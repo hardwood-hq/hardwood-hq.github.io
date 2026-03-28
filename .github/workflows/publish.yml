@@ -63,7 +63,7 @@ jobs:
 
       - name: Build JavaDoc
         working-directory: source
-        run: ./mvnw javadoc:aggregate -q
+        run: ./mvnw javadoc:aggregate '-Dmaven.javadoc.skippedModules=hardwood-(?!core).*|parquet-testing-runner|native-image-tests'
 
       - name: Deploy docs
         run: |
