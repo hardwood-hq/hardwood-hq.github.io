@@ -1,0 +1,90 @@
+name: Publish documentation
+
+on:
+  repository_dispatch:
+    types: [publish-docs]
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: 'Tag or SHA from hardwood to build (e.g. v0.2.0)'
+        required: true
+      version:
+        description: 'Version label without v prefix (e.g. 0.2.0)'
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    env:
+      SOURCE_REF: >-
+        ${{ github.event_name == 'repository_dispatch'
+            && github.event.client_payload.source_ref
+            || inputs.source_ref }}
+      VERSION: >-
+        ${{ github.event_name == 'repository_dispatch'
+            && github.event.client_payload.version
+            || inputs.version }}
+
+    steps:
+      - name: Checkout site repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # mike needs gh-pages history
+
+      - name: Checkout hardwood source
+        uses: actions/checkout@v4
+        with:
+          repository: hardwood-hq/hardwood
+          ref: ${{ env.SOURCE_REF }}
+          path: source
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install MkDocs dependencies
+        run: pip install -r source/docs/requirements.txt
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - name: Install Graphviz
+        run: sudo apt-get install -y graphviz
+
+      - name: Configure git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Build JavaDoc
+        working-directory: source
+        run: ./mvnw javadoc:aggregate -q
+
+      - name: Deploy docs
+        run: |
+          mike deploy \
+            --config-file source/docs/mkdocs.yml \
+            --branch gh-pages \
+            --set-default \
+            --update-aliases \
+            $VERSION latest
+
+          git checkout gh-pages
+
+          bash source/docs/patch-noindex.sh "$VERSION"
+
+          mkdir -p api/$VERSION
+          cp -r source/target/site/apidocs/. api/$VERSION/
+          rm -rf api/latest
+          cp -r source/target/site/apidocs/. api/latest/
+
+          git add api/
+          git add -u
+          git commit --amend --no-edit
+          git push origin gh-pages
+
