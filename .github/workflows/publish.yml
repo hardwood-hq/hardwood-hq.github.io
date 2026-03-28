@@ -105,14 +105,14 @@ jobs:
 
           git checkout gh-pages
 
-          bash source/docs/patch-seo.sh "https://hardwood-hq.github.io"
-
           mkdir -p api/$VERSION
           cp -r source/target/reports/apidocs/. api/$VERSION/
           if [ "$UPDATE_LATEST" = "true" ] && [ "$VERSION" != "dev" ]; then
             rm -rf api/latest
             cp -r source/target/reports/apidocs/. api/latest/
           fi
+
+          bash source/docs/patch-seo.sh "https://hardwood-hq.github.io"
 
           git add api/
           git add -u
