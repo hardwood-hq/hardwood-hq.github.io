@@ -9,8 +9,12 @@ on:
         description: 'Tag or SHA from hardwood to build (e.g. v0.2.0)'
         required: true
       version:
-        description: 'Version label without v prefix (e.g. 0.2.0)'
+        description: 'Version label without v prefix (e.g. 0.2.0, or dev)'
         required: true
+      update_latest:
+        description: 'Update the latest alias to point to this version'
+        type: boolean
+        default: true
 
 jobs:
   publish:
@@ -27,6 +31,10 @@ jobs:
         ${{ github.event_name == 'repository_dispatch'
             && github.event.client_payload.version
             || inputs.version }}
+      UPDATE_LATEST: >-
+        ${{ github.event_name == 'repository_dispatch'
+            && github.event.client_payload.update_latest
+            || inputs.update_latest }}
 
     steps:
       - name: Checkout site repo
@@ -65,32 +73,46 @@ jobs:
 
       - name: Build JavaDoc
         working-directory: source
-        run: ./mvnw javadoc:aggregate '-Dmaven.javadoc.skippedModules=hardwood-(?!core).*|parquet-testing-runner|native-image-tests'
+        run: ./mvnw javadoc:aggregate '-Dmaven.javadoc.skippedModules=hardwood-(?!core|s3|avro|aws-auth).*'
 
       - name: Deploy docs
         run: |
           sed -i "s|/api/latest/|/api/$VERSION/|" source/docs/mkdocs.yml
           find source/docs/content -name '*.md' -exec sed -i "s|/api/latest/|/api/$VERSION/|" {} +
 
-          mike deploy \
-            --config-file source/docs/mkdocs.yml \
-            --branch gh-pages \
-            --update-aliases \
-            $VERSION latest
+          if [ "$VERSION" = "dev" ]; then
+            mike deploy \
+              --config-file source/docs/mkdocs.yml \
+              --branch gh-pages \
+              dev
+          elif [ "$UPDATE_LATEST" = "true" ]; then
+            mike deploy \
+              --config-file source/docs/mkdocs.yml \
+              --branch gh-pages \
+              --update-aliases \
+              $VERSION latest
 
-          mike set-default \
-            --config-file source/docs/mkdocs.yml \
-            --branch gh-pages \
-            latest
+            mike set-default \
+              --config-file source/docs/mkdocs.yml \
+              --branch gh-pages \
+              latest
+          else
+            mike deploy \
+              --config-file source/docs/mkdocs.yml \
+              --branch gh-pages \
+              $VERSION
+          fi
 
           git checkout gh-pages
 
-          bash source/docs/patch-noindex.sh "$VERSION"
+          bash source/docs/patch-seo.sh "https://hardwood-hq.github.io"
 
           mkdir -p api/$VERSION
           cp -r source/target/reports/apidocs/. api/$VERSION/
-          rm -rf api/latest
-          cp -r source/target/reports/apidocs/. api/latest/
+          if [ "$UPDATE_LATEST" = "true" ] && [ "$VERSION" != "dev" ]; then
+            rm -rf api/latest
+            cp -r source/target/reports/apidocs/. api/latest/
+          fi
 
           git add api/
           git add -u
