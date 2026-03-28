@@ -534,6 +534,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -822,6 +844,28 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#package-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package Structure
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -859,15 +903,15 @@
 
 -->
 <h1 id="hardwood">Hardwood<a class="headerlink" href="#hardwood" title="Permanent link">&para;</a></h1>
-<p><em>A parser for the Apache Parquet file format, optimized for minimal dependencies and great performance.</em></p>
+<p><em>A parser for the Apache Parquet file format, optimized for minimal dependencies and great performance.
+Available as a Java library and a <a href="cli/">command-line tool</a>.</em></p>
 <p>Goals of the project are:</p>
 <ul>
 <li><strong>Light-weight:</strong> Implement the Parquet file format avoiding any 3rd party dependencies other than for compression algorithms (e.g. Snappy)</li>
 <li><strong>Correct:</strong> Support all Parquet files which are supported by the canonical <a href="https://github.com/apache/parquet-java">parquet-java</a> library</li>
-<li><strong>Fast:</strong> As fast or faster as parquet-java</li>
+<li><strong>Fast:</strong> Be as fast or faster as parquet-java</li>
 <li><strong>Complete:</strong> Add a Parquet file writer (after 1.0)</li>
 </ul>
-<p>Latest version: 1.0.0.Alpha1, 2026-02-26</p>
 <h2 id="quick-example">Quick Example<a class="headerlink" href="#quick-example" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.InputFile</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
@@ -887,6 +931,73 @@
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="p">}</span>
 </code></pre></div>
 <p>See <a href="getting-started/">Getting Started</a> for installation and setup.</p>
+<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">&para;</a></h2>
+<p>This is Alpha quality software, under active development.</p>
+<p>Currently, individual Parquet files must be <strong>at most 2 GB</strong>.
+Larger datasets should be split across multiple files and read via <code>MultiFileParquetReader</code>.</p>
+<h2 id="package-structure">Package Structure<a class="headerlink" href="#package-structure" title="Permanent link">&para;</a></h2>
+<p>Hardwood is organized into public API packages and internal implementation packages:</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Visibility</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dev.hardwood</code></td>
+<td><strong>Public API</strong></td>
+<td>Entry point for creating readers and managing shared resources (thread pool, decompressor pool).</td>
+</tr>
+<tr>
+<td><code>dev.hardwood.reader</code></td>
+<td><strong>Public API</strong></td>
+<td>Single-file and multi-file readers for row-oriented and column-oriented access.</td>
+</tr>
+<tr>
+<td><code>dev.hardwood.metadata</code></td>
+<td><strong>Public API</strong></td>
+<td>Parquet file metadata: row groups, column chunks, physical/logical types, and compression codecs.</td>
+</tr>
+<tr>
+<td><code>dev.hardwood.schema</code></td>
+<td><strong>Public API</strong></td>
+<td>Schema representation: file schema, column schemas, and column projection.</td>
+</tr>
+<tr>
+<td><code>dev.hardwood.row</code></td>
+<td><strong>Public API</strong></td>
+<td>Value types for nested data access: structs, lists, and maps.</td>
+</tr>
+<tr>
+<td><code>dev.hardwood.avro</code></td>
+<td><strong>Public API</strong></td>
+<td>Avro GenericRecord support: schema conversion and row materialization (<code>hardwood-avro</code> module).</td>
+</tr>
+<tr>
+<td><code>dev.hardwood.s3</code></td>
+<td><strong>Public API</strong></td>
+<td>S3 object storage support: <code>S3Source</code>, <code>S3InputFile</code>, <code>S3Credentials</code>, <code>S3CredentialsProvider</code> (<code>hardwood-s3</code> module, zero external dependencies).</td>
+</tr>
+<tr>
+<td><code>dev.hardwood.aws.auth</code></td>
+<td><strong>Public API</strong></td>
+<td>Bridges the AWS SDK credential chain to Hardwood's <code>S3CredentialsProvider</code> (<code>hardwood-aws-auth</code> module, optional).</td>
+</tr>
+<tr>
+<td><code>dev.hardwood.jfr</code></td>
+<td><strong>Public API</strong></td>
+<td>JFR event types emitted during file reading, decoding, and pipeline operations.</td>
+</tr>
+<tr>
+<td><code>dev.hardwood.internal.*</code></td>
+<td><strong>Internal</strong></td>
+<td>Implementation details — not part of the public API and may change without notice.</td>
+</tr>
+</tbody>
+</table>
 
 
 
