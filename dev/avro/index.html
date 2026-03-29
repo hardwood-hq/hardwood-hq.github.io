@@ -794,7 +794,7 @@
 
 -->
 <h1 id="avro-support">Avro Support<a class="headerlink" href="#avro-support" title="Permanent link">&para;</a></h1>
-<p>The <code>hardwood-avro</code> module reads Parquet files into Avro <code>GenericRecord</code> instances, the most common record representation for Parquet data in the JVM ecosystem. Add it alongside <code>hardwood-core</code>:</p>
+<p>If your application already works with Avro records — for instance in a Kafka or Spark pipeline — you can read Parquet files directly into <code>GenericRecord</code> instances instead of using Hardwood's own row API. The <code>hardwood-avro</code> module handles the schema conversion and record materialization, matching the behavior of parquet-java's <code>AvroReadSupport</code>. Add it alongside <code>hardwood-core</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">&lt;dependency&gt;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>dev.hardwood<span class="nt">&lt;/groupId&gt;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>hardwood-avro<span class="nt">&lt;/artifactId&gt;</span>

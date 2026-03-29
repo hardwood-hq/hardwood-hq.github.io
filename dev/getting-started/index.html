@@ -596,6 +596,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#first-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Read
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -890,6 +901,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#first-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        First Read
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1043,6 +1065,25 @@ Bindings are available for all popular logger implementations, for instance for 
 </code></pre></div>
 </details>
 <p>If you attempt to read a file using a compression codec whose library is not on the classpath, Hardwood will throw an exception with a message indicating which dependency to add.</p>
+<h2 id="first-read">First Read<a class="headerlink" href="#first-read" title="Permanent link">&para;</a></h2>
+<p>With the core dependency in place, read a Parquet file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.InputFile</span><span class="p">;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.RowReader</span><span class="p">;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">createRowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getLong</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">);</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">);</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">name</span><span class="p">);</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="p">}</span>
+</code></pre></div>
+<p>See <a href="../usage/">Usage</a> for the full API reference including column projection, predicate pushdown, column-oriented reading, and more.</p>
 
 
 

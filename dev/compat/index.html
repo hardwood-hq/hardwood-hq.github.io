@@ -905,7 +905,7 @@
 
 -->
 <h1 id="parquet-java-compatibility">Parquet-Java Compatibility<a class="headerlink" href="#parquet-java-compatibility" title="Permanent link">&para;</a></h1>
-<p>The <code>hardwood-parquet-java-compat</code> module provides a drop-in replacement for parquet-java's <code>ParquetReader&lt;Group&gt;</code> API. This allows users migrating from parquet-java to use Hardwood with minimal code changes.</p>
+<p>If you have existing code that uses Apache parquet-java's <code>ParquetReader&lt;Group&gt;</code> API and want to switch to Hardwood without rewriting it, the <code>hardwood-parquet-java-compat</code> module provides a drop-in replacement. It implements the same <code>org.apache.parquet.*</code> interfaces backed by Hardwood's reader, so you get Hardwood's performance with minimal code changes.</p>
 <p><strong>Features:</strong></p>
 <ul>
 <li>Provides <code>org.apache.parquet.*</code> namespace classes compatible with parquet-java</li>
