@@ -718,6 +718,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Notes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -734,6 +752,47 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#100beta1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0.Beta1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100alpha1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0.Alpha1
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -758,6 +817,36 @@
   
     
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#100beta1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0.Beta1
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#100alpha1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0.Alpha1
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -795,6 +884,36 @@
 -->
 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
 <p>See <a href="https://github.com/hardwood-hq/hardwood/releases">GitHub Releases</a> for the full changelog.</p>
+<h2 id="100beta1">1.0.0.Beta1<a class="headerlink" href="#100beta1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>S3 and remote object store support with coalesced reads (<a href="https://github.com/hardwood-hq/hardwood/issues/31">#31</a>)</li>
+<li>CLI tool for inspecting and querying Parquet files (<a href="https://github.com/hardwood-hq/hardwood/issues/38">#38</a>)</li>
+<li>Avro <code>GenericRecord</code> support via the <code>hardwood-avro</code> module (<a href="https://github.com/hardwood-hq/hardwood/issues/131">#131</a>)</li>
+<li>Row group filtering with predicate push-down (<a href="https://github.com/hardwood-hq/hardwood/issues/59">#59</a>)</li>
+<li>Page-level column index filtering (<a href="https://github.com/hardwood-hq/hardwood/issues/118">#118</a>)</li>
+<li><code>InputFile</code> abstraction for pluggable file sources (<a href="https://github.com/hardwood-hq/hardwood/issues/98">#98</a>)</li>
+<li><code>FieldPath</code> for unambiguous column lookup (<a href="https://github.com/hardwood-hq/hardwood/issues/59">#59</a>)</li>
+<li>Page CRC verification (<a href="https://github.com/hardwood-hq/hardwood/issues/76">#76</a>)</li>
+<li>Key/value metadata access (<a href="https://github.com/hardwood-hq/hardwood/issues/135">#135</a>)</li>
+<li>S3 support and filtering in the parquet-java compatibility layer (<a href="https://github.com/hardwood-hq/hardwood/issues/123">#123</a>)</li>
+<li>Project documentation site (<a href="https://github.com/hardwood-hq/hardwood/issues/109">#109</a>)</li>
+</ul>
+<h2 id="100alpha1">1.0.0.Alpha1<a class="headerlink" href="#100alpha1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Zero-dependency Parquet file reader for Java</li>
+<li>Row-oriented and columnar read APIs</li>
+<li>Support for flat and nested schemas (lists, maps, structs)</li>
+<li>All standard encodings (RLE, DELTA_BINARY_PACKED, DELTA_BYTE_ARRAY, BYTE_STREAM_SPLIT, etc.)</li>
+<li>Compression: Snappy, ZSTD, LZ4, GZIP, Brotli</li>
+<li>Projection push-down</li>
+<li>Parallel page pre-fetching and eager batch assembly</li>
+<li>Memory-mapped file I/O</li>
+<li>JFR events for observability</li>
+<li>Multi-file reader</li>
+<li>BOM for dependency management</li>
+<li>parquet-java compatibility layer</li>
+<li>Optional Vector API acceleration on Java 22+</li>
+</ul>
 
 
 
@@ -844,8 +963,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/1f8d768cf2fcd77eab06521efcb8bbae00d35100" target="_blank" rel="noopener">
-      1f8d768c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/9dfd2d8e0cbf86e6021d5c374589b0792defbdba" target="_blank" rel="noopener">
+      9dfd2d8e
     </a>
   
 </div>
