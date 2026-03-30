@@ -1523,7 +1523,7 @@
 <p>Supported operators: <code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code>, <code>in</code>, <code>inStrings</code>, <code>isNull</code>, <code>isNotNull</code>.
 Supported physical types: <code>int</code>, <code>long</code>, <code>float</code>, <code>double</code>, <code>boolean</code>, <code>String</code> (comparison operators); <code>int</code>, <code>long</code>, <code>String</code> (<code>in</code>/<code>inStrings</code>); any type (<code>isNull</code>/<code>isNotNull</code>).
 Supported logical types: <code>LocalDate</code>, <code>Instant</code>, <code>LocalTime</code>, <code>BigDecimal</code>, <code>UUID</code> (comparison operators).
-Logical combinators: <code>and</code>, <code>or</code>, <code>not</code>; the <code>and</code> and <code>or</code> combinators also accept varargs for three or more conditions.</p>
+Logical combinators: <code>and</code>, <code>or</code>, <code>not</code>; the <code>and</code> and <code>or</code> combinators also accept varargs for three or more conditions. <code>not</code> is fully pushed down to the statistics level: leaf predicates are inverted (e.g., <code>not(gt("x", 5))</code> → <code>ltEq("x", 5)</code>), compound predicates are transformed via De Morgan's laws (<code>not(and(a, b))</code> → <code>or(not(a), not(b))</code>), and double negation is unwrapped. The only case where <code>not</code> falls back to record-level-only filtering is <code>not(in(...))</code>.</p>
 <h3 id="logical-type-support">Logical Type Support<a class="headerlink" href="#logical-type-support" title="Permanent link">&para;</a></h3>
 <p>Factory methods are provided for common Parquet logical types, handling the physical
 encoding automatically:</p>
@@ -1554,12 +1554,6 @@ encoding automatically:</p>
 <p>Filters work with all reader types: <code>RowReader</code>, <code>ColumnReader</code>, <code>AvroRowReader</code>, and across multi-file readers.</p>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
 <ul>
-<li><strong><code>not</code> defeats statistics-based pushdown
-  (<a href="https://github.com/hardwood-hq/hardwood/issues/195">#195</a>).</strong> Row group and page-level
-  filtering cannot safely invert predicates wrapped in <code>not</code>. A filter like
-  <code>FilterPredicate.not(FilterPredicate.eq("x", 5))</code> will still apply at the record level
-  but will not skip any row groups or pages. For best pushdown, express the predicate
-  directly (e.g. <code>notEq("x", 5)</code> instead of <code>not(eq("x", 5))</code>).</li>
 <li><strong>Bloom filter pushdown is not supported
   (<a href="https://github.com/hardwood-hq/hardwood/issues/180">#180</a>).</strong> Parquet files may contain
   Bloom filters for high-cardinality columns, but Hardwood does not currently use them for
@@ -1896,8 +1890,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/8a6991ca2f88aa78ebd9edaadfbdd41ba17647ed" target="_blank" rel="noopener">
-      8a6991ca
+    <a href="https://github.com/hardwood-hq/hardwood/tree/3fc93edd9eccc083fe51feed2997024d68e8a922" target="_blank" rel="noopener">
+      3fc93edd
     </a>
   
 </div>
