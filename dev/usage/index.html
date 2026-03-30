@@ -1435,7 +1435,7 @@
 <p><strong>Null handling:</strong> Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw <code>NullPointerException</code> if the field is null — always check with <code>isNull()</code> first. Object accessors (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
 <p><strong>Type validation:</strong> The API validates at runtime that the requested type matches the schema. Mismatches throw <code>IllegalArgumentException</code> with a descriptive message.</p>
 <h2 id="predicate-pushdown-filter">Predicate Pushdown (Filter)<a class="headerlink" href="#predicate-pushdown-filter" title="Permanent link">&para;</a></h2>
-<p>Filter predicates enable two levels of predicate pushdown. At the row-group level, entire row groups whose statistics prove no rows can match are skipped. Within surviving row groups, the Column Index (per-page min/max statistics) is used to skip individual pages, avoiding unnecessary decompression and decoding. On remote backends like S3, only the matching pages are fetched, reducing network I/O.</p>
+<p>Filter predicates enable three levels of predicate pushdown. At the row-group level, entire row groups whose statistics prove no rows can match are skipped. Within surviving row groups, the Column Index (per-page min/max statistics) is used to skip individual pages, avoiding unnecessary decompression and decoding. On remote backends like S3, only the matching pages are fetched, reducing network I/O. Finally, record-level filtering evaluates the predicate against each decoded row, so <code>createRowReader(filter)</code> returns only rows that actually match.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.FilterPredicate</span><span class="p">;</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1">// Simple filter</span>
@@ -1793,8 +1793,8 @@ Logical combinators: <code>and</code>, <code>or</code>, <code>not</code>; the <c
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2ef2b16cb6a5bb2ecd14ab85bd0b1cf714dc58de" target="_blank" rel="noopener">
-      2ef2b16c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/aac3b90e85d830685ccd8ad9c15688bfb3ba5c13" target="_blank" rel="noopener">
+      aac3b90e
     </a>
   
 </div>

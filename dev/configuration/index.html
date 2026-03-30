@@ -1017,6 +1017,11 @@
 <td>Pages filtered by Column Index predicate pushdown. Fields: file, rowGroupIndex, column, totalPages, pagesKept, pagesSkipped</td>
 </tr>
 <tr>
+<td><code>dev.hardwood.RecordFilter</code></td>
+<td>Filter</td>
+<td>Records filtered by record-level predicate evaluation. Fields: totalRecords, recordsKept, recordsSkipped</td>
+</tr>
+<tr>
 <td><code>dev.hardwood.BatchWait</code></td>
 <td>Pipeline</td>
 <td>Consumer blocked waiting for the assembly pipeline. Fields: column</td>
@@ -1031,7 +1036,7 @@
 <p>Events appear under the <strong>Hardwood</strong> category in JDK Mission Control (JMC) or any JFR analysis tool. Use them to identify:</p>
 <ul>
 <li><strong>I/O bottlenecks</strong> — large <code>FileMapping</code> durations or frequent <code>PrefetchMiss</code> events</li>
-<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were skipped; <code>PageFilter</code> shows how many pages were skipped within surviving row groups</li>
+<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were skipped; <code>PageFilter</code> shows how many pages were skipped within surviving row groups; <code>RecordFilter</code> shows how many individual records were filtered out</li>
 <li><strong>Decode hotspots</strong> — <code>PageDecoded</code> events with large uncompressed sizes or high frequency</li>
 <li><strong>Pipeline stalls</strong> — <code>BatchWait</code> events indicate the reader is waiting for decoded data</li>
 </ul>
@@ -1106,8 +1111,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2ef2b16cb6a5bb2ecd14ab85bd0b1cf714dc58de" target="_blank" rel="noopener">
-      2ef2b16c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/aac3b90e85d830685ccd8ad9c15688bfb3ba5c13" target="_blank" rel="noopener">
+      aac3b90e
     </a>
   
 </div>
