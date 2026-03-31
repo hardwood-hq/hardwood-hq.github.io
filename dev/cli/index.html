@@ -955,12 +955,8 @@
 <td>Print the file schema</td>
 </tr>
 <tr>
-<td><code>hardwood head</code></td>
-<td>Print the first N rows as an ASCII table</td>
-</tr>
-<tr>
-<td><code>hardwood tail</code></td>
-<td>Print the last N rows as an ASCII table</td>
+<td><code>hardwood print</code></td>
+<td>Print rows as an ASCII table (head, tail, or all)</td>
 </tr>
 <tr>
 <td><code>hardwood convert</code></td>
@@ -1004,15 +1000,21 @@
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Show first 20 rows</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>hardwood<span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">20</span><span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">20</span><span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Convert to CSV</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Show last 5 rows</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span>-5<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># Show all rows</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Convert to CSV</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
 <h2 id="reading-files-from-s3">Reading Files from S3<a class="headerlink" href="#reading-files-from-s3" title="Permanent link">&para;</a></h2>
 <p>All commands accept <code>s3://</code> URIs via the <code>-f</code> flag:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>hardwood<span class="w"> </span>head<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
 <p>The CLI resolves credentials via the standard AWS credential chain (environment variables, <code>~/.aws/credentials</code>, SSO, instance profiles, etc.).</p>
 <table>
@@ -1091,8 +1093,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4bac753c782711edcfe5dcbab5320b5b967f276a" target="_blank" rel="noopener">
-      4bac753c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c9093efa14f3adea33c7413fd402dc5a3c8ef94d" target="_blank" rel="noopener">
+      c9093efa
     </a>
   
 </div>
