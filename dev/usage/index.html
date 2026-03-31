@@ -1523,7 +1523,7 @@
 <p>Supported operators: <code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code>, <code>in</code>, <code>inStrings</code>, <code>isNull</code>, <code>isNotNull</code>.
 Supported physical types: <code>int</code>, <code>long</code>, <code>float</code>, <code>double</code>, <code>boolean</code>, <code>String</code> (comparison operators); <code>int</code>, <code>long</code>, <code>String</code> (<code>in</code>/<code>inStrings</code>); any type (<code>isNull</code>/<code>isNotNull</code>).
 Supported logical types: <code>LocalDate</code>, <code>Instant</code>, <code>LocalTime</code>, <code>BigDecimal</code>, <code>UUID</code> (comparison operators).
-Logical combinators: <code>and</code>, <code>or</code>, <code>not</code>; the <code>and</code> and <code>or</code> combinators also accept varargs for three or more conditions. <code>not</code> is fully pushed down to the statistics level: leaf predicates are inverted (e.g., <code>not(gt("x", 5))</code> → <code>ltEq("x", 5)</code>), compound predicates are transformed via De Morgan's laws (<code>not(and(a, b))</code> → <code>or(not(a), not(b))</code>), and double negation is unwrapped. The only case where <code>not</code> falls back to record-level-only filtering is <code>not(in(...))</code>.</p>
+Logical combinators: <code>and</code>, <code>or</code>, <code>not</code>; the <code>and</code> and <code>or</code> combinators also accept varargs for three or more conditions. All predicates, including those wrapped in <code>not</code>, are pushed down to the statistics level for row group and page skipping.</p>
 <h3 id="logical-type-support">Logical Type Support<a class="headerlink" href="#logical-type-support" title="Permanent link">&para;</a></h3>
 <p>Factory methods are provided for common Parquet logical types, handling the physical
 encoding automatically:</p>
@@ -1890,8 +1890,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d381c327e6383fb5972ffe77ec454733d0cb72a9" target="_blank" rel="noopener">
-      d381c327
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4bac753c782711edcfe5dcbab5320b5b967f276a" target="_blank" rel="noopener">
+      4bac753c
     </a>
   
 </div>
