@@ -62,6 +62,8 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
+          cache: maven
+          cache-dependency-path: source/pom.xml
 
       - name: Install Graphviz
         run: sudo apt-get install -y graphviz
