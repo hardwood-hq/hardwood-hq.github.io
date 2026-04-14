@@ -1454,7 +1454,7 @@
 </tr>
 <tr>
 <td><code>getTimestamp</code></td>
-<td>INT64</td>
+<td>INT64, or legacy INT96</td>
 <td>TIMESTAMP</td>
 <td><code>Instant</code></td>
 </tr>
@@ -1497,6 +1497,7 @@
 </tbody>
 </table>
 <p>All methods are available as both <code>method(name)</code> and <code>method(index)</code>, except <code>getStruct</code>, <code>getList</code>, and <code>getMap</code> which are name-based only.</p>
+<p><strong>Legacy INT96 timestamps:</strong> Parquet files written by older versions of Apache Spark and Hive store timestamps in the deprecated INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> detects INT96 automatically and decodes it to an <code>Instant</code>; no caller-side handling is required.</p>
 <p><strong>Index-based access example:</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Get column indices once (before the loop)</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kt">int</span><span class="w"> </span><span class="n">idIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">getFileSchema</span><span class="p">().</span><span class="na">getColumn</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">).</span><span class="na">columnIndex</span><span class="p">();</span>
@@ -1944,8 +1945,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/efe787718d0c6b922cdb2790340ae82a809bb44c" target="_blank" rel="noopener">
-      efe78771
+    <a href="https://github.com/hardwood-hq/hardwood/tree/318af41eaea31a4820c1c4987d41e33be6c05356" target="_blank" rel="noopener">
+      318af41e
     </a>
   
 </div>
