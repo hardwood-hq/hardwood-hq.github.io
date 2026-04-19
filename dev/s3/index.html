@@ -702,6 +702,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#io-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I/O Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -943,6 +954,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#io-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I/O Behavior
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1112,6 +1134,9 @@
 </code></pre></div>
 <p>When a custom <code>HttpClient</code> is provided, the caller is responsible for closing it — <code>S3Source.close()</code> will not close the client. The <code>connectTimeout</code> builder option is ignored when a custom client is supplied.</p>
 <p>Column projection, row group filtering, and all other reader features work transparently with S3 files.</p>
+<h3 id="io-behavior">I/O Behavior<a class="headerlink" href="#io-behavior" title="Permanent link">&para;</a></h3>
+<p>When reading from S3, Hardwood coalesces column chunk reads within each row group into as few HTTP requests as possible (typically 1-2 per row group). Column projection, page-level predicate pushdown, and <code>maxRows</code> all narrow the byte ranges before coalescing, reducing the amount of data transferred.</p>
+<p>Note that without a <code>maxRows</code> limit, the reader fetches all projected (and filtered) column data for an entire row group when any column enters it. For large row groups (128 MB–1 GB is typical), this can transfer significant data even if the consumer stops reading early. To minimize data transfer for partial reads, set <code>maxRows</code> on the reader — this truncates each column's fetch to only the pages covering the needed rows.</p>
 
 
 
@@ -1161,8 +1186,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/718c1a5c9df2f3388e16d6faa41bf7322160d829" target="_blank" rel="noopener">
-      718c1a5c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f4ba94491670351c997cab9f7d17385606f8cdd4" target="_blank" rel="noopener">
+      f4ba9449
     </a>
   
 </div>
