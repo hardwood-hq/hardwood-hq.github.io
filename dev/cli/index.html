@@ -731,6 +731,78 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#interactive-exploration-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interactive exploration (dive)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interactive exploration (dive)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-you-can-do-with-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you can do with it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-drill-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical drill path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inline-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inline search
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reading-files-from-s3" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -917,6 +989,78 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#interactive-exploration-dive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interactive exploration (dive)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Interactive exploration (dive)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-you-can-do-with-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What you can do with it
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typical-drill-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical drill path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inline-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inline search
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reading-files-from-s3" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1029,6 +1173,10 @@
 <td>Display per-row-group column chunk metadata (sizes, codec)</td>
 </tr>
 <tr>
+<td><code>hardwood dive</code></td>
+<td>Interactively explore a file's structure in a TUI</td>
+</tr>
+<tr>
 <td><code>hardwood help</code></td>
 <td>Display help information about a command</td>
 </tr>
@@ -1053,10 +1201,160 @@
 <a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Convert to CSV</span>
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
+<h2 id="interactive-exploration-dive">Interactive exploration (<code>dive</code>)<a class="headerlink" href="#interactive-exploration-dive" title="Permanent link">&para;</a></h2>
+<p><code>hardwood dive</code> launches a terminal UI for navigating a Parquet file's structure
+without re-invoking the CLI for each slice:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hardwood<span class="w"> </span>dive<span class="w"> </span>-f<span class="w"> </span>data.parquet
+</code></pre></div>
+<p>From the Overview landing screen, drill into <strong>Schema</strong> or <strong>Row groups</strong>,
+then into column chunks and per-chunk metadata.</p>
+<h3 id="what-you-can-do-with-it">What you can do with it<a class="headerlink" href="#what-you-can-do-with-it" title="Permanent link">&para;</a></h3>
+<p><code>dive</code> composes the slices that the batch subcommands (<code>info</code>, <code>schema</code>,
+<code>footer</code>, <code>inspect</code>, <code>print</code>) each surface separately into a single
+navigable session. Typical things to reach for it for:</p>
+<ul>
+<li><strong>Find a column quickly</strong> in a wide schema — Schema screen, <code>/</code> to
+  filter the tree to leaves matching a substring.</li>
+<li><strong>Spot the heavy column chunks</strong> in a row group — Row groups → Column
+  chunks ranks by compressed size with the codec and dictionary flag
+  alongside.</li>
+<li><strong>Check page-level statistics and indexes</strong> — drill from a chunk into
+  Pages, Column index, or Offset index; <code>Enter</code> on a page opens the
+  full thrift header, including inline statistics when no Column Index
+  is present.</li>
+<li><strong>Inspect dictionary entries</strong> for a column — Dictionary screen with
+  <code>/</code> substring filter; <code>Enter</code> reveals the full untruncated value of
+  the highlighted entry.</li>
+<li><strong>Preview a few rows</strong> without exporting — Data preview paginates with
+  <code>PgDn</code>/<code>PgUp</code> (<code>g</code>/<code>G</code> for first/last); <code>Enter</code> opens a per-row modal
+  where each field can be expanded inline.</li>
+<li><strong>Decode key/value metadata</strong> — Spark JSON schemas pretty-print, Arrow
+  IPC schemas decode to a hex dump.</li>
+<li><strong>Compare a column across row groups</strong> — from Schema, <code>Enter</code> on a
+  leaf jumps to a one-row-per-RG view of that column's sizes,
+  encodings, and stats.</li>
+<li><strong>Read raw file layout</strong> — Footer &amp; indexes shows file size, footer
+  offset, encoding/codec histograms, page-index coverage, and aggregate
+  byte breakdowns; from there you can drill into a file-wide list of
+  every chunk's column index, offset index, or dictionary region.</li>
+</ul>
+<h3 id="keys">Keys<a class="headerlink" href="#keys" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>↑</code> / <code>↓</code></td>
+<td>Move selection</td>
+</tr>
+<tr>
+<td><code>PgDn</code> / <code>PgUp</code> (or <code>Shift-↓</code> / <code>Shift-↑</code>)</td>
+<td>Page down / up</td>
+</tr>
+<tr>
+<td><code>g</code> / <code>G</code></td>
+<td>Jump to first / last row</td>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>Drill into the selected item</td>
+</tr>
+<tr>
+<td><code>Esc</code> / <code>Backspace</code></td>
+<td>Go back one level</td>
+</tr>
+<tr>
+<td><code>Tab</code> / <code>Shift-Tab</code></td>
+<td>Switch focused pane</td>
+</tr>
+<tr>
+<td><code>/</code></td>
+<td>Inline search (Schema, Column index, Dictionary)</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td>Toggle logical / physical value rendering (screen-specific: Pages, Column index, Dictionary, Data preview, Column chunk detail)</td>
+</tr>
+<tr>
+<td><code>e</code> / <code>c</code></td>
+<td>Expand / collapse all (Schema tree; Data preview row modal)</td>
+</tr>
+<tr>
+<td><code>o</code></td>
+<td>Jump back to Overview</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>Toggle help overlay</td>
+</tr>
+<tr>
+<td><code>q</code> / <code>Ctrl-C</code></td>
+<td>Quit</td>
+</tr>
+</tbody>
+</table>
+<p>The keybar at the bottom of every screen lists the keys that are
+actually meaningful in the current context — so the menus above show the
+full vocabulary, but the keybar tells you which subset is live right
+now.</p>
+<p>Available screens: Overview, Schema (expandable tree of groups + leaves),
+Row groups, Column chunks, Column chunk detail (facts + drill menu), Pages
+(with a page-header modal on Enter), Column index, Offset index, Footer &amp;
+indexes (which also drills into a file-wide list of every chunk's column
+index, offset index, or dictionary region),
+Column-across-row-groups (from the Schema screen), Dictionary (with
+full-value modal on Enter and <code>/</code> inline search), and Data preview (row
+values via <code>RowReader</code>; <code>←/→</code> scrolls the visible column window,
+<code>PgDn/PgUp</code> flips pages).</p>
+<p>The <code>--rows N</code> flag sets the Data preview page size (default: 20).</p>
+<h3 id="layout">Layout<a class="headerlink" href="#layout" title="Permanent link">&para;</a></h3>
+<p>Every screen shares a four-region layout — a top bar with file identity, a
+breadcrumb showing the navigation stack, the active screen body, and a keybar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a> hardwood dive │ /data/lineitem.parquet │ 1.4 GB │ 3 RGs │ 12.4 M rows
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a> Overview › Row groups › RG #1 › Column chunks › l_address.street
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>┌────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│                                                                        │
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│                         (active screen body)                           │
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>│                                                                        │
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>└────────────────────────────────────────────────────────────────────────┘
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a> [↑↓] move  [Enter] drill  [Esc] back                [?] help   [q] quit
+</code></pre></div>
+<h3 id="typical-drill-path">Typical drill path<a class="headerlink" href="#typical-drill-path" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Overview</strong> → pick <em>Row groups</em> from the drill menu.</li>
+<li><strong>Row groups</strong> → select a row, <em>Enter</em> — opens its column chunks.</li>
+<li><strong>Column chunks</strong> → select a column, <em>Enter</em> — opens the chunk detail.</li>
+<li><strong>Column chunk detail</strong> (facts pane + drill menu) → pick <em>Pages</em>, <em>Column
+   index</em>, <em>Offset index</em>, or <em>Dictionary</em>.</li>
+<li>Drill sub-screens (<em>Pages</em>, <em>Column index</em>, etc.) support <em>Esc</em> back up to
+   the previous level; in <em>Pages</em> and <em>Dictionary</em>, <em>Enter</em> opens a modal with
+   the full header / value.</li>
+</ol>
+<p>Alternative entry: from <strong>Overview → Schema</strong>, navigate the tree of group and
+primitive nodes with <code>→</code> / <code>←</code>; <code>Enter</code> on a leaf drills into a
+<em>Column-across-row-groups</em> view — one row per row group showing that column's
+sizes, encoding, stats — and from there into the chunk detail.</p>
+<h3 id="inline-search">Inline search<a class="headerlink" href="#inline-search" title="Permanent link">&para;</a></h3>
+<p>The <strong>Schema</strong>, <strong>Column index</strong>, and <strong>Dictionary</strong> screens support inline
+search. Press <code>/</code> to enter search-edit mode:</p>
+<ul>
+<li><strong>Schema</strong> — filters leaf columns whose field path contains the query.
+  While the filter is active, the tree collapses to a flat list of matches.</li>
+<li><strong>Column index</strong> — filters pages whose formatted min or max value
+  contains the query.</li>
+<li><strong>Dictionary</strong> — filters entries whose value contains the query.</li>
+</ul>
+<p>In all three cases: typed characters extend the filter; <em>Backspace</em> trims;
+<em>Esc</em> clears the filter and exits edit mode; <em>Enter</em> commits (keeps the
+filter applied but exits edit mode). The table re-filters live as you type.</p>
 <h2 id="reading-files-from-s3">Reading Files from S3<a class="headerlink" href="#reading-files-from-s3" title="Permanent link">&para;</a></h2>
 <p>All commands accept <code>s3://</code> URIs via the <code>-f</code> flag:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
 <p>The CLI resolves credentials via the standard AWS credential chain (environment variables, <code>~/.aws/credentials</code>, SSO, instance profiles, etc.).</p>
 <table>
@@ -1083,7 +1381,7 @@
 </table>
 <h2 id="shell-completion">Shell Completion<a class="headerlink" href="#shell-completion" title="Permanent link">&para;</a></h2>
 <p>The distribution includes a Bash completion script at <code>bin/hardwood_completion</code>. Source it in your shell to enable tab completion for commands, options, and arguments:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
 </code></pre></div>
 <p>To make it permanent, add the line above to your <code>~/.bashrc</code> or <code>~/.bash_profile</code>.</p>
 
@@ -1135,8 +1433,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/09cbf47d96f89cf206ee36ed899d8b5f070e0de0" target="_blank" rel="noopener">
-      09cbf47d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a8f1ec3079892a90ec019e77e57914747c7cbdb7" target="_blank" rel="noopener">
+      a8f1ec30
     </a>
   
 </div>
