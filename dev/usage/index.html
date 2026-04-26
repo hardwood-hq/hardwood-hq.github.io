@@ -1595,6 +1595,12 @@
 <td><code>UUID</code></td>
 </tr>
 <tr>
+<td><code>getInterval</code></td>
+<td>FIXED_LEN_BYTE_ARRAY(12)</td>
+<td>INTERVAL</td>
+<td><code>PqInterval</code></td>
+</tr>
+<tr>
 <td><code>getStruct</code></td>
 <td></td>
 <td></td>
@@ -1627,6 +1633,7 @@
 </tbody>
 </table>
 <p>All methods are available as both <code>method(name)</code> and <code>method(index)</code>, except <code>getStruct</code>, <code>getList</code>, <code>getMap</code>, and <code>getVariant</code> which are name-based only.</p>
+<p><strong>INTERVAL columns:</strong> <code>PqInterval</code> is a plain record with three int properties — <code>months()</code>, <code>days()</code>, and <code>milliseconds()</code>. The components are independent and not normalized, and the on-disk encoding stores each as an unsigned 32-bit integer; if values may exceed <code>Integer.MAX_VALUE</code>, recover the unsigned value via <code>Integer.toUnsignedLong(interval.months())</code>. Files written by older parquet-mr / Spark / Hive writers that set only the legacy <code>converted_type=INTERVAL</code> annotation are handled transparently — no caller-side opt-in is required.</p>
 <p><strong>Bare <code>BYTE_ARRAY</code> columns:</strong> <code>BYTE_ARRAY</code> columns without a <code>STRING</code> logical type annotation may hold arbitrary binary payloads (Protobuf, WKB, custom encodings). Generic accessors such as <code>PqList.get</code> and <code>PqList.iterator</code> surface these as <code>byte[]</code> rather than silently UTF-8 decoding them — invalid byte sequences would otherwise be replaced with <code>U+FFFD</code>. Call <code>getString</code> explicitly when the column is known to contain UTF-8 text from an older writer that omitted the <code>STRING</code> annotation.</p>
 <p><strong>Legacy INT96 timestamps:</strong> Parquet files written by older versions of Apache Spark and Hive store timestamps in the deprecated INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> detects INT96 automatically and decodes it to an <code>Instant</code>; no caller-side handling is required.</p>
 <p><strong>Index-based access example:</strong></p>
@@ -1642,7 +1649,7 @@
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">}</span>
 </code></pre></div>
-<p><strong>Null handling:</strong> Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw <code>NullPointerException</code> if the field is null — always check with <code>isNull()</code> first. Object accessors (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
+<p><strong>Null handling:</strong> Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw <code>NullPointerException</code> if the field is null — always check with <code>isNull()</code> first. Object accessors (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>, <code>getInterval</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
 <p><strong>Type validation:</strong> The API validates at runtime that the requested type matches the schema. Mismatches throw <code>IllegalArgumentException</code> with a descriptive message.</p>
 <h2 id="variant-columns">Variant Columns<a class="headerlink" href="#variant-columns" title="Permanent link">&para;</a></h2>
 <p>A Parquet column annotated with the <code>VARIANT</code> logical type carries semi-structured, JSON-like data in a self-describing binary encoding. Physically it is a group of two required <code>BYTE_ARRAY</code> children, <code>metadata</code> and <code>value</code>, whose bytes together define a Variant value with its own type tag (object, array, string, int, etc.). <code>getVariant</code> reads both children and surfaces them through the <a href="https://github.com/apache/parquet-format/blob/master/VariantEncoding.md"><code>PqVariant</code></a> API.</p>
@@ -2140,8 +2147,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c22095c74359ef1452f96cfb7183648ea18a60c0" target="_blank" rel="noopener">
-      c22095c7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ba4bb37a5e030f1c98c44a3ccf5ed7f9f7002036" target="_blank" rel="noopener">
+      ba4bb37a
     </a>
   
 </div>
