@@ -1200,6 +1200,12 @@
 <a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
 <a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Convert to CSV</span>
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1"># Show dictionary entries for a column (first 50 entries per row group by default)</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># Show all dictionary entries for a column</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category<span class="w"> </span>--limit<span class="w"> </span><span class="m">0</span>
 </code></pre></div>
 <h2 id="interactive-exploration-dive">Interactive exploration (<code>dive</code>)<a class="headerlink" href="#interactive-exploration-dive" title="Permanent link">&para;</a></h2>
 <p><code>hardwood dive</code> launches a terminal UI for navigating a Parquet file's structure
@@ -1433,8 +1439,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/842e664e27967698582fe2a3aeeb2e9066b57ec9" target="_blank" rel="noopener">
-      842e664e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/14c064b9acd5ad0d33880f171547d39a53be03bf" target="_blank" rel="noopener">
+      14c064b9
     </a>
   
 </div>
