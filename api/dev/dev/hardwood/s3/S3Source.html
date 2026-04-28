@@ -138,16 +138,16 @@ multiple files for connection pooling and credential reuse.</p>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3InputFile.html" title="class in dev.hardwood.s3">S3InputFile</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputFile(java.lang.String)" class="member-name-link">inputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uri)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Creates an <a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
+<div class="block">Creates an <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3InputFile.html" title="class in dev.hardwood.s3">S3InputFile</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputFile(java.lang.String,java.lang.String)" class="member-name-link">inputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bucket,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Creates an <a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> for the given bucket and key.</div>
+<div class="block">Creates an <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for the given bucket and key.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#inputFiles(java.lang.String...)" class="member-name-link">inputFiles</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;uris)</code></div>
@@ -181,9 +181,13 @@ multiple files for connection pooling and credential reuse.</p>
 <section class="detail" id="inputFile(java.lang.String,java.lang.String)">
 <h3>inputFile</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3InputFile.html" title="class in dev.hardwood.s3">S3InputFile</a></span>&nbsp;<span class="element-name">inputFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bucket,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></span>&nbsp;<span class="element-name">inputFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bucket,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
-<div class="block">Creates an <a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> for the given bucket and key.</div>
+<div class="block">Creates an <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for the given bucket and key. Returns an
+<a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> when range backing is <a href="RangeBacking.html#NONE"><code>RangeBacking.NONE</code></a> (the
+default); otherwise wraps that bare file in a
+<code>RangeBackedInputFile</code> so repeated reads of the same byte range
+hit the local mapping.</div>
 </div>
 </section>
 </li>
@@ -191,8 +195,9 @@ multiple files for connection pooling and credential reuse.</p>
 <section class="detail" id="inputFile(java.lang.String)">
 <h3>inputFile</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3InputFile.html" title="class in dev.hardwood.s3">S3InputFile</a></span>&nbsp;<span class="element-name">inputFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uri)</span></div>
-<div class="block">Creates an <a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></span>&nbsp;<span class="element-name">inputFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uri)</span></div>
+<div class="block">Creates an <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> from an <code>s3://bucket/key</code> URI. See
+<a href="#inputFile(java.lang.String,java.lang.String)"><code>inputFile(String, String)</code></a> for the <a href="RangeBacking.html" title="enum class in dev.hardwood.s3"><code>RangeBacking</code></a> policy.</div>
 </div>
 </section>
 </li>

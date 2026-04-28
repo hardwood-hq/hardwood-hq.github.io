@@ -119,14 +119,26 @@ and transport settings.</div>
 <code>bucket.endpoint/key</code>).</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">S3Source.Builder.</span><code><a href="../S3Source.Builder.html#region(java.lang.String)" class="member-name-link">region</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">S3Source.Builder.</span><code><a href="../S3Source.Builder.html#rangeBacking(dev.hardwood.s3.RangeBacking)" class="member-name-link">rangeBacking</a><wbr>(<a href="../RangeBacking.html" title="enum class in dev.hardwood.s3">RangeBacking</a>&nbsp;rangeBacking)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Sets the AWS region (e.g. <code>&quot;eu-west-1&quot;</code>, <code>&quot;auto&quot;</code>).</div>
+<div class="block">Sets the range-caching strategy for files opened from this
+source.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">S3Source.Builder.</span><code><a href="../S3Source.Builder.html#requestTimeout(java.time.Duration)" class="member-name-link">requestTimeout</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a>&nbsp;requestTimeout)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">S3Source.Builder.</span><code><a href="../S3Source.Builder.html#region(java.lang.String)" class="member-name-link">region</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;region)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Sets the AWS region (e.g. <code>&quot;eu-west-1&quot;</code>, <code>&quot;auto&quot;</code>).</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">S3Source.Builder.</span><code><a href="../S3Source.Builder.html#requestTimeout(java.time.Duration)" class="member-name-link">requestTimeout</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a>&nbsp;requestTimeout)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Sets the per-request timeout for individual HTTP requests (default 30 seconds).</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">S3Source.Builder.</span><code><a href="../S3Source.Builder.html#tempDir(java.nio.file.Path)" class="member-name-link">tempDir</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;tempDir)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sets the temp directory used by <a href="../RangeBacking.html#SPARSE_TEMPFILE"><code>RangeBacking.SPARSE_TEMPFILE</code></a>
+for the sparse-file backing.</div>
 </div>
 </div>
 </section>

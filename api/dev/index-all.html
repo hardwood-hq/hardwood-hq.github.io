@@ -1860,11 +1860,11 @@ and transport settings.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/s3/S3Source.html#inputFile(java.lang.String)" class="member-name-link">inputFile(String)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>
-<div class="block">Creates an <a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
+<div class="block">Creates an <a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3Source.html#inputFile(java.lang.String,java.lang.String)" class="member-name-link">inputFile(String, String)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>
-<div class="block">Creates an <a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> for the given bucket and key.</div>
+<div class="block">Creates an <a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for the given bucket and key.</div>
 </dd>
 <dt><a href="dev/hardwood/InputFile.html" class="type-name-link" title="interface in dev.hardwood">InputFile</a> - Interface in <a href="dev/hardwood/package-summary.html">dev.hardwood</a></dt>
 <dd>
@@ -2469,6 +2469,10 @@ Variant spec.</div>
 <dd>
 <div class="block">Advance to the next batch.</div>
 </dd>
+<dt><a href="dev/hardwood/s3/RangeBacking.html#NONE" class="member-name-link">NONE</a> - Enum constant in enum class dev.hardwood.s3.<a href="dev/hardwood/s3/RangeBacking.html" title="enum class in dev.hardwood.s3">RangeBacking</a></dt>
+<dd>
+<div class="block">No range cache.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#not(dev.hardwood.reader.FilterPredicate)" class="member-name-link">not(FilterPredicate)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.Not.html#%3Cinit%3E(dev.hardwood.reader.FilterPredicate)" class="member-name-link">Not(FilterPredicate)</a> - Constructor for record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.Not.html" title="class in dev.hardwood.reader">FilterPredicate.Not</a></dt>
@@ -2855,6 +2859,15 @@ the <code>VARIANT</code> logical type.</div>
 </dl>
 <h2 class="title" id="I:R">R</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/s3/S3Source.Builder.html#rangeBacking(dev.hardwood.s3.RangeBacking)" class="member-name-link">rangeBacking(RangeBacking)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></dt>
+<dd>
+<div class="block">Sets the range-caching strategy for files opened from this
+source.</div>
+</dd>
+<dt><a href="dev/hardwood/s3/RangeBacking.html" class="type-name-link" title="enum class in dev.hardwood.s3">RangeBacking</a> - Enum Class in <a href="dev/hardwood/s3/package-summary.html">dev.hardwood.s3</a></dt>
+<dd>
+<div class="block">How an <a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> caches fetched byte ranges.</div>
+</dd>
 <dt><a href="dev/hardwood/InputFile.html#readRange(long,int)" class="member-name-link">readRange(long, int)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
 <dd>
 <div class="block">Read a range of bytes from the file.</div>
@@ -3080,6 +3093,11 @@ multi-file reading.</div>
 <dd>
 <div class="block">Snappy compression (fast, moderate ratio).</div>
 </dd>
+<dt><a href="dev/hardwood/s3/RangeBacking.html#SPARSE_TEMPFILE" class="member-name-link">SPARSE_TEMPFILE</a> - Enum constant in enum class dev.hardwood.s3.<a href="dev/hardwood/s3/RangeBacking.html" title="enum class in dev.hardwood.s3">RangeBacking</a></dt>
+<dd>
+<div class="block">Whole-file cache backed by a sparse temp file mmapped into the
+process.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.VariantType.html#specVersion()" class="member-name-link">specVersion()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.VariantType.html" title="class in dev.hardwood.metadata">LogicalType.VariantType</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/LogicalType.VariantType.html#param-specVersion"><code>specVersion</code></a> record component.</div>
@@ -3130,6 +3148,11 @@ multi-file reading.</div>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html#tail(long)" class="member-name-link">tail(long)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></dt>
 <dd>
 <div class="block">Limit to the last <code>tailRows</code> rows.</div>
+</dd>
+<dt><a href="dev/hardwood/s3/S3Source.Builder.html#tempDir(java.nio.file.Path)" class="member-name-link">tempDir(Path)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></dt>
+<dd>
+<div class="block">Sets the temp directory used by <a href="dev/hardwood/s3/RangeBacking.html#SPARSE_TEMPFILE"><code>RangeBacking.SPARSE_TEMPFILE</code></a>
+for the sparse-file backing.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#TIME_MICROS" class="member-name-link">TIME_MICROS</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
@@ -3597,6 +3620,10 @@ multi-file reading.</div>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="dev/hardwood/s3/RangeBacking.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.s3.<a href="dev/hardwood/s3/RangeBacking.html" title="enum class in dev.hardwood.s3">RangeBacking</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
@@ -3654,6 +3681,11 @@ the order they are declared.</div>
 <div class="block">Iterate over elements as raw objects without type conversion.</div>
 </dd>
 <dt><a href="dev/hardwood/row/VariantType.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.row.<a href="dev/hardwood/row/VariantType.html" title="enum class in dev.hardwood.row">VariantType</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="dev/hardwood/s3/RangeBacking.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.s3.<a href="dev/hardwood/s3/RangeBacking.html" title="enum class in dev.hardwood.s3">RangeBacking</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
