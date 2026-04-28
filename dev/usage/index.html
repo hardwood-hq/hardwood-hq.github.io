@@ -1780,10 +1780,11 @@ encoding automatically:</p>
 <a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="c1">// DECIMAL columns — scale and physical type are resolved from the column schema</span>
 <a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gtEq</span><span class="p">(</span><span class="s">&quot;amount&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BigDecimal</span><span class="p">(</span><span class="s">&quot;99.99&quot;</span><span class="p">));</span>
 <a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>
-<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="c1">// UUID columns</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="c1">// UUID columns — column must carry the UUID logical type</span>
 <a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">&quot;request_id&quot;</span><span class="p">,</span>
 <a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="w">    </span><span class="n">UUID</span><span class="p">.</span><span class="na">fromString</span><span class="p">(</span><span class="s">&quot;550e8400-e29b-41d4-a716-446655440000&quot;</span><span class="p">));</span>
 </code></pre></div>
+<p>The logical-type factories validate the column's logical type at reader creation: <code>BigDecimal</code> predicates require a <code>DECIMAL</code> column and <code>UUID</code> predicates require a <code>UUID</code> column. Applying them to a plain <code>FIXED_LEN_BYTE_ARRAY</code> column without the corresponding logical-type annotation throws <code>IllegalArgumentException</code>.</p>
 <p>Raw physical-type predicates (<code>int</code>, <code>long</code>, etc.) remain available for columns without logical types or for filtering on the underlying physical value directly.</p>
 <p>Filters work with all reader types: <code>RowReader</code>, <code>ColumnReader</code>, <code>AvroRowReader</code>, and across multi-file readers.</p>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
@@ -2197,8 +2198,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/789949ed633c8923c6cd6d46023b788771ba0be2" target="_blank" rel="noopener">
-      789949ed
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d4bb5f757fd81b877226a4b8918c207d8d1dd459" target="_blank" rel="noopener">
+      d4bb5f75
     </a>
   
 </div>
