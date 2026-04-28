@@ -59,7 +59,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
-<li><a href="#%3Cinit%3E(int,int,int)" tabindex="0">PqInterval(int, int, int)</a></li>
+<li><a href="#%3Cinit%3E(long,long,long)" tabindex="0">PqInterval(long, long, long)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -87,14 +87,14 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Record Components:</dt>
-<dd><code><span id="param-months">months</span></code> - number of months (unsigned 32-bit)</dd>
-<dd><code><span id="param-days">days</span></code> - number of days (unsigned 32-bit)</dd>
-<dd><code><span id="param-milliseconds">milliseconds</span></code> - number of milliseconds (unsigned 32-bit)</dd>
+<dd><code><span id="param-months">months</span></code> - number of months (unsigned 32-bit, range 0–4,294,967,295)</dd>
+<dd><code><span id="param-days">days</span></code> - number of days (unsigned 32-bit, range 0–4,294,967,295)</dd>
+<dd><code><span id="param-milliseconds">milliseconds</span></code> - number of milliseconds (unsigned 32-bit, range 0–4,294,967,295)</dd>
 </dl>
 <hr>
 <object type="image/svg+xml" data="PqInterval.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">PqInterval</span>(int&nbsp;months, int&nbsp;days, int&nbsp;milliseconds)
+<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">PqInterval</span>(long&nbsp;months, long&nbsp;days, long&nbsp;milliseconds)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block"><p>Value type for the Parquet <code>INTERVAL</code> logical type.</p>
 <p>The three components are stored independently — they are <strong>not</strong> normalized
@@ -102,10 +102,8 @@ loadScripts(document, 'script');</script>
 of months and days vary. The on-disk encoding is a 12-byte
 FIXED_LEN_BYTE_ARRAY: three little-endian <strong>unsigned</strong> 32-bit integers in
 the order <code>months</code>, <code>days</code>, <code>milliseconds</code>.</p>
-<p><strong>Unsigned semantics:</strong> Java has no unsigned <code>int</code> type, so values greater
-than <code>Integer.MAX_VALUE</code> will appear negative when read directly. To recover
-the unsigned value, use <code>Integer.toUnsignedLong(interval.months())</code> (and the
-same for <code>days()</code> / <code>milliseconds()</code>).</p>
+<p>Each component is exposed as a <code>long</code> holding its unsigned 32-bit value,
+so all values are in the range <code>[0, 4_294_967_295]</code>.</p>
 </div>
 </div>
 </section>
@@ -119,9 +117,9 @@ same for <code>days()</code> / <code>milliseconds()</code>).</p>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int,int)" class="member-name-link">PqInterval</a><wbr>(int&nbsp;months,
- int&nbsp;days,
- int&nbsp;milliseconds)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(long,long,long)" class="member-name-link">PqInterval</a><wbr>(long&nbsp;months,
+ long&nbsp;days,
+ long&nbsp;milliseconds)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>PqInterval</code> record class.</div>
 </div>
@@ -139,7 +137,7 @@ same for <code>days()</code> / <code>milliseconds()</code>).</p>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#days()" class="member-name-link">days</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-days"><code>days</code></a> record component.</div>
@@ -154,12 +152,12 @@ same for <code>days()</code> / <code>milliseconds()</code>).</p>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a hash code value for this object.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#milliseconds()" class="member-name-link">milliseconds</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-milliseconds"><code>milliseconds</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#months()" class="member-name-link">months</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-months"><code>months</code></a> record component.</div>
@@ -187,12 +185,12 @@ same for <code>days()</code> / <code>milliseconds()</code>).</p>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(int,int,int)">
+<section class="detail" id="&lt;init&gt;(long,long,long)">
 <h3>PqInterval</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PqInterval</span><wbr><span class="parameters">(int&nbsp;months,
- int&nbsp;days,
- int&nbsp;milliseconds)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PqInterval</span><wbr><span class="parameters">(long&nbsp;months,
+ long&nbsp;days,
+ long&nbsp;milliseconds)</span></div>
 <div class="block">Creates an instance of a <code>PqInterval</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -262,7 +260,7 @@ same for <code>days()</code> / <code>milliseconds()</code>).</p>
 <section class="detail" id="months()">
 <h3>months</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">months</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">months</span>()</div>
 <div class="block">Returns the value of the <a href="#param-months"><code>months</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -275,7 +273,7 @@ same for <code>days()</code> / <code>milliseconds()</code>).</p>
 <section class="detail" id="days()">
 <h3>days</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">days</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">days</span>()</div>
 <div class="block">Returns the value of the <a href="#param-days"><code>days</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -288,7 +286,7 @@ same for <code>days()</code> / <code>milliseconds()</code>).</p>
 <section class="detail" id="milliseconds()">
 <h3>milliseconds</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">milliseconds</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">milliseconds</span>()</div>
 <div class="block">Returns the value of the <a href="#param-milliseconds"><code>milliseconds</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -303,7 +301,7 @@ same for <code>days()</code> / <code>milliseconds()</code>).</p>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>
