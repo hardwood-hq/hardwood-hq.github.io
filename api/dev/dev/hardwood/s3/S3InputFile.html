@@ -63,6 +63,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#length()" tabindex="0">length()</a></li>
 <li><a href="#name()" tabindex="0">name()</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
+<li><a href="#networkRequestCount()" tabindex="0">networkRequestCount()</a></li>
+<li><a href="#networkBytesFetched()" tabindex="0">networkBytesFetched()</a></li>
 </ol>
 </li>
 </ol>
@@ -122,6 +124,16 @@ the same round-trip — eliminating a separate HEAD request per file.</p>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#name()" class="member-name-link">name</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns an identifier for this file, used in log messages and JFR events.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#networkBytesFetched()" class="member-name-link">networkBytesFetched</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Number of bytes fetched from the network since <a href="#open()"><code>open()</code></a>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#networkRequestCount()" class="member-name-link">networkRequestCount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Number of HTTP requests issued against the object since <a href="#open()"><code>open()</code></a>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open()" class="member-name-link">open</a>()</code></div>
@@ -238,13 +250,36 @@ Must be called before <a href="../InputFile.html#readRange(long,int)"><code>Inpu
 </div>
 </section>
 </li>
+<li>
+<section class="detail" id="networkRequestCount()">
+<h3>networkRequestCount</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">networkRequestCount</span>()</div>
+<div class="block">Number of HTTP requests issued against the object since <a href="#open()"><code>open()</code></a>.
+Counts the suffix-range tail fetch from <code>open</code> plus every
+network-fetch <a href="#readRange(long,int)"><code>readRange(long, int)</code></a> call. Tail-cache hits do not count.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="networkBytesFetched()">
+<h3>networkBytesFetched</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">networkBytesFetched</span>()</div>
+<div class="block">Number of bytes fetched from the network since <a href="#open()"><code>open()</code></a>. The tail
+fetch from <code>open</code> contributes its actual response size; each
+network-fetch <a href="#readRange(long,int)"><code>readRange(long, int)</code></a> contributes the requested length.
+Tail-cache hits do not count.</div>
+</div>
+</section>
+</li>
 </ul>
 </section>
 </li>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-<footer>
+<footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

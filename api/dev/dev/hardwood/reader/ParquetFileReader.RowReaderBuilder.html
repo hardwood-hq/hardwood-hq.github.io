@@ -63,6 +63,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#filter(dev.hardwood.reader.FilterPredicate)" tabindex="0">filter(FilterPredicate)</a></li>
 <li><a href="#head(long)" tabindex="0">head(long)</a></li>
 <li><a href="#tail(long)" tabindex="0">tail(long)</a></li>
+<li><a href="#firstRow(long)" tabindex="0">firstRow(long)</a></li>
 <li><a href="#build()" tabindex="0">build()</a></li>
 </ol>
 </li>
@@ -122,18 +123,23 @@ creates the reader. The builder is not reusable after <code>build()</code>.</p>
 <div class="block">Apply a row-group / record-level filter predicate.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#head(long)" class="member-name-link">head</a><wbr>(long&nbsp;maxRows)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#firstRow(long)" class="member-name-link">firstRow</a><wbr>(long&nbsp;firstRow)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Limit to the first <code>maxRows</code> rows.</div>
+<div class="block">Begin reading from the given absolute row index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#projection(dev.hardwood.schema.ColumnProjection)" class="member-name-link">projection</a><wbr>(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#head(long)" class="member-name-link">head</a><wbr>(long&nbsp;maxRows)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Restrict reading to the given columns.</div>
+<div class="block">Limit to the first <code>maxRows</code> rows.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tail(long)" class="member-name-link">tail</a><wbr>(long&nbsp;tailRows)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#projection(dev.hardwood.schema.ColumnProjection)" class="member-name-link">projection</a><wbr>(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Restrict reading to the given columns.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tail(long)" class="member-name-link">tail</a><wbr>(long&nbsp;tailRows)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Limit to the last <code>tailRows</code> rows.</div>
 </div>
 </div>
@@ -188,7 +194,33 @@ creates the reader. The builder is not reusable after <code>build()</code>.</p>
 <div class="block">Limit to the last <code>tailRows</code> rows. Row groups that do not overlap
 the tail are skipped entirely, so pages for earlier row groups are
 never fetched or decoded — useful on remote backends. Mutually
-exclusive with <a href="#head(long)"><code>head(long)</code></a> and <code>filter</code>. Single-file only.</div>
+exclusive with <a href="#head(long)"><code>head(long)</code></a>, <code>filter</code>, and <code>firstRow</code>. Single-file only.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="firstRow(long)">
+<h3>firstRow</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></span>&nbsp;<span class="element-name">firstRow</span><wbr><span class="parameters">(long&nbsp;firstRow)</span></div>
+<div class="block"><p>Begin reading from the given absolute row index. Earlier row groups
+are not opened — their pages are not fetched or decoded — so this
+is an O(1 RG) seek on remote backends, in contrast to walking
+<code>next()</code> from row 0.</p>
+<p><strong>Cost within the target row group.</strong> The reader still yields
+rows from the row group's first row, then walks <code>next()</code>
+<code>firstRow - rowGroupFirstRow</code> times to discard the leading
+residue. Those residue rows <em>are</em> decoded — <code>firstRow</code> near
+the end of a 1 M-row group walks ~1 M decoded <code>next()</code> calls.
+Page-level skip via OffsetIndex is tracked as #381.</p>
+<p><code>firstRow == 0</code> is the no-op default. <code>firstRow == totalRows</code>
+produces an empty reader. <code>firstRow &gt; totalRows</code> throws
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link"><code>IllegalArgumentException</code></a> at <code>build()</code> time. Indexes into the
+<em>first</em> file's rows for multi-file readers; cross-file
+<code>firstRow</code> is out of scope. Mutually exclusive with <a href="#tail(long)"><code>tail(long)</code></a>;
+composes with <a href="#head(long)"><code>head(long)</code></a> for a bounded
+<code>[firstRow, firstRow + maxRows)</code> window.</p>
+</div>
 </div>
 </section>
 </li>
@@ -206,7 +238,7 @@ exclusive with <a href="#head(long)"><code>head(long)</code></a> and <code>filte
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-<footer>
+<footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>
