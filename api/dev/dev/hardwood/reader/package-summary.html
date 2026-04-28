@@ -67,13 +67,14 @@ loadScripts(document, 'script');</script>
 <div class="package-signature">package <span class="element-name">dev.hardwood.reader</span></div>
 <section class="package-description" id="package-description">
 <div class="block"><p>Parquet file readers with row-oriented and column-oriented APIs.</p>
-<p><a href="ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a> opens a single file and provides access to metadata and
-schema. From there, create a <a href="RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> for row-at-a-time access with typed
-getters, or a <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> for batch-oriented columnar access with
-primitive arrays. <a href="FilterPredicate.html" title="interface in dev.hardwood.reader"><code>FilterPredicate</code></a> enables predicate pushdown at both the
-row-group and page level.</p>
-<p>For reading multiple files as a single dataset, use <a href="MultiFileParquetReader.html" title="class in dev.hardwood.reader"><code>MultiFileParquetReader</code></a>
-via <a href="../Hardwood.html" title="class in dev.hardwood"><code>Hardwood</code></a>.</p>
+<p><a href="ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a> opens one or more files and provides access to metadata
+and schema. From there, create a <a href="RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> for row-at-a-time access with
+typed getters, a <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> for single-column batch-oriented access, or
+a <a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> for multi-column projection access. <a href="FilterPredicate.html" title="interface in dev.hardwood.reader"><code>FilterPredicate</code></a>
+enables predicate pushdown at both the row-group and page level.</p>
+<p>For reading multiple files as a single dataset with cross-file
+prefetching, use <a href="../Hardwood.html" title="class in dev.hardwood"><code>Hardwood</code></a> to share a thread pool across
+readers.</p>
 </div>
 </section>
 </div>
@@ -105,77 +106,87 @@ via <a href="../Hardwood.html" title="class in dev.hardwood"><code>Hardwood</cod
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Batch-oriented column reader for reading a single column across all row groups.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Holds multiple <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by a shared
+<code>RowGroupIterator</code> for batch-oriented projection reads.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A predicate for filtering row groups based on column statistics.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.And.html" title="class in dev.hardwood.reader">FilterPredicate.And</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.BinaryColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BinaryColumnPredicate</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.And.html" title="class in dev.hardwood.reader">FilterPredicate.And</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.BinaryInPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BinaryInPredicate</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.BinaryColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BinaryColumnPredicate</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.BooleanColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BooleanColumnPredicate</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.BinaryInPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BinaryInPredicate</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.DateColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.DateColumnPredicate</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab4">
+<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.BooleanColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BooleanColumnPredicate</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab4">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.DateColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.DateColumnPredicate</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab4">
 <div class="block">Predicate for DATE columns.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.DecimalColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.DecimalColumnPredicate</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab4">
+<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.DecimalColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.DecimalColumnPredicate</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab4">
 <div class="block">Predicate for DECIMAL columns.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.DoubleColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.DoubleColumnPredicate</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.FloatColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.FloatColumnPredicate</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.DoubleColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.DoubleColumnPredicate</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.InstantColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.InstantColumnPredicate</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab4">
+<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.FloatColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.FloatColumnPredicate</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab4">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.InstantColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.InstantColumnPredicate</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab4">
 <div class="block">Predicate for TIMESTAMP columns.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.IntColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntColumnPredicate</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.IntInPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntInPredicate</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.IntColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntColumnPredicate</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.IsNotNullPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IsNotNullPredicate</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab4">
+<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.IntInPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntInPredicate</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab4">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.IsNotNullPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IsNotNullPredicate</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab4">
 <div class="block">Predicate that matches rows where the column value is not null.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.IsNullPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IsNullPredicate</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab4">
+<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.IsNullPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IsNullPredicate</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab4">
 <div class="block">Predicate that matches rows where the column value is null.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.LongColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.LongColumnPredicate</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.LongInPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.LongInPredicate</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.LongColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.LongColumnPredicate</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.Not.html" title="class in dev.hardwood.reader">FilterPredicate.Not</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.LongInPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.LongInPredicate</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab3"><a href="FilterPredicate.Operator.html" title="enum class in dev.hardwood.reader">FilterPredicate.Operator</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.Or.html" title="class in dev.hardwood.reader">FilterPredicate.Or</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab4">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.SignedBinaryColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.SignedBinaryColumnPredicate</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab4">
+<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.Not.html" title="class in dev.hardwood.reader">FilterPredicate.Not</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab4">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="FilterPredicate.Operator.html" title="enum class in dev.hardwood.reader">FilterPredicate.Operator</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.Or.html" title="class in dev.hardwood.reader">FilterPredicate.Or</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab4">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.SignedBinaryColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.SignedBinaryColumnPredicate</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab4">
 <div class="block">Predicate for <code>FIXED_LEN_BYTE_ARRAY</code> columns that require signed (two's complement)
 comparison, such as decimals.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab4"><a href="FilterPredicate.TimeColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.TimeColumnPredicate</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab4">
+<div class="col-first even-row-color class-summary class-summary-tab4"><a href="FilterPredicate.TimeColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.TimeColumnPredicate</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab4">
 <div class="block">Predicate for TIME columns.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MultiFileColumnReaders.html" title="class in dev.hardwood.reader">MultiFileColumnReaders</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Holds multiple <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by a shared <code>RowGroupIterator</code>
-for cross-file prefetching across multiple Parquet files.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Entry point for reading multiple Parquet files with cross-file prefetching.</div>
+<div class="block">Reader for one or more Parquet files.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Reader for individual Parquet files.</div>
+<div class="block">Builds a single-column <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> with an optional filter.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Builds a <a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented access to a
+projection of columns.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Builds a <a href="RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> with optional projection, filter, and head/tail
+row limit.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
@@ -192,7 +203,7 @@ multi-file reading.</div>
 </li>
 </ul>
 </section>
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

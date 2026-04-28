@@ -966,7 +966,7 @@ Available as a Java library and a <a href="cli/">command-line tool</a>.</em></p>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.RowReader</span><span class="p">;</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">createRowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
 <a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
@@ -982,7 +982,7 @@ Available as a Java library and a <a href="cli/">command-line tool</a>.</em></p>
 <h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">&para;</a></h2>
 <p>This is Alpha quality software, under active development.</p>
 <p>Currently, individual Parquet files must be <strong>at most 2 GB</strong>.
-Larger datasets should be split across multiple files and read via <code>MultiFileParquetReader</code>.</p>
+Larger datasets should be split across multiple files and read by passing a list of <code>InputFile</code>s to <code>Hardwood.openAll(...)</code> or <code>ParquetFileReader.openAll(...)</code>.</p>
 <h2 id="package-structure">Package Structure<a class="headerlink" href="#package-structure" title="Permanent link">&para;</a></h2>
 <p>Hardwood is organized into public API packages and internal implementation packages:</p>
 <table>
@@ -1095,8 +1095,8 @@ Larger datasets should be split across multiple files and read via <code>MultiFi
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/15d13b2560aa2183f774ab94fc4c604809e44e07" target="_blank" rel="noopener">
-      15d13b25
+    <a href="https://github.com/hardwood-hq/hardwood/tree/9efe4c55fc2d0e5876f8cd5615e13f1c58416479" target="_blank" rel="noopener">
+      9efe4c55
     </a>
   
 </div>

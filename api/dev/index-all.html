@@ -136,6 +136,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Factory for creating <a href="dev/hardwood/avro/AvroRowReader.html" title="class in dev.hardwood.avro"><code>AvroRowReader</code></a> instances from a
 <a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a>.</div>
 </dd>
+<dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" class="type-name-link" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a> - Class in <a href="dev/hardwood/avro/package-summary.html">dev.hardwood.avro</a></dt>
+<dd>
+<div class="block">Builds an <a href="dev/hardwood/avro/AvroRowReader.html" title="class in dev.hardwood.avro"><code>AvroRowReader</code></a> with optional projection, filter, and
+head/tail row limit.</div>
+</dd>
 <dt><a href="dev/hardwood/avro/AvroRowReader.html" class="type-name-link" title="class in dev.hardwood.avro">AvroRowReader</a> - Class in <a href="dev/hardwood/avro/package-summary.html">dev.hardwood.avro</a></dt>
 <dd>
 <div class="block">Reads Parquet rows as Avro <code>GenericRecord</code> instances.</div>
@@ -210,13 +215,44 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Creates an instance of a <code>BsonType</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/s3/S3Source.Builder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></dt>
 <dd>
 <div class="block">Builds the <a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3"><code>S3Source</code></a>.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#buildColumnReader(int)" class="member-name-link">buildColumnReader(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Begin configuring a single-column <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> by column index.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#buildColumnReader(java.lang.String)" class="member-name-link">buildColumnReader(String)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Begin configuring a single-column <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#buildColumnReaders(dev.hardwood.schema.ColumnProjection)" class="member-name-link">buildColumnReaders(ColumnProjection)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Begin configuring a <a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented
+access to a column projection.</div>
+</dd>
 <dt><a href="dev/hardwood/s3/S3Source.html#builder()" class="member-name-link">builder()</a> - Static method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>
 <div class="block">Creates a new <a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3"><code>S3Source.Builder</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#buildRowReader()" class="member-name-link">buildRowReader()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Begin configuring a <a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> with optional projection, filter,
+and head/tail limit.</div>
+</dd>
+<dt><a href="dev/hardwood/avro/AvroReaders.html#buildRowReader(dev.hardwood.reader.ParquetFileReader)" class="member-name-link">buildRowReader(ParquetFileReader)</a> - Static method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.html" title="class in dev.hardwood.avro">AvroReaders</a></dt>
+<dd>
+<div class="block">Begin configuring an <a href="dev/hardwood/avro/AvroRowReader.html" title="class in dev.hardwood.avro"><code>AvroRowReader</code></a> with optional projection,
+filter, and head/tail row limit.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/PhysicalType.html#BYTE_ARRAY" class="member-name-link">BYTE_ARRAY</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a></dt>
 <dd>
@@ -245,9 +281,7 @@ to be assembled by the assembly thread.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="dev/hardwood/reader/MultiFileColumnReaders.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileColumnReaders.html" title="class in dev.hardwood.reader">MultiFileColumnReaders</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="dev/hardwood/reader/MultiFileParquetReader.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></dt>
+<dt><a href="dev/hardwood/reader/ColumnReaders.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>&nbsp;</dd>
@@ -385,9 +419,29 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Specifies which columns to read from a Parquet file.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#columnReader(int)" class="member-name-link">columnReader(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Shortcut for <a href="dev/hardwood/reader/ParquetFileReader.html#buildColumnReader(int)"><code>ParquetFileReader.buildColumnReader(int)</code></a>.build() — read every row
+group of the column at the given index with no filter.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#columnReader(java.lang.String)" class="member-name-link">columnReader(String)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Shortcut for <a href="dev/hardwood/reader/ParquetFileReader.html#buildColumnReader(java.lang.String)"><code>ParquetFileReader.buildColumnReader(String)</code></a>.build() — read every row
+group of the named column with no filter.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html" class="type-name-link" title="class in dev.hardwood.reader">ColumnReader</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
 <div class="block">Batch-oriented column reader for reading a single column across all row groups.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#columnReaders(dev.hardwood.schema.ColumnProjection)" class="member-name-link">columnReaders(ColumnProjection)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Shortcut for <a href="dev/hardwood/reader/ParquetFileReader.html#buildColumnReaders(dev.hardwood.schema.ColumnProjection)"><code>ParquetFileReader.buildColumnReaders(ColumnProjection)</code></a>.build() —
+every row group, no filter.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ColumnReaders.html" class="type-name-link" title="class in dev.hardwood.reader">ColumnReaders</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Holds multiple <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by a shared
+<code>RowGroupIterator</code> for batch-oriented projection reads.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/RowGroup.html#columns()" class="member-name-link">columns()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/RowGroup.html" title="class in dev.hardwood.metadata">RowGroup</a></dt>
 <dd>
@@ -451,86 +505,9 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Creates a projected schema from the given full schema and projection.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/ParquetFileReader.html#createColumnReader(int)" class="member-name-link">createColumnReader(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>
-<div class="block">Create a ColumnReader for a column by index, spanning all row groups.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ParquetFileReader.html#createColumnReader(int,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createColumnReader(int, FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>
-<div class="block">Create a ColumnReader for a column by index, spanning only row groups that match the filter.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ParquetFileReader.html#createColumnReader(java.lang.String)" class="member-name-link">createColumnReader(String)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>
-<div class="block">Create a ColumnReader for a named column, spanning all row groups.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ParquetFileReader.html#createColumnReader(java.lang.String,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createColumnReader(String, FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>
-<div class="block">Create a ColumnReader for a named column, spanning only row groups that match the filter.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/MultiFileParquetReader.html#createColumnReaders(dev.hardwood.schema.ColumnProjection)" class="member-name-link">createColumnReaders(ColumnProjection)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></dt>
-<dd>
-<div class="block">Create column readers for batch-oriented access to the requested columns.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/MultiFileParquetReader.html#createColumnReaders(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createColumnReaders(ColumnProjection, FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></dt>
-<dd>
-<div class="block">Create column readers for batch-oriented access to the requested columns,
-skipping row groups that don't match the filter.</div>
-</dd>
 <dt><a href="dev/hardwood/metadata/FileMetaData.html#createdBy()" class="member-name-link">createdBy()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/FileMetaData.html#param-createdBy"><code>createdBy</code></a> record component.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/MultiFileParquetReader.html#createRowReader()" class="member-name-link">createRowReader()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></dt>
-<dd>
-<div class="block">Create a row reader that iterates over all rows in all files.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ParquetFileReader.html#createRowReader()" class="member-name-link">createRowReader()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>
-<div class="block">Create a RowReader that iterates over all rows in all row groups.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/MultiFileParquetReader.html#createRowReader(dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader(FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></dt>
-<dd>
-<div class="block">Create a row reader with a filter, iterating over all columns but only matching row groups.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ParquetFileReader.html#createRowReader(dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader(FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>
-<div class="block">Create a RowReader with a filter, iterating over all columns but only matching row groups.</div>
-</dd>
-<dt><a href="dev/hardwood/avro/AvroReaders.html#createRowReader(dev.hardwood.reader.ParquetFileReader)" class="member-name-link">createRowReader(ParquetFileReader)</a> - Static method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.html" title="class in dev.hardwood.avro">AvroReaders</a></dt>
-<dd>
-<div class="block">Create an AvroRowReader that reads all rows and columns.</div>
-</dd>
-<dt><a href="dev/hardwood/avro/AvroReaders.html#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader(ParquetFileReader, FilterPredicate)</a> - Static method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.html" title="class in dev.hardwood.avro">AvroReaders</a></dt>
-<dd>
-<div class="block">Create an AvroRowReader with predicate pushdown.</div>
-</dd>
-<dt><a href="dev/hardwood/avro/AvroReaders.html#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.schema.ColumnProjection)" class="member-name-link">createRowReader(ParquetFileReader, ColumnProjection)</a> - Static method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.html" title="class in dev.hardwood.avro">AvroReaders</a></dt>
-<dd>
-<div class="block">Create an AvroRowReader with column projection.</div>
-</dd>
-<dt><a href="dev/hardwood/avro/AvroReaders.html#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader(ParquetFileReader, ColumnProjection, FilterPredicate)</a> - Static method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.html" title="class in dev.hardwood.avro">AvroReaders</a></dt>
-<dd>
-<div class="block">Create an AvroRowReader with column projection and predicate pushdown.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/MultiFileParquetReader.html#createRowReader(dev.hardwood.schema.ColumnProjection)" class="member-name-link">createRowReader(ColumnProjection)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></dt>
-<dd>
-<div class="block">Create a row reader that iterates over selected columns in all files.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ParquetFileReader.html#createRowReader(dev.hardwood.schema.ColumnProjection)" class="member-name-link">createRowReader(ColumnProjection)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>
-<div class="block">Create a RowReader that iterates over selected columns in all row groups.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/MultiFileParquetReader.html#createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader(ColumnProjection, FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></dt>
-<dd>
-<div class="block">Create a row reader that iterates over selected columns in only matching row groups.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ParquetFileReader.html#createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader(ColumnProjection, FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>
-<div class="block">Create a RowReader that iterates over selected columns in only matching row groups.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ParquetFileReader.html#createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate,long)" class="member-name-link">createRowReader(ColumnProjection, FilterPredicate, long)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>
-<div class="block">Create a RowReader that returns at most <code>|maxRows|</code> rows.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3CredentialsProvider.html#credentials()" class="member-name-link">credentials()</a> - Method in interface dev.hardwood.s3.<a href="dev/hardwood/s3/S3CredentialsProvider.html" title="interface in dev.hardwood.s3">S3CredentialsProvider</a></dt>
 <dd>
@@ -1013,6 +990,22 @@ Variants, or absent.</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/FileOpenedEvent.html#fileSize" class="member-name-link">fileSize</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/FileOpenedEvent.html" title="class in dev.hardwood.jfr">FileOpenedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter(FilterPredicate)</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
+<dd>
+<div class="block">Apply a row-group / record-level filter predicate.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter(FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></dt>
+<dd>
+<div class="block">Apply a row-group / page-level filter predicate.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter(FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></dt>
+<dd>
+<div class="block">Apply a row-group statistics filter.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter(FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></dt>
+<dd>
+<div class="block">Apply a row-group / record-level filter predicate.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html" class="type-name-link" title="interface in dev.hardwood.reader">FilterPredicate</a> - Interface in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
 <div class="block">A predicate for filtering row groups based on column statistics.</div>
@@ -1196,7 +1189,7 @@ comparison, such as decimals.</div>
 <dd>
 <div class="block">Returns the column with the given name or dot-separated path.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/MultiFileColumnReaders.html#getColumnCount()" class="member-name-link">getColumnCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileColumnReaders.html" title="class in dev.hardwood.reader">MultiFileColumnReaders</a></dt>
+<dt><a href="dev/hardwood/reader/ColumnReaders.html#getColumnCount()" class="member-name-link">getColumnCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></dt>
 <dd>
 <div class="block">Get the number of projected columns.</div>
 </dd>
@@ -1204,11 +1197,11 @@ comparison, such as decimals.</div>
 <dd>
 <div class="block">Returns the total number of leaf columns in this schema.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/MultiFileColumnReaders.html#getColumnReader(int)" class="member-name-link">getColumnReader(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileColumnReaders.html" title="class in dev.hardwood.reader">MultiFileColumnReaders</a></dt>
+<dt><a href="dev/hardwood/reader/ColumnReaders.html#getColumnReader(int)" class="member-name-link">getColumnReader(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></dt>
 <dd>
 <div class="block">Get the ColumnReader by index within the requested columns.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/MultiFileColumnReaders.html#getColumnReader(java.lang.String)" class="member-name-link">getColumnReader(String)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileColumnReaders.html" title="class in dev.hardwood.reader">MultiFileColumnReaders</a></dt>
+<dt><a href="dev/hardwood/reader/ColumnReaders.html#getColumnReader(java.lang.String)" class="member-name-link">getColumnReader(String)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></dt>
 <dd>
 <div class="block">Get the ColumnReader for a named column.</div>
 </dd>
@@ -1281,10 +1274,8 @@ comparison, such as decimals.</div>
 <div class="block">Get the name of a field by index.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#getFileMetaData()" class="member-name-link">getFileMetaData()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="dev/hardwood/reader/MultiFileParquetReader.html#getFileSchema()" class="member-name-link">getFileSchema()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></dt>
 <dd>
-<div class="block">Get the file schema (common across all files).</div>
+<div class="block">File metadata of the first input file.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#getFileSchema()" class="member-name-link">getFileSchema()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>&nbsp;</dd>
@@ -1843,6 +1834,14 @@ comparison, such as decimals.</div>
 <dd>
 <div class="block">Check if there are more rows to read.</div>
 </dd>
+<dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#head(long)" class="member-name-link">head(long)</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
+<dd>
+<div class="block">Limit to the first <code>maxRows</code> rows.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html#head(long)" class="member-name-link">head(long)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></dt>
+<dd>
+<div class="block">Limit to the first <code>maxRows</code> rows.</div>
+</dd>
 <dt><a href="dev/hardwood/s3/S3Source.Builder.html#httpClient(java.net.http.HttpClient)" class="member-name-link">httpClient(HttpClient)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></dt>
 <dd>
 <div class="block">Sets a custom <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.net.http/java/net/http/HttpClient.html" title="class or interface in java.net.http" class="external-link"><code>HttpClient</code></a> for full control over connection pooling
@@ -2008,6 +2007,10 @@ and transport settings.</div>
 <dt><a href="dev/hardwood/metadata/Statistics.html#isMinMaxDeprecated()" class="member-name-link">isMinMaxDeprecated()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>isMinMaxDeprecated</code> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#isMultiFile()" class="member-name-link">isMultiFile()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block"><code>true</code> when this reader was opened over more than one input file.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#isNotNull(java.lang.String)" class="member-name-link">isNotNull(String)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>
@@ -2407,19 +2410,6 @@ Variant spec.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/row/PqInterval.html#param-months"><code>months</code></a> record component.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/MultiFileColumnReaders.html" class="type-name-link" title="class in dev.hardwood.reader">MultiFileColumnReaders</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
-<dd>
-<div class="block">Holds multiple <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by a shared <code>RowGroupIterator</code>
-for cross-file prefetching across multiple Parquet files.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/MultiFileParquetReader.html" class="type-name-link" title="class in dev.hardwood.reader">MultiFileParquetReader</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
-<dd>
-<div class="block">Entry point for reading multiple Parquet files with cross-file prefetching.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/MultiFileParquetReader.html#%3Cinit%3E(java.util.List,dev.hardwood.internal.reader.HardwoodContextImpl)" class="member-name-link">MultiFileParquetReader(List, HardwoodContextImpl)</a> - Constructor for class dev.hardwood.reader.<a href="dev/hardwood/reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></dt>
-<dd>
-<div class="block">Creates a MultiFileParquetReader for the given <a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> instances.</div>
-</dd>
 </dl>
 <h2 class="title" id="I:N">N</h2>
 <dl class="index">
@@ -2652,19 +2642,27 @@ for cross-file prefetching across multiple Parquet files.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/Hardwood.html#open(dev.hardwood.InputFile)" class="member-name-link">open(InputFile)</a> - Method in class dev.hardwood.<a href="dev/hardwood/Hardwood.html" title="class in dev.hardwood">Hardwood</a></dt>
 <dd>
-<div class="block">Open a Parquet file from an <a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for reading.</div>
+<div class="block">Open a single Parquet file.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#open(dev.hardwood.InputFile)" class="member-name-link">open(InputFile)</a> - Static method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>
-<div class="block">Open a Parquet file from an <a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> with a dedicated context.</div>
+<div class="block">Open a single Parquet file with a dedicated context.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext)" class="member-name-link">open(InputFile, HardwoodContext)</a> - Static method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>
-<div class="block">Open a Parquet file from an <a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> with a shared context.</div>
+<div class="block">Open a single Parquet file with a shared context.</div>
 </dd>
 <dt><a href="dev/hardwood/Hardwood.html#openAll(java.util.List)" class="member-name-link">openAll(List)</a> - Method in class dev.hardwood.<a href="dev/hardwood/Hardwood.html" title="class in dev.hardwood">Hardwood</a></dt>
 <dd>
 <div class="block">Open multiple Parquet files for reading with cross-file prefetching.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#openAll(java.util.List)" class="member-name-link">openAll(List)</a> - Static method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Open multiple Parquet files with a dedicated context.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#openAll(java.util.List,dev.hardwood.HardwoodContext)" class="member-name-link">openAll(List, HardwoodContext)</a> - Static method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Open multiple Parquet files with a shared context.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/RepetitionType.html#OPTIONAL" class="member-name-link">OPTIONAL</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a></dt>
 <dd>
@@ -2713,7 +2711,21 @@ for cross-file prefetching across multiple Parquet files.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html" class="type-name-link" title="class in dev.hardwood.reader">ParquetFileReader</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
-<div class="block">Reader for individual Parquet files.</div>
+<div class="block">Reader for one or more Parquet files.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html" class="type-name-link" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Builds a single-column <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> with an optional filter.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html" class="type-name-link" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Builds a <a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented access to a
+projection of columns.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" class="type-name-link" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Builds a <a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> with optional projection, filter, and head/tail
+row limit.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#pathInSchema()" class="member-name-link">pathInSchema()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
@@ -2806,6 +2818,14 @@ the <code>VARIANT</code> logical type.</div>
 <dt><a href="dev/hardwood/schema/ProjectedSchema.html" class="type-name-link" title="class in dev.hardwood.schema">ProjectedSchema</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
 <dd>
 <div class="block">Represents a projected view of a Parquet schema containing only selected columns.</div>
+</dd>
+<dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#projection(dev.hardwood.schema.ColumnProjection)" class="member-name-link">projection(ColumnProjection)</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
+<dd>
+<div class="block">Restrict reading to the given columns.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html#projection(dev.hardwood.schema.ColumnProjection)" class="member-name-link">projection(ColumnProjection)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></dt>
+<dd>
+<div class="block">Restrict reading to the given columns.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/ColumnProjection.html#projectsAll()" class="member-name-link">projectsAll()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a></dt>
 <dd>
@@ -2921,6 +2941,15 @@ the <code>VARIANT</code> logical type.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupFilterEvent.html#rowGroupsSkipped" class="member-name-link">rowGroupsSkipped</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupFilterEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#rowReader()" class="member-name-link">rowReader()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Shortcut for <a href="dev/hardwood/reader/ParquetFileReader.html#buildRowReader()"><code>ParquetFileReader.buildRowReader()</code></a>.build() — read every row of every
+column with no filter.</div>
+</dd>
+<dt><a href="dev/hardwood/avro/AvroReaders.html#rowReader(dev.hardwood.reader.ParquetFileReader)" class="member-name-link">rowReader(ParquetFileReader)</a> - Static method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.html" title="class in dev.hardwood.avro">AvroReaders</a></dt>
+<dd>
+<div class="block">Create an <code>AvroRowReader</code> that reads all rows and columns.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/RowReader.html" class="type-name-link" title="interface in dev.hardwood.reader">RowReader</a> - Interface in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
 <div class="block">Provides row-oriented iteration over a Parquet file.</div>
@@ -3082,6 +3111,14 @@ multi-file reading.</div>
 </dl>
 <h2 class="title" id="I:T">T</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#tail(long)" class="member-name-link">tail(long)</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
+<dd>
+<div class="block">Limit to the last <code>tailRows</code> rows.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html#tail(long)" class="member-name-link">tail(long)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></dt>
+<dd>
+<div class="block">Limit to the last <code>tailRows</code> rows.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#TIME_MICROS" class="member-name-link">TIME_MICROS</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">Time of day in microseconds, stored as INT64.</div>
@@ -3639,7 +3676,7 @@ does not match what the accessor expects — for example, calling
 </dd>
 </dl>
 <a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

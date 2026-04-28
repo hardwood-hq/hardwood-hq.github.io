@@ -102,7 +102,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 multi-level offsets and per-level null bitmaps enable efficient traversal without
 per-row virtual dispatch.</p>
 <p><strong>Flat column usage:</strong></p>
-<pre style="white-space:pre-wrap;"><code class="language-java">try (ColumnReader reader = fileReader.createColumnReader(&quot;fare_amount&quot;)) {
+<pre style="white-space:pre-wrap;"><code class="language-java">try (ColumnReader reader = fileReader.columnReader(&quot;fare_amount&quot;)) {
     while (reader.nextBatch()) {
         int count = reader.getRecordCount();
         double[] values = reader.getDoubles();
@@ -114,7 +114,7 @@ per-row virtual dispatch.</p>
 }
 </code></pre>
 <p><strong>Simple list usage (nestingDepth=1):</strong></p>
-<pre><code class="language-java">try (ColumnReader reader = fileReader.createColumnReader(&quot;fare_components&quot;)) {
+<pre><code class="language-java">try (ColumnReader reader = fileReader.columnReader(&quot;fare_components&quot;)) {
     while (reader.nextBatch()) {
         int recordCount = reader.getRecordCount();
         int valueCount = reader.getValueCount();
@@ -408,7 +408,7 @@ in the next level (or leaf values for the innermost level).</div>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

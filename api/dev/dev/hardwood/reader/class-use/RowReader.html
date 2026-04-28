@@ -74,71 +74,31 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RowReader.</span><code><a href="../RowReader.html#create(dev.hardwood.internal.reader.RowGroupIterator,dev.hardwood.schema.FileSchema,dev.hardwood.schema.ProjectedSchema,dev.hardwood.internal.reader.HardwoodContextImpl,dev.hardwood.internal.predicate.ResolvedPredicate,long)" class="member-name-link">create</a><wbr>(dev.hardwood.internal.reader.RowGroupIterator&nbsp;rowGroupIterator,
+<div class="col-first even-row-color"><code><a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#build()" class="member-name-link">build</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RowReader.</span><code><a href="../RowReader.html#create(dev.hardwood.internal.reader.RowGroupIterator,dev.hardwood.schema.FileSchema,dev.hardwood.schema.ProjectedSchema,dev.hardwood.internal.reader.HardwoodContextImpl,dev.hardwood.internal.predicate.ResolvedPredicate,long)" class="member-name-link">create</a><wbr>(dev.hardwood.internal.reader.RowGroupIterator&nbsp;rowGroupIterator,
  <a href="../../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema,
  <a href="../../schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a>&nbsp;projectedSchema,
  dev.hardwood.internal.reader.HardwoodContextImpl&nbsp;context,
  dev.hardwood.internal.predicate.ResolvedPredicate&nbsp;filter,
  long&nbsp;maxRows)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Creates a <a href="../RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> for the given pipeline components.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">MultiFileParquetReader.</span><code><a href="../MultiFileParquetReader.html#createRowReader()" class="member-name-link">createRowReader</a>()</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Create a row reader that iterates over all rows in all files.</div>
-</div>
 <div class="col-first even-row-color"><code><a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">MultiFileParquetReader.</span><code><a href="../MultiFileParquetReader.html#createRowReader(dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader</a><wbr>(<a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#rowReader()" class="member-name-link">rowReader</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Create a row reader with a filter, iterating over all columns but only matching row groups.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">MultiFileParquetReader.</span><code><a href="../MultiFileParquetReader.html#createRowReader(dev.hardwood.schema.ColumnProjection)" class="member-name-link">createRowReader</a><wbr>(<a href="../../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Create a row reader that iterates over selected columns in all files.</div>
-</div>
-<div class="col-first even-row-color"><code><a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">MultiFileParquetReader.</span><code><a href="../MultiFileParquetReader.html#createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader</a><wbr>(<a href="../../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection,
- <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Create a row reader that iterates over selected columns in only matching row groups.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#createRowReader()" class="member-name-link">createRowReader</a>()</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Create a RowReader that iterates over all rows in all row groups.</div>
-</div>
-<div class="col-first even-row-color"><code><a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#createRowReader(dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader</a><wbr>(<a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Create a RowReader with a filter, iterating over all columns but only matching row groups.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#createRowReader(dev.hardwood.schema.ColumnProjection)" class="member-name-link">createRowReader</a><wbr>(<a href="../../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Create a RowReader that iterates over selected columns in all row groups.</div>
-</div>
-<div class="col-first even-row-color"><code><a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader</a><wbr>(<a href="../../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection,
- <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Create a RowReader that iterates over selected columns in only matching row groups.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate,long)" class="member-name-link">createRowReader</a><wbr>(<a href="../../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection,
- <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter,
- long&nbsp;maxRows)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Create a RowReader that returns at most <code>|maxRows|</code> rows.</div>
+<div class="block">Shortcut for <a href="../ParquetFileReader.html#buildRowReader()"><code>ParquetFileReader.buildRowReader()</code></a>.build() — read every row of every
+column with no filter.</div>
 </div>
 </div>
 </section>
 </li>
 </ul>
 </section>
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

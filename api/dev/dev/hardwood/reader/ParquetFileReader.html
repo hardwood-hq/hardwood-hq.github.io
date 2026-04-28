@@ -55,22 +55,25 @@ loadScripts(document, 'script');</script>
 <div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#open(dev.hardwood.InputFile)" tabindex="0">open(InputFile)</a></li>
 <li><a href="#open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext)" tabindex="0">open(InputFile, HardwoodContext)</a></li>
+<li><a href="#openAll(java.util.List)" tabindex="0">openAll(List)</a></li>
+<li><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext)" tabindex="0">openAll(List, HardwoodContext)</a></li>
 <li><a href="#getFileMetaData()" tabindex="0">getFileMetaData()</a></li>
 <li><a href="#getFileSchema()" tabindex="0">getFileSchema()</a></li>
-<li><a href="#createColumnReader(java.lang.String)" tabindex="0">createColumnReader(String)</a></li>
-<li><a href="#createColumnReader(java.lang.String,dev.hardwood.reader.FilterPredicate)" tabindex="0">createColumnReader(String, FilterPredicate)</a></li>
-<li><a href="#createColumnReader(int)" tabindex="0">createColumnReader(int)</a></li>
-<li><a href="#createColumnReader(int,dev.hardwood.reader.FilterPredicate)" tabindex="0">createColumnReader(int, FilterPredicate)</a></li>
-<li><a href="#createRowReader()" tabindex="0">createRowReader()</a></li>
-<li><a href="#createRowReader(dev.hardwood.reader.FilterPredicate)" tabindex="0">createRowReader(FilterPredicate)</a></li>
-<li><a href="#createRowReader(dev.hardwood.schema.ColumnProjection)" tabindex="0">createRowReader(ColumnProjection)</a></li>
-<li><a href="#createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" tabindex="0">createRowReader(ColumnProjection, FilterPredicate)</a></li>
-<li><a href="#createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate,long)" tabindex="0">createRowReader(ColumnProjection, FilterPredicate, long)</a></li>
+<li><a href="#isMultiFile()" tabindex="0">isMultiFile()</a></li>
+<li><a href="#rowReader()" tabindex="0">rowReader()</a></li>
+<li><a href="#buildRowReader()" tabindex="0">buildRowReader()</a></li>
+<li><a href="#columnReader(java.lang.String)" tabindex="0">columnReader(String)</a></li>
+<li><a href="#columnReader(int)" tabindex="0">columnReader(int)</a></li>
+<li><a href="#buildColumnReader(java.lang.String)" tabindex="0">buildColumnReader(String)</a></li>
+<li><a href="#buildColumnReader(int)" tabindex="0">buildColumnReader(int)</a></li>
+<li><a href="#columnReaders(dev.hardwood.schema.ColumnProjection)" tabindex="0">columnReaders(ColumnProjection)</a></li>
+<li><a href="#buildColumnReaders(dev.hardwood.schema.ColumnProjection)" tabindex="0">buildColumnReaders(ColumnProjection)</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
 </ol>
 </li>
@@ -95,23 +98,62 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ParquetFileReader</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></span></div>
-<div class="block"><p>Reader for individual Parquet files.</p>
-<p>For single-file usage:</p>
-<pre style="white-space:pre-wrap;"><code class="language-java">try (ParquetFileReader reader = ParquetFileReader.open(InputFile.of(path))) {
-    RowReader rows = reader.createRowReader();
+<div class="block"><p>Reader for one or more Parquet files.</p>
+<p>A reader opened over a list of files exposes the schema of the first file
+and reads rows / column batches across all files in order, with
+cross-file prefetching handled by the underlying iterator.</p>
+<pre style="white-space:pre-wrap;"><code class="language-java">// Single file
+try (ParquetFileReader reader = ParquetFileReader.open(InputFile.of(path))) {
+    RowReader rows = reader.rowReader();
     // ...
 }
+
+// Multiple files (use Hardwood for a shared thread pool)
+try (Hardwood hardwood = Hardwood.create();
+     ParquetFileReader reader = hardwood.openAll(files)) {
+    try (ColumnReaders cols = reader.columnReaders(
+                ColumnProjection.columns(&quot;a&quot;, &quot;b&quot;))) {
+        // ...
+    }
+}
 </code></pre>
-<p>For multi-file usage with shared thread pool, use <a href="../Hardwood.html" title="class in dev.hardwood"><code>Hardwood</code></a>.</p>
 <p><strong>Limitation:</strong> When using the default memory-mapped <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a>,
 individual files must be at most 2 GB (<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html#MAX_VALUE" title="class or interface in java.lang" class="external-link"><code>Integer.MAX_VALUE</code></a> bytes).
-Larger datasets should be split across multiple files and read via
-<a href="MultiFileParquetReader.html" title="class in dev.hardwood.reader"><code>MultiFileParquetReader</code></a>.</p>
+Larger datasets should be split across multiple files.</p>
 </div>
 </div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="ParquetFileReader.ColumnReaderBuilder.html" class="type-name-link" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Builds a single-column <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> with an optional filter.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="ParquetFileReader.ColumnReadersBuilder.html" class="type-name-link" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Builds a <a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented access to a
+projection of columns.</div>
+</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="ParquetFileReader.RowReaderBuilder.html" class="type-name-link" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Builds a <a href="RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> with optional projection, filter, and head/tail
+row limit.</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
@@ -123,75 +165,89 @@ Larger datasets should be split across multiple files and read via
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#buildColumnReader(int)" class="member-name-link">buildColumnReader</a><wbr>(int&nbsp;columnIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Begin configuring a single-column <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> by column index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#buildColumnReader(java.lang.String)" class="member-name-link">buildColumnReader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Begin configuring a single-column <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#buildColumnReaders(dev.hardwood.schema.ColumnProjection)" class="member-name-link">buildColumnReaders</a><wbr>(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Begin configuring a <a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented
+access to a column projection.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#buildRowReader()" class="member-name-link">buildRowReader</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Begin configuring a <a href="RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> with optional projection, filter,
+and head/tail limit.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createColumnReader(int)" class="member-name-link">createColumnReader</a><wbr>(int&nbsp;columnIndex)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#columnReader(int)" class="member-name-link">columnReader</a><wbr>(int&nbsp;columnIndex)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a ColumnReader for a column by index, spanning all row groups.</div>
+<div class="block">Shortcut for <a href="#buildColumnReader(int)"><code>buildColumnReader(int)</code></a>.build() — read every row
+group of the column at the given index with no filter.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createColumnReader(int,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createColumnReader</a><wbr>(int&nbsp;columnIndex,
- <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#columnReader(java.lang.String)" class="member-name-link">columnReader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a ColumnReader for a column by index, spanning only row groups that match the filter.</div>
+<div class="block">Shortcut for <a href="#buildColumnReader(java.lang.String)"><code>buildColumnReader(String)</code></a>.build() — read every row
+group of the named column with no filter.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createColumnReader(java.lang.String)" class="member-name-link">createColumnReader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#columnReaders(dev.hardwood.schema.ColumnProjection)" class="member-name-link">columnReaders</a><wbr>(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a ColumnReader for a named column, spanning all row groups.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createColumnReader(java.lang.String,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createColumnReader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
- <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a ColumnReader for a named column, spanning only row groups that match the filter.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createRowReader()" class="member-name-link">createRowReader</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a RowReader that iterates over all rows in all row groups.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createRowReader(dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader</a><wbr>(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a RowReader with a filter, iterating over all columns but only matching row groups.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createRowReader(dev.hardwood.schema.ColumnProjection)" class="member-name-link">createRowReader</a><wbr>(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a RowReader that iterates over selected columns in all row groups.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader</a><wbr>(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection,
- <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a RowReader that iterates over selected columns in only matching row groups.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate,long)" class="member-name-link">createRowReader</a><wbr>(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection,
- <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter,
- long&nbsp;maxRows)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Create a RowReader that returns at most <code>|maxRows|</code> rows.</div>
+<div class="block">Shortcut for <a href="#buildColumnReaders(dev.hardwood.schema.ColumnProjection)"><code>buildColumnReaders(ColumnProjection)</code></a>.build() —
+every row group, no filter.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFileMetaData()" class="member-name-link">getFileMetaData</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">File metadata of the first input file.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFileSchema()" class="member-name-link">getFileSchema</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#open(dev.hardwood.InputFile)" class="member-name-link">open</a><wbr>(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Open a Parquet file from an <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> with a dedicated context.</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isMultiFile()" class="member-name-link">isMultiFile</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block"><code>true</code> when this reader was opened over more than one input file.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext)" class="member-name-link">open</a><wbr>(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile,
- <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#open(dev.hardwood.InputFile)" class="member-name-link">open</a><wbr>(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Open a Parquet file from an <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> with a shared context.</div>
+<div class="block">Open a single Parquet file with a dedicated context.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext)" class="member-name-link">open</a><wbr>(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile,
+ <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Open a single Parquet file with a shared context.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Open multiple Parquet files with a dedicated context.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
+ <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Open multiple Parquet files with a shared context.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowReader()" class="member-name-link">rowReader</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Shortcut for <a href="#buildRowReader()"><code>buildRowReader()</code></a>.build() — read every row of every
+column with no filter.</div>
 </div>
 </div>
 </div>
@@ -216,9 +272,9 @@ Larger datasets should be split across multiple files and read via
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">open</span><wbr><span class="parameters">(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</span>
                               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block"><p>Open a Parquet file from an <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> with a dedicated context.</p>
-<p>This method calls <a href="../InputFile.html#open()"><code>InputFile.open()</code></a> and takes ownership of the file;
-it will be closed when this reader is closed.</p>
+<div class="block"><p>Open a single Parquet file with a dedicated context.</p>
+<p>Calls <a href="../InputFile.html#open()"><code>InputFile.open()</code></a> and takes ownership of the file; it is
+closed when this reader is closed.</p>
 </div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -234,11 +290,43 @@ it will be closed when this reader is closed.</p>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">open</span><wbr><span class="parameters">(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile,
  <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</span>
                               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block"><p>Open a Parquet file from an <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> with a shared context.</p>
-<p>This method calls <a href="../InputFile.html#open()"><code>InputFile.open()</code></a> and takes ownership of the file;
-it will be closed when this reader is closed. The caller retains ownership
-of the context.</p>
+<div class="block"><p>Open a single Parquet file with a shared context.</p>
+<p>Calls <a href="../InputFile.html#open()"><code>InputFile.open()</code></a> and takes ownership of the file; it is
+closed when this reader is closed. The caller retains ownership of
+the context.</p>
 </div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="openAll(java.util.List)">
+<h3>openAll</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</span>
+                                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Open multiple Parquet files with a dedicated context. The schema
+is read from the first file and is assumed to be common across all
+files. Files are opened on demand by the iterator; the first file is
+opened eagerly so any I/O or metadata error surfaces immediately.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="openAll(java.util.List,dev.hardwood.HardwoodContext)">
+<h3>openAll</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
+ <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</span>
+                                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Open multiple Parquet files with a shared context.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
@@ -251,6 +339,9 @@ of the context.</p>
 <h3>getFileMetaData</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></span>&nbsp;<span class="element-name">getFileMetaData</span>()</div>
+<div class="block">File metadata of the first input file. For multi-file readers,
+per-file metadata for files beyond the first is not exposed; open
+those files individually to inspect their metadata.</div>
 </div>
 </section>
 </li>
@@ -263,132 +354,91 @@ of the context.</p>
 </section>
 </li>
 <li>
-<section class="detail" id="createColumnReader(java.lang.String)">
-<h3>createColumnReader</h3>
+<section class="detail" id="isMultiFile()">
+<h3>isMultiFile</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">createColumnReader</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</span></div>
-<div class="block">Create a ColumnReader for a named column, spanning all row groups.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMultiFile</span>()</div>
+<div class="block"><code>true</code> when this reader was opened over more than one input file.</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="createColumnReader(java.lang.String,dev.hardwood.reader.FilterPredicate)">
-<h3>createColumnReader</h3>
+<section class="detail" id="rowReader()">
+<h3>rowReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">createColumnReader</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
- <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</span></div>
-<div class="block">Create a ColumnReader for a named column, spanning only row groups that match the filter.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>columnName</code> - the column to read</dd>
-<dd><code>filter</code> - predicate for row group filtering based on statistics</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></span>&nbsp;<span class="element-name">rowReader</span>()</div>
+<div class="block">Shortcut for <a href="#buildRowReader()"><code>buildRowReader()</code></a>.build() — read every row of every
+column with no filter.</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="createColumnReader(int)">
-<h3>createColumnReader</h3>
+<section class="detail" id="buildRowReader()">
+<h3>buildRowReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">createColumnReader</span><wbr><span class="parameters">(int&nbsp;columnIndex)</span></div>
-<div class="block">Create a ColumnReader for a column by index, spanning all row groups.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></span>&nbsp;<span class="element-name">buildRowReader</span>()</div>
+<div class="block">Begin configuring a <a href="RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> with optional projection, filter,
+and head/tail limit.</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="createColumnReader(int,dev.hardwood.reader.FilterPredicate)">
-<h3>createColumnReader</h3>
+<section class="detail" id="columnReader(java.lang.String)">
+<h3>columnReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">createColumnReader</span><wbr><span class="parameters">(int&nbsp;columnIndex,
- <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</span></div>
-<div class="block">Create a ColumnReader for a column by index, spanning only row groups that match the filter.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>columnIndex</code> - the column index to read</dd>
-<dd><code>filter</code> - predicate for row group filtering based on statistics</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">columnReader</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</span></div>
+<div class="block">Shortcut for <a href="#buildColumnReader(java.lang.String)"><code>buildColumnReader(String)</code></a>.build() — read every row
+group of the named column with no filter. Single-file only.</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="createRowReader()">
-<h3>createRowReader</h3>
+<section class="detail" id="columnReader(int)">
+<h3>columnReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></span>&nbsp;<span class="element-name">createRowReader</span>()</div>
-<div class="block">Create a RowReader that iterates over all rows in all row groups.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">columnReader</span><wbr><span class="parameters">(int&nbsp;columnIndex)</span></div>
+<div class="block">Shortcut for <a href="#buildColumnReader(int)"><code>buildColumnReader(int)</code></a>.build() — read every row
+group of the column at the given index with no filter. Single-file
+only.</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="createRowReader(dev.hardwood.reader.FilterPredicate)">
-<h3>createRowReader</h3>
+<section class="detail" id="buildColumnReader(java.lang.String)">
+<h3>buildColumnReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></span>&nbsp;<span class="element-name">createRowReader</span><wbr><span class="parameters">(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</span></div>
-<div class="block">Create a RowReader with a filter, iterating over all columns but only matching row groups.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>filter</code> - predicate for row group filtering based on statistics</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></span>&nbsp;<span class="element-name">buildColumnReader</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</span></div>
+<div class="block">Begin configuring a single-column <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a>. Single-file only.</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="createRowReader(dev.hardwood.schema.ColumnProjection)">
-<h3>createRowReader</h3>
+<section class="detail" id="buildColumnReader(int)">
+<h3>buildColumnReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></span>&nbsp;<span class="element-name">createRowReader</span><wbr><span class="parameters">(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</span></div>
-<div class="block">Create a RowReader that iterates over selected columns in all row groups.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>projection</code> - specifies which columns to read</dd>
-<dt>Returns:</dt>
-<dd>a RowReader for the selected columns</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></span>&nbsp;<span class="element-name">buildColumnReader</span><wbr><span class="parameters">(int&nbsp;columnIndex)</span></div>
+<div class="block">Begin configuring a single-column <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> by column index.
+Single-file only.</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)">
-<h3>createRowReader</h3>
+<section class="detail" id="columnReaders(dev.hardwood.schema.ColumnProjection)">
+<h3>columnReaders</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></span>&nbsp;<span class="element-name">createRowReader</span><wbr><span class="parameters">(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection,
- <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</span></div>
-<div class="block">Create a RowReader that iterates over selected columns in only matching row groups.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>projection</code> - specifies which columns to read</dd>
-<dd><code>filter</code> - predicate for row group filtering based on statistics</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></span>&nbsp;<span class="element-name">columnReaders</span><wbr><span class="parameters">(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</span></div>
+<div class="block">Shortcut for <a href="#buildColumnReaders(dev.hardwood.schema.ColumnProjection)"><code>buildColumnReaders(ColumnProjection)</code></a>.build() —
+every row group, no filter. Works for single- and multi-file.</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="createRowReader(dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate,long)">
-<h3>createRowReader</h3>
+<section class="detail" id="buildColumnReaders(dev.hardwood.schema.ColumnProjection)">
+<h3>buildColumnReaders</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></span>&nbsp;<span class="element-name">createRowReader</span><wbr><span class="parameters">(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection,
- <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter,
- long&nbsp;maxRows)</span></div>
-<div class="block"><p>Create a RowReader that returns at most <code>|maxRows|</code> rows.</p>
-<p>The sign of <code>maxRows</code> selects the end of the file to read from:</p>
-<ul>
-<li><code>maxRows &gt; 0</code> — <strong>head</strong>: return the first <code>maxRows</code> rows.</li>
-<li><code>maxRows &lt; 0</code> — <strong>tail</strong>: return the last <code>-maxRows</code> rows. Row groups
-that do not overlap the tail are skipped entirely, so pages for
-earlier row groups are never fetched or decoded (useful on remote
-backends like S3).</li>
-</ul>
-<p>Tail mode cannot currently be combined with a filter: the set of
-matching rows is not known from row-group statistics alone, so the
-reader cannot determine which row groups cover the last <code>-maxRows</code>
-<strong>matching</strong> rows without scanning the whole file.</p>
-</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>projection</code> - specifies which columns to read</dd>
-<dd><code>filter</code> - predicate for row group filtering based on statistics (must be <code>null</code> when <code>maxRows &lt; 0</code>)</dd>
-<dd><code>maxRows</code> - row count with direction (must be non-zero)</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></span>&nbsp;<span class="element-name">buildColumnReaders</span><wbr><span class="parameters">(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</span></div>
+<div class="block">Begin configuring a <a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented
+access to a column projection. Works for single- and multi-file.</div>
 </div>
 </section>
 </li>
@@ -413,7 +463,7 @@ reader cannot determine which row groups cover the last <code>-maxRows</code>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

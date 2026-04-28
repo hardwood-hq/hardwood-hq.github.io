@@ -85,7 +85,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Hardwood.</span><code><a href="../../Hardwood.html#open(dev.hardwood.InputFile)" class="member-name-link">open</a><wbr>(<a href="../../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Open a Parquet file from an <a href="../../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for reading.</div>
+<div class="block">Open a single Parquet file.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Hardwood.</span><code><a href="../../Hardwood.html#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Open multiple Parquet files for reading with cross-file prefetching.</div>
 </div>
 </div>
 </section>
@@ -98,29 +103,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../../avro/AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AvroReaders.</span><code><a href="../../avro/AvroReaders.html#createRowReader(dev.hardwood.reader.ParquetFileReader)" class="member-name-link">createRowReader</a><wbr>(<a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader)</code></div>
+<div class="col-first even-row-color"><code>static <a href="../../avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AvroReaders.</span><code><a href="../../avro/AvroReaders.html#buildRowReader(dev.hardwood.reader.ParquetFileReader)" class="member-name-link">buildRowReader</a><wbr>(<a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Create an AvroRowReader that reads all rows and columns.</div>
+<div class="block">Begin configuring an <a href="../../avro/AvroRowReader.html" title="class in dev.hardwood.avro"><code>AvroRowReader</code></a> with optional projection,
+filter, and head/tail row limit.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../../avro/AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">AvroReaders.</span><code><a href="../../avro/AvroReaders.html#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader</a><wbr>(<a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader,
- <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AvroReaders.</span><code><a href="../../avro/AvroReaders.html#rowReader(dev.hardwood.reader.ParquetFileReader)" class="member-name-link">rowReader</a><wbr>(<a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Create an AvroRowReader with predicate pushdown.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../../avro/AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AvroReaders.</span><code><a href="../../avro/AvroReaders.html#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.schema.ColumnProjection)" class="member-name-link">createRowReader</a><wbr>(<a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader,
- <a href="../../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Create an AvroRowReader with column projection.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../../avro/AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">AvroReaders.</span><code><a href="../../avro/AvroReaders.html#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader</a><wbr>(<a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader,
- <a href="../../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection,
- <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Create an AvroRowReader with column projection and predicate pushdown.</div>
+<div class="block">Create an <code>AvroRowReader</code> that reads all rows and columns.</div>
 </div>
 </div>
 </section>
@@ -136,20 +128,31 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static <a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#open(dev.hardwood.InputFile)" class="member-name-link">open</a><wbr>(<a href="../../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Open a Parquet file from an <a href="../../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> with a dedicated context.</div>
+<div class="block">Open a single Parquet file with a dedicated context.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext)" class="member-name-link">open</a><wbr>(<a href="../../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile,
  <a href="../../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Open a Parquet file from an <a href="../../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> with a shared context.</div>
+<div class="block">Open a single Parquet file with a shared context.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Open multiple Parquet files with a dedicated context.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#openAll(java.util.List,dev.hardwood.HardwoodContext)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
+ <a href="../../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Open multiple Parquet files with a shared context.</div>
 </div>
 </div>
 </section>
 </li>
 </ul>
 </section>
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

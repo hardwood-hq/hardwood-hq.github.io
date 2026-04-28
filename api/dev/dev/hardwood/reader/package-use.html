@@ -79,13 +79,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="class-use/MultiFileParquetReader.html#dev.hardwood">MultiFileParquetReader</a></div>
+<div class="col-first even-row-color"><a href="class-use/ParquetFileReader.html#dev.hardwood">ParquetFileReader</a></div>
 <div class="col-last even-row-color">
-<div class="block">Entry point for reading multiple Parquet files with cross-file prefetching.</div>
-</div>
-<div class="col-first odd-row-color"><a href="class-use/ParquetFileReader.html#dev.hardwood">ParquetFileReader</a></div>
-<div class="col-last odd-row-color">
-<div class="block">Reader for individual Parquet files.</div>
+<div class="block">Reader for one or more Parquet files.</div>
 </div>
 </div>
 </section>
@@ -102,7 +98,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/ParquetFileReader.html#dev.hardwood.avro">ParquetFileReader</a></div>
 <div class="col-last odd-row-color">
-<div class="block">Reader for individual Parquet files.</div>
+<div class="block">Reader for one or more Parquet files.</div>
 </div>
 </div>
 </section>
@@ -117,23 +113,37 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Batch-oriented column reader for reading a single column across all row groups.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/FilterPredicate.html#dev.hardwood.reader">FilterPredicate</a></div>
+<div class="col-first odd-row-color"><a href="class-use/ColumnReaders.html#dev.hardwood.reader">ColumnReaders</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Holds multiple <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by a shared
+<code>RowGroupIterator</code> for batch-oriented projection reads.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/FilterPredicate.html#dev.hardwood.reader">FilterPredicate</a></div>
+<div class="col-last even-row-color">
 <div class="block">A predicate for filtering row groups based on column statistics.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/FilterPredicate.Operator.html#dev.hardwood.reader">FilterPredicate.Operator</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/MultiFileColumnReaders.html#dev.hardwood.reader">MultiFileColumnReaders</a></div>
-<div class="col-last odd-row-color">
-<div class="block">Holds multiple <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by a shared <code>RowGroupIterator</code>
-for cross-file prefetching across multiple Parquet files.</div>
-</div>
+<div class="col-first odd-row-color"><a href="class-use/FilterPredicate.Operator.html#dev.hardwood.reader">FilterPredicate.Operator</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="class-use/ParquetFileReader.html#dev.hardwood.reader">ParquetFileReader</a></div>
 <div class="col-last even-row-color">
-<div class="block">Reader for individual Parquet files.</div>
+<div class="block">Reader for one or more Parquet files.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/RowReader.html#dev.hardwood.reader">RowReader</a></div>
+<div class="col-first odd-row-color"><a href="class-use/ParquetFileReader.ColumnReaderBuilder.html#dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Builds a single-column <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> with an optional filter.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/ParquetFileReader.ColumnReadersBuilder.html#dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></div>
+<div class="col-last even-row-color">
+<div class="block">Builds a <a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented access to a
+projection of columns.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/ParquetFileReader.RowReaderBuilder.html#dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Builds a <a href="RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> with optional projection, filter, and head/tail
+row limit.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/RowReader.html#dev.hardwood.reader">RowReader</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides row-oriented iteration over a Parquet file.</div>
 </div>
 </div>
@@ -141,7 +151,7 @@ for cross-file prefetching across multiple Parquet files.</div>
 </li>
 </ul>
 </section>
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

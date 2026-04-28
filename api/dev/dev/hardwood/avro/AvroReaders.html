@@ -55,13 +55,12 @@ loadScripts(document, 'script');</script>
 <div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
-<li><a href="#createRowReader(dev.hardwood.reader.ParquetFileReader)" tabindex="0">createRowReader(ParquetFileReader)</a></li>
-<li><a href="#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.reader.FilterPredicate)" tabindex="0">createRowReader(ParquetFileReader, FilterPredicate)</a></li>
-<li><a href="#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.schema.ColumnProjection)" tabindex="0">createRowReader(ParquetFileReader, ColumnProjection)</a></li>
-<li><a href="#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" tabindex="0">createRowReader(ParquetFileReader, ColumnProjection, FilterPredicate)</a></li>
+<li><a href="#rowReader(dev.hardwood.reader.ParquetFileReader)" tabindex="0">rowReader(ParquetFileReader)</a></li>
+<li><a href="#buildRowReader(dev.hardwood.reader.ParquetFileReader)" tabindex="0">buildRowReader(ParquetFileReader)</a></li>
 </ol>
 </li>
 </ol>
@@ -82,8 +81,12 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block"><p>Factory for creating <a href="AvroRowReader.html" title="class in dev.hardwood.avro"><code>AvroRowReader</code></a> instances from a
 <a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a>.</p>
+<p>Mirrors the noun / buildNoun shape of <a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a>: the
+no-arg <a href="#rowReader(dev.hardwood.reader.ParquetFileReader)"><code>rowReader(ParquetFileReader)</code></a> returns the default reader;
+<a href="#buildRowReader(dev.hardwood.reader.ParquetFileReader)"><code>buildRowReader(ParquetFileReader)</code></a> returns a builder for
+projection / filter / head / tail configuration.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">try (ParquetFileReader fileReader = ParquetFileReader.open(inputFile);
-     AvroRowReader reader = AvroReaders.createRowReader(fileReader)) {
+     AvroRowReader reader = AvroReaders.rowReader(fileReader)) {
     while (reader.hasNext()) {
         GenericRecord record = reader.next();
         long id = (Long) record.get(&quot;id&quot;);
@@ -95,6 +98,24 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="AvroReaders.RowReaderBuilder.html" class="type-name-link" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Builds an <a href="AvroRowReader.html" title="class in dev.hardwood.avro"><code>AvroRowReader</code></a> with optional projection, filter, and
+head/tail row limit.</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
@@ -106,29 +127,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createRowReader(dev.hardwood.reader.ParquetFileReader)" class="member-name-link">createRowReader</a><wbr>(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildRowReader(dev.hardwood.reader.ParquetFileReader)" class="member-name-link">buildRowReader</a><wbr>(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Create an AvroRowReader that reads all rows and columns.</div>
+<div class="block">Begin configuring an <a href="AvroRowReader.html" title="class in dev.hardwood.avro"><code>AvroRowReader</code></a> with optional projection,
+filter, and head/tail row limit.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader</a><wbr>(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader,
- <a href="../reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#rowReader(dev.hardwood.reader.ParquetFileReader)" class="member-name-link">rowReader</a><wbr>(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Create an AvroRowReader with predicate pushdown.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.schema.ColumnProjection)" class="member-name-link">createRowReader</a><wbr>(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader,
- <a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Create an AvroRowReader with column projection.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)" class="member-name-link">createRowReader</a><wbr>(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader,
- <a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection,
- <a href="../reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Create an AvroRowReader with column projection and predicate pushdown.</div>
+<div class="block">Create an <code>AvroRowReader</code> that reads all rows and columns.</div>
 </div>
 </div>
 </div>
@@ -148,70 +156,21 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="createRowReader(dev.hardwood.reader.ParquetFileReader)">
-<h3>createRowReader</h3>
+<section class="detail" id="rowReader(dev.hardwood.reader.ParquetFileReader)">
+<h3>rowReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></span>&nbsp;<span class="element-name">createRowReader</span><wbr><span class="parameters">(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader)</span></div>
-<div class="block">Create an AvroRowReader that reads all rows and columns.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>reader</code> - the opened ParquetFileReader</dd>
-<dt>Returns:</dt>
-<dd>a new AvroRowReader</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></span>&nbsp;<span class="element-name">rowReader</span><wbr><span class="parameters">(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader)</span></div>
+<div class="block">Create an <code>AvroRowReader</code> that reads all rows and columns.</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.reader.FilterPredicate)">
-<h3>createRowReader</h3>
+<section class="detail" id="buildRowReader(dev.hardwood.reader.ParquetFileReader)">
+<h3>buildRowReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></span>&nbsp;<span class="element-name">createRowReader</span><wbr><span class="parameters">(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader,
- <a href="../reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</span></div>
-<div class="block">Create an AvroRowReader with predicate pushdown.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>reader</code> - the opened ParquetFileReader</dd>
-<dd><code>filter</code> - the filter predicate for row group pruning</dd>
-<dt>Returns:</dt>
-<dd>a new AvroRowReader</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.schema.ColumnProjection)">
-<h3>createRowReader</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></span>&nbsp;<span class="element-name">createRowReader</span><wbr><span class="parameters">(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader,
- <a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</span></div>
-<div class="block">Create an AvroRowReader with column projection.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>reader</code> - the opened ParquetFileReader</dd>
-<dd><code>projection</code> - the columns to read</dd>
-<dt>Returns:</dt>
-<dd>a new AvroRowReader</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="createRowReader(dev.hardwood.reader.ParquetFileReader,dev.hardwood.schema.ColumnProjection,dev.hardwood.reader.FilterPredicate)">
-<h3>createRowReader</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></span>&nbsp;<span class="element-name">createRowReader</span><wbr><span class="parameters">(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader,
- <a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection,
- <a href="../reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</span></div>
-<div class="block">Create an AvroRowReader with column projection and predicate pushdown.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>reader</code> - the opened ParquetFileReader</dd>
-<dd><code>projection</code> - the columns to read</dd>
-<dd><code>filter</code> - the filter predicate for row group pruning</dd>
-<dt>Returns:</dt>
-<dd>a new AvroRowReader</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></span>&nbsp;<span class="element-name">buildRowReader</span><wbr><span class="parameters">(<a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a>&nbsp;reader)</span></div>
+<div class="block">Begin configuring an <a href="AvroRowReader.html" title="class in dev.hardwood.avro"><code>AvroRowReader</code></a> with optional projection,
+filter, and head/tail row limit.</div>
 </div>
 </section>
 </li>
@@ -221,7 +180,7 @@ loadScripts(document, 'script');</script>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

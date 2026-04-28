@@ -121,9 +121,9 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(dev.hardwood.InputFile)" class="member-name-link">open</a><wbr>(<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Open a Parquet file from an <a href="InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for reading.</div>
+<div class="block">Open a single Parquet file.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Open multiple Parquet files for reading with cross-file prefetching.</div>
@@ -160,10 +160,8 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">open</span><wbr><span class="parameters">(<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</span>
                        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block"><p>Open a Parquet file from an <a href="InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for reading.</p>
-<p>The file will be opened and closed automatically; closing the
-returned reader closes the file.</p>
-</div>
+<div class="block">Open a single Parquet file. The file is opened immediately and
+closed when the returned reader is closed.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
@@ -175,20 +173,14 @@ returned reader closes the file.</p>
 <section class="detail" id="openAll(java.util.List)">
 <h3>openAll</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader">MultiFileParquetReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</span>
-                               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block"><p>Open multiple Parquet files for reading with cross-file prefetching.</p>
-<p>Returns a <a href="reader/MultiFileParquetReader.html" title="class in dev.hardwood.reader"><code>MultiFileParquetReader</code></a> that reads the schema from the first file
-and provides factory methods for row-oriented
-(<a href="reader/MultiFileParquetReader.html#createRowReader()"><code>MultiFileParquetReader.createRowReader()</code></a>) or column-oriented
-(<a href="reader/MultiFileParquetReader.html#createColumnReaders(dev.hardwood.schema.ColumnProjection)"><code>MultiFileParquetReader.createColumnReaders(dev.hardwood.schema.ColumnProjection)</code></a>) access.
-The files will be opened automatically as needed.</p>
-</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</span>
+                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Open multiple Parquet files for reading with cross-file prefetching.
+The schema is read from the first file. Files are opened on demand
+by the iterator and closed when the returned reader is closed.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>inputFiles</code> - the input files to read (must not be empty)</dd>
-<dt>Returns:</dt>
-<dd>a MultiFileParquetReader for the given files</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the first file cannot be opened or read</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the list is empty</dd>
@@ -214,7 +206,7 @@ The files will be opened automatically as needed.</p>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>
