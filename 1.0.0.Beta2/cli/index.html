@@ -1119,7 +1119,7 @@
 -->
 <h1 id="cli">CLI<a class="headerlink" href="#cli" title="Permanent link">&para;</a></h1>
 <p>The <code>hardwood</code> CLI lets you inspect and convert Parquet files from the command line — useful for exploring datasets, debugging file structure, and quick format conversions without writing Java code. It reads local files and S3 URIs, and ships as a GraalVM native binary with instant startup.</p>
-<p>Pre-built native binaries for Linux, macOS, and Windows are available from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">early-access release</a>.</p>
+<p>Pre-built native binaries for Linux, macOS, and Windows are available from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/v1.0.0.Beta2">release page</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">macOS</p>
 <p>The binary is not notarized. On first run, macOS Gatekeeper will block it. Remove the quarantine flag after extracting:</p>
@@ -1207,12 +1207,11 @@
 <a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category<span class="w"> </span>--limit<span class="w"> </span><span class="m">0</span>
 </code></pre></div>
 <h2 id="interactive-exploration-dive">Interactive exploration (<code>dive</code>)<a class="headerlink" href="#interactive-exploration-dive" title="Permanent link">&para;</a></h2>
-<p><code>hardwood dive</code> launches a terminal UI for navigating a Parquet file's structure
-without re-invoking the CLI for each slice:</p>
+<p><code>hardwood dive</code> launches a terminal UI for interactively navigating a Parquet file's structure:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hardwood<span class="w"> </span>dive<span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
-<p>From the Overview landing screen, drill into <strong>Schema</strong> or <strong>Row groups</strong>,
-then into column chunks and per-chunk metadata.</p>
+<script src="https://asciinema.org/a/992284.js" id="asciicast-992284" async="true"></script>
+
 <h3 id="what-you-can-do-with-it">What you can do with it<a class="headerlink" href="#what-you-can-do-with-it" title="Permanent link">&para;</a></h3>
 <p><code>dive</code> composes the slices that the batch subcommands (<code>info</code>, <code>schema</code>,
 <code>footer</code>, <code>inspect</code>, <code>print</code>) each surface separately into a single
@@ -1315,7 +1314,6 @@ Column-across-row-groups (from the Schema screen), Dictionary (with
 full-value modal on Enter and <code>/</code> inline search), and Data preview (row
 values via <code>RowReader</code>; <code>←/→</code> scrolls the visible column window,
 <code>PgDn/PgUp</code> flips pages).</p>
-<p>The <code>--rows N</code> flag sets the Data preview page size (default: 20).</p>
 <h3 id="layout">Layout<a class="headerlink" href="#layout" title="Permanent link">&para;</a></h3>
 <p>Every screen shares a four-region layout — a top bar with file identity, a
 breadcrumb showing the navigation stack, the active screen body, and a keybar:</p>
@@ -1438,8 +1436,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/v1.0.0.Beta2" target="_blank" rel="noopener">
-      v1.0.0.B
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a7024689043942e85820ec3f7e127b09fe44ab38" target="_blank" rel="noopener">
+      a7024689
     </a>
   
 </div>
