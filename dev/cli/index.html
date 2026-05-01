@@ -1150,7 +1150,7 @@
 </tr>
 <tr>
 <td><code>hardwood convert</code></td>
-<td>Convert a Parquet file to CSV or JSON; Variant columns are emitted as a JSON string in CSV and as a native JSON subtree in JSON</td>
+<td>Convert a Parquet file to CSV or JSON (head, tail, or all); Variant columns are emitted as a JSON string in CSV and as a native JSON subtree in JSON</td>
 </tr>
 <tr>
 <td><code>hardwood footer</code></td>
@@ -1206,6 +1206,12 @@
 <a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
 <a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># Show all dictionary entries for a column</span>
 <a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category<span class="w"> </span>--limit<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1"># Convert first 100 rows to JSON</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="c1"># Convert last 50 rows to CSV</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span>-50<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
 <h2 id="interactive-exploration-dive">Interactive exploration (<code>dive</code>)<a class="headerlink" href="#interactive-exploration-dive" title="Permanent link">&para;</a></h2>
 <p><code>hardwood dive</code> launches a terminal UI for interactively navigating a Parquet file's structure:</p>
@@ -1437,8 +1443,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5c5b493315dedb7ba624b2dc3b07d80c3510c9cb" target="_blank" rel="noopener">
-      5c5b4933
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e296e69523a846eb1fa67efdd9a73127ee108400" target="_blank" rel="noopener">
+      e296e695
     </a>
   
 </div>
