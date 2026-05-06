@@ -94,13 +94,16 @@ loadScripts(document, 'script');</script>
 <hr>
 <object type="image/svg+xml" data="ColumnReader.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ColumnReader</span>
+<div class="type-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public class </span><span class="element-name type-name-label">ColumnReader</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></span></div>
 <div class="block"><p>Batch-oriented column reader for reading a single column across all row groups.</p>
 <p>Provides typed primitive arrays for zero-boxing access. For nested/repeated columns,
 multi-level offsets and per-level null bitmaps enable efficient traversal without
 per-row virtual dispatch.</p>
+<p><strong>This API is <a href="../Experimental.html" title="annotation interface in dev.hardwood"><code>Experimental</code></a>:</strong> the shape of the batch accessors and nested-offset
+representation may change in future releases without prior deprecation.</p>
 <p><strong>Flat column usage:</strong></p>
 <pre style="white-space:pre-wrap;"><code class="language-java">try (ColumnReader reader = fileReader.columnReader(&quot;fare_amount&quot;)) {
     while (reader.nextBatch()) {
