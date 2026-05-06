@@ -70,6 +70,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#getStrings()" tabindex="0">getStrings()</a></li>
 <li><a href="#getElementNulls()" tabindex="0">getElementNulls()</a></li>
 <li><a href="#getLevelNulls(int)" tabindex="0">getLevelNulls(int)</a></li>
+<li><a href="#getEmptyListMarkers(int)" tabindex="0">getEmptyListMarkers(int)</a></li>
 <li><a href="#getNestingDepth()" tabindex="0">getNestingDepth()</a></li>
 <li><a href="#getOffsets(int)" tabindex="0">getOffsets(int)</a></li>
 <li><a href="#getColumnSchema()" tabindex="0">getColumnSchema()</a></li>
@@ -116,7 +117,11 @@ representation may change in future releases without prior deprecation.</p>
     }
 }
 </code></pre>
-<p><strong>Simple list usage (nestingDepth=1):</strong></p>
+<p><strong>Simple list usage (nestingDepth=1):</strong> a list/repeated container has four
+states (null, empty, list-with-null-element(s), list-with-value(s));
+<code>getLevelNulls</code> and <code>getEmptyListMarkers</code> together disambiguate the first
+two from the rest, and <code>getElementNulls</code> distinguishes null elements from
+real values inside a non-empty list.</p>
 <pre><code class="language-java">try (ColumnReader reader = fileReader.columnReader(&quot;fare_components&quot;)) {
     while (reader.nextBatch()) {
         int recordCount = reader.getRecordCount();
@@ -124,9 +129,11 @@ representation may change in future releases without prior deprecation.</p>
         double[] values = reader.getDoubles();
         int[] offsets = reader.getOffsets(0);
         BitSet recordNulls = reader.getLevelNulls(0);
+        BitSet emptyMarkers = reader.getEmptyListMarkers(0);
         BitSet elementNulls = reader.getElementNulls();
         for (int r = 0; r &lt; recordCount; r++) {
-            if (recordNulls != null &amp;&amp; recordNulls.get(r)) continue;
+            if (recordNulls != null &amp;&amp; recordNulls.get(r)) continue;       // null list
+            if (emptyMarkers != null &amp;&amp; emptyMarkers.get(r)) continue;     // empty list
             int start = offsets[r];
             int end = (r + 1 &lt; recordCount) ? offsets[r + 1] : valueCount;
             for (int i = start; i &lt; end; i++) {
@@ -172,48 +179,53 @@ representation may change in future releases without prior deprecation.</p>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Null bitmap over leaf values.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFloats()" class="member-name-link">getFloats</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInts()" class="member-name-link">getInts</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link">BitSet</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLevelNulls(int)" class="member-name-link">getLevelNulls</a><wbr>(int&nbsp;level)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEmptyListMarkers(int)" class="member-name-link">getEmptyListMarkers</a><wbr>(int&nbsp;level)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Empty-list bitmap at a given nesting level.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFloats()" class="member-name-link">getFloats</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInts()" class="member-name-link">getInts</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link">BitSet</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLevelNulls(int)" class="member-name-link">getLevelNulls</a><wbr>(int&nbsp;level)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Null bitmap at a given nesting level.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLongs()" class="member-name-link">getLongs</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNestingDepth()" class="member-name-link">getNestingDepth</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLongs()" class="member-name-link">getLongs</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNestingDepth()" class="member-name-link">getNestingDepth</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Nesting depth: 0 for flat, maxRepetitionLevel for nested.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOffsets(int)" class="member-name-link">getOffsets</a><wbr>(int&nbsp;level)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOffsets(int)" class="member-name-link">getOffsets</a><wbr>(int&nbsp;level)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Offset array for a given nesting level.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRecordCount()" class="member-name-link">getRecordCount</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRecordCount()" class="member-name-link">getRecordCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Number of top-level records in the current batch.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStrings()" class="member-name-link">getStrings</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStrings()" class="member-name-link">getStrings</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">String values for STRING and JSON logical type columns.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getValueCount()" class="member-name-link">getValueCount</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getValueCount()" class="member-name-link">getValueCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Total number of leaf values in the current batch.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextBatch()" class="member-name-link">nextBatch</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextBatch()" class="member-name-link">nextBatch</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Advance to the next batch.</div>
 </div>
 </div>
@@ -356,6 +368,32 @@ BSON columns are not string-decoded; use <a href="#getBinaries()"><code>getBinar
 <dd><code>level</code> - the nesting level (0 = outermost group)</dd>
 <dt>Returns:</dt>
 <dd>BitSet where set bits indicate null groups, or null if that level is required</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getEmptyListMarkers(int)">
+<h3>getEmptyListMarkers</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link">BitSet</a></span>&nbsp;<span class="element-name">getEmptyListMarkers</span><wbr><span class="parameters">(int&nbsp;level)</span></div>
+<div class="block"><p>Empty-list bitmap at a given nesting level. A set bit means the
+container at that level is non-null but contains zero entries.</p>
+<p>Together with <a href="#getLevelNulls(int)"><code>getLevelNulls(int)</code></a> this disambiguates the four
+container states a list/map can be in: null, empty, non-empty with null
+element(s), and non-empty with value(s). Specifically, this bitmap is
+what lets a caller tell an empty list apart from a list containing a
+single null element — in the underlying encoding both produce one
+phantom entry that <a href="#getElementNulls()"><code>getElementNulls()</code></a> flags as null.</p>
+<p>A <code>null</code> return is the sparse representation of an all-zero bitmap
+(no empty containers at this level in the current batch); callers
+should treat it the same as an unset bit at every index.</p>
+</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>level</code> - the nesting level (0 = outermost group)</dd>
+<dt>Returns:</dt>
+<dd>BitSet where set bits indicate empty containers, or null if no empties at that level</dd>
 </dl>
 </div>
 </section>
