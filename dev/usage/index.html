@@ -1758,8 +1758,8 @@
 </tr>
 <tr>
 <td><code>getFloat</code></td>
-<td>FLOAT</td>
-<td></td>
+<td>FLOAT, or FIXED_LEN_BYTE_ARRAY(2)</td>
+<td>FLOAT16 (optional)</td>
 <td><code>float</code></td>
 </tr>
 <tr>
@@ -1817,12 +1817,6 @@
 <td><code>PqInterval</code></td>
 </tr>
 <tr>
-<td><code>getFloat16</code></td>
-<td>FIXED_LEN_BYTE_ARRAY(2)</td>
-<td>FLOAT16</td>
-<td><code>Float</code></td>
-</tr>
-<tr>
 <td><code>getStruct</code></td>
 <td></td>
 <td></td>
@@ -1856,7 +1850,7 @@
 </table>
 <p>All methods are available as both <code>method(name)</code> and <code>method(index)</code>, except <code>getStruct</code>, <code>getList</code>, <code>getMap</code>, and <code>getVariant</code> which are name-based only.</p>
 <p><strong>INTERVAL columns:</strong> <code>PqInterval</code> is a plain record with three <code>long</code> properties — <code>months()</code>, <code>days()</code>, and <code>milliseconds()</code>. Each holds an unsigned 32-bit value in the range <code>[0, 4_294_967_295]</code>, so no additional conversion is needed. The components are independent and not normalized. Files written by older parquet-mr / Spark / Hive writers that set only the legacy <code>converted_type=INTERVAL</code> annotation are handled transparently — no caller-side opt-in is required.</p>
-<p><strong>FLOAT16 columns:</strong> <code>getFloat16</code> decodes the 2-byte IEEE 754 half-precision payload to a single-precision Java <code>Float</code>. The widening is lossless — half-precision NaN, ±Infinity, and signed zero round-trip cleanly, and the original NaN bit pattern is preserved (the Parquet spec does not canonicalize NaNs on write). Use <code>Float.isNaN(value)</code> for NaN checks rather than equality.</p>
+<p><strong>FLOAT16 columns:</strong> <code>getFloat</code> accepts FLOAT16 columns (<code>FIXED_LEN_BYTE_ARRAY(2)</code> annotated with the <code>FLOAT16</code> logical type) and decodes the 2-byte IEEE 754 half-precision payload to a single-precision <code>float</code>. The widening is lossless — half-precision NaN, ±Infinity, and signed zero round-trip cleanly, and the original NaN bit pattern is preserved (the Parquet spec does not canonicalize NaNs on write). Use <code>Float.isNaN(value)</code> for NaN checks rather than equality. As with all primitive accessors, <code>isNull()</code> must be checked before <code>getFloat()</code> since FLOAT16 columns can be optional.</p>
 <p><strong>Bare <code>BYTE_ARRAY</code> columns:</strong> <code>BYTE_ARRAY</code> columns without a <code>STRING</code> logical type annotation may hold arbitrary binary payloads (Protobuf, WKB, custom encodings). Generic accessors such as <code>PqList.get</code> and <code>PqList.iterator</code> surface these as <code>byte[]</code> rather than silently UTF-8 decoding them — invalid byte sequences would otherwise be replaced with <code>U+FFFD</code>. Call <code>getString</code> explicitly when the column is known to contain UTF-8 text from an older writer that omitted the <code>STRING</code> annotation.</p>
 <p><strong>Legacy INT96 timestamps:</strong> Parquet files written by older versions of Apache Spark and Hive store timestamps in the deprecated INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> detects INT96 automatically and decodes it to an <code>Instant</code>; no caller-side handling is required.</p>
 <p><strong>Index-based access example:</strong></p>
@@ -1872,7 +1866,7 @@
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">}</span>
 </code></pre></div>
-<p><strong>Null handling:</strong> Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw <code>NullPointerException</code> if the field is null — always check with <code>isNull()</code> first. Object accessors (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>, <code>getInterval</code>, <code>getFloat16</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
+<p><strong>Null handling:</strong> Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw <code>NullPointerException</code> if the field is null — always check with <code>isNull()</code> first. Object accessors (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>, <code>getInterval</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
 <p><strong>Type validation:</strong> The API validates at runtime that the requested type matches the schema. Mismatches throw <code>IllegalArgumentException</code> with a descriptive message.</p>
 <h2 id="predicate-pushdown-filter">Predicate Pushdown (Filter)<a class="headerlink" href="#predicate-pushdown-filter" title="Permanent link">&para;</a></h2>
 <p>Filter predicates enable three levels of predicate pushdown. At the row-group level, entire row groups whose statistics prove no rows can match are skipped. Within surviving row groups, the Column Index (per-page min/max statistics) is used to skip individual pages, avoiding unnecessary decompression and decoding. On remote backends like S3, only the matching pages are fetched, reducing network I/O. Finally, record-level filtering evaluates the predicate against each decoded row, so <code>buildRowReader().filter(filter).build()</code> returns only rows that actually match.</p>
@@ -2727,8 +2721,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/fb813853dd0af59fb61dae55b404c76e67f5ad75" target="_blank" rel="noopener">
-      fb813853
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d207e44d1789ff3f705bc95f0ed4e33bbd6d4513" target="_blank" rel="noopener">
+      d207e44d
     </a>
   
 </div>
