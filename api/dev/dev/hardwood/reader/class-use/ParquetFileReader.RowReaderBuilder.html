@@ -84,26 +84,31 @@ and head/tail limit.</div>
 <div class="col-first odd-row-color"><code><a href="../ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter</a><wbr>(<a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Apply a row-group / record-level filter predicate.</div>
+<div class="block">Apply a column-statistics / record-level filter predicate.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#firstRow(long)" class="member-name-link">firstRow</a><wbr>(long&nbsp;firstRow)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#filter(dev.hardwood.reader.RowGroupPredicate)" class="member-name-link">filter</a><wbr>(<a href="../RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a>&nbsp;rowGroupFilter)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Apply a row-group selection predicate (e.g. byte-range, for split-aware reading).</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#firstRow(long)" class="member-name-link">firstRow</a><wbr>(long&nbsp;firstRow)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Begin reading from the given absolute row index.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#head(long)" class="member-name-link">head</a><wbr>(long&nbsp;maxRows)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="../ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#head(long)" class="member-name-link">head</a><wbr>(long&nbsp;maxRows)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Limit to the first <code>maxRows</code> rows.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#projection(dev.hardwood.schema.ColumnProjection)" class="member-name-link">projection</a><wbr>(<a href="../../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="../ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#projection(dev.hardwood.schema.ColumnProjection)" class="member-name-link">projection</a><wbr>(<a href="../../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Restrict reading to the given columns.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#tail(long)" class="member-name-link">tail</a><wbr>(long&nbsp;tailRows)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="../ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.RowReaderBuilder.</span><code><a href="../ParquetFileReader.RowReaderBuilder.html#tail(long)" class="member-name-link">tail</a><wbr>(long&nbsp;tailRows)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Limit to the last <code>tailRows</code> rows.</div>
 </div>
 </div>

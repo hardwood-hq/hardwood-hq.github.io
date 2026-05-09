@@ -790,6 +790,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unreleased
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#100beta2-2026-04-29" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -884,6 +895,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#unreleased" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unreleased
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#100beta2-2026-04-29" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -954,6 +976,10 @@
 -->
 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
 <p>See <a href="https://github.com/hardwood-hq/hardwood/releases">GitHub Releases</a> for downloads and more information.</p>
+<h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>RowGroupPredicate</code> for split-aware row group selection. Pass <code>RowGroupPredicate.byteRange(start, end)</code> to any reader builder's <code>filter(...)</code> to restrict reading to the row groups whose midpoint falls in the given file byte range — the standard split convention used by Hadoop-style integrations (Flink <code>BulkFormat</code>, Spark file source, …). Combines with <code>FilterPredicate</code> via intersection. See <a href="../usage/#split-aware-reading">Split-Aware Reading</a> and <a href="https://github.com/hardwood-hq/hardwood/issues/431">#431</a>.</li>
+</ul>
 <h2 id="100beta2-2026-04-29">1.0.0.Beta2 (2026-04-29)<a class="headerlink" href="#100beta2-2026-04-29" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.morling.dev/blog/variant-support-interactive-parquet-file-tui-hardwood-1.0.0.beta2-is-out/">Announcement blog post</a></p>
 <p>Highlights of this release:</p>
@@ -1047,8 +1073,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/35e4394a7530a811ce7bc06bccec8b10f058d145" target="_blank" rel="noopener">
-      35e4394a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e2fd5ec7c2b798568f04ca659288900a41c2a5d9" target="_blank" rel="noopener">
+      e2fd5ec7
     </a>
   
 </div>

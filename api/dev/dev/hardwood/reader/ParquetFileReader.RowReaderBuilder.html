@@ -61,6 +61,7 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list">
 <li><a href="#projection(dev.hardwood.schema.ColumnProjection)" tabindex="0">projection(ColumnProjection)</a></li>
 <li><a href="#filter(dev.hardwood.reader.FilterPredicate)" tabindex="0">filter(FilterPredicate)</a></li>
+<li><a href="#filter(dev.hardwood.reader.RowGroupPredicate)" tabindex="0">filter(RowGroupPredicate)</a></li>
 <li><a href="#head(long)" tabindex="0">head(long)</a></li>
 <li><a href="#tail(long)" tabindex="0">tail(long)</a></li>
 <li><a href="#firstRow(long)" tabindex="0">firstRow(long)</a></li>
@@ -120,26 +121,31 @@ creates the reader. The builder is not reusable after <code>build()</code>.</p>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter</a><wbr>(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Apply a row-group / record-level filter predicate.</div>
+<div class="block">Apply a column-statistics / record-level filter predicate.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#firstRow(long)" class="member-name-link">firstRow</a><wbr>(long&nbsp;firstRow)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#filter(dev.hardwood.reader.RowGroupPredicate)" class="member-name-link">filter</a><wbr>(<a href="RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a>&nbsp;rowGroupFilter)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Apply a row-group selection predicate (e.g. byte-range, for split-aware reading).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#firstRow(long)" class="member-name-link">firstRow</a><wbr>(long&nbsp;firstRow)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Begin reading from the given absolute row index.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#head(long)" class="member-name-link">head</a><wbr>(long&nbsp;maxRows)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#head(long)" class="member-name-link">head</a><wbr>(long&nbsp;maxRows)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Limit to the first <code>maxRows</code> rows.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#projection(dev.hardwood.schema.ColumnProjection)" class="member-name-link">projection</a><wbr>(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#projection(dev.hardwood.schema.ColumnProjection)" class="member-name-link">projection</a><wbr>(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Restrict reading to the given columns.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tail(long)" class="member-name-link">tail</a><wbr>(long&nbsp;tailRows)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tail(long)" class="member-name-link">tail</a><wbr>(long&nbsp;tailRows)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Limit to the last <code>tailRows</code> rows.</div>
 </div>
 </div>
@@ -173,7 +179,23 @@ creates the reader. The builder is not reusable after <code>build()</code>.</p>
 <h3>filter</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></span>&nbsp;<span class="element-name">filter</span><wbr><span class="parameters">(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</span></div>
-<div class="block">Apply a row-group / record-level filter predicate. Default: no filter.</div>
+<div class="block">Apply a column-statistics / record-level filter predicate. Default: no filter.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="filter(dev.hardwood.reader.RowGroupPredicate)">
+<h3>filter</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></span>&nbsp;<span class="element-name">filter</span><wbr><span class="parameters">(<a href="RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a>&nbsp;rowGroupFilter)</span></div>
+<div class="block"><p>Apply a row-group selection predicate (e.g. byte-range, for split-aware reading).
+Default: read every row group. Combines with <a href="#filter(dev.hardwood.reader.FilterPredicate)"><code>filter(FilterPredicate)</code></a> via
+intersection: a row group is read if and only if it passes both.</p>
+<p>Composes with <a href="#head(long)"><code>head(long)</code></a> and <a href="#firstRow(long)"><code>firstRow(long)</code></a> over the <em>filtered</em> row-group
+sequence — <code>firstRow(N)</code> skips <code>N</code> rows of the kept set, <code>head(N)</code> caps at <code>N</code>
+rows of the kept set. Mutually exclusive with <a href="#tail(long)"><code>tail(long)</code></a> (tail mode requires
+a known total row count, which row-group filtering invalidates).</p>
+</div>
 </div>
 </section>
 </li>

@@ -65,7 +65,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#and(dev.hardwood.reader.FilterPredicate,dev.hardwood.reader.FilterPredicate)" class="member-name-link">and(FilterPredicate, FilterPredicate)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.html#and(dev.hardwood.reader.RowGroupPredicate...)" class="member-name-link">and(RowGroupPredicate...)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a></dt>
+<dd>
+<div class="block">Keep row groups that match every child predicate (intersection).</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.And.html#%3Cinit%3E(java.util.List)" class="member-name-link">And(List)</a> - Constructor for record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.And.html" title="class in dev.hardwood.reader">FilterPredicate.And</a></dt>
+<dd>
+<div class="block">Creates an instance of a <code>And</code> record class.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.And.html#%3Cinit%3E(java.util.List)" class="member-name-link">And(List)</a> - Constructor for record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.And.html" title="class in dev.hardwood.reader">RowGroupPredicate.And</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>And</code> record class.</div>
 </dd>
@@ -274,9 +282,22 @@ filter, and head/tail row limit.</div>
 <dd>
 <div class="block">Byte-stream split encoding for floating-point data.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.html#byteRange(long,long)" class="member-name-link">byteRange(long, long)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a></dt>
+<dd>
+<div class="block">Keep row groups whose data midpoint — start of the first column chunk plus half of
+the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html#%3Cinit%3E(long,long)" class="member-name-link">ByteRange(long, long)</a> - Constructor for record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a></dt>
+<dd>
+<div class="block">Creates an instance of a <code>ByteRange</code> record class.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:C">C</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.And.html#children()" class="member-name-link">children()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.And.html" title="class in dev.hardwood.reader">RowGroupPredicate.And</a></dt>
+<dd>
+<div class="block">Returns the value of the <code>children</code> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/SchemaNode.GroupNode.html#children()" class="member-name-link">children()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.GroupNode.html" title="class in dev.hardwood.schema">SchemaNode.GroupNode</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.GroupNode.html#param-children"><code>children</code></a> record component.</div>
@@ -714,6 +735,10 @@ every row group, no filter.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-encodings"><code>encodings</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html#endExclusive()" class="member-name-link">endExclusive()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a></dt>
+<dd>
+<div class="block">Returns the value of the <code>endExclusive</code> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/s3/S3Source.Builder.html#endpoint(java.lang.String)" class="member-name-link">endpoint(String)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></dt>
 <dd>
 <div class="block">Sets the endpoint for S3-compatible services (e.g. MinIO, R2, GCP).</div>
@@ -956,6 +981,14 @@ every row group, no filter.</div>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.And.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.And.html" title="class in dev.hardwood.reader">RowGroupPredicate.And</a></dt>
+<dd>
+<div class="block">Indicates whether some other object is "equal to" this one.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a></dt>
+<dd>
+<div class="block">Indicates whether some other object is "equal to" this one.</div>
+</dd>
 <dt><a href="dev/hardwood/row/PqInterval.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.row.<a href="dev/hardwood/row/PqInterval.html" title="class in dev.hardwood.row">PqInterval</a></dt>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
@@ -1056,15 +1089,29 @@ Variants, or absent.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter(FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></dt>
 <dd>
-<div class="block">Apply a row-group / page-level filter predicate.</div>
+<div class="block">Apply a column-statistics filter — row groups whose statistics prove no row
+matches are skipped.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter(FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></dt>
 <dd>
-<div class="block">Apply a row-group statistics filter.</div>
+<div class="block">Apply a column-statistics filter — row groups whose statistics prove no row
+matches are skipped.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter(FilterPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></dt>
 <dd>
-<div class="block">Apply a row-group / record-level filter predicate.</div>
+<div class="block">Apply a column-statistics / record-level filter predicate.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html#filter(dev.hardwood.reader.RowGroupPredicate)" class="member-name-link">filter(RowGroupPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></dt>
+<dd>
+<div class="block">Apply a row-group selection predicate (e.g. byte-range, for split-aware reading).</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html#filter(dev.hardwood.reader.RowGroupPredicate)" class="member-name-link">filter(RowGroupPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></dt>
+<dd>
+<div class="block">Apply a row-group selection predicate (e.g. byte-range, for split-aware reading).</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html#filter(dev.hardwood.reader.RowGroupPredicate)" class="member-name-link">filter(RowGroupPredicate)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></dt>
+<dd>
+<div class="block">Apply a row-group selection predicate (e.g. byte-range, for split-aware reading).</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html" class="type-name-link" title="interface in dev.hardwood.reader">FilterPredicate</a> - Interface in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
@@ -1927,6 +1974,14 @@ Variants, or absent.</div>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.UUIDColumnPredicate.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.UUIDColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.UUIDColumnPredicate</a></dt>
+<dd>
+<div class="block">Returns a hash code value for this object.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.And.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.And.html" title="class in dev.hardwood.reader">RowGroupPredicate.And</a></dt>
+<dd>
+<div class="block">Returns a hash code value for this object.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a></dt>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
@@ -3106,6 +3161,18 @@ source.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupScannedEvent.html#rowGroupIndex" class="member-name-link">rowGroupIndex</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupScannedEvent.html" title="class in dev.hardwood.jfr">RowGroupScannedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.html" class="type-name-link" title="interface in dev.hardwood.reader">RowGroupPredicate</a> - Interface in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">A predicate over row groups, used to select which row groups a reader scans.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.And.html" class="type-name-link" title="class in dev.hardwood.reader">RowGroupPredicate.And</a> - Record Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Conjunction of row-group predicates — a row group passes if and only if every child passes.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" class="type-name-link" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a> - Record Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Keep row groups whose midpoint falls in <code>[startInclusive, endExclusive)</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/FileMetaData.html#rowGroups()" class="member-name-link">rowGroups()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/FileMetaData.html#param-rowGroups"><code>rowGroups</code></a> record component.</div>
@@ -3258,6 +3325,10 @@ process.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html#SPHERICAL" class="member-name-link">SPHERICAL</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html" title="enum class in dev.hardwood.metadata">LogicalType.EdgeInterpolationAlgorithm</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html#startInclusive()" class="member-name-link">startInclusive()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a></dt>
+<dd>
+<div class="block">Returns the value of the <code>startInclusive</code> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#statistics()" class="member-name-link">statistics()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-statistics"><code>statistics</code></a> record component.</div>
@@ -3589,6 +3660,14 @@ for the sparse-file backing.</div>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.UUIDColumnPredicate.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.UUIDColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.UUIDColumnPredicate</a></dt>
+<dd>
+<div class="block">Returns a string representation of this record class.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.And.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.And.html" title="class in dev.hardwood.reader">RowGroupPredicate.And</a></dt>
+<dd>
+<div class="block">Returns a string representation of this record class.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a></dt>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
