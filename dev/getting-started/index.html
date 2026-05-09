@@ -574,6 +574,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#dependency-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependency Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dependency Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#using-the-bom-bill-of-materials" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -583,19 +595,36 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#adding-the-core-dependency" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#specifying-the-version-directly" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Adding the Core Dependency
+        Specifying the Version Directly
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
+  <a href="#optional-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional Dependencies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#logging" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -605,8 +634,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#compression-libraries" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -614,6 +643,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -906,6 +940,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#dependency-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dependency Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Dependency Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#using-the-bom-bill-of-materials" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -915,19 +961,36 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#adding-the-core-dependency" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#specifying-the-version-directly" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Adding the Core Dependency
+        Specifying the Version Directly
       
     </span>
   </a>
   
 </li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
+  <a href="#optional-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optional Dependencies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optional Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#logging" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -937,8 +1000,8 @@
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+          <li class="md-nav__item">
   <a href="#compression-libraries" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -946,6 +1009,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -999,7 +1067,8 @@
 <h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
 <p>Hardwood runs on Java 21 or newer; Java 25 is recommended for best performance.</p>
 <p>If you just want to inspect or convert Parquet files from the command line, grab a pre-built native binary for Linux, macOS, or Windows from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">release page</a>; see the <a href="../cli/">CLI</a> page for details.</p>
-<h2 id="using-the-bom-bill-of-materials">Using the BOM (Bill of Materials)<a class="headerlink" href="#using-the-bom-bill-of-materials" title="Permanent link">&para;</a></h2>
+<h2 id="dependency-management">Dependency Management<a class="headerlink" href="#dependency-management" title="Permanent link">&para;</a></h2>
+<h3 id="using-the-bom-bill-of-materials">Using the BOM (Bill of Materials)<a class="headerlink" href="#using-the-bom-bill-of-materials" title="Permanent link">&para;</a></h3>
 <p>The <code>hardwood-bom</code> manages versions for all Hardwood modules and their optional runtime dependencies.
 Import it in your dependency management so you can declare Hardwood dependencies without specifying versions:</p>
 <p><strong>Maven:</strong></p>
@@ -1026,7 +1095,7 @@ Import it in your dependency management so you can declare Hardwood dependencies
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>hardwood-core<span class="nt">&lt;/artifactId&gt;</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nt">&lt;/dependency&gt;</span>
 </code></pre></div>
-<h2 id="adding-the-core-dependency">Adding the Core Dependency<a class="headerlink" href="#adding-the-core-dependency" title="Permanent link">&para;</a></h2>
+<h3 id="specifying-the-version-directly">Specifying the Version Directly<a class="headerlink" href="#specifying-the-version-directly" title="Permanent link">&para;</a></h3>
 <p>If you prefer not to use the BOM, you can specify the version directly:</p>
 <p><strong>Maven:</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">&lt;dependency&gt;</span>
@@ -1038,10 +1107,11 @@ Import it in your dependency management so you can declare Hardwood dependencies
 <p><strong>Gradle:</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;dev.hardwood:hardwood-core:1.0.0.Beta2&#39;</span>
 </code></pre></div>
-<h2 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h2>
+<h2 id="optional-dependencies">Optional Dependencies<a class="headerlink" href="#optional-dependencies" title="Permanent link">&para;</a></h2>
+<h3 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h3>
 <p>Hardwood uses the Java Platform Logging API (<code>System.Logger</code>).
 Bindings are available for all popular logger implementations, for instance for <a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-jpl">log4j 2</a>.</p>
-<h2 id="compression-libraries">Compression Libraries<a class="headerlink" href="#compression-libraries" title="Permanent link">&para;</a></h2>
+<h3 id="compression-libraries">Compression Libraries<a class="headerlink" href="#compression-libraries" title="Permanent link">&para;</a></h3>
 <p>Hardwood supports reading Parquet files compressed with GZIP (built into Java), Snappy, ZSTD, LZ4, and Brotli. The compression libraries are optional dependencies—add only the ones you need:</p>
 <table>
 <thead>
@@ -1182,8 +1252,8 @@ Bindings are available for all popular logger implementations, for instance for 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/66d8053abf973970debe32a87c8169502efbe0c5" target="_blank" rel="noopener">
-      66d8053a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/35e4394a7530a811ce7bc06bccec8b10f058d145" target="_blank" rel="noopener">
+      35e4394a
     </a>
   
 </div>
