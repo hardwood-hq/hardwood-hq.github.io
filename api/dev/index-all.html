@@ -829,6 +829,10 @@ every row group, no filter.</div>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.Float16Type.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a></dt>
+<dd>
+<div class="block">Indicates whether some other object is "equal to" this one.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.GeographyType.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.GeographyType.html" title="class in dev.hardwood.metadata">LogicalType.GeographyType</a></dt>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
@@ -1206,6 +1210,10 @@ matches are skipped.</div>
 <dd>
 <div class="block">IEEE 32-bit floating point.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.Float16Type.html#%3Cinit%3E()" class="member-name-link">Float16Type()</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a></dt>
+<dd>
+<div class="block">Creates an instance of a <code>Float16Type</code> record class.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.FloatColumnPredicate.html#%3Cinit%3E(java.lang.String,dev.hardwood.reader.FilterPredicate.Operator,float)" class="member-name-link">FloatColumnPredicate(String, FilterPredicate.Operator, float)</a> - Constructor for record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.FloatColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.FloatColumnPredicate</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>FloatColumnPredicate</code> record class.</div>
@@ -1433,6 +1441,14 @@ matches are skipped.</div>
 <dt><a href="dev/hardwood/row/FieldAccessor.html#getFloat(java.lang.String)" class="member-name-link">getFloat(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/FieldAccessor.html" title="interface in dev.hardwood.row">FieldAccessor</a></dt>
 <dd>
 <div class="block">Get a FLOAT field value by name.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowReader.html#getFloat16(int)" class="member-name-link">getFloat16(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></dt>
+<dd>
+<div class="block">Get a FLOAT16 field value by field index, decoded to a single-precision <code>float</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/row/FieldAccessor.html#getFloat16(java.lang.String)" class="member-name-link">getFloat16(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/FieldAccessor.html" title="interface in dev.hardwood.row">FieldAccessor</a></dt>
+<dd>
+<div class="block">Get a FLOAT16 field value by name, decoded to a single-precision <code>float</code>.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#getFloats()" class="member-name-link">getFloats()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>&nbsp;</dd>
@@ -1822,6 +1838,10 @@ matches are skipped.</div>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.EnumType.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.EnumType.html" title="class in dev.hardwood.metadata">LogicalType.EnumType</a></dt>
+<dd>
+<div class="block">Returns a hash code value for this object.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.Float16Type.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a></dt>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
@@ -2365,6 +2385,11 @@ and transport settings.</div>
 <dt><a href="dev/hardwood/metadata/LogicalType.EnumType.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.EnumType</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
 <div class="block">Enum stored as a UTF-8 string.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.Float16Type.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
+<dd>
+<div class="block">IEEE 754 half-precision (binary16) floating point, stored as a 2-byte
+<code>FIXED_LEN_BYTE_ARRAY</code> in little-endian byte order.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.GeographyType.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.GeographyType</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
@@ -3508,6 +3533,10 @@ for the sparse-file backing.</div>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.EnumType.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.EnumType.html" title="class in dev.hardwood.metadata">LogicalType.EnumType</a></dt>
+<dd>
+<div class="block">Returns a string representation of this record class.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.Float16Type.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a></dt>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
