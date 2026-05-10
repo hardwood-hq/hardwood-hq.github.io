@@ -250,7 +250,22 @@ real values inside a non-empty list.</p>
 <h3>nextBatch</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">nextBatch</span>()</div>
-<div class="block">Advance to the next batch.</div>
+<div class="block"><p>Advance to the next batch.</p>
+<p><strong>Multi-column alignment.</strong> Every <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> over the same file produces
+batches at the same row boundaries — call <code>nextBatch()</code> on each in turn and they
+will report identical <a href="#getRecordCount()"><code>getRecordCount()</code></a>s for the matching batch. This holds
+because the per-column drain workers all use the same internal batch capacity and
+every reader observes the same total row count per row group.</p>
+<p>Consumers reading multiple columns in lockstep should generally prefer
+<a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> (obtained from
+<a href="ParquetFileReader.html#buildColumnReaders(dev.hardwood.schema.ColumnProjection)"><code>ParquetFileReader.buildColumnReaders(dev.hardwood.schema.ColumnProjection)</code></a>),
+which shares a single <code>RowGroupIterator</code> across all
+columns and exposes a single coordinated <a href="ColumnReaders.html#nextBatch()"><code>ColumnReaders.nextBatch()</code></a> that drives
+every reader and validates alignment in one call. Driving independent
+<code>ColumnReader</code> instances by hand with the bitwise-and idiom
+(<code>a.nextBatch() &amp; b.nextBatch()</code>) is correct but loses the shared-iterator
+efficiency and gives up the structural alignment guard.</p>
+</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if a batch is available, false if exhausted</dd>

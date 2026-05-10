@@ -852,6 +852,28 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#navigating-nested-groups-in-the-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Navigating nested groups in the schema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-nested-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading nested data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#multi-level-nesting" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1423,6 +1445,28 @@
   
     <nav class="md-nav" aria-label="Nested and Repeated Columns">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#navigating-nested-groups-in-the-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Navigating nested groups in the schema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-nested-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading nested data
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#multi-level-nesting" class="md-nav__link">
@@ -2155,40 +2199,46 @@ encoding automatically:</p>
 </code></pre></div>
 <p>Typed accessors are available for each physical type: <code>getInts()</code>, <code>getLongs()</code>, <code>getFloats()</code>, <code>getDoubles()</code>, <code>getBooleans()</code>, <code>getBinaries()</code>, and <code>getStrings()</code>. Column readers can also be created by index via <code>columnReader(int columnIndex)</code>. To attach a filter, use the builder form: <code>reader.buildColumnReader("id").filter(predicate).build()</code>.</p>
 <h3 id="reading-multiple-columns">Reading Multiple Columns<a class="headerlink" href="#reading-multiple-columns" title="Permanent link">&para;</a></h3>
-<p>For reading multiple columns together, use <code>columnReaders(projection)</code> which returns a <code>ColumnReaders</code> collection:</p>
+<p>For reading multiple columns together, use <code>columnReaders(projection)</code> which returns a <code>ColumnReaders</code> collection. Drive every reader in lockstep with <code>ColumnReaders.nextBatch()</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.Hardwood</span><span class="p">;</span>
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
 <a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ColumnReaders</span><span class="p">;</span>
-<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ColumnReader</span><span class="p">;</span>
-<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.schema.ColumnProjection</span><span class="p">;</span>
-<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
-<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">parquet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">     </span><span class="n">ColumnReaders</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parquet</span><span class="p">.</span><span class="na">columnReaders</span><span class="p">(</span>
-<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">             </span><span class="n">ColumnProjection</span><span class="p">.</span><span class="na">columns</span><span class="p">(</span><span class="s">&quot;passenger_count&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;trip_distance&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fare_amount&quot;</span><span class="p">))</span>
-<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>
-<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">    </span><span class="n">ColumnReader</span><span class="w"> </span><span class="n">col0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="p">.</span><span class="na">getColumnReader</span><span class="p">(</span><span class="s">&quot;passenger_count&quot;</span><span class="p">);</span>
-<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">    </span><span class="n">ColumnReader</span><span class="w"> </span><span class="n">col1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="p">.</span><span class="na">getColumnReader</span><span class="p">(</span><span class="s">&quot;trip_distance&quot;</span><span class="p">);</span>
-<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="w">    </span><span class="n">ColumnReader</span><span class="w"> </span><span class="n">col2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="p">.</span><span class="na">getColumnReader</span><span class="p">(</span><span class="s">&quot;fare_amount&quot;</span><span class="p">);</span>
-<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>
-<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">passengerCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">tripDistance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">fareAmount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>
-<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">col0</span><span class="p">.</span><span class="na">nextBatch</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">col1</span><span class="p">.</span><span class="na">nextBatch</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">col2</span><span class="p">.</span><span class="na">nextBatch</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col0</span><span class="p">.</span><span class="na">getRecordCount</span><span class="p">();</span>
-<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="w">        </span><span class="kt">double</span><span class="o">[]</span><span class="w"> </span><span class="n">v0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col0</span><span class="p">.</span><span class="na">getDoubles</span><span class="p">();</span>
-<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="w">        </span><span class="kt">double</span><span class="o">[]</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col1</span><span class="p">.</span><span class="na">getDoubles</span><span class="p">();</span>
-<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="w">        </span><span class="kt">double</span><span class="o">[]</span><span class="w"> </span><span class="n">v2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">col2</span><span class="p">.</span><span class="na">getDoubles</span><span class="p">();</span>
-<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>
-<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">count</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a><span class="w">            </span><span class="n">passengerCount</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="w"> </span><span class="n">v0</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
-<a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="w">            </span><span class="n">tripDistance</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">v1</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
-<a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a><span class="w">            </span><span class="n">fareAmount</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">v2</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
-<a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a><span class="p">}</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.schema.ColumnProjection</span><span class="p">;</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">parquet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">     </span><span class="n">ColumnReaders</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parquet</span><span class="p">.</span><span class="na">buildColumnReaders</span><span class="p">(</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">             </span><span class="n">ColumnProjection</span><span class="p">.</span><span class="na">columns</span><span class="p">(</span><span class="s">&quot;passenger_count&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;trip_distance&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fare_amount&quot;</span><span class="p">))</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">passengerCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">tripDistance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">fareAmount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">columns</span><span class="p">.</span><span class="na">nextBatch</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="p">.</span><span class="na">getRecordCount</span><span class="p">();</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">        </span><span class="kt">double</span><span class="o">[]</span><span class="w"> </span><span class="n">v0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="p">.</span><span class="na">getColumnReader</span><span class="p">(</span><span class="s">&quot;passenger_count&quot;</span><span class="p">).</span><span class="na">getDoubles</span><span class="p">();</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="w">        </span><span class="kt">double</span><span class="o">[]</span><span class="w"> </span><span class="n">v1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="p">.</span><span class="na">getColumnReader</span><span class="p">(</span><span class="s">&quot;trip_distance&quot;</span><span class="p">).</span><span class="na">getDoubles</span><span class="p">();</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="w">        </span><span class="kt">double</span><span class="o">[]</span><span class="w"> </span><span class="n">v2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="p">.</span><span class="na">getColumnReader</span><span class="p">(</span><span class="s">&quot;fare_amount&quot;</span><span class="p">).</span><span class="na">getDoubles</span><span class="p">();</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">count</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a><span class="w">            </span><span class="n">passengerCount</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="w"> </span><span class="n">v0</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="w">            </span><span class="n">tripDistance</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">v1</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="w">            </span><span class="n">fareAmount</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">v2</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">;</span>
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a><span class="p">}</span>
 </code></pre></div>
+<p><code>ColumnReaders.nextBatch()</code> advances every underlying reader once and returns <code>false</code> when any reader is exhausted — partial advancement isn't possible because all readers consume from a shared <code>RowGroupIterator</code>. The aligned record count is exposed via <code>ColumnReaders.getRecordCount()</code>. As a defensive guard, mismatched per-reader record counts throw <code>IllegalStateException</code>. Single-column consumers, or callers that need fine-grained per-reader cadence, can still call <code>ColumnReader.nextBatch()</code> directly on the readers returned by <code>getColumnReader(...)</code>.</p>
 <h3 id="nested-and-repeated-columns">Nested and Repeated Columns<a class="headerlink" href="#nested-and-repeated-columns" title="Permanent link">&para;</a></h3>
+<h4 id="navigating-nested-groups-in-the-schema">Navigating nested groups in the schema<a class="headerlink" href="#navigating-nested-groups-in-the-schema" title="Permanent link">&para;</a></h4>
+<p>Before opening a reader for a nested column, you usually need to walk the file's schema tree to find the leaf you want. <code>SchemaNode.GroupNode</code> exposes the structural primitives:</p>
+<ul>
+<li><code>isList()</code> / <code>isMap()</code> / <code>isStruct()</code> — disambiguate which kind of group a node is.</li>
+<li><code>getListElement()</code> — for LIST groups, returns the element node, applying Parquet's backward-compatibility rules for legacy 2-level encodings.</li>
+<li><code>getMapKey()</code> / <code>getMapValue()</code> — for MAP groups, returns the key and value nodes from the standard <code>map.key_value.key</code> / <code>map.key_value.value</code> encoding.</li>
+<li><code>children()</code> — for plain struct groups, iterate to get each field.</li>
+</ul>
+<p>All three navigation methods return <code>null</code> when the group isn't of the expected kind or its encoding is malformed. Callers decide whether <code>null</code> is fatal at their layer.</p>
+<h4 id="reading-nested-data">Reading nested data<a class="headerlink" href="#reading-nested-data" title="Permanent link">&para;</a></h4>
 <p>For nested columns (lists, maps), <code>ColumnReader</code> provides multi-level offsets and per-level null bitmaps. A list/map container has four states, and three bitmaps together identify which one each record is in:</p>
 <ul>
 <li><strong>Null</strong> — <code>getLevelNulls(level)</code> set at the container's index.</li>
@@ -2721,8 +2771,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/f3a5470d3789b5f56940417e9d6b06f7afe96c48" target="_blank" rel="noopener">
-      f3a5470d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4f0a55a6ddccd7ff734263d3c5b69b7936856f48" target="_blank" rel="noopener">
+      4f0a55a6
     </a>
   
 </div>

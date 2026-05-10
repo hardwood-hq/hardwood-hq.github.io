@@ -71,6 +71,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#isStruct()" tabindex="0">isStruct()</a></li>
 <li><a href="#isVariant()" tabindex="0">isVariant()</a></li>
 <li><a href="#getListElement()" tabindex="0">getListElement()</a></li>
+<li><a href="#getMapKey()" tabindex="0">getMapKey()</a></li>
+<li><a href="#getMapValue()" tabindex="0">getMapValue()</a></li>
 <li><a href="#toString()" tabindex="0">toString()</a></li>
 <li><a href="#hashCode()" tabindex="0">hashCode()</a></li>
 <li><a href="#equals(java.lang.Object)" tabindex="0">equals(Object)</a></li>
@@ -186,6 +188,18 @@ implements <a href="SchemaNode.html" title="interface in dev.hardwood.schema">Sc
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">For LIST groups, returns the element node (skipping the intermediate
 <code>list</code>/<code>key_value</code> group in standard 3-level encoding).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapKey()" class="member-name-link">getMapKey</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">For MAP groups, returns the key node from the standard encoding
+(<code>map.key_value.key</code>).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapValue()" class="member-name-link">getMapValue</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">For MAP groups, returns the value node from the standard encoding
+(<code>map.key_value.value</code>).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
@@ -347,6 +361,32 @@ the LIST-annotated group's name with <code>_tuple</code> appended, the repeated 
 <li>Otherwise, the repeated field's single child is the element (standard 3-level encoding).</li>
 </ol>
 </div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getMapKey()">
+<h3>getMapKey</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></span>&nbsp;<span class="element-name">getMapKey</span>()</div>
+<div class="block"><p>For MAP groups, returns the key node from the standard encoding
+(<code>map.key_value.key</code>).</p>
+<p>Returns <code>null</code> if this group is not a MAP, or if the structure does not
+match the standard encoding (a single REPEATED <code>key_value</code> child group with
+exactly two children). Symmetric with <a href="#getListElement()"><code>getListElement()</code></a> in returning
+<code>null</code> rather than throwing — callers decide whether a malformed schema is
+fatal at their layer.</p>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getMapValue()">
+<h3>getMapValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></span>&nbsp;<span class="element-name">getMapValue</span>()</div>
+<div class="block">For MAP groups, returns the value node from the standard encoding
+(<code>map.key_value.value</code>). See <a href="#getMapKey()"><code>getMapKey()</code></a> for null semantics.</div>
 </div>
 </section>
 </li>

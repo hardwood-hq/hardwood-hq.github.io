@@ -61,6 +61,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#getColumnCount()" tabindex="0">getColumnCount()</a></li>
 <li><a href="#getColumnReader(java.lang.String)" tabindex="0">getColumnReader(String)</a></li>
 <li><a href="#getColumnReader(int)" tabindex="0">getColumnReader(int)</a></li>
+<li><a href="#nextBatch()" tabindex="0">nextBatch()</a></li>
+<li><a href="#getRecordCount()" tabindex="0">getRecordCount()</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
 </ol>
 </li>
@@ -90,18 +92,20 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 single- and multi-file <a href="ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a> inputs; the iterator
 transparently handles cross-file prefetching when more than one file is
 involved.</p>
+<p>Use <a href="#nextBatch()"><code>nextBatch()</code></a> to advance every underlying reader in lockstep — this is
+the structurally-safe path for multi-column consumption: a single call drives
+every reader, returns false when any is exhausted, and validates that the
+readers report matching record counts.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">try (ParquetFileReader parquet = ParquetFileReader.openAll(files);
-     ColumnReaders columns = parquet.columnReaders(
+     ColumnReaders columns = parquet.buildColumnReaders(
              ColumnProjection.columns(&quot;passenger_count&quot;, &quot;trip_distance&quot;, &quot;fare_amount&quot;))
              .build()) {
 
-    ColumnReader col0 = columns.getColumnReader(&quot;passenger_count&quot;);
-    ColumnReader col1 = columns.getColumnReader(&quot;trip_distance&quot;);
-    ColumnReader col2 = columns.getColumnReader(&quot;fare_amount&quot;);
-
-    while (col0.nextBatch() &amp; col1.nextBatch() &amp; col2.nextBatch()) {
-        int count = col0.getRecordCount();
-        double[] v0 = col0.getDoubles();
+    while (columns.nextBatch()) {
+        int count = columns.getRecordCount();
+        double[] v0 = columns.getColumnReader(0).getDoubles();
+        double[] v1 = columns.getColumnReader(1).getDoubles();
+        double[] v2 = columns.getColumnReader(2).getDoubles();
         // ...
     }
 }
@@ -139,6 +143,16 @@ involved.</p>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnReader(java.lang.String)" class="member-name-link">getColumnReader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get the ColumnReader for a named column.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRecordCount()" class="member-name-link">getRecordCount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Number of records in the most recently published batch.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextBatch()" class="member-name-link">nextBatch</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Advance every underlying <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> to its next batch in lockstep.</div>
 </div>
 </div>
 </div>
@@ -195,6 +209,56 @@ For nested columns, use the dot-separated field path (e.g. <code>&quot;address.z
 <dd><code>index</code> - index within the requested column names (0-based)</dd>
 <dt>Returns:</dt>
 <dd>the ColumnReader at the given index</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="nextBatch()">
+<h3>nextBatch</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">nextBatch</span>()</div>
+<div class="block"><p>Advance every underlying <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> to its next batch in lockstep.</p>
+<p>All readers share the same <code>RowGroupIterator</code>, so they always publish batches at
+the same row boundaries. This method drives every reader once and returns:</p>
+<ul>
+<li><code>true</code> when every reader produced a new batch — callers can then read values
+via the per-column accessors. The aligned record count is exposed through
+<a href="#getRecordCount()"><code>getRecordCount()</code></a>.</li>
+<li><code>false</code> when any reader is exhausted — partial advancement is impossible
+because all readers consume from the shared iterator, so once one is done they
+all are.</li>
+</ul>
+<p>As a defensive guard, a mismatch between the readers' published record counts
+throws <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>. Under correct internal behavior this can't
+happen — the guard exists to detect future regressions in the per-column drain
+workers, not to be triggered in production.</p>
+<p>Single-column consumers, or consumers that need fine-grained control over the
+per-reader cadence, can still call <a href="ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> directly on the
+readers returned by <a href="#getColumnReader(int)"><code>getColumnReader(int)</code></a> / <a href="#getColumnReader(java.lang.String)"><code>getColumnReader(String)</code></a>.</p>
+</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if a new aligned batch is available across all readers, false if exhausted</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the readers report mismatched record counts</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRecordCount()">
+<h3>getRecordCount</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRecordCount</span>()</div>
+<div class="block"><p>Number of records in the most recently published batch.</p>
+<p>Equal to every underlying reader's <a href="ColumnReader.html#getRecordCount()"><code>ColumnReader.getRecordCount()</code></a> — alignment is
+validated by <a href="#nextBatch()"><code>nextBatch()</code></a>.</p>
+</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if no batch is currently available — call
+<a href="#nextBatch()"><code>nextBatch()</code></a> first</dd>
 </dl>
 </div>
 </section>
