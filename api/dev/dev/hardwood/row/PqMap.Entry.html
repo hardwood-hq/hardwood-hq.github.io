@@ -86,6 +86,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#getStructValue()" tabindex="0">getStructValue()</a></li>
 <li><a href="#getListValue()" tabindex="0">getListValue()</a></li>
 <li><a href="#getMapValue()" tabindex="0">getMapValue()</a></li>
+<li><a href="#getVariantValue()" tabindex="0">getVariantValue()</a></li>
 <li><a href="#getValue()" tabindex="0">getValue()</a></li>
 <li><a href="#getRawValue()" tabindex="0">getRawValue()</a></li>
 <li><a href="#isValueNull()" tabindex="0">isValueNull()</a></li>
@@ -271,9 +272,14 @@ decoding.</div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get the value, decoded to its logical-type representation.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isValueNull()" class="member-name-link">isValueNull</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getVariantValue()" class="member-name-link">getVariantValue</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get the value as a VARIANT.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isValueNull()" class="member-name-link">isValueNull</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Check if the value is null.</div>
 </div>
 </div>
@@ -700,6 +706,25 @@ a FIXED_LEN_BYTE_ARRAY-backed DECIMAL returns <code>byte[]</code>, not <a href="
 <dd>the nested map, or null if the value is null</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the value type is not a map</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getVariantValue()">
+<h3>getVariantValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></span>&nbsp;<span class="element-name">getVariantValue</span>()</div>
+<div class="block"><p>Get the value as a VARIANT.</p>
+<p>Only unshredded variants are supported in repeated contexts today;
+shredded variant values throw <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link"><code>UnsupportedOperationException</code></a>.</p>
+</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the variant, or null if the value is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the value type is not a variant</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the variant is shredded</dd>
 </dl>
 </div>
 </section>
