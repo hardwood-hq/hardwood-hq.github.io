@@ -1281,7 +1281,7 @@ matches are skipped.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqList.html#get(int)" class="member-name-link">get(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>
-<div class="block">Get a raw element by index without type conversion.</div>
+<div class="block">Get an element by index, decoded to its logical-type representation.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqLongList.html#get(int)" class="member-name-link">get(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqLongList.html" title="interface in dev.hardwood.row">PqLongList</a></dt>
 <dd>
@@ -1386,6 +1386,10 @@ matches are skipped.</div>
 <dd>
 <div class="block">Get a DECIMAL field value by name.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqMap.Entry.html#getDecimalKey()" class="member-name-link">getDecimalKey()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
+<dd>
+<div class="block">Get the key as a DECIMAL.</div>
+</dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getDecimalValue()" class="member-name-link">getDecimalValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
 <div class="block">Get the value as a DECIMAL.</div>
@@ -1464,6 +1468,10 @@ matches are skipped.</div>
 <dd>
 <div class="block">Get an INTERVAL field value by name.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqMap.Entry.html#getIntervalValue()" class="member-name-link">getIntervalValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
+<dd>
+<div class="block">Get the value as an INTERVAL.</div>
+</dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getIntKey()" class="member-name-link">getIntKey()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
 <div class="block">Get the key as an INT32.</div>
@@ -1476,7 +1484,7 @@ matches are skipped.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getKey()" class="member-name-link">getKey()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
-<div class="block">Get the key without type conversion.</div>
+<div class="block">Get the key, decoded to its logical-type representation.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#getLevelNulls(int)" class="member-name-link">getLevelNulls(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>
@@ -1608,6 +1616,32 @@ matches are skipped.</div>
 <dd>
 <div class="block">Returns the indices of projected top-level fields in the root node's children.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqList.html#getRaw(int)" class="member-name-link">getRaw(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
+<dd>
+<div class="block">Get an element by index in its underlying physical form, mirroring
+the <code>getRawValue</code> accessors on <code>RowReader</code> / <a href="dev/hardwood/row/PqStruct.html" title="interface in dev.hardwood.row"><code>PqStruct</code></a> / <a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row"><code>PqMap.Entry</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqMap.Entry.html#getRawKey()" class="member-name-link">getRawKey()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
+<dd>
+<div class="block">Get the key as its raw physical representation, without logical-type
+decoding (e.g. an INT64-backed TIMESTAMP returns <code>Long</code>, not <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a>;
+a FIXED_LEN_BYTE_ARRAY-backed DECIMAL returns <code>byte[]</code>, not <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a>).</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqMap.Entry.html#getRawValue()" class="member-name-link">getRawValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
+<dd>
+<div class="block">Get the value as its raw physical representation, without logical-type
+decoding.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/RowReader.html#getRawValue(int)" class="member-name-link">getRawValue(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></dt>
+<dd>
+<div class="block">Get a field value by field index as its raw physical representation,
+without logical-type decoding.</div>
+</dd>
+<dt><a href="dev/hardwood/row/FieldAccessor.html#getRawValue(java.lang.String)" class="member-name-link">getRawValue(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/FieldAccessor.html" title="interface in dev.hardwood.row">FieldAccessor</a></dt>
+<dd>
+<div class="block">Get a field value by name as its raw physical representation, without
+logical-type decoding.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#getRecordCount()" class="member-name-link">getRecordCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>
 <div class="block">Number of top-level records in the current batch.</div>
@@ -1664,6 +1698,10 @@ matches are skipped.</div>
 <dd>
 <div class="block">Get a TIME field value by name.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqMap.Entry.html#getTimeKey()" class="member-name-link">getTimeKey()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
+<dd>
+<div class="block">Get the key as a TIME.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/RowReader.html#getTimestamp(int)" class="member-name-link">getTimestamp(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></dt>
 <dd>
 <div class="block">Get a TIMESTAMP field value by field index.</div>
@@ -1702,15 +1740,16 @@ matches are skipped.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getValue()" class="member-name-link">getValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
-<div class="block">Get the value without type conversion.</div>
+<div class="block">Get the value, decoded to its logical-type representation.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/RowReader.html#getValue(int)" class="member-name-link">getValue(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></dt>
 <dd>
-<div class="block">Get a field value by field index without type conversion.</div>
+<div class="block">Get a field value by field index, decoded to its logical-type
+representation.</div>
 </dd>
 <dt><a href="dev/hardwood/row/FieldAccessor.html#getValue(java.lang.String)" class="member-name-link">getValue(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/FieldAccessor.html" title="interface in dev.hardwood.row">FieldAccessor</a></dt>
 <dd>
-<div class="block">Get a field value by name without type conversion.</div>
+<div class="block">Get a field value by name, decoded to its logical-type representation.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#getValueCount()" class="member-name-link">getValueCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>
@@ -2144,6 +2183,10 @@ and transport settings.</div>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#INTERVAL" class="member-name-link">INTERVAL</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">Interval stored as a 12-byte fixed-length byte array.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqList.html#intervals()" class="member-name-link">intervals()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
+<dd>
+<div class="block">Iterate over elements as <a href="dev/hardwood/row/PqInterval.html" title="class in dev.hardwood.row"><code>PqInterval</code></a> values.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.IntervalType.html#%3Cinit%3E()" class="member-name-link">IntervalType()</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.IntervalType.html" title="class in dev.hardwood.metadata">LogicalType.IntervalType</a></dt>
 <dd>
@@ -3112,6 +3155,10 @@ source.</div>
 <dd>
 <div class="block">How an <a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> caches fetched byte ranges.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqList.html#rawValues()" class="member-name-link">rawValues()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
+<dd>
+<div class="block">Iterate over elements in their underlying physical form, as in <a href="dev/hardwood/row/PqList.html#getRaw(int)"><code>PqList.getRaw(int)</code></a>.</div>
+</dd>
 <dt><a href="dev/hardwood/InputFile.html#readRange(long,int)" class="member-name-link">readRange(long, int)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
 <dd>
 <div class="block">Read a range of bytes from the file.</div>
@@ -3995,7 +4042,7 @@ the order they are declared.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqList.html#values()" class="member-name-link">values()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>
-<div class="block">Iterate over elements as raw objects without type conversion.</div>
+<div class="block">Iterate over elements, each decoded to its logical-type representation.</div>
 </dd>
 <dt><a href="dev/hardwood/row/VariantType.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.row.<a href="dev/hardwood/row/VariantType.html" title="enum class in dev.hardwood.row">VariantType</a></dt>
 <dd>
