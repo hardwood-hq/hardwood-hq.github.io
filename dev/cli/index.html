@@ -6,17 +6,17 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A zero-dependency Java Parquet file reader">
+        <meta name="description" content="A lightweight Java Parquet reader — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
       
       
       
         <link rel="canonical" href="https://hardwood.dev/dev/cli/">
       
       
-        <link rel="prev" href="../avro/">
+        <link rel="prev" href="../usage/">
       
       
-        <link rel="next" href="../compat/">
+        <link rel="next" href="../s3/">
       
       
         
@@ -304,44 +304,6 @@
   
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../s3/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  S3
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../avro/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Avro
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
     
   
   
@@ -364,17 +326,18 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="../compat/" class="md-tabs__link">
-        
-  
-  
     
+    
+      <li class="md-tabs__item">
+        <a href="../s3/" class="md-tabs__link">
+          
   
-  Parquet-Java Compatibility
+  
+  Modules
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -592,60 +555,6 @@
       
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../s3/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    S3
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../avro/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Avro
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
     
   
   
@@ -838,6 +747,116 @@
   
   
   
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../avro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Avro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../compat/" class="md-nav__link">
         
@@ -855,6 +874,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1204,7 +1231,7 @@
 <a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1"># Show dictionary entries for a column (first 50 entries per row group by default)</span>
 <a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category
 <a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># Show all dictionary entries for a column</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># Show all dictionary entries for a column (--limit 0 means unlimited)</span>
 <a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category<span class="w"> </span>--limit<span class="w"> </span><span class="m">0</span>
 <a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
 <a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1"># Convert first 100 rows to JSON</span>
@@ -1366,7 +1393,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
-<p>The CLI resolves credentials via the standard AWS credential chain (environment variables, <code>~/.aws/credentials</code>, SSO, instance profiles, etc.).</p>
+<p>The CLI resolves credentials via the standard AWS credential chain (<code>AWS_ACCESS_KEY_ID</code> / <code>AWS_SECRET_ACCESS_KEY</code> / <code>AWS_SESSION_TOKEN</code> environment variables, <code>~/.aws/credentials</code>, SSO, EC2/ECS instance profiles, web identity). See the <a href="../s3/">S3 module page</a> for the resolution order and provider details.</p>
+<p>The CLI additionally reads these environment variables:</p>
 <table>
 <thead>
 <tr>
@@ -1443,8 +1471,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0aadc8f76ca75f42ad829560c9a4ddf66076bce4" target="_blank" rel="noopener">
-      0aadc8f7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/03eb02450e4f291a994144ae65b881a93260ebf5" target="_blank" rel="noopener">
+      03eb0245
     </a>
   
 </div>

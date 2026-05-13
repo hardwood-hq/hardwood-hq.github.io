@@ -6,14 +6,14 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A zero-dependency Java Parquet file reader">
+        <meta name="description" content="A lightweight Java Parquet reader — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
       
       
       
         <link rel="canonical" href="https://hardwood.dev/dev/compat/">
       
       
-        <link rel="prev" href="../cli/">
+        <link rel="prev" href="../avro/">
       
       
         <link rel="next" href="../release-notes/">
@@ -306,44 +306,6 @@
   
   
     <li class="md-tabs__item">
-      <a href="../s3/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  S3
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../avro/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Avro
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
       <a href="../cli/" class="md-tabs__link">
         
   
@@ -364,17 +326,18 @@
     
   
   
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
-        
-  
-  
     
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../s3/" class="md-tabs__link">
+          
   
-  Parquet-Java Compatibility
+  
+  Modules
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -595,6 +558,90 @@
   
   
     <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../s3/" class="md-nav__link">
         
   
@@ -614,9 +661,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -641,36 +689,10 @@
     </li>
   
 
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    CLI
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
+              
+            
+              
+                
   
   
     
@@ -771,6 +793,14 @@
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -954,6 +984,10 @@
 -->
 <h1 id="parquet-java-compatibility">Parquet-Java Compatibility<a class="headerlink" href="#parquet-java-compatibility" title="Permanent link">&para;</a></h1>
 <p>If you have existing code that uses Apache parquet-java's <code>ParquetReader&lt;Group&gt;</code> API and want to switch to Hardwood without rewriting it, the <code>hardwood-parquet-java-compat</code> module provides a drop-in replacement. It implements the same <code>org.apache.parquet.*</code> interfaces backed by Hardwood's reader, so you get Hardwood's performance with minimal code changes.</p>
+<div class="admonition warning">
+<p class="admonition-title">Mutually exclusive with parquet-java</p>
+<p>This module provides its own type shims in the <code>org.apache.parquet.*</code> namespace. It <strong>cannot</strong> be used alongside <code>parquet-java</code> on the same classpath — pick one or the other.</p>
+</div>
 <p><strong>Features:</strong></p>
 <ul>
 <li>Provides <code>org.apache.parquet.*</code> namespace classes compatible with parquet-java</li>
@@ -1014,10 +1048,6 @@
 <a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="c1">// only rows from matching row groups are returned</span>
 <a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">}</span>
 </code></pre></div>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>This module provides its own type shims in the <code>org.apache.parquet.*</code> namespace. It cannot be used alongside parquet-java on the same classpath.</p>
-</div>
 
 
 
@@ -1067,8 +1097,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0aadc8f76ca75f42ad829560c9a4ddf66076bce4" target="_blank" rel="noopener">
-      0aadc8f7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/03eb02450e4f291a994144ae65b881a93260ebf5" target="_blank" rel="noopener">
+      03eb0245
     </a>
   
 </div>

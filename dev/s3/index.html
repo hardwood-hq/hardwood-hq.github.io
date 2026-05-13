@@ -6,14 +6,14 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A zero-dependency Java Parquet file reader">
+        <meta name="description" content="A lightweight Java Parquet reader — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
       
       
       
         <link rel="canonical" href="https://hardwood.dev/dev/s3/">
       
       
-        <link rel="prev" href="../usage/">
+        <link rel="prev" href="../cli/">
       
       
         <link rel="next" href="../avro/">
@@ -304,46 +304,6 @@
   
   
   
-    
-  
-  
-    <li class="md-tabs__item md-tabs__item--active">
-      <a href="./" class="md-tabs__link">
-        
-  
-  
-    
-  
-  S3
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../avro/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Avro
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
   
     <li class="md-tabs__item">
       <a href="../cli/" class="md-tabs__link">
@@ -363,18 +323,21 @@
   
   
   
-  
-    <li class="md-tabs__item">
-      <a href="../compat/" class="md-tabs__link">
-        
+    
   
   
     
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
   
-  Parquet-Java Compatibility
+  
+  Modules
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -592,6 +555,90 @@
       
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
     
   
   
@@ -732,6 +779,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#not-currently-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not currently supported
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -744,9 +802,10 @@
     </li>
   
 
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -771,36 +830,10 @@
     </li>
   
 
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    CLI
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
+              
+            
+              
+                
   
   
   
@@ -822,6 +855,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1011,6 +1052,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#not-currently-supported" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not currently supported
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1166,6 +1218,7 @@
 <a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p>Set <code>maxRetries(0)</code> to disable retries entirely.</p>
+<p>When the retry budget is exhausted, the last failure is re-thrown as an <code>IOException</code> to the caller. For HTTP errors the message has the form <code>GET s3://&lt;bucket&gt;/&lt;key&gt; failed: HTTP &lt;status&gt;</code>; for network errors the original <code>IOException</code> message is preserved.</p>
 <h3 id="custom-httpclient">Custom HttpClient<a class="headerlink" href="#custom-httpclient" title="Permanent link">&para;</a></h3>
 <p>For full control over connection pooling, proxy settings, or other transport configuration, pass a pre-configured <code>HttpClient</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">HttpClient</span><span class="w"> </span><span class="n">client</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HttpClient</span><span class="p">.</span><span class="na">newBuilder</span><span class="p">()</span>
@@ -1178,11 +1231,19 @@
 <a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">        </span><span class="p">.</span><span class="na">httpClient</span><span class="p">(</span><span class="n">client</span><span class="p">)</span>
 <a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-<p>When a custom <code>HttpClient</code> is provided, the caller is responsible for closing it — <code>S3Source.close()</code> will not close the client. The <code>connectTimeout</code> builder option is ignored when a custom client is supplied.</p>
+<div class="admonition warning">
+<p class="admonition-title">Caller-supplied <code>HttpClient</code> lifecycle</p>
+<p>When a custom <code>HttpClient</code> is provided, the caller is responsible for closing it — <code>S3Source.close()</code> will not close the client. The <code>connectTimeout</code> builder option is also ignored when a custom client is supplied.</p>
+</div>
 <p>Column projection, row group filtering, and all other reader features work transparently with S3 files.</p>
 <h3 id="io-behavior">I/O Behavior<a class="headerlink" href="#io-behavior" title="Permanent link">&para;</a></h3>
 <p>When reading from S3, Hardwood coalesces column chunk reads within each row group into as few HTTP requests as possible (typically 1-2 per row group). Column projection, page-level predicate pushdown, and <code>maxRows</code> all narrow the byte ranges before coalescing, reducing the amount of data transferred.</p>
 <p>Note that without a <code>maxRows</code> limit, the reader fetches all projected (and filtered) column data for an entire row group when any column enters it. For large row groups (128 MB–1 GB is typical), this can transfer significant data even if the consumer stops reading early. To minimize data transfer for partial reads, set <code>maxRows</code> on the reader — this truncates each column's fetch to only the pages covering the needed rows.</p>
+<h3 id="not-currently-supported">Not currently supported<a class="headerlink" href="#not-currently-supported" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Anonymous (unsigned) requests</strong> — <code>S3Credentials</code> requires an access key + secret key pair; there is no built-in mode for public buckets without credentials.</li>
+<li><strong>Requester-pays buckets</strong> — Hardwood does not send the <code>x-amz-request-payer</code> header. Reads against requester-pays buckets will fail with <code>403 AccessDenied</code> even with valid credentials.</li>
+</ul>
 
 
 
@@ -1232,8 +1293,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0aadc8f76ca75f42ad829560c9a4ddf66076bce4" target="_blank" rel="noopener">
-      0aadc8f7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/03eb02450e4f291a994144ae65b881a93260ebf5" target="_blank" rel="noopener">
+      03eb0245
     </a>
   
 </div>

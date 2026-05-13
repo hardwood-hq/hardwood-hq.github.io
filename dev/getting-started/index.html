@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A zero-dependency Java Parquet file reader">
+        <meta name="description" content="A lightweight Java Parquet reader — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
       
       
       
@@ -308,44 +308,6 @@
   
   
     <li class="md-tabs__item">
-      <a href="../s3/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  S3
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="../avro/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Avro
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
       <a href="../cli/" class="md-tabs__link">
         
   
@@ -364,17 +326,18 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="../compat/" class="md-tabs__link">
-        
-  
-  
     
+    
+      <li class="md-tabs__item">
+        <a href="../s3/" class="md-tabs__link">
+          
   
-  Parquet-Java Compatibility
+  
+  Modules
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -731,60 +694,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../s3/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    S3
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../avro/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Avro
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../cli/" class="md-nav__link">
         
   
@@ -811,6 +720,116 @@
   
   
   
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../avro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Avro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../compat/" class="md-nav__link">
         
@@ -828,6 +847,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -1089,11 +1116,13 @@ Import it in your dependency management so you can declare Hardwood dependencies
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="n">platform</span><span class="o">(</span><span class="s1">&#39;dev.hardwood:hardwood-bom:1.0.0.Beta2&#39;</span><span class="o">)</span>
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="o">}</span>
 </code></pre></div>
-<p>Then declare dependencies without versions:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">&lt;dependency&gt;</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>dev.hardwood<span class="nt">&lt;/groupId&gt;</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>hardwood-core<span class="nt">&lt;/artifactId&gt;</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="nt">&lt;/dependency&gt;</span>
+<p>Then declare dependencies inside your project's <code>&lt;dependencies&gt;</code> block without specifying a version:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">&lt;dependencies&gt;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="nt">&lt;dependency&gt;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="nt">&lt;groupId&gt;</span>dev.hardwood<span class="nt">&lt;/groupId&gt;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="nt">&lt;artifactId&gt;</span>hardwood-core<span class="nt">&lt;/artifactId&gt;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="nt">&lt;/dependency&gt;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nt">&lt;/dependencies&gt;</span>
 </code></pre></div>
 <h3 id="specifying-the-version-directly">Specifying the Version Directly<a class="headerlink" href="#specifying-the-version-directly" title="Permanent link">&para;</a></h3>
 <p>If you prefer not to use the BOM, you can specify the version directly:</p>
@@ -1112,7 +1141,7 @@ Import it in your dependency management so you can declare Hardwood dependencies
 <p>Hardwood uses the Java Platform Logging API (<code>System.Logger</code>).
 Bindings are available for all popular logger implementations, for instance for <a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-jpl">log4j 2</a>.</p>
 <h3 id="compression-libraries">Compression Libraries<a class="headerlink" href="#compression-libraries" title="Permanent link">&para;</a></h3>
-<p>Hardwood supports reading Parquet files compressed with GZIP (built into Java), Snappy, ZSTD, LZ4, and Brotli. The compression libraries are optional dependencies—add only the ones you need:</p>
+<p>Hardwood supports reading Parquet files compressed with GZIP (built into Java), Snappy, ZSTD, LZ4, and Brotli. The compression libraries are optional dependencies—add only the ones you need. Snappy and ZSTD are the codecs most commonly seen in the wild; LZ4 and Brotli are rarer.</p>
 <table>
 <thead>
 <tr>
@@ -1252,8 +1281,8 @@ Bindings are available for all popular logger implementations, for instance for 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0aadc8f76ca75f42ad829560c9a4ddf66076bce4" target="_blank" rel="noopener">
-      0aadc8f7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/03eb02450e4f291a994144ae65b881a93260ebf5" target="_blank" rel="noopener">
+      03eb0245
     </a>
   
 </div>

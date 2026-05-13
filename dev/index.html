@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A zero-dependency Java Parquet file reader">
+        <meta name="description" content="A lightweight Java Parquet reader — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
       
       
       
@@ -306,44 +306,6 @@
   
   
     <li class="md-tabs__item">
-      <a href="s3/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  S3
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
-      <a href="avro/" class="md-tabs__link">
-        
-  
-  
-    
-  
-  Avro
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-tabs__item">
       <a href="cli/" class="md-tabs__link">
         
   
@@ -362,17 +324,18 @@
   
   
   
-    <li class="md-tabs__item">
-      <a href="compat/" class="md-tabs__link">
-        
-  
-  
     
+    
+      <li class="md-tabs__item">
+        <a href="s3/" class="md-tabs__link">
+          
   
-  Parquet-Java Compatibility
+  
+  Modules
 
-      </a>
-    </li>
+        </a>
+      </li>
+    
   
 
       
@@ -545,6 +508,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#why-hardwood" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Hardwood
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quick-example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -560,6 +545,28 @@
     <span class="md-ellipsis">
       
         Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roadmap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting help
       
     </span>
   </a>
@@ -673,60 +680,6 @@
   
   
     <li class="md-nav__item">
-      <a href="s3/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    S3
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="avro/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Avro
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="cli/" class="md-nav__link">
         
   
@@ -753,6 +706,116 @@
   
   
   
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modules
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Modules
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="avro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Avro
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="compat/" class="md-nav__link">
         
@@ -770,6 +833,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -882,6 +953,28 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#why-hardwood" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Hardwood
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#quick-example" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -897,6 +990,28 @@
     <span class="md-ellipsis">
       
         Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Roadmap
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#getting-help" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Getting help
       
     </span>
   </a>
@@ -951,14 +1066,17 @@
 
 -->
 <h1 id="hardwood">Hardwood<a class="headerlink" href="#hardwood" title="Permanent link">&para;</a></h1>
-<p><em>A parser for the Apache Parquet file format, optimized for minimal dependencies and great performance.
+<p><em>A lightweight Java reader for the <a href="https://parquet.apache.org/">Apache Parquet</a> file format.
 Available as a Java library and a <a href="cli/">command-line tool</a>.</em></p>
-<p>Goals of the project are:</p>
+<h2 id="why-hardwood">Why Hardwood<a class="headerlink" href="#why-hardwood" title="Permanent link">&para;</a></h2>
+<p>Hardwood is built for applications that want Parquet read support without pulling in Hadoop, Avro, or the wider <a href="https://github.com/apache/parquet-java">parquet-java</a> dependency tree. Use it when you need any of: a small runtime (zero transitive dependencies in the core), fast startup (suitable for native CLIs and short-lived processes), multi-threaded decode out of the box (pages decoded in parallel across a shared thread pool), direct S3 access (without <code>hadoop-aws</code>), or drop-in replacement of <code>parquet-java</code>'s <code>ParquetReader&lt;Group&gt;</code> API via the <a href="compat/">compat module</a>.</p>
+<h2 id="goals">Goals<a class="headerlink" href="#goals" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Light-weight:</strong> Implement the Parquet file format avoiding any 3rd party dependencies other than for compression algorithms (e.g. Snappy)</li>
-<li><strong>Correct:</strong> Support all Parquet files which are supported by the canonical <a href="https://github.com/apache/parquet-java">parquet-java</a> library</li>
-<li><strong>Fast:</strong> Be as fast or faster as parquet-java</li>
-<li><strong>Complete:</strong> Add a Parquet file writer (after 1.0)</li>
+<li><strong>Light-weight</strong> — implement the Parquet format with zero transitive dependencies beyond optional compression libraries (Snappy, ZSTD, LZ4, Brotli).</li>
+<li><strong>Compatible</strong> — read every file that <code>parquet-java</code> reads, with documented divergences where Hardwood applies stricter semantics (e.g. SQL three-valued <code>notEq</code>).</li>
+<li><strong>Fast</strong> — match or exceed <code>parquet-java</code>'s read throughput; remain competitive in native-image builds and short-lived JVMs.</li>
+<li><strong>Concurrent</strong> — multi-threaded at the core: pages decode in parallel on a shared thread pool, with cross-file prefetching for multi-file reads.</li>
+<li><strong>Embeddable</strong> — usable from native CLIs, S3-only pipelines, and Avro / Spark consumers via thin shim modules.</li>
 </ul>
 <h2 id="quick-example">Quick Example<a class="headerlink" href="#quick-example" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.InputFile</span><span class="p">;</span>
@@ -980,11 +1098,26 @@ Available as a Java library and a <a href="cli/">command-line tool</a>.</em></p>
 </code></pre></div>
 <p>See <a href="getting-started/">Getting Started</a> for installation and setup.</p>
 <h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">&para;</a></h2>
-<p>This is Alpha quality software, under active development.</p>
-<p>Currently, individual Parquet files must be <strong>at most 2 GB</strong>.
-Larger datasets should be split across multiple files and read by passing a list of <code>InputFile</code>s to <code>Hardwood.openAll(...)</code> or <code>ParquetFileReader.openAll(...)</code>.</p>
+<p>This is Beta quality software, under active development.</p>
+<div class="admonition warning">
+<p class="admonition-title">2 GB single-file limit</p>
+<p>Individual Parquet files must currently be at most <strong>2 GB</strong>. Larger datasets should be split across multiple files and read by passing a list of <code>InputFile</code>s to <code>Hardwood.openAll(...)</code> or <code>ParquetFileReader.openAll(...)</code>. Tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/75">#75</a>.</p>
+</div>
+<h2 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">&para;</a></h2>
+<p>Forward-looking items tracked for post-1.0. None are committed to a specific release.</p>
+<ul>
+<li><strong>Writer support</strong> — write Parquet files in addition to reading; today Hardwood is reader-only. (<a href="https://github.com/hardwood-hq/hardwood/issues/9">#9</a>)</li>
+<li><strong>Bloom filter predicate pushdown</strong> — use per-chunk bloom filters for equality-predicate skipping on high-cardinality columns, where min/max statistics can't help. (<a href="https://github.com/hardwood-hq/hardwood/issues/105">#105</a>)</li>
+<li><strong>Parquet Modular Encryption</strong> — read files encrypted under the Parquet <a href="https://github.com/apache/parquet-format/blob/master/Encryption.md">Modular Encryption spec</a>: encrypted footer, per-column keys, AES-GCM and AES-GCM-CTR. (<a href="https://github.com/hardwood-hq/hardwood/issues/128">#128</a>)</li>
+<li><strong>Apache Arrow interop</strong> — <code>ColumnReader</code> output as Arrow <code>FieldVector</code> / <code>VectorSchemaRoot</code> for zero-copy handoff to DuckDB, DataFusion, Pandas-via-JNI, and other Arrow-native consumers. (<a href="https://github.com/hardwood-hq/hardwood/issues/153">#153</a>)</li>
+</ul>
+<h2 id="getting-help">Getting help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Questions, ideas, design discussion</strong> — <a href="https://github.com/hardwood-hq/hardwood/discussions">GitHub Discussions</a>. The best first stop for "how do I…", "is X possible…", or "what's the right way to…".</li>
+<li><strong>Bug reports and feature requests</strong> — the <a href="https://github.com/hardwood-hq/hardwood/issues">GitHub issue tracker</a>. Please check whether a similar issue already exists.</li>
+</ul>
 <h2 id="package-structure">Package Structure<a class="headerlink" href="#package-structure" title="Permanent link">&para;</a></h2>
-<p>Hardwood is organized into public API packages and internal implementation packages:</p>
+<p>Hardwood is organized into public API packages and internal implementation packages. Application code should import only from the public packages; <code>dev.hardwood.internal.*</code> and its subpackages are implementation details and may change without notice.</p>
 <table>
 <thead>
 <tr>
@@ -995,47 +1128,47 @@ Larger datasets should be split across multiple files and read by passing a list
 </thead>
 <tbody>
 <tr>
-<td><code>dev.hardwood</code></td>
+<td><a href="/api/dev/dev/hardwood/package-summary.html"><code>dev.hardwood</code></a></td>
 <td><strong>Public API</strong></td>
 <td>Entry point for creating readers and managing shared resources (thread pool, decompressor pool).</td>
 </tr>
 <tr>
-<td><code>dev.hardwood.reader</code></td>
+<td><a href="/api/dev/dev/hardwood/reader/package-summary.html"><code>dev.hardwood.reader</code></a></td>
 <td><strong>Public API</strong></td>
 <td>Single-file and multi-file readers for row-oriented and column-oriented access.</td>
 </tr>
 <tr>
-<td><code>dev.hardwood.metadata</code></td>
+<td><a href="/api/dev/dev/hardwood/metadata/package-summary.html"><code>dev.hardwood.metadata</code></a></td>
 <td><strong>Public API</strong></td>
 <td>Parquet file metadata: row groups, column chunks, physical/logical types, and compression codecs.</td>
 </tr>
 <tr>
-<td><code>dev.hardwood.schema</code></td>
+<td><a href="/api/dev/dev/hardwood/schema/package-summary.html"><code>dev.hardwood.schema</code></a></td>
 <td><strong>Public API</strong></td>
 <td>Schema representation: file schema, column schemas, and column projection.</td>
 </tr>
 <tr>
-<td><code>dev.hardwood.row</code></td>
+<td><a href="/api/dev/dev/hardwood/row/package-summary.html"><code>dev.hardwood.row</code></a></td>
 <td><strong>Public API</strong></td>
 <td>Value types for nested data access: structs, lists, and maps.</td>
 </tr>
 <tr>
-<td><code>dev.hardwood.avro</code></td>
+<td><a href="/api/dev/dev/hardwood/avro/package-summary.html"><code>dev.hardwood.avro</code></a></td>
 <td><strong>Public API</strong></td>
 <td>Avro GenericRecord support: schema conversion and row materialization (<code>hardwood-avro</code> module).</td>
 </tr>
 <tr>
-<td><code>dev.hardwood.s3</code></td>
+<td><a href="/api/dev/dev/hardwood/s3/package-summary.html"><code>dev.hardwood.s3</code></a></td>
 <td><strong>Public API</strong></td>
 <td>S3 object storage support: <code>S3Source</code>, <code>S3InputFile</code>, <code>S3Credentials</code>, <code>S3CredentialsProvider</code> (<code>hardwood-s3</code> module, zero external dependencies).</td>
 </tr>
 <tr>
-<td><code>dev.hardwood.aws.auth</code></td>
+<td><a href="/api/dev/dev/hardwood/aws/auth/package-summary.html"><code>dev.hardwood.aws.auth</code></a></td>
 <td><strong>Public API</strong></td>
 <td>Bridges the AWS SDK credential chain to Hardwood's <code>S3CredentialsProvider</code> (<code>hardwood-aws-auth</code> module, optional).</td>
 </tr>
 <tr>
-<td><code>dev.hardwood.jfr</code></td>
+<td><a href="/api/dev/dev/hardwood/jfr/package-summary.html"><code>dev.hardwood.jfr</code></a></td>
 <td><strong>Public API</strong></td>
 <td>JFR event types emitted during file reading, decoding, and pipeline operations.</td>
 </tr>
@@ -1095,8 +1228,8 @@ Larger datasets should be split across multiple files and read by passing a list
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0aadc8f76ca75f42ad829560c9a4ddf66076bce4" target="_blank" rel="noopener">
-      0aadc8f7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/03eb02450e4f291a994144ae65b881a93260ebf5" target="_blank" rel="noopener">
+      03eb0245
     </a>
   
 </div>
