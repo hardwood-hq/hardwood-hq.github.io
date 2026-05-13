@@ -1313,7 +1313,10 @@ matches are skipped.</div>
 <a href="dev/hardwood/row/PqVariantArray.html" title="interface in dev.hardwood.row"><code>PqVariantArray</code></a> view.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#getBinaries()" class="member-name-link">getBinaries()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Materialises one <code>byte[]</code> per leaf value, copying out of the binary
+buffer.</div>
+</dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getBinary(int)" class="member-name-link">getBinary(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
 <div class="block">Get a BINARY field value by field index.</div>
@@ -1326,9 +1329,17 @@ matches are skipped.</div>
 <dd>
 <div class="block">Get the key as a BINARY.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getBinaryOffsets()" class="member-name-link">getBinaryOffsets()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dd>
+<div class="block">Sentinel-suffixed offsets into <a href="dev/hardwood/reader/ColumnReader.html#getBinaryValues()"><code>ColumnReader.getBinaryValues()</code></a>.</div>
+</dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getBinaryValue()" class="member-name-link">getBinaryValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
 <div class="block">Get the value as a BINARY.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getBinaryValues()" class="member-name-link">getBinaryValues()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dd>
+<div class="block">Backing byte buffer for a varlength leaf.</div>
 </dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getBoolean(int)" class="member-name-link">getBoolean(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
@@ -1402,6 +1413,10 @@ matches are skipped.</div>
 <dd>
 <div class="block">Get the value as a DECIMAL.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getDefinitionLevels()" class="member-name-link">getDefinitionLevels()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dd>
+<div class="block">Raw definition levels for the current batch.</div>
+</dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getDouble(int)" class="member-name-link">getDouble(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
 <div class="block">Get a DOUBLE field value by field index.</div>
@@ -1415,14 +1430,6 @@ matches are skipped.</div>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getDoubleValue()" class="member-name-link">getDoubleValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
 <div class="block">Get the value as a DOUBLE.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ColumnReader.html#getElementNulls()" class="member-name-link">getElementNulls()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
-<dd>
-<div class="block">Null bitmap over leaf values.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ColumnReader.html#getEmptyListMarkers(int)" class="member-name-link">getEmptyListMarkers(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
-<dd>
-<div class="block">Empty-list bitmap at a given nesting level.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqMap.html#getEntries()" class="member-name-link">getEntries()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.html" title="interface in dev.hardwood.row">PqMap</a></dt>
 <dd>
@@ -1494,9 +1501,25 @@ matches are skipped.</div>
 <dd>
 <div class="block">Get the key, decoded to its logical-type representation.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/ColumnReader.html#getLevelNulls(int)" class="member-name-link">getLevelNulls(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getLayerCount()" class="member-name-link">getLayerCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>
-<div class="block">Null bitmap at a given nesting level.</div>
+<div class="block">Number of layers in this column's schema chain. <code>0</code> for a flat column.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getLayerKind(int)" class="member-name-link">getLayerKind(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dd>
+<div class="block">Layer kind at <code>layer</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getLayerOffsets(int)" class="member-name-link">getLayerOffsets(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dd>
+<div class="block">Offsets at <code>layer</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getLayerValidity(int)" class="member-name-link">getLayerValidity(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dd>
+<div class="block">Validity at <code>layer</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getLeafValidity()" class="member-name-link">getLeafValidity()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dd>
+<div class="block">Validity over the leaf-value array, indexed <code>0..getValueCount()</code>.</div>
 </dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getList(int)" class="member-name-link">getList(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
@@ -1559,18 +1582,10 @@ matches are skipped.</div>
 <dd>
 <div class="block">Returns the schema name (typically &quot;schema&quot; or &quot;message&quot;).</div>
 </dd>
-<dt><a href="dev/hardwood/reader/ColumnReader.html#getNestingDepth()" class="member-name-link">getNestingDepth()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
-<dd>
-<div class="block">Nesting depth: 0 for flat, maxRepetitionLevel for nested.</div>
-</dd>
 <dt><a href="dev/hardwood/row/PqVariantObject.html#getObject(java.lang.String)" class="member-name-link">getObject(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqVariantObject.html" title="interface in dev.hardwood.row">PqVariantObject</a></dt>
 <dd>
 <div class="block">Get a field whose Variant type is OBJECT and unwrap it as a nested
 <a href="dev/hardwood/row/PqVariantObject.html" title="interface in dev.hardwood.row"><code>PqVariantObject</code></a> view.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ColumnReader.html#getOffsets(int)" class="member-name-link">getOffsets(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
-<dd>
-<div class="block">Offset array for a given nesting level.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/ProjectedSchema.html#getOriginalSchema()" class="member-name-link">getOriginalSchema()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
 <dd>
@@ -1649,6 +1664,10 @@ logical-type decoding.</div>
 <dd>
 <div class="block">Number of records in the most recently published batch.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getRepetitionLevels()" class="member-name-link">getRepetitionLevels()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dd>
+<div class="block">Raw repetition levels for the current batch.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.html#getRootNode()" class="member-name-link">getRootNode()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></dt>
 <dd>
 <div class="block">Returns the hierarchical schema tree representation.</div>
@@ -1671,7 +1690,8 @@ logical-type decoding.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#getStrings()" class="member-name-link">getStrings()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>
-<div class="block">String values for STRING and JSON logical type columns.</div>
+<div class="block">Convenience: materialises one <code>String</code> per leaf value by UTF-8 decoding
+the slice of <a href="dev/hardwood/reader/ColumnReader.html#getBinaryValues()"><code>ColumnReader.getBinaryValues()</code></a> for each entry.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getStringValue()" class="member-name-link">getStringValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
@@ -1755,7 +1775,8 @@ logical-type decoding.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#getValueCount()" class="member-name-link">getValueCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>
-<div class="block">Total number of leaf values in the current batch.</div>
+<div class="block">Total number of leaf values in the current batch — sized to real items
+only (phantom slots from null/empty parents are excluded).</div>
 </dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getVariant(int)" class="member-name-link">getVariant(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
@@ -2088,6 +2109,15 @@ logical-type decoding.</div>
 <dd>
 <div class="block">Check if there are more rows to read.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/Validity.Backed.html#hasNulls()" class="member-name-link">hasNulls()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.html#hasNulls()" class="member-name-link">hasNulls()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dd>
+<div class="block"><code>true</code> iff at least one item at this scope is null in the current
+batch.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#hasNulls()" class="member-name-link">hasNulls()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#head(long)" class="member-name-link">head(long)</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
 <dd>
 <div class="block">Limit to the first <code>maxRows</code> rows.</div>
@@ -2278,6 +2308,14 @@ and transport settings.</div>
 <dd>
 <div class="block"><code>true</code> when this reader was opened over more than one input file.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/Validity.Backed.html#isNotNull(int)" class="member-name-link">isNotNull(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.html#isNotNull(int)" class="member-name-link">isNotNull(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dd>
+<div class="block"><code>true</code> iff the item at index <code>i</code> is not null.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#isNotNull(int)" class="member-name-link">isNotNull(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#isNotNull(java.lang.String)" class="member-name-link">isNotNull(String)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>
 <div class="block">Creates a predicate that matches rows where the given column is not null.</div>
@@ -2290,6 +2328,14 @@ and transport settings.</div>
 <dd>
 <div class="block">True iff <a href="dev/hardwood/row/PqVariant.html#type()"><code>PqVariant.type()</code></a> is <a href="dev/hardwood/row/VariantType.html#NULL"><code>VariantType.NULL</code></a>.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/Validity.Backed.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dd>
+<div class="block"><code>true</code> iff the item at index <code>i</code> is null.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/row/PqDoubleList.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqDoubleList.html" title="interface in dev.hardwood.row">PqDoubleList</a></dt>
 <dd>
 <div class="block">Check if an element is null by index.</div>
@@ -2383,6 +2429,10 @@ and transport settings.</div>
 </dl>
 <h2 class="title" id="I:L">L</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/reader/LayerKind.html" class="type-name-link" title="enum class in dev.hardwood.reader">LayerKind</a> - Enum Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Classifies a <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> layer between root and leaf.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/FieldPath.html#leafName()" class="member-name-link">leafName()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a></dt>
 <dd>
 <div class="block">Returns the leaf (last) element of the path.</div>
@@ -2762,6 +2812,29 @@ Variant spec.</div>
 <dd>
 <div class="block">Advance every underlying <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> to its next batch in lockstep.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/Validity.Backed.html#nextNotNull(int,int)" class="member-name-link">nextNotNull(int, int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.html#nextNotNull(int,int)" class="member-name-link">nextNotNull(int, int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dd>
+<div class="block">Index of the next non-null item in <code>[from, count)</code>, or <code>-1</code> if
+every item in that range is null.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#nextNotNull(int,int)" class="member-name-link">nextNotNull(int, int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.Backed.html#nextNull(int,int)" class="member-name-link">nextNull(int, int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.html#nextNull(int,int)" class="member-name-link">nextNull(int, int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dd>
+<div class="block">Index of the next null item in <code>[from, count)</code>, or <code>-1</code> if every
+item in that range is non-null.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#nextNull(int,int)" class="member-name-link">nextNull(int, int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.html#NO_NULLS" class="member-name-link">NO_NULLS</a> - Static variable in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dd>
+<div class="block">Singleton signalling &quot;no item at this scope is null in the
+current batch.&quot;</div>
+</dd>
 <dt><a href="dev/hardwood/s3/RangeBacking.html#NONE" class="member-name-link">NONE</a> - Enum constant in enum class dev.hardwood.s3.<a href="dev/hardwood/s3/RangeBacking.html" title="enum class in dev.hardwood.s3">RangeBacking</a></dt>
 <dd>
 <div class="block">No range cache.</div>
@@ -2814,6 +2887,14 @@ Variant spec.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/Statistics.html#param-nullCount"><code>nullCount</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/Validity.Backed.html#nullCount(int)" class="member-name-link">nullCount(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#nullCount(int)" class="member-name-link">nullCount(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.html#nullCount(int)" class="member-name-link">nullCount(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dd>
+<div class="block">Number of null items in this batch.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.html#nullCounts()" class="member-name-link">nullCounts()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnIndex.html#param-nullCounts"><code>nullCounts</code></a> record component.</div>
@@ -2860,6 +2941,10 @@ Variant spec.</div>
 <dt><a href="dev/hardwood/InputFile.html#of(java.nio.file.Path)" class="member-name-link">of(Path)</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
 <dd>
 <div class="block">Creates an unopened <a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for a local file path.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/Validity.html#of(java.util.BitSet)" class="member-name-link">of(BitSet)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dd>
+<div class="block">Wraps a backing <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a> (set-bit-= -present storage).</div>
 </dd>
 <dt><a href="dev/hardwood/InputFile.html#ofBuffers(java.nio.ByteBuffer,java.nio.ByteBuffer...)" class="member-name-link">ofBuffers(ByteBuffer, ByteBuffer...)</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
 <dd>
@@ -3193,6 +3278,10 @@ source.</div>
 <dd>
 <div class="block">Field can appear zero or more times (list semantics).</div>
 </dd>
+<dt><a href="dev/hardwood/reader/LayerKind.html#REPEATED" class="member-name-link">REPEATED</a> - Enum constant in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/LayerKind.html" title="enum class in dev.hardwood.reader">LayerKind</a></dt>
+<dd>
+<div class="block">A <code>LIST</code> or <code>MAP</code>-annotated group.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/SchemaElement.html#repetitionType()" class="member-name-link">repetitionType()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SchemaElement.html#param-repetitionType"><code>repetitionType</code></a> record component.</div>
@@ -3448,6 +3537,10 @@ process.</div>
 <dt><a href="dev/hardwood/metadata/LogicalType.StringType.html#%3Cinit%3E()" class="member-name-link">StringType()</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.StringType.html" title="class in dev.hardwood.metadata">LogicalType.StringType</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>StringType</code> record class.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/LayerKind.html#STRUCT" class="member-name-link">STRUCT</a> - Enum constant in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/LayerKind.html" title="enum class in dev.hardwood.reader">LayerKind</a></dt>
+<dd>
+<div class="block">A user-authored <code>OPTIONAL</code> group along the schema chain.</div>
 </dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html" class="type-name-link" title="interface in dev.hardwood.row">StructAccessor</a> - Interface in <a href="dev/hardwood/row/package-summary.html">dev.hardwood.row</a></dt>
 <dd>
@@ -3897,6 +3990,20 @@ for the sparse-file backing.</div>
 </dl>
 <h2 class="title" id="I:V">V</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/reader/Validity.html" class="type-name-link" title="interface in dev.hardwood.reader">Validity</a> - Interface in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Per-item null bitmap at a <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> scope (a <code>STRUCT</code> /
+<code>REPEATED</code> layer or the leaf).</div>
+</dd>
+<dt><a href="dev/hardwood/reader/Validity.Backed.html" class="type-name-link" title="class in dev.hardwood.reader">Validity.Backed</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">A <code>Validity</code> whose per-item nullability is stored in a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a>
+(set bit = item is present).</div>
+</dd>
+<dt><a href="dev/hardwood/reader/Validity.NoNulls.html" class="type-name-link" title="class in dev.hardwood.reader">Validity.NoNulls</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Every item at this scope is non-null in the current batch.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.BinaryColumnPredicate.html#value()" class="member-name-link">value()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.BinaryColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BinaryColumnPredicate</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>value</code> record component.</div>
@@ -3985,6 +4092,10 @@ for the sparse-file backing.</div>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/LayerKind.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/LayerKind.html" title="enum class in dev.hardwood.reader">LayerKind</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="dev/hardwood/row/VariantType.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.row.<a href="dev/hardwood/row/VariantType.html" title="enum class in dev.hardwood.row">VariantType</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
@@ -4046,6 +4157,11 @@ the order they are declared.</div>
 <div class="block">Returns the value of the <code>values</code> record component.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.Operator.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.Operator.html" title="enum class in dev.hardwood.reader">FilterPredicate.Operator</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/LayerKind.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/LayerKind.html" title="enum class in dev.hardwood.reader">LayerKind</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
