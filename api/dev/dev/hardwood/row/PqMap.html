@@ -62,6 +62,18 @@ loadScripts(document, 'script');</script>
 <li><a href="#getEntries()" tabindex="0">getEntries()</a></li>
 <li><a href="#size()" tabindex="0">size()</a></li>
 <li><a href="#isEmpty()" tabindex="0">isEmpty()</a></li>
+<li><a href="#containsKey(java.lang.String)" tabindex="0">containsKey(String)</a></li>
+<li><a href="#containsKey(int)" tabindex="0">containsKey(int)</a></li>
+<li><a href="#containsKey(long)" tabindex="0">containsKey(long)</a></li>
+<li><a href="#containsKey(byte%5B%5D)" tabindex="0">containsKey(byte[])</a></li>
+<li><a href="#getValue(java.lang.String)" tabindex="0">getValue(String)</a></li>
+<li><a href="#getValue(int)" tabindex="0">getValue(int)</a></li>
+<li><a href="#getValue(long)" tabindex="0">getValue(long)</a></li>
+<li><a href="#getValue(byte%5B%5D)" tabindex="0">getValue(byte[])</a></li>
+<li><a href="#getRawValue(java.lang.String)" tabindex="0">getRawValue(String)</a></li>
+<li><a href="#getRawValue(int)" tabindex="0">getRawValue(int)</a></li>
+<li><a href="#getRawValue(long)" tabindex="0">getRawValue(long)</a></li>
+<li><a href="#getRawValue(byte%5B%5D)" tabindex="0">getRawValue(byte[])</a></li>
 </ol>
 </li>
 </ol>
@@ -85,6 +97,10 @@ for (PqMap.Entry entry : attributes.getEntries()) {
     int value = entry.getIntValue();
 }
 </code></pre>
+<p>A <code>PqMap</code> and its <a href="PqMap.Entry.html" title="interface in dev.hardwood.row"><code>PqMap.Entry</code></a> objects are flyweights over the underlying read
+batch — accessors resolve to column data on each call. The flyweight is
+valid for as long as the batch it was obtained from is current; it is not
+safe to hold across <code>rowReader.next()</code> calls.</p>
 </div>
 </div>
 </section>
@@ -118,10 +134,70 @@ for (PqMap.Entry entry : attributes.getEntries()) {
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#containsKey(byte%5B%5D)" class="member-name-link">containsKey</a><wbr>(byte[]&nbsp;key)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">True if this map contains an entry with the given byte-array key.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#containsKey(int)" class="member-name-link">containsKey</a><wbr>(int&nbsp;key)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">True if this map contains an entry with the given INT32 key.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#containsKey(long)" class="member-name-link">containsKey</a><wbr>(long&nbsp;key)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">True if this map contains an entry with the given INT64 key.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#containsKey(java.lang.String)" class="member-name-link">containsKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">True if this map contains an entry with the given STRING key.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getEntries()" class="member-name-link">getEntries</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get all entries in this map.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRawValue(byte%5B%5D)" class="member-name-link">getRawValue</a><wbr>(byte[]&nbsp;key)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Look up the raw physical value for a byte-array key — mirrors <a href="PqMap.Entry.html#getRawValue()"><code>PqMap.Entry.getRawValue()</code></a>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRawValue(int)" class="member-name-link">getRawValue</a><wbr>(int&nbsp;key)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Look up the raw physical value for an INT32 key — mirrors <a href="PqMap.Entry.html#getRawValue()"><code>PqMap.Entry.getRawValue()</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRawValue(long)" class="member-name-link">getRawValue</a><wbr>(long&nbsp;key)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Look up the raw physical value for an INT64 key — mirrors <a href="PqMap.Entry.html#getRawValue()"><code>PqMap.Entry.getRawValue()</code></a>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRawValue(java.lang.String)" class="member-name-link">getRawValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Look up the raw physical value for a STRING key — mirrors <a href="PqMap.Entry.html#getRawValue()"><code>PqMap.Entry.getRawValue()</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getValue(byte%5B%5D)" class="member-name-link">getValue</a><wbr>(byte[]&nbsp;key)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Look up the decoded value for a byte-array key.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getValue(int)" class="member-name-link">getValue</a><wbr>(int&nbsp;key)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Look up the decoded value for an INT32 key.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getValue(long)" class="member-name-link">getValue</a><wbr>(long&nbsp;key)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Look up the decoded value for an INT64 key.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getValue(java.lang.String)" class="member-name-link">getValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Look up the decoded value for a STRING key.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isEmpty()" class="member-name-link">isEmpty</a>()</code></div>
@@ -182,6 +258,191 @@ for (PqMap.Entry entry : attributes.getEntries()) {
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>true if the map has no entries</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="containsKey(java.lang.String)">
+<h3>containsKey</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">containsKey</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="block">True if this map contains an entry with the given STRING key.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>key</code> is null</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not STRING / BYTE_ARRAY</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="containsKey(int)">
+<h3>containsKey</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">containsKey</span><wbr><span class="parameters">(int&nbsp;key)</span></div>
+<div class="block">True if this map contains an entry with the given INT32 key.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not INT32</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="containsKey(long)">
+<h3>containsKey</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">containsKey</span><wbr><span class="parameters">(long&nbsp;key)</span></div>
+<div class="block">True if this map contains an entry with the given INT64 key.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not INT64</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="containsKey(byte[])">
+<h3>containsKey</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">containsKey</span><wbr><span class="parameters">(byte[]&nbsp;key)</span></div>
+<div class="block">True if this map contains an entry with the given byte-array key.
+Byte equality follows [java.util.Arrays#equals(byte[], byte[])].</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>key</code> is null</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not BYTE_ARRAY / FIXED_LEN_BYTE_ARRAY</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getValue(java.lang.String)">
+<h3>getValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="block"><p>Look up the decoded value for a STRING key.</p>
+<p>Returns the same form as <a href="PqMap.Entry.html#getValue()"><code>PqMap.Entry.getValue()</code></a>: boxed primitive, <code>String</code>,
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a>, <a href="PqStruct.html" title="interface in dev.hardwood.row"><code>PqStruct</code></a> / <a href="PqList.html" title="interface in dev.hardwood.row"><code>PqList</code></a> /
+<a href="PqMap.html" title="interface in dev.hardwood.row"><code>PqMap</code></a> for nested groups, etc.</p>
+</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the decoded value, or <code>null</code> if the key is absent or its value is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>key</code> is null</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not STRING / BYTE_ARRAY</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getValue(int)">
+<h3>getValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getValue</span><wbr><span class="parameters">(int&nbsp;key)</span></div>
+<div class="block">Look up the decoded value for an INT32 key.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the decoded value, or <code>null</code> if the key is absent or its value is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not INT32</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getValue(long)">
+<h3>getValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getValue</span><wbr><span class="parameters">(long&nbsp;key)</span></div>
+<div class="block">Look up the decoded value for an INT64 key.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the decoded value, or <code>null</code> if the key is absent or its value is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not INT64</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getValue(byte[])">
+<h3>getValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getValue</span><wbr><span class="parameters">(byte[]&nbsp;key)</span></div>
+<div class="block">Look up the decoded value for a byte-array key.
+Byte equality follows [java.util.Arrays#equals(byte[], byte[])].</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the decoded value, or <code>null</code> if the key is absent or its value is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>key</code> is null</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not BYTE_ARRAY / FIXED_LEN_BYTE_ARRAY</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRawValue(java.lang.String)">
+<h3>getRawValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getRawValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="block">Look up the raw physical value for a STRING key — mirrors <a href="PqMap.Entry.html#getRawValue()"><code>PqMap.Entry.getRawValue()</code></a>.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the raw value, or <code>null</code> if the key is absent or its value is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>key</code> is null</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not STRING / BYTE_ARRAY</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRawValue(int)">
+<h3>getRawValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getRawValue</span><wbr><span class="parameters">(int&nbsp;key)</span></div>
+<div class="block">Look up the raw physical value for an INT32 key — mirrors <a href="PqMap.Entry.html#getRawValue()"><code>PqMap.Entry.getRawValue()</code></a>.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the raw value, or <code>null</code> if the key is absent or its value is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not INT32</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRawValue(long)">
+<h3>getRawValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getRawValue</span><wbr><span class="parameters">(long&nbsp;key)</span></div>
+<div class="block">Look up the raw physical value for an INT64 key — mirrors <a href="PqMap.Entry.html#getRawValue()"><code>PqMap.Entry.getRawValue()</code></a>.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the raw value, or <code>null</code> if the key is absent or its value is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not INT64</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRawValue(byte[])">
+<h3>getRawValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getRawValue</span><wbr><span class="parameters">(byte[]&nbsp;key)</span></div>
+<div class="block">Look up the raw physical value for a byte-array key — mirrors <a href="PqMap.Entry.html#getRawValue()"><code>PqMap.Entry.getRawValue()</code></a>.
+Byte equality follows [java.util.Arrays#equals(byte[], byte[])].</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the raw value, or <code>null</code> if the key is absent or its value is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>key</code> is null</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/ClassCastException.html" title="class or interface in java.lang" class="external-link">ClassCastException</a></code> - if the map's key column is not BYTE_ARRAY / FIXED_LEN_BYTE_ARRAY</dd>
 </dl>
 </div>
 </section>

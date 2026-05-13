@@ -59,11 +59,28 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#getStruct(java.lang.String)" tabindex="0">getStruct(String)</a></li>
-<li><a href="#getListOfInts(java.lang.String)" tabindex="0">getListOfInts(String)</a></li>
-<li><a href="#getListOfLongs(java.lang.String)" tabindex="0">getListOfLongs(String)</a></li>
-<li><a href="#getListOfDoubles(java.lang.String)" tabindex="0">getListOfDoubles(String)</a></li>
 <li><a href="#getList(java.lang.String)" tabindex="0">getList(String)</a></li>
 <li><a href="#getMap(java.lang.String)" tabindex="0">getMap(String)</a></li>
+<li><a href="#getInt(int)" tabindex="0">getInt(int)</a></li>
+<li><a href="#getLong(int)" tabindex="0">getLong(int)</a></li>
+<li><a href="#getFloat(int)" tabindex="0">getFloat(int)</a></li>
+<li><a href="#getDouble(int)" tabindex="0">getDouble(int)</a></li>
+<li><a href="#getBoolean(int)" tabindex="0">getBoolean(int)</a></li>
+<li><a href="#getString(int)" tabindex="0">getString(int)</a></li>
+<li><a href="#getBinary(int)" tabindex="0">getBinary(int)</a></li>
+<li><a href="#getDate(int)" tabindex="0">getDate(int)</a></li>
+<li><a href="#getTime(int)" tabindex="0">getTime(int)</a></li>
+<li><a href="#getTimestamp(int)" tabindex="0">getTimestamp(int)</a></li>
+<li><a href="#getDecimal(int)" tabindex="0">getDecimal(int)</a></li>
+<li><a href="#getUuid(int)" tabindex="0">getUuid(int)</a></li>
+<li><a href="#getInterval(int)" tabindex="0">getInterval(int)</a></li>
+<li><a href="#getVariant(int)" tabindex="0">getVariant(int)</a></li>
+<li><a href="#getStruct(int)" tabindex="0">getStruct(int)</a></li>
+<li><a href="#getList(int)" tabindex="0">getList(int)</a></li>
+<li><a href="#getMap(int)" tabindex="0">getMap(int)</a></li>
+<li><a href="#getValue(int)" tabindex="0">getValue(int)</a></li>
+<li><a href="#getRawValue(int)" tabindex="0">getRawValue(int)</a></li>
+<li><a href="#isNull(int)" tabindex="0">isNull(int)</a></li>
 </ol>
 </li>
 </ol>
@@ -88,15 +105,18 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">StructAccessor</span><span class="extends-implements">
 extends <a href="FieldAccessor.html" title="interface in dev.hardwood.row">FieldAccessor</a></span></div>
 <div class="block"><p>Parquet-struct access interface. Extends <a href="FieldAccessor.html" title="interface in dev.hardwood.row"><code>FieldAccessor</code></a> with complex getters
-specific to the Parquet schema-typed world: nested structs, lists (including
-primitive-specialized ones), and maps.</p>
+specific to the Parquet schema-typed world (nested structs, lists, maps) and
+with index-based mirrors of the <a href="FieldAccessor.html" title="interface in dev.hardwood.row"><code>FieldAccessor</code></a> by-name accessors.</p>
 <p>Variant objects do not expose these methods — use <a href="PqVariantObject.html" title="interface in dev.hardwood.row"><code>PqVariantObject</code></a> for
-Variant navigation. See <a href="FieldAccessor.html" title="interface in dev.hardwood.row"><code>FieldAccessor</code></a> for the common primitive and Variant
-accessor surface shared by both.</p>
+Variant navigation. By-index access lives here rather than on <a href="FieldAccessor.html" title="interface in dev.hardwood.row"><code>FieldAccessor</code></a>
+because the &quot;field index&quot; is meaningful for struct-shaped accessors (the
+position in projected schema order) but not for Variant objects (whose field
+order is lexicographic on the metadata key dictionary and rarely matches what
+a caller would consider &quot;first&quot; / &quot;second&quot;).</p>
 <p>This interface makes no assumptions about mutability or lifecycle, allowing
 code to work polymorphically with both <a href="../reader/RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> (a
-stateful, mutable view over the current row) and <a href="PqStruct.html" title="interface in dev.hardwood.row"><code>PqStruct</code></a> (an immutable,
-self-contained nested struct value).</p>
+stateful, mutable view over the current row) and <a href="PqStruct.html" title="interface in dev.hardwood.row"><code>PqStruct</code></a> (a flyweight
+over a nested struct position).</p>
 </div>
 <dl class="notes">
 <dt>See Also:</dt>
@@ -122,35 +142,120 @@ self-contained nested struct value).</p>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqList.html" title="interface in dev.hardwood.row">PqList</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getList(java.lang.String)" class="member-name-link">getList</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBinary(int)" class="member-name-link">getBinary</a><wbr>(int&nbsp;fieldIndex)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a BINARY field value by field index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBoolean(int)" class="member-name-link">getBoolean</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a BOOLEAN field value by field index.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDate(int)" class="member-name-link">getDate</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a DATE field value by field index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDecimal(int)" class="member-name-link">getDecimal</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a DECIMAL field value by field index.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDouble(int)" class="member-name-link">getDouble</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a DOUBLE field value by field index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFloat(int)" class="member-name-link">getFloat</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a FLOAT field value by field index.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getInt(int)" class="member-name-link">getInt</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get an INT32 field value by field index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqInterval.html" title="class in dev.hardwood.row">PqInterval</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getInterval(int)" class="member-name-link">getInterval</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get an INTERVAL field value by field index.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqList.html" title="interface in dev.hardwood.row">PqList</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getList(int)" class="member-name-link">getList</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a LIST field value by field index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqList.html" title="interface in dev.hardwood.row">PqList</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getList(java.lang.String)" class="member-name-link">getList</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get a LIST field value by name.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqDoubleList.html" title="interface in dev.hardwood.row">PqDoubleList</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getListOfDoubles(java.lang.String)" class="member-name-link">getListOfDoubles</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get a DOUBLE list field by name.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqIntList.html" title="interface in dev.hardwood.row">PqIntList</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getListOfInts(java.lang.String)" class="member-name-link">getListOfInts</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLong(int)" class="member-name-link">getLong</a><wbr>(int&nbsp;fieldIndex)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get an INT32 list field by name.</div>
+<div class="block">Get an INT64 field value by field index.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqLongList.html" title="interface in dev.hardwood.row">PqLongList</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getListOfLongs(java.lang.String)" class="member-name-link">getListOfLongs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqMap.html" title="interface in dev.hardwood.row">PqMap</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMap(int)" class="member-name-link">getMap</a><wbr>(int&nbsp;fieldIndex)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get an INT64 list field by name.</div>
+<div class="block">Get a MAP field value by field index.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqMap.html" title="interface in dev.hardwood.row">PqMap</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMap(java.lang.String)" class="member-name-link">getMap</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get a MAP field value by name.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqStruct.html" title="interface in dev.hardwood.row">PqStruct</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStruct(java.lang.String)" class="member-name-link">getStruct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRawValue(int)" class="member-name-link">getRawValue</a><wbr>(int&nbsp;fieldIndex)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a field value by field index as its raw physical representation.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getString(int)" class="member-name-link">getString</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a STRING field value by field index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqStruct.html" title="interface in dev.hardwood.row">PqStruct</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStruct(int)" class="member-name-link">getStruct</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a nested struct field value by field index.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqStruct.html" title="interface in dev.hardwood.row">PqStruct</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStruct(java.lang.String)" class="member-name-link">getStruct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get a nested struct field value by name.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTime(int)" class="member-name-link">getTime</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a TIME field value by field index.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTimestamp(int)" class="member-name-link">getTimestamp</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a TIMESTAMP field value by field index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUuid(int)" class="member-name-link">getUuid</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a UUID field value by field index.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getValue(int)" class="member-name-link">getValue</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a field value by field index, decoded to its logical-type representation.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getVariant(int)" class="member-name-link">getVariant</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a VARIANT field value by field index.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isNull(int)" class="member-name-link">isNull</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Check if a field is null by field index.</div>
 </div>
 </div>
 </div>
@@ -187,57 +292,6 @@ self-contained nested struct value).</p>
 </section>
 </li>
 <li>
-<section class="detail" id="getListOfInts(java.lang.String)">
-<h3>getListOfInts</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="return-type"><a href="PqIntList.html" title="interface in dev.hardwood.row">PqIntList</a></span>&nbsp;<span class="element-name">getListOfInts</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
-<div class="block">Get an INT32 list field by name.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>name</code> - the field name</dd>
-<dt>Returns:</dt>
-<dd>the int list, or null if the field is null</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field is not a list of INT32</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getListOfLongs(java.lang.String)">
-<h3>getListOfLongs</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="return-type"><a href="PqLongList.html" title="interface in dev.hardwood.row">PqLongList</a></span>&nbsp;<span class="element-name">getListOfLongs</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
-<div class="block">Get an INT64 list field by name.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>name</code> - the field name</dd>
-<dt>Returns:</dt>
-<dd>the long list, or null if the field is null</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field is not a list of INT64</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getListOfDoubles(java.lang.String)">
-<h3>getListOfDoubles</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="return-type"><a href="PqDoubleList.html" title="interface in dev.hardwood.row">PqDoubleList</a></span>&nbsp;<span class="element-name">getListOfDoubles</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
-<div class="block">Get a DOUBLE list field by name.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>name</code> - the field name</dd>
-<dt>Returns:</dt>
-<dd>the double list, or null if the field is null</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field is not a list of DOUBLE</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
 <section class="detail" id="getList(java.lang.String)">
 <h3>getList</h3>
 <div class="horizontal-scroll">
@@ -268,6 +322,188 @@ self-contained nested struct value).</p>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field type is not a map</dd>
 </dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getInt(int)">
+<h3>getInt</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getInt</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get an INT32 field value by field index. See <a href="FieldAccessor.html#getInt(java.lang.String)"><code>FieldAccessor.getInt(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getLong(int)">
+<h3>getLong</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">long</span>&nbsp;<span class="element-name">getLong</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get an INT64 field value by field index. See <a href="FieldAccessor.html#getLong(java.lang.String)"><code>FieldAccessor.getLong(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFloat(int)">
+<h3>getFloat</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">float</span>&nbsp;<span class="element-name">getFloat</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a FLOAT field value by field index. See <a href="FieldAccessor.html#getFloat(java.lang.String)"><code>FieldAccessor.getFloat(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getDouble(int)">
+<h3>getDouble</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">double</span>&nbsp;<span class="element-name">getDouble</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a DOUBLE field value by field index. See <a href="FieldAccessor.html#getDouble(java.lang.String)"><code>FieldAccessor.getDouble(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBoolean(int)">
+<h3>getBoolean</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">getBoolean</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a BOOLEAN field value by field index. See <a href="FieldAccessor.html#getBoolean(java.lang.String)"><code>FieldAccessor.getBoolean(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getString(int)">
+<h3>getString</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getString</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a STRING field value by field index. See <a href="FieldAccessor.html#getString(java.lang.String)"><code>FieldAccessor.getString(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBinary(int)">
+<h3>getBinary</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">byte[]</span>&nbsp;<span class="element-name">getBinary</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a BINARY field value by field index. See <a href="FieldAccessor.html#getBinary(java.lang.String)"><code>FieldAccessor.getBinary(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getDate(int)">
+<h3>getDate</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></span>&nbsp;<span class="element-name">getDate</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a DATE field value by field index. See <a href="FieldAccessor.html#getDate(java.lang.String)"><code>FieldAccessor.getDate(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getTime(int)">
+<h3>getTime</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a></span>&nbsp;<span class="element-name">getTime</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a TIME field value by field index. See <a href="FieldAccessor.html#getTime(java.lang.String)"><code>FieldAccessor.getTime(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getTimestamp(int)">
+<h3>getTimestamp</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name">getTimestamp</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a TIMESTAMP field value by field index. See <a href="FieldAccessor.html#getTimestamp(java.lang.String)"><code>FieldAccessor.getTimestamp(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getDecimal(int)">
+<h3>getDecimal</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></span>&nbsp;<span class="element-name">getDecimal</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a DECIMAL field value by field index. See <a href="FieldAccessor.html#getDecimal(java.lang.String)"><code>FieldAccessor.getDecimal(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getUuid(int)">
+<h3>getUuid</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a></span>&nbsp;<span class="element-name">getUuid</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a UUID field value by field index. See <a href="FieldAccessor.html#getUuid(java.lang.String)"><code>FieldAccessor.getUuid(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getInterval(int)">
+<h3>getInterval</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="PqInterval.html" title="class in dev.hardwood.row">PqInterval</a></span>&nbsp;<span class="element-name">getInterval</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get an INTERVAL field value by field index. See <a href="FieldAccessor.html#getInterval(java.lang.String)"><code>FieldAccessor.getInterval(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getVariant(int)">
+<h3>getVariant</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></span>&nbsp;<span class="element-name">getVariant</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a VARIANT field value by field index. See <a href="FieldAccessor.html#getVariant(java.lang.String)"><code>FieldAccessor.getVariant(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStruct(int)">
+<h3>getStruct</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="PqStruct.html" title="interface in dev.hardwood.row">PqStruct</a></span>&nbsp;<span class="element-name">getStruct</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a nested struct field value by field index. See <a href="#getStruct(java.lang.String)"><code>getStruct(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getList(int)">
+<h3>getList</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="PqList.html" title="interface in dev.hardwood.row">PqList</a></span>&nbsp;<span class="element-name">getList</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a LIST field value by field index. See <a href="#getList(java.lang.String)"><code>getList(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getMap(int)">
+<h3>getMap</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="PqMap.html" title="interface in dev.hardwood.row">PqMap</a></span>&nbsp;<span class="element-name">getMap</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a MAP field value by field index. See <a href="#getMap(java.lang.String)"><code>getMap(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getValue(int)">
+<h3>getValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getValue</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a field value by field index, decoded to its logical-type representation.
+See <a href="FieldAccessor.html#getValue(java.lang.String)"><code>FieldAccessor.getValue(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRawValue(int)">
+<h3>getRawValue</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getRawValue</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a field value by field index as its raw physical representation.
+See <a href="FieldAccessor.html#getRawValue(java.lang.String)"><code>FieldAccessor.getRawValue(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isNull(int)">
+<h3>isNull</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isNull</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Check if a field is null by field index. See <a href="FieldAccessor.html#isNull(java.lang.String)"><code>FieldAccessor.isNull(String)</code></a>.</div>
 </div>
 </section>
 </li>

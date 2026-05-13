@@ -1744,7 +1744,7 @@
 <a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">            </span><span class="p">}</span>
 <a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">        </span><span class="p">}</span>
 <a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
-<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">        </span><span class="c1">// Access maps (map&lt;string, int&gt;)</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">        </span><span class="c1">// Access maps (map&lt;string, int&gt;) — iterate all entries</span>
 <a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">        </span><span class="n">PqMap</span><span class="w"> </span><span class="n">attributes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getMap</span><span class="p">(</span><span class="s">&quot;attributes&quot;</span><span class="p">);</span>
 <a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">attributes</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">PqMap</span><span class="p">.</span><span class="na">Entry</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">attributes</span><span class="p">.</span><span class="na">getEntries</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
@@ -1754,17 +1754,29 @@
 <a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">            </span><span class="p">}</span>
 <a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">        </span><span class="p">}</span>
 <a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
-<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">        </span><span class="c1">// Access maps with struct values (map&lt;string, struct&gt;)</span>
-<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">        </span><span class="n">PqMap</span><span class="w"> </span><span class="n">people</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getMap</span><span class="p">(</span><span class="s">&quot;people&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">people</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">            </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">PqMap</span><span class="p">.</span><span class="na">Entry</span><span class="w"> </span><span class="n">entry</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">people</span><span class="p">.</span><span class="na">getEntries</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">personId</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">entry</span><span class="p">.</span><span class="na">getStringKey</span><span class="p">();</span>
-<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w">                </span><span class="n">PqStruct</span><span class="w"> </span><span class="n">person</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">entry</span><span class="p">.</span><span class="na">getStructValue</span><span class="p">();</span>
-<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">personName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">personAge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">person</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">);</span>
-<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w">            </span><span class="p">}</span>
-<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">        </span><span class="c1">// Key-based lookup (no per-entry flyweight allocations)</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">        </span><span class="n">PqMap</span><span class="w"> </span><span class="n">attrs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getMap</span><span class="p">(</span><span class="s">&quot;attributes&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">attrs</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">attrs</span><span class="p">.</span><span class="na">containsKey</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">            </span><span class="n">Integer</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Integer</span><span class="p">)</span><span class="w"> </span><span class="n">attrs</span><span class="p">.</span><span class="na">getValue</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w">        </span><span class="c1">// Access maps with struct values (map&lt;string, struct&gt;)</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w">        </span><span class="n">PqMap</span><span class="w"> </span><span class="n">people</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getMap</span><span class="p">(</span><span class="s">&quot;people&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">people</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="w">            </span><span class="n">PqStruct</span><span class="w"> </span><span class="n">alice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">PqStruct</span><span class="p">)</span><span class="w"> </span><span class="n">people</span><span class="p">.</span><span class="na">getValue</span><span class="p">(</span><span class="s">&quot;alice&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">alice</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="kc">null</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="w">                </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="w">                </span><span class="kt">int</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">alice</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;age&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="w">        </span><span class="p">}</span>
 </code></pre></div>
+<p><code>PqMap.getValue(key)</code> returns <code>null</code> for both an absent key and a
+present-but-null value — call <code>containsKey(key)</code> to disambiguate.
+Lookup is supported by <code>String</code> / <code>int</code> / <code>long</code> / <code>byte[]</code> keys;
+long-tail key types (DATE / TIMESTAMP / DECIMAL / UUID) are reachable
+through <code>getEntries()</code> + <code>Entry.getKey()</code>. Parquet permits duplicate
+keys; the lookup methods walk in entry order and surface the first
+match.</p>
 </details>
 <h3 id="typed-accessor-methods">Typed Accessor Methods<a class="headerlink" href="#typed-accessor-methods" title="Permanent link">&para;</a></h3>
 <p>All accessor methods are available in two forms:</p>
@@ -1897,13 +1909,25 @@
 <p><strong>FLOAT16 columns:</strong> <code>getFloat</code> accepts FLOAT16 columns (<code>FIXED_LEN_BYTE_ARRAY(2)</code> annotated with the <code>FLOAT16</code> logical type) and decodes the 2-byte IEEE 754 half-precision payload to a single-precision <code>float</code>. The widening is lossless — half-precision NaN, ±Infinity, and signed zero round-trip cleanly, and the original NaN bit pattern is preserved (the Parquet spec does not canonicalize NaNs on write). Use <code>Float.isNaN(value)</code> for NaN checks rather than equality. As with all primitive accessors, <code>isNull()</code> must be checked before <code>getFloat()</code> since FLOAT16 columns can be optional.</p>
 <p><strong>Bare <code>BYTE_ARRAY</code> columns:</strong> <code>BYTE_ARRAY</code> columns without a <code>STRING</code> logical type annotation may hold arbitrary binary payloads (Protobuf, WKB, custom encodings). Generic accessors such as <code>PqList.get</code> and <code>PqList.iterator</code> surface these as <code>byte[]</code> rather than silently UTF-8 decoding them — invalid byte sequences would otherwise be replaced with <code>U+FFFD</code>. Call <code>getString</code> explicitly when the column is known to contain UTF-8 text from an older writer that omitted the <code>STRING</code> annotation.</p>
 <p><strong>Typed accessors on <code>PqList</code> and <code>PqMap.Entry</code>:</strong> Both interfaces mirror the
-RowReader's typed accessor surface — <code>ints()</code> / <code>longs()</code> / <code>strings()</code> /
-<code>dates()</code> / <code>times()</code> / <code>timestamps()</code> / <code>decimals()</code> / <code>uuids()</code> /
-<code>intervals()</code> on <code>PqList</code>; <code>getStringKey()</code> / <code>getDateKey()</code> / <code>getTimeKey()</code> /
-<code>getDecimalKey()</code> / etc. and the matching <code>getStringValue()</code> / <code>getDateValue()</code>
-/ <code>getIntervalValue()</code> / etc. on <code>PqMap.Entry</code>. Use these in preference to the
-generic <code>getValue()</code> when iterating over a list / map of a known logical type
-to avoid the boxed <code>Object</code> return.</p>
+RowReader's typed accessor surface — <code>strings()</code> / <code>dates()</code> / <code>times()</code> /
+<code>timestamps()</code> / <code>decimals()</code> / <code>uuids()</code> / <code>intervals()</code> / <code>floats()</code> /
+<code>booleans()</code> on <code>PqList</code> (each returning <code>List&lt;T&gt;</code>); the matching
+<code>getStringValue()</code> / <code>getDateValue()</code> / <code>getIntervalValue()</code> / etc. on
+<code>PqMap.Entry</code>. Use these in preference to the generic <code>getValue()</code> when
+iterating over a list / map of a known logical type to avoid the boxed
+<code>Object</code> return.</p>
+<p><code>PqMap.Entry</code>'s typed <em>key</em> accessor surface is intentionally narrower:
+<code>getStringKey()</code> / <code>getIntKey()</code> / <code>getLongKey()</code> / <code>getBinaryKey()</code> cover
+the four high-frequency map key types. Long-tail key types (DATE / TIME /
+TIMESTAMP / DECIMAL / UUID) fall through to <code>getKey()</code> (decoded) and
+<code>getRawKey()</code> (raw).</p>
+<p><code>PqList.ints()</code> / <code>longs()</code> / <code>doubles()</code> return the specialized
+<code>PqIntList</code> / <code>PqLongList</code> / <code>PqDoubleList</code> types instead — these expose
+<code>PrimitiveIterator.OfInt</code> / <code>OfLong</code> / <code>OfDouble</code>, <code>int get(int)</code>, and
+<code>int[] toArray()</code> so primitive list iteration allocates no boxed wrappers.
+For nested <code>list&lt;list&lt;int&gt;&gt;</code> (or <code>&lt;long&gt;</code> / <code>&lt;double&gt;</code>), use
+<code>intLists()</code> / <code>longLists()</code> / <code>doubleLists()</code> to surface the inner lists as
+<code>PqIntList</code> / <code>PqLongList</code> / <code>PqDoubleList</code>.</p>
 <p><strong>Decoded vs. raw generic access:</strong> The generic fallback accessors return values decoded to their logical-type representation by default:</p>
 <ul>
 <li><code>RowReader.getValue(name)</code> / <code>getValue(index)</code> — <code>Integer</code> / <code>Long</code> / <code>String</code> / <code>LocalDate</code> / <code>LocalTime</code> / <code>Instant</code> / <code>BigDecimal</code> / <code>UUID</code> / <code>PqInterval</code> / <code>PqVariant</code> / nested <code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code>, with <code>byte[]</code> for un-annotated <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> columns.</li>
@@ -2794,8 +2818,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a9a4507d0f75fb79faae455bcff18d9292a86502" target="_blank" rel="noopener">
-      a9a4507d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/0aadc8f76ca75f42ad829560c9a4ddf66076bce4" target="_blank" rel="noopener">
+      0aadc8f7
     </a>
   
 </div>

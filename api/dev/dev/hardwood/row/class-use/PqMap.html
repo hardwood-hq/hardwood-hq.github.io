@@ -59,33 +59,13 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#dev.hardwood.reader">dev.hardwood.reader</a></div>
+<div class="col-first even-row-color"><a href="#dev.hardwood.row">dev.hardwood.row</a></div>
 <div class="col-last even-row-color">
-<div class="block">Parquet file readers with row-oriented and column-oriented APIs.</div>
-</div>
-<div class="col-first odd-row-color"><a href="#dev.hardwood.row">dev.hardwood.row</a></div>
-<div class="col-last odd-row-color">
 <div class="block">Value types for nested Parquet structures accessed through <a href="../../reader/RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a>.</div>
 </div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
-<li>
-<section class="detail" id="dev.hardwood.reader">
-<h2>Uses of <a href="../PqMap.html" title="interface in dev.hardwood.row">PqMap</a> in <a href="../../reader/package-summary.html">dev.hardwood.reader</a></h2>
-<div class="caption"><span>Methods in <a href="../../reader/package-summary.html">dev.hardwood.reader</a> that return <a href="../PqMap.html" title="interface in dev.hardwood.row">PqMap</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../PqMap.html" title="interface in dev.hardwood.row">PqMap</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RowReader.</span><code><a href="../../reader/RowReader.html#getMap(int)" class="member-name-link">getMap</a><wbr>(int&nbsp;fieldIndex)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Get a MAP field value by field index.</div>
-</div>
-</div>
-</section>
-</li>
 <li>
 <section class="detail" id="dev.hardwood.row">
 <h2>Uses of <a href="../PqMap.html" title="interface in dev.hardwood.row">PqMap</a> in <a href="../package-summary.html">dev.hardwood.row</a></h2>
@@ -95,13 +75,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../PqMap.html" title="interface in dev.hardwood.row">PqMap</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StructAccessor.</span><code><a href="../StructAccessor.html#getMap(java.lang.String)" class="member-name-link">getMap</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StructAccessor.</span><code><a href="../StructAccessor.html#getMap(int)" class="member-name-link">getMap</a><wbr>(int&nbsp;fieldIndex)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Get a MAP field value by name.</div>
+<div class="block">Get a MAP field value by field index.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../PqMap.html" title="interface in dev.hardwood.row">PqMap</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">PqMap.Entry.</span><code><a href="../PqMap.Entry.html#getMapValue()" class="member-name-link">getMapValue</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StructAccessor.</span><code><a href="../StructAccessor.html#getMap(java.lang.String)" class="member-name-link">getMap</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Get a MAP field value by name.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../PqMap.html" title="interface in dev.hardwood.row">PqMap</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PqMap.Entry.</span><code><a href="../PqMap.Entry.html#getMapValue()" class="member-name-link">getMapValue</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Get the value as a MAP.</div>
 </div>
 </div>
@@ -110,10 +95,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a><wbr>&lt;<a href="../PqMap.html" title="interface in dev.hardwood.row">PqMap</a>&gt;</code></div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../PqMap.html" title="interface in dev.hardwood.row">PqMap</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">PqList.</span><code><a href="../PqList.html#maps()" class="member-name-link">maps</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Iterate over elements as nested maps.</div>
+<div class="block">View the elements as a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of nested maps.</div>
 </div>
 </div>
 </section>

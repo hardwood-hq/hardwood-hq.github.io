@@ -63,11 +63,6 @@ loadScripts(document, 'script');</script>
 <li><a href="#getLongKey()" tabindex="0">getLongKey()</a></li>
 <li><a href="#getStringKey()" tabindex="0">getStringKey()</a></li>
 <li><a href="#getBinaryKey()" tabindex="0">getBinaryKey()</a></li>
-<li><a href="#getDateKey()" tabindex="0">getDateKey()</a></li>
-<li><a href="#getTimeKey()" tabindex="0">getTimeKey()</a></li>
-<li><a href="#getTimestampKey()" tabindex="0">getTimestampKey()</a></li>
-<li><a href="#getDecimalKey()" tabindex="0">getDecimalKey()</a></li>
-<li><a href="#getUuidKey()" tabindex="0">getUuidKey()</a></li>
 <li><a href="#getKey()" tabindex="0">getKey()</a></li>
 <li><a href="#getRawKey()" tabindex="0">getRawKey()</a></li>
 <li><a href="#getIntValue()" tabindex="0">getIntValue()</a></li>
@@ -108,7 +103,15 @@ loadScripts(document, 'script');</script>
 <object type="image/svg+xml" data="PqMap.Entry.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">PqMap.Entry</span></div>
-<div class="block">A single key-value entry in a map.</div>
+<div class="block"><p>A single key-value entry in a map.</p>
+<p>The key-side accessor surface is intentionally narrower than the
+value side: real-world Parquet map keys cluster on <code>String</code>, <code>Int</code>,
+<code>Long</code>, and occasionally <code>Binary</code> (Avro maps are string-keyed by spec,
+and ID-keyed maps account for nearly all numeric-keyed cases). Other
+logical types are well-defined as keys but vanishingly rare in
+practice — they fall back to <a href="#getKey()"><code>getKey()</code></a> (decoded) and <a href="#getRawKey()"><code>getRawKey()</code></a> (raw)
+rather than each having a dedicated typed accessor.</p>
+</div>
 </div>
 </section>
 <section class="summary">
@@ -140,19 +143,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Get the value as a BOOLEAN.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDateKey()" class="member-name-link">getDateKey</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDateValue()" class="member-name-link">getDateValue</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get the key as a DATE.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDateValue()" class="member-name-link">getDateValue</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get the value as a DATE.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDecimalKey()" class="member-name-link">getDecimalKey</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get the key as a DECIMAL.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDecimalValue()" class="member-name-link">getDecimalValue</a>()</code></div>
@@ -237,16 +230,6 @@ decoding.</div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get the value as a nested struct.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTimeKey()" class="member-name-link">getTimeKey</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get the key as a TIME.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTimestampKey()" class="member-name-link">getTimestampKey</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get the key as a TIMESTAMP.</div>
-</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTimestampValue()" class="member-name-link">getTimestampValue</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
@@ -258,28 +241,23 @@ decoding.</div>
 <div class="block">Get the value as a TIME.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUuidKey()" class="member-name-link">getUuidKey</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUuidValue()" class="member-name-link">getUuidValue</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get the key as a UUID.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUuidValue()" class="member-name-link">getUuidValue</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get the value as a UUID.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getValue()" class="member-name-link">getValue</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getValue()" class="member-name-link">getValue</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get the value, decoded to its logical-type representation.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getVariantValue()" class="member-name-link">getVariantValue</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getVariantValue()" class="member-name-link">getVariantValue</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get the value as a VARIANT.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isValueNull()" class="member-name-link">isValueNull</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isValueNull()" class="member-name-link">isValueNull</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Check if the value is null.</div>
 </div>
 </div>
@@ -357,89 +335,16 @@ decoding.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="getDateKey()">
-<h3>getDateKey</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a></span>&nbsp;<span class="element-name">getDateKey</span>()</div>
-<div class="block">Get the key as a DATE.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the date key value</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the key type is not DATE</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getTimeKey()">
-<h3>getTimeKey</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a></span>&nbsp;<span class="element-name">getTimeKey</span>()</div>
-<div class="block">Get the key as a TIME.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the time key value</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the key type is not TIME</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getTimestampKey()">
-<h3>getTimestampKey</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a></span>&nbsp;<span class="element-name">getTimestampKey</span>()</div>
-<div class="block">Get the key as a TIMESTAMP.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the instant key value</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the key type is not TIMESTAMP</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getDecimalKey()">
-<h3>getDecimalKey</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a></span>&nbsp;<span class="element-name">getDecimalKey</span>()</div>
-<div class="block">Get the key as a DECIMAL.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the decimal key value</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the key type is not DECIMAL</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getUuidKey()">
-<h3>getUuidKey</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a></span>&nbsp;<span class="element-name">getUuidKey</span>()</div>
-<div class="block">Get the key as a UUID.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the UUID key value</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the key type is not UUID</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
 <section class="detail" id="getKey()">
 <h3>getKey</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getKey</span>()</div>
 <div class="block"><p>Get the key, decoded to its logical-type representation.</p>
 <p>Returns the same form as the typed key accessors above
-(<code>Integer</code>, <code>Long</code>, <code>String</code>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a>,
-<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link"><code>UUID</code></a>, etc.), with <code>byte[]</code> for un-annotated
+(<code>Integer</code>, <code>Long</code>, <code>String</code>, <code>byte[]</code>) and additionally covers the
+long-tail logical types not exposed individually — <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a> for
+DATE, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a> for TIME, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> for TIMESTAMP, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a>
+for DECIMAL, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link"><code>UUID</code></a> for UUID — with <code>byte[]</code> for un-annotated
 BYTE_ARRAY / FIXED_LEN_BYTE_ARRAY columns.</p>
 <p>Use <a href="#getRawKey()"><code>getRawKey()</code></a> to obtain the underlying physical value instead.</p>
 </div>
