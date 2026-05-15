@@ -193,6 +193,14 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/LogicalType.IntType.html#param-bitWidth"><code>bitWidth</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/ColumnMetaData.html#bloomFilterLength()" class="member-name-link">bloomFilterLength()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-bloomFilterLength"><code>bloomFilterLength</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ColumnMetaData.html#bloomFilterOffset()" class="member-name-link">bloomFilterOffset()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-bloomFilterOffset"><code>bloomFilterOffset</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/PhysicalType.html#BOOLEAN" class="member-name-link">BOOLEAN</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a></dt>
 <dd>
 <div class="block">Single-bit boolean value.</div>
@@ -452,7 +460,7 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dd>
 <div class="block">Metadata for a column chunk.</div>
 </dd>
-<dt><a href="dev/hardwood/metadata/ColumnMetaData.html#%3Cinit%3E(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics)" class="member-name-link">ColumnMetaData(PhysicalType, List, FieldPath, CompressionCodec, long, long, long, Map, long, Long, Statistics, GeospatialStatistics)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
+<dt><a href="dev/hardwood/metadata/ColumnMetaData.html#%3Cinit%3E(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics,java.lang.Long,java.lang.Integer)" class="member-name-link">ColumnMetaData(PhysicalType, List, FieldPath, CompressionCodec, long, long, long, Map, long, Long, Statistics, GeospatialStatistics, Long, Integer)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>ColumnMetaData</code> record class.</div>
 </dd>
@@ -870,6 +878,10 @@ every row group, no filter.</div>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.MapType.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.MapType.html" title="class in dev.hardwood.metadata">LogicalType.MapType</a></dt>
+<dd>
+<div class="block">Indicates whether some other object is "equal to" this one.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.NullType.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.NullType.html" title="class in dev.hardwood.metadata">LogicalType.NullType</a></dt>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
@@ -1945,6 +1957,10 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.NullType.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.NullType.html" title="class in dev.hardwood.metadata">LogicalType.NullType</a></dt>
+<dd>
+<div class="block">Returns a hash code value for this object.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.StringType.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.StringType.html" title="class in dev.hardwood.metadata">LogicalType.StringType</a></dt>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
@@ -2520,6 +2536,10 @@ and transport settings.</div>
 <dd>
 <div class="block">Map (key-value pairs) logical type.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.NullType.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.NullType</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
+<dd>
+<div class="block">Column whose every value is null.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.StringType.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.StringType</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
 <div class="block">UTF-8 encoded string.</div>
@@ -2890,6 +2910,10 @@ current batch.&quot;</div>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.html#nullPages()" class="member-name-link">nullPages()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnIndex.html#param-nullPages"><code>nullPages</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.NullType.html#%3Cinit%3E()" class="member-name-link">NullType()</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.NullType.html" title="class in dev.hardwood.metadata">LogicalType.NullType</a></dt>
+<dd>
+<div class="block">Creates an instance of a <code>NullType</code> record class.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/SchemaElement.html#numChildren()" class="member-name-link">numChildren()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></dt>
 <dd>
@@ -3716,6 +3740,10 @@ for the sparse-file backing.</div>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.NullType.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.NullType.html" title="class in dev.hardwood.metadata">LogicalType.NullType</a></dt>
+<dd>
+<div class="block">Returns a string representation of this record class.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.StringType.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.StringType.html" title="class in dev.hardwood.metadata">LogicalType.StringType</a></dt>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
@@ -4250,7 +4278,7 @@ does not match what the accessor expects — for example, calling
 </dd>
 </dl>
 <a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:X">X</a>&nbsp;<a href="#I:Y">Y</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

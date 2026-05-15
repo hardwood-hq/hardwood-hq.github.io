@@ -1136,7 +1136,7 @@
 <ul>
 <li><strong>FileMetaData</strong> — top-level: row count, schema, key-value metadata (e.g. Spark schema, pandas metadata), and the writer that produced the file (<code>createdBy</code>)</li>
 <li><strong>RowGroup</strong> — a horizontal partition of the data; each row group contains all columns for a subset of rows</li>
-<li><strong>ColumnChunk</strong> — one column within a row group; holds compression codec, byte sizes, and optional statistics (min/max values, null count) used for predicate pushdown</li>
+<li><strong>ColumnChunk</strong> — one column within a row group; holds compression codec, byte sizes, and optional statistics (min/max values, null count) used for predicate pushdown. Per-chunk byte ranges for the column index and offset index (when present in the file) are exposed via <code>columnIndexOffset</code>/<code>columnIndexLength</code> and <code>offsetIndexOffset</code>/<code>offsetIndexLength</code> on <code>ColumnChunk</code>. The bloom-filter byte range (<code>bloomFilterOffset</code>/<code>bloomFilterLength</code>) is exposed on <code>ColumnMetaData</code>, matching its position in the Parquet Thrift schema.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.ColumnChunk</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.ColumnMetaData</span><span class="p">;</span>
@@ -1244,8 +1244,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0462fc32cf997de4f7cf24bcec903263fa207dd5" target="_blank" rel="noopener">
-      0462fc32
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e9b9afba43b9fc0eec551cf0b9b97acbf5f95a78" target="_blank" rel="noopener">
+      e9b9afba
     </a>
   
 </div>

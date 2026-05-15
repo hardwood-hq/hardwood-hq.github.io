@@ -59,7 +59,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
-<li><a href="#%3Cinit%3E(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics)" tabindex="0">ColumnMetaData(PhysicalType, List, FieldPath, CompressionCodec, long, long, long, Map, long, Long, Statistics, GeospatialStatistics)</a></li>
+<li><a href="#%3Cinit%3E(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics,java.lang.Long,java.lang.Integer)" tabindex="0">ColumnMetaData(PhysicalType, List, FieldPath, CompressionCodec, long, long, long, Map, long, Long, Statistics, GeospatialStatistics, Long, Integer)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -79,6 +79,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#dictionaryPageOffset()" tabindex="0">dictionaryPageOffset()</a></li>
 <li><a href="#statistics()" tabindex="0">statistics()</a></li>
 <li><a href="#geospatialStatistics()" tabindex="0">geospatialStatistics()</a></li>
+<li><a href="#bloomFilterOffset()" tabindex="0">bloomFilterOffset()</a></li>
+<li><a href="#bloomFilterLength()" tabindex="0">bloomFilterLength()</a></li>
 </ol>
 </li>
 </ol>
@@ -108,11 +110,13 @@ loadScripts(document, 'script');</script>
 <dd><code><span id="param-dictionaryPageOffset">dictionaryPageOffset</span></code> - byte offset in the file where the dictionary page begins, or <code>null</code> if there is no dictionary page</dd>
 <dd><code><span id="param-statistics">statistics</span></code> - column chunk statistics (min/max values, null count, distinct count), or <code>null</code> if absent</dd>
 <dd><code><span id="param-geospatialStatistics">geospatialStatistics</span></code> - column chunk geospatial statistics (bounding box, geospatial types), or <code>null</code> if absent</dd>
+<dd><code><span id="param-bloomFilterOffset">bloomFilterOffset</span></code> - file offset of the bloom filter for this column chunk, or <code>null</code> if absent</dd>
+<dd><code><span id="param-bloomFilterLength">bloomFilterLength</span></code> - length of the bloom filter in bytes, or <code>null</code> if absent</dd>
 </dl>
 <hr>
 <object type="image/svg+xml" data="ColumnMetaData.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">ColumnMetaData</span>(<a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a>&gt;&nbsp;encodings, <a href="FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a>&nbsp;pathInSchema, <a href="CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a>&nbsp;codec, long&nbsp;numValues, long&nbsp;totalUncompressedSize, long&nbsp;totalCompressedSize, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;keyValueMetadata, long&nbsp;dataPageOffset, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;dictionaryPageOffset, <a href="Statistics.html" title="class in dev.hardwood.metadata">Statistics</a>&nbsp;statistics, <a href="GeospatialStatistics.html" title="class in dev.hardwood.metadata">GeospatialStatistics</a>&nbsp;geospatialStatistics)
+<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">ColumnMetaData</span>(<a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a>&gt;&nbsp;encodings, <a href="FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a>&nbsp;pathInSchema, <a href="CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a>&nbsp;codec, long&nbsp;numValues, long&nbsp;totalUncompressedSize, long&nbsp;totalCompressedSize, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;keyValueMetadata, long&nbsp;dataPageOffset, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;dictionaryPageOffset, <a href="Statistics.html" title="class in dev.hardwood.metadata">Statistics</a>&nbsp;statistics, <a href="GeospatialStatistics.html" title="class in dev.hardwood.metadata">GeospatialStatistics</a>&nbsp;geospatialStatistics, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;bloomFilterOffset, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;bloomFilterLength)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block">Metadata for a column chunk.</div>
 <dl class="notes">
@@ -136,7 +140,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics)" class="member-name-link">ColumnMetaData</a><wbr>(<a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics,java.lang.Long,java.lang.Integer)" class="member-name-link">ColumnMetaData</a><wbr>(<a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a>&gt;&nbsp;encodings,
  <a href="FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a>&nbsp;pathInSchema,
  <a href="CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a>&nbsp;codec,
@@ -147,7 +151,9 @@ loadScripts(document, 'script');</script>
  long&nbsp;dataPageOffset,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;dictionaryPageOffset,
  <a href="Statistics.html" title="class in dev.hardwood.metadata">Statistics</a>&nbsp;statistics,
- <a href="GeospatialStatistics.html" title="class in dev.hardwood.metadata">GeospatialStatistics</a>&nbsp;geospatialStatistics)</code></div>
+ <a href="GeospatialStatistics.html" title="class in dev.hardwood.metadata">GeospatialStatistics</a>&nbsp;geospatialStatistics,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;bloomFilterOffset,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;bloomFilterLength)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>ColumnMetaData</code> record class.</div>
 </div>
@@ -165,6 +171,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bloomFilterLength()" class="member-name-link">bloomFilterLength</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-bloomFilterLength"><code>bloomFilterLength</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bloomFilterOffset()" class="member-name-link">bloomFilterOffset</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-bloomFilterOffset"><code>bloomFilterOffset</code></a> record component.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#codec()" class="member-name-link">codec</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -258,7 +274,7 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics)">
+<section class="detail" id="&lt;init&gt;(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics,java.lang.Long,java.lang.Integer)">
 <h3>ColumnMetaData</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ColumnMetaData</span><wbr><span class="parameters">(<a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
@@ -272,7 +288,9 @@ loadScripts(document, 'script');</script>
  long&nbsp;dataPageOffset,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;dictionaryPageOffset,
  <a href="Statistics.html" title="class in dev.hardwood.metadata">Statistics</a>&nbsp;statistics,
- <a href="GeospatialStatistics.html" title="class in dev.hardwood.metadata">GeospatialStatistics</a>&nbsp;geospatialStatistics)</span></div>
+ <a href="GeospatialStatistics.html" title="class in dev.hardwood.metadata">GeospatialStatistics</a>&nbsp;geospatialStatistics,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;bloomFilterOffset,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;bloomFilterLength)</span></div>
 <div class="block">Creates an instance of a <code>ColumnMetaData</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -288,6 +306,8 @@ loadScripts(document, 'script');</script>
 <dd><code>dictionaryPageOffset</code> - the value for the <a href="#param-dictionaryPageOffset"><code>dictionaryPageOffset</code></a> record component</dd>
 <dd><code>statistics</code> - the value for the <a href="#param-statistics"><code>statistics</code></a> record component</dd>
 <dd><code>geospatialStatistics</code> - the value for the <a href="#param-geospatialStatistics"><code>geospatialStatistics</code></a> record component</dd>
+<dd><code>bloomFilterOffset</code> - the value for the <a href="#param-bloomFilterOffset"><code>bloomFilterOffset</code></a> record component</dd>
+<dd><code>bloomFilterLength</code> - the value for the <a href="#param-bloomFilterLength"><code>bloomFilterLength</code></a> record component</dd>
 </dl>
 </div>
 </section>
@@ -503,13 +523,39 @@ loadScripts(document, 'script');</script>
 </div>
 </section>
 </li>
+<li>
+<section class="detail" id="bloomFilterOffset()">
+<h3>bloomFilterOffset</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name">bloomFilterOffset</span>()</div>
+<div class="block">Returns the value of the <a href="#param-bloomFilterOffset"><code>bloomFilterOffset</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-bloomFilterOffset"><code>bloomFilterOffset</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="bloomFilterLength()">
+<h3>bloomFilterLength</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></span>&nbsp;<span class="element-name">bloomFilterLength</span>()</div>
+<div class="block">Returns the value of the <a href="#param-bloomFilterLength"><code>bloomFilterLength</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-bloomFilterLength"><code>bloomFilterLength</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
 </ul>
 </section>
 </li>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-<footer role="contentinfo">
+<footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>
 </footer>

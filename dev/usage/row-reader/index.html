@@ -755,6 +755,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#null-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NULL columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#bare-byte_array-columns" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1345,6 +1356,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#null-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NULL columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#bare-byte_array-columns" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1692,6 +1714,8 @@ match.</p>
 <p><code>getFloat</code> accepts FLOAT16 columns (<code>FIXED_LEN_BYTE_ARRAY(2)</code> annotated with the <code>FLOAT16</code> logical type) and decodes the 2-byte IEEE 754 half-precision payload to a single-precision <code>float</code>. The widening is lossless — half-precision NaN, ±Infinity, and signed zero round-trip cleanly, and the original NaN bit pattern is preserved (the Parquet spec does not canonicalize NaNs on write). Use <code>Float.isNaN(value)</code> for NaN checks rather than equality. As with all primitive accessors, <code>isNull()</code> must be checked before <code>getFloat()</code> since FLOAT16 columns can be optional.</p>
 <h4 id="legacy-int96-timestamps">Legacy INT96 timestamps<a class="headerlink" href="#legacy-int96-timestamps" title="Permanent link">&para;</a></h4>
 <p>Parquet files written by older versions of Apache Spark and Hive store timestamps in the deprecated INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> detects INT96 automatically and decodes it to an <code>Instant</code>; no caller-side handling is required.</p>
+<h4 id="null-columns">NULL columns<a class="headerlink" href="#null-columns" title="Permanent link">&para;</a></h4>
+<p>A column annotated with the <code>NULL</code> logical type (e.g. PyArrow's <code>pa.null()</code>) holds a null value at every row. <code>column.logicalType()</code> returns <code>LogicalType.NullType</code>; <code>isNull(name)</code> is always <code>true</code> and the typed/generic accessors return <code>null</code> accordingly. No separate accessor is needed.</p>
 <h4 id="bare-byte_array-columns">Bare <code>BYTE_ARRAY</code> columns<a class="headerlink" href="#bare-byte_array-columns" title="Permanent link">&para;</a></h4>
 <p><code>BYTE_ARRAY</code> columns without a <code>STRING</code> logical type annotation may hold arbitrary binary payloads (Protobuf, WKB, custom encodings). Generic accessors such as <code>PqList.get</code> and <code>PqList.iterator</code> surface these as <code>byte[]</code> rather than silently UTF-8 decoding them — invalid byte sequences would otherwise be replaced with <code>U+FFFD</code>. Call <code>getString</code> explicitly when the column is known to contain UTF-8 text from an older writer that omitted the <code>STRING</code> annotation.</p>
 <h4 id="typed-accessors-on-pqlist-and-pqmapentry">Typed accessors on <code>PqList</code> and <code>PqMap.Entry</code><a class="headerlink" href="#typed-accessors-on-pqlist-and-pqmapentry" title="Permanent link">&para;</a></h4>
@@ -1769,8 +1793,8 @@ match.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0462fc32cf997de4f7cf24bcec903263fa207dd5" target="_blank" rel="noopener">
-      0462fc32
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e9b9afba43b9fc0eec551cf0b9b97acbf5f95a78" target="_blank" rel="noopener">
+      e9b9afba
     </a>
   
 </div>
