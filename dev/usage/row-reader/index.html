@@ -100,7 +100,15 @@
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Hardwood" class="md-header__button md-logo" aria-label="Hardwood" data-md-component="logo">
-      <img src="../../assets/hardwood-with-text.svg" alt="Hardwood">
+      <!--
+
+     SPDX-License-Identifier: Apache-2.0
+
+     Copyright The original authors
+
+     Licensed under the Apache Software License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+
+--><img src="../../assets/hardwood-with-text.svg" alt="Hardwood">
     </a>
     <label class="md-header__button md-icon" for="__drawer">
       
@@ -419,7 +427,15 @@
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Hardwood" class="md-nav__button md-logo" aria-label="Hardwood" data-md-component="logo">
-      <img src="../../assets/hardwood-with-text.svg" alt="Hardwood">
+      <!--
+
+     SPDX-License-Identifier: Apache-2.0
+
+     Copyright The original authors
+
+     Licensed under the Apache Software License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+
+--><img src="../../assets/hardwood-with-text.svg" alt="Hardwood">
     </a>
     Hardwood
   </label>
@@ -694,10 +710,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#type-validation" class="md-nav__link">
+  <a href="#type-mismatches" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Type validation
+        Type mismatches
       
     </span>
   </a>
@@ -1295,10 +1311,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#type-validation" class="md-nav__link">
+  <a href="#type-mismatches" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Type validation
+        Type mismatches
       
     </span>
   </a>
@@ -1683,11 +1699,11 @@ match.</p>
 </tr>
 </tbody>
 </table>
-<p>All methods are available as both <code>method(name)</code> and <code>method(index)</code>, except <code>getStruct</code>, <code>getList</code>, <code>getMap</code>, and <code>getVariant</code> which are name-based only.</p>
+<p>All methods are available as both <code>method(name)</code> and <code>method(index)</code>.</p>
 <h4 id="null-handling">Null handling<a class="headerlink" href="#null-handling" title="Permanent link">&para;</a></h4>
 <p>Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw <code>NullPointerException</code> if the field is null — always check with <code>isNull()</code> first. Object accessors (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>, <code>getInterval</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
-<h4 id="type-validation">Type validation<a class="headerlink" href="#type-validation" title="Permanent link">&para;</a></h4>
-<p>The API validates at runtime that the requested type matches the schema. Mismatches throw <code>IllegalArgumentException</code> with a descriptive message.</p>
+<h4 id="type-mismatches">Type mismatches<a class="headerlink" href="#type-mismatches" title="Permanent link">&para;</a></h4>
+<p>Requesting the wrong type for a column (e.g. <code>getInt</code> on a <code>LONG</code> column, <code>getDate</code> on a <code>STRING</code> column) is a programming error; the call fails at runtime with an unchecked exception. The specific exception type is unspecified and may change between releases — do not catch it as part of normal control flow. Check the schema up front if the column type isn't known statically.</p>
 <h4 id="index-based-access">Index-based access<a class="headerlink" href="#index-based-access" title="Permanent link">&para;</a></h4>
 <p>For hot loops, look up column indices once outside the loop and pass them to the accessors instead of names:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Get column indices once (before the loop)</span>
@@ -1787,8 +1803,8 @@ match.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/fd41e1311f75b926a4dd0334043ea28a68bd8c66" target="_blank" rel="noopener">
-      fd41e131
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4f355e9c36e099393155cfc83e961e52a4e817fb" target="_blank" rel="noopener">
+      4f355e9c
     </a>
   
 </div>
