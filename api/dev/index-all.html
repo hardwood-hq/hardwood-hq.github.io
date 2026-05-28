@@ -50,7 +50,7 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:X">X</a>&nbsp;<a href="#I:Y">Y</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<a href="#I:X">X</a>&nbsp;<a href="#I:Y">Y</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
 <h2 class="title" id="I:A">A</h2>
 <dl class="index">
 <dt><a href="dev/hardwood/s3/S3Credentials.html#accessKeyId()" class="member-name-link">accessKeyId()</a> - Method in record class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Credentials.html" title="class in dev.hardwood.s3">S3Credentials</a></dt>
@@ -2938,6 +2938,10 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Object — string-keyed collection of Variant values.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/Validity.html#of(long%5B%5D)" class="member-name-link">of(long[])</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dd>
+<div class="block">Wraps a packed <code>long[]</code> bitmap (set-bit-= -present storage).</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/FieldPath.html#of(java.lang.String...)" class="member-name-link">of(String...)</a> - Static method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a></dt>
 <dd>
 <div class="block">Creates a FieldPath from individual path components.</div>
@@ -2953,10 +2957,6 @@ current batch.&quot;</div>
 <dt><a href="dev/hardwood/InputFile.html#of(java.nio.file.Path)" class="member-name-link">of(Path)</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
 <dd>
 <div class="block">Creates an unopened <a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for a local file path.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/Validity.html#of(java.util.BitSet)" class="member-name-link">of(BitSet)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
-<dd>
-<div class="block">Wraps a backing <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a> (set-bit-= -present storage).</div>
 </dd>
 <dt><a href="dev/hardwood/InputFile.html#ofBuffers(java.nio.ByteBuffer,java.nio.ByteBuffer...)" class="member-name-link">ofBuffers(ByteBuffer, ByteBuffer...)</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
 <dd>
@@ -4013,8 +4013,8 @@ for the sparse-file backing.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/Validity.Backed.html" class="type-name-link" title="class in dev.hardwood.reader">Validity.Backed</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
-<div class="block">A <code>Validity</code> whose per-item nullability is stored in a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a>
-(set bit = item is present).</div>
+<div class="block">A <code>Validity</code> whose per-item nullability is stored in a packed
+<code>long[]</code> (set bit = item is present).</div>
 </dd>
 <dt><a href="dev/hardwood/reader/Validity.NoNulls.html" class="type-name-link" title="class in dev.hardwood.reader">Validity.NoNulls</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
@@ -4224,6 +4224,17 @@ does not match what the accessor expects — for example, calling
 <dt><a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html#VINCENTY" class="member-name-link">VINCENTY</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html" title="enum class in dev.hardwood.metadata">LogicalType.EdgeInterpolationAlgorithm</a></dt>
 <dd>&nbsp;</dd>
 </dl>
+<h2 class="title" id="I:W">W</h2>
+<dl class="index">
+<dt><a href="dev/hardwood/reader/Validity.Backed.html#words()" class="member-name-link">words()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#words()" class="member-name-link">words()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/Validity.html#words()" class="member-name-link">words()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dd>
+<div class="block">The word array (set-bit = present polarity).</div>
+</dd>
+</dl>
 <h2 class="title" id="I:X">X</h2>
 <dl class="index">
 <dt><a href="dev/hardwood/metadata/BoundingBox.html#xmax()" class="member-name-link">xmax()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/BoundingBox.html" title="class in dev.hardwood.metadata">BoundingBox</a></dt>
@@ -4277,7 +4288,7 @@ does not match what the accessor expects — for example, calling
 <div class="block">Zstandard compression.</div>
 </dd>
 </dl>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:X">X</a>&nbsp;<a href="#I:Y">Y</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<a href="#I:X">X</a>&nbsp;<a href="#I:Y">Y</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
 <footer>
 <hr>
 <p class="legal-copy"><small>Licensed under the <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>. Copyright &copy; 2026. All rights reserved.</small></p>

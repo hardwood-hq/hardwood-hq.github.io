@@ -67,6 +67,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#nullCount(int)" tabindex="0">nullCount(int)</a></li>
 <li><a href="#nextNull(int,int)" tabindex="0">nextNull(int, int)</a></li>
 <li><a href="#nextNotNull(int,int)" tabindex="0">nextNotNull(int, int)</a></li>
+<li><a href="#words()" tabindex="0">words()</a></li>
 </ol>
 </li>
 </ol>
@@ -94,11 +95,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public static final class </span><span class="element-name type-name-label">Validity.Backed</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="Validity.html" title="interface in dev.hardwood.reader">Validity</a></span></div>
-<div class="block">A <code>Validity</code> whose per-item nullability is stored in a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a>
-(set bit = item is present). Constructed by <a href="Validity.html#of(java.util.BitSet)"><code>Validity.of(BitSet)</code></a> when
-at least one item is null in the batch. The backing bitmap is
-not exposed; consumers query through <code>isNull</code> / <code>isNotNull</code> /
-<code>nullCount</code> / <code>nextNull</code> / <code>nextNotNull</code>.</div>
+<div class="block">A <code>Validity</code> whose per-item nullability is stored in a packed
+<code>long[]</code> (set bit = item is present). Constructed by <a href="Validity.html#of(long%5B%5D)"><code>Validity.of(long[])</code></a>
+when at least one item is null in the batch.</div>
 </div>
 </section>
 <section class="summary">
@@ -166,6 +165,11 @@ item in that range is non-null.</div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nullCount(int)" class="member-name-link">nullCount</a><wbr>(int&nbsp;count)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Number of null items in this batch.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#words()" class="member-name-link">words</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The word array (set-bit = present polarity).</div>
 </div>
 </div>
 </div>
@@ -280,6 +284,24 @@ length.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Validity.html#nextNotNull(int,int)">nextNotNull</a></code>&nbsp;in interface&nbsp;<code><a href="Validity.html" title="interface in dev.hardwood.reader">Validity</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="words()">
+<h3>words</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long[]</span>&nbsp;<span class="element-name">words</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="Validity.html#words()">Validity</a></code></span></div>
+<div class="block">The word array (set-bit = present polarity). Returns <code>null</code> for
+<a href="Validity.NoNulls.html" title="class in dev.hardwood.reader"><code>Validity.NoNulls</code></a>. For <a href="Validity.Backed.html" title="class in dev.hardwood.reader"><code>Validity.Backed</code></a>, returns the backing array directly — no
+copy. Callers must not mutate it; mirroring the inbound contract
+on [#of(long[])], the <code>Validity</code> owns the bitmap once handed in.
+Bits at indices <code>&gt;= count</code> are undefined and must not be read.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Validity.html#words()">words</a></code>&nbsp;in interface&nbsp;<code><a href="Validity.html" title="interface in dev.hardwood.reader">Validity</a></code></dd>
 </dl>
 </div>
 </section>

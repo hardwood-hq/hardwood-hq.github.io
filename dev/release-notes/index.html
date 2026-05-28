@@ -1275,7 +1275,7 @@
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
-<p><strong>Breaking:</strong> <code>ColumnReader</code> rebuilt around a layer model. Each non-leaf node along the schema chain contributes zero or one layer — <code>OPTIONAL</code> groups become <code>STRUCT</code> layers, <code>LIST</code>/<code>MAP</code>-annotated groups become <code>REPEATED</code> layers — and the API is structured per-layer rather than per-Parquet-repetition-level. Validity is returned as a dedicated <a href="/api/dev/dev/hardwood/reader/Validity.html">Validity</a> sealed type with two implementations: a <code>Validity.NO_NULLS</code> singleton for the O(1) no-nulls fast path, and a <code>BitSet</code>-backed wrapper otherwise. Predicates are <code>isNull(i)</code> / <code>isNotNull(i)</code> / <code>hasNulls()</code>. <code>LIST</code>/<code>MAP</code> layers encode "empty" as <code>offsets[r+1] - offsets[r] == 0</code> and "null" as a cleared validity bit, dropping the separate empty-marker bitmap. The leaf array and layer offsets are sized to <strong>real items only</strong> — phantom slots from null/empty parents are excluded. Permitted by <code>ColumnReader</code>'s existing <code>@Experimental</code> annotation; no deprecation cycle is run. Subsumes <a href="https://github.com/hardwood-hq/hardwood/issues/436">#436</a>'s struct-null-vs-leaf-null disambiguation. See the <a href="../usage/column-reader/#reading-nested-data-the-layer-model">Layer Model</a> section and <a href="https://github.com/hardwood-hq/hardwood/issues/430">#430</a>.</p>
+<p><strong>Breaking:</strong> <code>ColumnReader</code> rebuilt around a layer model. Each non-leaf node along the schema chain contributes zero or one layer — <code>OPTIONAL</code> groups become <code>STRUCT</code> layers, <code>LIST</code>/<code>MAP</code>-annotated groups become <code>REPEATED</code> layers — and the API is structured per-layer rather than per-Parquet-repetition-level. Validity is returned as a dedicated <a href="/api/dev/dev/hardwood/reader/Validity.html">Validity</a> sealed type with two implementations: a <code>Validity.NO_NULLS</code> singleton for the O(1) no-nulls fast path, and a packed <code>long[]</code>-backed wrapper otherwise. Predicates are <code>isNull(i)</code> / <code>isNotNull(i)</code> / <code>hasNulls()</code>, and <code>words()</code> exposes the backing <code>long[]</code> for word-wise iteration. <code>LIST</code>/<code>MAP</code> layers encode "empty" as <code>offsets[r+1] - offsets[r] == 0</code> and "null" as a cleared validity bit, dropping the separate empty-marker bitmap. The leaf array and layer offsets are sized to <strong>real items only</strong> — phantom slots from null/empty parents are excluded. Permitted by <code>ColumnReader</code>'s existing <code>@Experimental</code> annotation; no deprecation cycle is run. Subsumes <a href="https://github.com/hardwood-hq/hardwood/issues/436">#436</a>'s struct-null-vs-leaf-null disambiguation. See the <a href="../usage/column-reader/#reading-nested-data-the-layer-model">Layer Model</a> section, <a href="https://github.com/hardwood-hq/hardwood/issues/430">#430</a>, and <a href="https://github.com/hardwood-hq/hardwood/issues/440">#440</a>.</p>
 <p>Migration table:</p>
 <table>
 <thead>
@@ -1300,6 +1300,10 @@
 <tr>
 <td><code>nulls == null</code> ⇒ no nulls in batch</td>
 <td><code>!v.hasNulls()</code> ⇒ no nulls in batch</td>
+</tr>
+<tr>
+<td><code>nulls.toLongArray()</code> for word-wise scans</td>
+<td><code>v.words()</code> (backing array, set bit = present, do not mutate)</td>
 </tr>
 <tr>
 <td><code>reader.getLevelNulls(level)</code> (returns <code>BitSet</code>, set bit = null)</td>
@@ -1430,8 +1434,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4f355e9c36e099393155cfc83e961e52a4e817fb" target="_blank" rel="noopener">
-      4f355e9c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/3975ef8d980676809499dedcb3bafb58c7a73494" target="_blank" rel="noopener">
+      3975ef8d
     </a>
   
 </div>

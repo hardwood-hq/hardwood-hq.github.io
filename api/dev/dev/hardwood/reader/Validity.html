@@ -65,13 +65,14 @@ loadScripts(document, 'script');</script>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
-<li><a href="#of(java.util.BitSet)" tabindex="0">of(BitSet)</a></li>
+<li><a href="#of(long%5B%5D)" tabindex="0">of(long[])</a></li>
 <li><a href="#hasNulls()" tabindex="0">hasNulls()</a></li>
 <li><a href="#isNull(int)" tabindex="0">isNull(int)</a></li>
 <li><a href="#isNotNull(int)" tabindex="0">isNotNull(int)</a></li>
 <li><a href="#nullCount(int)" tabindex="0">nullCount(int)</a></li>
 <li><a href="#nextNull(int,int)" tabindex="0">nextNull(int, int)</a></li>
 <li><a href="#nextNotNull(int,int)" tabindex="0">nextNotNull(int, int)</a></li>
+<li><a href="#words()" tabindex="0">words()</a></li>
 </ol>
 </li>
 </ol>
@@ -99,8 +100,9 @@ loadScripts(document, 'script');</script>
 <li><a href="Validity.NoNulls.html" title="class in dev.hardwood.reader"><code>Validity.NoNulls</code></a> — every item at that scope is non-null in the current
 batch. The <a href="#NO_NULLS"><code>NO_NULLS</code></a> singleton, returned for the no-nulls fast
 path; no per-batch allocation.</li>
-<li><a href="Validity.Backed.html" title="class in dev.hardwood.reader"><code>Validity.Backed</code></a> — a wrapper over a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a> whose bit <code>i</code> is set iff
-item <code>i</code> is <strong>not null</strong> (set-bit-= -present storage polarity).</li>
+<li><a href="Validity.Backed.html" title="class in dev.hardwood.reader"><code>Validity.Backed</code></a> — a packed <code>long[]</code> bitmap with <strong>set-bit-= -present</strong>
+polarity: bit <code>i</code> is set iff item <code>i</code> is present (non-null). Word
+<code>w</code> covers items <code>[w*64, w*64+64)</code>, low bit = lowest item.</li>
 </ul>
 <p>Consumer-side predicates (<code>isNull(i)</code> / <code>isNotNull(i)</code> / <code>hasNulls()</code>)
 describe nullability; the storage uses set-bit-= -present internally
@@ -129,8 +131,8 @@ fast path explicit:</p>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="Validity.Backed.html" class="type-name-link" title="class in dev.hardwood.reader">Validity.Backed</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">A <code>Validity</code> whose per-item nullability is stored in a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a>
-(set bit = item is present).</div>
+<div class="block">A <code>Validity</code> whose per-item nullability is stored in a packed
+<code>long[]</code> (set bit = item is present).</div>
 </div>
 <div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="Validity.NoNulls.html" class="type-name-link" title="class in dev.hardwood.reader">Validity.NoNulls</a></code></div>
@@ -205,9 +207,14 @@ item in that range is non-null.</div>
 <div class="block">Number of null items in this batch.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="Validity.html" title="interface in dev.hardwood.reader">Validity</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#of(java.util.BitSet)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link">BitSet</a>&nbsp;bits)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#of(long%5B%5D)" class="member-name-link">of</a><wbr>(long[]&nbsp;words)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1">
-<div class="block">Wraps a backing <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a> (set-bit-= -present storage).</div>
+<div class="block">Wraps a packed <code>long[]</code> bitmap (set-bit-= -present storage).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#words()" class="member-name-link">words</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">The word array (set-bit = present polarity).</div>
 </div>
 </div>
 </div>
@@ -242,16 +249,21 @@ current batch.&quot; Identity-stable across calls.</div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="of(java.util.BitSet)">
+<section class="detail" id="of(long[])">
 <h3>of</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="Validity.html" title="interface in dev.hardwood.reader">Validity</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link">BitSet</a>&nbsp;bits)</span></div>
-<div class="block">Wraps a backing <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a> (set-bit-= -present storage). Returns
-<a href="#NO_NULLS"><code>NO_NULLS</code></a> when <code>bits</code> is <code>null</code> (the sparse &quot;no nulls&quot;
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="Validity.html" title="interface in dev.hardwood.reader">Validity</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(long[]&nbsp;words)</span></div>
+<div class="block"><p>Wraps a packed <code>long[]</code> bitmap (set-bit-= -present storage).
+Returns <a href="#NO_NULLS"><code>NO_NULLS</code></a> when <code>words</code> is <code>null</code> (the sparse &quot;no nulls&quot;
 representation produced by the internal pipeline); otherwise
 returns a fresh <a href="Validity.Backed.html" title="class in dev.hardwood.reader"><code>Validity.Backed</code></a> holding the given bitmap. The wrapper
 does not copy — callers must not mutate the bitmap after handing
-it to a <code>Validity</code>.</div>
+it to a <code>Validity</code>.</p>
+<p>The caller is responsible for sizing the array to at least
+<code>(count + 63) &gt;&gt;&gt; 6</code> words for any <code>count</code> they later pass to
+<a href="#nullCount(int)"><code>nullCount(int)</code></a> / <a href="#nextNull(int,int)"><code>nextNull(int, int)</code></a> / <a href="#nextNotNull(int,int)"><code>nextNotNull(int, int)</code></a>, and for keeping
+indices into <a href="#isNull(int)"><code>isNull(int)</code></a> / <a href="#isNotNull(int)"><code>isNotNull(int)</code></a> within the same bound.</p>
+</div>
 </div>
 </section>
 </li>
@@ -322,6 +334,19 @@ item in that range is non-null.</div>
 every item in that range is null. <code>count</code> is the total item count
 at this scope — required because <a href="Validity.NoNulls.html" title="class in dev.hardwood.reader"><code>Validity.NoNulls</code></a> has no intrinsic
 length.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="words()">
+<h3>words</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">long[]</span>&nbsp;<span class="element-name">words</span>()</div>
+<div class="block">The word array (set-bit = present polarity). Returns <code>null</code> for
+<a href="Validity.NoNulls.html" title="class in dev.hardwood.reader"><code>Validity.NoNulls</code></a>. For <a href="Validity.Backed.html" title="class in dev.hardwood.reader"><code>Validity.Backed</code></a>, returns the backing array directly — no
+copy. Callers must not mutate it; mirroring the inbound contract
+on [#of(long[])], the <code>Validity</code> owns the bitmap once handed in.
+Bits at indices <code>&gt;= count</code> are undefined and must not be read.</div>
 </div>
 </section>
 </li>

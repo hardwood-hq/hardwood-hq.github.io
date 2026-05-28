@@ -77,8 +77,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../Validity.Backed.html" class="type-name-link" title="class in dev.hardwood.reader">Validity.Backed</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">A <code>Validity</code> whose per-item nullability is stored in a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a>
-(set bit = item is present).</div>
+<div class="block">A <code>Validity</code> whose per-item nullability is stored in a packed
+<code>long[]</code> (set bit = item is present).</div>
 </div>
 <div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../Validity.NoNulls.html" class="type-name-link" title="class in dev.hardwood.reader">Validity.NoNulls</a></code></div>
@@ -114,9 +114,9 @@ current batch.&quot;</div>
 <div class="block">Validity over the leaf-value array, indexed <code>0..getValueCount()</code>.</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="../Validity.html" title="interface in dev.hardwood.reader">Validity</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Validity.</span><code><a href="../Validity.html#of(java.util.BitSet)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link">BitSet</a>&nbsp;bits)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Validity.</span><code><a href="../Validity.html#of(long%5B%5D)" class="member-name-link">of</a><wbr>(long[]&nbsp;words)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Wraps a backing <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/BitSet.html" title="class or interface in java.util" class="external-link"><code>BitSet</code></a> (set-bit-= -present storage).</div>
+<div class="block">Wraps a packed <code>long[]</code> bitmap (set-bit-= -present storage).</div>
 </div>
 </div>
 </section>
