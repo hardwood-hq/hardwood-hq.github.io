@@ -1086,10 +1086,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#unreleased" class="md-nav__link">
+  <a href="#100cr1-2026-05-31" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unreleased
+        1.0.0.CR1 (2026-05-31)
       
     </span>
   </a>
@@ -1191,10 +1191,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#unreleased" class="md-nav__link">
+  <a href="#100cr1-2026-05-31" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Unreleased
+        1.0.0.CR1 (2026-05-31)
       
     </span>
   </a>
@@ -1272,75 +1272,19 @@
 -->
 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
 <p>See <a href="https://github.com/hardwood-hq/hardwood/releases">GitHub Releases</a> for downloads and more information.</p>
-<h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
+<h2 id="100cr1-2026-05-31">1.0.0.CR1 (2026-05-31)<a class="headerlink" href="#100cr1-2026-05-31" title="Permanent link">&para;</a></h2>
+<p>Highlights of this release:</p>
 <ul>
-<li>
-<p><strong>Breaking:</strong> <code>ColumnReader</code> rebuilt around a layer model. Each non-leaf node along the schema chain contributes zero or one layer — <code>OPTIONAL</code> groups become <code>STRUCT</code> layers, <code>LIST</code>/<code>MAP</code>-annotated groups become <code>REPEATED</code> layers — and the API is structured per-layer rather than per-Parquet-repetition-level. Validity is returned as a dedicated <a href="/api/dev/dev/hardwood/reader/Validity.html">Validity</a> sealed type with two implementations: a <code>Validity.NO_NULLS</code> singleton for the O(1) no-nulls fast path, and a packed <code>long[]</code>-backed wrapper otherwise. Predicates are <code>isNull(i)</code> / <code>isNotNull(i)</code> / <code>hasNulls()</code>, and <code>words()</code> exposes the backing <code>long[]</code> for word-wise iteration. <code>LIST</code>/<code>MAP</code> layers encode "empty" as <code>offsets[r+1] - offsets[r] == 0</code> and "null" as a cleared validity bit, dropping the separate empty-marker bitmap. The leaf array and layer offsets are sized to <strong>real items only</strong> — phantom slots from null/empty parents are excluded. Permitted by <code>ColumnReader</code>'s existing <code>@Experimental</code> annotation; no deprecation cycle is run. Subsumes <a href="https://github.com/hardwood-hq/hardwood/issues/436">#436</a>'s struct-null-vs-leaf-null disambiguation. See the <a href="../usage/column-reader/#reading-nested-data-the-layer-model">Layer Model</a> section, <a href="https://github.com/hardwood-hq/hardwood/issues/430">#430</a>, and <a href="https://github.com/hardwood-hq/hardwood/issues/440">#440</a>.</p>
-<p>Migration table:</p>
-<table>
-<thead>
-<tr>
-<th>Before</th>
-<th>After</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>BitSet nulls = reader.getElementNulls();</code></td>
-<td><code>Validity v = reader.getLeafValidity();</code></td>
-</tr>
-<tr>
-<td><code>if (nulls != null &amp;&amp; nulls.get(i)) skip;</code></td>
-<td><code>if (v.isNull(i)) skip;</code></td>
-</tr>
-<tr>
-<td><code>if (nulls == null \|\| !nulls.get(i)) keep;</code></td>
-<td><code>if (v.isNotNull(i)) keep;</code></td>
-</tr>
-<tr>
-<td><code>nulls == null</code> ⇒ no nulls in batch</td>
-<td><code>!v.hasNulls()</code> ⇒ no nulls in batch</td>
-</tr>
-<tr>
-<td><code>nulls.toLongArray()</code> for word-wise scans</td>
-<td><code>v.words()</code> (backing array, set bit = present, do not mutate)</td>
-</tr>
-<tr>
-<td><code>reader.getLevelNulls(level)</code> (returns <code>BitSet</code>, set bit = null)</td>
-<td><code>reader.getLayerValidity(layer)</code> (returns <code>Validity</code>)</td>
-</tr>
-<tr>
-<td><code>reader.getEmptyListMarkers(level)</code></td>
-<td>encoded as <code>offsets[i+1] - offsets[i] == 0</code></td>
-</tr>
-<tr>
-<td><code>reader.getOffsets(level)</code></td>
-<td><code>reader.getLayerOffsets(layer)</code> (sentinel-suffixed; length <code>count + 1</code>)</td>
-</tr>
-<tr>
-<td><code>reader.getNestingDepth()</code></td>
-<td><code>reader.getLayerCount()</code></td>
-</tr>
-<tr>
-<td><code>byte[][] reader.getBinaries()</code> (primary)</td>
-<td><code>byte[] reader.getBinaryValues()</code> + <code>int[] reader.getBinaryOffsets()</code> (primary). <code>getBinaries()</code> is retained as a convenience accessor that allocates per row.</td>
-</tr>
-<tr>
-<td><code>reader.getStrings()</code> (primary)</td>
-<td>retained as a convenience accessor; hot loops should consult <code>getBinaryValues()</code> + <code>getBinaryOffsets()</code> directly.</td>
-</tr>
-<tr>
-<td><code>getBinaries()[recordIndex]</code> / <code>getStrings()[recordIndex]</code></td>
-<td>the returned array is sized to <code>getValueCount()</code> (real leaf count), not <code>getRecordCount()</code>. For flat columns the two coincide; under nesting (e.g. <code>list&lt;string&gt;</code>) they differ — index through the appropriate layer offsets rather than by record.</td>
-</tr>
-</tbody>
-</table>
-<p>Layer indexing also changes shape: a column whose chain is <code>optional group a { list&lt;list&lt;int&gt;&gt; b }</code> moves from "two repetition levels" to "three layers" (one <code>STRUCT</code> for <code>a</code>, two <code>REPEATED</code> for <code>b</code>). Callers that index numerically must be re-keyed.
-- <code>RowGroupPredicate</code> for split-aware row group selection. Pass <code>RowGroupPredicate.byteRange(start, end)</code> to any reader builder's <code>filter(...)</code> to restrict reading to the row groups whose midpoint falls in the given file byte range — the standard split convention used by Hadoop-style integrations (Flink <code>BulkFormat</code>, Spark file source, …). Combines with <code>FilterPredicate</code> via intersection. See <a href="../usage/query-controls/#split-aware-reading">Split-Aware Reading</a> and <a href="https://github.com/hardwood-hq/hardwood/issues/431">#431</a>.
-- Coordinated <code>ColumnReaders.nextBatch()</code> and <code>ColumnReaders.getRecordCount()</code> for multi-column reads. A single call advances every underlying reader in lockstep, returns <code>false</code> when any is exhausted, and validates that the readers' record counts agree. Replaces the prior <code>col0.nextBatch() &amp; col1.nextBatch() &amp; …</code> idiom and gives consumers structural alignment instead of an implicit invariant. See <a href="../usage/column-reader/#reading-multiple-columns">Reading Multiple Columns</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/434">#434</a>, and the related contract gap <a href="https://github.com/hardwood-hq/hardwood/issues/61">#61</a>.
-- <code>SchemaNode.GroupNode.getMapKey()</code> / <code>getMapValue()</code> for navigating MAP groups, symmetric with the existing <code>getListElement()</code>. Returns the key and value nodes from the standard <code>map.key_value.key</code> / <code>map.key_value.value</code> encoding; returns <code>null</code> for non-MAP or malformed groups, matching <code>getListElement()</code>'s behavior. See <a href="https://github.com/hardwood-hq/hardwood/issues/435">#435</a>.</p>
-</li>
+<li><strong>Breaking:</strong> <code>ColumnReader</code> rebuilt around a layer model, with per-layer validity, offsets, and real-item-only sizing for nested data (see the <a href="../usage/column-reader/#reading-nested-data-the-layer-model">Layer Model</a> docs); <code>ColumnReader</code> is now marked <code>@Experimental</code></li>
+<li>More performant evaluation of multi-column filter expressions</li>
+<li>Split-aware reading via <code>RowGroupPredicate.byteRange(...)</code>, for Hadoop-style split integrations</li>
+<li>Coordinated multi-column reads via <code>ColumnReaders.nextBatch()</code> / <code>getRecordCount()</code></li>
+<li>Richer <code>RowReader</code> value model: by-index field access on <code>PqStruct</code>, key-based lookup and typed accessors on <code>PqMap</code>, typed <code>List</code> accessors on <code>PqList</code>, and additional variant accessors</li>
+<li>Float16 filter predicates and recognition of the <code>NullType</code> logical annotation</li>
+<li>CLI: exhaustive logical-type formatting; <code>hardwood dive</code>: faster navigation of large collections and corrected "go to latest" in the data preview</li>
 </ul>
+<p>See the <a href="https://github.com/hardwood-hq/hardwood/milestone/6?closed=1">1.0.0.CR1 milestone</a> on GitHub for the full list of resolved issues.</p>
+<p>Thank you to all contributors to this release: <a href="https://github.com/CarlosEduR">Carlos Sousa</a>, <a href="https://github.com/iifawzi">Fawzi Essam</a>, <a href="https://github.com/gunnarmorling">Gunnar Morling</a>, <a href="https://github.com/mghildiy">Manish</a>, <a href="https://github.com/mohamedibrahim54">Mohamed Ibrahim Elsawy</a>, <a href="https://github.com/muhannd2004">muhannd Sayed</a>, <a href="https://github.com/polo7">polo</a>, <a href="https://github.com/prshnt">Prashant Khanal</a>, <a href="https://github.com/rionmonster">Rion Williams</a>, <a href="https://github.com/bmscomp">Said Boudjelda</a>.</p>
 <h2 id="100beta2-2026-04-29">1.0.0.Beta2 (2026-04-29)<a class="headerlink" href="#100beta2-2026-04-29" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.morling.dev/blog/variant-support-interactive-parquet-file-tui-hardwood-1.0.0.beta2-is-out/">Announcement blog post</a></p>
 <p>Highlights of this release:</p>
@@ -1434,8 +1378,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5d64caf7dc17745e2ce93dc274a04079f2932bca" target="_blank" rel="noopener">
-      5d64caf7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/050096dd4552314ddc368565528ef56d1675a8eb" target="_blank" rel="noopener">
+      050096dd
     </a>
   
 </div>
