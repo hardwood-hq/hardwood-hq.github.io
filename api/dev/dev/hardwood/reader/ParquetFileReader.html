@@ -117,9 +117,10 @@ try (Hardwood hardwood = Hardwood.create();
     }
 }
 </code></pre>
-<p><strong>Limitation:</strong> When using the default memory-mapped <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a>,
-individual files must be at most 2 GB (<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html#MAX_VALUE" title="class or interface in java.lang" class="external-link"><code>Integer.MAX_VALUE</code></a> bytes).
-Larger datasets should be split across multiple files.</p>
+<p><strong>Limitation:</strong> When using the default memory-mapped <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a>, the file
+itself may be arbitrarily large, but each individual column chunk must be at
+most 2 GB (<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html#MAX_VALUE" title="class or interface in java.lang" class="external-link"><code>Integer.MAX_VALUE</code></a> bytes) of compressed data. The in-memory and
+object-store backends have a 2 GB limit on the whole file.</p>
 </div>
 </div>
 </section>
