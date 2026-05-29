@@ -943,17 +943,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Layout
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#typical-drill-path" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1319,17 +1308,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#layout" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Layout
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#typical-drill-path" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1608,31 +1586,40 @@ navigable session. Typical things to reach for it for:</p>
 actually meaningful in the current context — so the menus above show the
 full vocabulary, but the keybar tells you which subset is live right
 now.</p>
-<p>Available screens: Overview, Schema (expandable tree of groups + leaves),
-Row groups, Column chunks, Column chunk detail (facts + drill menu), Pages
-(with a page-header modal on Enter), Column index, Offset index, Footer &amp;
-indexes (which also drills into a file-wide list of every chunk's column
-index, offset index, or dictionary region),
-Column-across-row-groups (from the Schema screen), Dictionary (with
-full-value modal on Enter and <code>/</code> inline search), and Data preview (row
-values via <code>RowReader</code>; <code>←/→</code> scrolls the visible column window,
-<code>PgDn/PgUp</code> flips pages).</p>
-<h3 id="layout">Layout<a class="headerlink" href="#layout" title="Permanent link">&para;</a></h3>
+<p>Available screens:</p>
+<ul>
+<li><strong>Overview</strong></li>
+<li><strong>Schema</strong> — expandable tree of groups and leaves</li>
+<li><strong>Row groups</strong></li>
+<li><strong>Row group detail</strong></li>
+<li><strong>Column chunks</strong></li>
+<li><strong>Column chunk detail</strong> — facts pane plus drill menu</li>
+<li><strong>Pages</strong> — with a page-header modal on Enter</li>
+<li><strong>Column index</strong></li>
+<li><strong>Offset index</strong></li>
+<li><strong>Footer &amp; indexes</strong> — also drills into a file-wide list of every chunk's column index, offset index, or dictionary region</li>
+<li><strong>Column-across-row-groups</strong> — from the Schema screen</li>
+<li><strong>Dictionary</strong> — full-value modal on Enter and <code>/</code> inline search</li>
+<li><strong>Data preview</strong> — row values via <code>RowReader</code>; <code>←/→</code> scrolls the visible column window, <code>PgDn/PgUp</code> flips pages</li>
+</ul>
+<p>A tour through the main screens (click any shot to open it full size):</p>
+<figure><a href="/assets/cli/01-landing-overview.svg"><img alt="Overview screen" src="/assets/cli/01-landing-overview.svg" width="720" /></a><figcaption>Overview</figcaption></figure>
+<figure><a href="/assets/cli/02-schema-tree.svg"><img alt="Schema screen" src="/assets/cli/02-schema-tree.svg" width="720" /></a><figcaption>Schema — expandable tree of groups and leaves</figcaption></figure>
+<figure><a href="/assets/cli/03-1-rg.svg"><img alt="Row groups screen" src="/assets/cli/03-1-rg.svg" width="720" /></a><figcaption>Row groups</figcaption></figure>
+<figure><a href="/assets/cli/03-2-rg-detail.svg"><img alt="Row group detail screen" src="/assets/cli/03-2-rg-detail.svg" width="720" /></a><figcaption>Row group detail</figcaption></figure>
+<figure><a href="/assets/cli/03-3-rg-column-chunks.svg"><img alt="Column chunks screen" src="/assets/cli/03-3-rg-column-chunks.svg" width="720" /></a><figcaption>Column chunks</figcaption></figure>
+<figure><a href="/assets/cli/03-4-rg-column-chunk-detail.svg"><img alt="Column chunk detail screen" src="/assets/cli/03-4-rg-column-chunk-detail.svg" width="720" /></a><figcaption>Column chunk detail — facts pane plus drill menu</figcaption></figure>
+<figure><a href="/assets/cli/04-pages-header-modal.svg"><img alt="Pages screen with page-header modal" src="/assets/cli/04-pages-header-modal.svg" width="720" /></a><figcaption>Pages — page-header modal on Enter</figcaption></figure>
+<figure><a href="/assets/cli/05-dict-search.svg"><img alt="Dictionary screen with inline search" src="/assets/cli/05-dict-search.svg" width="720" /></a><figcaption>Dictionary — <code>/</code> inline search</figcaption></figure>
+<figure><a href="/assets/cli/06-data-scrolled-right.svg"><img alt="Data preview screen scrolled right" src="/assets/cli/06-data-scrolled-right.svg" width="720" /></a><figcaption>Data preview — scrolled right across the column window</figcaption></figure>
 <p>Every screen shares a four-region layout — a top bar with file identity, a
-breadcrumb showing the navigation stack, the active screen body, and a keybar:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a> hardwood dive │ /data/lineitem.parquet │ 1.4 GB │ 3 RGs │ 12.4 M rows
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a> Overview › Row groups › RG #1 › Column chunks › l_address.street
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>┌────────────────────────────────────────────────────────────────────────┐
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│                                                                        │
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│                         (active screen body)                           │
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>│                                                                        │
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>└────────────────────────────────────────────────────────────────────────┘
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a> [↑↓] move  [Enter] drill  [Esc] back                [?] help   [q] quit
-</code></pre></div>
+breadcrumb showing the navigation stack, the active screen body, and a keybar
+(all four visible in the Overview screenshot above).</p>
 <h3 id="typical-drill-path">Typical drill path<a class="headerlink" href="#typical-drill-path" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>Overview</strong> → pick <em>Row groups</em> from the drill menu.</li>
-<li><strong>Row groups</strong> → select a row, <em>Enter</em> — opens its column chunks.</li>
+<li><strong>Row groups</strong> → select a row, <em>Enter</em> — opens that row group's detail.</li>
+<li><strong>Row group detail</strong> → <em>Enter</em> — opens its column chunks.</li>
 <li><strong>Column chunks</strong> → select a column, <em>Enter</em> — opens the chunk detail.</li>
 <li><strong>Column chunk detail</strong> (facts pane + drill menu) → pick <em>Pages</em>, <em>Column
    index</em>, <em>Offset index</em>, or <em>Dictionary</em>.</li>
@@ -1659,8 +1646,8 @@ search. Press <code>/</code> to enter search-edit mode:</p>
 filter applied but exits edit mode). The table re-filters live as you type.</p>
 <h2 id="reading-files-from-s3">Reading Files from S3<a class="headerlink" href="#reading-files-from-s3" title="Permanent link">&para;</a></h2>
 <p>All commands accept <code>s3://</code> URIs via the <code>-f</code> flag:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
 <p>The CLI resolves credentials via the standard AWS credential chain (<code>AWS_ACCESS_KEY_ID</code> / <code>AWS_SECRET_ACCESS_KEY</code> / <code>AWS_SESSION_TOKEN</code> environment variables, <code>~/.aws/credentials</code>, SSO, EC2/ECS instance profiles, web identity). See the <a href="../s3/">S3 module page</a> for the resolution order and provider details.</p>
 <p>The CLI additionally reads these environment variables:</p>
@@ -1688,7 +1675,7 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
 </table>
 <h2 id="shell-completion">Shell Completion<a class="headerlink" href="#shell-completion" title="Permanent link">&para;</a></h2>
 <p>The distribution includes a Bash completion script at <code>bin/hardwood_completion</code>. Source it in your shell to enable tab completion for commands, options, and arguments:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
 </code></pre></div>
 <p>To make it permanent, add the line above to your <code>~/.bashrc</code> or <code>~/.bash_profile</code>.</p>
 
@@ -1740,8 +1727,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/564a318ce245c3f0b0343ed9c65c97bee1952fce" target="_blank" rel="noopener">
-      564a318c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ede5103d963e360fe6b209d76f61742a869f7fc2" target="_blank" rel="noopener">
+      ede5103d
     </a>
   
 </div>
