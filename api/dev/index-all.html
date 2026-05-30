@@ -2121,15 +2121,11 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Check if there are more rows to read.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.Backed.html#hasNulls()" class="member-name-link">hasNulls()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/Validity.html#hasNulls()" class="member-name-link">hasNulls()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
 <dd>
 <div class="block"><code>true</code> iff at least one item at this scope is null in the current
 batch.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#hasNulls()" class="member-name-link">hasNulls()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#head(long)" class="member-name-link">head(long)</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
 <dd>
 <div class="block">Limit to the first <code>maxRows</code> rows.</div>
@@ -2316,14 +2312,10 @@ and transport settings.</div>
 <dd>
 <div class="block"><code>true</code> when this reader was opened over more than one input file.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.Backed.html#isNotNull(int)" class="member-name-link">isNotNull(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/Validity.html#isNotNull(int)" class="member-name-link">isNotNull(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
 <dd>
 <div class="block"><code>true</code> iff the item at index <code>i</code> is not null.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#isNotNull(int)" class="member-name-link">isNotNull(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#isNotNull(java.lang.String)" class="member-name-link">isNotNull(String)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>
 <div class="block">Creates a predicate that matches rows where the given column is not null.</div>
@@ -2336,14 +2328,10 @@ and transport settings.</div>
 <dd>
 <div class="block">True iff <a href="dev/hardwood/row/PqVariant.html#type()"><code>PqVariant.type()</code></a> is <a href="dev/hardwood/row/VariantType.html#NULL"><code>VariantType.NULL</code></a>.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.Backed.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/Validity.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
 <dd>
 <div class="block"><code>true</code> iff the item at index <code>i</code> is null.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/row/PqDoubleList.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqDoubleList.html" title="interface in dev.hardwood.row">PqDoubleList</a></dt>
 <dd>
 <div class="block">Check if an element is null by index.</div>
@@ -2820,24 +2808,16 @@ Variant spec.</div>
 <dd>
 <div class="block">Advance every underlying <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> to its next batch in lockstep.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.Backed.html#nextNotNull(int,int)" class="member-name-link">nextNotNull(int, int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/Validity.html#nextNotNull(int,int)" class="member-name-link">nextNotNull(int, int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
 <dd>
 <div class="block">Index of the next non-null item in <code>[from, count)</code>, or <code>-1</code> if
 every item in that range is null.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#nextNotNull(int,int)" class="member-name-link">nextNotNull(int, int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="dev/hardwood/reader/Validity.Backed.html#nextNull(int,int)" class="member-name-link">nextNull(int, int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/Validity.html#nextNull(int,int)" class="member-name-link">nextNull(int, int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
 <dd>
 <div class="block">Index of the next null item in <code>[from, count)</code>, or <code>-1</code> if every
 item in that range is non-null.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#nextNull(int,int)" class="member-name-link">nextNull(int, int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/Validity.html#NO_NULLS" class="member-name-link">NO_NULLS</a> - Static variable in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
 <dd>
 <div class="block">Singleton signalling &quot;no item at this scope is null in the
@@ -2895,10 +2875,6 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/Statistics.html#param-nullCount"><code>nullCount</code></a> record component.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.Backed.html#nullCount(int)" class="member-name-link">nullCount(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#nullCount(int)" class="member-name-link">nullCount(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/Validity.html#nullCount(int)" class="member-name-link">nullCount(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
 <dd>
 <div class="block">Number of null items in this batch.</div>
@@ -2940,7 +2916,7 @@ current batch.&quot;</div>
 </dd>
 <dt><a href="dev/hardwood/reader/Validity.html#of(long%5B%5D)" class="member-name-link">of(long[])</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
 <dd>
-<div class="block">Wraps a packed <code>long[]</code> bitmap (set-bit-= -present storage).</div>
+<div class="block">Wraps a packed <code>long[]</code> bitmap (set-bit = present storage).</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/FieldPath.html#of(java.lang.String...)" class="member-name-link">of(String...)</a> - Static method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a></dt>
 <dd>
@@ -4011,15 +3987,6 @@ for the sparse-file backing.</div>
 <div class="block">Per-item null bitmap at a <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> scope (a <code>STRUCT</code> /
 <code>REPEATED</code> layer or the leaf).</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.Backed.html" class="type-name-link" title="class in dev.hardwood.reader">Validity.Backed</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
-<dd>
-<div class="block">A <code>Validity</code> whose per-item nullability is stored in a packed
-<code>long[]</code> (set bit = item is present).</div>
-</dd>
-<dt><a href="dev/hardwood/reader/Validity.NoNulls.html" class="type-name-link" title="class in dev.hardwood.reader">Validity.NoNulls</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
-<dd>
-<div class="block">Every item at this scope is non-null in the current batch.</div>
-</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.BinaryColumnPredicate.html#value()" class="member-name-link">value()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.BinaryColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BinaryColumnPredicate</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>value</code> record component.</div>
@@ -4226,10 +4193,6 @@ does not match what the accessor expects — for example, calling
 </dl>
 <h2 class="title" id="I:W">W</h2>
 <dl class="index">
-<dt><a href="dev/hardwood/reader/Validity.Backed.html#words()" class="member-name-link">words()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.Backed.html" title="class in dev.hardwood.reader">Validity.Backed</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="dev/hardwood/reader/Validity.NoNulls.html#words()" class="member-name-link">words()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.NoNulls.html" title="class in dev.hardwood.reader">Validity.NoNulls</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/Validity.html#words()" class="member-name-link">words()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
 <dd>
 <div class="block">The word array (set-bit = present polarity).</div>
