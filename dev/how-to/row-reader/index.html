@@ -2113,7 +2113,7 @@ match.</p>
 </tr>
 </tbody>
 </table>
-<p><code>TIME_*</code> / <code>TIMESTAMP_*</code> are read as UTC-normalized instants, matching the parquet-format backward-compatibility rule for these annotations. Unsigned columns preserve the stored bit pattern — reinterpret with <code>Integer.toUnsignedLong</code> / <code>Long.toUnsignedString</code> for the unsigned magnitude. When a file carries both a <code>converted_type</code> and a modern <code>logicalType</code>, the <code>logicalType</code> takes precedence.</p>
+<p><code>TIME_*</code> columns decode to a UTC-normalized <code>LocalTime</code> time-of-day and <code>TIMESTAMP_*</code> columns to a UTC-normalized <code>Instant</code>, matching the parquet-format backward-compatibility rule for these annotations. Unsigned columns preserve the stored bit pattern — reinterpret with <code>Integer.toUnsignedLong</code> / <code>Long.toUnsignedString</code> for the unsigned magnitude. When a file carries both a <code>converted_type</code> and a modern <code>logicalType</code>, the <code>logicalType</code> takes precedence.</p>
 <h4 id="null-columns">NULL columns<a class="headerlink" href="#null-columns" title="Permanent link">&para;</a></h4>
 <p>A column annotated with the <code>NULL</code> logical type (e.g. PyArrow's <code>pa.null()</code>) holds a null value at every row. <code>column.logicalType()</code> returns <code>LogicalType.NullType</code>; <code>isNull(name)</code> is always <code>true</code> and the typed/generic accessors return <code>null</code> accordingly. No separate accessor is needed.</p>
 <h4 id="bare-byte_array-columns">Bare <code>BYTE_ARRAY</code> columns<a class="headerlink" href="#bare-byte_array-columns" title="Permanent link">&para;</a></h4>
@@ -2193,8 +2193,8 @@ match.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0cda128d3a95971af60e004077c3bcd1f20f6554" target="_blank" rel="noopener">
-      0cda128d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/af43a3e74de8ecead2c07799fcffeaefd5015112" target="_blank" rel="noopener">
+      af43a3e7
     </a>
   
 </div>
