@@ -810,6 +810,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#legacy-converted-type-annotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy converted-type annotations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#null-columns" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1670,6 +1681,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#legacy-converted-type-annotations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy converted-type annotations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#null-columns" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2023,11 +2045,75 @@ match.</p>
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">}</span>
 </code></pre></div>
 <h4 id="interval-columns">INTERVAL columns<a class="headerlink" href="#interval-columns" title="Permanent link">&para;</a></h4>
-<p><code>PqInterval</code> is a plain record with three <code>long</code> properties — <code>months()</code>, <code>days()</code>, and <code>milliseconds()</code>. Each holds an unsigned 32-bit value in the range <code>[0, 4_294_967_295]</code>, so no additional conversion is needed. The components are independent and not normalized. Files written by older parquet-mr / Spark / Hive writers that set only the legacy <code>converted_type=INTERVAL</code> annotation are handled transparently — no caller-side opt-in is required.</p>
+<p><code>PqInterval</code> is a plain record with three <code>long</code> properties — <code>months()</code>, <code>days()</code>, and <code>milliseconds()</code>. Each holds an unsigned 32-bit value in the range <code>[0, 4_294_967_295]</code>, so no additional conversion is needed. The components are independent and not normalized. <code>INTERVAL</code> is one of the legacy <code>converted_type</code> annotations handled transparently — see <a href="#legacy-converted-type-annotations">Legacy converted-type annotations</a> below.</p>
 <h4 id="float16-columns">FLOAT16 columns<a class="headerlink" href="#float16-columns" title="Permanent link">&para;</a></h4>
 <p><code>getFloat</code> accepts FLOAT16 columns (<code>FIXED_LEN_BYTE_ARRAY(2)</code> annotated with the <code>FLOAT16</code> logical type) and decodes the 2-byte IEEE 754 half-precision payload to a single-precision <code>float</code>. The widening is lossless — half-precision NaN, ±Infinity, and signed zero round-trip cleanly, and the original NaN bit pattern is preserved (the Parquet spec does not canonicalize NaNs on write). Use <code>Float.isNaN(value)</code> for NaN checks rather than equality. As with all primitive accessors, <code>isNull()</code> must be checked before <code>getFloat()</code> since FLOAT16 columns can be optional.</p>
 <h4 id="legacy-int96-timestamps">Legacy INT96 timestamps<a class="headerlink" href="#legacy-int96-timestamps" title="Permanent link">&para;</a></h4>
 <p>Parquet files written by older versions of Apache Spark and Hive store timestamps in the deprecated INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> detects INT96 automatically and decodes it to an <code>Instant</code>; no caller-side handling is required.</p>
+<h4 id="legacy-converted-type-annotations">Legacy converted-type annotations<a class="headerlink" href="#legacy-converted-type-annotations" title="Permanent link">&para;</a></h4>
+<p>Writers predating the modern logical-type union (older parquet-mr / Hive / Impala / Spark) annotate primitive columns with only a legacy <code>converted_type</code> and no <code>logicalType</code>. Hardwood promotes each one to its logical type, so the column decodes through the normal typed accessor with no caller-side opt-in:</p>
+<table>
+<thead>
+<tr>
+<th><code>converted_type</code></th>
+<th>Accessor</th>
+<th>Java type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UTF8</code></td>
+<td><code>getString</code></td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>JSON</code></td>
+<td><code>getString</code></td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>ENUM</code>, <code>BSON</code></td>
+<td><code>getBinary</code></td>
+<td><code>byte[]</code></td>
+</tr>
+<tr>
+<td><code>DATE</code></td>
+<td><code>getDate</code></td>
+<td><code>LocalDate</code></td>
+</tr>
+<tr>
+<td><code>DECIMAL</code></td>
+<td><code>getDecimal</code></td>
+<td><code>BigDecimal</code></td>
+</tr>
+<tr>
+<td><code>TIME_MILLIS</code>, <code>TIME_MICROS</code></td>
+<td><code>getTime</code></td>
+<td><code>LocalTime</code></td>
+</tr>
+<tr>
+<td><code>TIMESTAMP_MILLIS</code>, <code>TIMESTAMP_MICROS</code></td>
+<td><code>getTimestamp</code></td>
+<td><code>Instant</code></td>
+</tr>
+<tr>
+<td><code>INT_8</code>, <code>INT_16</code>, <code>INT_32</code>, <code>INT_64</code></td>
+<td><code>getValue</code></td>
+<td><code>Byte</code> / <code>Short</code> / <code>Integer</code> / <code>Long</code></td>
+</tr>
+<tr>
+<td><code>UINT_8</code>, <code>UINT_16</code>, <code>UINT_32</code>, <code>UINT_64</code></td>
+<td><code>getValue</code></td>
+<td><code>Integer</code> / <code>Long</code> (raw two's-complement bit pattern)</td>
+</tr>
+<tr>
+<td><code>INTERVAL</code></td>
+<td><code>getInterval</code></td>
+<td><code>PqInterval</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>TIME_*</code> / <code>TIMESTAMP_*</code> are read as UTC-normalized instants, matching the parquet-format backward-compatibility rule for these annotations. Unsigned columns preserve the stored bit pattern — reinterpret with <code>Integer.toUnsignedLong</code> / <code>Long.toUnsignedString</code> for the unsigned magnitude. When a file carries both a <code>converted_type</code> and a modern <code>logicalType</code>, the <code>logicalType</code> takes precedence.</p>
 <h4 id="null-columns">NULL columns<a class="headerlink" href="#null-columns" title="Permanent link">&para;</a></h4>
 <p>A column annotated with the <code>NULL</code> logical type (e.g. PyArrow's <code>pa.null()</code>) holds a null value at every row. <code>column.logicalType()</code> returns <code>LogicalType.NullType</code>; <code>isNull(name)</code> is always <code>true</code> and the typed/generic accessors return <code>null</code> accordingly. No separate accessor is needed.</p>
 <h4 id="bare-byte_array-columns">Bare <code>BYTE_ARRAY</code> columns<a class="headerlink" href="#bare-byte_array-columns" title="Permanent link">&para;</a></h4>
@@ -2107,8 +2193,8 @@ match.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5fc797ed8a75e7d32e9ddcf578df034e7804d862" target="_blank" rel="noopener">
-      5fc797ed
+    <a href="https://github.com/hardwood-hq/hardwood/tree/0cda128d3a95971af60e004077c3bcd1f20f6554" target="_blank" rel="noopener">
+      0cda128d
     </a>
   
 </div>
