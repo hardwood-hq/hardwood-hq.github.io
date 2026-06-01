@@ -1679,15 +1679,15 @@ and the reader APIs work underneath.</p>
 <li>Java 21 or newer (<code>java -version</code> to check).</li>
 <li>Hardwood on the classpath. If you haven't set up a project yet, follow
   <a href="../../getting-started/">Getting Started</a> first — you need <code>hardwood-core</code>, and because the
-  sample file is Snappy-compressed, also add the <code>snappy-java</code> dependency.</li>
+  sample file is ZSTD-compressed, also add the <code>zstd-jni</code> dependency.</li>
 </ul>
 <h2 id="step-1-get-a-sample-file">Step 1 — Get a sample file<a class="headerlink" href="#step-1-get-a-sample-file" title="Permanent link">&para;</a></h2>
 <p>Download a month of the public NYC Taxi &amp; Limousine Commission yellow-cab trip data — a real
-Parquet file, about 50 MB:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-O<span class="w"> </span>https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.parquet
+Parquet file, about 60 MB:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-O<span class="w"> </span>https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2026-01.parquet
 </code></pre></div>
-<p>You now have <code>yellow_tripdata_2023-01.parquet</code> in your working directory. Every snippet below
-opens this file via <code>Path.of("yellow_tripdata_2023-01.parquet")</code>.</p>
+<p>You now have <code>yellow_tripdata_2026-01.parquet</code> in your working directory. Every snippet below
+opens this file via <code>Path.of("yellow_tripdata_2026-01.parquet")</code>.</p>
 <h2 id="step-2-see-whats-inside">Step 2 — See what's inside<a class="headerlink" href="#step-2-see-whats-inside" title="Permanent link">&para;</a></h2>
 <p>Before reading data, print the schema. This tells you the column names and types you'll use in
 the next steps — and introduces metadata access, which never touches row data:</p>
@@ -1699,7 +1699,7 @@ the next steps — and introduces metadata access, which never touches row data:
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span><span class="p">;</span>
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">        </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;yellow_tripdata_2023-01.parquet&quot;</span><span class="p">))))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">        </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;yellow_tripdata_2026-01.parquet&quot;</span><span class="p">))))</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
 <a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">&quot;Total rows: &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">getFileMetaData</span><span class="p">().</span><span class="na">numRows</span><span class="p">());</span>
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
@@ -1710,9 +1710,9 @@ the next steps — and introduces metadata access, which never touches row data:
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="p">}</span>
 </code></pre></div>
-<p>Run it. You'll see a few million rows and a column list that includes <code>VendorID</code> (a <code>long</code>),
-<code>passenger_count</code>, <code>trip_distance</code>, and <code>fare_amount</code> (each a <code>double</code>). Those are the columns
-this lesson uses.</p>
+<p>Run it. You'll see a few million rows and a column list that includes <code>VendorID</code> (an <code>int</code>),
+<code>passenger_count</code> (a <code>long</code>), and <code>trip_distance</code> and <code>fare_amount</code> (each a <code>double</code>). Those are
+the columns this lesson uses.</p>
 <h2 id="step-3-read-rows">Step 3 — Read rows<a class="headerlink" href="#step-3-read-rows" title="Permanent link">&para;</a></h2>
 <p>Open a <code>RowReader</code> and walk the rows. The typed accessors return the column's value at the
 current row; <code>hasNext()</code> / <code>next()</code> advance the cursor. Print the first five trips:</p>
@@ -1723,14 +1723,14 @@ current row; <code>hasNext()</code> / <code>next()</code> advance the cursor. Pr
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span><span class="p">;</span>
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
 <a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">            </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;yellow_tripdata_2023-01.parquet&quot;</span><span class="p">)));</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">            </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;yellow_tripdata_2026-01.parquet&quot;</span><span class="p">)));</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">printed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rows</span><span class="p">.</span><span class="na">hasNext</span><span class="p">()</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">printed</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="n">rows</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
 <a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">vendor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rows</span><span class="p">.</span><span class="na">getLong</span><span class="p">(</span><span class="s">&quot;VendorID&quot;</span><span class="p">);</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">vendor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rows</span><span class="p">.</span><span class="na">getInt</span><span class="p">(</span><span class="s">&quot;VendorID&quot;</span><span class="p">);</span>
 <a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">distance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rows</span><span class="p">.</span><span class="na">getDouble</span><span class="p">(</span><span class="s">&quot;trip_distance&quot;</span><span class="p">);</span>
 <a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">        </span><span class="kt">double</span><span class="w"> </span><span class="n">fare</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rows</span><span class="p">.</span><span class="na">getDouble</span><span class="p">(</span><span class="s">&quot;fare_amount&quot;</span><span class="p">);</span>
 <a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
@@ -1757,7 +1757,7 @@ current row; <code>hasNext()</code> / <code>next()</code> advance the cursor. Pr
 <a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span><span class="p">;</span>
 <a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
 <a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">            </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;yellow_tripdata_2023-01.parquet&quot;</span><span class="p">)));</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">            </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;yellow_tripdata_2026-01.parquet&quot;</span><span class="p">)));</span>
 <a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">        </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
 <a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">                </span><span class="p">.</span><span class="na">projection</span><span class="p">(</span><span class="n">ColumnProjection</span><span class="p">.</span><span class="na">columns</span><span class="p">(</span><span class="s">&quot;trip_distance&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fare_amount&quot;</span><span class="p">))</span>
 <a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">                </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">&quot;fare_amount&quot;</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0</span><span class="p">))</span>
@@ -1785,7 +1785,7 @@ typed primitive arrays a batch at a time — no per-row calls. Total the fares:<
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.nio.file.Path</span><span class="p">;</span>
 <a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
 <a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">            </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;yellow_tripdata_2023-01.parquet&quot;</span><span class="p">)));</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">            </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">&quot;yellow_tripdata_2026-01.parquet&quot;</span><span class="p">)));</span>
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">        </span><span class="n">ColumnReader</span><span class="w"> </span><span class="n">fare</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">columnReader</span><span class="p">(</span><span class="s">&quot;fare_amount&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
 <a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
@@ -1873,8 +1873,8 @@ Parquet with Hardwood.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b802c8fcb47f67eaebc65d5d847c6301226dfdeb" target="_blank" rel="noopener">
-      b802c8fc
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c5de421ec2a06982477b66b30dfaf1d171421361" target="_blank" rel="noopener">
+      c5de421e
     </a>
   
 </div>
