@@ -570,13 +570,9 @@ every row group, no filter.</div>
 <dd>
 <div class="block">Create a new context with a thread pool of the specified size.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/RowReader.html#create(dev.hardwood.internal.reader.RowGroupIterator,dev.hardwood.schema.FileSchema,dev.hardwood.schema.ProjectedSchema,dev.hardwood.internal.reader.HardwoodContextImpl,dev.hardwood.internal.predicate.ResolvedPredicate,long)" class="member-name-link">create(RowGroupIterator, FileSchema, ProjectedSchema, HardwoodContextImpl, ResolvedPredicate, long)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></dt>
+<dt><a href="dev/hardwood/reader/RowReader.html#create(dev.hardwood.internal.reader.RowGroupIterator,dev.hardwood.schema.FileSchema,dev.hardwood.internal.schema.ProjectedSchema,dev.hardwood.internal.reader.HardwoodContextImpl,dev.hardwood.internal.predicate.ResolvedPredicate,long)" class="member-name-link">create(RowGroupIterator, FileSchema, ProjectedSchema, HardwoodContextImpl, ResolvedPredicate, long)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></dt>
 <dd>
 <div class="block">Creates a <a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> for the given pipeline components.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html#create(dev.hardwood.schema.FileSchema,dev.hardwood.schema.ColumnProjection)" class="member-name-link">create(FileSchema, ColumnProjection)</a> - Static method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
-<dd>
-<div class="block">Creates a projected schema from the given full schema and projection.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/FileMetaData.html#createdBy()" class="member-name-link">createdBy()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></dt>
 <dd>
@@ -1054,10 +1050,6 @@ size is configured via <code>batchSize(int)</code> on the reader builders.</div>
 <dd>
 <div class="block">Get the executor service for parallel operations.</div>
 </dd>
-<dt><a href="dev/hardwood/row/VariantTypeException.html#expected(dev.hardwood.row.VariantType,dev.hardwood.row.VariantType)" class="member-name-link">expected(VariantType, VariantType)</a> - Static method in exception class dev.hardwood.row.<a href="dev/hardwood/row/VariantTypeException.html" title="class in dev.hardwood.row">VariantTypeException</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="dev/hardwood/row/VariantTypeException.html#expectedOneOf(java.lang.String,dev.hardwood.row.VariantType)" class="member-name-link">expectedOneOf(String, VariantType)</a> - Static method in exception class dev.hardwood.row.<a href="dev/hardwood/row/VariantTypeException.html" title="class in dev.hardwood.row">VariantTypeException</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/Experimental.html" class="type-name-link" title="annotation interface in dev.hardwood">Experimental</a> - Annotation Interface in <a href="dev/hardwood/package-summary.html">dev.hardwood</a></dt>
 <dd>
 <div class="block">Marks a public API as experimental.</div>
@@ -1604,33 +1596,13 @@ buffer.</div>
 <div class="block">Get a field whose Variant type is OBJECT and unwrap it as a nested
 <a href="dev/hardwood/row/PqVariantObject.html" title="interface in dev.hardwood.row"><code>PqVariantObject</code></a> view.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html#getOriginalSchema()" class="member-name-link">getOriginalSchema()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
-<dd>
-<div class="block">Returns the original file schema.</div>
-</dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.html#getPageCount()" class="member-name-link">getPageCount()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
 <dd>
 <div class="block">Returns the number of pages described by this index.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html#getProjectedColumn(int)" class="member-name-link">getProjectedColumn(int)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
-<dd>
-<div class="block">Returns the projected column at the given projected index.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html#getProjectedColumnCount()" class="member-name-link">getProjectedColumnCount()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
-<dd>
-<div class="block">Returns the number of projected columns.</div>
-</dd>
 <dt><a href="dev/hardwood/schema/ColumnProjection.html#getProjectedColumnNames()" class="member-name-link">getProjectedColumnNames()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a></dt>
 <dd>
 <div class="block">Returns the set of column names to project, or null if all columns are projected.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html#getProjectedColumns()" class="member-name-link">getProjectedColumns()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
-<dd>
-<div class="block">Returns the list of projected columns.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html#getProjectedFieldIndices()" class="member-name-link">getProjectedFieldIndices()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
-<dd>
-<div class="block">Returns the indices of projected top-level fields in the root node's children.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqList.html#getRaw(int)" class="member-name-link">getRaw(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>
@@ -3210,10 +3182,6 @@ the <code>VARIANT</code> logical type.</div>
 <dd>
 <div class="block">Creates an instance of a <code>PrimitiveNode</code> record class.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html" class="type-name-link" title="class in dev.hardwood.schema">ProjectedSchema</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
-<dd>
-<div class="block">Represents a projected view of a Parquet schema containing only selected columns.</div>
-</dd>
 <dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#projection(dev.hardwood.schema.ColumnProjection)" class="member-name-link">projection(ColumnProjection)</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
 <dd>
 <div class="block">Restrict reading to the given columns.</div>
@@ -3225,10 +3193,6 @@ the <code>VARIANT</code> logical type.</div>
 <dt><a href="dev/hardwood/schema/ColumnProjection.html#projectsAll()" class="member-name-link">projectsAll()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a></dt>
 <dd>
 <div class="block">Returns true if this projection includes all columns.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html#projectsAll()" class="member-name-link">projectsAll()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
-<dd>
-<div class="block">Returns true if all columns are projected.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:Q">Q</h2>
@@ -3637,21 +3601,9 @@ for the sparse-file backing.</div>
 <dd>
 <div class="block">Convert to a primitive array.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html#toOriginalIndex(int)" class="member-name-link">toOriginalIndex(int)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
-<dd>
-<div class="block">Converts a projected column index to the original column index.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html#toOriginalIndices()" class="member-name-link">toOriginalIndices()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
-<dd>
-<div class="block">Returns a copy of the projected-to-original index mapping.</div>
-</dd>
 <dt><a href="dev/hardwood/metadata/FieldPath.html#topLevelName()" class="member-name-link">topLevelName()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a></dt>
 <dd>
 <div class="block">Returns the first (top-level) element of the path.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/ProjectedSchema.html#toProjectedIndex(int)" class="member-name-link">toProjectedIndex(int)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a></dt>
-<dd>
-<div class="block">Converts an original column index to the projected column index.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/BoundingBox.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/BoundingBox.html" title="class in dev.hardwood.metadata">BoundingBox</a></dt>
 <dd>

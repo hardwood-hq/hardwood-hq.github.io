@@ -950,6 +950,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#measuring-fetch-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measuring Fetch Cost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#not-currently-supported" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1626,6 +1637,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#measuring-fetch-cost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Measuring Fetch Cost
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#not-currently-supported" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1812,6 +1834,26 @@
 <h3 id="io-behavior">I/O Behavior<a class="headerlink" href="#io-behavior" title="Permanent link">&para;</a></h3>
 <p>When reading from S3, Hardwood coalesces column chunk reads within each row group into as few HTTP requests as possible (typically 1-2 per row group). Column projection, page-level predicate pushdown, and <code>maxRows</code> all narrow the byte ranges before coalescing, reducing the amount of data transferred.</p>
 <p>Note that without a <code>maxRows</code> limit, the reader fetches all projected (and filtered) column data for an entire row group when any column enters it. For large row groups (128 MB–1 GB is typical), this can transfer significant data even if the consumer stops reading early. To minimize data transfer for partial reads, set <code>maxRows</code> on the reader — this truncates each column's fetch to only the pages covering the needed rows.</p>
+<h3 id="measuring-fetch-cost">Measuring Fetch Cost<a class="headerlink" href="#measuring-fetch-cost" title="Permanent link">&para;</a></h3>
+<p>Each <code>S3InputFile</code> tracks the network I/O it has performed, which is useful for confirming that column projection, predicate pushdown, and <code>maxRows</code> actually reduced transfer — and for estimating S3 cost (GET requests plus bytes transferred). <code>S3Source.inputFile(...)</code> returns the <code>InputFile</code> supertype, so cast to <code>S3InputFile</code> to read the counters:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.s3.S3InputFile</span><span class="p">;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">S3InputFile</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">S3InputFile</span><span class="p">)</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="na">inputFile</span><span class="p">(</span><span class="s">&quot;s3://my-bucket/data/trips.parquet&quot;</span><span class="p">);</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">     </span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rows</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">        </span><span class="n">rows</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">        </span><span class="c1">// ...</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">&quot;fetched %d bytes over %d requests%n&quot;</span><span class="p">,</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">            </span><span class="n">in</span><span class="p">.</span><span class="na">networkBytesFetched</span><span class="p">(),</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">networkRequestCount</span><span class="p">());</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>networkRequestCount()</code> — HTTP GET requests issued since <code>open()</code>: the footer tail fetch plus every column-chunk range fetch. Tail-cache hits are not counted.</li>
+<li><code>networkBytesFetched()</code> — total bytes fetched across those requests, counted the same way.</li>
+</ul>
+<p>Read the counters before the try-with-resources block exits, while the <code>S3InputFile</code> is still open.</p>
 <h3 id="not-currently-supported">Not currently supported<a class="headerlink" href="#not-currently-supported" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Anonymous (unsigned) requests</strong> — <code>S3Credentials</code> requires an access key + secret key pair; there is no built-in mode for public buckets without credentials.</li>
@@ -1866,8 +1908,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/08ac54e8a510e8103c2edbcf4c06af79d69d1ec2" target="_blank" rel="noopener">
-      08ac54e8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e3363fd46472c201c355e3d9d052bc252a084b78" target="_blank" rel="noopener">
+      e3363fd4
     </a>
   
 </div>

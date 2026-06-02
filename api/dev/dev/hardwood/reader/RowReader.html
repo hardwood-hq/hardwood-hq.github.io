@@ -58,7 +58,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
-<li><a href="#create(dev.hardwood.internal.reader.RowGroupIterator,dev.hardwood.schema.FileSchema,dev.hardwood.schema.ProjectedSchema,dev.hardwood.internal.reader.HardwoodContextImpl,dev.hardwood.internal.predicate.ResolvedPredicate,long)" tabindex="0">create(RowGroupIterator, FileSchema, ProjectedSchema, HardwoodContextImpl, ResolvedPredicate, long)</a></li>
+<li><a href="#create(dev.hardwood.internal.reader.RowGroupIterator,dev.hardwood.schema.FileSchema,dev.hardwood.internal.schema.ProjectedSchema,dev.hardwood.internal.reader.HardwoodContextImpl,dev.hardwood.internal.predicate.ResolvedPredicate,long)" tabindex="0">create(RowGroupIterator, FileSchema, ProjectedSchema, HardwoodContextImpl, ResolvedPredicate, long)</a></li>
 <li><a href="#hasNext()" tabindex="0">hasNext()</a></li>
 <li><a href="#next()" tabindex="0">next()</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
@@ -114,9 +114,9 @@ in the iterator. The values returned by its accessors change between calls of <a
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#create(dev.hardwood.internal.reader.RowGroupIterator,dev.hardwood.schema.FileSchema,dev.hardwood.schema.ProjectedSchema,dev.hardwood.internal.reader.HardwoodContextImpl,dev.hardwood.internal.predicate.ResolvedPredicate,long)" class="member-name-link">create</a><wbr>(dev.hardwood.internal.reader.RowGroupIterator&nbsp;rowGroupIterator,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#create(dev.hardwood.internal.reader.RowGroupIterator,dev.hardwood.schema.FileSchema,dev.hardwood.internal.schema.ProjectedSchema,dev.hardwood.internal.reader.HardwoodContextImpl,dev.hardwood.internal.predicate.ResolvedPredicate,long)" class="member-name-link">create</a><wbr>(dev.hardwood.internal.reader.RowGroupIterator&nbsp;rowGroupIterator,
  <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema,
- <a href="../schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a>&nbsp;projectedSchema,
+ dev.hardwood.internal.schema.ProjectedSchema&nbsp;projectedSchema,
  dev.hardwood.internal.reader.HardwoodContextImpl&nbsp;context,
  dev.hardwood.internal.predicate.ResolvedPredicate&nbsp;filter,
  long&nbsp;maxRows)</code></div>
@@ -154,12 +154,12 @@ in the iterator. The values returned by its accessors change between calls of <a
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="create(dev.hardwood.internal.reader.RowGroupIterator,dev.hardwood.schema.FileSchema,dev.hardwood.schema.ProjectedSchema,dev.hardwood.internal.reader.HardwoodContextImpl,dev.hardwood.internal.predicate.ResolvedPredicate,long)">
+<section class="detail" id="create(dev.hardwood.internal.reader.RowGroupIterator,dev.hardwood.schema.FileSchema,dev.hardwood.internal.schema.ProjectedSchema,dev.hardwood.internal.reader.HardwoodContextImpl,dev.hardwood.internal.predicate.ResolvedPredicate,long)">
 <h3>create</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(dev.hardwood.internal.reader.RowGroupIterator&nbsp;rowGroupIterator,
  <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema,
- <a href="../schema/ProjectedSchema.html" title="class in dev.hardwood.schema">ProjectedSchema</a>&nbsp;projectedSchema,
+ dev.hardwood.internal.schema.ProjectedSchema&nbsp;projectedSchema,
  dev.hardwood.internal.reader.HardwoodContextImpl&nbsp;context,
  dev.hardwood.internal.predicate.ResolvedPredicate&nbsp;filter,
  long&nbsp;maxRows)</span></div>

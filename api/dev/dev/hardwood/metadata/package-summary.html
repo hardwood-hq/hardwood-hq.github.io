@@ -71,6 +71,16 @@ loadScripts(document, 'script');</script>
 a Parquet file footer. For a higher-level schema representation with
 computed definition and repetition levels, see
 <a href="../schema/package-summary.html"><code>dev.hardwood.schema</code></a>.</p>
+<p>The record types in this package (e.g. <a href="FileMetaData.html" title="class in dev.hardwood.metadata"><code>FileMetaData</code></a>, <a href="RowGroup.html" title="class in dev.hardwood.metadata"><code>RowGroup</code></a>,
+<a href="ColumnChunk.html" title="class in dev.hardwood.metadata"><code>ColumnChunk</code></a>, <a href="Statistics.html" title="class in dev.hardwood.metadata"><code>Statistics</code></a>) are <strong>read-only views</strong> of the metadata in a
+Parquet file: Hardwood constructs them while parsing, and callers consume
+them through their accessors. Their canonical constructors and component
+lists are not part of the supported API — do not instantiate these records
+directly, and do not rely on record deconstruction patterns over them.
+Because these types mirror the evolving Parquet Thrift definitions, future
+releases may add components; such additions are treated as
+backward-compatible under this policy even though they change the canonical
+constructor.</p>
 </div>
 <dl class="notes">
 <dt>See Also:</dt>
