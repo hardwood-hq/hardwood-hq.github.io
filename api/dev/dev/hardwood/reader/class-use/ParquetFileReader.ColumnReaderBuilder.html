@@ -76,24 +76,29 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#buildColumnReader(int)" class="member-name-link">buildColumnReader</a><wbr>(int&nbsp;columnIndex)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.ColumnReaderBuilder.</span><code><a href="../ParquetFileReader.ColumnReaderBuilder.html#batchSize(int)" class="member-name-link">batchSize</a><wbr>(int&nbsp;batchSize)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Begin configuring a single-column <a href="../ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> by column index.</div>
+<div class="block">Set the maximum number of records to return in each batch.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#buildColumnReader(java.lang.String)" class="member-name-link">buildColumnReader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#buildColumnReader(int)" class="member-name-link">buildColumnReader</a><wbr>(int&nbsp;columnIndex)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Begin configuring a single-column <a href="../ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a>.</div>
+<div class="block">Begin configuring a single-column <a href="../ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> by column index.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.ColumnReaderBuilder.</span><code><a href="../ParquetFileReader.ColumnReaderBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter</a><wbr>(<a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../ParquetFileReader.html#buildColumnReader(java.lang.String)" class="member-name-link">buildColumnReader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Begin configuring a single-column <a href="../ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.ColumnReaderBuilder.</span><code><a href="../ParquetFileReader.ColumnReaderBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter</a><wbr>(<a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Apply a column-statistics filter — row groups whose statistics prove no row
 matches are skipped.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.ColumnReaderBuilder.</span><code><a href="../ParquetFileReader.ColumnReaderBuilder.html#filter(dev.hardwood.reader.RowGroupPredicate)" class="member-name-link">filter</a><wbr>(<a href="../RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a>&nbsp;rowGroupFilter)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="../ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.ColumnReaderBuilder.</span><code><a href="../ParquetFileReader.ColumnReaderBuilder.html#filter(dev.hardwood.reader.RowGroupPredicate)" class="member-name-link">filter</a><wbr>(<a href="../RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a>&nbsp;rowGroupFilter)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Apply a row-group selection predicate (e.g. byte-range, for split-aware reading).</div>
 </div>
 </div>
