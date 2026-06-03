@@ -185,6 +185,23 @@ holds on all rows, including null ones.</p>
 parquet-java's <code>notEq</code>, which treats <code>null &lt;&gt; v</code> as true and therefore
 includes null rows. To reproduce parquet-java's behavior in Hardwood, write
 the null-inclusion explicitly: <code>or(notEq(&quot;x&quot;, v), isNull(&quot;x&quot;))</code>.</p>
+<h3 id="float-and-double-comparisons-heading">Float and double comparisons</h3>
+<p>Predicates on <code>float</code> and <code>double</code> columns use the <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Float.html#compare(float,float)" title="class or interface in java.lang" class="external-link"><code>Float.compare(float, float)</code></a> /
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Double.html#compare(double,double)" title="class or interface in java.lang" class="external-link"><code>Double.compare(double, double)</code></a> total order, not IEEE 754 equality. Two consequences
+matter in practice:</p>
+<ul>
+<li><code>-0.0</code> is strictly less than <code>+0.0</code>. <code>eq(0.0)</code> matches only <code>+0.0</code>
+values; to match either zero, use <code>or(eq(0.0), eq(-0.0))</code>.</li>
+<li><code>NaN</code> sorts above every finite value. <code>eq(NaN)</code> matches only <code>NaN</code>
+(whereas IEEE <code>NaN == anything</code> is always false). <code>lt</code> and <code>ltEq</code> against
+any value never match <code>NaN</code> rows; <code>gt</code> and <code>gtEq</code> against a finite value
+always include <code>NaN</code> rows.</li>
+</ul>
+<p>Predicate pushdown is defensive against non-conformant writers: if a
+column's statistics carry <code>NaN</code> as <code>min</code> or <code>max</code> (forbidden by the
+Parquet spec, but produced by older / buggy writers), the bound is
+treated as no-bound and pruning is skipped on that side — matching rows
+are never dropped.</p>
 </div>
 </div>
 </section>
