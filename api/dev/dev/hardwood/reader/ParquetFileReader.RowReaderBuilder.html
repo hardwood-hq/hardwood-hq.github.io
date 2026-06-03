@@ -204,7 +204,11 @@ a known total row count, which row-group filtering invalidates).</p>
 <h3>head</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></span>&nbsp;<span class="element-name">head</span><wbr><span class="parameters">(long&nbsp;maxRows)</span></div>
-<div class="block">Limit to the first <code>maxRows</code> rows. Mutually exclusive with <a href="#tail(long)"><code>tail(long)</code></a>.</div>
+<div class="block">Limit to the first <code>maxRows</code> rows. When combined with <a href="#filter(dev.hardwood.reader.FilterPredicate)"><code>filter(FilterPredicate)</code></a>,
+the cap is on the number of <em>matching</em> rows, not the number scanned — the
+reader keeps scanning until <code>maxRows</code> rows satisfy the predicate or the input
+is exhausted (SQL <code>LIMIT</code> over the filtered relation). Mutually exclusive with
+<a href="#tail(long)"><code>tail(long)</code></a>.</div>
 </div>
 </section>
 </li>
