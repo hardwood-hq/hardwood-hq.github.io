@@ -2058,7 +2058,7 @@ encoding automatically:</p>
 <a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span><span class="c1">// ...</span>
 <a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="p">}</span>
 </code></pre></div>
-<p><code>skip == 0</code> is the no-op default. <code>skip == totalRows</code> produces an empty reader; <code>skip &gt; totalRows</code> throws <code>IllegalArgumentException</code>. Mutually exclusive with <code>tail(N)</code>.</p>
+<p><code>skip == 0</code> is the no-op default. <code>skip == totalRows</code> produces an empty reader; <code>skip &gt; totalRows</code> throws <code>IllegalArgumentException</code>. Mutually exclusive with <code>tail(N)</code> and with <code>filter(FilterPredicate)</code> — a logical <code>OFFSET</code> over the filtered relation is not yet supported, so the combination is rejected at <code>build()</code> time. <code>skip(N)</code> composes with <code>filter(RowGroupPredicate)</code> (e.g. <code>byteRange</code>), indexing into the kept row-group sequence.</p>
 <div class="admonition warning">
 <p class="admonition-title">Multi-file readers: first file only</p>
 <p>For multi-file readers, <code>skip(N)</code> indexes into the <strong>first</strong> file's rows only — it does not seek across file boundaries. To skip whole files, omit them from the input list; to skip within a non-first file, open it separately.</p>
@@ -2113,8 +2113,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/70caa78572a79a3068e6989dbedf9ca61229759d" target="_blank" rel="noopener">
-      70caa785
+    <a href="https://github.com/hardwood-hq/hardwood/tree/539f83bebe269bee0152d21474d65504c052ce85" target="_blank" rel="noopener">
+      539f83be
     </a>
   
 </div>

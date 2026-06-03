@@ -243,9 +243,10 @@ Page-level skip via OffsetIndex is tracked as #381.</p>
 produces an empty reader. <code>skip &gt; totalRows</code> throws
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link"><code>IllegalArgumentException</code></a> at <code>build()</code> time. Indexes into the
 <em>first</em> file's rows for multi-file readers; cross-file
-<code>skip</code> is out of scope. Mutually exclusive with <a href="#tail(long)"><code>tail(long)</code></a>;
-composes with <a href="#head(long)"><code>head(long)</code></a> for a bounded
-<code>[skip, skip + maxRows)</code> window.</p>
+<code>skip</code> is out of scope. Mutually exclusive with <a href="#tail(long)"><code>tail(long)</code></a> and with
+<a href="#filter(dev.hardwood.reader.FilterPredicate)"><code>filter(FilterPredicate)</code></a>; composes with <a href="#head(long)"><code>head(long)</code></a> for a bounded
+<code>[skip, skip + maxRows)</code> window, and with
+<a href="#filter(dev.hardwood.reader.RowGroupPredicate)"><code>filter(RowGroupPredicate)</code></a> over the kept row-group sequence.</p>
 </div>
 </div>
 </section>
