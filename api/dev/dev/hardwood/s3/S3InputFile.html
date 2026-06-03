@@ -95,6 +95,12 @@ byte-range header, so only the requested bytes are transferred.</p>
 discovers the file length from the <code>Content-Range</code> response header
 and pre-fetches the Parquet footer (which sits at the end of the file) in
 the same round-trip — eliminating a separate HEAD request per file.</p>
+<p>When the owning <a href="S3Source.html" title="class in dev.hardwood.s3"><code>S3Source</code></a> is configured with
+<a href="RangeBacking.html#SPARSE_TEMPFILE"><code>RangeBacking.SPARSE_TEMPFILE</code></a>, an internal mmap-backed range cache
+serves repeat reads of the same byte ranges without re-issuing HTTP
+requests. The cache is invisible at the API surface — the same
+counters (<code>networkRequestCount</code>, <code>networkBytesFetched</code>) reflect
+only network traffic in either mode.</p>
 <p>Thread-safe once <a href="#open()"><code>open()</code></a> has been called.</p>
 </div>
 </div>
@@ -240,12 +246,15 @@ Must be called before <a href="../InputFile.html#readRange(long,int)"><code>Inpu
 <section class="detail" id="close()">
 <h3>close</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()
+           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
 </div>
 </section>

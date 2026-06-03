@@ -1835,10 +1835,10 @@
 <p>When reading from S3, Hardwood coalesces column chunk reads within each row group into as few HTTP requests as possible (typically 1-2 per row group). Column projection, page-level predicate pushdown, and <code>maxRows</code> all narrow the byte ranges before coalescing, reducing the amount of data transferred.</p>
 <p>Note that without a <code>maxRows</code> limit, the reader fetches all projected (and filtered) column data for an entire row group when any column enters it. For large row groups (128 MB–1 GB is typical), this can transfer significant data even if the consumer stops reading early. To minimize data transfer for partial reads, set <code>maxRows</code> on the reader — this truncates each column's fetch to only the pages covering the needed rows.</p>
 <h3 id="measuring-fetch-cost">Measuring Fetch Cost<a class="headerlink" href="#measuring-fetch-cost" title="Permanent link">&para;</a></h3>
-<p>Each <code>S3InputFile</code> tracks the network I/O it has performed, which is useful for confirming that column projection, predicate pushdown, and <code>maxRows</code> actually reduced transfer — and for estimating S3 cost (GET requests plus bytes transferred). <code>S3Source.inputFile(...)</code> returns the <code>InputFile</code> supertype, so cast to <code>S3InputFile</code> to read the counters:</p>
+<p>Each <code>S3InputFile</code> tracks the network I/O it has performed, which is useful for confirming that column projection, predicate pushdown, and <code>maxRows</code> actually reduced transfer — and for estimating S3 cost (GET requests plus bytes transferred):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.s3.S3InputFile</span><span class="p">;</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">S3InputFile</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">S3InputFile</span><span class="p">)</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="na">inputFile</span><span class="p">(</span><span class="s">&quot;s3://my-bucket/data/trips.parquet&quot;</span><span class="p">);</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">S3InputFile</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="na">inputFile</span><span class="p">(</span><span class="s">&quot;s3://my-bucket/data/trips.parquet&quot;</span><span class="p">);</span>
 <a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">     </span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rows</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
@@ -1908,8 +1908,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/e3363fd46472c201c355e3d9d052bc252a084b78" target="_blank" rel="noopener">
-      e3363fd4
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e0d61e5b70d0ab7184b123ec460a92c3c499e6a2" target="_blank" rel="noopener">
+      e0d61e5b
     </a>
   
 </div>

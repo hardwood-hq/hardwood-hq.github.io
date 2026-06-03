@@ -138,7 +138,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Hardwood.</span><code><a href="../Hardwood.html#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Hardwood.</span><code><a href="../Hardwood.html#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Open multiple Parquet files for reading with cross-file prefetching.</div>
 </div>
@@ -171,12 +171,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../reader/ParquetFileReader.html#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../reader/ParquetFileReader.html#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Open multiple Parquet files with a dedicated context.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../reader/ParquetFileReader.html#openAll(java.util.List,dev.hardwood.HardwoodContext)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
+<div class="col-second odd-row-color"><span class="type-name-label">ParquetFileReader.</span><code><a href="../reader/ParquetFileReader.html#openAll(java.util.List,dev.hardwood.HardwoodContext)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
  <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Open multiple Parquet files with a shared context.</div>
@@ -196,40 +196,6 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="../s3/S3InputFile.html" class="type-name-link" title="class in dev.hardwood.s3">S3InputFile</a></code></div>
 <div class="col-last even-row-color">
 <div class="block"><a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> backed by an object in Amazon S3 (or an S3-compatible service).</div>
-</div>
-</div>
-<div class="caption"><span>Methods in <a href="../s3/package-summary.html">dev.hardwood.s3</a> that return <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">S3Source.</span><code><a href="../s3/S3Source.html#inputFile(java.lang.String)" class="member-name-link">inputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uri)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates an <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">S3Source.</span><code><a href="../s3/S3Source.html#inputFile(java.lang.String,java.lang.String)" class="member-name-link">inputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bucket,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates an <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for the given bucket and key.</div>
-</div>
-</div>
-<div class="caption"><span>Methods in <a href="../s3/package-summary.html">dev.hardwood.s3</a> that return types with arguments of type <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">S3Source.</span><code><a href="../s3/S3Source.html#inputFiles(java.lang.String...)" class="member-name-link">inputFiles</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;uris)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> instances from <code>s3://</code> URIs (may span buckets).</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">S3Source.</span><code><a href="../s3/S3Source.html#inputFilesInBucket(java.lang.String,java.lang.String...)" class="member-name-link">inputFilesInBucket</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bucket,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;keys)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> instances for multiple keys in the same bucket.</div>
 </div>
 </div>
 </section>

@@ -524,10 +524,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#status" class="md-nav__link">
+  <a href="#status-and-limitations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Status
+        Status and Limitations
       
     </span>
   </a>
@@ -1537,10 +1537,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#status" class="md-nav__link">
+  <a href="#status-and-limitations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Status
+        Status and Limitations
       
     </span>
   </a>
@@ -1647,9 +1647,10 @@ Available as a Java library and a <a href="reference/cli/">command-line tool</a>
 <a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="p">}</span>
 </code></pre></div>
 <p>Ready? <a href="getting-started/">Install Hardwood</a>, then read <a href="tutorial/first-read/">your first file end-to-end</a>.</p>
-<h2 id="status">Status<a class="headerlink" href="#status" title="Permanent link">&para;</a></h2>
+<h2 id="status-and-limitations">Status and Limitations<a class="headerlink" href="#status-and-limitations" title="Permanent link">&para;</a></h2>
 <p>This is Beta quality software, under active development.</p>
-<p>Reading from S3 or an in-memory <code>ByteBuffer</code> currently caps a file at 2 GB; split larger datasets across multiple files (local memory-mapped reads have no whole-file size limit). See <a href="concepts/parquet-layout/">Parquet file layout</a>.</p>
+<p>The Hardwood library supports reading arbitrarily large Parquet files, provided individual column chunks are not larger than 2 GB (see <a href="concepts/parquet-layout/">Parquet file layout</a>).
+The interactive <code>dive</code> TUI currently caps S3 files at 2 GB.</p>
 <h2 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">&para;</a></h2>
 <p>Forward-looking items tracked for post-1.0. None are committed to a specific release.</p>
 <ul>
@@ -1719,8 +1720,8 @@ Available as a Java library and a <a href="reference/cli/">command-line tool</a>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/e3363fd46472c201c355e3d9d052bc252a084b78" target="_blank" rel="noopener">
-      e3363fd4
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e0d61e5b70d0ab7184b123ec460a92c3c499e6a2" target="_blank" rel="noopener">
+      e0d61e5b
     </a>
   
 </div>

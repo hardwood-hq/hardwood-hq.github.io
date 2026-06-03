@@ -124,7 +124,7 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="block">Open a single Parquet file.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Open multiple Parquet files for reading with cross-file prefetching.</div>
 </div>
@@ -173,7 +173,7 @@ closed when the returned reader is closed.</div>
 <section class="detail" id="openAll(java.util.List)">
 <h3>openAll</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</span>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</span>
                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Open multiple Parquet files for reading with cross-file prefetching.
 The schema is read from the first file. Files are opened on demand

@@ -234,12 +234,12 @@ every row group, no filter.</div>
 <div class="block">Open a single Parquet file with a shared context.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Open multiple Parquet files with a dedicated context.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
  <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Open multiple Parquet files with a shared context.</div>
@@ -307,7 +307,7 @@ the context.</p>
 <section class="detail" id="openAll(java.util.List)">
 <h3>openAll</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</span>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</span>
                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Open multiple Parquet files with a dedicated context. The schema
 is read from the first file and is assumed to be common across all
@@ -324,7 +324,7 @@ opened eagerly so any I/O or metadata error surfaces immediately.</div>
 <section class="detail" id="openAll(java.util.List,dev.hardwood.HardwoodContext)">
 <h3>openAll</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
  <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</span>
                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Open multiple Parquet files with a shared context.</div>
