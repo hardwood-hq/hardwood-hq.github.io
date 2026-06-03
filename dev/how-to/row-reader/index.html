@@ -1972,8 +1972,14 @@ and surface the value of the last matching entry.</p>
 <tr>
 <td><code>getTimestamp</code></td>
 <td>INT64, or legacy INT96</td>
-<td>TIMESTAMP</td>
+<td>TIMESTAMP (<code>isAdjustedToUTC = true</code>)</td>
 <td><code>Instant</code></td>
+</tr>
+<tr>
+<td><code>getLocalTimestamp</code></td>
+<td>INT64</td>
+<td>TIMESTAMP (<code>isAdjustedToUTC = false</code>)</td>
+<td><code>LocalDateTime</code></td>
 </tr>
 <tr>
 <td><code>getDecimal</code></td>
@@ -2027,9 +2033,11 @@ and surface the value of the last matching entry.</p>
 </table>
 <p>All methods are available as both <code>method(name)</code> and <code>method(index)</code>.</p>
 <h4 id="null-handling">Null handling<a class="headerlink" href="#null-handling" title="Permanent link">&para;</a></h4>
-<p>Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw <code>NullPointerException</code> if the field is null — always check with <code>isNull()</code> first. Object accessors (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>, <code>getInterval</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
+<p>Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw <code>NullPointerException</code> if the field is null — always check with <code>isNull()</code> first. Object accessors (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getLocalTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>, <code>getInterval</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
 <h4 id="type-mismatches">Type mismatches<a class="headerlink" href="#type-mismatches" title="Permanent link">&para;</a></h4>
 <p>Requesting the wrong type for a column (e.g. <code>getInt</code> on a <code>LONG</code> column, <code>getDate</code> on a <code>STRING</code> column) is a programming error; the call fails at runtime with an unchecked exception. The specific exception type is unspecified and may change between releases — do not catch it as part of normal control flow. If the column type isn't known statically, check it up front via <code>reader.getFileSchema().getColumn(name)</code> and inspect the returned <code>ColumnSchema</code>'s <code>type()</code> / <code>logicalType()</code> — see <a href="../metadata/">Inspect File Metadata</a>.</p>
+<p>The TIMESTAMP logical type carries an <code>isAdjustedToUTC</code> flag that picks between two distinct semantic kinds — a UTC-adjusted instant or a wall-clock local timestamp — and the accessor pair is split along the same line. <code>getTimestamp</code> requires <code>isAdjustedToUTC = true</code> and returns <code>Instant</code>; <code>getLocalTimestamp</code> requires <code>isAdjustedToUTC = false</code> and returns <code>LocalDateTime</code>. Calling the wrong one for a column throws <code>IllegalStateException</code> naming the column and the actual flag value. If the kind isn't known statically, branch on <code>((LogicalType.TimestampType) column.logicalType()).isAdjustedToUTC()</code> before the accessor call, or use the generic <code>getValue</code> accessor which returns <code>Instant</code> or <code>LocalDateTime</code> per the column's flag. Legacy INT96 columns have no <code>isAdjustedToUTC</code> field and are read as <code>Instant</code> via <code>getTimestamp</code> (Spark / Hive convention).</p>
+<p>The TIME logical type also carries an <code>isAdjustedToUTC</code> flag, but <code>LocalTime</code> has no zone of its own, so <code>getTime</code> returns <code>LocalTime</code> either way and the flag is informational — inspect <code>((LogicalType.TimeType) column.logicalType()).isAdjustedToUTC()</code> if the distinction matters to your application.</p>
 <h4 id="index-based-access">Index-based access<a class="headerlink" href="#index-based-access" title="Permanent link">&para;</a></h4>
 <p>For hot loops, look up column indices once outside the loop and pass them to the accessors instead of names:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Get column indices once (before the loop)</span>
@@ -2193,8 +2201,8 @@ and surface the value of the last matching entry.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/6065dcafe92563bf47a9295fe06041c436a27eaf" target="_blank" rel="noopener">
-      6065dcaf
+    <a href="https://github.com/hardwood-hq/hardwood/tree/9d8f5e5037a75cfad5e1e67b9eba7acce08b620f" target="_blank" rel="noopener">
+      9d8f5e50
     </a>
   
 </div>

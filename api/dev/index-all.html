@@ -117,6 +117,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Extract an int.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqVariant.html#asLocalTimestamp()" class="member-name-link">asLocalTimestamp()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></dt>
+<dd>
+<div class="block">Extract a local-wall-clock timestamp.</div>
+</dd>
 <dt><a href="dev/hardwood/row/PqVariant.html#asLong()" class="member-name-link">asLong()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></dt>
 <dd>
 <div class="block">Extract a long.</div>
@@ -135,7 +139,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="dev/hardwood/row/PqVariant.html#asTimestamp()" class="member-name-link">asTimestamp()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></dt>
 <dd>
-<div class="block">Extract a timestamp.</div>
+<div class="block">Extract a UTC-adjusted timestamp.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqVariant.html#asUuid()" class="member-name-link">asUuid()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></dt>
 <dd>
@@ -1547,6 +1551,18 @@ buffer.</div>
 <dd>
 <div class="block">Get the value as a LIST.</div>
 </dd>
+<dt><a href="dev/hardwood/row/StructAccessor.html#getLocalTimestamp(int)" class="member-name-link">getLocalTimestamp(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
+<dd>
+<div class="block">Get a local-wall-clock TIMESTAMP field value by field index.</div>
+</dd>
+<dt><a href="dev/hardwood/row/FieldAccessor.html#getLocalTimestamp(java.lang.String)" class="member-name-link">getLocalTimestamp(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/FieldAccessor.html" title="interface in dev.hardwood.row">FieldAccessor</a></dt>
+<dd>
+<div class="block">Get a local-wall-clock TIMESTAMP field value by name.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqMap.Entry.html#getLocalTimestampValue()" class="member-name-link">getLocalTimestampValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
+<dd>
+<div class="block">Get the value as a local-wall-clock TIMESTAMP (<code>isAdjustedToUTC = false</code>).</div>
+</dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getLong(int)" class="member-name-link">getLong(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
 <div class="block">Get an INT64 field value by field index.</div>
@@ -1712,11 +1728,11 @@ the slice of <a href="dev/hardwood/reader/ColumnReader.html#getBinaryValues()"><
 </dd>
 <dt><a href="dev/hardwood/row/FieldAccessor.html#getTimestamp(java.lang.String)" class="member-name-link">getTimestamp(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/FieldAccessor.html" title="interface in dev.hardwood.row">FieldAccessor</a></dt>
 <dd>
-<div class="block">Get a TIMESTAMP field value by name.</div>
+<div class="block">Get a UTC-adjusted TIMESTAMP field value by name.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getTimestampValue()" class="member-name-link">getTimestampValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
-<div class="block">Get the value as a TIMESTAMP.</div>
+<div class="block">Get the value as a UTC-adjusted TIMESTAMP (<code>isAdjustedToUTC = true</code>).</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getTimeValue()" class="member-name-link">getTimeValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
@@ -2431,6 +2447,11 @@ and transport settings.</div>
 <dt><a href="dev/hardwood/metadata/LogicalType.ListType.html#%3Cinit%3E()" class="member-name-link">ListType()</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.ListType.html" title="class in dev.hardwood.metadata">LogicalType.ListType</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>ListType</code> record class.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqList.html#localTimestamps()" class="member-name-link">localTimestamps()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
+<dd>
+<div class="block">View the elements as a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link"><code>LocalDateTime</code></a> (local-wall-clock
+timestamp) values.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/SchemaElement.html#logicalType()" class="member-name-link">logicalType()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></dt>
 <dd>

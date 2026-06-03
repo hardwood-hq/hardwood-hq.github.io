@@ -1542,6 +1542,7 @@
 </code></pre></div>
 <p>The <code>PqVariantObject</code> view exposes the same primitive getters as a Parquet struct (<code>getInt</code>, <code>getString</code>, <code>getTimestamp</code>, …), but its complex navigation uses <code>getObject</code> and <code>getArray</code> (Variant-spec terminology) rather than <code>getStruct</code> / <code>getList</code> / <code>getMap</code>. A <code>PqVariantArray</code> is iterable and indexed; elements are heterogeneous <code>PqVariant</code>s — inspect each element's <code>type()</code> and unwrap appropriately.</p>
 <p><strong>Primitive extraction on <code>PqVariant</code>:</strong> When you already hold a <code>PqVariant</code> (e.g. an array element) use the <code>as*()</code> methods — <code>asInt</code>, <code>asString</code>, <code>asTimestamp</code>, and so on. Each throws <code>VariantTypeException</code> if the variant's type tag doesn't match.</p>
+<p><strong>Timestamp tags:</strong> The Variant binary format carries four timestamp tags, split along the same <code>isAdjustedToUTC</code> boundary as the Parquet TIMESTAMP logical type. <code>asTimestamp</code> returns <code>Instant</code> and accepts the UTC-adjusted tags <code>TIMESTAMP</code> / <code>TIMESTAMP_NANOS</code>; <code>asLocalTimestamp</code> returns <code>LocalDateTime</code> and accepts the wall-clock tags <code>TIMESTAMP_NTZ</code> / <code>TIMESTAMP_NTZ_NANOS</code>. <code>PqVariantObject.getTimestamp</code> / <code>getLocalTimestamp</code> follow the same split.</p>
 <p><strong>Shredded Variants:</strong> Some writers store part of the payload in a typed sibling column (<code>typed_value</code>) alongside <code>value</code> for better compression and pushdown. Reassembly is transparent: <code>metadata()</code> and <code>value()</code> return canonical bytes regardless of whether the file was shredded, so <code>PqVariant</code> consumers see a single consistent representation.</p>
 <h2 id="current-limitations">Current limitations<a class="headerlink" href="#current-limitations" title="Permanent link">&para;</a></h2>
 <ul>
@@ -1597,8 +1598,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/6065dcafe92563bf47a9295fe06041c436a27eaf" target="_blank" rel="noopener">
-      6065dcaf
+    <a href="https://github.com/hardwood-hq/hardwood/tree/9d8f5e5037a75cfad5e1e67b9eba7acce08b620f" target="_blank" rel="noopener">
+      9d8f5e50
     </a>
   
 </div>
