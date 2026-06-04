@@ -1958,7 +1958,7 @@ typed primitive arrays a batch at a time — no per-row calls. Total the fares:<
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
 <a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">fare</span><span class="p">.</span><span class="na">nextBatch</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fare</span><span class="p">.</span><span class="na">getRecordCount</span><span class="p">();</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fare</span><span class="p">.</span><span class="na">getValueCount</span><span class="p">();</span>
 <a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">        </span><span class="kt">double</span><span class="o">[]</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fare</span><span class="p">.</span><span class="na">getDoubles</span><span class="p">();</span>
 <a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">        </span><span class="n">Validity</span><span class="w"> </span><span class="n">validity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fare</span><span class="p">.</span><span class="na">getLeafValidity</span><span class="p">();</span>
 <a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">hasNulls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">validity</span><span class="p">.</span><span class="na">hasNulls</span><span class="p">();</span>
@@ -2041,8 +2041,8 @@ Parquet with Hardwood.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/8f5eb9e31876edc8f24911bf82693768d9209367" target="_blank" rel="noopener">
-      8f5eb9e3
+    <a href="https://github.com/hardwood-hq/hardwood/tree/de8d3ec5160887d3757d9fcd00418dcfd0f1faaa" target="_blank" rel="noopener">
+      de8d3ec5
     </a>
   
 </div>
