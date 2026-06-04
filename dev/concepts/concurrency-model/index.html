@@ -1670,7 +1670,10 @@ shared pool matters, since all the files draw on the same workers. See
 <li><strong>Drive one reader from one thread.</strong> A <code>RowReader</code> / <code>ColumnReader</code> / <code>ColumnReaders</code> instance
   is a stateful cursor meant to be advanced by a single consumer thread. The concurrency is
   <em>internal</em> — you do not, and should not, call <code>next()</code> / <code>nextBatch()</code> on the same reader from
-  multiple threads.</li>
+  multiple threads. This restricts advancing the cursor, not the data it returns: a <code>ColumnReader</code>
+  allocates fresh batch arrays on every <code>nextBatch()</code> and never reuses them later, so you can fan a
+  batch's arrays out to other threads for processing while the consumer thread moves on (see
+  <a href="../../how-to/column-reader/#retaining-and-handing-off-batch-arrays">Column-Oriented Reading</a>).</li>
 <li><strong>For your own parallelism, read in parallel at the file or row-group grain.</strong> To use more
   than one consumer thread, give each its own reader over a different file, or partition one file
   across readers by byte range with
@@ -1742,8 +1745,8 @@ shared pool matters, since all the files draw on the same workers. See
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/8962e9c21964b3e5df93c956a9b3a45f2a046865" target="_blank" rel="noopener">
-      8962e9c2
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f466a39b801a0dbb99fe94b786e89c4732cc2797" target="_blank" rel="noopener">
+      f466a39b
     </a>
   
 </div>

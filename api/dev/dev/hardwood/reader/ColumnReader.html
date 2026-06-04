@@ -130,6 +130,16 @@ real-items-only counts. Phantom positions for null/empty parents are
 excluded; <code>getLayerOffsets(k)[i+1] - getLayerOffsets(k)[i] == 0</code>
 distinguishes empty from null at REPEATED layers (validity carries the
 null bit).</p>
+<p><strong>Array ownership.</strong> Every array and <a href="Validity.html" title="interface in dev.hardwood.reader"><code>Validity</code></a> handed back by an
+accessor (<a href="#getInts()"><code>getInts()</code></a>, <a href="#getLongs()"><code>getLongs()</code></a>, <a href="#getLayerOffsets(int)"><code>getLayerOffsets(int)</code></a>,
+<a href="#getLeafValidity()"><code>getLeafValidity()</code></a>, and the rest) belongs to the current batch and is
+freshly allocated by the <a href="#nextBatch()"><code>nextBatch()</code></a> call that produced it. A later
+<a href="#nextBatch()"><code>nextBatch()</code></a> never reuses or overwrites an array returned for an
+earlier batch — so a returned array may be kept and read after the reader
+has advanced, including handed off to another thread for processing. The
+reader itself is still a single-threaded cursor: only one consumer thread
+may call <a href="#nextBatch()"><code>nextBatch()</code></a>. (The capacity-sizing note on <a href="#getBinaryValues()"><code>getBinaryValues()</code></a>
+is about array <em>length</em>, not reuse; that buffer is fresh per batch too.)</p>
 <p><strong>This API is <a href="../Experimental.html" title="annotation interface in dev.hardwood"><code>Experimental</code></a>:</strong> the shape of the batch accessors and
 layer representation may change in future releases without prior
 deprecation.</p>
