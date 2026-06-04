@@ -744,21 +744,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#null-handling" class="md-nav__link">
+  <a href="#null-and-type-mismatch-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Null handling
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#type-mismatches" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Type mismatches
+        Null and type-mismatch handling
       
     </span>
   </a>
@@ -781,39 +770,6 @@
     <span class="md-ellipsis">
       
         INTERVAL columns
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#float16-columns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        FLOAT16 columns
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#legacy-int96-timestamps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Legacy INT96 timestamps
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#legacy-converted-type-annotations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Legacy converted-type annotations
       
     </span>
   </a>
@@ -1293,6 +1249,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concepts/nested-columns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Layer Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concepts/row-selection/" class="md-nav__link">
         
   
@@ -1301,6 +1285,34 @@
     
   
     Row Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/timestamps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timestamp Semantics
   
 
     
@@ -1418,6 +1430,90 @@
     
   
     Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/accessors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Typed Accessors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/query-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Query Controls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3
   
 
     
@@ -1643,21 +1739,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#null-handling" class="md-nav__link">
+  <a href="#null-and-type-mismatch-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Null handling
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#type-mismatches" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Type mismatches
+        Null and type-mismatch handling
       
     </span>
   </a>
@@ -1680,39 +1765,6 @@
     <span class="md-ellipsis">
       
         INTERVAL columns
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#float16-columns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        FLOAT16 columns
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#legacy-int96-timestamps" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Legacy INT96 timestamps
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#legacy-converted-type-annotations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Legacy converted-type annotations
       
     </span>
   </a>
@@ -1933,139 +1985,79 @@ and surface the value of the last matching entry.</p>
 <li><strong>Name-based</strong> (e.g., <code>getInt("column_name")</code>) — convenient for ad-hoc access</li>
 <li><strong>Index-based</strong> (e.g., <code>getInt(columnIndex)</code>) — faster for performance-critical loops</li>
 </ul>
+<p>The common scalar and nested types:</p>
 <table>
 <thead>
 <tr>
 <th>Method</th>
-<th>Physical Type</th>
-<th>Logical Type</th>
 <th>Java Type</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>getBoolean</code></td>
-<td>BOOLEAN</td>
-<td></td>
 <td><code>boolean</code></td>
 </tr>
 <tr>
 <td><code>getInt</code></td>
-<td>INT32</td>
-<td></td>
 <td><code>int</code></td>
 </tr>
 <tr>
 <td><code>getLong</code></td>
-<td>INT64</td>
-<td></td>
 <td><code>long</code></td>
 </tr>
 <tr>
 <td><code>getFloat</code></td>
-<td>FLOAT, or FIXED_LEN_BYTE_ARRAY(2)</td>
-<td>FLOAT16 (optional)</td>
 <td><code>float</code></td>
 </tr>
 <tr>
 <td><code>getDouble</code></td>
-<td>DOUBLE</td>
-<td></td>
 <td><code>double</code></td>
 </tr>
 <tr>
-<td><code>getBinary</code></td>
-<td>BYTE_ARRAY</td>
-<td>BSON (optional)</td>
-<td><code>byte[]</code></td>
-</tr>
-<tr>
 <td><code>getString</code></td>
-<td>BYTE_ARRAY</td>
-<td>STRING or JSON</td>
 <td><code>String</code></td>
 </tr>
 <tr>
 <td><code>getDate</code></td>
-<td>INT32</td>
-<td>DATE</td>
 <td><code>LocalDate</code></td>
 </tr>
 <tr>
 <td><code>getTime</code></td>
-<td>INT32 or INT64</td>
-<td>TIME</td>
 <td><code>LocalTime</code></td>
 </tr>
 <tr>
 <td><code>getTimestamp</code></td>
-<td>INT64, or legacy INT96</td>
-<td>TIMESTAMP (<code>isAdjustedToUTC = true</code>)</td>
 <td><code>Instant</code></td>
 </tr>
 <tr>
 <td><code>getLocalTimestamp</code></td>
-<td>INT64</td>
-<td>TIMESTAMP (<code>isAdjustedToUTC = false</code>)</td>
 <td><code>LocalDateTime</code></td>
 </tr>
 <tr>
 <td><code>getDecimal</code></td>
-<td>INT32, INT64, or FIXED_LEN_BYTE_ARRAY</td>
-<td>DECIMAL</td>
 <td><code>BigDecimal</code></td>
 </tr>
 <tr>
 <td><code>getUuid</code></td>
-<td>FIXED_LEN_BYTE_ARRAY</td>
-<td>UUID</td>
 <td><code>UUID</code></td>
 </tr>
 <tr>
-<td><code>getInterval</code></td>
-<td>FIXED_LEN_BYTE_ARRAY(12)</td>
-<td>INTERVAL</td>
-<td><code>PqInterval</code></td>
-</tr>
-<tr>
-<td><code>getStruct</code></td>
-<td></td>
-<td></td>
-<td><code>PqStruct</code></td>
-</tr>
-<tr>
-<td><code>getList</code></td>
-<td></td>
-<td>LIST</td>
-<td><code>PqList</code></td>
-</tr>
-<tr>
-<td><code>getMap</code></td>
-<td></td>
-<td>MAP</td>
-<td><code>PqMap</code></td>
-</tr>
-<tr>
-<td><code>getVariant</code></td>
-<td>BYTE_ARRAY pair</td>
-<td>VARIANT</td>
-<td><code>PqVariant</code></td>
-</tr>
-<tr>
-<td><code>isNull</code></td>
-<td>Any</td>
-<td>Any</td>
-<td><code>boolean</code></td>
+<td><code>getStruct</code> / <code>getList</code> / <code>getMap</code></td>
+<td><code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code></td>
 </tr>
 </tbody>
 </table>
-<p>All methods are available as both <code>method(name)</code> and <code>method(index)</code>.</p>
-<h4 id="null-handling">Null handling<a class="headerlink" href="#null-handling" title="Permanent link">&para;</a></h4>
-<p>Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw <code>NullPointerException</code> if the field is null — always check with <code>isNull()</code> first. Object accessors (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getLocalTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>, <code>getInterval</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
-<h4 id="type-mismatches">Type mismatches<a class="headerlink" href="#type-mismatches" title="Permanent link">&para;</a></h4>
-<p>Requesting the wrong type for a column (e.g. <code>getInt</code> on a <code>LONG</code> column, <code>getDate</code> on a <code>STRING</code> column) is a programming error; the call fails at runtime with an unchecked exception. The specific exception type is unspecified and may change between releases — do not catch it as part of normal control flow. If the column type isn't known statically, check it up front via <code>reader.getFileSchema().getColumn(name)</code> and inspect the returned <code>ColumnSchema</code>'s <code>type()</code> / <code>logicalType()</code> — see <a href="../metadata/">Inspect File Metadata</a>.</p>
-<p>The TIMESTAMP logical type carries an <code>isAdjustedToUTC</code> flag that picks between two distinct semantic kinds — a UTC-adjusted instant or a wall-clock local timestamp — and the accessor pair is split along the same line. <code>getTimestamp</code> requires <code>isAdjustedToUTC = true</code> and returns <code>Instant</code>; <code>getLocalTimestamp</code> requires <code>isAdjustedToUTC = false</code> and returns <code>LocalDateTime</code>. Calling the wrong one for a column throws <code>IllegalStateException</code> naming the column and the actual flag value. If the kind isn't known statically, branch on <code>((LogicalType.TimestampType) column.logicalType()).isAdjustedToUTC()</code> before the accessor call, or use the generic <code>getValue</code> accessor which returns <code>Instant</code> or <code>LocalDateTime</code> per the column's flag. Legacy INT96 columns have no <code>isAdjustedToUTC</code> field and are read as <code>Instant</code> via <code>getTimestamp</code> (Spark / Hive convention).</p>
-<p>The TIME logical type also carries an <code>isAdjustedToUTC</code> flag, but <code>LocalTime</code> has no zone of its own, so <code>getTime</code> returns <code>LocalTime</code> either way and the flag is informational — inspect <code>((LogicalType.TimeType) column.logicalType()).isAdjustedToUTC()</code> if the distinction matters to your application.</p>
+<p>For the complete correspondence — physical and logical types, the <code>getBinary</code> / <code>getInterval</code> /
+<code>getVariant</code> accessors, FLOAT16, BSON, INT96, and the legacy <code>converted_type</code> columns — plus the
+null- and type-mismatch contracts, see <a href="../../reference/accessors/">Typed Accessors</a>.</p>
+<h4 id="null-and-type-mismatch-handling">Null and type-mismatch handling<a class="headerlink" href="#null-and-type-mismatch-handling" title="Permanent link">&para;</a></h4>
+<p>Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw
+<code>NullPointerException</code> on a null field — always check <code>isNull()</code> first; object accessors return
+<code>null</code>. Requesting the wrong type for a column fails at runtime with an unchecked exception. The
+full rules — including the split <code>getTimestamp</code> / <code>getLocalTimestamp</code> pair — are in
+<a href="../../reference/accessors/">Typed Accessors</a>; the reasoning behind the timestamp split is in
+<a href="../../concepts/timestamps/">Timestamp Semantics</a>.</p>
 <h4 id="index-based-access">Index-based access<a class="headerlink" href="#index-based-access" title="Permanent link">&para;</a></h4>
 <p>For hot loops, look up column indices once outside the loop and pass them to the accessors instead of names:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Get column indices once (before the loop)</span>
@@ -2081,75 +2073,7 @@ and surface the value of the last matching entry.</p>
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">}</span>
 </code></pre></div>
 <h4 id="interval-columns">INTERVAL columns<a class="headerlink" href="#interval-columns" title="Permanent link">&para;</a></h4>
-<p><code>PqInterval</code> is a plain record with three <code>long</code> properties — <code>months()</code>, <code>days()</code>, and <code>milliseconds()</code>. Each holds an unsigned 32-bit value in the range <code>[0, 4_294_967_295]</code>, so no additional conversion is needed. The components are independent and not normalized. <code>INTERVAL</code> is one of the legacy <code>converted_type</code> annotations handled transparently — see <a href="#legacy-converted-type-annotations">Legacy converted-type annotations</a> below.</p>
-<h4 id="float16-columns">FLOAT16 columns<a class="headerlink" href="#float16-columns" title="Permanent link">&para;</a></h4>
-<p><code>getFloat</code> accepts FLOAT16 columns (<code>FIXED_LEN_BYTE_ARRAY(2)</code> annotated with the <code>FLOAT16</code> logical type) and decodes the 2-byte IEEE 754 half-precision payload to a single-precision <code>float</code>. The widening is lossless — half-precision NaN, ±Infinity, and signed zero round-trip cleanly, and the original NaN bit pattern is preserved (the Parquet spec does not canonicalize NaNs on write). Use <code>Float.isNaN(value)</code> for NaN checks rather than equality. As with all primitive accessors, <code>isNull()</code> must be checked before <code>getFloat()</code> since FLOAT16 columns can be optional.</p>
-<h4 id="legacy-int96-timestamps">Legacy INT96 timestamps<a class="headerlink" href="#legacy-int96-timestamps" title="Permanent link">&para;</a></h4>
-<p>Parquet files written by older versions of Apache Spark and Hive store timestamps in the deprecated INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> detects INT96 automatically and decodes it to an <code>Instant</code>; no caller-side handling is required.</p>
-<h4 id="legacy-converted-type-annotations">Legacy converted-type annotations<a class="headerlink" href="#legacy-converted-type-annotations" title="Permanent link">&para;</a></h4>
-<p>Writers predating the modern logical-type union (older parquet-mr / Hive / Impala / Spark) annotate primitive columns with only a legacy <code>converted_type</code> and no <code>logicalType</code>. Hardwood promotes each one to its logical type, so the column decodes through the normal typed accessor with no caller-side opt-in:</p>
-<table>
-<thead>
-<tr>
-<th><code>converted_type</code></th>
-<th>Accessor</th>
-<th>Java type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>UTF8</code></td>
-<td><code>getString</code></td>
-<td><code>String</code></td>
-</tr>
-<tr>
-<td><code>JSON</code></td>
-<td><code>getString</code></td>
-<td><code>String</code></td>
-</tr>
-<tr>
-<td><code>ENUM</code>, <code>BSON</code></td>
-<td><code>getBinary</code></td>
-<td><code>byte[]</code></td>
-</tr>
-<tr>
-<td><code>DATE</code></td>
-<td><code>getDate</code></td>
-<td><code>LocalDate</code></td>
-</tr>
-<tr>
-<td><code>DECIMAL</code></td>
-<td><code>getDecimal</code></td>
-<td><code>BigDecimal</code></td>
-</tr>
-<tr>
-<td><code>TIME_MILLIS</code>, <code>TIME_MICROS</code></td>
-<td><code>getTime</code></td>
-<td><code>LocalTime</code></td>
-</tr>
-<tr>
-<td><code>TIMESTAMP_MILLIS</code>, <code>TIMESTAMP_MICROS</code></td>
-<td><code>getTimestamp</code></td>
-<td><code>Instant</code></td>
-</tr>
-<tr>
-<td><code>INT_8</code>, <code>INT_16</code>, <code>INT_32</code>, <code>INT_64</code></td>
-<td><code>getValue</code></td>
-<td><code>Byte</code> / <code>Short</code> / <code>Integer</code> / <code>Long</code></td>
-</tr>
-<tr>
-<td><code>UINT_8</code>, <code>UINT_16</code>, <code>UINT_32</code>, <code>UINT_64</code></td>
-<td><code>getValue</code></td>
-<td><code>Integer</code> / <code>Long</code> (raw two's-complement bit pattern)</td>
-</tr>
-<tr>
-<td><code>INTERVAL</code></td>
-<td><code>getInterval</code></td>
-<td><code>PqInterval</code></td>
-</tr>
-</tbody>
-</table>
-<p><code>TIME_*</code> columns decode to a UTC-normalized <code>LocalTime</code> time-of-day and <code>TIMESTAMP_*</code> columns to a UTC-normalized <code>Instant</code>, matching the parquet-format backward-compatibility rule for these annotations. Unsigned columns preserve the stored bit pattern — reinterpret with <code>Integer.toUnsignedLong</code> / <code>Long.toUnsignedString</code> for the unsigned magnitude. When a file carries both a <code>converted_type</code> and a modern <code>logicalType</code>, the <code>logicalType</code> takes precedence.</p>
+<p><code>PqInterval</code> is a plain record with three <code>long</code> properties — <code>months()</code>, <code>days()</code>, and <code>milliseconds()</code>. Each holds an unsigned 32-bit value in the range <code>[0, 4_294_967_295]</code>, so no additional conversion is needed. The components are independent and not normalized. <code>INTERVAL</code> is one of the legacy <code>converted_type</code> annotations handled transparently — see <a href="../../reference/accessors/#legacy-converted-type-annotations">Legacy converted-type annotations</a>.</p>
 <h4 id="null-columns">NULL columns<a class="headerlink" href="#null-columns" title="Permanent link">&para;</a></h4>
 <p>A column annotated with the <code>NULL</code> logical type (e.g. PyArrow's <code>pa.null()</code>) holds a null value at every row. <code>column.logicalType()</code> returns <code>LogicalType.NullType</code>; <code>isNull(name)</code> is always <code>true</code> and the typed/generic accessors return <code>null</code> accordingly. No separate accessor is needed.</p>
 <h4 id="bare-byte_array-columns">Bare <code>BYTE_ARRAY</code> columns<a class="headerlink" href="#bare-byte_array-columns" title="Permanent link">&para;</a></h4>
@@ -2229,8 +2153,8 @@ and surface the value of the last matching entry.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c224eeb0119a35b52aa1ca6c5f6811f618c11a34" target="_blank" rel="noopener">
-      c224eeb0
+    <a href="https://github.com/hardwood-hq/hardwood/tree/adfac77ab8afbebcc3ba1e553ce4f10ae68c54c4" target="_blank" rel="noopener">
+      adfac77a
     </a>
   
 </div>

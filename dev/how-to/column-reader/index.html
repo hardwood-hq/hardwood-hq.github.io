@@ -925,28 +925,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#real-items-only" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Real items only
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#counts-at-each-layer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Counts at each layer
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1337,6 +1315,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concepts/nested-columns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Layer Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concepts/row-selection/" class="md-nav__link">
         
   
@@ -1345,6 +1351,34 @@
     
   
     Row Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/timestamps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timestamp Semantics
   
 
     
@@ -1462,6 +1496,90 @@
     
   
     Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/accessors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Typed Accessors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/query-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Query Controls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3
   
 
     
@@ -1840,28 +1958,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#real-items-only" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Real items only
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#counts-at-each-layer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Counts at each layer
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1996,129 +2092,14 @@
 </ul>
 <p>All three navigation methods return <code>null</code> when the group isn't of the expected kind or its encoding is malformed. Callers decide whether <code>null</code> is fatal at their layer.</p>
 <h4 id="reading-nested-data-the-layer-model">Reading nested data: the layer model<a class="headerlink" href="#reading-nested-data-the-layer-model" title="Permanent link">&para;</a></h4>
-<p><code>ColumnReader</code> exposes a column's schema chain as a sequence of <strong>layers</strong>. Each non-leaf node along the chain contributes zero or one layer:</p>
-<table>
-<thead>
-<tr>
-<th>Schema node</th>
-<th>Contributes layer?</th>
-<th>Layer kind</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>REQUIRED</code> group</td>
-<td>no</td>
-<td>—</td>
-</tr>
-<tr>
-<td><code>OPTIONAL</code> group (struct)</td>
-<td>yes</td>
-<td><code>STRUCT</code></td>
-</tr>
-<tr>
-<td><code>LIST</code> / <code>MAP</code>-annotated group</td>
-<td>yes — exactly one</td>
-<td><code>REPEATED</code></td>
-</tr>
-</tbody>
-</table>
-<p>Layers are numbered <code>0..getLayerCount() - 1</code> outermost-to-innermost, and the leaf is queried separately. A flat column reports <code>getLayerCount() == 0</code>.</p>
-<p>For each layer, two buffers describe the items at that layer:</p>
-<ul>
-<li><code>getLayerValidity(k)</code> — a <a href="/api/dev/dev/hardwood/reader/Validity.html">Validity</a> indexed by item position; <code>isNull(i)</code> / <code>isNotNull(i)</code> answer the per-item question, <code>hasNulls()</code> is the O(1) fast-path gate. Returns the shared <code>Validity.NO_NULLS</code> singleton when no item at layer <code>k</code> is null in this batch.</li>
-<li><code>getLayerOffsets(k)</code> — sentinel-suffixed offsets of length <code>count(k) + 1</code> into the next inner layer's items (or, for the innermost layer, into the leaf-value array). Only valid when <code>getLayerKind(k) == REPEATED</code>; throws on a <code>STRUCT</code> layer.</li>
-</ul>
-<p>The leaf has its own <code>getLeafValidity()</code> (also a <code>Validity</code>), and the four states of a <code>LIST</code>/<code>MAP</code> container fall out cleanly from offsets and validity:</p>
-<table>
-<thead>
-<tr>
-<th>Logical value</th>
-<th><code>getLayerValidity</code></th>
-<th><code>offsets[r+1] - offsets[r]</code></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>null</code></td>
-<td><code>isNull(r)</code></td>
-<td><code>0</code></td>
-</tr>
-<tr>
-<td><code>[]</code></td>
-<td><code>isNotNull(r)</code></td>
-<td><code>0</code></td>
-</tr>
-<tr>
-<td><code>[null]</code></td>
-<td><code>isNotNull(r)</code></td>
-<td><code>1</code>, leaf validity says null</td>
-</tr>
-<tr>
-<td><code>[v]</code></td>
-<td><code>isNotNull(r)</code></td>
-<td><code>1</code>, leaf validity says not null</td>
-</tr>
-</tbody>
-</table>
-<p>Empty-vs-null is the offsets diff; the validity bit picks out null. No empty-marker bitmap is needed.</p>
-<p>A quick reference for what <code>getLayerCount()</code> / <code>getLayerKind(k)</code> report for common chains:</p>
-<table>
-<thead>
-<tr>
-<th>Schema chain</th>
-<th><code>getLayerCount()</code></th>
-<th>Kinds (outer → inner)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>optional double x</code></td>
-<td>0</td>
-<td>—</td>
-</tr>
-<tr>
-<td><code>optional struct { ... int x }</code></td>
-<td>1</td>
-<td>STRUCT</td>
-</tr>
-<tr>
-<td><code>list&lt;int&gt;</code></td>
-<td>1</td>
-<td>REPEATED</td>
-</tr>
-<tr>
-<td><code>map&lt;string, int&gt;</code></td>
-<td>1</td>
-<td>REPEATED</td>
-</tr>
-<tr>
-<td><code>list&lt;list&lt;int&gt;&gt;</code></td>
-<td>2</td>
-<td>REPEATED, REPEATED</td>
-</tr>
-<tr>
-<td><code>optional struct { list&lt;int&gt; }</code></td>
-<td>2</td>
-<td>STRUCT, REPEATED</td>
-</tr>
-<tr>
-<td><code>list&lt;optional struct { ... }&gt;</code></td>
-<td>2</td>
-<td>REPEATED, STRUCT</td>
-</tr>
-<tr>
-<td><code>optional struct { map&lt;string, int&gt; }</code></td>
-<td>2</td>
-<td>STRUCT, REPEATED</td>
-</tr>
-</tbody>
-</table>
-<p>Two rules generate this table:</p>
-<ol>
-<li><strong>STRUCT keeps cardinality.</strong> Items at layer <code>k+1</code> equal items at layer <code>k</code>. STRUCT layers carry validity, no offsets.</li>
-<li><strong>REPEATED expands cardinality.</strong> Items at layer <code>k+1</code> equal <code>getLayerOffsets(k)[count(k)]</code>. REPEATED layers carry both validity and offsets.</li>
-</ol>
+<p><code>ColumnReader</code> exposes a nested column's schema chain as a sequence of <strong>layers</strong>, numbered
+<code>0..getLayerCount() - 1</code> outermost-to-innermost, with the leaf queried separately. Each layer has a
+<a href="/api/dev/dev/hardwood/reader/Validity.html">Validity</a> via <code>getLayerValidity(k)</code>; <code>REPEATED</code>
+layers (lists and maps) additionally have <code>getLayerOffsets(k)</code>; and the leaf has its own
+<code>getLeafValidity()</code>.</p>
+<p>For the full model — how <code>STRUCT</code> and <code>REPEATED</code> nodes map to layers, the four container states,
+the offset/validity encoding, and the per-layer count recursion — see
+<a href="../../concepts/nested-columns/">The Layer Model</a>. The examples below walk the common shapes.</p>
 <h4 id="picking-a-null-check-loop-shape">Picking a null-check loop shape<a class="headerlink" href="#picking-a-null-check-loop-shape" title="Permanent link">&para;</a></h4>
 <p><code>Validity</code> supports three loop shapes against the same value. Pick by workload:</p>
 <table>
@@ -2342,16 +2323,6 @@
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">Validity</span><span class="w"> </span><span class="n">mapValidity</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">getLayerValidity</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">   </span><span class="c1">// REPEATED layer for the map</span>
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kt">int</span><span class="o">[]</span><span class="w">    </span><span class="n">entryOffsets</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">getLayerOffsets</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </code></pre></div>
-<h4 id="real-items-only">Real items only<a class="headerlink" href="#real-items-only" title="Permanent link">&para;</a></h4>
-<p>The leaf array and <code>getLayerOffsets</code> carry <strong>real items only</strong> — phantom slots from null/empty parents at any <code>REPEATED</code> layer are excluded. <code>getValueCount()</code> returns the real leaf count. <code>STRUCT</code> layers do not expand or contract the item stream — they carry a validity bitmap of the same length as their parent. Only <code>REPEATED</code> layers add cardinality, via their offsets.</p>
-<h4 id="counts-at-each-layer">Counts at each layer<a class="headerlink" href="#counts-at-each-layer" title="Permanent link">&para;</a></h4>
-<p>Every per-layer buffer is sized to <code>count(k)</code>, defined recursively:</p>
-<ul>
-<li><code>count(0) == getRecordCount()</code></li>
-<li>For <code>k &gt; 0</code>: <code>count(k)</code> equals <code>count(k-1)</code> if layer <code>k-1</code> is <code>STRUCT</code>, or <code>getLayerOffsets(k-1)[count(k-1)]</code> (the trailing sentinel) if layer <code>k-1</code> is <code>REPEATED</code>.</li>
-</ul>
-<p>The leaf array itself follows the same rule one step past the innermost layer, so <code>getValueCount()</code> matches <code>count(layerCount)</code>.</p>
-<p>Deeper nestings extend the same chain: at depth N you walk <code>getLayerOffsets(0)</code> through <code>getLayerOffsets(N - 1)</code>, checking <code>getLayerValidity(k)</code> (and, for <code>REPEATED</code> layers, the zero-length offsets diff that flags an empty container) at each step before descending.</p>
 
 
 
@@ -2401,8 +2372,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c224eeb0119a35b52aa1ca6c5f6811f618c11a34" target="_blank" rel="noopener">
-      c224eeb0
+    <a href="https://github.com/hardwood-hq/hardwood/tree/adfac77ab8afbebcc3ba1e553ce4f10ae68c54c4" target="_blank" rel="noopener">
+      adfac77a
     </a>
   
 </div>

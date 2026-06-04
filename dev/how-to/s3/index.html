@@ -1249,6 +1249,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concepts/nested-columns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Layer Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concepts/row-selection/" class="md-nav__link">
         
   
@@ -1257,6 +1285,34 @@
     
   
     Row Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/timestamps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timestamp Semantics
   
 
     
@@ -1374,6 +1430,90 @@
     
   
     Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/accessors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Typed Accessors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/query-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Query Controls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3
   
 
     
@@ -1819,6 +1959,9 @@
 </code></pre></div>
 <p>When a custom endpoint is set, region can be omitted. Use <code>.pathStyle(true)</code> for services that require path-style access (e.g. MinIO, SeaweedFS).</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
+<p>The builder exposes timeouts, retries, and transport configuration. The consolidated option /
+default table is in the <a href="../../reference/s3/#s3source-builder-options">S3 Reference</a>; the worked
+examples below cover the common cases.</p>
 <h3 id="timeouts">Timeouts<a class="headerlink" href="#timeouts" title="Permanent link">&para;</a></h3>
 <p>The builder provides connect and request timeouts with sensible defaults:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
@@ -1828,10 +1971,6 @@
 <a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">        </span><span class="p">.</span><span class="na">requestTimeout</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span><span class="w">   </span><span class="c1">// default: 30s</span>
 <a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-<ul>
-<li><strong>Connect timeout</strong> — maximum time to establish a TCP connection (default 10 seconds).</li>
-<li><strong>Request timeout</strong> — maximum time for an individual HTTP request to complete (default 30 seconds).</li>
-</ul>
 <h3 id="retries">Retries<a class="headerlink" href="#retries" title="Permanent link">&para;</a></h3>
 <p>GET requests are automatically retried on transient failures (HTTP 500, 503, and network errors) with exponential backoff and jitter. The default maximum number of retries is 3:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
@@ -1877,16 +2016,9 @@
 <a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">            </span><span class="n">in</span><span class="p">.</span><span class="na">networkBytesFetched</span><span class="p">(),</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">networkRequestCount</span><span class="p">());</span>
 <a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="p">}</span>
 </code></pre></div>
-<ul>
-<li><code>networkRequestCount()</code> — HTTP GET requests issued since <code>open()</code>: the footer tail fetch plus every column-chunk range fetch. Tail-cache hits are not counted.</li>
-<li><code>networkBytesFetched()</code> — total bytes fetched across those requests, counted the same way.</li>
-</ul>
-<p>Read the counters before the try-with-resources block exits, while the <code>S3InputFile</code> is still open.</p>
+<p>Read the counters before the try-with-resources block exits, while the <code>S3InputFile</code> is still open. For the exact counting semantics of <code>networkRequestCount()</code> and <code>networkBytesFetched()</code>, see the <a href="../../reference/s3/#fetch-cost-counters">S3 Reference</a>.</p>
 <h3 id="not-currently-supported">Not currently supported<a class="headerlink" href="#not-currently-supported" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Anonymous (unsigned) requests</strong> — <code>S3Credentials</code> requires an access key + secret key pair; there is no built-in mode for public buckets without credentials.</li>
-<li><strong>Requester-pays buckets</strong> — Hardwood does not send the <code>x-amz-request-payer</code> header. Reads against requester-pays buckets will fail with <code>403 AccessDenied</code> even with valid credentials.</li>
-</ul>
+<p>Anonymous (unsigned) requests and requester-pays buckets are not supported — see the <a href="../../reference/s3/#not-currently-supported">S3 Reference</a> for details.</p>
 
 
 
@@ -1936,8 +2068,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c224eeb0119a35b52aa1ca6c5f6811f618c11a34" target="_blank" rel="noopener">
-      c224eeb0
+    <a href="https://github.com/hardwood-hq/hardwood/tree/adfac77ab8afbebcc3ba1e553ce4f10ae68c54c4" target="_blank" rel="noopener">
+      adfac77a
     </a>
   
 </div>

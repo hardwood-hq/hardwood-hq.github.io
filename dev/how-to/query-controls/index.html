@@ -1294,6 +1294,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../concepts/nested-columns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Layer Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../concepts/row-selection/" class="md-nav__link">
         
   
@@ -1302,6 +1330,34 @@
     
   
     Row Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/timestamps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timestamp Semantics
   
 
     
@@ -1419,6 +1475,90 @@
     
   
     Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/accessors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Typed Accessors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/query-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Query Controls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3
   
 
     
@@ -1854,41 +1994,7 @@
 <a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="p">}</span>
 </code></pre></div>
-<table>
-<thead>
-<tr>
-<th>Category</th>
-<th>Supported</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Comparison operators</td>
-<td><code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code></td>
-</tr>
-<tr>
-<td>Set operators</td>
-<td><code>in</code> (int, long), <code>inStrings</code></td>
-</tr>
-<tr>
-<td>Null operators</td>
-<td><code>isNull</code>, <code>isNotNull</code> (any type)</td>
-</tr>
-<tr>
-<td>Physical types (comparison)</td>
-<td><code>int</code>, <code>long</code>, <code>float</code>, <code>double</code>, <code>boolean</code>, <code>String</code></td>
-</tr>
-<tr>
-<td>Logical types (comparison)</td>
-<td><code>LocalDate</code>, <code>Instant</code>, <code>LocalTime</code>, <code>BigDecimal</code>, <code>UUID</code></td>
-</tr>
-<tr>
-<td>Combinators</td>
-<td><code>and</code>, <code>or</code>, <code>not</code> (<code>and</code> / <code>or</code> accept varargs for three or more conditions)</td>
-</tr>
-</tbody>
-</table>
-<p>All predicates, including those wrapped in <code>not</code>, are pushed down to the statistics level for row-group and page skipping.</p>
+<p>For the full matrix of supported operators, comparable physical and logical types, and combinators, see <a href="../../reference/query-controls/#supported-filter-predicates">Query Controls</a>. All predicates, including those wrapped in <code>not</code>, are pushed down to the statistics level for row-group and page skipping.</p>
 <h3 id="null-handling">Null Handling<a class="headerlink" href="#null-handling" title="Permanent link">&para;</a></h3>
 <p>Comparison predicates (<code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code>, <code>in</code>, <code>inStrings</code>) follow SQL three-valued logic: any comparison against a null column value yields UNKNOWN, and rows whose predicate is UNKNOWN are not returned. Put differently, <strong>rows where the tested column is null are never returned by a comparison predicate</strong> — including <code>notEq</code>.</p>
 <p><code>not(p)</code> preserves this behavior: rows where <code>p</code> is UNKNOWN stay UNKNOWN under negation and are dropped. The SQL identity <code>not(gt(x, v)) ≡ ltEq(x, v)</code> holds on all rows, including null ones.</p>
@@ -1988,33 +2094,7 @@ encoding automatically:</p>
 <a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="p">}</span>
 </code></pre></div>
-<p><strong>Projection options:</strong></p>
-<table>
-<thead>
-<tr>
-<th>Form</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>ColumnProjection.all()</code></td>
-<td>Read all columns (default)</td>
-</tr>
-<tr>
-<td><code>ColumnProjection.columns("id", "name")</code></td>
-<td>Read specific columns by name</td>
-</tr>
-<tr>
-<td><code>ColumnProjection.columns("address")</code></td>
-<td>Select an entire struct and all its children</td>
-</tr>
-<tr>
-<td><code>ColumnProjection.columns("address.city")</code></td>
-<td>Select a specific nested field (dot notation)</td>
-</tr>
-</tbody>
-</table>
+<p><code>ColumnProjection.all()</code> reads every column (the default); <code>ColumnProjection.columns(...)</code> selects by name, including a whole struct and its children or a dot-notation nested field. See <a href="../../reference/query-controls/#column-projection-forms">Query Controls</a> for the full list of forms.</p>
 <h3 id="combining-projection-and-filters">Combining Projection and Filters<a class="headerlink" href="#combining-projection-and-filters" title="Permanent link">&para;</a></h3>
 <p>Column projection and predicate pushdown can be used together:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
@@ -2182,8 +2262,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c224eeb0119a35b52aa1ca6c5f6811f618c11a34" target="_blank" rel="noopener">
-      c224eeb0
+    <a href="https://github.com/hardwood-hq/hardwood/tree/adfac77ab8afbebcc3ba1e553ce4f10ae68c54c4" target="_blank" rel="noopener">
+      adfac77a
     </a>
   
 </div>
