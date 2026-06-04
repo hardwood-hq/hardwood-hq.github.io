@@ -141,7 +141,7 @@ creates the reader. The builder is not reusable after <code>build()</code>.</p>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#skip(long)" class="member-name-link">skip</a><wbr>(long&nbsp;skip)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Begin reading from the given absolute row index.</div>
+<div class="block">Skip leading rows before reading — SQL <code>OFFSET</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tail(long)" class="member-name-link">tail</a><wbr>(long&nbsp;tailRows)</code></div>
@@ -229,23 +229,23 @@ exclusive with <a href="#head(long)"><code>head(long)</code></a>, <code>filter</
 <h3>skip</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></span>&nbsp;<span class="element-name">skip</span><wbr><span class="parameters">(long&nbsp;skip)</span></div>
-<div class="block"><p>Begin reading from the given absolute row index. Earlier row groups
-are not opened — their pages are not fetched or decoded — so this
-is an O(1 RG) seek on remote backends, in contrast to walking
-<code>next()</code> from row 0.</p>
-<p><strong>Cost within the target row group.</strong> The reader still yields
-rows from the row group's first row, then walks <code>next()</code>
-<code>skip - rowGroupFirstRow</code> times to discard the leading
-residue. Those residue rows <em>are</em> decoded — <code>skip</code> near
-the end of a 1 M-row group walks ~1 M decoded <code>next()</code> calls.
-Page-level skip via OffsetIndex is tracked as #381.</p>
-<p><code>skip == 0</code> is the no-op default. <code>skip == totalRows</code>
-produces an empty reader. <code>skip &gt; totalRows</code> throws
-<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link"><code>IllegalArgumentException</code></a> at <code>build()</code> time. Indexes into the
-<em>first</em> file's rows for multi-file readers; cross-file
-<code>skip</code> is out of scope. Mutually exclusive with <a href="#tail(long)"><code>tail(long)</code></a> and with
-<a href="#filter(dev.hardwood.reader.FilterPredicate)"><code>filter(FilterPredicate)</code></a>; composes with <a href="#head(long)"><code>head(long)</code></a> for a bounded
-<code>[skip, skip + maxRows)</code> window, and with
+<div class="block"><p>Skip leading rows before reading — SQL <code>OFFSET</code>. Its meaning depends on
+whether a <a href="#filter(dev.hardwood.reader.FilterPredicate)"><code>filter(FilterPredicate)</code></a> is present:</p>
+<ul>
+<li><strong>Without a filter:</strong> a physical absolute row index. Earlier row groups
+are not opened — an O(1 row-group) seek on remote backends (the leading
+residue within the target row group is still decoded). <code>skip &gt;= totalRows</code>
+yields an empty reader. Indexes into the <em>first</em> file's rows for multi-file
+readers.</li>
+<li><strong>With a filter:</strong> a <em>logical</em> offset over the matched rows — discards the
+first <code>n</code> rows matching the predicate, symmetric with <a href="#head(long)"><code>head(long)</code></a> as <code>LIMIT</code>.
+The O(1) seek does not apply: the reader decodes earlier groups to count
+matches (groups proven non-matching by statistics are still pruned). A
+<code>skip</code> past the match count yields an empty reader, counting across <em>all</em>
+files in order.</li>
+</ul>
+<p><code>skip == 0</code> is the no-op default. Mutually exclusive with <a href="#tail(long)"><code>tail(long)</code></a>; composes
+with <a href="#head(long)"><code>head(long)</code></a> (<code>skip(n).head(k)</code> is <code>OFFSET n LIMIT k</code>) and with
 <a href="#filter(dev.hardwood.reader.RowGroupPredicate)"><code>filter(RowGroupPredicate)</code></a> over the kept row-group sequence.</p>
 </div>
 </div>
