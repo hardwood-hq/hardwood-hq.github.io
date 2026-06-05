@@ -1,0 +1,107 @@
+Hardwood API report
+  HEAD (5ecc69c) vs 1.0.0.CR1
+  generated 2026-06-05T09:23:36Z
+
+==================================================
+ hardwood-core
+==================================================
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-core/1.0.0-SNAPSHOT/hardwood-core-1.0.0-SNAPSHOT.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-core/1.0.0.CR1/hardwood-core-1.0.0.CR1.jar
+===* UNCHANGED CLASS: PUBLIC dev.hardwood.Hardwood  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	===* UNCHANGED METHOD: PUBLIC dev.hardwood.reader.ParquetFileReader openAll(java.util.List<? extends dev.hardwood.InputFile>(<- <dev.hardwood.InputFile>))
+		===  UNCHANGED EXCEPTION: java.io.IOException
+***! MODIFIED CLASS: PUBLIC FINAL dev.hardwood.metadata.ColumnIndex  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ColumnIndex(java.util.List<java.lang.Boolean>, java.util.List, java.util.List, dev.hardwood.metadata.ColumnIndex$BoundaryOrder, java.util.List<java.lang.Long>, java.util.List<dev.hardwood.metadata.GeospatialStatistics>)
+	+++  NEW CONSTRUCTOR: PUBLIC(+) ColumnIndex(java.util.List<java.lang.Boolean>, java.util.List, java.util.List, dev.hardwood.metadata.ColumnIndex$BoundaryOrder, java.util.List<java.lang.Long>)
+	---! REMOVED METHOD: PUBLIC(-) java.util.List<dev.hardwood.metadata.GeospatialStatistics> geospatialStatistics()
+***  MODIFIED CLASS: PUBLIC dev.hardwood.reader.ColumnReader  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	***  MODIFIED FIELD: PUBLIC (<- PACKAGE_PROTECTED) STATIC FINAL int DEFAULT_BATCH_SIZE
+***  MODIFIED CLASS: PUBLIC dev.hardwood.reader.ColumnReaders  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+**** MODIFIED CLASS: PUBLIC dev.hardwood.reader.ParquetFileReader  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	===* UNCHANGED METHOD: PUBLIC STATIC dev.hardwood.reader.ParquetFileReader openAll(java.util.List<? extends dev.hardwood.InputFile>(<- <dev.hardwood.InputFile>))
+		===  UNCHANGED EXCEPTION: java.io.IOException
+	===* UNCHANGED METHOD: PUBLIC STATIC dev.hardwood.reader.ParquetFileReader openAll(java.util.List<? extends dev.hardwood.InputFile>(<- <dev.hardwood.InputFile>), dev.hardwood.HardwoodContext)
+		===  UNCHANGED EXCEPTION: java.io.IOException
+***  MODIFIED CLASS: PUBLIC STATIC FINAL dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder batchSize(int)
+***  MODIFIED CLASS: PUBLIC STATIC FINAL dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder batchSize(int)
+***! MODIFIED CLASS: PUBLIC STATIC FINAL dev.hardwood.reader.ParquetFileReader$RowReaderBuilder  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.ParquetFileReader$RowReaderBuilder firstRow(long)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$RowReaderBuilder skip(long)
+***! MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.reader.RowReader  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	===* UNCHANGED INTERFACE: dev.hardwood.row.StructAccessor
+	===* UNCHANGED INTERFACE: dev.hardwood.row.FieldAccessor
+	---! REMOVED METHOD: PUBLIC(-) STATIC(-) dev.hardwood.reader.RowReader create(dev.hardwood.internal.reader.RowGroupIterator, dev.hardwood.schema.FileSchema, dev.hardwood.schema.ProjectedSchema, dev.hardwood.internal.reader.HardwoodContextImpl, dev.hardwood.internal.predicate.ResolvedPredicate, long)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.reader.RowReader create(dev.hardwood.internal.reader.RowGroupIterator, dev.hardwood.schema.FileSchema, dev.hardwood.internal.schema.ProjectedSchema, dev.hardwood.internal.reader.HardwoodContextImpl, dev.hardwood.internal.predicate.ResolvedPredicate, long)
+**** MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.row.FieldAccessor  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.LocalDateTime getLocalTimestamp(java.lang.String)
+**** MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.row.PqList  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.util.List<java.time.LocalDateTime> localTimestamps()
+**** MODIFIED INTERFACE: PUBLIC ABSTRACT STATIC dev.hardwood.row.PqMap$Entry  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.LocalDateTime getLocalTimestampValue()
+**** MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.row.PqVariant  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.LocalDateTime asLocalTimestamp()
+**** MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.row.StructAccessor  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	===* UNCHANGED INTERFACE: dev.hardwood.row.FieldAccessor
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.LocalDateTime getLocalTimestamp(int)
+***! MODIFIED CLASS: PUBLIC dev.hardwood.row.VariantTypeException  (default serialVersionUID changed)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	---! REMOVED METHOD: PUBLIC(-) STATIC(-) dev.hardwood.row.VariantTypeException expected(dev.hardwood.row.VariantType, dev.hardwood.row.VariantType)
+	---! REMOVED METHOD: PUBLIC(-) STATIC(-) dev.hardwood.row.VariantTypeException expectedOneOf(java.lang.String, dev.hardwood.row.VariantType)
+---! REMOVED CLASS: PUBLIC(-) FINAL(-) dev.hardwood.schema.ProjectedSchema  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 65.0
+	---! REMOVED SUPERCLASS: java.lang.Object
+	---! REMOVED METHOD: PUBLIC(-) STATIC(-) dev.hardwood.schema.ProjectedSchema create(dev.hardwood.schema.FileSchema, dev.hardwood.schema.ColumnProjection)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.schema.FileSchema getOriginalSchema()
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.schema.ColumnSchema getProjectedColumn(int)
+	---! REMOVED METHOD: PUBLIC(-) int getProjectedColumnCount()
+	---! REMOVED METHOD: PUBLIC(-) java.util.List<dev.hardwood.schema.ColumnSchema> getProjectedColumns()
+	---! REMOVED METHOD: PUBLIC(-) int[] getProjectedFieldIndices()
+	---! REMOVED METHOD: PUBLIC(-) boolean projectsAll()
+	---! REMOVED METHOD: PUBLIC(-) int toOriginalIndex(int)
+	---! REMOVED METHOD: PUBLIC(-) int[] toOriginalIndices()
+	---! REMOVED METHOD: PUBLIC(-) int toProjectedIndex(int)
+
+Semantic versioning suggestion: 1.0.0
+==================================================
+ hardwood-avro
+==================================================
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-avro/1.0.0-SNAPSHOT/hardwood-avro-1.0.0-SNAPSHOT.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-avro/1.0.0.CR1/hardwood-avro-1.0.0.CR1.jar
+No changes.
+Semantic versioning suggestion: 0.0.1
+==================================================
+ hardwood-s3
+==================================================
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0-SNAPSHOT/hardwood-s3-1.0.0-SNAPSHOT.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0.CR1/hardwood-s3-1.0.0.CR1.jar
+**** MODIFIED CLASS: PUBLIC dev.hardwood.s3.S3InputFile  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	**** MODIFIED METHOD: PUBLIC void close()
+		+++  NEW EXCEPTION: java.io.IOException
+***! MODIFIED CLASS: PUBLIC FINAL dev.hardwood.s3.S3Source  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	***! MODIFIED METHOD: PUBLIC dev.hardwood.s3.S3InputFile (<-dev.hardwood.InputFile) inputFile(java.lang.String, java.lang.String)
+	***! MODIFIED METHOD: PUBLIC dev.hardwood.s3.S3InputFile (<-dev.hardwood.InputFile) inputFile(java.lang.String)
+	===* UNCHANGED METHOD: PUBLIC java.util.List<dev.hardwood.s3.S3InputFile>(<- <dev.hardwood.InputFile>) inputFiles(java.lang.String[])
+	===* UNCHANGED METHOD: PUBLIC java.util.List<dev.hardwood.s3.S3InputFile>(<- <dev.hardwood.InputFile>) inputFilesInBucket(java.lang.String, java.lang.String[])
+
+Semantic versioning suggestion: 1.0.0
+==================================================
+ hardwood-aws-auth
+==================================================
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-aws-auth/1.0.0-SNAPSHOT/hardwood-aws-auth-1.0.0-SNAPSHOT.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-aws-auth/1.0.0.CR1/hardwood-aws-auth-1.0.0.CR1.jar
+No changes.
+Semantic versioning suggestion: 0.0.1
