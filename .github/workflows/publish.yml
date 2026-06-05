@@ -63,8 +63,19 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
-          cache: maven
-          cache-dependency-path: source/pom.xml
+
+      # setup-java's built-in maven cache keys on a single pom and never re-saves
+      # on a key hit, so the JavaDoc + API-report dependencies it lacked were
+      # re-downloaded every run. Use an explicit rolling cache with restore-keys,
+      # as the main hardwood build does, so the full ~/.m2 is captured and reused.
+      - name: Cache Maven dependencies
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7  # v5 — https://github.com/actions/cache/releases/tag/v5
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-publish-${{ hashFiles('source/**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}-publish-
+            maven-${{ runner.os }}-
 
       - name: Install Graphviz
         run: sudo apt-get install -y graphviz

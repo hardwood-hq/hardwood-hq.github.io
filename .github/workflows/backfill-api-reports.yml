@@ -42,8 +42,15 @@ jobs:
         with:
           distribution: temurin
           java-version: '25'
-          cache: maven
-          cache-dependency-path: source/pom.xml
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7  # v5 — https://github.com/actions/cache/releases/tag/v5
+        with:
+          path: ~/.m2/repository
+          key: maven-${{ runner.os }}-publish-${{ hashFiles('source/**/pom.xml') }}
+          restore-keys: |
+            maven-${{ runner.os }}-publish-
+            maven-${{ runner.os }}-
 
       - name: Configure git identity
         run: |
