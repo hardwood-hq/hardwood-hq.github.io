@@ -1,0 +1,82 @@
+name: Backfill API change reports
+
+# One-shot: generate API change reports for already-released versions and commit
+# them under api-changes/<version>/ on gh-pages. Each version is compared against
+# its immediate predecessor; both JARs are resolved from Maven Central, so no
+# per-version source checkout is needed. The highest version also seeds
+# api-changes/latest. The dev report is published by the regular docs flow.
+
+on:
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: 'Space-separated release versions, oldest first (no v prefix)'
+        required: true
+        default: '1.0.0.Beta1 1.0.0.Beta2 1.0.0.CR1'
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    env:
+      VERSIONS: ${{ inputs.versions }}
+
+    steps:
+      - name: Checkout site repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6
+        with:
+          fetch-depth: 0
+
+      - name: Checkout hardwood source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6
+        with:
+          repository: hardwood-hq/hardwood
+          ref: main
+          path: source
+          fetch-depth: 0        # publish-api-report.sh enumerates release tags
+
+      - name: Set up Java
+        uses: actions/setup-java@be666c2fcd27ec809703dec50e508c2fdc7f6654  # v5
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: maven
+          cache-dependency-path: source/pom.xml
+
+      - name: Configure git identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate reports
+        working-directory: source
+        run: |
+          for v in $VERSIONS; do
+            tools/publish-api-report.sh "$v" "$GITHUB_WORKSPACE/api-changes-staging/$v"
+          done
+
+      - name: Commit to gh-pages
+        run: |
+          git checkout gh-pages
+          LATEST=""
+          for v in $VERSIONS; do
+            staged="$GITHUB_WORKSPACE/api-changes-staging/$v"
+            [ -d "$staged" ] || continue
+            rm -rf "api-changes/$v"
+            mkdir -p "api-changes/$v"
+            cp -r "$staged/." "api-changes/$v/"
+            LATEST="$v"
+          done
+          if [ -n "$LATEST" ]; then
+            rm -rf api-changes/latest
+            cp -r "$GITHUB_WORKSPACE/api-changes-staging/$LATEST/." api-changes/latest/
+          fi
+          git add api-changes/
+          if git diff --cached --quiet; then
+            echo "No API change reports to commit."
+          else
+            git commit -m "Backfill API change reports for: $VERSIONS"
+            git push origin gh-pages
+          fi

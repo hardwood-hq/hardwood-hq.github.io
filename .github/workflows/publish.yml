@@ -48,6 +48,7 @@ jobs:
           repository: hardwood-hq/hardwood
           ref: ${{ env.SOURCE_REF }}
           path: source
+          fetch-depth: 0        # publish-api-report.sh enumerates release tags
 
       - name: Set up Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
@@ -77,6 +78,17 @@ jobs:
         working-directory: source
         run: ./mvnw javadoc:aggregate '-Dmaven.javadoc.skippedModules=hardwood-(?!core|s3|avro|aws-auth).*'
 
+      - name: Generate API change report
+        working-directory: source
+        run: |
+          # Absent on release tags predating the report tooling; those reports
+          # are produced by the backfill workflow instead.
+          if [ -x tools/publish-api-report.sh ]; then
+            tools/publish-api-report.sh "$VERSION" "$GITHUB_WORKSPACE/api-changes-staging"
+          else
+            echo "tools/publish-api-report.sh not present at $SOURCE_REF — skipping."
+          fi
+
       - name: Deploy docs
         run: |
           SHORT_SHA="${SOURCE_REF:0:8}"
@@ -84,6 +96,8 @@ jobs:
 
           sed -i "s|/api/latest/|/api/$VERSION/|" source/docs/mkdocs.yml
           find source/docs/content -name '*.md' -exec sed -i "s|/api/latest/|/api/$VERSION/|" {} +
+          sed -i "s|/api-changes/latest/|/api-changes/$VERSION/|" source/docs/mkdocs.yml
+          find source/docs/content -name '*.md' -exec sed -i "s|/api-changes/latest/|/api-changes/$VERSION/|" {} +
 
           if [ "$VERSION" = "dev" ]; then
             mike deploy \
@@ -120,9 +134,21 @@ jobs:
             cp -r source/target/reports/apidocs/. api/latest/
           fi
 
+          # The change report is absent for a release with no predecessor.
+          if [ -d "$GITHUB_WORKSPACE/api-changes-staging" ]; then
+            rm -rf api-changes/$VERSION
+            mkdir -p api-changes/$VERSION
+            cp -r "$GITHUB_WORKSPACE/api-changes-staging/." api-changes/$VERSION/
+            if [ "$UPDATE_LATEST" = "true" ] && [ "$VERSION" != "dev" ]; then
+              rm -rf api-changes/latest
+              cp -r "$GITHUB_WORKSPACE/api-changes-staging/." api-changes/latest/
+            fi
+          fi
+
           bash source/docs/patch-seo.sh "https://hardwood.dev"
 
           git add api/
+          git add api-changes/ 2>/dev/null || true
           git add -u
           git commit --amend --no-edit
           git push origin gh-pages
