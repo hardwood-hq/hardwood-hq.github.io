@@ -1,0 +1,23 @@
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-avro/1.0.0.Beta2/hardwood-avro-1.0.0.Beta2.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-avro/1.0.0.Beta1/hardwood-avro-1.0.0.Beta1.jar
+***! MODIFIED CLASS: PUBLIC FINAL dev.hardwood.avro.AvroReaders  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.avro.AvroReaders$RowReaderBuilder buildRowReader(dev.hardwood.reader.ParquetFileReader)
+	---! REMOVED METHOD: PUBLIC(-) STATIC(-) dev.hardwood.avro.AvroRowReader createRowReader(dev.hardwood.reader.ParquetFileReader)
+	---! REMOVED METHOD: PUBLIC(-) STATIC(-) dev.hardwood.avro.AvroRowReader createRowReader(dev.hardwood.reader.ParquetFileReader, dev.hardwood.reader.FilterPredicate)
+	---! REMOVED METHOD: PUBLIC(-) STATIC(-) dev.hardwood.avro.AvroRowReader createRowReader(dev.hardwood.reader.ParquetFileReader, dev.hardwood.schema.ColumnProjection)
+	---! REMOVED METHOD: PUBLIC(-) STATIC(-) dev.hardwood.avro.AvroRowReader createRowReader(dev.hardwood.reader.ParquetFileReader, dev.hardwood.schema.ColumnProjection, dev.hardwood.reader.FilterPredicate)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.avro.AvroRowReader rowReader(dev.hardwood.reader.ParquetFileReader)
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.avro.AvroReaders$RowReaderBuilder  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.avro.AvroRowReader build()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.avro.AvroReaders$RowReaderBuilder filter(dev.hardwood.reader.FilterPredicate)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.avro.AvroReaders$RowReaderBuilder head(long)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.avro.AvroReaders$RowReaderBuilder projection(dev.hardwood.schema.ColumnProjection)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.avro.AvroReaders$RowReaderBuilder tail(long)
+***  MODIFIED CLASS: PUBLIC dev.hardwood.avro.AvroRowReader  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+***  MODIFIED CLASS: PUBLIC FINAL dev.hardwood.avro.internal.AvroSchemaConverter  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+
+Semantic versioning suggestion: 1.0.0

@@ -1,0 +1,25 @@
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0.Beta2/hardwood-s3-1.0.0.Beta2.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0.Beta1/hardwood-s3-1.0.0.Beta1.jar
++++  NEW ENUM: PUBLIC(+) FINAL(+) dev.hardwood.s3.RangeBacking  (compatible)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.lang.constant.Constable
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: java.io.Serializable
+	+++  NEW SUPERCLASS: java.lang.Enum
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.s3.RangeBacking NONE
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.s3.RangeBacking SPARSE_TEMPFILE
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.s3.RangeBacking valueOf(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.s3.RangeBacking[] values()
+***  MODIFIED CLASS: PUBLIC dev.hardwood.s3.S3InputFile  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) long networkBytesFetched()
+	+++  NEW METHOD: PUBLIC(+) long networkRequestCount()
+***! MODIFIED CLASS: PUBLIC FINAL dev.hardwood.s3.S3Source  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	***! MODIFIED METHOD: PUBLIC dev.hardwood.InputFile (<-dev.hardwood.s3.S3InputFile) inputFile(java.lang.String, java.lang.String)
+	***! MODIFIED METHOD: PUBLIC dev.hardwood.InputFile (<-dev.hardwood.s3.S3InputFile) inputFile(java.lang.String)
+***  MODIFIED CLASS: PUBLIC STATIC FINAL dev.hardwood.s3.S3Source$Builder  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder rangeBacking(dev.hardwood.s3.RangeBacking)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder tempDir(java.nio.file.Path)
+
+Semantic versioning suggestion: 1.0.0

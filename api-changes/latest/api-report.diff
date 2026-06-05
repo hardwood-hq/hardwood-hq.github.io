@@ -1,0 +1,321 @@
+Hardwood API report
+  1.0.0.CR1 vs 1.0.0.Beta2
+  generated 2026-06-05T09:27:20Z
+
+==================================================
+ hardwood-core
+==================================================
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-core/1.0.0.CR1/hardwood-core-1.0.0.CR1.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-core/1.0.0.Beta2/hardwood-core-1.0.0.Beta2.jar
++++  NEW ANNOTATION: PUBLIC(+) ABSTRACT(+) dev.hardwood.Experimental  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.lang.annotation.Annotation
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW ANNOTATION: java.lang.annotation.Documented
+	+++  NEW ANNOTATION: java.lang.annotation.Target
+		+++  NEW ELEMENT: value=java.lang.annotation.ElementType.TYPE,java.lang.annotation.ElementType.METHOD,java.lang.annotation.ElementType.CONSTRUCTOR,java.lang.annotation.ElementType.FIELD (+)
+	+++  NEW ANNOTATION: java.lang.annotation.Retention
+		+++  NEW ELEMENT: value=java.lang.annotation.RetentionPolicy.CLASS (+)
++++  NEW CLASS: PUBLIC(+) FINAL(+) dev.hardwood.metadata.BoundingBox  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) BoundingBox(double, double, double, double, java.lang.Double, java.lang.Double, java.lang.Double, java.lang.Double)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) java.lang.Double mmax()
+	+++  NEW METHOD: PUBLIC(+) java.lang.Double mmin()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
+	+++  NEW METHOD: PUBLIC(+) double xmax()
+	+++  NEW METHOD: PUBLIC(+) double xmin()
+	+++  NEW METHOD: PUBLIC(+) double ymax()
+	+++  NEW METHOD: PUBLIC(+) double ymin()
+	+++  NEW METHOD: PUBLIC(+) java.lang.Double zmax()
+	+++  NEW METHOD: PUBLIC(+) java.lang.Double zmin()
+***! MODIFIED CLASS: PUBLIC FINAL dev.hardwood.metadata.ColumnIndex  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ColumnIndex(java.util.List<java.lang.Boolean>, java.util.List, java.util.List, dev.hardwood.metadata.ColumnIndex$BoundaryOrder, java.util.List<java.lang.Long>)
+	+++  NEW CONSTRUCTOR: PUBLIC(+) ColumnIndex(java.util.List<java.lang.Boolean>, java.util.List, java.util.List, dev.hardwood.metadata.ColumnIndex$BoundaryOrder, java.util.List<java.lang.Long>, java.util.List<dev.hardwood.metadata.GeospatialStatistics>)
+	+++  NEW METHOD: PUBLIC(+) java.util.List<dev.hardwood.metadata.GeospatialStatistics> geospatialStatistics()
+***! MODIFIED CLASS: PUBLIC FINAL dev.hardwood.metadata.ColumnMetaData  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) ColumnMetaData(dev.hardwood.metadata.PhysicalType, java.util.List<dev.hardwood.metadata.Encoding>, dev.hardwood.metadata.FieldPath, dev.hardwood.metadata.CompressionCodec, long, long, long, java.util.Map<java.lang.String,java.lang.String>, long, java.lang.Long, dev.hardwood.metadata.Statistics)
+	+++  NEW CONSTRUCTOR: PUBLIC(+) ColumnMetaData(dev.hardwood.metadata.PhysicalType, java.util.List<dev.hardwood.metadata.Encoding>, dev.hardwood.metadata.FieldPath, dev.hardwood.metadata.CompressionCodec, long, long, long, java.util.Map<java.lang.String,java.lang.String>, long, java.lang.Long, dev.hardwood.metadata.Statistics, dev.hardwood.metadata.GeospatialStatistics, java.lang.Long, java.lang.Integer)
+	+++  NEW METHOD: PUBLIC(+) java.lang.Integer bloomFilterLength()
+	+++  NEW METHOD: PUBLIC(+) java.lang.Long bloomFilterOffset()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.metadata.GeospatialStatistics geospatialStatistics()
++++  NEW CLASS: PUBLIC(+) FINAL(+) dev.hardwood.metadata.GeospatialStatistics  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) GeospatialStatistics(dev.hardwood.metadata.BoundingBox, java.util.List<java.lang.Integer>)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.metadata.BoundingBox bbox()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) java.util.List<java.lang.Integer> geospatialTypes()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
++++  NEW ENUM: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$EdgeInterpolationAlgorithm  (compatible)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.lang.constant.Constable
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: java.io.Serializable
+	+++  NEW SUPERCLASS: java.lang.Enum
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$EdgeInterpolationAlgorithm VINCENTY
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$EdgeInterpolationAlgorithm KARNEY
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$EdgeInterpolationAlgorithm THOMAS
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$EdgeInterpolationAlgorithm ANDOYER
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$EdgeInterpolationAlgorithm SPHERICAL
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.metadata.LogicalType$EdgeInterpolationAlgorithm valueOf(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.metadata.LogicalType$EdgeInterpolationAlgorithm[] values()
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$Float16Type  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.metadata.LogicalType
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) LogicalType$Float16Type()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$GeographyType  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.metadata.LogicalType
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) LogicalType$GeographyType(java.lang.String, dev.hardwood.metadata.LogicalType$EdgeInterpolationAlgorithm)
+	+++  NEW METHOD: PUBLIC(+) java.lang.String crs()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.metadata.LogicalType$EdgeInterpolationAlgorithm edgeInterpolation()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$GeometryType  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.metadata.LogicalType
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) LogicalType$GeometryType(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) java.lang.String crs()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$NullType  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.metadata.LogicalType
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) LogicalType$NullType()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
+***! MODIFIED CLASS: PUBLIC dev.hardwood.reader.ColumnReader  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) int[] getBinaryOffsets()
+	+++  NEW METHOD: PUBLIC(+) byte[] getBinaryValues()
+	+++  NEW METHOD: PUBLIC(+) int[] getDefinitionLevels()
+	---! REMOVED METHOD: PUBLIC(-) java.util.BitSet getElementNulls()
+	+++  NEW METHOD: PUBLIC(+) int getLayerCount()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.LayerKind getLayerKind(int)
+	+++  NEW METHOD: PUBLIC(+) int[] getLayerOffsets(int)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.Validity getLayerValidity(int)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.Validity getLeafValidity()
+	---! REMOVED METHOD: PUBLIC(-) java.util.BitSet getLevelNulls(int)
+	---! REMOVED METHOD: PUBLIC(-) int getNestingDepth()
+	---! REMOVED METHOD: PUBLIC(-) int[] getOffsets(int)
+	+++  NEW METHOD: PUBLIC(+) int[] getRepetitionLevels()
+***  MODIFIED CLASS: PUBLIC dev.hardwood.reader.ColumnReaders  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) int getRecordCount()
+	+++  NEW METHOD: PUBLIC(+) boolean nextBatch()
+***  MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.reader.FilterPredicate  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.reader.FilterPredicate intersects(java.lang.String, double, double, double, double)
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.reader.FilterPredicate$IntersectsPredicate  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.reader.FilterPredicate
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) FilterPredicate$IntersectsPredicate(java.lang.String, double, double, double, double)
+	+++  NEW METHOD: PUBLIC(+) java.lang.String column()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
+	+++  NEW METHOD: PUBLIC(+) double xmax()
+	+++  NEW METHOD: PUBLIC(+) double xmin()
+	+++  NEW METHOD: PUBLIC(+) double ymax()
+	+++  NEW METHOD: PUBLIC(+) double ymin()
++++  NEW ENUM: PUBLIC(+) FINAL(+) dev.hardwood.reader.LayerKind  (compatible)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.lang.constant.Constable
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: java.io.Serializable
+	+++  NEW SUPERCLASS: java.lang.Enum
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.reader.LayerKind REPEATED
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.reader.LayerKind STRUCT
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.reader.LayerKind valueOf(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.reader.LayerKind[] values()
+***  MODIFIED CLASS: PUBLIC dev.hardwood.reader.ParquetFileReader  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+***  MODIFIED CLASS: PUBLIC STATIC FINAL dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder filter(dev.hardwood.reader.RowGroupPredicate)
+***  MODIFIED CLASS: PUBLIC STATIC FINAL dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder filter(dev.hardwood.reader.RowGroupPredicate)
+***  MODIFIED CLASS: PUBLIC STATIC FINAL dev.hardwood.reader.ParquetFileReader$RowReaderBuilder  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$RowReaderBuilder filter(dev.hardwood.reader.RowGroupPredicate)
++++  NEW INTERFACE: PUBLIC(+) ABSTRACT(+) dev.hardwood.reader.RowGroupPredicate  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.reader.RowGroupPredicate and(dev.hardwood.reader.RowGroupPredicate[])
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.reader.RowGroupPredicate byteRange(long, long)
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.reader.RowGroupPredicate$And  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.reader.RowGroupPredicate
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) RowGroupPredicate$And(java.util.List<dev.hardwood.reader.RowGroupPredicate>)
+	+++  NEW METHOD: PUBLIC(+) java.util.List<dev.hardwood.reader.RowGroupPredicate> children()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.reader.RowGroupPredicate$ByteRange  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.reader.RowGroupPredicate
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) RowGroupPredicate$ByteRange(long, long)
+	+++  NEW METHOD: PUBLIC(+) long endExclusive()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) long startInclusive()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
+***! MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.reader.RowReader  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	===! UNCHANGED INTERFACE: dev.hardwood.row.StructAccessor
+	===* UNCHANGED INTERFACE: dev.hardwood.row.FieldAccessor
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) byte[] getBinary(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) boolean getBoolean(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.time.LocalDate getDate(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.math.BigDecimal getDecimal(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) double getDouble(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) float getFloat(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) int getInt(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) dev.hardwood.row.PqInterval getInterval(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) dev.hardwood.row.PqList getList(int)
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) dev.hardwood.row.PqDoubleList getListOfDoubles(int)
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) dev.hardwood.row.PqIntList getListOfInts(int)
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) dev.hardwood.row.PqLongList getListOfLongs(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) long getLong(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) dev.hardwood.row.PqMap getMap(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.lang.String getString(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) dev.hardwood.row.PqStruct getStruct(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.time.LocalTime getTime(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.time.Instant getTimestamp(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.UUID getUuid(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.lang.Object getValue(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) boolean isNull(int)
++++  NEW INTERFACE: PUBLIC(+) ABSTRACT(+) dev.hardwood.reader.Validity  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.reader.Validity NO_NULLS
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean hasNulls()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean isNotNull(int)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean isNull(int)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) int nextNotNull(int, int)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) int nextNull(int, int)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) int nullCount(int)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.reader.Validity of(long[])
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) long[] words()
+**** MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.row.FieldAccessor  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getRawValue(java.lang.String)
+***! MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.row.PqList  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List (<-java.lang.Iterable) binaries()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<java.lang.Boolean><java.lang.Boolean> (<-java.lang.Iterable<java.lang.Boolean><java.lang.Boolean>) booleans()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<java.time.LocalDate><java.time.LocalDate> (<-java.lang.Iterable<java.time.LocalDate><java.time.LocalDate>) dates()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<java.math.BigDecimal><java.math.BigDecimal> (<-java.lang.Iterable<java.math.BigDecimal><java.math.BigDecimal>) decimals()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.lang.Iterable<dev.hardwood.row.PqDoubleList> doubleLists()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT dev.hardwood.row.PqDoubleList(<- <java.lang.Double>) (<-java.lang.Iterable(<- <java.lang.Double>)) doubles()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<java.lang.Float><java.lang.Float> (<-java.lang.Iterable<java.lang.Float><java.lang.Float>) floats()
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getRaw(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.util.List<dev.hardwood.row.PqInterval> intervals()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.lang.Iterable<dev.hardwood.row.PqIntList> intLists()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT dev.hardwood.row.PqIntList(<- <java.lang.Integer>) (<-java.lang.Iterable(<- <java.lang.Integer>)) ints()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<dev.hardwood.row.PqList><dev.hardwood.row.PqList> (<-java.lang.Iterable<dev.hardwood.row.PqList><dev.hardwood.row.PqList>) lists()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.lang.Iterable<dev.hardwood.row.PqLongList> longLists()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT dev.hardwood.row.PqLongList(<- <java.lang.Long>) (<-java.lang.Iterable(<- <java.lang.Long>)) longs()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<dev.hardwood.row.PqMap><dev.hardwood.row.PqMap> (<-java.lang.Iterable<dev.hardwood.row.PqMap><dev.hardwood.row.PqMap>) maps()
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.util.List<java.lang.Object> rawValues()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<java.lang.String><java.lang.String> (<-java.lang.Iterable<java.lang.String><java.lang.String>) strings()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<dev.hardwood.row.PqStruct><dev.hardwood.row.PqStruct> (<-java.lang.Iterable<dev.hardwood.row.PqStruct><dev.hardwood.row.PqStruct>) structs()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<java.time.LocalTime><java.time.LocalTime> (<-java.lang.Iterable<java.time.LocalTime><java.time.LocalTime>) times()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<java.time.Instant><java.time.Instant> (<-java.lang.Iterable<java.time.Instant><java.time.Instant>) timestamps()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<java.util.UUID><java.util.UUID> (<-java.lang.Iterable<java.util.UUID><java.util.UUID>) uuids()
+	***! MODIFIED METHOD: PUBLIC ABSTRACT java.util.List<java.lang.Object><java.lang.Object> (<-java.lang.Iterable<java.lang.Object><java.lang.Object>) values()
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.util.List<dev.hardwood.row.PqVariant> variants()
+**** MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.row.PqMap  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean containsKey(java.lang.String)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean containsKey(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean containsKey(long)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean containsKey(byte[])
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getRawValue(java.lang.String)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getRawValue(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getRawValue(long)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getRawValue(byte[])
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getValue(java.lang.String)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getValue(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getValue(long)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getValue(byte[])
+***! MODIFIED INTERFACE: PUBLIC ABSTRACT STATIC dev.hardwood.row.PqMap$Entry  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.time.LocalDate getDateKey()
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqInterval getIntervalValue()
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getRawKey()
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getRawValue()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.time.Instant getTimestampKey()
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.UUID getUuidKey()
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariant getVariantValue()
+***! MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.row.StructAccessor  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	===* UNCHANGED INTERFACE: dev.hardwood.row.FieldAccessor
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) byte[] getBinary(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean getBoolean(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.LocalDate getDate(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.math.BigDecimal getDecimal(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) double getDouble(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) float getFloat(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) int getInt(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqInterval getInterval(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqList getList(int)
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) dev.hardwood.row.PqDoubleList getListOfDoubles(java.lang.String)
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) dev.hardwood.row.PqIntList getListOfInts(java.lang.String)
+	---! REMOVED METHOD: PUBLIC(-) ABSTRACT(-) dev.hardwood.row.PqLongList getListOfLongs(java.lang.String)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) long getLong(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqMap getMap(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getRawValue(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.String getString(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqStruct getStruct(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.LocalTime getTime(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.Instant getTimestamp(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.util.UUID getUuid(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getValue(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariant getVariant(int)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean isNull(int)
+***  MODIFIED CLASS: PUBLIC dev.hardwood.schema.FileSchema  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+***  MODIFIED CLASS: PUBLIC STATIC FINAL dev.hardwood.schema.SchemaNode$GroupNode  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.schema.SchemaNode getMapKey()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.schema.SchemaNode getMapValue()
+
+Semantic versioning suggestion: 1.0.0
+==================================================
+ hardwood-avro
+==================================================
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-avro/1.0.0.CR1/hardwood-avro-1.0.0.CR1.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-avro/1.0.0.Beta2/hardwood-avro-1.0.0.Beta2.jar
+No changes.
+Semantic versioning suggestion: 0.0.1
+==================================================
+ hardwood-s3
+==================================================
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0.CR1/hardwood-s3-1.0.0.CR1.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0.Beta2/hardwood-s3-1.0.0.Beta2.jar
+No changes.
+Semantic versioning suggestion: 0.0.1
+==================================================
+ hardwood-aws-auth
+==================================================
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-aws-auth/1.0.0.CR1/hardwood-aws-auth-1.0.0.CR1.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-aws-auth/1.0.0.Beta2/hardwood-aws-auth-1.0.0.Beta2.jar
+No changes.
+Semantic versioning suggestion: 0.0.1

@@ -1,0 +1,260 @@
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-core/1.0.0.Beta2/hardwood-core-1.0.0.Beta2.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-core/1.0.0.Beta1/hardwood-core-1.0.0.Beta1.jar
+***! MODIFIED CLASS: PUBLIC dev.hardwood.Hardwood  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	***! MODIFIED METHOD: PUBLIC dev.hardwood.reader.ParquetFileReader (<-dev.hardwood.reader.MultiFileParquetReader) openAll(java.util.List<dev.hardwood.InputFile><dev.hardwood.InputFile>)
+		===  UNCHANGED EXCEPTION: java.io.IOException
+***  MODIFIED CLASS: PUBLIC FINAL dev.hardwood.metadata.ColumnChunk  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) long chunkStartOffset()
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.metadata.LogicalType$VariantType  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.metadata.LogicalType
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) LogicalType$VariantType(int)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) int specVersion()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String toString()
+***  MODIFIED CLASS: PUBLIC dev.hardwood.reader.ColumnReader  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
++++  NEW CLASS: PUBLIC(+) dev.hardwood.reader.ColumnReaders  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.lang.AutoCloseable
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) void close()
+	+++  NEW METHOD: PUBLIC(+) int getColumnCount()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ColumnReader getColumnReader(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ColumnReader getColumnReader(int)
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.reader.FilterPredicate$UUIDColumnPredicate  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.reader.FilterPredicate
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) FilterPredicate$UUIDColumnPredicate(java.lang.String, dev.hardwood.reader.FilterPredicate$Operator, byte[])
+	+++  NEW METHOD: PUBLIC(+) java.lang.String column()
+	+++  NEW METHOD: PUBLIC(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.FilterPredicate$Operator op()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
+	+++  NEW METHOD: PUBLIC(+) byte[] value()
+---! REMOVED CLASS: PUBLIC(-) dev.hardwood.reader.MultiFileColumnReaders  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 65.0
+	---! REMOVED INTERFACE: java.lang.AutoCloseable
+	---! REMOVED SUPERCLASS: java.lang.Object
+	---! REMOVED METHOD: PUBLIC(-) void close()
+	---! REMOVED METHOD: PUBLIC(-) int getColumnCount()
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.ColumnReader getColumnReader(java.lang.String)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.ColumnReader getColumnReader(int)
+---! REMOVED CLASS: PUBLIC(-) dev.hardwood.reader.MultiFileParquetReader  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 65.0
+	---! REMOVED INTERFACE: java.lang.AutoCloseable
+	---! REMOVED SUPERCLASS: java.lang.Object
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) MultiFileParquetReader(java.util.List<dev.hardwood.InputFile>, dev.hardwood.internal.reader.HardwoodContextImpl)
+		---  REMOVED EXCEPTION: java.io.IOException
+	---! REMOVED METHOD: PUBLIC(-) void close()
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.MultiFileColumnReaders createColumnReaders(dev.hardwood.schema.ColumnProjection)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.MultiFileColumnReaders createColumnReaders(dev.hardwood.schema.ColumnProjection, dev.hardwood.reader.FilterPredicate)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.MultiFileRowReader createRowReader()
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.MultiFileRowReader createRowReader(dev.hardwood.reader.FilterPredicate)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.MultiFileRowReader createRowReader(dev.hardwood.schema.ColumnProjection)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.MultiFileRowReader createRowReader(dev.hardwood.schema.ColumnProjection, dev.hardwood.reader.FilterPredicate)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.schema.FileSchema getFileSchema()
+---! REMOVED CLASS: PUBLIC(-) dev.hardwood.reader.MultiFileRowReader  (not serializable)
+	---  CLASS FILE FORMAT VERSION: n.a. <- 65.0
+	---! REMOVED INTERFACE: dev.hardwood.row.StructAccessor
+	---! REMOVED INTERFACE: dev.hardwood.row.FieldAccessor
+	---! REMOVED INTERFACE: dev.hardwood.reader.RowReader
+	---! REMOVED INTERFACE: java.lang.AutoCloseable
+	---! REMOVED SUPERCLASS: dev.hardwood.reader.AbstractRowReader
+	---  REMOVED METHOD: PUBLIC(-) void close()
+	---! REMOVED METHOD: PROTECTED(-) void initialize()
+	---! REMOVED METHOD: PROTECTED(-) boolean loadNextBatch()
+***! MODIFIED CLASS: PUBLIC dev.hardwood.reader.ParquetFileReader  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder buildColumnReader(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder buildColumnReader(int)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder buildColumnReaders(dev.hardwood.schema.ColumnProjection)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$RowReaderBuilder buildRowReader()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ColumnReader columnReader(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ColumnReader columnReader(int)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ColumnReaders columnReaders(dev.hardwood.schema.ColumnProjection)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.ColumnReader createColumnReader(java.lang.String)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.ColumnReader createColumnReader(java.lang.String, dev.hardwood.reader.FilterPredicate)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.ColumnReader createColumnReader(int)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.ColumnReader createColumnReader(int, dev.hardwood.reader.FilterPredicate)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.RowReader createRowReader()
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.RowReader createRowReader(dev.hardwood.reader.FilterPredicate)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.RowReader createRowReader(dev.hardwood.schema.ColumnProjection)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.RowReader createRowReader(dev.hardwood.schema.ColumnProjection, dev.hardwood.reader.FilterPredicate)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.RowReader createRowReader(long)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.RowReader createRowReader(dev.hardwood.schema.ColumnProjection, long)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.RowReader createRowReader(dev.hardwood.reader.FilterPredicate, long)
+	---! REMOVED METHOD: PUBLIC(-) dev.hardwood.reader.RowReader createRowReader(dev.hardwood.schema.ColumnProjection, dev.hardwood.reader.FilterPredicate, long)
+	+++  NEW METHOD: PUBLIC(+) boolean isMultiFile()
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.reader.ParquetFileReader openAll(java.util.List<dev.hardwood.InputFile>)
+		+++  NEW EXCEPTION: java.io.IOException
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.reader.ParquetFileReader openAll(java.util.List<dev.hardwood.InputFile>, dev.hardwood.HardwoodContext)
+		+++  NEW EXCEPTION: java.io.IOException
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.RowReader rowReader()
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ColumnReader build()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder filter(dev.hardwood.reader.FilterPredicate)
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ColumnReaders build()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder filter(dev.hardwood.reader.FilterPredicate)
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.reader.ParquetFileReader$RowReaderBuilder  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.RowReader build()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$RowReaderBuilder filter(dev.hardwood.reader.FilterPredicate)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$RowReaderBuilder firstRow(long)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$RowReaderBuilder head(long)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$RowReaderBuilder projection(dev.hardwood.schema.ColumnProjection)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.reader.ParquetFileReader$RowReaderBuilder tail(long)
+**** MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.reader.RowReader  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.reader.RowReader create(dev.hardwood.internal.reader.RowGroupIterator, dev.hardwood.schema.FileSchema, dev.hardwood.schema.ProjectedSchema, dev.hardwood.internal.reader.HardwoodContextImpl, dev.hardwood.internal.predicate.ResolvedPredicate, long)
+	+++* NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqInterval getInterval(int)
++++  NEW CLASS: PUBLIC(+) dev.hardwood.reader.SchemaIncompatibleException  (compatible)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.io.Serializable
+	+++  NEW SUPERCLASS: java.lang.RuntimeException
+	+++  NEW CONSTRUCTOR: PUBLIC(+) SchemaIncompatibleException(java.lang.String)
++++  NEW INTERFACE: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.FieldAccessor  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) byte[] getBinary(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean getBoolean(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.LocalDate getDate(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.math.BigDecimal getDecimal(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) double getDouble(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) int getFieldCount()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.String getFieldName(int)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) float getFloat(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) int getInt(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqInterval getInterval(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) long getLong(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.String getString(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.LocalTime getTime(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.Instant getTimestamp(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.util.UUID getUuid(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.Object getValue(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariant getVariant(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean isNull(java.lang.String)
++++  NEW CLASS: PUBLIC(+) FINAL(+) dev.hardwood.row.PqInterval  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) PqInterval(long, long, long)
+	+++  NEW METHOD: PUBLIC(+) long days()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) long milliseconds()
+	+++  NEW METHOD: PUBLIC(+) long months()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
++++  NEW INTERFACE: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariant  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariantArray asArray()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) byte[] asBinary()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean asBoolean()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.LocalDate asDate()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.math.BigDecimal asDecimal()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) double asDouble()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) float asFloat()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) int asInt()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) long asLong()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariantObject asObject()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.lang.String asString()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.LocalTime asTime()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.time.Instant asTimestamp()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) java.util.UUID asUuid()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) boolean isNull()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) byte[] metadata()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.VariantType type()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) byte[] value()
++++  NEW INTERFACE: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariantArray  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.lang.Iterable
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariant get(int)
+	+++  NEW METHOD: PUBLIC(+) java.util.Iterator<dev.hardwood.row.PqVariant> iterator()
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) int size()
++++  NEW INTERFACE: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariantObject  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.row.FieldAccessor
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariantArray getArray(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.row.PqVariantObject getObject(java.lang.String)
+***  MODIFIED INTERFACE: PUBLIC ABSTRACT dev.hardwood.row.StructAccessor  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW INTERFACE: dev.hardwood.row.FieldAccessor
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) byte[] getBinary(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) boolean getBoolean(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.time.LocalDate getDate(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.math.BigDecimal getDecimal(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) double getDouble(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) int getFieldCount()
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.lang.String getFieldName(int)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) float getFloat(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) int getInt(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) long getLong(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.lang.String getString(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.time.LocalTime getTime(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.time.Instant getTimestamp(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.util.UUID getUuid(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) java.lang.Object getValue(java.lang.String)
+	---  REMOVED METHOD: PUBLIC(-) ABSTRACT(-) boolean isNull(java.lang.String)
++++  NEW ENUM: PUBLIC(+) FINAL(+) dev.hardwood.row.VariantType  (compatible)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.lang.constant.Constable
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: java.io.Serializable
+	+++  NEW SUPERCLASS: java.lang.Enum
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType FLOAT
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType NULL
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType ARRAY
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType INT64
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType TIME_NTZ
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType INT32
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType BINARY
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType INT8
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType TIMESTAMP_NANOS
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType OBJECT
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType DATE
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType TIMESTAMP
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType TIMESTAMP_NTZ
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType BOOLEAN_FALSE
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType DECIMAL4
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType TIMESTAMP_NTZ_NANOS
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType BOOLEAN_TRUE
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType STRING
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType DOUBLE
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType DECIMAL16
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType DECIMAL8
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType UUID
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.row.VariantType INT16
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.row.VariantType valueOf(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.row.VariantType[] values()
++++  NEW CLASS: PUBLIC(+) dev.hardwood.row.VariantTypeException  (compatible)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.io.Serializable
+	+++  NEW SUPERCLASS: java.lang.RuntimeException
+	+++  NEW CONSTRUCTOR: PUBLIC(+) VariantTypeException(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.row.VariantTypeException expected(dev.hardwood.row.VariantType, dev.hardwood.row.VariantType)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.row.VariantTypeException expectedOneOf(java.lang.String, dev.hardwood.row.VariantType)
+***  MODIFIED CLASS: PUBLIC dev.hardwood.schema.FileSchema  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+***  MODIFIED CLASS: PUBLIC FINAL dev.hardwood.schema.ProjectedSchema  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	+++  NEW METHOD: PUBLIC(+) int[] toOriginalIndices()
+***! MODIFIED CLASS: PUBLIC STATIC FINAL dev.hardwood.schema.SchemaNode$GroupNode  (not serializable)
+	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
+	---! REMOVED CONSTRUCTOR: PUBLIC(-) SchemaNode$GroupNode(java.lang.String, dev.hardwood.metadata.RepetitionType, dev.hardwood.metadata.ConvertedType, java.util.List<dev.hardwood.schema.SchemaNode>, int, int)
+	+++  NEW CONSTRUCTOR: PUBLIC(+) SchemaNode$GroupNode(java.lang.String, dev.hardwood.metadata.RepetitionType, dev.hardwood.metadata.ConvertedType, dev.hardwood.metadata.LogicalType, java.util.List<dev.hardwood.schema.SchemaNode>, int, int)
+	+++  NEW METHOD: PUBLIC(+) boolean isVariant()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.metadata.LogicalType logicalType()
+
+Semantic versioning suggestion: 1.0.0
