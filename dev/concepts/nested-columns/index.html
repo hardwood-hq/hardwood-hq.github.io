@@ -1780,6 +1780,13 @@ leaf values belong to which record, and where the nulls and empty containers sit
 model</strong> is how <code>ColumnReader</code> expresses that structure without boxing or per-row objects. This page
 explains the model; for worked code against it, see
 <a href="../../how-to/column-reader/">Column-Oriented Reading</a>.</p>
+<blockquote>
+<p><strong>A note on lineage.</strong> The layer model — flat value arrays, offset buffers, and set-bit-present
+validity bitmaps — takes inspiration from <a href="https://arrow.apache.org/">Apache Arrow</a>'s columnar
+representation, so the shapes feel familiar if you come from an Arrow-based engine. The
+resemblance is conceptual only: Hardwood implements no part of the Arrow specification, and the
+buffers are plain Java arrays rather than an Arrow-bit-compatible layout.</p>
+</blockquote>
 <h2 id="layers">Layers<a class="headerlink" href="#layers" title="Permanent link">&para;</a></h2>
 <p><code>ColumnReader</code> exposes a column's schema chain as a sequence of <strong>layers</strong>. Each non-leaf node
 along the chain contributes zero or one layer:</p>
@@ -1984,8 +1991,8 @@ descending.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/6d9e12e6b640aa79ae77e401ef9b664af753488c" target="_blank" rel="noopener">
-      6d9e12e6
+    <a href="https://github.com/hardwood-hq/hardwood/tree/3a3378ff0e3684878c7770848e6cfa2baf1b5696" target="_blank" rel="noopener">
+      3a3378ff
     </a>
   
 </div>

@@ -355,7 +355,9 @@ every reader and validates alignment in one call.</p>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getValueCount</span>()</div>
 <div class="block">Total number of leaf values in the current batch — sized to real items
 only (phantom slots from null/empty parents are excluded). For flat
-columns this equals <a href="#getRecordCount()"><code>getRecordCount()</code></a>.</div>
+columns this equals <a href="#getRecordCount()"><code>getRecordCount()</code></a>. For a repeated column it is not
+bounded by the configured batch size — the batch size caps records, not
+leaf values — so a batch may carry more leaf values than records.</div>
 </div>
 </section>
 </li>

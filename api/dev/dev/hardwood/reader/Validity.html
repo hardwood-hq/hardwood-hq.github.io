@@ -99,9 +99,8 @@ polarity: bit <code>i</code> is set iff item <code>i</code> is present (non-null
 <code>w</code> covers items <code>[w*64, w*64+64)</code>, low bit = lowest item.</li>
 </ul>
 <p>Consumer-side predicates (<code>isNull(i)</code> / <code>isNotNull(i)</code> / <code>hasNulls()</code>)
-describe nullability; the storage uses set-bit = present internally
-to match Arrow's layout. <a href="#hasNulls()"><code>hasNulls()</code></a> makes the no-nulls fast path
-explicit:</p>
+describe nullability; the storage uses set-bit = present internally.
+<a href="#hasNulls()"><code>hasNulls()</code></a> makes the no-nulls fast path explicit:</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">if (!validity.hasNulls()) {
     // tight loop, skip per-item check
 } else {
