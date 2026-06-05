@@ -1611,6 +1611,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#100cr2-unreleased" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0.CR2 (unreleased)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#100cr1-2026-05-31" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1687,6 +1698,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#100cr2-unreleased" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0.CR2 (unreleased)
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#100cr1-2026-05-31" class="md-nav__link">
@@ -1770,6 +1792,23 @@
 -->
 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
 <p>See <a href="https://github.com/hardwood-hq/hardwood/releases">GitHub Releases</a> for downloads and more information.</p>
+<h2 id="100cr2-unreleased">1.0.0.CR2 (unreleased)<a class="headerlink" href="#100cr2-unreleased" title="Permanent link">&para;</a></h2>
+<!-- TODO at release: add the announcement blog post link here, as a follow-up commit (see CR1).  · [API changes](/api-changes/1.0.0.CR2/) -->
+
+<p>Highlights of this release:</p>
+<ul>
+<li><strong>Breaking:</strong> <code>RowReaderBuilder.firstRow()</code> renamed to <code>skip()</code>, which now composes with a filter as a logical <code>OFFSET</code> — rows are skipped after the filter is applied</li>
+<li>Configurable read batch size for <code>ColumnReader</code> / <code>ColumnReaders</code>, with the default batch size now part of the public API</li>
+<li>TIMESTAMP accessors honor <code>isAdjustedToUTC</code>, with dedicated accessors for local (non-UTC) timestamps</li>
+<li>Graceful, explicit failure when opening encrypted Parquet files</li>
+<li>Stricter metadata validation: negative sizes, counts, and offsets are rejected, as are shredded Variant objects repeating a field across <code>typed_value</code> and <code>value</code></li>
+<li>NaN-safe row group and page pruning for <code>float</code> and <code>double</code> columns</li>
+<li>Duplicate map keys resolve to the last value per the Parquet spec; <code>head()</code> with a filter caps matched rows rather than scanned rows</li>
+<li><code>S3Source</code> factory methods return <code>S3InputFile</code>; the parquet-java compatibility layer tracks parquet-java 1.17.1</li>
+<li>API change reports are now published alongside the JavaDoc on the website</li>
+</ul>
+<p>See the <a href="https://github.com/hardwood-hq/hardwood/milestone/4?closed=1">1.0.0.CR2 milestone</a> on GitHub for the full list of resolved issues.</p>
+<p>Thank you to all contributors to this release: <a href="https://github.com/iifawzi">Fawzi Essam</a>, <a href="https://github.com/gunnarmorling">Gunnar Morling</a>, <a href="https://github.com/mohamedibrahim54">Mohamed Ibrahim Elsawy</a>.</p>
 <h2 id="100cr1-2026-05-31">1.0.0.CR1 (2026-05-31)<a class="headerlink" href="#100cr1-2026-05-31" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.morling.dev/blog/improved-column-reader-api-geospatial-support-hardwood-1-0-0-cr1-available/">Announcement blog post</a> · <a href="/api-changes/1.0.0.CR1/">API changes</a></p>
 <p>Highlights of this release:</p>
@@ -1879,8 +1918,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/069ca9a8a106e4aea14dd73132b9bfc935cfc384" target="_blank" rel="noopener">
-      069ca9a8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/75d98d7a54c380c5b8c6360711dc747719d5001b" target="_blank" rel="noopener">
+      75d98d7a
     </a>
   
 </div>
