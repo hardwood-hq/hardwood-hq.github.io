@@ -175,8 +175,12 @@ intersection: a row group is read if and only if it passes both.</div>
 <h3>batchSize</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></span>&nbsp;<span class="element-name">batchSize</span><wbr><span class="parameters">(int&nbsp;batchSize)</span></div>
-<div class="block">Set the maximum number of records to return in each batch.
-Default: <a href="ColumnReader.html#DEFAULT_BATCH_SIZE"><code>ColumnReader.DEFAULT_BATCH_SIZE</code></a>.</div>
+<div class="block"><p>Set the maximum number of records to return in each batch.</p>
+<p>When unset, the batch size is chosen adaptively from the column's
+physical width so the per-batch arrays stay within the CPU cache —
+the same byte-budgeted sizing the <a href="RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> path uses — rather
+than a fixed record count. Set this explicitly to override.</p>
+</div>
 </div>
 </section>
 </li>

@@ -2090,7 +2090,7 @@
 <a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="p">}</span>
 </code></pre></div>
-<p>To customize the batch size for all columns, use <code>.batchSize(int)</code> on the builder:</p>
+<p>By default the batch size is chosen adaptively from the projected columns' physical widths, so the per-batch arrays stay within the CPU cache regardless of how wide or how many columns you project — the same byte-budgeted sizing the <code>RowReader</code> path uses. To pin a specific record count instead, use <code>.batchSize(int)</code> on the builder:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ColumnReaders</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parquet</span><span class="p">.</span><span class="na">buildColumnReaders</span><span class="p">(</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">             </span><span class="n">ColumnProjection</span><span class="p">.</span><span class="na">columns</span><span class="p">(</span><span class="s">&quot;passenger_count&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;trip_distance&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;fare_amount&quot;</span><span class="p">))</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="p">.</span><span class="na">batchSize</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
@@ -2402,8 +2402,8 @@ the offset/validity encoding, and the per-layer count recursion — see
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/936077fa3529546d3cd400a318d5a97ac6637e1e" target="_blank" rel="noopener">
-      936077fa
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4611cf9a448a237d4b60d96bfad7246b5e874a46" target="_blank" rel="noopener">
+      4611cf9a
     </a>
   
 </div>

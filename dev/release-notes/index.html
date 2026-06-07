@@ -1798,7 +1798,7 @@
 <p>Highlights of this release:</p>
 <ul>
 <li><strong>Breaking:</strong> <code>RowReaderBuilder.firstRow()</code> renamed to <code>skip()</code>, which now composes with a filter as a logical <code>OFFSET</code> — rows are skipped after the filter is applied</li>
-<li>Configurable read batch size for <code>ColumnReader</code> / <code>ColumnReaders</code>, with the default batch size now part of the public API</li>
+<li>Configurable read batch size for <code>ColumnReader</code> / <code>ColumnReaders</code>, with the default now sized adaptively from the projected column widths (byte-budgeted to stay within CPU cache, matching the <code>RowReader</code> path) instead of a fixed record count</li>
 <li>TIMESTAMP accessors honor <code>isAdjustedToUTC</code>, with dedicated accessors for local (non-UTC) timestamps</li>
 <li>Graceful, explicit failure when opening encrypted Parquet files</li>
 <li>Stricter metadata validation: negative sizes, counts, and offsets are rejected, as are shredded Variant objects repeating a field across <code>typed_value</code> and <code>value</code></li>
@@ -1918,8 +1918,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/936077fa3529546d3cd400a318d5a97ac6637e1e" target="_blank" rel="noopener">
-      936077fa
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4611cf9a448a237d4b60d96bfad7246b5e874a46" target="_blank" rel="noopener">
+      4611cf9a
     </a>
   
 </div>

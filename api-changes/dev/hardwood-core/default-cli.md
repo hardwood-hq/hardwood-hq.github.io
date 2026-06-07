@@ -133,13 +133,6 @@ ___
 |----------|-----------|-------|----------------|------------|--------|---------------------|-----------------------|
 | Modified | `public`  | Class | `ColumnReader` | [`Object`] | JDK 21 | ![Not serializable] | ![No changes]         |
 
-
-#### Fields
-
-| Status   | Modifiers                     | Type  | Name                 | Annotations | Compatibility Changes |
-|----------|-------------------------------|-------|----------------------|-------------|-----------------------|
-| Modified | **`public`** `static` `final` | `int` | `DEFAULT_BATCH_SIZE` |             | ![No changes]         |
-
 ___
 
 <a id="user-content-dev.hardwood.reader.columnreaders"></a>
@@ -439,7 +432,7 @@ ___
 
 ___
 
-*Generated on: 2026-06-07 18:35:43.331+0000*.
+*Generated on: 2026-06-07 18:54:53.571+0000*.
 
 [Class removed]: https://img.shields.io/badge/Class_removed-red "Class removed"
 [Constructor removed]: https://img.shields.io/badge/Constructor_removed-red "Constructor removed"
