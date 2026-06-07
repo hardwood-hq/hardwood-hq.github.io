@@ -1,41 +1,699 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<japicmp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" accessModifier="PROTECTED" creationTimestamp="2026-06-07T18:54:53.929+0000" ignoreMissingClasses="false" ignoreMissingClassesByRegularExpressions="" newJar="/home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0-SNAPSHOT/hardwood-s3-1.0.0-SNAPSHOT.jar" newVersion="1.0.0-SNAPSHOT" oldJar="/home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0.CR1/hardwood-s3-1.0.0.CR1.jar" oldVersion="1.0.0.CR1" onlyBinaryIncompatibleModifications="false" onlyModifications="true" packagesExclude="dev.hardwood.internal;dev.hardwood.internal" packagesInclude="all" semanticVersioning="1.0.0" title="Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0-SNAPSHOT/hardwood-s3-1.0.0-SNAPSHOT.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0.CR1/hardwood-s3-1.0.0.CR1.jar" xsi:noNamespaceSchemaLocation="japicmp.xsd">
+<japicmp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" accessModifier="PROTECTED" creationTimestamp="2026-06-07T19:06:22.347+0000" ignoreMissingClasses="false" ignoreMissingClassesByRegularExpressions="" newJar="/home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0-SNAPSHOT/hardwood-s3-1.0.0-SNAPSHOT.jar" newVersion="1.0.0-SNAPSHOT" oldJar="n.a." oldVersion="n.a." onlyBinaryIncompatibleModifications="false" onlyModifications="true" packagesExclude="dev.hardwood.internal;dev.hardwood.internal" packagesInclude="all" semanticVersioning="0.1.0" title="Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0-SNAPSHOT/hardwood-s3-1.0.0-SNAPSHOT.jar against " xsi:noNamespaceSchemaLocation="japicmp.xsd">
     <classes>
-        <class binaryCompatible="true" changeStatus="MODIFIED" fullyQualifiedName="dev.hardwood.s3.S3InputFile" javaObjectSerializationCompatible="NOT_SERIALIZABLE" javaObjectSerializationCompatibleAsString="not serializable" sourceCompatible="false">
+        <class binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="dev.hardwood.s3.internal.Aws4Signer" javaObjectSerializationCompatible="NOT_SERIALIZABLE" javaObjectSerializationCompatibleAsString="not serializable" sourceCompatible="true">
             <annotations/>
             <attributes>
-                <attribute changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
             </attributes>
-            <classFileFormatVersion changeStatus="UNCHANGED" majorVersionNew="65" majorVersionOld="65" minorVersionNew="0" minorVersionOld="0"/>
-            <classType changeStatus="UNCHANGED" newType="CLASS" oldType="CLASS"/>
+            <classFileFormatVersion changeStatus="NEW" majorVersionNew="65" majorVersionOld="-1" minorVersionNew="0" minorVersionOld="-1"/>
+            <classType changeStatus="NEW" newType="CLASS" oldType="n.a."/>
             <compatibilityChanges/>
             <constructors/>
             <fields/>
             <genericTemplates/>
             <interfaces/>
             <methods>
-                <method binaryCompatible="true" changeStatus="MODIFIED" name="close" newLineNumber="172" oldLineNumber="140" sourceCompatible="false">
+                <method binaryCompatible="true" changeStatus="NEW" name="sign" newLineNumber="66" oldLineNumber="n.a." sourceCompatible="true">
                     <annotations/>
                     <attributes>
-                        <attribute changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
                     </attributes>
                     <compatibilityChanges>
-                        <compatibilityChange binaryCompatible="true" sourceCompatible="false" type="METHOD_NOW_THROWS_CHECKED_EXCEPTION"/>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.net.URI">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.util.Map">
+                            <compatibilityChanges/>
+                            <newGenericTypes>
+<newGenericType genericWildCard="NONE" type="java.lang.String">
+    <genericTypes/>
+</newGenericType>
+<newGenericType genericWildCard="NONE" type="java.lang.String">
+    <genericTypes/>
+</newGenericType>
+                            </newGenericTypes>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.time.ZonedDateTime">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.internal.Aws4Signer$SignResult" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="sign" newLineNumber="81" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.net.URI">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.util.Map">
+                            <compatibilityChanges/>
+                            <newGenericTypes>
+<newGenericType genericWildCard="NONE" type="java.lang.String">
+    <genericTypes/>
+</newGenericType>
+<newGenericType genericWildCard="NONE" type="java.lang.String">
+    <genericTypes/>
+</newGenericType>
+                            </newGenericTypes>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.time.ZonedDateTime">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="boolean">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.internal.Aws4Signer$SignResult" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+            </methods>
+            <modifiers>
+                <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </modifiers>
+            <serialVersionUid serialVersionUidDefaultNew="n.a." serialVersionUidDefaultOld="n.a." serialVersionUidInClassNew="n.a." serialVersionUidInClassOld="n.a." serializableNew="false" serializableOld="false"/>
+            <superclass binaryCompatible="true" changeStatus="NEW" sourceCompatible="true" superclassNew="java.lang.Object" superclassOld="n.a.">
+                <compatibilityChanges/>
+            </superclass>
+        </class>
+        <class binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="dev.hardwood.s3.internal.Aws4Signer$SignResult" javaObjectSerializationCompatible="NOT_SERIALIZABLE" javaObjectSerializationCompatibleAsString="not serializable" sourceCompatible="true">
+            <annotations/>
+            <attributes>
+                <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </attributes>
+            <classFileFormatVersion changeStatus="NEW" majorVersionNew="65" majorVersionOld="-1" minorVersionNew="0" minorVersionOld="-1"/>
+            <classType changeStatus="NEW" newType="CLASS" oldType="n.a."/>
+            <compatibilityChanges/>
+            <constructors>
+                <constructor binaryCompatible="true" changeStatus="NEW" name="Aws4Signer$SignResult" newLineNumber="43" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges/>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.util.Map">
+                            <compatibilityChanges/>
+                            <newGenericTypes>
+<newGenericType genericWildCard="NONE" type="java.lang.String">
+    <genericTypes/>
+</newGenericType>
+<newGenericType genericWildCard="NONE" type="java.lang.String">
+    <genericTypes/>
+</newGenericType>
+                            </newGenericTypes>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                </constructor>
+            </constructors>
+            <fields/>
+            <genericTemplates/>
+            <interfaces/>
+            <methods>
+                <method binaryCompatible="true" changeStatus="NEW" name="authorizationHeader" newLineNumber="43" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.lang.String" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="equals" newLineNumber="43" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.Object">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="boolean" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="hashCode" newLineNumber="43" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="int" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="headers" newLineNumber="43" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.util.Map" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes>
+                            <newGenericType genericWildCard="NONE" type="java.lang.String">
+<genericTypes/>
+                            </newGenericType>
+                            <newGenericType genericWildCard="NONE" type="java.lang.String">
+<genericTypes/>
+                            </newGenericType>
+                        </newGenericTypes>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="timestamp" newLineNumber="43" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.lang.String" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="toString" newLineNumber="43" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.lang.String" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+            </methods>
+            <modifiers>
+                <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="STATIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </modifiers>
+            <serialVersionUid serialVersionUidDefaultNew="n.a." serialVersionUidDefaultOld="n.a." serialVersionUidInClassNew="n.a." serialVersionUidInClassOld="n.a." serializableNew="false" serializableOld="false"/>
+            <superclass binaryCompatible="true" changeStatus="NEW" sourceCompatible="true" superclassNew="java.lang.Record" superclassOld="n.a.">
+                <compatibilityChanges/>
+            </superclass>
+        </class>
+        <class binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="dev.hardwood.s3.internal.S3Api" javaObjectSerializationCompatible="NOT_SERIALIZABLE" javaObjectSerializationCompatibleAsString="not serializable" sourceCompatible="true">
+            <annotations/>
+            <attributes>
+                <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </attributes>
+            <classFileFormatVersion changeStatus="NEW" majorVersionNew="65" majorVersionOld="-1" minorVersionNew="0" minorVersionOld="-1"/>
+            <classType changeStatus="NEW" newType="CLASS" oldType="n.a."/>
+            <compatibilityChanges/>
+            <constructors>
+                <constructor binaryCompatible="true" changeStatus="NEW" name="S3Api" newLineNumber="61" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges/>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.net.http.HttpClient">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="dev.hardwood.s3.S3CredentialsProvider">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.net.URI">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="boolean">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.time.Duration">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="int">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                </constructor>
+            </constructors>
+            <fields/>
+            <genericTemplates/>
+            <interfaces/>
+            <methods>
+                <method binaryCompatible="true" changeStatus="NEW" name="createBucket" newLineNumber="147" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
                     </compatibilityChanges>
                     <exceptions>
                         <exception changeStatus="NEW" name="java.io.IOException"/>
                     </exceptions>
                     <genericTemplates/>
                     <modifiers>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_FINAL" oldValue="NON_FINAL"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_STATIC" oldValue="NON_STATIC"/>
-                        <modifier changeStatus="UNCHANGED" newValue="PUBLIC" oldValue="PUBLIC"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_ABSTRACT" oldValue="NON_ABSTRACT"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_BRIDGE" oldValue="NON_BRIDGE"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
                     </modifiers>
-                    <parameters/>
-                    <returnType binaryCompatible="true" changeStatus="UNCHANGED" newValue="void" oldValue="void" sourceCompatible="true">
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="void" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="getBytes" newLineNumber="76" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions>
+                        <exception changeStatus="NEW" name="java.io.IOException"/>
+                    </exceptions>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.net.http.HttpResponse" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="getStream" newLineNumber="84" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions>
+                        <exception changeStatus="NEW" name="java.io.IOException"/>
+                    </exceptions>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.net.http.HttpResponse" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes>
+                            <newGenericType genericWildCard="NONE" type="java.io.InputStream">
+<genericTypes/>
+                            </newGenericType>
+                        </newGenericTypes>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="objectUri" newLineNumber="156" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.net.URI" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="putObject" newLineNumber="139" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions>
+                        <exception changeStatus="NEW" name="java.io.IOException"/>
+                    </exceptions>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="byte[]">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="void" oldValue="n.a." sourceCompatible="true">
                         <compatibilityChanges/>
                         <newGenericTypes/>
                         <oldGenericTypes/>
@@ -43,151 +701,1062 @@
                 </method>
             </methods>
             <modifiers>
-                <modifier changeStatus="UNCHANGED" newValue="NON_FINAL" oldValue="NON_FINAL"/>
-                <modifier changeStatus="UNCHANGED" newValue="NON_STATIC" oldValue="NON_STATIC"/>
-                <modifier changeStatus="UNCHANGED" newValue="PUBLIC" oldValue="PUBLIC"/>
-                <modifier changeStatus="UNCHANGED" newValue="NON_ABSTRACT" oldValue="NON_ABSTRACT"/>
-                <modifier changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
             </modifiers>
             <serialVersionUid serialVersionUidDefaultNew="n.a." serialVersionUidDefaultOld="n.a." serialVersionUidInClassNew="n.a." serialVersionUidInClassOld="n.a." serializableNew="false" serializableOld="false"/>
-            <superclass binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" superclassNew="java.lang.Object" superclassOld="java.lang.Object">
+            <superclass binaryCompatible="true" changeStatus="NEW" sourceCompatible="true" superclassNew="java.lang.Object" superclassOld="n.a.">
                 <compatibilityChanges/>
             </superclass>
         </class>
-        <class binaryCompatible="false" changeStatus="MODIFIED" fullyQualifiedName="dev.hardwood.s3.S3Source" javaObjectSerializationCompatible="NOT_SERIALIZABLE" javaObjectSerializationCompatibleAsString="not serializable" sourceCompatible="false">
+        <class binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="dev.hardwood.s3.RangeBacking" javaObjectSerializationCompatible="SERIALIZABLE_COMPATIBLE" javaObjectSerializationCompatibleAsString="compatible" sourceCompatible="true">
             <annotations/>
             <attributes>
-                <attribute changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
             </attributes>
-            <classFileFormatVersion changeStatus="UNCHANGED" majorVersionNew="65" majorVersionOld="65" minorVersionNew="0" minorVersionOld="0"/>
-            <classType changeStatus="UNCHANGED" newType="CLASS" oldType="CLASS"/>
+            <classFileFormatVersion changeStatus="NEW" majorVersionNew="65" majorVersionOld="-1" minorVersionNew="0" minorVersionOld="-1"/>
+            <classType changeStatus="NEW" newType="ENUM" oldType="n.a."/>
+            <compatibilityChanges>
+                <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="INTERFACE_ADDED"/>
+            </compatibilityChanges>
+            <constructors/>
+            <fields>
+                <field binaryCompatible="true" changeStatus="NEW" name="NONE" sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_TRANSIENT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_VOLATILE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <newGenericTypes/>
+                    <oldGenericTypes/>
+                    <type changeStatus="NEW" newValue="dev.hardwood.s3.RangeBacking" oldValue="n.a."/>
+                </field>
+                <field binaryCompatible="true" changeStatus="NEW" name="SPARSE_TEMPFILE" sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_TRANSIENT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_VOLATILE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <newGenericTypes/>
+                    <oldGenericTypes/>
+                    <type changeStatus="NEW" newValue="dev.hardwood.s3.RangeBacking" oldValue="n.a."/>
+                </field>
+            </fields>
+            <genericTemplates/>
+            <interfaces>
+                <interface binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="java.lang.constant.Constable" sourceCompatible="true">
+                    <compatibilityChanges/>
+                </interface>
+                <interface binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="java.lang.Comparable" sourceCompatible="true">
+                    <compatibilityChanges/>
+                </interface>
+                <interface binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="java.io.Serializable" sourceCompatible="true">
+                    <compatibilityChanges/>
+                </interface>
+            </interfaces>
+            <methods>
+                <method binaryCompatible="true" changeStatus="NEW" name="valueOf" newLineNumber="12" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.RangeBacking" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="values" newLineNumber="12" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.RangeBacking[]" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+            </methods>
+            <modifiers>
+                <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </modifiers>
+            <serialVersionUid serialVersionUidDefaultNew="-6539715384447065440" serialVersionUidDefaultOld="n.a." serialVersionUidInClassNew="n.a." serialVersionUidInClassOld="n.a." serializableNew="true" serializableOld="false"/>
+            <superclass binaryCompatible="true" changeStatus="NEW" sourceCompatible="true" superclassNew="java.lang.Enum" superclassOld="n.a.">
+                <compatibilityChanges/>
+            </superclass>
+        </class>
+        <class binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="dev.hardwood.s3.S3Credentials" javaObjectSerializationCompatible="NOT_SERIALIZABLE" javaObjectSerializationCompatibleAsString="not serializable" sourceCompatible="true">
+            <annotations/>
+            <attributes>
+                <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </attributes>
+            <classFileFormatVersion changeStatus="NEW" majorVersionNew="65" majorVersionOld="-1" minorVersionNew="0" minorVersionOld="-1"/>
+            <classType changeStatus="NEW" newType="CLASS" oldType="n.a."/>
+            <compatibilityChanges/>
+            <constructors>
+                <constructor binaryCompatible="true" changeStatus="NEW" name="S3Credentials" newLineNumber="20" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges/>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                </constructor>
+            </constructors>
+            <fields/>
+            <genericTemplates/>
+            <interfaces/>
+            <methods>
+                <method binaryCompatible="true" changeStatus="NEW" name="accessKeyId" newLineNumber="20" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.lang.String" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="equals" newLineNumber="20" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.Object">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="boolean" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="hashCode" newLineNumber="20" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="int" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="of" newLineNumber="28" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Credentials" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="secretAccessKey" newLineNumber="20" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.lang.String" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="sessionToken" newLineNumber="20" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.lang.String" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="toString" newLineNumber="20" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.lang.String" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+            </methods>
+            <modifiers>
+                <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </modifiers>
+            <serialVersionUid serialVersionUidDefaultNew="n.a." serialVersionUidDefaultOld="n.a." serialVersionUidInClassNew="n.a." serialVersionUidInClassOld="n.a." serializableNew="false" serializableOld="false"/>
+            <superclass binaryCompatible="true" changeStatus="NEW" sourceCompatible="true" superclassNew="java.lang.Record" superclassOld="n.a.">
+                <compatibilityChanges/>
+            </superclass>
+        </class>
+        <class binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="dev.hardwood.s3.S3CredentialsProvider" javaObjectSerializationCompatible="NOT_SERIALIZABLE" javaObjectSerializationCompatibleAsString="not serializable" sourceCompatible="true">
+            <annotations>
+                <annotation binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="java.lang.FunctionalInterface" sourceCompatible="true">
+                    <compatibilityChanges/>
+                    <elements/>
+                </annotation>
+            </annotations>
+            <attributes>
+                <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </attributes>
+            <classFileFormatVersion changeStatus="NEW" majorVersionNew="65" majorVersionOld="-1" minorVersionNew="0" minorVersionOld="-1"/>
+            <classType changeStatus="NEW" newType="INTERFACE" oldType="n.a."/>
+            <compatibilityChanges>
+                <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="ANNOTATION_ADDED"/>
+            </compatibilityChanges>
+            <constructors/>
+            <fields/>
+            <genericTemplates/>
+            <interfaces/>
+            <methods>
+                <method binaryCompatible="true" changeStatus="NEW" name="credentials" newLineNumber="n.a." oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges/>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Credentials" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+            </methods>
+            <modifiers>
+                <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="ABSTRACT" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </modifiers>
+            <serialVersionUid serialVersionUidDefaultNew="n.a." serialVersionUidDefaultOld="n.a." serialVersionUidInClassNew="n.a." serialVersionUidInClassOld="n.a." serializableNew="false" serializableOld="false"/>
+            <superclass binaryCompatible="true" changeStatus="NEW" sourceCompatible="true" superclassNew="java.lang.Object" superclassOld="n.a.">
+                <compatibilityChanges/>
+            </superclass>
+        </class>
+        <class binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="dev.hardwood.s3.S3InputFile" javaObjectSerializationCompatible="NOT_SERIALIZABLE" javaObjectSerializationCompatibleAsString="not serializable" sourceCompatible="true">
+            <annotations/>
+            <attributes>
+                <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </attributes>
+            <classFileFormatVersion changeStatus="NEW" majorVersionNew="65" majorVersionOld="-1" minorVersionNew="0" minorVersionOld="-1"/>
+            <classType changeStatus="NEW" newType="CLASS" oldType="n.a."/>
+            <compatibilityChanges>
+                <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="INTERFACE_ADDED"/>
+            </compatibilityChanges>
+            <constructors/>
+            <fields/>
+            <genericTemplates/>
+            <interfaces>
+                <interface binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="dev.hardwood.InputFile" sourceCompatible="true">
+                    <compatibilityChanges/>
+                </interface>
+                <interface binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="java.io.Closeable" sourceCompatible="true">
+                    <compatibilityChanges/>
+                </interface>
+                <interface binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="java.lang.AutoCloseable" sourceCompatible="true">
+                    <compatibilityChanges/>
+                </interface>
+            </interfaces>
+            <methods>
+                <method binaryCompatible="true" changeStatus="NEW" name="close" newLineNumber="172" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions>
+                        <exception changeStatus="NEW" name="java.io.IOException"/>
+                    </exceptions>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="void" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="length" newLineNumber="159" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="long" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="name" newLineNumber="167" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.lang.String" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="networkBytesFetched" newLineNumber="189" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="long" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="networkRequestCount" newLineNumber="181" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="long" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="open" newLineNumber="75" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions>
+                        <exception changeStatus="NEW" name="java.io.IOException"/>
+                    </exceptions>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="void" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="readRange" newLineNumber="84" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions>
+                        <exception changeStatus="NEW" name="java.io.IOException"/>
+                    </exceptions>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="long">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="int">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.nio.ByteBuffer" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+            </methods>
+            <modifiers>
+                <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </modifiers>
+            <serialVersionUid serialVersionUidDefaultNew="n.a." serialVersionUidDefaultOld="n.a." serialVersionUidInClassNew="n.a." serialVersionUidInClassOld="n.a." serializableNew="false" serializableOld="false"/>
+            <superclass binaryCompatible="true" changeStatus="NEW" sourceCompatible="true" superclassNew="java.lang.Object" superclassOld="n.a.">
+                <compatibilityChanges/>
+            </superclass>
+        </class>
+        <class binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="dev.hardwood.s3.S3Source" javaObjectSerializationCompatible="NOT_SERIALIZABLE" javaObjectSerializationCompatibleAsString="not serializable" sourceCompatible="true">
+            <annotations/>
+            <attributes>
+                <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </attributes>
+            <classFileFormatVersion changeStatus="NEW" majorVersionNew="65" majorVersionOld="-1" minorVersionNew="0" minorVersionOld="-1"/>
+            <classType changeStatus="NEW" newType="CLASS" oldType="n.a."/>
+            <compatibilityChanges>
+                <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="INTERFACE_ADDED"/>
+            </compatibilityChanges>
+            <constructors/>
+            <fields/>
+            <genericTemplates/>
+            <interfaces>
+                <interface binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="java.io.Closeable" sourceCompatible="true">
+                    <compatibilityChanges/>
+                </interface>
+                <interface binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="java.lang.AutoCloseable" sourceCompatible="true">
+                    <compatibilityChanges/>
+                </interface>
+            </interfaces>
+            <methods>
+                <method binaryCompatible="true" changeStatus="NEW" name="builder" newLineNumber="108" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="close" newLineNumber="101" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="void" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="inputFile" newLineNumber="53" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3InputFile" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="inputFile" newLineNumber="61" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3InputFile" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="inputFiles" newLineNumber="79" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String[]">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.util.List" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes>
+                            <newGenericType genericWildCard="NONE" type="dev.hardwood.s3.S3InputFile">
+<genericTypes/>
+                            </newGenericType>
+                        </newGenericTypes>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="inputFilesInBucket" newLineNumber="68" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String[]">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="java.util.List" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes>
+                            <newGenericType genericWildCard="NONE" type="dev.hardwood.s3.S3InputFile">
+<genericTypes/>
+                            </newGenericType>
+                        </newGenericTypes>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+            </methods>
+            <modifiers>
+                <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </modifiers>
+            <serialVersionUid serialVersionUidDefaultNew="n.a." serialVersionUidDefaultOld="n.a." serialVersionUidInClassNew="n.a." serialVersionUidInClassOld="n.a." serializableNew="false" serializableOld="false"/>
+            <superclass binaryCompatible="true" changeStatus="NEW" sourceCompatible="true" superclassNew="java.lang.Object" superclassOld="n.a.">
+                <compatibilityChanges/>
+            </superclass>
+        </class>
+        <class binaryCompatible="true" changeStatus="NEW" fullyQualifiedName="dev.hardwood.s3.S3Source$Builder" javaObjectSerializationCompatible="NOT_SERIALIZABLE" javaObjectSerializationCompatibleAsString="not serializable" sourceCompatible="true">
+            <annotations/>
+            <attributes>
+                <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+            </attributes>
+            <classFileFormatVersion changeStatus="NEW" majorVersionNew="65" majorVersionOld="-1" minorVersionNew="0" minorVersionOld="-1"/>
+            <classType changeStatus="NEW" newType="CLASS" oldType="n.a."/>
             <compatibilityChanges/>
             <constructors/>
             <fields/>
             <genericTemplates/>
             <interfaces/>
             <methods>
-                <method binaryCompatible="false" changeStatus="MODIFIED" name="inputFile" newLineNumber="53" oldLineNumber="55" sourceCompatible="false">
+                <method binaryCompatible="true" changeStatus="NEW" name="build" newLineNumber="235" oldLineNumber="n.a." sourceCompatible="true">
                     <annotations/>
                     <attributes>
-                        <attribute changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
                     </attributes>
                     <compatibilityChanges>
-                        <compatibilityChange binaryCompatible="false" sourceCompatible="false" type="METHOD_RETURN_TYPE_CHANGED"/>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
                     </compatibilityChanges>
                     <exceptions/>
                     <genericTemplates/>
                     <modifiers>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_FINAL" oldValue="NON_FINAL"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_STATIC" oldValue="NON_STATIC"/>
-                        <modifier changeStatus="UNCHANGED" newValue="PUBLIC" oldValue="PUBLIC"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_ABSTRACT" oldValue="NON_ABSTRACT"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_BRIDGE" oldValue="NON_BRIDGE"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
                     </modifiers>
-                    <parameters>
-                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
-                            <compatibilityChanges/>
-                            <newGenericTypes/>
-                            <oldGenericTypes/>
-                        </parameter>
-                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
-                            <compatibilityChanges/>
-                            <newGenericTypes/>
-                            <oldGenericTypes/>
-                        </parameter>
-                    </parameters>
-                    <returnType binaryCompatible="true" changeStatus="MODIFIED" newValue="dev.hardwood.s3.S3InputFile" oldValue="dev.hardwood.InputFile" sourceCompatible="true">
+                    <parameters/>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source" oldValue="n.a." sourceCompatible="true">
                         <compatibilityChanges/>
                         <newGenericTypes/>
                         <oldGenericTypes/>
                     </returnType>
                 </method>
-                <method binaryCompatible="false" changeStatus="MODIFIED" name="inputFile" newLineNumber="61" oldLineNumber="66" sourceCompatible="false">
+                <method binaryCompatible="true" changeStatus="NEW" name="connectTimeout" newLineNumber="181" oldLineNumber="n.a." sourceCompatible="true">
                     <annotations/>
                     <attributes>
-                        <attribute changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
                     </attributes>
                     <compatibilityChanges>
-                        <compatibilityChange binaryCompatible="false" sourceCompatible="false" type="METHOD_RETURN_TYPE_CHANGED"/>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
                     </compatibilityChanges>
                     <exceptions/>
                     <genericTemplates/>
                     <modifiers>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_FINAL" oldValue="NON_FINAL"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_STATIC" oldValue="NON_STATIC"/>
-                        <modifier changeStatus="UNCHANGED" newValue="PUBLIC" oldValue="PUBLIC"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_ABSTRACT" oldValue="NON_ABSTRACT"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_BRIDGE" oldValue="NON_BRIDGE"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
                     </modifiers>
                     <parameters>
-                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.time.Duration">
                             <compatibilityChanges/>
                             <newGenericTypes/>
                             <oldGenericTypes/>
                         </parameter>
                     </parameters>
-                    <returnType binaryCompatible="true" changeStatus="MODIFIED" newValue="dev.hardwood.s3.S3InputFile" oldValue="dev.hardwood.InputFile" sourceCompatible="true">
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
                         <compatibilityChanges/>
                         <newGenericTypes/>
                         <oldGenericTypes/>
                     </returnType>
                 </method>
-                <method binaryCompatible="true" changeStatus="UNCHANGED" name="inputFiles" newLineNumber="79" oldLineNumber="84" sourceCompatible="false">
+                <method binaryCompatible="true" changeStatus="NEW" name="credentials" newLineNumber="169" oldLineNumber="n.a." sourceCompatible="true">
                     <annotations/>
                     <attributes>
-                        <attribute changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
                     </attributes>
-                    <compatibilityChanges/>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
                     <exceptions/>
                     <genericTemplates/>
                     <modifiers>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_FINAL" oldValue="NON_FINAL"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_STATIC" oldValue="NON_STATIC"/>
-                        <modifier changeStatus="UNCHANGED" newValue="PUBLIC" oldValue="PUBLIC"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_ABSTRACT" oldValue="NON_ABSTRACT"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_BRIDGE" oldValue="NON_BRIDGE"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
                     </modifiers>
                     <parameters>
-                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String[]">
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="dev.hardwood.s3.S3CredentialsProvider">
                             <compatibilityChanges/>
                             <newGenericTypes/>
                             <oldGenericTypes/>
                         </parameter>
                     </parameters>
-                    <returnType binaryCompatible="true" changeStatus="UNCHANGED" newValue="java.util.List" oldValue="java.util.List" sourceCompatible="false">
-                        <compatibilityChanges>
-                            <compatibilityChange binaryCompatible="true" sourceCompatible="false" type="METHOD_RETURN_TYPE_GENERICS_CHANGED"/>
-                        </compatibilityChanges>
-                        <newGenericTypes>
-                            <newGenericType genericWildCard="NONE" type="dev.hardwood.s3.S3InputFile">
-<genericTypes/>
-                            </newGenericType>
-                        </newGenericTypes>
-                        <oldGenericTypes>
-                            <oldGenericType genericWildCard="NONE" type="dev.hardwood.InputFile">
-<genericTypes/>
-                            </oldGenericType>
-                        </oldGenericTypes>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
                     </returnType>
                 </method>
-                <method binaryCompatible="true" changeStatus="UNCHANGED" name="inputFilesInBucket" newLineNumber="68" oldLineNumber="73" sourceCompatible="false">
+                <method binaryCompatible="true" changeStatus="NEW" name="credentials" newLineNumber="175" oldLineNumber="n.a." sourceCompatible="true">
                     <annotations/>
                     <attributes>
-                        <attribute changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
                     </attributes>
-                    <compatibilityChanges/>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
                     <exceptions/>
                     <genericTemplates/>
                     <modifiers>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_FINAL" oldValue="NON_FINAL"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_STATIC" oldValue="NON_STATIC"/>
-                        <modifier changeStatus="UNCHANGED" newValue="PUBLIC" oldValue="PUBLIC"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_ABSTRACT" oldValue="NON_ABSTRACT"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_BRIDGE" oldValue="NON_BRIDGE"/>
-                        <modifier changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="dev.hardwood.s3.S3Credentials">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="endpoint" newLineNumber="156" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
                     </modifiers>
                     <parameters>
                         <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
@@ -195,38 +1764,240 @@
                             <newGenericTypes/>
                             <oldGenericTypes/>
                         </parameter>
-                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String[]">
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="httpClient" newLineNumber="206" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.net.http.HttpClient">
                             <compatibilityChanges/>
                             <newGenericTypes/>
                             <oldGenericTypes/>
                         </parameter>
                     </parameters>
-                    <returnType binaryCompatible="true" changeStatus="UNCHANGED" newValue="java.util.List" oldValue="java.util.List" sourceCompatible="false">
-                        <compatibilityChanges>
-                            <compatibilityChange binaryCompatible="true" sourceCompatible="false" type="METHOD_RETURN_TYPE_GENERICS_CHANGED"/>
-                        </compatibilityChanges>
-                        <newGenericTypes>
-                            <newGenericType genericWildCard="NONE" type="dev.hardwood.s3.S3InputFile">
-<genericTypes/>
-                            </newGenericType>
-                        </newGenericTypes>
-                        <oldGenericTypes>
-                            <oldGenericType genericWildCard="NONE" type="dev.hardwood.InputFile">
-<genericTypes/>
-                            </oldGenericType>
-                        </oldGenericTypes>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="maxRetries" newLineNumber="194" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="int">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="pathStyle" newLineNumber="163" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="boolean">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="rangeBacking" newLineNumber="216" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="dev.hardwood.s3.RangeBacking">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="region" newLineNumber="150" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.lang.String">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="requestTimeout" newLineNumber="187" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.time.Duration">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
+                    </returnType>
+                </method>
+                <method binaryCompatible="true" changeStatus="NEW" name="tempDir" newLineNumber="225" oldLineNumber="n.a." sourceCompatible="true">
+                    <annotations/>
+                    <attributes>
+                        <attribute changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </attributes>
+                    <compatibilityChanges>
+                        <compatibilityChange binaryCompatible="true" sourceCompatible="true" type="METHOD_ADDED_TO_PUBLIC_CLASS"/>
+                    </compatibilityChanges>
+                    <exceptions/>
+                    <genericTemplates/>
+                    <modifiers>
+                        <modifier changeStatus="NEW" newValue="NON_FINAL" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_STATIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_BRIDGE" oldValue="n.a."/>
+                        <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
+                    </modifiers>
+                    <parameters>
+                        <parameter binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" templateName="N/A" type="java.nio.file.Path">
+                            <compatibilityChanges/>
+                            <newGenericTypes/>
+                            <oldGenericTypes/>
+                        </parameter>
+                    </parameters>
+                    <returnType binaryCompatible="true" changeStatus="NEW" newValue="dev.hardwood.s3.S3Source$Builder" oldValue="n.a." sourceCompatible="true">
+                        <compatibilityChanges/>
+                        <newGenericTypes/>
+                        <oldGenericTypes/>
                     </returnType>
                 </method>
             </methods>
             <modifiers>
-                <modifier changeStatus="UNCHANGED" newValue="FINAL" oldValue="FINAL"/>
-                <modifier changeStatus="UNCHANGED" newValue="NON_STATIC" oldValue="NON_STATIC"/>
-                <modifier changeStatus="UNCHANGED" newValue="PUBLIC" oldValue="PUBLIC"/>
-                <modifier changeStatus="UNCHANGED" newValue="NON_ABSTRACT" oldValue="NON_ABSTRACT"/>
-                <modifier changeStatus="UNCHANGED" newValue="NON_SYNTHETIC" oldValue="NON_SYNTHETIC"/>
+                <modifier changeStatus="NEW" newValue="FINAL" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="STATIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="PUBLIC" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_ABSTRACT" oldValue="n.a."/>
+                <modifier changeStatus="NEW" newValue="NON_SYNTHETIC" oldValue="n.a."/>
             </modifiers>
             <serialVersionUid serialVersionUidDefaultNew="n.a." serialVersionUidDefaultOld="n.a." serialVersionUidInClassNew="n.a." serialVersionUidInClassOld="n.a." serializableNew="false" serializableOld="false"/>
-            <superclass binaryCompatible="true" changeStatus="UNCHANGED" sourceCompatible="true" superclassNew="java.lang.Object" superclassOld="java.lang.Object">
+            <superclass binaryCompatible="true" changeStatus="NEW" sourceCompatible="true" superclassNew="java.lang.Object" superclassOld="n.a.">
                 <compatibilityChanges/>
             </superclass>
         </class>

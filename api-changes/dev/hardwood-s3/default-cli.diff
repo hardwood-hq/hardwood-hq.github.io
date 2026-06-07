@@ -1,13 +1,99 @@
-Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0-SNAPSHOT/hardwood-s3-1.0.0-SNAPSHOT.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0.CR1/hardwood-s3-1.0.0.CR1.jar
-**** MODIFIED CLASS: PUBLIC dev.hardwood.s3.S3InputFile  (not serializable)
-	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
-	**** MODIFIED METHOD: PUBLIC void close()
+Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-s3/1.0.0-SNAPSHOT/hardwood-s3-1.0.0-SNAPSHOT.jar against 
++++  NEW CLASS: PUBLIC(+) FINAL(+) dev.hardwood.s3.internal.Aws4Signer  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.s3.internal.Aws4Signer$SignResult sign(java.lang.String, java.net.URI, java.util.Map<java.lang.String,java.lang.String>, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.time.ZonedDateTime)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.s3.internal.Aws4Signer$SignResult sign(java.lang.String, java.net.URI, java.util.Map<java.lang.String,java.lang.String>, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.time.ZonedDateTime, boolean)
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.s3.internal.Aws4Signer$SignResult  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) Aws4Signer$SignResult(java.lang.String, java.lang.String, java.util.Map<java.lang.String,java.lang.String>)
+	+++  NEW METHOD: PUBLIC(+) java.lang.String authorizationHeader()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) java.util.Map<java.lang.String,java.lang.String> headers()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String timestamp()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
++++  NEW CLASS: PUBLIC(+) FINAL(+) dev.hardwood.s3.internal.S3Api  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW CONSTRUCTOR: PUBLIC(+) S3Api(java.net.http.HttpClient, dev.hardwood.s3.S3CredentialsProvider, java.lang.String, java.net.URI, boolean, java.time.Duration, int)
+	+++  NEW METHOD: PUBLIC(+) void createBucket(java.lang.String)
 		+++  NEW EXCEPTION: java.io.IOException
-***! MODIFIED CLASS: PUBLIC FINAL dev.hardwood.s3.S3Source  (not serializable)
-	===  CLASS FILE FORMAT VERSION: 65.0 <- 65.0
-	***! MODIFIED METHOD: PUBLIC dev.hardwood.s3.S3InputFile (<-dev.hardwood.InputFile) inputFile(java.lang.String, java.lang.String)
-	***! MODIFIED METHOD: PUBLIC dev.hardwood.s3.S3InputFile (<-dev.hardwood.InputFile) inputFile(java.lang.String)
-	===* UNCHANGED METHOD: PUBLIC java.util.List<dev.hardwood.s3.S3InputFile>(<- <dev.hardwood.InputFile>) inputFiles(java.lang.String[])
-	===* UNCHANGED METHOD: PUBLIC java.util.List<dev.hardwood.s3.S3InputFile>(<- <dev.hardwood.InputFile>) inputFilesInBucket(java.lang.String, java.lang.String[])
+	+++  NEW METHOD: PUBLIC(+) java.net.http.HttpResponse getBytes(java.lang.String, java.lang.String, java.lang.String)
+		+++  NEW EXCEPTION: java.io.IOException
+	+++  NEW METHOD: PUBLIC(+) java.net.http.HttpResponse<java.io.InputStream> getStream(java.lang.String, java.lang.String, java.lang.String)
+		+++  NEW EXCEPTION: java.io.IOException
+	+++  NEW METHOD: PUBLIC(+) java.net.URI objectUri(java.lang.String, java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) void putObject(java.lang.String, java.lang.String, byte[])
+		+++  NEW EXCEPTION: java.io.IOException
++++  NEW ENUM: PUBLIC(+) FINAL(+) dev.hardwood.s3.RangeBacking  (compatible)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.lang.constant.Constable
+	+++  NEW INTERFACE: java.lang.Comparable
+	+++  NEW INTERFACE: java.io.Serializable
+	+++  NEW SUPERCLASS: java.lang.Enum
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.s3.RangeBacking NONE
+	+++  NEW FIELD: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.s3.RangeBacking SPARSE_TEMPFILE
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.s3.RangeBacking valueOf(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.s3.RangeBacking[] values()
++++  NEW CLASS: PUBLIC(+) FINAL(+) dev.hardwood.s3.S3Credentials  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Record
+	+++  NEW CONSTRUCTOR: PUBLIC(+) S3Credentials(java.lang.String, java.lang.String, java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) java.lang.String accessKeyId()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) boolean equals(java.lang.Object)
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) int hashCode()
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.s3.S3Credentials of(java.lang.String, java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) java.lang.String secretAccessKey()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String sessionToken()
+	+++  NEW METHOD: PUBLIC(+) FINAL(+) java.lang.String toString()
++++  NEW INTERFACE: PUBLIC(+) ABSTRACT(+) dev.hardwood.s3.S3CredentialsProvider  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) ABSTRACT(+) dev.hardwood.s3.S3Credentials credentials()
+	+++  NEW ANNOTATION: java.lang.FunctionalInterface
++++  NEW CLASS: PUBLIC(+) dev.hardwood.s3.S3InputFile  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: dev.hardwood.InputFile
+	+++  NEW INTERFACE: java.io.Closeable
+	+++  NEW INTERFACE: java.lang.AutoCloseable
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) void close()
+		+++  NEW EXCEPTION: java.io.IOException
+	+++  NEW METHOD: PUBLIC(+) long length()
+	+++  NEW METHOD: PUBLIC(+) java.lang.String name()
+	+++  NEW METHOD: PUBLIC(+) long networkBytesFetched()
+	+++  NEW METHOD: PUBLIC(+) long networkRequestCount()
+	+++  NEW METHOD: PUBLIC(+) void open()
+		+++  NEW EXCEPTION: java.io.IOException
+	+++  NEW METHOD: PUBLIC(+) java.nio.ByteBuffer readRange(long, int)
+		+++  NEW EXCEPTION: java.io.IOException
++++  NEW CLASS: PUBLIC(+) FINAL(+) dev.hardwood.s3.S3Source  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW INTERFACE: java.io.Closeable
+	+++  NEW INTERFACE: java.lang.AutoCloseable
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) STATIC(+) dev.hardwood.s3.S3Source$Builder builder()
+	+++  NEW METHOD: PUBLIC(+) void close()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3InputFile inputFile(java.lang.String, java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3InputFile inputFile(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) java.util.List<dev.hardwood.s3.S3InputFile> inputFiles(java.lang.String[])
+	+++  NEW METHOD: PUBLIC(+) java.util.List<dev.hardwood.s3.S3InputFile> inputFilesInBucket(java.lang.String, java.lang.String[])
++++  NEW CLASS: PUBLIC(+) STATIC(+) FINAL(+) dev.hardwood.s3.S3Source$Builder  (not serializable)
+	+++  CLASS FILE FORMAT VERSION: 65.0 <- n.a.
+	+++  NEW SUPERCLASS: java.lang.Object
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source build()
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder connectTimeout(java.time.Duration)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder credentials(dev.hardwood.s3.S3CredentialsProvider)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder credentials(dev.hardwood.s3.S3Credentials)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder endpoint(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder httpClient(java.net.http.HttpClient)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder maxRetries(int)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder pathStyle(boolean)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder rangeBacking(dev.hardwood.s3.RangeBacking)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder region(java.lang.String)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder requestTimeout(java.time.Duration)
+	+++  NEW METHOD: PUBLIC(+) dev.hardwood.s3.S3Source$Builder tempDir(java.nio.file.Path)
 
-Semantic versioning suggestion: 1.0.0
+Semantic versioning suggestion: 0.1.0
