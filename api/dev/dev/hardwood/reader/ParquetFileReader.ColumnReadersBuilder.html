@@ -124,8 +124,7 @@ handles cross-file prefetch transparently.</p>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter</a><wbr>(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Apply a column-statistics filter — row groups whose statistics prove no row
-matches are skipped.</div>
+<div class="block">Apply a filter predicate.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#filter(dev.hardwood.reader.RowGroupPredicate)" class="member-name-link">filter</a><wbr>(<a href="RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a>&nbsp;rowGroupFilter)</code></div>
@@ -154,8 +153,12 @@ matches are skipped.</div>
 <h3>filter</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></span>&nbsp;<span class="element-name">filter</span><wbr><span class="parameters">(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;filter)</span></div>
-<div class="block">Apply a column-statistics filter — row groups whose statistics prove no row
-matches are skipped. Default: no filter.</div>
+<div class="block">Apply a filter predicate. Every column in the projection returns
+<strong>only</strong> the rows matching <code>filter</code> — exact, row-aligned across
+columns, with no client-side residual. Row groups and pages proven
+non-matching by statistics are skipped; the surviving rows are then
+filtered exactly. The predicate may reference a projected column or a
+column that is not part of the projection. Default: no filter.</div>
 </div>
 </section>
 </li>
