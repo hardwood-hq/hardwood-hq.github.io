@@ -89,6 +89,19 @@ jobs:
         working-directory: source
         run: ./mvnw javadoc:aggregate '-Dmaven.javadoc.skippedModules=hardwood-(?!core|s3|avro|aws-auth).*'
 
+      - name: Strip non-deterministic metadata from JavaDoc SVGs
+        working-directory: source
+        run: |
+          # UMLDoclet embeds a timestamped copy of each diagram's source into the
+          # SVG, so every class diagram churns on the published site on each build
+          # even when the rendered graphic is identical. Drop it. Absent on refs
+          # predating the tool, in which case the SVGs publish unstripped as before.
+          if [ -x tools/strip-svg-metadata.sh ]; then
+            tools/strip-svg-metadata.sh target/reports/apidocs
+          else
+            echo "tools/strip-svg-metadata.sh not present at $SOURCE_REF — skipping."
+          fi
+
       - name: Generate API change report
         working-directory: source
         run: |
