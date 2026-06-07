@@ -2205,28 +2205,28 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
 <p>To make it permanent, add the line above to your <code>~/.bashrc</code> or <code>~/.bash_profile</code>.</p>
 <h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
 <p>A minimal Fedora-based Docker image is published to the GitHub Container Registry for Linux amd64 and arm64:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:v1.0.0.CR2
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0.0.CR2
 </code></pre></div>
 <p>Run any command by passing it after the image name:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:v1.0.0.CR2<span class="w"> </span>--help
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:v1.0.0.CR2<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0.0.CR2<span class="w"> </span>--help
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0.0.CR2<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
 </code></pre></div>
 <p>Mount a local directory to access files on the host:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>:/data<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:v1.0.0.CR2<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0.0.CR2<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span>schema<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
 </code></pre></div>
 <p>The <code>dive</code> TUI needs an interactive terminal, so pass <code>-it</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>:/data<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:v1.0.0.CR2<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0.0.CR2<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span>dive<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
 </code></pre></div>
 <p>Start an interactive shell with tab completion pre-loaded:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>:/data<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:v1.0.0.CR2
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0.0.CR2
 </code></pre></div>
 
 
@@ -2277,8 +2277,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/dbeabdc8fccf279ec1724367e07fb50ae4a047c9" target="_blank" rel="noopener">
-      dbeabdc8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/875db6300ed0156e157d82830e09c5b6efe60e0c" target="_blank" rel="noopener">
+      875db630
     </a>
   
 </div>
