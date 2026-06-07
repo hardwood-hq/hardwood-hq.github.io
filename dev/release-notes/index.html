@@ -1611,10 +1611,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#100cr2-unreleased" class="md-nav__link">
+  <a href="#100cr2-2026-06-7" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1.0.0.CR2 (unreleased)
+        1.0.0.CR2 (2026-06-7)
       
     </span>
   </a>
@@ -1700,10 +1700,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#100cr2-unreleased" class="md-nav__link">
+  <a href="#100cr2-2026-06-7" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1.0.0.CR2 (unreleased)
+        1.0.0.CR2 (2026-06-7)
       
     </span>
   </a>
@@ -1792,23 +1792,25 @@
 -->
 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
 <p>See <a href="https://github.com/hardwood-hq/hardwood/releases">GitHub Releases</a> for downloads and more information.</p>
-<h2 id="100cr2-unreleased">1.0.0.CR2 (unreleased)<a class="headerlink" href="#100cr2-unreleased" title="Permanent link">&para;</a></h2>
+<h2 id="100cr2-2026-06-7">1.0.0.CR2 (2026-06-7)<a class="headerlink" href="#100cr2-2026-06-7" title="Permanent link">&para;</a></h2>
+<p><a href="/api-changes/1.0.0.CR2/">API changes</a></p>
 <!-- TODO at release: add the announcement blog post link here, as a follow-up commit (see CR1).  · [API changes](/api-changes/1.0.0.CR2/) -->
 
 <p>Highlights of this release:</p>
 <ul>
 <li><strong>Breaking:</strong> <code>RowReaderBuilder.firstRow()</code> renamed to <code>skip()</code>, which now composes with a filter as a logical <code>OFFSET</code> — rows are skipped after the filter is applied</li>
-<li>Configurable read batch size for <code>ColumnReader</code> / <code>ColumnReaders</code>, with the default now sized adaptively from the projected column widths (byte-budgeted to stay within CPU cache, matching the <code>RowReader</code> path) instead of a fixed record count</li>
+<li>Docker distribution of the <code>hardwood</code> CLI, published as a multi-arch image to GHCR</li>
+<li>Configurable read batch size for <code>ColumnReader</code> / <code>ColumnReaders</code>, with the default now sized adaptively from the projected column widths instead of a fixed record count</li>
 <li>TIMESTAMP accessors honor <code>isAdjustedToUTC</code>, with dedicated accessors for local (non-UTC) timestamps</li>
-<li>Graceful, explicit failure when opening encrypted Parquet files</li>
 <li>Stricter metadata validation: negative sizes, counts, and offsets are rejected, as are shredded Variant objects repeating a field across <code>typed_value</code> and <code>value</code></li>
 <li>NaN-safe row group and page pruning for <code>float</code> and <code>double</code> columns</li>
-<li>Duplicate map keys resolve to the last value per the Parquet spec; <code>head()</code> with a filter caps matched rows rather than scanned rows</li>
-<li><code>S3Source</code> factory methods return <code>S3InputFile</code>; the parquet-java compatibility layer tracks parquet-java 1.17.1</li>
+<li>Duplicate map keys resolve to the last value per the Parquet spec</li>
+<li><code>head()</code> with a filter caps matched rows rather than scanned rows</li>
+<li>Legacy MAP columns from older parquet-mr / Hive / Impala writers (which annotate only the inner <code>key_value</code> group) are now recognized as maps</li>
 <li>API change reports are now published alongside the JavaDoc on the website</li>
 </ul>
 <p>See the <a href="https://github.com/hardwood-hq/hardwood/milestone/4?closed=1">1.0.0.CR2 milestone</a> on GitHub for the full list of resolved issues.</p>
-<p>Thank you to all contributors to this release: <a href="https://github.com/iifawzi">Fawzi Essam</a>, <a href="https://github.com/gunnarmorling">Gunnar Morling</a>, <a href="https://github.com/mohamedibrahim54">Mohamed Ibrahim Elsawy</a>.</p>
+<p>Thank you to all contributors to this release: <a href="https://github.com/AlexeiZenin">Alexei Zenin</a>, <a href="https://github.com/iifawzi">Fawzi Essam</a>, <a href="https://github.com/gunnarmorling">Gunnar Morling</a>, <a href="https://github.com/mohamedibrahim54">Mohamed Ibrahim Elsawy</a>.</p>
 <h2 id="100cr1-2026-05-31">1.0.0.CR1 (2026-05-31)<a class="headerlink" href="#100cr1-2026-05-31" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.morling.dev/blog/improved-column-reader-api-geospatial-support-hardwood-1-0-0-cr1-available/">Announcement blog post</a> · <a href="/api-changes/1.0.0.CR1/">API changes</a></p>
 <p>Highlights of this release:</p>
@@ -1918,8 +1920,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/651a1a9de58d4f27ee6a413497756eb64b0bd394" target="_blank" rel="noopener">
-      651a1a9d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4a4adbbfa85819b83b9c8a4f6fb374247f85b6b4" target="_blank" rel="noopener">
+      4a4adbbf
     </a>
   
 </div>
