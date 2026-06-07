@@ -66,6 +66,7 @@
 | Modified            | [dev.hardwood.row.PqVariant]                                 | ![Not serializable]                 | ![Method added to interface] |
 | Modified            | [dev.hardwood.row.StructAccessor]                            | ![Not serializable]                 | ![Method added to interface] |
 | Modified            | [dev.hardwood.row.VariantTypeException]                      | ![Default serialversionuid changed] | ![Method removed]     |
+| Modified            | [dev.hardwood.schema.FileSchema]                             | ![Not serializable]                 | ![No changes]         |
 | Removed             | [dev.hardwood.schema.ProjectedSchema]                        | ![Not serializable]                 | ![Class removed] ![Superclass removed] ![Method removed] |
 
 <details markdown="1">
@@ -393,6 +394,19 @@ ___
 
 ___
 
+<a id="user-content-dev.hardwood.schema.fileschema"></a>
+### `dev.hardwood.schema.FileSchema`
+
+- [X] Binary-compatible
+- [X] Source-compatible
+- [X] Serialization-compatible
+
+| Status   | Modifiers | Type  | Name         | Extends    | JDK    | Serialization       | Compatibility Changes |
+|----------|-----------|-------|--------------|------------|--------|---------------------|-----------------------|
+| Modified | `public`  | Class | `FileSchema` | [`Object`] | JDK 21 | ![Not serializable] | ![No changes]         |
+
+___
+
 <a id="user-content-dev.hardwood.schema.projectedschema"></a>
 ### `dev.hardwood.schema.ProjectedSchema`
 
@@ -426,7 +440,7 @@ ___
 
 ___
 
-*Generated on: 2026-06-07 09:34:55.012+0000*.
+*Generated on: 2026-06-07 09:57:21.687+0000*.
 
 [1]: # "dev.hardwood.internal.schema.ProjectedSchema"
 [Class removed]: https://img.shields.io/badge/Class_removed-red "Class removed"
@@ -487,4 +501,5 @@ ___
 [dev.hardwood.row.PqVariant]: #user-content-dev.hardwood.row.pqvariant
 [dev.hardwood.row.StructAccessor]: #user-content-dev.hardwood.row.structaccessor
 [dev.hardwood.row.VariantTypeException]: #user-content-dev.hardwood.row.varianttypeexception
+[dev.hardwood.schema.FileSchema]: #user-content-dev.hardwood.schema.fileschema
 [dev.hardwood.schema.ProjectedSchema]: #user-content-dev.hardwood.schema.projectedschema

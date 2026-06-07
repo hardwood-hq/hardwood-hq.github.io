@@ -2059,6 +2059,11 @@ UTC-normalized <code>Instant</code>, matching the parquet-format backward-compat
 annotations. Unsigned columns preserve the stored bit pattern — reinterpret with
 <code>Integer.toUnsignedLong</code> / <code>Long.toUnsignedString</code> for the unsigned magnitude. When a file carries
 both a <code>converted_type</code> and a modern <code>logicalType</code>, the <code>logicalType</code> takes precedence.</p>
+<p>The MAP group annotation has a legacy form too: some older parquet-mr / Hive / Impala files annotate
+only the inner repeated <code>key_value</code> group with <code>MAP_KEY_VALUE</code> and leave the outer group unannotated.
+Hardwood recognizes this form as a map, so <code>getMap</code> returns a <code>PqMap</code> and the group's
+<code>SchemaNode.GroupNode.isMap()</code> reports <code>true</code> (with <code>logicalType()</code> returning a <code>MapType</code>), exactly as
+for the modern <code>MAP</code> annotation.</p>
 
 
 
@@ -2108,8 +2113,8 @@ both a <code>converted_type</code> and a modern <code>logicalType</code>, the <c
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/758cada66236e193d4fd78cbeac796f3742e66e1" target="_blank" rel="noopener">
-      758cada6
+    <a href="https://github.com/hardwood-hq/hardwood/tree/3b23c5fa267e84e90e25a082de7e732822b9a80b" target="_blank" rel="noopener">
+      3b23c5fa
     </a>
   
 </div>
