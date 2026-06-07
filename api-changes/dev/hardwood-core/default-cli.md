@@ -59,7 +59,7 @@
 | Modified            | [dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder]  | ![Not serializable]                 | ![Method added to public class] |
 | Modified            | [dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder] | ![Not serializable]                 | ![Method added to public class] |
 | Modified            | [dev.hardwood.reader.ParquetFileReader$RowReaderBuilder]     | ![Not serializable]                 | ![Method removed] ![Method added to public class] |
-| Modified            | [dev.hardwood.reader.RowReader]                              | ![Not serializable]                 | ![Method removed] ![Method new static added to interface] |
+| Modified            | [dev.hardwood.reader.RowReader]                              | ![Not serializable]                 | ![Method removed]     |
 | Modified            | [dev.hardwood.row.FieldAccessor]                             | ![Not serializable]                 | ![Method added to interface] |
 | Modified            | [dev.hardwood.row.PqList]                                    | ![Not serializable]                 | ![Method added to interface] |
 | Modified            | [dev.hardwood.row.PqMap$Entry]                               | ![Not serializable]                 | ![Method added to interface] |
@@ -262,7 +262,6 @@ ___
 | Status  | Modifiers                 | Generics | Type              | Method | Annotations | Throws | Compatibility Changes |
 |---------|---------------------------|----------|-------------------|--------|-------------|--------|-----------------------|
 | Removed | ~~`static`~~ ~~`public`~~ |          | ~~[`RowReader`]~~ | ~~`create`~~([`RowGroupIterator`], [`FileSchema`], [`ProjectedSchema`], [`HardwoodContextImpl`], [`ResolvedPredicate`], `long`) |  |  | ![Method removed] |
-| Added   | **`static`** **`public`** |          | **[`RowReader`]** | **`create`**([`RowGroupIterator`], [`FileSchema`], [`ProjectedSchema`][1], [`HardwoodContextImpl`], [`ResolvedPredicate`], `long`) |  |  | ![Method new static added to interface] |
 
 ___
 
@@ -440,15 +439,13 @@ ___
 
 ___
 
-*Generated on: 2026-06-07 16:41:26.576+0000*.
+*Generated on: 2026-06-07 18:35:43.331+0000*.
 
-[1]: # "dev.hardwood.internal.schema.ProjectedSchema"
 [Class removed]: https://img.shields.io/badge/Class_removed-red "Class removed"
 [Constructor removed]: https://img.shields.io/badge/Constructor_removed-red "Constructor removed"
 [Default serialversionuid changed]: https://img.shields.io/badge/Incompatible-red "Default serialversionuid changed"
 [Method added to interface]: https://img.shields.io/badge/Method_added_to_interface-orange "Method added to interface"
 [Method added to public class]: https://img.shields.io/badge/Method_added_to_public_class-yellow "Method added to public class"
-[Method new static added to interface]: https://img.shields.io/badge/Method_new_static_added_to_interface-orange "Method new static added to interface"
 [Method parameter generics changed]: https://img.shields.io/badge/Method_parameter_generics_changed-orange "Method parameter generics changed"
 [Method removed]: https://img.shields.io/badge/Method_removed-red "Method removed"
 [No changes]: https://img.shields.io/badge/No_changes-green "No changes"
