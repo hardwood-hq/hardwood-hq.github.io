@@ -352,10 +352,13 @@ implements <a href="SchemaNode.html" title="interface in dev.hardwood.schema">Sc
 if not a list or improperly structured.</p>
 <p>Applies the Parquet backward-compatibility rules for legacy 2-level
 encodings as defined in the format spec; see
-<a href="https://github.com/apache/parquet-format/blob/master/LogicalTypes.md#backward-compatibility-rules">Backward-compatibility rules</a>:</p>
+<a href="https://parquet.apache.org/docs/file-format/types/logicaltypes/#backward-compatibility-rules">Backward-compatibility rules</a>:</p>
 <ol>
 <li>If the repeated field is not a group, the repeated field's type is the element type.</li>
 <li>If the repeated field is a group with multiple fields, the repeated group is the element.</li>
+<li>If the repeated field is a group with one field and that field is itself <code>repeated</code>, the
+repeated group is the element — it is a genuine element struct, not a synthetic
+single-field wrapper (legacy 2-level encoding of a list whose element is itself a list).</li>
 <li>If the repeated field is a group with one field and is named either <code>array</code> or uses
 the LIST-annotated group's name with <code>_tuple</code> appended, the repeated group is the element.</li>
 <li>Otherwise, the repeated field's single child is the element (standard 3-level encoding).</li>

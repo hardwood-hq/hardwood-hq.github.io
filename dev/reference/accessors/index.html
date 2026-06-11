@@ -1423,6 +1423,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#legacy-list-encodings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy list encodings
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1781,6 +1792,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#legacy-list-encodings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Legacy list encodings
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2064,6 +2086,21 @@ only the inner repeated <code>key_value</code> group with <code>MAP_KEY_VALUE</c
 Hardwood recognizes this form as a map, so <code>getMap</code> returns a <code>PqMap</code> and the group's
 <code>SchemaNode.GroupNode.isMap()</code> reports <code>true</code> (with <code>logicalType()</code> returning a <code>MapType</code>), exactly as
 for the modern <code>MAP</code> annotation.</p>
+<h2 id="legacy-list-encodings">Legacy list encodings<a class="headerlink" href="#legacy-list-encodings" title="Permanent link">&para;</a></h2>
+<p>Lists predate the modern <code>LIST</code>-annotated three-level group and appear in older files in two legacy
+forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqList</code> with no caller-side opt-in:</p>
+<ul>
+<li><strong>Unannotated repeated field.</strong> A <code>REPEATED</code> field carrying no <code>LIST</code>/<code>MAP</code> annotation is a required
+  list of required elements whose element type is the field itself. A repeated primitive reads as a
+  list of scalars (<code>getList("foo").ints()</code>); a repeated group reads as a list of structs
+  (<code>getList("foo").structs()</code>).</li>
+<li><strong>Two-level <code>LIST</code> group.</strong> A <code>LIST</code>-annotated group whose repeated child is the element directly,
+  with no intermediate <code>list</code> wrapper. Hardwood applies the parquet-format
+  <a href="https://parquet.apache.org/docs/file-format/types/logicaltypes/#backward-compatibility-rules">backward-compatibility rules</a>
+  to resolve the element: a repeated group with multiple fields, a repeated group named <code>array</code> or
+  <code>&lt;list&gt;_tuple</code>, or a repeated group whose single field is itself repeated is the element struct;
+  otherwise the repeated group's single child is the element.</li>
+</ul>
 
 
 
@@ -2113,8 +2150,8 @@ for the modern <code>MAP</code> annotation.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5dd9e1c277497ee49243773f8ba94c3927b36871" target="_blank" rel="noopener">
-      5dd9e1c2
+    <a href="https://github.com/hardwood-hq/hardwood/tree/11061d4bdc62ea9562f9a75f0182c0e65a764863" target="_blank" rel="noopener">
+      11061d4b
     </a>
   
 </div>
