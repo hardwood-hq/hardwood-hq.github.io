@@ -73,8 +73,12 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public sealed interface </span><span class="element-name type-name-label">LogicalType</span>
 <span class="permits">permits <a href="LogicalType.StringType.html" title="class in dev.hardwood.metadata">LogicalType.StringType</a>, <a href="LogicalType.EnumType.html" title="class in dev.hardwood.metadata">LogicalType.EnumType</a>, <a href="LogicalType.UuidType.html" title="class in dev.hardwood.metadata">LogicalType.UuidType</a>, <a href="LogicalType.IntType.html" title="class in dev.hardwood.metadata">LogicalType.IntType</a>, <a href="LogicalType.DecimalType.html" title="class in dev.hardwood.metadata">LogicalType.DecimalType</a>, <a href="LogicalType.DateType.html" title="class in dev.hardwood.metadata">LogicalType.DateType</a>, <a href="LogicalType.TimeType.html" title="class in dev.hardwood.metadata">LogicalType.TimeType</a>, <a href="LogicalType.TimestampType.html" title="class in dev.hardwood.metadata">LogicalType.TimestampType</a>, <a href="LogicalType.IntervalType.html" title="class in dev.hardwood.metadata">LogicalType.IntervalType</a>, <a href="LogicalType.JsonType.html" title="class in dev.hardwood.metadata">LogicalType.JsonType</a>, <a href="LogicalType.BsonType.html" title="class in dev.hardwood.metadata">LogicalType.BsonType</a>, <a href="LogicalType.ListType.html" title="class in dev.hardwood.metadata">LogicalType.ListType</a>, <a href="LogicalType.MapType.html" title="class in dev.hardwood.metadata">LogicalType.MapType</a>, <a href="LogicalType.VariantType.html" title="class in dev.hardwood.metadata">LogicalType.VariantType</a>, <a href="LogicalType.GeometryType.html" title="class in dev.hardwood.metadata">LogicalType.GeometryType</a>, <a href="LogicalType.GeographyType.html" title="class in dev.hardwood.metadata">LogicalType.GeographyType</a>, <a href="LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a>, <a href="LogicalType.NullType.html" title="class in dev.hardwood.metadata">LogicalType.NullType</a></span></div>
-<div class="block">Logical types that provide semantic meaning to physical types.
-Sealed interface allows for parameterized types (e.g., DECIMAL with scale/precision).</div>
+<div class="block"><p>Logical types that provide semantic meaning to physical types.
+Sealed interface allows for parameterized types (e.g., DECIMAL with scale/precision).</p>
+<p>Each implementation's <code>toString()</code> renders the Parquet-style annotation token shown in
+schema dumps and metadata views — <code>STRING</code>, <code>LIST</code>, <code>DECIMAL(10, 2)</code>, <code>TIMESTAMP(MICROS, UTC)</code>,
+and so on — not the default record representation.</p>
+</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
