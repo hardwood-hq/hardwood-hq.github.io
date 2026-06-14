@@ -199,7 +199,8 @@ implements <a href="SchemaNode.html" title="interface in dev.hardwood.schema">Sc
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapValue()" class="member-name-link">getMapValue</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">For MAP groups, returns the value node from the standard encoding
-(<code>map.key_value.value</code>).</div>
+(<code>map.key_value.value</code>), or <code>null</code> if the <code>key_value</code> group has no value
+field.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
@@ -375,10 +376,10 @@ the LIST-annotated group's name with <code>_tuple</code> appended, the repeated 
 <div class="block"><p>For MAP groups, returns the key node from the standard encoding
 (<code>map.key_value.key</code>).</p>
 <p>Returns <code>null</code> if this group is not a MAP, or if the structure does not
-match the standard encoding (a single REPEATED <code>key_value</code> child group with
-exactly two children). Symmetric with <a href="#getListElement()"><code>getListElement()</code></a> in returning
-<code>null</code> rather than throwing — callers decide whether a malformed schema is
-fatal at their layer.</p>
+match the standard encoding (a single REPEATED <code>key_value</code> child group).
+Symmetric with <a href="#getListElement()"><code>getListElement()</code></a> in returning <code>null</code> rather than
+throwing — callers decide whether a malformed schema is fatal at their
+layer.</p>
 </div>
 </div>
 </section>
@@ -389,7 +390,10 @@ fatal at their layer.</p>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></span>&nbsp;<span class="element-name">getMapValue</span>()</div>
 <div class="block">For MAP groups, returns the value node from the standard encoding
-(<code>map.key_value.value</code>). See <a href="#getMapKey()"><code>getMapKey()</code></a> for null semantics.</div>
+(<code>map.key_value.value</code>), or <code>null</code> if the <code>key_value</code> group has no value
+field. The Parquet spec permits a key-only <code>key_value</code> group, which
+represents a set of keys or a map with all-null values. See
+<a href="#getMapKey()"><code>getMapKey()</code></a> for the other null cases.</div>
 </div>
 </section>
 </li>
