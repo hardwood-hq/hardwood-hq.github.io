@@ -1201,6 +1201,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#logical-element-versus-physical-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logical element versus physical encoding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#counts-at-each-layer" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1749,6 +1760,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#logical-element-versus-physical-encoding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logical element versus physical encoding
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#counts-at-each-layer" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1986,6 +2008,19 @@ separate layer: a null <code>contacts</code> is recorded in <code>getLayerValidi
 same layer shape a <code>required</code> list would have, differing only in that validity. Layer 1 is the
 <code>element</code> struct, which carries validity but no offsets, so <code>getLayerOffsets(1)</code> throws <code>Layer 1 is
 STRUCT, not REPEATED</code>.</p>
+<h2 id="logical-element-versus-physical-encoding">Logical element versus physical encoding<a class="headerlink" href="#logical-element-versus-physical-encoding" title="Permanent link">&para;</a></h2>
+<p>The same logical-over-physical split governs schema <em>navigation</em>, not just layers.
+<code>SchemaNode.GroupNode.getListElement()</code> returns a list's <strong>logical</strong> element — <em>what</em> the element
+is — independent of whether the list is physically 2-level or 3-level. For <code>list&lt;list&lt;int&gt;&gt;</code> the
+element is the inner <code>list&lt;int&gt;</code>; for <code>list&lt;int&gt;</code> it is the <code>int</code>. The encoding changes only <em>where</em>
+that element sits in the node tree, never what <code>getListElement()</code> resolves it to.</p>
+<p>The returned node keeps all its physical attributes. In a standard 3-level list the element is the
+non-repeated child below the synthetic <code>repeated group</code>; in a legacy 2-level list the repeated field
+<em>is</em> the element, so the returned node is itself <code>REPEATED</code>. Counted structurally, a list's nesting
+depth is the number of <code>repeated</code> nodes on the path (equivalently, the leaf's maximum repetition
+level), not the number of <code>LIST</code> annotations. To walk to the leaf logically, recurse
+<code>getListElement()</code> while the result <code>isList()</code> — uniform across both encodings. To inspect the raw
+physical tree instead, walk <code>children()</code>.</p>
 <h2 id="counts-at-each-layer">Counts at each layer<a class="headerlink" href="#counts-at-each-layer" title="Permanent link">&para;</a></h2>
 <p>Every per-layer buffer is sized to <code>count(k)</code>, defined recursively:</p>
 <ul>
@@ -2047,8 +2082,8 @@ descending.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5729a13505bcd0963e13ef3a33f15c314a7a7ab8" target="_blank" rel="noopener">
-      5729a135
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8bd90dc0b9a780c678f19809306cb2f868abc190" target="_blank" rel="noopener">
+      8bd90dc0
     </a>
   
 </div>

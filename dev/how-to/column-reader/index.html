@@ -2116,7 +2116,7 @@
 <p>Before opening a reader for a nested column, you usually need to walk the file's schema tree to find the leaf you want. <code>SchemaNode.GroupNode</code> exposes the structural primitives:</p>
 <ul>
 <li><code>isList()</code> / <code>isMap()</code> / <code>isStruct()</code> — disambiguate which kind of group a node is.</li>
-<li><code>getListElement()</code> — for LIST groups, returns the element node, applying Parquet's backward-compatibility rules for legacy 2-level encodings.</li>
+<li><code>getListElement()</code> — for LIST groups, returns the element node, applying Parquet's backward-compatibility rules for legacy 2-level encodings. For a legacy 2-level list the returned element is itself <code>REPEATED</code> and, in a nested list, itself a LIST; a list's nesting depth is the number of <code>repeated</code> nodes on the path, not the number of LIST annotations. Walk to the leaf uniformly by recursing while the result <code>isList()</code>.</li>
 <li><code>getMapKey()</code> / <code>getMapValue()</code> — for MAP groups, returns the key and value nodes from the standard <code>map.key_value.key</code> / <code>map.key_value.value</code> encoding.</li>
 <li><code>children()</code> — for plain struct groups, iterate to get each field.</li>
 </ul>
@@ -2402,8 +2402,8 @@ the offset/validity encoding, and the per-layer count recursion — see
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5729a13505bcd0963e13ef3a33f15c314a7a7ab8" target="_blank" rel="noopener">
-      5729a135
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8bd90dc0b9a780c678f19809306cb2f868abc190" target="_blank" rel="noopener">
+      8bd90dc0
     </a>
   
 </div>
