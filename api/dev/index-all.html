@@ -480,6 +480,15 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dd>
 <div class="block">Creates an instance of a <code>ColumnMetaData</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/ColumnOrder.html" class="type-name-link" title="enum class in dev.hardwood.metadata">ColumnOrder</a> - Enum Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
+<dd>
+<div class="block">The ordering used for a leaf column's <code>min</code>/<code>max</code> statistics, decoded from the
+<code>FileMetaData.column_orders</code> union.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/FileMetaData.html#columnOrders()" class="member-name-link">columnOrders()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/FileMetaData.html#param-columnOrders"><code>columnOrders</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/ColumnProjection.html" class="type-name-link" title="class in dev.hardwood.schema">ColumnProjection</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
 <dd>
 <div class="block">Specifies which columns to read from a Parquet file.</div>
@@ -1099,7 +1108,7 @@ Variants, or absent.</div>
 <dd>
 <div class="block">Top-level file metadata for a Parquet file.</div>
 </dd>
-<dt><a href="dev/hardwood/metadata/FileMetaData.html#%3Cinit%3E(int,java.util.List,long,java.util.List,java.util.Map,java.lang.String)" class="member-name-link">FileMetaData(int, List, long, List, Map, String)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></dt>
+<dt><a href="dev/hardwood/metadata/FileMetaData.html#%3Cinit%3E(int,java.util.List,long,java.util.List,java.util.Map,java.lang.String,java.util.List)" class="member-name-link">FileMetaData(int, List, long, List, Map, String, List)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>FileMetaData</code> record class.</div>
 </dd>
@@ -2129,6 +2138,10 @@ and transport settings.</div>
 </dl>
 <h2 class="title" id="I:I">I</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/metadata/ColumnOrder.html#IEEE754_TOTAL_ORDER" class="member-name-link">IEEE754_TOTAL_ORDER</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnOrder.html" title="enum class in dev.hardwood.metadata">ColumnOrder</a></dt>
+<dd>
+<div class="block">The IEEE 754 total order (the <code>IEEE_754_TOTAL_ORDER</code> union member).</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#in(java.lang.String,int...)" class="member-name-link">in(String, int...)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#in(java.lang.String,long...)" class="member-name-link">in(String, long...)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
@@ -3888,6 +3901,10 @@ for the sparse-file backing.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.PrimitiveNode.html#param-type"><code>type</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/ColumnOrder.html#TYPE_DEFINED_ORDER" class="member-name-link">TYPE_DEFINED_ORDER</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnOrder.html" title="enum class in dev.hardwood.metadata">ColumnOrder</a></dt>
+<dd>
+<div class="block">Ordering defined by the column's physical or logical type (the <code>TYPE_ORDER</code> union member).</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/SchemaElement.html#typeLength()" class="member-name-link">typeLength()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SchemaElement.html#param-typeLength"><code>typeLength</code></a> record component.</div>
@@ -3928,6 +3945,11 @@ for the sparse-file backing.</div>
 <dt><a href="dev/hardwood/metadata/LogicalType.TimeType.html#unit()" class="member-name-link">unit()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.TimeType.html" title="class in dev.hardwood.metadata">LogicalType.TimeType</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/LogicalType.TimeType.html#param-unit"><code>unit</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ColumnOrder.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnOrder.html" title="enum class in dev.hardwood.metadata">ColumnOrder</a></dt>
+<dd>
+<div class="block">A <code>ColumnOrder</code> union member that this version of Hardwood does not recognize, e.g. an
+ordering added to the Parquet format after this release.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/Encoding.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a></dt>
 <dd>
@@ -4019,6 +4041,10 @@ for the sparse-file backing.</div>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/ColumnOrder.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnOrder.html" title="enum class in dev.hardwood.metadata">ColumnOrder</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/CompressionCodec.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
@@ -4064,6 +4090,11 @@ for the sparse-file backing.</div>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ColumnOrder.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnOrder.html" title="enum class in dev.hardwood.metadata">ColumnOrder</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
