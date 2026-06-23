@@ -1819,9 +1819,9 @@ Available as a Java library and a <a href="reference/cli/">command-line tool</a>
 <p>Hardwood gives applications Parquet read support without pulling in Hadoop, Avro, or the wider <a href="https://github.com/apache/parquet-java">parquet-java</a> dependency tree:</p>
 <ul>
 <li><strong>Light-weight</strong> — zero transitive dependencies beyond optional compression libraries (Snappy, ZSTD, LZ4, Brotli).</li>
-<li><strong>Compatible</strong> — reads every file that <code>parquet-java</code> reads, with documented divergences where Hardwood applies stricter semantics (e.g. SQL three-valued <code>notEq</code>).</li>
 <li><strong>Fast</strong> — matches or exceeds <code>parquet-java</code>'s read throughput; competitive in native-image builds and short-lived JVMs.</li>
 <li><strong>Concurrent</strong> — multi-threaded at the core: pages decode in parallel on a shared thread pool, with cross-file prefetching for multi-file reads.</li>
+<li><strong>Compatible</strong> — reads every file that <code>parquet-java</code> reads, with documented divergences where Hardwood applies stricter semantics (e.g. SQL three-valued <code>notEq</code>).</li>
 <li><strong>Embeddable</strong> — usable from native CLIs, S3-only pipelines (without <code>hadoop-aws</code>), and Avro / Spark consumers via thin shim modules, including a <a href="how-to/compat/">drop-in <code>parquet-java</code> replacement</a>.</li>
 </ul>
 <h2 id="quick-example">Quick Example<a class="headerlink" href="#quick-example" title="Permanent link">&para;</a></h2>
@@ -1916,8 +1916,8 @@ The interactive <code>dive</code> TUI currently caps S3 files at 2 GB.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/1199619663e3818ca52c9ca83b7de22d63945f9d" target="_blank" rel="noopener">
-      11996196
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fdcc10e52303393fc5a6ae3abe517864746a3404" target="_blank" rel="noopener">
+      fdcc10e5
     </a>
   
 </div>
