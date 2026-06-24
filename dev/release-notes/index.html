@@ -1611,6 +1611,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#100final-2026-06-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0.Final (2026-06-24)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#100cr2-2026-06-7" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1698,6 +1709,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#100final-2026-06-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.0.0.Final (2026-06-24)
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#100cr2-2026-06-7" class="md-nav__link">
@@ -1792,6 +1814,22 @@
 -->
 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
 <p>See <a href="https://github.com/hardwood-hq/hardwood/releases">GitHub Releases</a> for downloads and more information.</p>
+<h2 id="100final-2026-06-24">1.0.0.Final (2026-06-24)<a class="headerlink" href="#100final-2026-06-24" title="Permanent link">&para;</a></h2>
+<p><a href="/api-changes/1.0.0.Final/">API changes</a></p>
+<!-- TODO at release: add the announcement blog post link here, as a follow-up commit (see CR1).  · [API changes](/api-changes/1.0.0.Final/) -->
+
+<p>Highlights of this release:</p>
+<ul>
+<li>Float and double row group and page pruning honors the file's column order, with <code>ColumnOrder</code> surfaced on the API; <code>ResolvedPredicate</code> float/double convenience constructors are now public</li>
+<li>Legacy list encodings from older writers — un-annotated repeated fields and 2-level lists — are recognized as lists</li>
+<li>MAP columns without a value field (key-only <code>key_value</code> groups) are read instead of throwing</li>
+<li><code>ColumnReader</code> and <code>RowReader</code> <code>close()</code> methods are now idempotent, fixing a close-time performance regression introduced in Beta2</li>
+<li>Logical types render as Parquet-style annotation tokens (e.g. <code>STRING</code>) instead of a misleading record <code>toString()</code></li>
+<li><code>hardwood dive</code> fails fast with a clear message when stdout is not an interactive terminal</li>
+<li>Documentation and tooling polish: corrected Docker image tags in the published docs, a single unified API change report linking each version to its commit, and stable JavaDoc diagrams</li>
+</ul>
+<p>See the <a href="https://github.com/hardwood-hq/hardwood/milestone/7?closed=1">1.0.0.Final milestone</a> on GitHub for the full list of resolved issues.</p>
+<p>Thank you to all contributors to this release: <a href="https://github.com/iifawzi">Fawzi Essam</a>, <a href="https://github.com/gunnarmorling">Gunnar Morling</a>, <a href="https://github.com/RayanRal">Leo Chashnikov</a>, <a href="https://github.com/mohamedibrahim54">Mohamed Ibrahim Elsawy</a>, <a href="https://github.com/rionmonster">Rion Williams</a>, <a href="https://github.com/yashpriyadarshan">Yash Priyadarshan</a>.</p>
 <h2 id="100cr2-2026-06-7">1.0.0.CR2 (2026-06-7)<a class="headerlink" href="#100cr2-2026-06-7" title="Permanent link">&para;</a></h2>
 <p><a href="/api-changes/1.0.0.CR2/">API changes</a></p>
 <!-- TODO at release: add the announcement blog post link here, as a follow-up commit (see CR1).  · [API changes](/api-changes/1.0.0.CR2/) -->
@@ -1920,8 +1958,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/fdcc10e52303393fc5a6ae3abe517864746a3404" target="_blank" rel="noopener">
-      fdcc10e5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/60553eb31ad4518834f0e74d1fd34c804d342502" target="_blank" rel="noopener">
+      60553eb3
     </a>
   
 </div>
