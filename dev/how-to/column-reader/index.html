@@ -2033,6 +2033,10 @@
 <p class="admonition-title">Experimental API</p>
 <p>The <code>ColumnReader</code> is under active development; the shape of the batch accessors and layer representation may change in future releases without prior deprecation.</p>
 </div>
+<div class="admonition example">
+<p class="admonition-title">Try it yourself</p>
+<p>Want to run it or explore the capabilities yourself? <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/column-analytics"><strong>Column Analytics</strong></a> aggregates a column batch by batch, <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/layer-model"><strong>Layer Model</strong></a> reads nested columns from offsets, and <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/concurrent-column-consumer"><strong>Concurrent Column Consumer</strong></a> fans batch arrays across a thread pool.</p>
+</div>
 <h3 id="reading-a-single-column">Reading a Single Column<a class="headerlink" href="#reading-a-single-column" title="Permanent link">&para;</a></h3>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.InputFile</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
@@ -2349,9 +2353,9 @@ the offset/validity encoding, and the per-layer count recursion — see
 </code></pre></div>
 <p>Two orthogonal offset axes show up here, as in <code>list&lt;string&gt;</code>: <code>entryOffsets</code> walks map entries within a record (across the <code>getValueCount()</code> axis), <code>keyOffsets</code> walks byte spans within a single key (across the byte axis of <code>getBinaryValues()</code>).</p>
 <p>If the map sits under an <code>OPTIONAL</code> group — e.g. <code>optional group meta { map&lt;string, int&gt; tags }</code> — the chain gains a <code>STRUCT</code> layer on top. The same key/value lockstep walk applies, with <code>getLayerValidity(0)</code> for <code>meta</code>, <code>getLayerValidity(1)</code> plus <code>getLayerOffsets(1)</code> for the map, and <code>getLeafValidity()</code> for the value:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">Validity</span><span class="w"> </span><span class="n">metaValidity</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">getLayerValidity</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w">   </span><span class="c1">// STRUCT layer for `meta`</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">Validity</span><span class="w"> </span><span class="n">mapValidity</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">getLayerValidity</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">   </span><span class="c1">// REPEATED layer for the map</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kt">int</span><span class="o">[]</span><span class="w">    </span><span class="n">entryOffsets</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">getLayerOffsets</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">Validity</span><span class="w"> </span><span class="n">metaValidity</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">.</span><span class="na">getLayerValidity</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w">   </span><span class="c1">// STRUCT layer for `meta`</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">Validity</span><span class="w"> </span><span class="n">mapValidity</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">.</span><span class="na">getLayerValidity</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span><span class="w">   </span><span class="c1">// REPEATED layer for the map</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kt">int</span><span class="o">[]</span><span class="w">    </span><span class="n">entryOffsets</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">.</span><span class="na">getLayerOffsets</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 </code></pre></div>
 
 
@@ -2402,8 +2406,8 @@ the offset/validity encoding, and the per-layer count recursion — see
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/397e3f6c3463043e5e58cfb625924ab61d0c5f92" target="_blank" rel="noopener">
-      397e3f6c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e668dd003db48949c9a00cc094db8ea09ecf106b" target="_blank" rel="noopener">
+      e668dd00
     </a>
   
 </div>

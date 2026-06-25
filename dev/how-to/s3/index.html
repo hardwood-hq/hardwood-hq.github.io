@@ -1897,6 +1897,10 @@
 -->
 <h1 id="reading-from-s3">Reading from S3<a class="headerlink" href="#reading-from-s3" title="Permanent link">&para;</a></h1>
 <p>Parquet files often live in cloud object storage rather than on local disk. The <code>hardwood-s3</code> module lets you read them directly from Amazon S3 and S3-compatible services (Cloudflare R2, GCP Cloud Storage via HMAC keys, MinIO) without downloading files first. Hardwood minimizes S3 requests by pre-fetching the file footer on open and coalescing column chunk reads within each row group. Column projection and page-level predicate pushdown further reduce the amount of data transferred.</p>
+<div class="admonition example">
+<p class="admonition-title">Try it yourself</p>
+<p>Want to run it or explore the capabilities yourself? The <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/reading-from-s3"><strong>Reading from S3</strong></a> example streams a Parquet file straight from an S3-compatible endpoint, proves projection only fetches the byte ranges it needs via <code>networkBytesFetched()</code> / <code>networkRequestCount()</code>, and opens a whole bucket as one dataset with <code>Hardwood.openAll(...)</code>.</p>
+</div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">&lt;dependency&gt;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>dev.hardwood<span class="nt">&lt;/groupId&gt;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>hardwood-s3<span class="nt">&lt;/artifactId&gt;</span>
@@ -2096,8 +2100,8 @@ examples below cover the common cases.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/397e3f6c3463043e5e58cfb625924ab61d0c5f92" target="_blank" rel="noopener">
-      397e3f6c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e668dd003db48949c9a00cc094db8ea09ecf106b" target="_blank" rel="noopener">
+      e668dd00
     </a>
   
 </div>

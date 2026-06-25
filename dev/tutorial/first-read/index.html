@@ -1870,6 +1870,12 @@ one works as written.</p>
 options. When you're done, the <a href="../../how-to/">how-to guides</a> cover the full range of
 choices, and the <a href="../../concepts/parquet-layout/">background pages</a> explain how Parquet files
 and the reader APIs work underneath.</p>
+<div class="admonition example">
+<p class="admonition-title">Try it yourself</p>
+<p>Want to run this as a standalone example? The <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/hello-hardwood">Hello Hardwood</a>
+example mirrors these steps — opening a file, inspecting its schema and footer, reading a few
+rows, and summing a column.</p>
+</div>
 <h2 id="before-you-start">Before you start<a class="headerlink" href="#before-you-start" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Java 21 or newer (<code>java -version</code> to check).</li>
@@ -1986,7 +1992,7 @@ typed primitive arrays a batch at a time — no per-row calls. Total the fares:<
 <a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
 <a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">total</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">fare</span><span class="p">.</span><span class="na">nextBatch</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fare</span><span class="p">.</span><span class="na">getValueCount</span><span class="p">();</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">        </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fare</span><span class="p">.</span><span class="na">getRecordCount</span><span class="p">();</span>
 <a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">        </span><span class="kt">double</span><span class="o">[]</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fare</span><span class="p">.</span><span class="na">getDoubles</span><span class="p">();</span>
 <a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">        </span><span class="n">Validity</span><span class="w"> </span><span class="n">validity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fare</span><span class="p">.</span><span class="na">getLeafValidity</span><span class="p">();</span>
 <a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">        </span><span class="kt">boolean</span><span class="w"> </span><span class="n">hasNulls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">validity</span><span class="p">.</span><span class="na">hasNulls</span><span class="p">();</span>
@@ -2069,8 +2075,8 @@ Parquet with Hardwood.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/397e3f6c3463043e5e58cfb625924ab61d0c5f92" target="_blank" rel="noopener">
-      397e3f6c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e668dd003db48949c9a00cc094db8ea09ecf106b" target="_blank" rel="noopener">
+      e668dd00
     </a>
   
 </div>

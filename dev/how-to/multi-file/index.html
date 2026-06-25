@@ -1643,6 +1643,10 @@
 <h1 id="reading-multiple-files">Reading Multiple Files<a class="headerlink" href="#reading-multiple-files" title="Permanent link">&para;</a></h1>
 <p>When processing multiple Parquet files, use the <code>Hardwood</code> class to share a thread pool across readers.
 <code>Hardwood.openAll(List&lt;InputFile&gt;)</code> returns a <code>ParquetFileReader</code> over many files. The same <code>RowReader</code>, <code>ColumnReader</code>, and <code>ColumnReaders</code> APIs apply.</p>
+<div class="admonition example">
+<p class="admonition-title">Try it yourself</p>
+<p>Want to run it or explore the capabilities yourself? <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/multi-file"><strong>Multi-File</strong></a> reads three months of data as one dataset, and <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/byte-buffer-source"><strong>Byte Buffer Source</strong></a> reads several in-memory <code>ByteBuffer</code>s as one dataset.</p>
+</div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.Hardwood</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.InputFile</span><span class="p">;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
@@ -1726,8 +1730,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/397e3f6c3463043e5e58cfb625924ab61d0c5f92" target="_blank" rel="noopener">
-      397e3f6c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e668dd003db48949c9a00cc094db8ea09ecf106b" target="_blank" rel="noopener">
+      e668dd00
     </a>
   
 </div>

@@ -1709,6 +1709,10 @@
 -->
 <h1 id="variant-columns">Variant Columns<a class="headerlink" href="#variant-columns" title="Permanent link">&para;</a></h1>
 <p>A Parquet column annotated with the <a href="https://parquet.apache.org/docs/file-format/types/variantencoding/"><code>VARIANT</code></a> logical type carries semi-structured, JSON-like data in a self-describing binary encoding. Physically it is a group of two required <code>BYTE_ARRAY</code> children, <code>metadata</code> and <code>value</code>, whose bytes together define a Variant value with its own type tag (object, array, string, int, etc.). <code>getVariant</code> reads both children and surfaces them through the <code>PqVariant</code> API.</p>
+<div class="admonition example">
+<p class="admonition-title">Try it yourself</p>
+<p>Want to run it or explore the capabilities yourself? The <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/variant-columns"><strong>Variant Columns</strong></a> example renders every Variant type through one recursive method, including nested objects and arrays.</p>
+</div>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
@@ -1794,8 +1798,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/397e3f6c3463043e5e58cfb625924ab61d0c5f92" target="_blank" rel="noopener">
-      397e3f6c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e668dd003db48949c9a00cc094db8ea09ecf106b" target="_blank" rel="noopener">
+      e668dd00
     </a>
   
 </div>

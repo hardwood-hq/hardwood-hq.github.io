@@ -1642,6 +1642,10 @@
 -->
 <h1 id="accessing-file-metadata">Accessing File Metadata<a class="headerlink" href="#accessing-file-metadata" title="Permanent link">&para;</a></h1>
 <p>Inspecting metadata before reading is useful for understanding file structure, choosing which columns to project, validating files in a pipeline, or building tooling. Hardwood exposes the full Parquet metadata hierarchy without reading any row data.</p>
+<div class="admonition example">
+<p class="admonition-title">Try it yourself</p>
+<p>Want to run it or explore the capabilities yourself? The <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/metadata-explorer"><strong>Metadata Explorer</strong></a> example describes a Parquet file from its footer alone — version, schema, and per-row-group column statistics.</p>
+</div>
 <p>A Parquet file is organized as follows:</p>
 <ul>
 <li><strong>FileMetaData</strong> — top-level: row count, schema, key-value metadata (e.g. Spark schema, pandas metadata), the writer that produced the file (<code>createdBy</code>), and the per-column statistics ordering (<code>columnOrders</code>)</li>
@@ -1761,8 +1765,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/397e3f6c3463043e5e58cfb625924ab61d0c5f92" target="_blank" rel="noopener">
-      397e3f6c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e668dd003db48949c9a00cc094db8ea09ecf106b" target="_blank" rel="noopener">
+      e668dd00
     </a>
   
 </div>
