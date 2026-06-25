@@ -59,6 +59,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#create()" tabindex="0">create()</a></li>
+<li><a href="#create(dev.hardwood.HardwoodContext)" tabindex="0">create(HardwoodContext)</a></li>
 <li><a href="#open(dev.hardwood.InputFile)" tabindex="0">open(InputFile)</a></li>
 <li><a href="#openAll(java.util.List)" tabindex="0">openAll(List)</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
@@ -93,6 +94,16 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
     // ...
 }
 </code></pre>
+<p>To control the decode parallelism, or to reuse one context (and its thread
+pool) across many reads and standalone <a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a>s, create the
+<a href="HardwoodContext.html" title="interface in dev.hardwood"><code>HardwoodContext</code></a> yourself and pass it in:</p>
+<pre><code class="language-java">try (HardwoodContext context = HardwoodContext.create(4)) {
+    try (Hardwood hardwood = Hardwood.create(context)) {
+        // ...
+    }
+    // context is still open here for further use
+}
+</code></pre>
 <p>For single-file usage, <a href="reader/ParquetFileReader.html#open(dev.hardwood.InputFile)"><code>ParquetFileReader.open(InputFile)</code></a> is simpler.</p>
 </div>
 </div>
@@ -118,14 +129,20 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Create a new Hardwood instance with a thread pool sized to available processors.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(dev.hardwood.InputFile)" class="member-name-link">open</a><wbr>(<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Open a single Parquet file.</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Hardwood.html" title="class in dev.hardwood">Hardwood</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.HardwoodContext)" class="member-name-link">create</a><wbr>(<a href="HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Create a new Hardwood instance backed by the given context, e.g. one
+created via <a href="HardwoodContext.html#create(int)"><code>HardwoodContext.create(int)</code></a> to size the decode thread pool.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(dev.hardwood.InputFile)" class="member-name-link">open</a><wbr>(<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Open a single Parquet file.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Open multiple Parquet files for reading with cross-file prefetching.</div>
 </div>
 </div>
@@ -150,7 +167,23 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <h3>create</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Hardwood.html" title="class in dev.hardwood">Hardwood</a></span>&nbsp;<span class="element-name">create</span>()</div>
-<div class="block">Create a new Hardwood instance with a thread pool sized to available processors.</div>
+<div class="block">Create a new Hardwood instance with a thread pool sized to available processors.
+The context is owned by this instance and closed when it is closed.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="create(dev.hardwood.HardwoodContext)">
+<h3>create</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Hardwood.html" title="class in dev.hardwood">Hardwood</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(<a href="HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</span></div>
+<div class="block"><p>Create a new Hardwood instance backed by the given context, e.g. one
+created via <a href="HardwoodContext.html#create(int)"><code>HardwoodContext.create(int)</code></a> to size the decode thread pool.</p>
+<p>The caller retains ownership of the context: it is <strong>not</strong> closed when
+this instance is closed, so the same context — and its thread pool — can
+be reused for later reads and shared with standalone <a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a>s
+opened via <a href="reader/ParquetFileReader.html#open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext)"><code>ParquetFileReader.open(InputFile, HardwoodContext)</code></a>.</p>
+</div>
 </div>
 </section>
 </li>

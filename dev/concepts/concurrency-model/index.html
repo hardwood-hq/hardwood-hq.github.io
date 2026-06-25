@@ -1835,9 +1835,12 @@ that context comes into being:</p>
 <ul>
 <li><strong>Implicit.</strong> <code>ParquetFileReader.open(InputFile)</code> creates and owns a context sized to the
   available processors. Closing the reader shuts it down.</li>
-<li><strong>Explicit.</strong> Create a <code>Hardwood</code> (via <code>Hardwood.create()</code>) or a <code>HardwoodContext</code> (via
-  <code>HardwoodContext.create(threadCount)</code>) yourself and pass it to the reader. The pool then
-  outlives any one reader and is shared across all readers opened against it.</li>
+<li><strong>Explicit.</strong> Create a <code>HardwoodContext</code> (via <code>HardwoodContext.create(threadCount)</code>) to size the
+  pool, then share it: pass it to <code>Hardwood.create(HardwoodContext)</code> for multi-file reads or to
+  <code>ParquetFileReader.open(InputFile, HardwoodContext)</code> for single-file reads. <code>Hardwood.create()</code>
+  with no context is the shorthand that builds and owns a default-sized one. An explicitly created
+  context outlives any one reader and is shared across all readers opened against it; the caller
+  closes it.</li>
 </ul>
 <p>Share one context across many reads. The pool is the expensive, reusable resource; readers are
 cheap and short-lived. This matters most when reading many files — see below.</p>
@@ -1944,8 +1947,8 @@ shared pool matters, since all the files draw on the same workers. See
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bfc931c4ceb32f78049493296a407c8d1b705095" target="_blank" rel="noopener">
-      bfc931c4
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6ebba12c36374370416bdfeae6997a9e3901814e" target="_blank" rel="noopener">
+      6ebba12c
     </a>
   
 </div>
