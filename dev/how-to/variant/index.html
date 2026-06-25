@@ -1747,7 +1747,7 @@
 <h2 id="current-limitations">Current limitations<a class="headerlink" href="#current-limitations" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>No Variant-aware predicate pushdown.</strong> Filter predicates against a Variant sub-path (e.g. <code>WHERE v.age &gt; 30</code>) aren't yet understood by the pushdown pipeline. Filtering still works against the file's physical shredded columns if you know the layout — a <code>FilterPredicate.gt("v.typed_value.age", 30)</code> gets row-group and page skipping via ordinary column statistics — but that ties query code to the writer's shredding strategy and misses any rows where the payload sits in the opaque <code>value</code> blob instead. Tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/309">#309</a>.</li>
-<li><strong>No path projection optimization.</strong> Reading only <code>v.age</code> from a Variant column still reassembles the whole Variant for each row rather than reading just the shredded <code>typed_value.age</code> column. Requires the same variant-aware planning as #309; no separate issue filed yet.</li>
+<li><strong>No path projection optimization.</strong> Reading only <code>v.age</code> from a Variant column still reassembles the whole Variant for each row rather than reading just the shredded <code>typed_value.age</code> column. Requires the same variant-aware planning as #309. Tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/700">#700</a>.</li>
 </ul>
 
 
@@ -1798,8 +1798,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/e668dd003db48949c9a00cc094db8ea09ecf106b" target="_blank" rel="noopener">
-      e668dd00
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c9ead7e631d4510b31038d250edff4610ab2ab90" target="_blank" rel="noopener">
+      c9ead7e6
     </a>
   
 </div>
