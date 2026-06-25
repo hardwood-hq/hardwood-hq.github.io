@@ -1823,11 +1823,13 @@
 <li>Float and double row group and page pruning honors the file's column order, with <code>ColumnOrder</code> surfaced on the API; <code>ResolvedPredicate</code> float/double convenience constructors are now public</li>
 <li>Legacy list encodings from older writers — un-annotated repeated fields and 2-level lists — are recognized as lists</li>
 <li>MAP columns without a value field (key-only <code>key_value</code> groups) are read instead of throwing</li>
-<li><code>ColumnReader</code> and <code>RowReader</code> <code>close()</code> methods are now idempotent, fixing a close-time performance regression introduced in Beta2</li>
-<li>Logical types render as Parquet-style annotation tokens (e.g. <code>STRING</code>) instead of a misleading record <code>toString()</code></li>
+<li>Sub-field projections into MAP values and VARIANT groups pull in the structural columns they require (the MAP's key, every VARIANT leaf)</li>
+<li><code>AvroRowReader</code> honors column projections, and DECIMAL, UUID, UINT_32, and FIXED columns now read correctly</li>
+<li>The multi-file <code>Hardwood</code> entry point accepts a caller-supplied <code>HardwoodContext</code>, for control over decoder thread-pool sizing and sharing a context across readers</li>
+<li><code>ColumnReader</code> and <code>RowReader</code> <code>close()</code> methods are now idempotent, fixing a close-time performance regression from Beta2</li>
+<li>Logical types render as Parquet-style annotation tokens (e.g. <code>STRING</code>)</li>
 <li><code>hardwood dive</code> fails fast with a clear message when stdout is not an interactive terminal</li>
 <li><code>hardwood print</code> short option names follow the conventional single-dash, single-character form (<code>-s</code>, <code>-w</code>, <code>-i</code>, <code>-d</code>); <code>--transpose</code> is long-only</li>
-<li>Documentation and tooling polish: corrected Docker image tags in the published docs, a single unified API change report linking each version to its commit, and stable JavaDoc diagrams</li>
 </ul>
 <p>See the <a href="https://github.com/hardwood-hq/hardwood/milestone/7?closed=1">1.0.0.Final milestone</a> on GitHub for the full list of resolved issues.</p>
 <p>Thank you to all contributors to this release: <a href="https://github.com/iifawzi">Fawzi Essam</a>, <a href="https://github.com/gunnarmorling">Gunnar Morling</a>, <a href="https://github.com/RayanRal">Leo Chashnikov</a>, <a href="https://github.com/mohamedibrahim54">Mohamed Ibrahim Elsawy</a>, <a href="https://github.com/rionmonster">Rion Williams</a>, <a href="https://github.com/yashpriyadarshan">Yash Priyadarshan</a>.</p>
@@ -1959,8 +1961,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/6ebba12c36374370416bdfeae6997a9e3901814e" target="_blank" rel="noopener">
-      6ebba12c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e8cf0f70019c96e636f7b394c1846729113c6738" target="_blank" rel="noopener">
+      e8cf0f70
     </a>
   
 </div>
