@@ -88,9 +88,9 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <div class="block"><p>Reads Parquet rows as Avro <code>GenericRecord</code> instances.</p>
 <p>Wraps a Hardwood <a href="../reader/RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> and materializes each row into a
 <code>GenericRecord</code> using the converted Avro schema. Values are stored
-in Avro's raw representation (e.g. timestamps as <code>Long</code>, decimals
-as <code>ByteBuffer</code>), matching the behavior of parquet-java's
-<code>AvroReadSupport</code>.</p>
+in Avro's raw representation (e.g. timestamps as <code>Long</code>, <code>bytes</code>-backed
+decimals as <code>ByteBuffer</code>, <code>fixed</code>-typed columns as <code>GenericData.Fixed</code>),
+matching the behavior of parquet-java's <code>AvroReadSupport</code>.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">try (AvroRowReader reader = AvroReaders.createRowReader(fileReader)) {
     while (reader.hasNext()) {
         GenericRecord record = reader.next();
