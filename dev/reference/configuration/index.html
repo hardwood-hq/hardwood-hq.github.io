@@ -1855,7 +1855,12 @@
 <tr>
 <td><code>dev.hardwood.RowGroupFilter</code></td>
 <td>Filter</td>
-<td>Row groups filtered by predicate pushdown. Fields: file, totalRowGroups, rowGroupsKept, rowGroupsSkipped</td>
+<td>Row groups dropped by statistics predicate pushdown. Fields: file, totalRowGroups, rowGroupsKept, rowGroupsSkipped</td>
+</tr>
+<tr>
+<td><code>dev.hardwood.RowGroupByteRangeFilter</code></td>
+<td>Filter</td>
+<td>Row groups selected by a byte-range split predicate (split-aware reading). Fields: file, totalRowGroups, rowGroupsKept, rowGroupsSkipped</td>
 </tr>
 <tr>
 <td><code>dev.hardwood.PageFilter</code></td>
@@ -1882,7 +1887,7 @@
 <p>Events appear under the <strong>Hardwood</strong> category in JDK Mission Control (JMC) or any JFR analysis tool. Use them to identify:</p>
 <ul>
 <li><strong>I/O bottlenecks</strong> — large <code>FileMapping</code> durations or frequent <code>PrefetchMiss</code> events</li>
-<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were skipped; <code>PageFilter</code> shows how many pages were skipped within surviving row groups; <code>RecordFilter</code> shows how many individual records were filtered out</li>
+<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were dropped by statistics pushdown and <code>RowGroupByteRangeFilter</code> how many were excluded by split selection; <code>PageFilter</code> shows how many pages were skipped within surviving row groups; <code>RecordFilter</code> shows how many individual records were filtered out</li>
 <li><strong>Decode hotspots</strong> — <code>PageDecoded</code> events with large uncompressed sizes or high frequency</li>
 <li><strong>Pipeline stalls</strong> — <code>BatchWait</code> events indicate the reader is waiting for decoded data</li>
 </ul>
@@ -1957,8 +1962,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/023577651c2f9c0cccd27b21a956f29281467bc0" target="_blank" rel="noopener">
-      02357765
+    <a href="https://github.com/hardwood-hq/hardwood/tree/849b1caf8bae94652a2e2452651e13f886689358" target="_blank" rel="noopener">
+      849b1caf
     </a>
   
 </div>
