@@ -2227,11 +2227,8 @@ encoding automatically:</p>
 <a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="p">}</span>
 </code></pre></div>
-<p><code>skip == 0</code> is the no-op default. <code>skip &gt;= totalRows</code> produces an empty reader (a SQL <code>OFFSET</code> past the end of the file). Within the target row group, the reader still decodes the leading residue rows and discards them via <code>next()</code>; page-level skip via the OffsetIndex is tracked separately.</p>
-<div class="admonition warning">
-<p class="admonition-title">Multi-file readers: first file only</p>
-<p>For the no-filter (physical) case, <code>skip(N)</code> indexes into the <strong>first</strong> file's rows only — it never carries across a file boundary. A <code>skip</code> at or beyond the first file's row count therefore does not empty the reader: it drops the first file and streams the remaining files in full. To skip whole files, omit them from the input list; to skip within a non-first file, open it separately.</p>
-</div>
+<p><code>skip == 0</code> is the no-op default. <code>skip &gt;= totalRows</code> produces an empty reader (a SQL <code>OFFSET</code> past the end of the file, or of the concatenated relation for multi-file readers). The seek lands at row-group granularity: rows before the offset within the target row group are still read.</p>
+<p>For multi-file readers, physical <code>skip(N)</code> is a global offset across the input files in order. Hardwood reads the footers of skipped files to count their rows, but skipped files' data pages are not fetched or decoded.</p>
 <p><strong>With a filter,</strong> <code>skip(n)</code> is a <em>logical</em> offset over the matched rows — it discards the first <code>n</code> rows that match the predicate and returns the rest, exactly like SQL <code>OFFSET</code> after a <code>WHERE</code>. The O(1 row-group) seek does <strong>not</strong> apply: row-group statistics bound min/max values, not match <em>counts</em>, so the reader decodes earlier groups to count matches (groups whose statistics prove no match are still pruned). A <code>skip</code> past the number of matching rows yields an empty reader rather than throwing.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">// Skip the first 150 rows matching the predicate, then read the next 20.</span>
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1">// OFFSET 150 LIMIT 20 over the filtered relation.</span>
@@ -2294,8 +2291,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/849b1caf8bae94652a2e2452651e13f886689358" target="_blank" rel="noopener">
-      849b1caf
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d27c8621468d9ea41b52628a120c3834fddba19e" target="_blank" rel="noopener">
+      d27c8621
     </a>
   
 </div>
