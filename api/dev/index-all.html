@@ -57,6 +57,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/s3/S3Credentials.html#param-accessKeyId"><code>accessKeyId</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
+<dd>
+<div class="block">Append a primitive column.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/ColumnProjection.html#all()" class="member-name-link">all()</a> - Static method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a></dt>
 <dd>
 <div class="block">Returns a projection that includes all columns.</div>
@@ -267,6 +271,10 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Builds the <a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3"><code>S3Source</code></a>.</div>
 </dd>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
+<dd>
+<div class="block">Build the schema.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#buildColumnReader(int)" class="member-name-link">buildColumnReader(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>
 <div class="block">Begin configuring a single-column <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> by column index.</div>
@@ -283,6 +291,11 @@ access to a column projection.</div>
 <dt><a href="dev/hardwood/s3/S3Source.html#builder()" class="member-name-link">builder()</a> - Static method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>
 <div class="block">Creates a new <a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3"><code>S3Source.Builder</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.html#builder(java.lang.String)" class="member-name-link">builder(String)</a> - Static method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></dt>
+<dd>
+<div class="block">Creates a builder for constructing a flat schema programmatically, for use
+with the writer.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#buildRowReader()" class="member-name-link">buildRowReader()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>
@@ -347,6 +360,8 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dt><a href="dev/hardwood/s3/S3InputFile.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3">S3InputFile</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/s3/S3Source.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#codec()" class="member-name-link">codec()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
@@ -583,6 +598,10 @@ every row group, no filter.</div>
 <dd>
 <div class="block">Create a new context with a thread pool sized to available processors.</div>
 </dd>
+<dt><a href="dev/hardwood/OutputFile.html#create()" class="member-name-link">create()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
+<dd>
+<div class="block">Performs resource acquisition (e.g. opening a file channel).</div>
+</dd>
 <dt><a href="dev/hardwood/HardwoodContext.html#create(int)" class="member-name-link">create(int)</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a></dt>
 <dd>
 <div class="block">Create a new context with a thread pool of the specified size.</div>
@@ -591,6 +610,10 @@ every row group, no filter.</div>
 <dd>
 <div class="block">Create a new Hardwood instance backed by the given context, e.g. one
 created via <a href="dev/hardwood/HardwoodContext.html#create(int)"><code>HardwoodContext.create(int)</code></a> to size the decode thread pool.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" class="member-name-link">create(OutputFile, FileSchema)</a> - Static method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
+<dd>
+<div class="block">Opens a writer, writing the leading magic bytes.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/FileMetaData.html#createdBy()" class="member-name-link">createdBy()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></dt>
 <dd>
@@ -734,9 +757,18 @@ created via <a href="dev/hardwood/HardwoodContext.html#create(int)"><code>Hardwo
 <dd>
 <div class="block">High-level Parquet schema types with computed definition and repetition levels.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a> - package dev.hardwood.writer</dt>
+<dd>
+<div class="block">Parquet file writer with a columnar API.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#dictionaryPageOffset()" class="member-name-link">dictionaryPageOffset()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-dictionaryPageOffset"><code>dictionaryPageOffset</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/OutputFile.html#discard()" class="member-name-link">discard()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
+<dd>
+<div class="block">Discards everything written and releases resources without publishing a
+file at the destination.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/Statistics.html#distinctCount()" class="member-name-link">distinctCount()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
 <dd>
@@ -1128,6 +1160,10 @@ Variants, or absent.</div>
 <dt><a href="dev/hardwood/schema/FileSchema.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
 <dd>
 <div class="block">Root schema container representing the complete Parquet schema.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.Builder</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
+<dd>
+<div class="block">Builder for constructing a flat <a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema"><code>FileSchema</code></a> programmatically.</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/FileOpenedEvent.html#fileSize" class="member-name-link">fileSize</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/FileOpenedEvent.html" title="class in dev.hardwood.jfr">FileOpenedEvent</a></dt>
 <dd>&nbsp;</dd>
@@ -2946,6 +2982,10 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Creates an unopened <a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> for a local file path.</div>
 </dd>
+<dt><a href="dev/hardwood/OutputFile.html#of(java.nio.file.Path)" class="member-name-link">of(Path)</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
+<dd>
+<div class="block">Creates an uncreated <a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> for a local file path.</div>
+</dd>
 <dt><a href="dev/hardwood/InputFile.html#ofBuffers(java.nio.ByteBuffer,java.nio.ByteBuffer...)" class="member-name-link">ofBuffers(ByteBuffer, ByteBuffer...)</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
 <dd>
 <div class="block">Creates <a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> instances for the given in-memory <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a>s.</div>
@@ -3074,6 +3114,10 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Creates an instance of a <code>Or</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/OutputFile.html" class="type-name-link" title="interface in dev.hardwood">OutputFile</a> - Interface in <a href="dev/hardwood/package-summary.html">dev.hardwood</a></dt>
+<dd>
+<div class="block">Abstraction for writing Parquet file data.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:P">P</h2>
 <dl class="index">
@@ -3125,6 +3169,10 @@ projection of columns.</div>
 <div class="block">Builds a <a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> with optional projection, filter, and head/tail
 row limit.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html" class="type-name-link" title="class in dev.hardwood.writer">ParquetFileWriter</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">Writes a Parquet file through a columnar API.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#pathInSchema()" class="member-name-link">pathInSchema()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-pathInSchema"><code>pathInSchema</code></a> record component.</div>
@@ -3145,6 +3193,11 @@ row limit.</div>
 <dt><a href="dev/hardwood/metadata/Encoding.html#PLAIN_DICTIONARY" class="member-name-link">PLAIN_DICTIONARY</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a></dt>
 <dd>
 <div class="block">Dictionary encoding using a plain-encoded dictionary page (deprecated in favor of <a href="dev/hardwood/metadata/Encoding.html#RLE_DICTIONARY"><code>Encoding.RLE_DICTIONARY</code></a>).</div>
+</dd>
+<dt><a href="dev/hardwood/OutputFile.html#position()" class="member-name-link">position()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
+<dd>
+<div class="block">Returns the number of bytes written so far, which is the offset at which
+the next <a href="dev/hardwood/OutputFile.html#write(java.nio.ByteBuffer)"><code>OutputFile.write(ByteBuffer)</code></a> will begin.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqDoubleList.html" class="type-name-link" title="interface in dev.hardwood.row">PqDoubleList</a> - Interface in <a href="dev/hardwood/row/package-summary.html">dev.hardwood.row</a></dt>
 <dd>
@@ -3646,6 +3699,11 @@ for the sparse-file backing.</div>
 <dt><a href="dev/hardwood/metadata/FieldPath.html#topLevelName()" class="member-name-link">topLevelName()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a></dt>
 <dd>
 <div class="block">Returns the first (top-level) element of the path.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.html#toSchemaElements()" class="member-name-link">toSchemaElements()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></dt>
+<dd>
+<div class="block">Flattens this schema back into the depth-first <a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata"><code>SchemaElement</code></a> list written
+to the file footer, the inverse of <a href="dev/hardwood/schema/FileSchema.html#fromSchemaElements(java.util.List)"><code>FileSchema.fromSchemaElements(List)</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/BoundingBox.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/BoundingBox.html" title="class in dev.hardwood.metadata">BoundingBox</a></dt>
 <dd>
@@ -4223,6 +4281,14 @@ does not match what the accessor expects — for example, calling
 <dt><a href="dev/hardwood/reader/Validity.html#words()" class="member-name-link">words()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
 <dd>
 <div class="block">The word array (set-bit = present polarity).</div>
+</dd>
+<dt><a href="dev/hardwood/OutputFile.html#write(java.nio.ByteBuffer)" class="member-name-link">write(ByteBuffer)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
+<dd>
+<div class="block">Appends the remaining bytes of <code>data</code> to the file.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#writeInts(int,int%5B%5D)" class="member-name-link">writeInts(int, int[])</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
+<dd>
+<div class="block">Writes the full contents of a <code>REQUIRED INT32</code> column.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:X">X</h2>

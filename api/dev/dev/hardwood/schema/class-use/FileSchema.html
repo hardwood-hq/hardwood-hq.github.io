@@ -67,6 +67,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">High-level Parquet schema types with computed definition and repetition levels.</div>
 </div>
+<div class="col-first even-row-color"><a href="#dev.hardwood.writer">dev.hardwood.writer</a></div>
+<div class="col-last even-row-color">
+<div class="block">Parquet file writer with a columnar API.</div>
+</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -92,10 +96,32 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FileSchema.</span><code><a href="../FileSchema.html#fromSchemaElements(java.util.List)" class="member-name-link">fromSchemaElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a>&gt;&nbsp;elements)</code></div>
+<div class="col-first even-row-color"><code><a href="../FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FileSchema.Builder.</span><code><a href="../FileSchema.Builder.html#build()" class="member-name-link">build</a>()</code></div>
 <div class="col-last even-row-color">
+<div class="block">Build the schema.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FileSchema.</span><code><a href="../FileSchema.html#fromSchemaElements(java.util.List)" class="member-name-link">fromSchemaElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a>&gt;&nbsp;elements)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Reconstruct schema from Thrift SchemaElement list.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dev.hardwood.writer">
+<h2>Uses of <a href="../FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a> in <a href="../../writer/package-summary.html">dev.hardwood.writer</a></h2>
+<div class="caption"><span>Methods in <a href="../../writer/package-summary.html">dev.hardwood.writer</a> with parameters of type <a href="../FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileWriter.</span><code><a href="../../writer/ParquetFileWriter.html#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" class="member-name-link">create</a><wbr>(<a href="../../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
+ <a href="../FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Opens a writer, writing the leading magic bytes.</div>
 </div>
 </div>
 </section>
