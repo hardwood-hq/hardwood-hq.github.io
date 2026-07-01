@@ -1855,7 +1855,7 @@
 <tr>
 <td><code>dev.hardwood.RowGroupFilter</code></td>
 <td>Filter</td>
-<td>Row groups dropped by statistics predicate pushdown. Fields: file, totalRowGroups, rowGroupsKept, rowGroupsSkipped</td>
+<td>Row groups dropped by statistics/bloom predicate pushdown. Fields: file, totalRowGroups, rowGroupsKept, rowGroupsSkipped</td>
 </tr>
 <tr>
 <td><code>dev.hardwood.RowGroupByteRangeFilter</code></td>
@@ -1887,7 +1887,7 @@
 <p>Events appear under the <strong>Hardwood</strong> category in JDK Mission Control (JMC) or any JFR analysis tool. Use them to identify:</p>
 <ul>
 <li><strong>I/O bottlenecks</strong> — large <code>FileMapping</code> durations or frequent <code>PrefetchMiss</code> events</li>
-<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were dropped by statistics pushdown and <code>RowGroupByteRangeFilter</code> how many were excluded by split selection; <code>PageFilter</code> shows how many pages were skipped within surviving row groups; <code>RecordFilter</code> shows how many individual records were filtered out</li>
+<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were dropped by statistics/bloom pushdown and <code>RowGroupByteRangeFilter</code> how many were excluded by split selection; <code>PageFilter</code> shows how many pages were skipped within surviving row groups; <code>RecordFilter</code> shows how many individual records were filtered out</li>
 <li><strong>Decode hotspots</strong> — <code>PageDecoded</code> events with large uncompressed sizes or high frequency</li>
 <li><strong>Pipeline stalls</strong> — <code>BatchWait</code> events indicate the reader is waiting for decoded data</li>
 </ul>
@@ -1962,8 +1962,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ed5f99480e5f42bb1c60e3cb96e9f84bf0976b51" target="_blank" rel="noopener">
-      ed5f9948
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8609e621b0cdd9a92cdd00541ee51047a2cdde84" target="_blank" rel="noopener">
+      8609e621
     </a>
   
 </div>

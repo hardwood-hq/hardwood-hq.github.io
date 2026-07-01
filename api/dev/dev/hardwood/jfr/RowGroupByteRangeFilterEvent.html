@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
 <div class="block"><p>JFR event emitted when row groups are selected by a byte-range row-group predicate
 (split-aware reading).</p>
 <p>This is distinct from <a href="RowGroupFilterEvent.html" title="class in dev.hardwood.jfr"><code>RowGroupFilterEvent</code></a>, which reports row groups dropped by
-statistics predicate push-down. Byte-range selection keeps a row group when its
+statistics/bloom predicate push-down. Byte-range selection keeps a row group when its
 midpoint falls inside the requested split, and runs before push-down: the row groups
 reported as kept here are the input to the push-down evaluation.</p>
 </div>

@@ -1993,7 +1993,7 @@
 <h2 id="predicate-pushdown-filter">Predicate Pushdown (Filter)<a class="headerlink" href="#predicate-pushdown-filter" title="Permanent link">&para;</a></h2>
 <p>Filter predicates apply at three levels, in this order:</p>
 <ol>
-<li><strong>Row group</strong> — entire row groups whose statistics prove no rows can match are skipped.</li>
+<li><strong>Row group</strong> — entire row groups whose statistics prove no rows can match are skipped. For <code>eq</code> and <code>in</code> predicates, a column's <a href="https://parquet.apache.org/docs/file-format/bloomfilter/">Bloom filter</a> (when present) additionally skips a row group whose value range covers the target but which never actually stored it — the case min/max statistics cannot catch.</li>
 <li><strong>Page</strong> — within surviving row groups, the Column Index (per-page min/max statistics) is used to skip individual pages, avoiding unnecessary decompression and decoding. On remote backends like S3, only the matching pages are fetched, so the same skip also reduces network I/O.</li>
 <li><strong>Record</strong> — <code>buildRowReader().filter(filter).build()</code> evaluates the predicate against each decoded row and returns only rows that actually match.</li>
 </ol>
@@ -2093,10 +2093,12 @@ encoding automatically:</p>
   nested columns (structs, lists, or maps), record-level filtering is not active. Row-group
   and page-level statistics pushdown still apply, but non-matching rows within surviving pages
   will not be filtered out. A warning is logged when this occurs.</li>
-<li><strong>Bloom filter pushdown is not supported
-  (<a href="https://github.com/hardwood-hq/hardwood/issues/105">#105</a>).</strong> Parquet files may contain
-  Bloom filters for high-cardinality columns, but Hardwood does not currently use them for
-  filter evaluation.</li>
+<li><strong>Bloom filter pushdown applies to <code>eq</code> predicates</strong> on <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code>, and
+  binary (<code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code>) columns that carry a Bloom filter, and to <code>in</code>
+  predicates on the integer and binary types. It runs automatically during row-group pruning,
+  alongside statistics, and skips a row group when the value is provably absent. For <code>FLOAT</code> /
+  <code>DOUBLE</code>, <code>eq(-0.0)</code> and <code>eq(NaN)</code> are not pruned by the Bloom filter. Range predicates (<code>lt</code>,
+  <code>gt</code>, …) and <code>notEq</code> are unaffected — a Bloom filter answers only membership.</li>
 <li><strong>Dictionary-based filtering is not supported
   (<a href="https://github.com/hardwood-hq/hardwood/issues/196">#196</a>).</strong> Dictionary-encoded columns
   are not checked for predicate matches before decoding.</li>
@@ -2291,8 +2293,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ed5f99480e5f42bb1c60e3cb96e9f84bf0976b51" target="_blank" rel="noopener">
-      ed5f9948
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8609e621b0cdd9a92cdd00541ee51047a2cdde84" target="_blank" rel="noopener">
+      8609e621
     </a>
   
 </div>
