@@ -275,6 +275,10 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Build the schema.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Builds the immutable configuration.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#buildColumnReader(int)" class="member-name-link">buildColumnReader(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>
 <div class="block">Begin configuring a single-column <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> by column index.</div>
@@ -291,6 +295,10 @@ access to a column projection.</div>
 <dt><a href="dev/hardwood/s3/S3Source.html#builder()" class="member-name-link">builder()</a> - Static method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>
 <div class="block">Creates a new <a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3"><code>S3Source.Builder</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#builder()" class="member-name-link">builder()</a> - Static method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">A builder pre-populated with the defaults.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/FileSchema.html#builder(java.lang.String)" class="member-name-link">builder(String)</a> - Static method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></dt>
 <dd>
@@ -448,6 +456,10 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dt><a href="dev/hardwood/reader/FilterPredicate.UUIDColumnPredicate.html#column()" class="member-name-link">column()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.UUIDColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.UUIDColumnPredicate</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>column</code> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ColumnBatch.html" class="type-name-link" title="class in dev.hardwood.writer">ColumnBatch</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">One aligned slice of a file's columns.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnChunk.html" class="type-name-link" title="class in dev.hardwood.metadata">ColumnChunk</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
@@ -613,11 +625,23 @@ created via <a href="dev/hardwood/HardwoodContext.html#create(int)"><code>Hardwo
 </dd>
 <dt><a href="dev/hardwood/writer/ParquetFileWriter.html#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" class="member-name-link">create(OutputFile, FileSchema)</a> - Static method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
 <dd>
+<div class="block">Opens a writer with the default <a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)" class="member-name-link">create(OutputFile, FileSchema, WriterConfig)</a> - Static method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
+<dd>
 <div class="block">Opens a writer, writing the leading magic bytes.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/FileMetaData.html#createdBy()" class="member-name-link">createdBy()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/FileMetaData.html#param-createdBy"><code>createdBy</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#createdBy()" class="member-name-link">createdBy()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">The <code>created_by</code> identifier written into the file footer.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#createdBy(java.lang.String)" class="member-name-link">createdBy(String)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets the <code>created_by</code> footer identifier; must be non-null.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3CredentialsProvider.html#credentials()" class="member-name-link">credentials()</a> - Method in interface dev.hardwood.s3.<a href="dev/hardwood/s3/S3CredentialsProvider.html" title="interface in dev.hardwood.s3">S3CredentialsProvider</a></dt>
 <dd>
@@ -698,10 +722,26 @@ created via <a href="dev/hardwood/HardwoodContext.html#create(int)"><code>Hardwo
 <dd>
 <div class="block">Creates an instance of a <code>DecimalType</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_CREATED_BY" class="member-name-link">DEFAULT_CREATED_BY</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Default <code>created_by</code> identifier written into the file footer.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Default page target: 1 MiB of uncompressed values per data page.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Default row-group target: 128 MiB of uncompressed data per row group.</div>
+</dd>
 <dt><a href="dev/hardwood/aws/auth/SdkCredentialsProviders.html#defaultChain()" class="member-name-link">defaultChain()</a> - Static method in class dev.hardwood.aws.auth.<a href="dev/hardwood/aws/auth/SdkCredentialsProviders.html" title="class in dev.hardwood.aws.auth">SdkCredentialsProviders</a></dt>
 <dd>
 <div class="block">Returns a provider backed by the full AWS default credential chain
 (env vars, <code>~/.aws/credentials</code>, EC2/ECS instance profile, SSO, web identity, etc.).</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#defaults()" class="member-name-link">defaults()</a> - Static method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">The default configuration.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.Not.html#delegate()" class="member-name-link">delegate()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.Not.html" title="class in dev.hardwood.reader">FilterPredicate.Not</a></dt>
 <dd>
@@ -2291,6 +2331,14 @@ and transport settings.</div>
 <dd>
 <div class="block">View the elements as a <a href="dev/hardwood/row/PqIntList.html" title="interface in dev.hardwood.row"><code>PqIntList</code></a> (no boxing).</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ColumnBatch.html#ints(int,int%5B%5D)" class="member-name-link">ints(int, int[])</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
+<dd>
+<div class="block">Adds the values for a <code>REQUIRED INT32</code> column, addressed by index.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ColumnBatch.html#ints(java.lang.String,int%5B%5D)" class="member-name-link">ints(String, int[])</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
+<dd>
+<div class="block">Adds the values for a <code>REQUIRED INT32</code> column, addressed by name.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.IntType.html#%3Cinit%3E(int,boolean)" class="member-name-link">IntType(int, boolean)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.IntType.html" title="class in dev.hardwood.metadata">LogicalType.IntType</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>IntType</code> record class.</div>
@@ -3151,6 +3199,14 @@ current batch.&quot;</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/PageFilterEvent.html#pagesSkipped" class="member-name-link">pagesSkipped</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PageFilterEvent.html" title="class in dev.hardwood.jfr">PageFilterEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#pageTargetBytes()" class="member-name-link">pageTargetBytes()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Maximum uncompressed bytes of values per data page.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#pageTargetBytes(int)" class="member-name-link">pageTargetBytes(int)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets the page target; must be at least one <code>INT32</code> (4 bytes).</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html" class="type-name-link" title="class in dev.hardwood.reader">ParquetFileReader</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
 <div class="block">Reader for one or more Parquet files.</div>
@@ -3171,7 +3227,7 @@ row limit.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/ParquetFileWriter.html" class="type-name-link" title="class in dev.hardwood.writer">ParquetFileWriter</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
 <dd>
-<div class="block">Writes a Parquet file through a columnar API.</div>
+<div class="block">Writes a Parquet file through a columnar batch API.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#pathInSchema()" class="member-name-link">pathInSchema()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
@@ -3424,6 +3480,14 @@ source.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupFilterEvent.html#rowGroupsSkipped" class="member-name-link">rowGroupsSkipped</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupFilterEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Uncompressed byte threshold at which a row group is flushed.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#rowGroupTargetBytes(long)" class="member-name-link">rowGroupTargetBytes(long)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets the row-group target; must be positive.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#rowReader()" class="member-name-link">rowReader()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>
 <div class="block">Shortcut for <a href="dev/hardwood/reader/ParquetFileReader.html#buildRowReader()"><code>ParquetFileReader.buildRowReader()</code></a>.build() — read every row of every
@@ -4286,9 +4350,18 @@ does not match what the accessor expects — for example, calling
 <dd>
 <div class="block">Appends the remaining bytes of <code>data</code> to the file.</div>
 </dd>
-<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#writeInts(int,int%5B%5D)" class="member-name-link">writeInts(int, int[])</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#writeBatch(java.util.function.Consumer)" class="member-name-link">writeBatch(Consumer)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
 <dd>
-<div class="block">Writes the full contents of a <code>REQUIRED INT32</code> column.</div>
+<div class="block">Writes one aligned batch of column values, flushing row groups as the buffered
+data crosses the row-group target.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html" class="type-name-link" title="class in dev.hardwood.writer">WriterConfig</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">Tuning knobs for <a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html" class="type-name-link" title="class in dev.hardwood.writer">WriterConfig.Builder</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">Builder for <a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:X">X</h2>

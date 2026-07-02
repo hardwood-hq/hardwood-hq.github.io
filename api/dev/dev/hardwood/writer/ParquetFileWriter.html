@@ -59,7 +59,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" tabindex="0">create(OutputFile, FileSchema)</a></li>
-<li><a href="#writeInts(int,int%5B%5D)" tabindex="0">writeInts(int, int[])</a></li>
+<li><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)" tabindex="0">create(OutputFile, FileSchema, WriterConfig)</a></li>
+<li><a href="#writeBatch(java.util.function.Consumer)" tabindex="0">writeBatch(Consumer)</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
 </ol>
 </li>
@@ -84,12 +85,12 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">ParquetFileWriter</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
-<div class="block"><p>Writes a Parquet file through a columnar API.</p>
-<p>This increment writes flat schemas of <code>REQUIRED INT32</code> columns as a single row
-group of uncompressed, PLAIN-encoded data pages. A column larger than the target
-page size is split across multiple size-bounded data pages. Each column's values
-are supplied once via <a href="#writeInts(int,int%5B%5D)"><code>writeInts(int, int[])</code></a>; the row group and footer are finalized on
-<a href="#close()"><code>close()</code></a>.</p>
+<div class="block"><p>Writes a Parquet file through a columnar batch API.</p>
+<p>This increment writes flat schemas of <code>REQUIRED INT32</code> columns. Data is supplied as
+<a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a> slices; the writer packs each column into size-bounded, uncompressed
+<code>PLAIN</code> data pages and flushes a row group once its buffered data reaches the
+configured target, so peak memory is bounded regardless of how much is written. The
+row groups and footer are finalized on <a href="#close()"><code>close()</code></a>.</p>
 <p>The file is produced front to back and is valid only after <code>close()</code> returns.</p>
 </div>
 </div>
@@ -114,13 +115,20 @@ are supplied once via <a href="#writeInts(int,int%5B%5D)"><code>writeInts(int, i
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" class="member-name-link">create</a><wbr>(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
  <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Opens a writer with the default <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)" class="member-name-link">create</a><wbr>(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
+ <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema,
+ <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a>&nbsp;config)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Opens a writer, writing the leading magic bytes.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeInts(int,int%5B%5D)" class="member-name-link">writeInts</a><wbr>(int&nbsp;columnIndex,
- int[]&nbsp;values)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Writes the full contents of a <code>REQUIRED INT32</code> column.</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeBatch(java.util.function.Consumer)" class="member-name-link">writeBatch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a>&gt;&nbsp;filler)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Writes one aligned batch of column values, flushing row groups as the buffered
+data crosses the row-group target.</div>
 </div>
 </div>
 </div>
@@ -146,7 +154,7 @@ are supplied once via <a href="#writeInts(int,int%5B%5D)"><code>writeInts(int, i
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
  <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema)</span>
                                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block">Opens a writer, writing the leading magic bytes.</div>
+<div class="block">Opens a writer with the default <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>out</code> - the destination</dd>
@@ -155,25 +163,55 @@ are supplied once via <a href="#writeInts(int,int%5B%5D)"><code>writeInts(int, i
 <dd>an open writer</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the destination cannot be opened</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema is not flat</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema is not a flat schema of
+<code>REQUIRED INT32</code> columns</dd>
 </dl>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="writeInts(int,int[])">
-<h3>writeInts</h3>
+<section class="detail" id="create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)">
+<h3>create</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeInts</span><wbr><span class="parameters">(int&nbsp;columnIndex,
- int[]&nbsp;values)</span>
-               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block">Writes the full contents of a <code>REQUIRED INT32</code> column.</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
+ <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema,
+ <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a>&nbsp;config)</span>
+                                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Opens a writer, writing the leading magic bytes.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>columnIndex</code> - zero-based leaf-column index</dd>
-<dd><code>values</code> - the column values; its length must match every other column</dd>
+<dd><code>out</code> - the destination</dd>
+<dd><code>schema</code> - the flat schema to write</dd>
+<dd><code>config</code> - the writer configuration</dd>
+<dt>Returns:</dt>
+<dd>an open writer</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the destination cannot be opened</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema is not a flat schema of
+<code>REQUIRED INT32</code> columns</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="writeBatch(java.util.function.Consumer)">
+<h3>writeBatch</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeBatch</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a>&gt;&nbsp;filler)</span>
+                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><p>Writes one aligned batch of column values, flushing row groups as the buffered
+data crosses the row-group target. A batch that would overflow the current row
+group is split at the boundary.</p>
+<p>The writer creates the batch — bound to the schema — passes it to <code>filler</code> to be
+populated (columns addressed by index or name), then submits it. There is no
+separate build or submit step to forget.</p>
+</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>filler</code> - populates the batch's columns; must cover every column exactly once</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the write fails</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the batch does not cover every column</dd>
 </dl>
 </div>
 </section>
