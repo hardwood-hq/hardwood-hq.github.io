@@ -85,10 +85,11 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
 <div class="block"><p>Writes a Parquet file through a columnar API.</p>
-<p>This first increment writes flat schemas of <code>REQUIRED INT32</code> columns as a
-single row group with one uncompressed, PLAIN-encoded data page per column.
-Each column's values are supplied once via <a href="#writeInts(int,int%5B%5D)"><code>writeInts(int, int[])</code></a>; the row group and
-footer are finalized on <a href="#close()"><code>close()</code></a>.</p>
+<p>This increment writes flat schemas of <code>REQUIRED INT32</code> columns as a single row
+group of uncompressed, PLAIN-encoded data pages. A column larger than the target
+page size is split across multiple size-bounded data pages. Each column's values
+are supplied once via <a href="#writeInts(int,int%5B%5D)"><code>writeInts(int, int[])</code></a>; the row group and footer are finalized on
+<a href="#close()"><code>close()</code></a>.</p>
 <p>The file is produced front to back and is valid only after <code>close()</code> returns.</p>
 </div>
 </div>
