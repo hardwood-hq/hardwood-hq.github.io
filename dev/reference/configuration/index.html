@@ -1814,12 +1814,10 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>SIMD support: enabled (256-bit vectors)
 </code></pre></div></p>
 <p>The vector width depends on your CPU (128-bit for SSE/NEON, 256-bit for AVX2, 512-bit for AVX-512).</p>
-<p>To disable SIMD and force scalar operations (for debugging or comparison), set the system property:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>-Dhardwood.simd.disabled<span class="o">=</span><span class="nb">true</span>
-</code></pre></div>
+<p>SIMD engages only when the incubator module is added, so to run scalar operations (for debugging or comparison) simply omit the <code>--add-modules jdk.incubator.vector</code> argument.</p>
 <h2 id="jfr-java-flight-recorder-events">JFR (Java Flight Recorder) Events<a class="headerlink" href="#jfr-java-flight-recorder-events" title="Permanent link">&para;</a></h2>
 <p>Hardwood emits JFR events during file reading, enabling detailed performance profiling with zero overhead when recording is off. Start a JFR recording to capture them:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>java<span class="w"> </span>-XX:StartFlightRecording<span class="o">=</span><span class="nv">filename</span><span class="o">=</span>recording.jfr,settings<span class="o">=</span>profile<span class="w"> </span>...
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>java<span class="w"> </span>-XX:StartFlightRecording<span class="o">=</span><span class="nv">filename</span><span class="o">=</span>recording.jfr,settings<span class="o">=</span>profile<span class="w"> </span>...
 </code></pre></div>
 <p>Or attach dynamically via <code>jcmd &lt;pid&gt; JFR.start</code>.</p>
 <p><strong>Available events:</strong></p>
@@ -1906,11 +1904,6 @@
 <td><code>true</code></td>
 <td>Set to <code>false</code> to disable libdeflate for GZIP decompression</td>
 </tr>
-<tr>
-<td><code>hardwood.simd.disabled</code></td>
-<td><code>false</code></td>
-<td>Set to <code>true</code> to force scalar operations instead of SIMD</td>
-</tr>
 </tbody>
 </table>
 
@@ -1962,8 +1955,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2824eb55705278a160953e34560fc5d435c0eba8" target="_blank" rel="noopener">
-      2824eb55
+    <a href="https://github.com/hardwood-hq/hardwood/tree/9bb5bc6f6f48d38a451ddb501cf3cd2c624947f5" target="_blank" rel="noopener">
+      9bb5bc6f
     </a>
   
 </div>
