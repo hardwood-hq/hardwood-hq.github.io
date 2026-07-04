@@ -267,6 +267,10 @@ to be assembled by the assembly thread.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/ReaderConfig.Builder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ReaderConfig.Builder.html" title="class in dev.hardwood.reader">ReaderConfig.Builder</a></dt>
+<dd>
+<div class="block">Builds the immutable configuration.</div>
+</dd>
 <dt><a href="dev/hardwood/s3/S3Source.Builder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></dt>
 <dd>
 <div class="block">Builds the <a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3"><code>S3Source</code></a>.</div>
@@ -291,6 +295,10 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Begin configuring a <a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented
 access to a column projection.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ReaderConfig.html#builder()" class="member-name-link">builder()</a> - Static method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ReaderConfig.html" title="class in dev.hardwood.reader">ReaderConfig</a></dt>
+<dd>
+<div class="block">A builder for setting reader options.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3Source.html#builder()" class="member-name-link">builder()</a> - Static method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>
@@ -738,6 +746,10 @@ created via <a href="dev/hardwood/HardwoodContext.html#create(int)"><code>Hardwo
 <dd>
 <div class="block">Returns a provider backed by the full AWS default credential chain
 (env vars, <code>~/.aws/credentials</code>, EC2/ECS instance profile, SSO, web identity, etc.).</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ReaderConfig.html#defaults()" class="member-name-link">defaults()</a> - Static method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ReaderConfig.html" title="class in dev.hardwood.reader">ReaderConfig</a></dt>
+<dd>
+<div class="block">The default configuration (no options set).</div>
 </dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#defaults()" class="member-name-link">defaults()</a> - Static method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
@@ -3138,6 +3150,11 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Open a single Parquet file with a shared context.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext,dev.hardwood.reader.ReaderConfig)" class="member-name-link">open(InputFile, HardwoodContext, ReaderConfig)</a> - Static method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Open a single Parquet file with a shared context and an explicit
+<a href="dev/hardwood/reader/ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>.</div>
+</dd>
 <dt><a href="dev/hardwood/Hardwood.html#openAll(java.util.List)" class="member-name-link">openAll(List)</a> - Method in class dev.hardwood.<a href="dev/hardwood/Hardwood.html" title="class in dev.hardwood">Hardwood</a></dt>
 <dd>
 <div class="block">Open multiple Parquet files for reading with cross-file prefetching.</div>
@@ -3150,9 +3167,22 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Open multiple Parquet files with a shared context.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/ParquetFileReader.html#openAll(java.util.List,dev.hardwood.HardwoodContext,dev.hardwood.reader.ReaderConfig)" class="member-name-link">openAll(List, HardwoodContext, ReaderConfig)</a> - Static method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
+<dd>
+<div class="block">Open multiple Parquet files with a shared context and an explicit
+<a href="dev/hardwood/reader/ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ReaderConfig.Builder.html#option(java.lang.String,java.lang.String)" class="member-name-link">option(String, String)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ReaderConfig.Builder.html" title="class in dev.hardwood.reader">ReaderConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets a reader option.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/RepetitionType.html#OPTIONAL" class="member-name-link">OPTIONAL</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a></dt>
 <dd>
 <div class="block">Field may be null.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ReaderConfig.html#options()" class="member-name-link">options()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ReaderConfig.html" title="class in dev.hardwood.reader">ReaderConfig</a></dt>
+<dd>
+<div class="block">The options set on this config, as an immutable map.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#or(dev.hardwood.reader.FilterPredicate...)" class="member-name-link">or(FilterPredicate...)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>&nbsp;</dd>
@@ -3354,6 +3384,14 @@ source.</div>
 <dt><a href="dev/hardwood/row/PqList.html#rawValues()" class="member-name-link">rawValues()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>
 <div class="block">View the elements as a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> in their underlying physical form, as in <a href="dev/hardwood/row/PqList.html#getRaw(int)"><code>PqList.getRaw(int)</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ReaderConfig.html" class="type-name-link" title="class in dev.hardwood.reader">ReaderConfig</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Read-time behaviour knobs for <a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ReaderConfig.Builder.html" class="type-name-link" title="class in dev.hardwood.reader">ReaderConfig.Builder</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Builder for <a href="dev/hardwood/reader/ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/InputFile.html#readRange(long,int)" class="member-name-link">readRange(long, int)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
 <dd>

@@ -61,8 +61,10 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list">
 <li><a href="#open(dev.hardwood.InputFile)" tabindex="0">open(InputFile)</a></li>
 <li><a href="#open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext)" tabindex="0">open(InputFile, HardwoodContext)</a></li>
+<li><a href="#open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext,dev.hardwood.reader.ReaderConfig)" tabindex="0">open(InputFile, HardwoodContext, ReaderConfig)</a></li>
 <li><a href="#openAll(java.util.List)" tabindex="0">openAll(List)</a></li>
 <li><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext)" tabindex="0">openAll(List, HardwoodContext)</a></li>
+<li><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext,dev.hardwood.reader.ReaderConfig)" tabindex="0">openAll(List, HardwoodContext, ReaderConfig)</a></li>
 <li><a href="#getFileMetaData()" tabindex="0">getFileMetaData()</a></li>
 <li><a href="#getFileSchema()" tabindex="0">getFileSchema()</a></li>
 <li><a href="#isMultiFile()" tabindex="0">isMultiFile()</a></li>
@@ -234,15 +236,31 @@ every row group, no filter.</div>
 <div class="block">Open a single Parquet file with a shared context.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext,dev.hardwood.reader.ReaderConfig)" class="member-name-link">open</a><wbr>(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile,
+ <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context,
+ <a href="ReaderConfig.html" title="class in dev.hardwood.reader">ReaderConfig</a>&nbsp;readerConfig)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Open multiple Parquet files with a dedicated context.</div>
+<div class="block">Open a single Parquet file with a shared context and an explicit
+<a href="ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
- <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Open multiple Parquet files with a dedicated context.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
+ <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Open multiple Parquet files with a shared context.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext,dev.hardwood.reader.ReaderConfig)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
+ <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context,
+ <a href="ReaderConfig.html" title="class in dev.hardwood.reader">ReaderConfig</a>&nbsp;readerConfig)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Open multiple Parquet files with a shared context and an explicit
+<a href="ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowReader()" class="member-name-link">rowReader</a>()</code></div>
@@ -304,6 +322,25 @@ the context.</p>
 </section>
 </li>
 <li>
+<section class="detail" id="open(dev.hardwood.InputFile,dev.hardwood.HardwoodContext,dev.hardwood.reader.ReaderConfig)">
+<h3>open</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">open</span><wbr><span class="parameters">(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile,
+ <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context,
+ <a href="ReaderConfig.html" title="class in dev.hardwood.reader">ReaderConfig</a>&nbsp;readerConfig)</span>
+                              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Open a single Parquet file with a shared context and an explicit
+<a href="ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>. The context (shared runtime resources) and the config
+(per-read behaviour) are independent, so one context can back reads with
+different configs.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="openAll(java.util.List)">
 <h3>openAll</h3>
 <div class="horizontal-scroll">
@@ -328,6 +365,23 @@ opened eagerly so any I/O or metadata error surfaces immediately.</div>
  <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</span>
                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Open multiple Parquet files with a shared context.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="openAll(java.util.List,dev.hardwood.HardwoodContext,dev.hardwood.reader.ReaderConfig)">
+<h3>openAll</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
+ <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context,
+ <a href="ReaderConfig.html" title="class in dev.hardwood.reader">ReaderConfig</a>&nbsp;readerConfig)</span>
+                                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Open multiple Parquet files with a shared context and an explicit
+<a href="ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>

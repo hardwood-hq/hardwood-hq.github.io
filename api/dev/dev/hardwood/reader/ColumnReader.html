@@ -484,8 +484,14 @@ rather than indexing by record.</p>
 <h3>getDefinitionLevels</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int[]</span>&nbsp;<span class="element-name">getDefinitionLevels</span>()</div>
-<div class="block">Raw definition levels for the current batch. Returns <code>null</code> for flat
-columns; their validity is fully captured by <a href="#getLeafValidity()"><code>getLeafValidity()</code></a>.</div>
+<div class="block"><p>Raw definition levels for the current batch. Returns <code>null</code> for flat
+columns; their validity is fully captured by <a href="#getLeafValidity()"><code>getLeafValidity()</code></a>.</p>
+<p>When the batch was decoded via the fixed-size-list fast path the level
+arrays are not materialized during decode; this escape hatch synthesizes
+them on demand (every leaf present, so <code>maxDefinitionLevel</code>) so callers
+see the same levels the regular path would produce. It is expected to be
+called rarely, so the arrays are rebuilt per call rather than cached.</p>
+</div>
 </div>
 </section>
 </li>
@@ -494,8 +500,12 @@ columns; their validity is fully captured by <a href="#getLeafValidity()"><code>
 <h3>getRepetitionLevels</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int[]</span>&nbsp;<span class="element-name">getRepetitionLevels</span>()</div>
-<div class="block">Raw repetition levels for the current batch. Returns <code>null</code> for columns
-whose <code>maxRepetitionLevel == 0</code>.</div>
+<div class="block"><p>Raw repetition levels for the current batch. Returns <code>null</code> for columns
+whose <code>maxRepetitionLevel == 0</code>.</p>
+<p>On a fixed-size-list fast-path batch the levels are synthesized on demand
+(each row is <code>0</code> followed by <code>k - 1</code> ones), matching the regular path. See
+<a href="#getDefinitionLevels()"><code>getDefinitionLevels()</code></a>.</p>
+</div>
 </div>
 </section>
 </li>

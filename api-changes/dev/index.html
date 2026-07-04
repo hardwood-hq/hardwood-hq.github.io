@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Hardwood API report — HEAD (9bb5bc6) vs 1.0.0.Final</title>
+<title>Hardwood API report — HEAD (87ee4e9) vs 1.0.0.Final</title>
 <style>
 body {
     font-family: Verdana;
@@ -173,7 +173,7 @@ ul {
 </head>
 <body>
 <h1>Hardwood API report</h1>
-<p><a href="https://github.com/hardwood-hq/hardwood/commit/9bb5bc6f6f48d38a451ddb501cf3cd2c624947f5" target="_blank" rel="noopener">HEAD (9bb5bc6)</a> vs <a href="https://github.com/hardwood-hq/hardwood/commit/cb41af6d068792dc1c2bcd43ca7afbffa190aa36" target="_blank" rel="noopener">1.0.0.Final</a> &mdash; generated 2026-07-02T15:04:15Z</p>
+<p><a href="https://github.com/hardwood-hq/hardwood/commit/87ee4e9cfacf9b27c4b7264ff23c67706a93b942" target="_blank" rel="noopener">HEAD (87ee4e9)</a> vs <a href="https://github.com/hardwood-hq/hardwood/commit/cb41af6d068792dc1c2bcd43ca7afbffa190aa36" target="_blank" rel="noopener">1.0.0.Final</a> &mdash; generated 2026-07-04T07:11:17Z</p>
 <ul>
   <li><a href="#hardwood-core">hardwood-core</a></li>
   <li><a href="#hardwood-avro">hardwood-avro</a></li>
@@ -201,7 +201,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-07-02T15:04:14.964+0000
+				2026-07-04T07:11:17.352+0000
 			</td>
 		</tr>
 		<tr>
@@ -299,8 +299,48 @@ ul {
 		<span class="modified">MODIFIED</span>
 	</td>
 	<td>
+		<a href="#dev.hardwood.reader.ColumnReader">
+			dev.hardwood.reader.ColumnReader
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.reader.ColumnReaders">
+			dev.hardwood.reader.ColumnReaders
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED</span>
+	</td>
+	<td>
 		<a href="#dev.hardwood.reader.ParquetFileReader">
 			dev.hardwood.reader.ParquetFileReader
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="new">NEW</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.reader.ReaderConfig">
+			dev.hardwood.reader.ReaderConfig
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="new">NEW</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.reader.ReaderConfig$Builder">
+			dev.hardwood.reader.ReaderConfig$Builder
 		</a>
 	</td>
 </tr>
@@ -1398,6 +1438,82 @@ ul {
 	</div>
 </div>
 <div>
+	<div class="class" id="dev.hardwood.reader.ColumnReader">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.ColumnReader"></a>
+				<span class="modified">MODIFIED</span>
+				
+				<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.reader.ColumnReader
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.reader.ColumnReaders">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.ColumnReaders"></a>
+				<span class="modified">MODIFIED</span>
+				
+				<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.reader.ColumnReaders
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			
+		</div>
+		
+	</div>
+</div>
+<div>
 	<div class="class" id="dev.hardwood.reader.ParquetFileReader">
 		<div class="class_header">
 			<span class="label">
@@ -1430,7 +1546,475 @@ ul {
 			
 		</div>
 		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">static</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.reader.ParquetFileReader</span></td>
+<td>open(<span class="method_parameter unchanged">dev.hardwood.InputFile</span>, <span class="method_parameter unchanged">dev.hardwood.HardwoodContext</span>, <span class="method_parameter unchanged">dev.hardwood.reader.ReaderConfig</span>)</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			154
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">static</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.reader.ParquetFileReader</span></td>
+<td>openAll(<span class="method_parameter unchanged">java.util.List<div class="tooltip"><span class="unchanged method_parameter">&#60;..&#62;</span><div class="tooltiptext"><table><tr><td class="table_head_td">New:</td><td>? extends dev.hardwood.InputFile</td></tr></table></div></div></span>, <span class="method_parameter unchanged">dev.hardwood.HardwoodContext</span>, <span class="method_parameter unchanged">dev.hardwood.reader.ReaderConfig</span>)</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			174
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.reader.ReaderConfig">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.ReaderConfig"></a>
+				<span class="new">NEW</span>
+				
+				<span class="modifier new">final</span>
+<span class="modifier new">public</span>
+
+				<span class="new">class</span>
+&#160;dev.hardwood.reader.ReaderConfig
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
 			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">static</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.reader.ReaderConfig$Builder</span></td>
+<td>builder()</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			43
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">static</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.reader.ReaderConfig</span></td>
+<td>defaults()</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			38
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">java.util.Map<div class="tooltip"><span class="unchanged method_parameter">&#60;..&#62;</span><div class="tooltiptext"><table><tr><td class="table_head_td">New:</td><td>java.lang.String</td><td>java.lang.String</td></tr></table></div></div></span></td>
+<td>options()</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			49
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.reader.ReaderConfig$Builder">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.ReaderConfig$Builder"></a>
+				<span class="new">NEW</span>
+				
+				<span class="modifier new">final</span>
+<span class="modifier new">static</span>
+<span class="modifier new">public</span>
+
+				<span class="new">class</span>
+&#160;dev.hardwood.reader.ReaderConfig$Builder
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.reader.ReaderConfig</span></td>
+<td>build()</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			71
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.reader.ReaderConfig$Builder</span></td>
+<td>option(<span class="method_parameter unchanged">java.lang.String</span>, <span class="method_parameter unchanged">java.lang.String</span>)</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			65
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
 		</div>
 		
 	</div>
@@ -2763,7 +3347,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-07-02T15:04:15.224+0000
+				2026-07-04T07:11:17.608+0000
 			</td>
 		</tr>
 		<tr>
@@ -2835,7 +3419,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-07-02T15:04:15.071+0000
+				2026-07-04T07:11:17.457+0000
 			</td>
 		</tr>
 		<tr>
@@ -2907,7 +3491,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-07-02T15:04:15.141+0000
+				2026-07-04T07:11:17.544+0000
 			</td>
 		</tr>
 		<tr>
