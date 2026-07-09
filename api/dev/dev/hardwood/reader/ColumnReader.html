@@ -122,7 +122,7 @@ real-items-only counts. Phantom positions for null/empty parents are
 excluded; <code>getLayerOffsets(k)[i+1] - getLayerOffsets(k)[i] == 0</code>
 distinguishes empty from null at REPEATED layers (validity carries the
 null bit).</p>
-<p><strong>Array ownership.</strong> Every array and <a href="Validity.html" title="interface in dev.hardwood.reader"><code>Validity</code></a> handed back by an
+<p><strong>Array ownership.</strong> Every array and <a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> handed back by an
 accessor (<a href="#getInts()"><code>getInts()</code></a>, <a href="#getLongs()"><code>getLongs()</code></a>, <a href="#getLayerOffsets(int)"><code>getLayerOffsets(int)</code></a>,
 <a href="#getLeafValidity()"><code>getLeafValidity()</code></a>, and the rest) belongs to the current batch and is
 freshly allocated by the <a href="#nextBatch()"><code>nextBatch()</code></a> call that produced it. A later
@@ -202,12 +202,12 @@ buffer.</div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Offsets at <code>layer</code>.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Validity.html" title="interface in dev.hardwood.reader">Validity</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../Validity.html" title="interface in dev.hardwood">Validity</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLayerValidity(int)" class="member-name-link">getLayerValidity</a><wbr>(int&nbsp;layer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Validity at <code>layer</code>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Validity.html" title="interface in dev.hardwood.reader">Validity</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../Validity.html" title="interface in dev.hardwood">Validity</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLeafValidity()" class="member-name-link">getLeafValidity</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Validity over the leaf-value array, indexed <code>0..getValueCount()</code>.</div>
@@ -326,8 +326,8 @@ safe to call before the first <a href="#nextBatch()"><code>nextBatch()</code></a
 <section class="detail" id="getLayerValidity(int)">
 <h3>getLayerValidity</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Validity.html" title="interface in dev.hardwood.reader">Validity</a></span>&nbsp;<span class="element-name">getLayerValidity</span><wbr><span class="parameters">(int&nbsp;layer)</span></div>
-<div class="block">Validity at <code>layer</code>. Returns <a href="Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a> when no item at
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../Validity.html" title="interface in dev.hardwood">Validity</a></span>&nbsp;<span class="element-name">getLayerValidity</span><wbr><span class="parameters">(int&nbsp;layer)</span></div>
+<div class="block">Validity at <code>layer</code>. Returns <a href="../Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a> when no item at
 that layer is null in the current batch (the sparse fast path);
 otherwise returns a wrapper over the per-item null bitmap.</div>
 </div>
@@ -353,9 +353,9 @@ or if the layer is not <a href="LayerKind.html#REPEATED"><code>LayerKind.REPEATE
 <section class="detail" id="getLeafValidity()">
 <h3>getLeafValidity</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Validity.html" title="interface in dev.hardwood.reader">Validity</a></span>&nbsp;<span class="element-name">getLeafValidity</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../Validity.html" title="interface in dev.hardwood">Validity</a></span>&nbsp;<span class="element-name">getLeafValidity</span>()</div>
 <div class="block">Validity over the leaf-value array, indexed <code>0..getValueCount()</code>.
-Returns <a href="Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a> when no leaf in the current batch is
+Returns <a href="../Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a> when no leaf in the current batch is
 null.</div>
 </div>
 </section>

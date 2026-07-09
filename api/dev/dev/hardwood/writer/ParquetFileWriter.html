@@ -86,11 +86,12 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
 <div class="block"><p>Writes a Parquet file through a columnar batch API.</p>
-<p>This increment writes flat schemas of <code>REQUIRED INT32</code> columns. Data is supplied as
-<a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a> slices; the writer packs each column into size-bounded, uncompressed
-<code>PLAIN</code> data pages and flushes a row group once its buffered data reaches the
-configured target, so peak memory is bounded regardless of how much is written. The
-row groups and footer are finalized on <a href="#close()"><code>close()</code></a>.</p>
+<p>This increment writes flat schemas of <code>REQUIRED</code> and <code>OPTIONAL INT32</code> columns. Data is
+supplied as <a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a> slices; the writer packs each column into size-bounded,
+uncompressed <code>PLAIN</code> data pages — an <code>OPTIONAL</code> column's pages carrying an RLE
+definition-level stream ahead of the non-null values — and flushes a row group once
+its buffered data reaches the configured target, so peak memory is bounded regardless
+of how much is written. The row groups and footer are finalized on <a href="#close()"><code>close()</code></a>.</p>
 <p>The file is produced front to back and is valid only after <code>close()</code> returns.</p>
 </div>
 </div>
@@ -163,8 +164,8 @@ data crosses the row-group target.</div>
 <dd>an open writer</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the destination cannot be opened</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema is not a flat schema of
-<code>REQUIRED INT32</code> columns</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema is not a flat schema of <code>INT32</code>
+columns</dd>
 </dl>
 </div>
 </section>
@@ -187,8 +188,8 @@ data crosses the row-group target.</div>
 <dd>an open writer</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the destination cannot be opened</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema is not a flat schema of
-<code>REQUIRED INT32</code> columns</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema is not a flat schema of <code>INT32</code>
+columns</dd>
 </dl>
 </div>
 </section>

@@ -67,9 +67,10 @@ loadScripts(document, 'script');</script>
 <div class="package-signature">package <span class="element-name">dev.hardwood.writer</span></div>
 <section class="package-description" id="package-description">
 <div class="block"><p>Parquet file writer with a columnar API.</p>
-<p><a href="ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a> writes a flat schema to a <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> as a
-single row group, taking each column's values through a typed columnar method.
-Build the target schema with <a href="../schema/FileSchema.html#builder(java.lang.String)"><code>FileSchema.builder(String)</code></a>.</p>
+<p><a href="ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a> writes a flat schema of <code>REQUIRED</code> and <code>OPTIONAL INT32</code> columns to
+a <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a>, taking each column's values through <a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a> slices
+and banding them into size-bounded pages and row groups. Build the target schema with
+<a href="../schema/FileSchema.html#builder(java.lang.String)"><code>FileSchema.builder(String)</code></a>.</p>
 </div>
 </section>
 </div>

@@ -60,6 +60,10 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list">
 <li><a href="#ints(int,int%5B%5D)" tabindex="0">ints(int, int[])</a></li>
 <li><a href="#ints(java.lang.String,int%5B%5D)" tabindex="0">ints(String, int[])</a></li>
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)" tabindex="0">ints(int, int[], Validity)</a></li>
+<li><a href="#ints(java.lang.String,int%5B%5D,dev.hardwood.Validity)" tabindex="0">ints(String, int[], Validity)</a></li>
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)" tabindex="0">ints(int, int[], boolean[])</a></li>
+<li><a href="#ints(java.lang.String,int%5B%5D,boolean%5B%5D)" tabindex="0">ints(String, int[], boolean[])</a></li>
 </ol>
 </li>
 </ol>
@@ -90,6 +94,22 @@ twice (whether by index or name) all fail eagerly rather than at write time.</p>
         .ints(0, idColumn)
         .ints(&quot;value&quot;, valueColumn));
 </code></pre>
+<p>An <code>OPTIONAL</code> column carries its nulls as a <a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> alongside its values. The values
+array is full length — one slot per row — and the entry at a null row is ignored. The
+<a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> uses the null-centric polarity the reader exposes (<code>Validity#isNull</code>), so a
+value read back as null is written by marking that row null. Because <a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> is an
+interface, the caller picks the representation through its factory: <a href="../Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a>
+for none, <a href="../Validity.html#ofNulls(boolean%5B%5D)"><code>Validity.ofNulls(boolean[])</code></a> to bridge a plain <code>boolean[]</code> mask, <a href="../Validity.html#of(long%5B%5D)"><code>Validity.of(long[])</code></a> for a
+packed present-bitmap — and, in the future, a sparse form — all consumed identically by
+the writer.</p>
+<pre><code class="language-java">writer.writeBatch(b -&gt; b
+        .ints(0, idColumn)
+        .ints(&quot;value&quot;, valueColumn, valueNulls));       // boolean[] nulls, true = null
+</code></pre>
+<p>The [#ints(int, int[], boolean[])] overload is convenience sugar over
+<a href="../Validity.html#ofNulls(boolean%5B%5D)"><code>Validity.ofNulls(boolean[])</code></a>. The mask-less [#ints(int, int[])] setter is the all-present form for
+both <code>REQUIRED</code> and <code>OPTIONAL</code> columns; a null mask is only accepted for an <code>OPTIONAL</code>
+column.</p>
 </div>
 </div>
 </section>
@@ -113,10 +133,40 @@ twice (whether by index or name) all fail eagerly rather than at write time.</p>
 <div class="block">Adds the values for a <code>REQUIRED INT32</code> column, addressed by index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ints(int,int%5B%5D,boolean%5B%5D)" class="member-name-link">ints</a><wbr>(int&nbsp;columnIndex,
+ int[]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index, with nulls given
+as a plain mask.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)" class="member-name-link">ints</a><wbr>(int&nbsp;columnIndex,
+ int[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ints(java.lang.String,int%5B%5D)" class="member-name-link">ints</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
  int[]&nbsp;values)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds the values for a <code>REQUIRED INT32</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ints(java.lang.String,int%5B%5D,boolean%5B%5D)" class="member-name-link">ints</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ int[]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name, with nulls given
+as a plain mask.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ints(java.lang.String,int%5B%5D,dev.hardwood.Validity)" class="member-name-link">ints</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ int[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name.</div>
 </div>
 </div>
 </div>
@@ -177,6 +227,107 @@ has been written.</p>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column has that name, the column is already
 set (by name or index), or the length does not match the other columns</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ints(int,int[],dev.hardwood.Validity)">
+<h3>ints</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">ints</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ int[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block"><p>Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index.</p>
+<p>The values array is referenced, not copied, so it must not be mutated until the
+batch has been written; it is full length — one slot per row — and the entry at a
+null row is ignored.</p>
+</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>columnIndex</code> - zero-based leaf-column index</dd>
+<dd><code>values</code> - the column's values for this batch</dd>
+<dd><code>nulls</code> - the column's nulls; <code>nulls.isNull(i)</code> marks row <code>i</code> null</dd>
+<dt>Returns:</dt>
+<dd>this batch, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is not
+<code>OPTIONAL</code>, or the column is already set</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ints(java.lang.String,int[],dev.hardwood.Validity)">
+<h3>ints</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">ints</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ int[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>columnName</code> - the column's name</dd>
+<dd><code>values</code> - the column's values for this batch</dd>
+<dd><code>nulls</code> - the column's nulls; <code>nulls.isNull(i)</code> marks row <code>i</code> null</dd>
+<dt>Returns:</dt>
+<dd>this batch, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column has that name, the column is not
+<code>OPTIONAL</code>, or the column is already set</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ints(int,int[],boolean[])">
+<h3>ints</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">ints</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ int[]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index, with nulls given
+as a plain mask. Convenience sugar over [#ints(int, int[], Validity)] and
+<a href="../Validity.html#ofNulls(boolean%5B%5D)"><code>Validity.ofNulls(boolean[])</code></a>; unlike the <a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> form, the mask length is checked against
+the values.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>columnIndex</code> - zero-based leaf-column index</dd>
+<dd><code>values</code> - the column's values for this batch</dd>
+<dd><code>nulls</code> - the per-row null mask; <code>nulls[i] == true</code> marks row <code>i</code> null</dd>
+<dt>Returns:</dt>
+<dd>this batch, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is not
+<code>OPTIONAL</code>, the column is already set, or the lengths do not agree</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ints(java.lang.String,int[],boolean[])">
+<h3>ints</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">ints</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ int[]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name, with nulls given
+as a plain mask. Convenience sugar over [#ints(String, int[], Validity)] and
+<a href="../Validity.html#ofNulls(boolean%5B%5D)"><code>Validity.ofNulls(boolean[])</code></a>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>columnName</code> - the column's name</dd>
+<dd><code>values</code> - the column's values for this batch</dd>
+<dd><code>nulls</code> - the per-row null mask; <code>nulls[i] == true</code> marks row <code>i</code> null</dd>
+<dt>Returns:</dt>
+<dd>this batch, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column has that name, the column is not
+<code>OPTIONAL</code>, the column is already set, or the lengths do not agree</dd>
 </dl>
 </div>
 </section>

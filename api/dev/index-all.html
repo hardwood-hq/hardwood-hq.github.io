@@ -2204,7 +2204,7 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Check if there are more rows to read.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.html#hasNulls()" class="member-name-link">hasNulls()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dt><a href="dev/hardwood/Validity.html#hasNulls()" class="member-name-link">hasNulls()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
 <div class="block"><code>true</code> iff at least one item at this scope is null in the current
 batch.</div>
@@ -2339,9 +2339,27 @@ and transport settings.</div>
 <dd>
 <div class="block">Adds the values for a <code>REQUIRED INT32</code> column, addressed by index.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ColumnBatch.html#ints(int,int%5B%5D,boolean%5B%5D)" class="member-name-link">ints(int, int[], boolean[])</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
+<dd>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index, with nulls given
+as a plain mask.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ColumnBatch.html#ints(int,int%5B%5D,dev.hardwood.Validity)" class="member-name-link">ints(int, int[], Validity)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
+<dd>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/ColumnBatch.html#ints(java.lang.String,int%5B%5D)" class="member-name-link">ints(String, int[])</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
 <dd>
 <div class="block">Adds the values for a <code>REQUIRED INT32</code> column, addressed by name.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ColumnBatch.html#ints(java.lang.String,int%5B%5D,boolean%5B%5D)" class="member-name-link">ints(String, int[], boolean[])</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
+<dd>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name, with nulls given
+as a plain mask.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ColumnBatch.html#ints(java.lang.String,int%5B%5D,dev.hardwood.Validity)" class="member-name-link">ints(String, int[], Validity)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
+<dd>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.IntType.html#%3Cinit%3E(int,boolean)" class="member-name-link">IntType(int, boolean)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.IntType.html" title="class in dev.hardwood.metadata">LogicalType.IntType</a></dt>
 <dd>
@@ -2407,7 +2425,7 @@ and transport settings.</div>
 <dd>
 <div class="block"><code>true</code> when this reader was opened over more than one input file.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.html#isNotNull(int)" class="member-name-link">isNotNull(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dt><a href="dev/hardwood/Validity.html#isNotNull(int)" class="member-name-link">isNotNull(int)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
 <div class="block"><code>true</code> iff the item at index <code>i</code> is not null.</div>
 </dd>
@@ -2422,10 +2440,6 @@ and transport settings.</div>
 <dt><a href="dev/hardwood/row/PqVariant.html#isNull()" class="member-name-link">isNull()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></dt>
 <dd>
 <div class="block">True iff <a href="dev/hardwood/row/PqVariant.html#type()"><code>PqVariant.type()</code></a> is <a href="dev/hardwood/row/VariantType.html#NULL"><code>VariantType.NULL</code></a>.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/Validity.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
-<dd>
-<div class="block"><code>true</code> iff the item at index <code>i</code> is null.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqDoubleList.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqDoubleList.html" title="interface in dev.hardwood.row">PqDoubleList</a></dt>
 <dd>
@@ -2446,6 +2460,10 @@ and transport settings.</div>
 <dt><a href="dev/hardwood/row/StructAccessor.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
 <div class="block">Check if a field is null by field index.</div>
+</dd>
+<dt><a href="dev/hardwood/Validity.html#isNull(int)" class="member-name-link">isNull(int)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
+<dd>
+<div class="block"><code>true</code> iff the item at index <code>i</code> is null.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#isNull(java.lang.String)" class="member-name-link">isNull(String)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>
@@ -2908,17 +2926,17 @@ Variant spec.</div>
 <dd>
 <div class="block">Advance every underlying <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> to its next batch in lockstep.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.html#nextNotNull(int,int)" class="member-name-link">nextNotNull(int, int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dt><a href="dev/hardwood/Validity.html#nextNotNull(int,int)" class="member-name-link">nextNotNull(int, int)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
 <div class="block">Index of the next non-null item in <code>[from, count)</code>, or <code>-1</code> if
 every item in that range is null.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.html#nextNull(int,int)" class="member-name-link">nextNull(int, int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dt><a href="dev/hardwood/Validity.html#nextNull(int,int)" class="member-name-link">nextNull(int, int)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
 <div class="block">Index of the next null item in <code>[from, count)</code>, or <code>-1</code> if every
 item in that range is non-null.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.html#NO_NULLS" class="member-name-link">NO_NULLS</a> - Static variable in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dt><a href="dev/hardwood/Validity.html#NO_NULLS" class="member-name-link">NO_NULLS</a> - Static variable in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
 <div class="block">Singleton signalling &quot;no item at this scope is null in the
 current batch.&quot;</div>
@@ -2975,7 +2993,7 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/Statistics.html#param-nullCount"><code>nullCount</code></a> record component.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.html#nullCount(int)" class="member-name-link">nullCount(int)</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dt><a href="dev/hardwood/Validity.html#nullCount(int)" class="member-name-link">nullCount(int)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
 <div class="block">Number of null items in this batch.</div>
 </dd>
@@ -3014,7 +3032,7 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Object — string-keyed collection of Variant values.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/Validity.html#of(long%5B%5D)" class="member-name-link">of(long[])</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dt><a href="dev/hardwood/Validity.html#of(long%5B%5D)" class="member-name-link">of(long[])</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
 <div class="block">Wraps a packed <code>long[]</code> bitmap (set-bit = present storage).</div>
 </dd>
@@ -3067,6 +3085,11 @@ current batch.&quot;</div>
 <dt><a href="dev/hardwood/metadata/ColumnChunk.html#offsetIndexOffset()" class="member-name-link">offsetIndexOffset()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnChunk.html" title="class in dev.hardwood.metadata">ColumnChunk</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnChunk.html#param-offsetIndexOffset"><code>offsetIndexOffset</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/Validity.html#ofNulls(boolean%5B%5D)" class="member-name-link">ofNulls(boolean[])</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
+<dd>
+<div class="block">Builds a <code>Validity</code> over a per-item null mask, where <code>nulls[i] == true</code> marks item
+<code>i</code> null — the null-centric polarity of <a href="dev/hardwood/Validity.html#isNull(int)"><code>Validity.isNull(int)</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/InputFile.html#ofPaths(java.nio.file.Path,java.nio.file.Path...)" class="member-name-link">ofPaths(Path, Path...)</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
 <dd>
@@ -4152,10 +4175,11 @@ ordering added to the Parquet format after this release.</div>
 </dl>
 <h2 class="title" id="I:V">V</h2>
 <dl class="index">
-<dt><a href="dev/hardwood/reader/Validity.html" class="type-name-link" title="interface in dev.hardwood.reader">Validity</a> - Interface in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dt><a href="dev/hardwood/Validity.html" class="type-name-link" title="interface in dev.hardwood">Validity</a> - Interface in <a href="dev/hardwood/package-summary.html">dev.hardwood</a></dt>
 <dd>
-<div class="block">Per-item null bitmap at a <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> scope (a <code>STRUCT</code> /
-<code>REPEATED</code> layer or the leaf).</div>
+<div class="block">Per-item nullability over a run of items, shared by the reader and the writer: the
+reader returns it (a column-reader leaf or <code>STRUCT</code> / <code>REPEATED</code> layer scope), and the
+writer accepts it as a column's null mask.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.BinaryColumnPredicate.html#value()" class="member-name-link">value()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.BinaryColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BinaryColumnPredicate</a></dt>
 <dd>
@@ -4372,7 +4396,7 @@ does not match what the accessor expects — for example, calling
 </dl>
 <h2 class="title" id="I:W">W</h2>
 <dl class="index">
-<dt><a href="dev/hardwood/reader/Validity.html#words()" class="member-name-link">words()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/Validity.html" title="interface in dev.hardwood.reader">Validity</a></dt>
+<dt><a href="dev/hardwood/Validity.html#words()" class="member-name-link">words()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
 <div class="block">The word array (set-bit = present polarity).</div>
 </dd>

@@ -2061,7 +2061,7 @@
 <a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p">}</span>
 </code></pre></div>
-<p>The <a href="/api/dev/dev/hardwood/reader/Validity.html">Validity</a> type wraps the underlying null bitmap behind <code>isNull(i)</code> / <code>isNotNull(i)</code> / <code>hasNulls()</code>. When no item in a batch is null, <code>getLeafValidity()</code> (and <code>getLayerValidity(k)</code>) returns the shared <code>Validity.NO_NULLS</code> singleton — <code>hasNulls()</code> returns <code>false</code> in O(1) and gates the no-per-element-check fast path, no per-batch allocation. Hot inner loops should hoist <code>hasNulls()</code> into a local boolean before iterating; see <a href="#hot-loops-hoist-hasnulls-outside-the-loop">Hot loops</a> for why.</p>
+<p>The <a href="/api/dev/dev/hardwood/Validity.html">Validity</a> type wraps the underlying null bitmap behind <code>isNull(i)</code> / <code>isNotNull(i)</code> / <code>hasNulls()</code>. When no item in a batch is null, <code>getLeafValidity()</code> (and <code>getLayerValidity(k)</code>) returns the shared <code>Validity.NO_NULLS</code> singleton — <code>hasNulls()</code> returns <code>false</code> in O(1) and gates the no-per-element-check fast path, no per-batch allocation. Hot inner loops should hoist <code>hasNulls()</code> into a local boolean before iterating; see <a href="#hot-loops-hoist-hasnulls-outside-the-loop">Hot loops</a> for why.</p>
 <p>Typed accessors are available for each fixed-width physical type: <code>getInts()</code>, <code>getLongs()</code>, <code>getFloats()</code>, <code>getDoubles()</code>, <code>getBooleans()</code>. For varlength leaves (<code>BINARY</code>, <code>FIXED_LEN_BYTE_ARRAY</code>, <code>INT96</code>) the primary accessors are <code>getBinaryValues()</code> (a <code>byte[]</code> buffer) plus <code>getBinaryOffsets()</code> (a sentinel-suffixed <code>int[]</code> of length <code>getValueCount() + 1</code>); the byte slice for value <code>i</code> is <code>[offsets[i], offsets[i+1])</code>. The convenience accessors <code>getBinaries()</code> and <code>getStrings()</code> materialise one <code>byte[]</code> or <code>String</code> per leaf — useful for low-volume / debug paths, so hot loops should read the buffers directly. <code>getBinaries()</code> allocates a fresh <code>byte[]</code> per value; <code>getStrings()</code> likewise allocates per value, except on dictionary-encoded columns, where repeated values reuse a single interned <code>String</code> per dictionary entry.</p>
 <p>Column readers can also be created by index via <code>columnReader(int columnIndex)</code>. To attach a filter or customize the batch size, use the builder form: <code>reader.buildColumnReader("id").filter(predicate).batchSize(1024).build()</code>.</p>
 <p>A filtered column reader returns <strong>only</strong> the matching rows — exact, with no client-side residual filtering required. Each batch's <code>getRecordCount()</code> and typed arrays already exclude non-matching rows, so a direct aggregate over the output is correct. The predicate may reference the column being read, another column, or a column that is not read at all; for <code>columnReaders(projection)</code> every column is filtered to the same row set and stays row-aligned. Predicate columns that are not part of the projection are decoded internally to evaluate the filter but are not exposed.</p>
@@ -2128,7 +2128,7 @@
 <h4 id="reading-nested-data-the-layer-model">Reading nested data: the layer model<a class="headerlink" href="#reading-nested-data-the-layer-model" title="Permanent link">&para;</a></h4>
 <p><code>ColumnReader</code> exposes a nested column's schema chain as a sequence of <strong>layers</strong>, numbered
 <code>0..getLayerCount() - 1</code> outermost-to-innermost, with the leaf queried separately. Each layer has a
-<a href="/api/dev/dev/hardwood/reader/Validity.html">Validity</a> via <code>getLayerValidity(k)</code>; <code>REPEATED</code>
+<a href="/api/dev/dev/hardwood/Validity.html">Validity</a> via <code>getLayerValidity(k)</code>; <code>REPEATED</code>
 layers (lists and maps) additionally have <code>getLayerOffsets(k)</code>; and the leaf has its own
 <code>getLeafValidity()</code>.</p>
 <p>For the full model — how <code>STRUCT</code> and <code>REPEATED</code> nodes map to layers, the four container states,
@@ -2406,8 +2406,8 @@ the offset/validity encoding, and the per-layer count recursion — see
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/872794929ae02dd0b9fcde81173991321dc68170" target="_blank" rel="noopener">
-      87279492
+    <a href="https://github.com/hardwood-hq/hardwood/tree/582fe979fc2dfcb16a33f54c79cba23ff19496af" target="_blank" rel="noopener">
+      582fe979
     </a>
   
 </div>

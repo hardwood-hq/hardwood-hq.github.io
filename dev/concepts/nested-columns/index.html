@@ -1881,7 +1881,7 @@ through on a concrete schema.</p>
 separately. A flat column reports <code>getLayerCount() == 0</code>.</p>
 <p>For each layer, two buffers describe the items at that layer:</p>
 <ul>
-<li><code>getLayerValidity(k)</code> — a <a href="/api/dev/dev/hardwood/reader/Validity.html">Validity</a> indexed by
+<li><code>getLayerValidity(k)</code> — a <a href="/api/dev/dev/hardwood/Validity.html">Validity</a> indexed by
   item position; <code>isNull(i)</code> / <code>isNotNull(i)</code> answer the per-item question, <code>hasNulls()</code> is the
   O(1) fast-path gate. Returns the shared <code>Validity.NO_NULLS</code> singleton when no item at layer <code>k</code>
   is null in this batch.</li>
@@ -2090,8 +2090,8 @@ descending.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/872794929ae02dd0b9fcde81173991321dc68170" target="_blank" rel="noopener">
-      87279492
+    <a href="https://github.com/hardwood-hq/hardwood/tree/582fe979fc2dfcb16a33f54c79cba23ff19496af" target="_blank" rel="noopener">
+      582fe979
     </a>
   
 </div>
