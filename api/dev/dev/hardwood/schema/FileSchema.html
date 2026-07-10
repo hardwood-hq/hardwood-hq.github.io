@@ -117,7 +117,17 @@ Supports both flat schemas and nested structures (structs, lists).</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="FileSchema.Builder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.Builder</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Builder for constructing a flat <a href="FileSchema.html" title="class in dev.hardwood.schema"><code>FileSchema</code></a> programmatically.</div>
+<div class="block">Builder for constructing a <a href="FileSchema.html" title="class in dev.hardwood.schema"><code>FileSchema</code></a> programmatically.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="FileSchema.ElementBuilder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Declares the element of a <code>LIST</code>: a primitive, a nested <code>struct</code>, or a nested <code>LIST</code>.</div>
+</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="FileSchema.StructBuilder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Declares the fields of a <code>struct</code> group.</div>
 </div>
 </div>
 </section>
@@ -193,7 +203,8 @@ with the writer.</div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toSchemaElements()" class="member-name-link">toSchemaElements</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Flattens this schema back into the depth-first <a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata"><code>SchemaElement</code></a> list written
-to the file footer, the inverse of <a href="#fromSchemaElements(java.util.List)"><code>fromSchemaElements(List)</code></a>.</div>
+to the file footer, the inverse of <a href="#fromSchemaElements(java.util.List)"><code>fromSchemaElements(List)</code></a>: the root element
+followed by each node in pre-order, groups carrying their child count.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
@@ -339,15 +350,9 @@ with the writer.</div>
 <h3>toSchemaElements</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a>&gt;</span>&nbsp;<span class="element-name">toSchemaElements</span>()</div>
-<div class="block"><p>Flattens this schema back into the depth-first <a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata"><code>SchemaElement</code></a> list written
-to the file footer, the inverse of <a href="#fromSchemaElements(java.util.List)"><code>fromSchemaElements(List)</code></a>.</p>
-<p>Only flat schemas are supported; nested schemas are handled by a later
-writer increment.</p>
-</div>
-<dl class="notes">
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema is not flat</dd>
-</dl>
+<div class="block">Flattens this schema back into the depth-first <a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata"><code>SchemaElement</code></a> list written
+to the file footer, the inverse of <a href="#fromSchemaElements(java.util.List)"><code>fromSchemaElements(List)</code></a>: the root element
+followed by each node in pre-order, groups carrying their child count.</div>
 </div>
 </section>
 </li>
