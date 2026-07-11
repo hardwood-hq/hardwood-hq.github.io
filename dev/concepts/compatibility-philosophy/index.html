@@ -1844,8 +1844,11 @@ list of quirks.</p>
   years — parquet-mr, Arrow, Spark, Hive, PyArrow — using legacy encodings, deprecated types,
   and annotations that newer specs dropped. Hardwood reads these transparently: most legacy
   list-encoding variants, INT96 timestamps, the legacy <code>converted_type</code> annotations that
-  predate the modern logical-type union, <code>NULL</code>-typed columns, FLOAT16. On the <em>input</em> side,
-  Hardwood is liberal — if parquet-java can read it, Hardwood aims to.</li>
+  predate the modern logical-type union, <code>NULL</code>-typed columns, FLOAT16. The tolerance also
+  extends <em>forward</em>: a logical-type annotation newer than Hardwood recognizes is ignored rather
+  than rejected, and the column's physical type is exposed, so a file written by a tool that
+  has adopted a future logical type still reads. On the <em>input</em> side, Hardwood is liberal — if
+  parquet-java can read it, Hardwood aims to.</li>
 <li><strong>Don't silently produce wrong results.</strong> On the <em>semantic</em> side, where a behavior is a matter
   of correctness rather than file compatibility, Hardwood chooses the well-defined answer even
   when that diverges from parquet-java's historical behavior. This follows the project's
@@ -1939,8 +1942,8 @@ the classpath — see <a href="../../how-to/compat/">parquet-java Compatibility<
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a92751e5f82e5c5a0db5c9d6e487ff135633641a" target="_blank" rel="noopener">
-      a92751e5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/9e12caad1e51581e12ad2f17f428db2c654a4e03" target="_blank" rel="noopener">
+      9e12caad
     </a>
   
 </div>
