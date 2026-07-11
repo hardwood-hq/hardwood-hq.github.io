@@ -1223,7 +1223,8 @@ Variants, or absent.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
 <dd>
-<div class="block">Declares the element of a <code>LIST</code>: a primitive, a nested <code>struct</code>, or a nested <code>LIST</code>.</div>
+<div class="block">Declares the element of a <code>LIST</code>, or the value of a <code>MAP</code>: a primitive, a nested
+<code>struct</code>, a nested <code>LIST</code>, or a nested <code>MAP</code>.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
 <dd>
@@ -2795,6 +2796,27 @@ Variant spec.</div>
 </dl>
 <h2 class="title" id="I:M">M</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#map(dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" class="member-name-link">map(RepetitionType, PhysicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
+<dd>
+<div class="block">Declare a nested <code>MAP</code> element.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ColumnBatch.html#map(java.lang.String,int%5B%5D)" class="member-name-link">map(String, int[])</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
+<dd>
+<div class="block">Sets the entry offsets of a <code>MAP</code>, addressed by the map group's dot-separated path.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ColumnBatch.html#map(java.lang.String,int%5B%5D,dev.hardwood.Validity)" class="member-name-link">map(String, int[], Validity)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
+<dd>
+<div class="block">Sets the entry offsets of a <code>MAP</code> together with its per-instance nulls (which maps
+are themselves absent), distinct from an empty map carrying a zero-delta offset.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, PhysicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
+<dd>
+<div class="block">Append a <code>MAP</code> group whose value is declared by <code>value</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, PhysicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
+<dd>
+<div class="block">Append a nested <code>MAP</code> field.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#MAP" class="member-name-link">MAP</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">Map of key-value pairs.</div>

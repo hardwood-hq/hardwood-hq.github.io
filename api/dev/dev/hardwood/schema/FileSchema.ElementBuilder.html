@@ -62,6 +62,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" tabindex="0">primitive(PhysicalType, RepetitionType)</a></li>
 <li><a href="#struct(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" tabindex="0">struct(RepetitionType, Consumer)</a></li>
 <li><a href="#list(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" tabindex="0">list(RepetitionType, Consumer)</a></li>
+<li><a href="#map(dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" tabindex="0">map(RepetitionType, PhysicalType, Consumer)</a></li>
 </ol>
 </li>
 </ol>
@@ -84,7 +85,9 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public static final class </span><span class="element-name type-name-label">FileSchema.ElementBuilder</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Declares the element of a <code>LIST</code>: a primitive, a nested <code>struct</code>, or a nested <code>LIST</code>.</div>
+<div class="block">Declares the element of a <code>LIST</code>, or the value of a <code>MAP</code>: a primitive, a nested
+<code>struct</code>, a nested <code>LIST</code>, or a nested <code>MAP</code>. The declared node is named <code>element</code>
+inside a list and <code>value</code> inside a map.</div>
 </div>
 </section>
 <section class="summary">
@@ -107,15 +110,22 @@ loadScripts(document, 'script');</script>
 <div class="block">Declare a nested <code>LIST</code> element.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">primitive</a><wbr>(<a href="../metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
- <a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#map(dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" class="member-name-link">map</a><wbr>(<a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
+ <a href="../metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;keyType,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a>&gt;&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Declare a primitive element.</div>
+<div class="block">Declare a nested <code>MAP</code> element.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#struct(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">struct</a><wbr>(<a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">primitive</a><wbr>(<a href="../metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+ <a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Declare a primitive element.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#struct(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">struct</a><wbr>(<a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Declare a <code>struct</code> element.</div>
 </div>
 </div>
@@ -166,6 +176,21 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">list</span><wbr><span class="parameters">(<a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a>&gt;&nbsp;element)</span></div>
 <div class="block">Declare a nested <code>LIST</code> element.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="map(dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)">
+<h3>map</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">map</span><wbr><span class="parameters">(<a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
+ <a href="../metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;keyType,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a>&gt;&nbsp;value)</span></div>
+<div class="block">Declare a nested <code>MAP</code> element.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no value is declared</dd>
+</dl>
 </div>
 </section>
 </li>

@@ -61,6 +61,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#struct(java.lang.String,dev.hardwood.Validity)" tabindex="0">struct(String, Validity)</a></li>
 <li><a href="#list(java.lang.String,int%5B%5D)" tabindex="0">list(String, int[])</a></li>
 <li><a href="#list(java.lang.String,int%5B%5D,dev.hardwood.Validity)" tabindex="0">list(String, int[], Validity)</a></li>
+<li><a href="#map(java.lang.String,int%5B%5D)" tabindex="0">map(String, int[])</a></li>
+<li><a href="#map(java.lang.String,int%5B%5D,dev.hardwood.Validity)" tabindex="0">map(String, int[], Validity)</a></li>
 <li><a href="#ints(int,int%5B%5D)" tabindex="0">ints(int, int[])</a></li>
 <li><a href="#ints(java.lang.String,int%5B%5D)" tabindex="0">ints(String, int[])</a></li>
 <li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)" tabindex="0">ints(int, int[], Validity)</a></li>
@@ -186,6 +188,20 @@ as a plain mask.</div>
 are themselves absent), distinct from an empty list carrying a zero-delta offset.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#map(java.lang.String,int%5B%5D)" class="member-name-link">map</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mapPath,
+ int[]&nbsp;offsets)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the entry offsets of a <code>MAP</code>, addressed by the map group's dot-separated path.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#map(java.lang.String,int%5B%5D,dev.hardwood.Validity)" class="member-name-link">map</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mapPath,
+ int[]&nbsp;offsets,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the entry offsets of a <code>MAP</code> together with its per-instance nulls (which maps
+are themselves absent), distinct from an empty map carrying a zero-delta offset.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#struct(java.lang.String,dev.hardwood.Validity)" class="member-name-link">struct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;structPath,
  <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -276,6 +292,55 @@ are themselves absent), distinct from an empty list carrying a zero-delta offset
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the path does not name an <code>OPTIONAL</code> <code>LIST</code>, the
 list is already set, or <code>offsets</code> is empty</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="map(java.lang.String,int[])">
+<h3>map</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">map</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mapPath,
+ int[]&nbsp;offsets)</span></div>
+<div class="block">Sets the entry offsets of a <code>MAP</code>, addressed by the map group's dot-separated path.
+A thin alias over [#list(String, int[])]: the map's <code>key</code> and <code>value</code> leaves share
+this one offsets array, <code>offsets[i+1] - offsets[i]</code> being the number of entries of
+map <code>i</code>, and a zero delta an empty map. The key and value leaves are filled through
+<a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a> at <code>&lt;mapPath&gt;.key_value.key</code> and <code>&lt;mapPath&gt;.key_value.value</code>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>mapPath</code> - the map group's path (e.g. <code>&quot;props&quot;</code>)</dd>
+<dd><code>offsets</code> - the entry offsets</dd>
+<dt>Returns:</dt>
+<dd>this batch, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the path does not name a <code>MAP</code>, the map is
+already set, or <code>offsets</code> is empty</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="map(java.lang.String,int[],dev.hardwood.Validity)">
+<h3>map</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">map</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mapPath,
+ int[]&nbsp;offsets,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Sets the entry offsets of a <code>MAP</code> together with its per-instance nulls (which maps
+are themselves absent), distinct from an empty map carrying a zero-delta offset.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>mapPath</code> - the map group's path</dd>
+<dd><code>offsets</code> - the entry offsets</dd>
+<dd><code>nulls</code> - the map nulls; <code>nulls.isNull(i)</code> marks map <code>i</code> absent</dd>
+<dt>Returns:</dt>
+<dd>this batch, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the path does not name an <code>OPTIONAL</code> <code>MAP</code>, the
+map is already set, or <code>offsets</code> is empty</dd>
 </dl>
 </div>
 </section>
