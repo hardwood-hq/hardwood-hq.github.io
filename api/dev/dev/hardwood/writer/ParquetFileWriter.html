@@ -89,11 +89,13 @@ implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base
 <p>This increment writes <code>INT32</code> columns — flat <code>REQUIRED</code> / <code>OPTIONAL</code>, nested inside
 <code>REQUIRED</code> / <code>OPTIONAL</code> <code>struct</code> groups, and inside <code>LIST</code>s and <code>MAP</code>s (including lists
 of lists, lists of structs, and maps of any in-scope value). Data is supplied as
-<a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a> slices; the writer packs each column into size-bounded, uncompressed
-<code>PLAIN</code> data pages — a levelled column's pages carrying an RLE definition-level stream
-ahead of the non-null values — and flushes a row group once its buffered data reaches
-the configured target, so peak memory is bounded regardless of how much is written.
-The row groups and footer are finalized on <a href="#close()"><code>close()</code></a>.</p>
+<a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a> slices; the writer packs each column into size-bounded, uncompressed data
+pages — a levelled column's pages carrying an RLE definition-level stream ahead of the
+values — and flushes a row group once its buffered data reaches the configured target, so
+peak memory is bounded regardless of how much is written. Columns are dictionary-encoded
+by default (a dictionary page plus <code>RLE_DICTIONARY</code> index pages), falling back to <code>PLAIN</code>
+when the dictionary grows past the configured limit; both are configurable through
+<a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>. The row groups and footer are finalized on <a href="#close()"><code>close()</code></a>.</p>
 <p>The file is produced front to back and is valid only after <code>close()</code> returns.</p>
 </div>
 </div>

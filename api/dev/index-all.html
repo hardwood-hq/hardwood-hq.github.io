@@ -738,6 +738,11 @@ created via <a href="dev/hardwood/HardwoodContext.html#create(int)"><code>Hardwo
 <dd>
 <div class="block">Default <code>created_by</code> identifier written into the file footer.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES" class="member-name-link">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Default dictionary page-size limit: 1 MiB of dictionary values before a column
+chunk falls back to <code>PLAIN</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
 <div class="block">Default page target: 1 MiB of uncompressed values per data page.</div>
@@ -817,6 +822,15 @@ created via <a href="dev/hardwood/HardwoodContext.html#create(int)"><code>Hardwo
 <dd>
 <div class="block">Parquet file writer with a columnar API.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#dictionaryPageLimitBytes()" class="member-name-link">dictionaryPageLimitBytes()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">The dictionary size in bytes at which a column chunk falls back to <code>PLAIN</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#dictionaryPageLimitBytes(int)" class="member-name-link">dictionaryPageLimitBytes(int)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets the dictionary size in bytes past which a column chunk falls back to <code>PLAIN</code>;
+must be at least one <code>INT32</code> (4 bytes) so at least one value always fits.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#dictionaryPageOffset()" class="member-name-link">dictionaryPageOffset()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-dictionaryPageOffset"><code>dictionaryPageOffset</code></a> record component.</div>
@@ -856,6 +870,14 @@ file at the destination.</div>
 <dt><a href="dev/hardwood/metadata/FieldPath.html#elements()" class="member-name-link">elements()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/FieldPath.html#param-elements"><code>elements</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#enableDictionary()" class="member-name-link">enableDictionary()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Whether eligible columns are dictionary-encoded (with <code>PLAIN</code> fallback on overflow).</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#enableDictionary(boolean)" class="member-name-link">enableDictionary(boolean)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Enables or disables dictionary encoding.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/Encoding.html" class="type-name-link" title="enum class in dev.hardwood.metadata">Encoding</a> - Enum Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>

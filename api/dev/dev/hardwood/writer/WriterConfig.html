@@ -63,6 +63,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#DEFAULT_PAGE_TARGET_BYTES" tabindex="0">DEFAULT_PAGE_TARGET_BYTES</a></li>
 <li><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" tabindex="0">DEFAULT_ROW_GROUP_TARGET_BYTES</a></li>
 <li><a href="#DEFAULT_CREATED_BY" tabindex="0">DEFAULT_CREATED_BY</a></li>
+<li><a href="#DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES" tabindex="0">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -72,6 +73,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#pageTargetBytes()" tabindex="0">pageTargetBytes()</a></li>
 <li><a href="#rowGroupTargetBytes()" tabindex="0">rowGroupTargetBytes()</a></li>
 <li><a href="#createdBy()" tabindex="0">createdBy()</a></li>
+<li><a href="#enableDictionary()" tabindex="0">enableDictionary()</a></li>
+<li><a href="#dictionaryPageLimitBytes()" tabindex="0">dictionaryPageLimitBytes()</a></li>
 </ol>
 </li>
 </ol>
@@ -136,13 +139,19 @@ uncompressed data reaches this many bytes, bounding how much it holds in memory.
 <div class="block">Default <code>created_by</code> identifier written into the file footer.</div>
 </div>
 <div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES" class="member-name-link">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">Default dictionary page-size limit: 1 MiB of dictionary values before a column
+chunk falls back to <code>PLAIN</code>.</div>
+</div>
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default page target: 1 MiB of uncompressed values per data page.</div>
 </div>
-<div class="col-first even-row-color"><code>static final long</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final long</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default row-group target: 128 MiB of uncompressed data per row group.</div>
 </div>
 </div>
@@ -173,6 +182,16 @@ uncompressed data reaches this many bytes, bounding how much it holds in memory.
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#defaults()" class="member-name-link">defaults</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">The default configuration.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dictionaryPageLimitBytes()" class="member-name-link">dictionaryPageLimitBytes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The dictionary size in bytes at which a column chunk falls back to <code>PLAIN</code>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableDictionary()" class="member-name-link">enableDictionary</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Whether eligible columns are dictionary-encoded (with <code>PLAIN</code> fallback on overflow).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes()" class="member-name-link">pageTargetBytes</a>()</code></div>
@@ -252,6 +271,24 @@ uncompressed data reaches this many bytes, bounding how much it holds in memory.
 </div>
 </section>
 </li>
+<li>
+<section class="detail" id="DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES">
+<h3>DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</span></div>
+<div class="block">Default dictionary page-size limit: 1 MiB of dictionary values before a column
+chunk falls back to <code>PLAIN</code>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../constant-values.html#dev.hardwood.writer.WriterConfig.DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -302,6 +339,24 @@ uncompressed data reaches this many bytes, bounding how much it holds in memory.
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">createdBy</span>()</div>
 <div class="block">The <code>created_by</code> identifier written into the file footer.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="enableDictionary()">
+<h3>enableDictionary</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">enableDictionary</span>()</div>
+<div class="block">Whether eligible columns are dictionary-encoded (with <code>PLAIN</code> fallback on overflow).</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dictionaryPageLimitBytes()">
+<h3>dictionaryPageLimitBytes</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">dictionaryPageLimitBytes</span>()</div>
+<div class="block">The dictionary size in bytes at which a column chunk falls back to <code>PLAIN</code>.</div>
 </div>
 </section>
 </li>
