@@ -169,6 +169,19 @@ jobs:
             fi
           fi
 
+          # dive-web demo: a prebuilt WebAssembly bundle attached to the 1.0-early-access
+          # release. It is published to a fixed, unversioned path and refreshed on every
+          # deploy. Absent for refs/releases predating the demo, in which case it is skipped.
+          DIVE_WEB_URL="https://github.com/hardwood-hq/hardwood/releases/download/1.0-early-access/dive-web-demo.zip"
+          if curl -fsSL -o /tmp/dive-web.zip "$DIVE_WEB_URL"; then
+            rm -rf experiments/dive-web
+            mkdir -p experiments/dive-web
+            unzip -q /tmp/dive-web.zip -d experiments/dive-web
+            git add experiments/
+          else
+            echo "dive-web demo asset not available — skipping."
+          fi
+
           bash source/docs/patch-seo.sh "https://hardwood.dev"
 
           git add api/
