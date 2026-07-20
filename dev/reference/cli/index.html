@@ -2022,12 +2022,9 @@ run the CLI via Docker without installing it locally — see the <a href="#docke
 <td><code>hardwood dive</code></td>
 <td>Interactively explore a file's structure in a TUI</td>
 </tr>
-<tr>
-<td><code>hardwood help</code></td>
-<td>Display help information about a command</td>
-</tr>
 </tbody>
 </table>
+<p>Pass <code>--help</code> to any command (or <code>hardwood --help</code>) to print its usage.</p>
 <h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Show file overview</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>hardwood<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>data.parquet
@@ -2247,10 +2244,33 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
 </tbody>
 </table>
 <h2 id="shell-completion">Shell Completion<a class="headerlink" href="#shell-completion" title="Permanent link">&para;</a></h2>
-<p>The distribution includes a Bash completion script at <code>bin/hardwood_completion</code>. Source it in your shell to enable tab completion for commands, options, and arguments:</p>
+<p>The distribution includes completion scripts for Bash, Zsh, and Fish under <code>bin/</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Shell</th>
+<th>Script</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bash</td>
+<td><code>bin/hardwood_completion</code></td>
+</tr>
+<tr>
+<td>Zsh</td>
+<td><code>bin/hardwood_completion.zsh</code></td>
+</tr>
+<tr>
+<td>Fish</td>
+<td><code>bin/hardwood_completion.fish</code></td>
+</tr>
+</tbody>
+</table>
+<p>Source the one for your shell to enable tab completion for commands, options, and arguments:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
 </code></pre></div>
-<p>To make it permanent, add the line above to your <code>~/.bashrc</code> or <code>~/.bash_profile</code>.</p>
+<p>To make it permanent, add the line above to your shell's startup file (e.g. <code>~/.bashrc</code>, <code>~/.zshrc</code>).</p>
 <h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
 <p>A minimal Fedora-based Docker image is published to the GitHub Container Registry for Linux amd64 and arm64:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access
@@ -2325,8 +2345,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2f90602df806409e8412dbe484618a3b5415b530" target="_blank" rel="noopener">
-      2f90602d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ce5e37e9987682b93e29f5ec5c80057d4f0b7eef" target="_blank" rel="noopener">
+      ce5e37e9
     </a>
   
 </div>
