@@ -1885,6 +1885,10 @@
 <h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Physical <code>skip(N)</code> on multi-file row readers is now a true global offset over the concatenated input files; skipped files have their footers read for row counts, but their data pages are not decoded.</li>
+<li>The <code>hardwood</code> CLI is now built on the aesh command framework instead of picocli/Quarkus; removing the Quarkus/CDI bootstrap makes the CLI start faster</li>
+<li><code>hardwood help &lt;command&gt;</code> is removed — use <code>hardwood &lt;command&gt; --help</code> (or <code>-h</code>)</li>
+<li>Shell completion scripts are now generated for zsh and fish in addition to bash</li>
+<li>The native <code>hardwood</code> binary now reads LZ4 and LZ4_RAW compressed files</li>
 </ul>
 <h2 id="100final-2026-06-25">1.0.0.Final (2026-06-25)<a class="headerlink" href="#100final-2026-06-25" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.morling.dev/blog/hardwood-1-0-fast-lightweight-apache-parquet-reader-for-the-jvm/">Announcement blog post</a> · <a href="/api-changes/1.0.0.Final/">API changes</a></p>
@@ -2029,8 +2033,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ce5e37e9987682b93e29f5ec5c80057d4f0b7eef" target="_blank" rel="noopener">
-      ce5e37e9
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8b902458ac2df9a7eaeb1ffc58cee3eb9fccd2bc" target="_blank" rel="noopener">
+      8b902458
     </a>
   
 </div>
