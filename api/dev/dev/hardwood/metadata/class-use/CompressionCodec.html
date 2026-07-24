@@ -63,6 +63,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Low-level Parquet file metadata types that mirror the Thrift definitions.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#dev.hardwood.writer">dev.hardwood.writer</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Parquet file writer with a columnar API.</div>
+</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -124,6 +128,45 @@ the order they are declared.</div>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;bloomFilterLength)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>ColumnMetaData</code> record class.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dev.hardwood.writer">
+<h2>Uses of <a href="../CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a> in <a href="../../writer/package-summary.html">dev.hardwood.writer</a></h2>
+<div class="caption"><span>Fields in <a href="../../writer/package-summary.html">dev.hardwood.writer</a> declared as <a href="../CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="../CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">WriterConfig.</span><code><a href="../../writer/WriterConfig.html#DEFAULT_CODEC" class="member-name-link">DEFAULT_CODEC</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Default page compression codec: <code>ZSTD</code> when the zstd-jni library is on the classpath,
+otherwise <code>UNCOMPRESSED</code>.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../writer/package-summary.html">dev.hardwood.writer</a> that return <a href="../CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">WriterConfig.</span><code><a href="../../writer/WriterConfig.html#codec()" class="member-name-link">codec</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">The codec each page body is compressed with.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../writer/package-summary.html">dev.hardwood.writer</a> with parameters of type <a href="../CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../../writer/WriterConfig.Builder.html#codec(dev.hardwood.metadata.CompressionCodec)" class="member-name-link">codec</a><wbr>(<a href="../CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a>&nbsp;codec)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Sets the codec each page body is compressed with; must be non-null.</div>
 </div>
 </div>
 </section>

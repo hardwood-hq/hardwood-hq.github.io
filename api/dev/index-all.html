@@ -387,6 +387,14 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-codec"><code>codec</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#codec()" class="member-name-link">codec()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">The codec each page body is compressed with.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#codec(dev.hardwood.metadata.CompressionCodec)" class="member-name-link">codec(CompressionCodec)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets the codec each page body is compressed with; must be non-null.</div>
+</dd>
 <dt><a href="dev/hardwood/jfr/BatchWaitEvent.html#column" class="member-name-link">column</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/BatchWaitEvent.html" title="class in dev.hardwood.jfr">BatchWaitEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/PageDecodedEvent.html#column" class="member-name-link">column</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PageDecodedEvent.html" title="class in dev.hardwood.jfr">PageDecodedEvent</a></dt>
@@ -733,6 +741,11 @@ created via <a href="dev/hardwood/HardwoodContext.html#create(int)"><code>Hardwo
 <dt><a href="dev/hardwood/metadata/LogicalType.DecimalType.html#%3Cinit%3E(int,int)" class="member-name-link">DecimalType(int, int)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.DecimalType.html" title="class in dev.hardwood.metadata">LogicalType.DecimalType</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>DecimalType</code> record class.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_CODEC" class="member-name-link">DEFAULT_CODEC</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Default page compression codec: <code>ZSTD</code> when the zstd-jni library is on the classpath,
+otherwise <code>UNCOMPRESSED</code>.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_CREATED_BY" class="member-name-link">DEFAULT_CREATED_BY</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>

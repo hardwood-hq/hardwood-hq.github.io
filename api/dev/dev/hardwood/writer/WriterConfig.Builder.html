@@ -64,6 +64,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#createdBy(java.lang.String)" tabindex="0">createdBy(String)</a></li>
 <li><a href="#enableDictionary(boolean)" tabindex="0">enableDictionary(boolean)</a></li>
 <li><a href="#dictionaryPageLimitBytes(int)" tabindex="0">dictionaryPageLimitBytes(int)</a></li>
+<li><a href="#codec(dev.hardwood.metadata.CompressionCodec)" tabindex="0">codec(CompressionCodec)</a></li>
 <li><a href="#build()" tabindex="0">build()</a></li>
 </ol>
 </li>
@@ -109,29 +110,34 @@ loadScripts(document, 'script');</script>
 <div class="block">Builds the immutable configuration.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createdBy(java.lang.String)" class="member-name-link">createdBy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;createdBy)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#codec(dev.hardwood.metadata.CompressionCodec)" class="member-name-link">codec</a><wbr>(<a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a>&nbsp;codec)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the <code>created_by</code> footer identifier; must be non-null.</div>
+<div class="block">Sets the codec each page body is compressed with; must be non-null.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dictionaryPageLimitBytes(int)" class="member-name-link">dictionaryPageLimitBytes</a><wbr>(int&nbsp;dictionaryPageLimitBytes)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createdBy(java.lang.String)" class="member-name-link">createdBy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;createdBy)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the <code>created_by</code> footer identifier; must be non-null.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dictionaryPageLimitBytes(int)" class="member-name-link">dictionaryPageLimitBytes</a><wbr>(int&nbsp;dictionaryPageLimitBytes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the dictionary size in bytes past which a column chunk falls back to <code>PLAIN</code>;
 must be at least one <code>INT32</code> (4 bytes) so at least one value always fits.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableDictionary(boolean)" class="member-name-link">enableDictionary</a><wbr>(boolean&nbsp;enableDictionary)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableDictionary(boolean)" class="member-name-link">enableDictionary</a><wbr>(boolean&nbsp;enableDictionary)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Enables or disables dictionary encoding.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes(int)" class="member-name-link">pageTargetBytes</a><wbr>(int&nbsp;pageTargetBytes)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes(int)" class="member-name-link">pageTargetBytes</a><wbr>(int&nbsp;pageTargetBytes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the page target; must be at least one <code>INT32</code> (4 bytes).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes(long)" class="member-name-link">rowGroupTargetBytes</a><wbr>(long&nbsp;rowGroupTargetBytes)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes(long)" class="member-name-link">rowGroupTargetBytes</a><wbr>(long&nbsp;rowGroupTargetBytes)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the row-group target; must be positive.</div>
 </div>
 </div>
@@ -195,6 +201,17 @@ written as <code>PLAIN</code> with no dictionary page.</div>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">dictionaryPageLimitBytes</span><wbr><span class="parameters">(int&nbsp;dictionaryPageLimitBytes)</span></div>
 <div class="block">Sets the dictionary size in bytes past which a column chunk falls back to <code>PLAIN</code>;
 must be at least one <code>INT32</code> (4 bytes) so at least one value always fits.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="codec(dev.hardwood.metadata.CompressionCodec)">
+<h3>codec</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">codec</span><wbr><span class="parameters">(<a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a>&nbsp;codec)</span></div>
+<div class="block">Sets the codec each page body is compressed with; must be non-null. Only
+<code>UNCOMPRESSED</code> and <code>ZSTD</code> are currently supported on the write path, and a
+non-<code>UNCOMPRESSED</code> codec requires its library on the classpath.</div>
 </div>
 </section>
 </li>

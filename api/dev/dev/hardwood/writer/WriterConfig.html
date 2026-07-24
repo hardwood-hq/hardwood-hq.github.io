@@ -64,6 +64,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" tabindex="0">DEFAULT_ROW_GROUP_TARGET_BYTES</a></li>
 <li><a href="#DEFAULT_CREATED_BY" tabindex="0">DEFAULT_CREATED_BY</a></li>
 <li><a href="#DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES" tabindex="0">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</a></li>
+<li><a href="#DEFAULT_CODEC" tabindex="0">DEFAULT_CODEC</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -75,6 +76,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#createdBy()" tabindex="0">createdBy()</a></li>
 <li><a href="#enableDictionary()" tabindex="0">enableDictionary()</a></li>
 <li><a href="#dictionaryPageLimitBytes()" tabindex="0">dictionaryPageLimitBytes()</a></li>
+<li><a href="#codec()" tabindex="0">codec()</a></li>
 </ol>
 </li>
 </ol>
@@ -133,25 +135,31 @@ uncompressed data reaches this many bytes, bounding how much it holds in memory.
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_CREATED_BY" class="member-name-link">DEFAULT_CREATED_BY</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_CODEC" class="member-name-link">DEFAULT_CODEC</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Default page compression codec: <code>ZSTD</code> when the zstd-jni library is on the classpath,
+otherwise <code>UNCOMPRESSED</code>.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_CREATED_BY" class="member-name-link">DEFAULT_CREATED_BY</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default <code>created_by</code> identifier written into the file footer.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES" class="member-name-link">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES" class="member-name-link">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default dictionary page-size limit: 1 MiB of dictionary values before a column
 chunk falls back to <code>PLAIN</code>.</div>
 </div>
-<div class="col-first even-row-color"><code>static final int</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default page target: 1 MiB of uncompressed values per data page.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final long</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final long</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default row-group target: 128 MiB of uncompressed data per row group.</div>
 </div>
 </div>
@@ -173,34 +181,39 @@ chunk falls back to <code>PLAIN</code>.</div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">A builder pre-populated with the defaults.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createdBy()" class="member-name-link">createdBy</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#codec()" class="member-name-link">codec</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The codec each page body is compressed with.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createdBy()" class="member-name-link">createdBy</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The <code>created_by</code> identifier written into the file footer.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#defaults()" class="member-name-link">defaults</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#defaults()" class="member-name-link">defaults</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">The default configuration.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dictionaryPageLimitBytes()" class="member-name-link">dictionaryPageLimitBytes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dictionaryPageLimitBytes()" class="member-name-link">dictionaryPageLimitBytes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The dictionary size in bytes at which a column chunk falls back to <code>PLAIN</code>.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableDictionary()" class="member-name-link">enableDictionary</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableDictionary()" class="member-name-link">enableDictionary</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Whether eligible columns are dictionary-encoded (with <code>PLAIN</code> fallback on overflow).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes()" class="member-name-link">pageTargetBytes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes()" class="member-name-link">pageTargetBytes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Maximum uncompressed bytes of values per data page.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Uncompressed byte threshold at which a row group is flushed.</div>
 </div>
 </div>
@@ -289,6 +302,18 @@ chunk falls back to <code>PLAIN</code>.</div>
 </div>
 </section>
 </li>
+<li>
+<section class="detail" id="DEFAULT_CODEC">
+<h3>DEFAULT_CODEC</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></span>&nbsp;<span class="element-name">DEFAULT_CODEC</span></div>
+<div class="block">Default page compression codec: <code>ZSTD</code> when the zstd-jni library is on the classpath,
+otherwise <code>UNCOMPRESSED</code>. Choosing a codec explicitly through <code>WriterConfig.Builder.codec</code> still
+requires that codec's library and fails at writer creation when it is missing; this
+default only avoids imposing the ZSTD dependency on callers who did not ask to compress.</div>
+</div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -357,6 +382,15 @@ chunk falls back to <code>PLAIN</code>.</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">dictionaryPageLimitBytes</span>()</div>
 <div class="block">The dictionary size in bytes at which a column chunk falls back to <code>PLAIN</code>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="codec()">
+<h3>codec</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></span>&nbsp;<span class="element-name">codec</span>()</div>
+<div class="block">The codec each page body is compressed with.</div>
 </div>
 </section>
 </li>
