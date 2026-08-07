@@ -1988,6 +1988,11 @@
 <td><code>false</code></td>
 <td>Set to <code>"true"</code> to decode fixed-size <code>LIST</code> columns (e.g. embedding vectors, where every row holds the same number of non-null elements) without reconstructing per-row definition and repetition levels. Off by default, so every column takes the general nested-decode path unless the option is enabled.</td>
 </tr>
+<tr>
+<td><code>hardwood.statistics-filtering</code></td>
+<td><code>true</code></td>
+<td>Set to <code>"false"</code> to disable statistics-based filtering: no row groups or pages are skipped from min/max statistics, bloom filters, or page indexes, and filter predicates are instead evaluated against every decoded row. Filtered results then depend only on the data pages, for files whose footer or page-index metadata is unreliable.</td>
+</tr>
 </tbody>
 </table>
 <h2 id="system-properties-reference">System Properties Reference<a class="headerlink" href="#system-properties-reference" title="Permanent link">&para;</a></h2>
@@ -2056,8 +2061,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/be3c26dfc508ba333643af57eba0b19ca1f5f218" target="_blank" rel="noopener">
-      be3c26df
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8ded0f5c1f9dc6a41e32bebcebb6c4178082dd57" target="_blank" rel="noopener">
+      8ded0f5c
     </a>
   
 </div>
