@@ -182,12 +182,30 @@ the order they are declared.</div>
 <div class="col-last even-row-color">
 <div class="block">Append a primitive column.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../../schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FileSchema.StructBuilder.</span><code><a href="../../schema/FileSchema.StructBuilder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">addColumn</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+<div class="col-first odd-row-color"><code><a href="../../schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FileSchema.Builder.</span><code><a href="../../schema/FileSchema.Builder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int)" class="member-name-link">addColumn</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ <a href="../PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+ <a href="../RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
+ int&nbsp;typeLength)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Append a primitive column, giving the fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code>
+column.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../../schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FileSchema.StructBuilder.</span><code><a href="../../schema/FileSchema.StructBuilder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">addColumn</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
  <a href="../PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
  <a href="../RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Append a primitive field.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FileSchema.StructBuilder.</span><code><a href="../../schema/FileSchema.StructBuilder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int)" class="member-name-link">addColumn</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ <a href="../PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+ <a href="../RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
+ int&nbsp;typeLength)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Append a primitive field, giving the fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code>
+column.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../../schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FileSchema.Builder.</span><code><a href="../../schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" class="member-name-link">map</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mapName,
@@ -217,6 +235,14 @@ the order they are declared.</div>
  <a href="../RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Declare a primitive element.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FileSchema.ElementBuilder.</span><code><a href="../../schema/FileSchema.ElementBuilder.html#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int)" class="member-name-link">primitive</a><wbr>(<a href="../PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+ <a href="../RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
+ int&nbsp;typeLength)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Declare a primitive element, giving the fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code>
+element.</div>
 </div>
 </div>
 <div class="caption"><span>Constructors in <a href="../../schema/package-summary.html">dev.hardwood.schema</a> with parameters of type <a href="../PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a></span></div>

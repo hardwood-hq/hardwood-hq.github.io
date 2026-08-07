@@ -93,6 +93,18 @@ loadScripts(document, 'script');</script>
 <li><a href="#booleans(java.lang.String,boolean%5B%5D,dev.hardwood.Validity)" tabindex="0">booleans(String, boolean[], Validity)</a></li>
 <li><a href="#booleans(int,boolean%5B%5D,boolean%5B%5D)" tabindex="0">booleans(int, boolean[], boolean[])</a></li>
 <li><a href="#booleans(java.lang.String,boolean%5B%5D,boolean%5B%5D)" tabindex="0">booleans(String, boolean[], boolean[])</a></li>
+<li><a href="#bytes(int,byte%5B%5D%5B%5D)" tabindex="0">bytes(int, byte[][])</a></li>
+<li><a href="#bytes(java.lang.String,byte%5B%5D%5B%5D)" tabindex="0">bytes(String, byte[][])</a></li>
+<li><a href="#bytes(int,byte%5B%5D%5B%5D,dev.hardwood.Validity)" tabindex="0">bytes(int, byte[][], Validity)</a></li>
+<li><a href="#bytes(java.lang.String,byte%5B%5D%5B%5D,dev.hardwood.Validity)" tabindex="0">bytes(String, byte[][], Validity)</a></li>
+<li><a href="#bytes(int,byte%5B%5D%5B%5D,boolean%5B%5D)" tabindex="0">bytes(int, byte[][], boolean[])</a></li>
+<li><a href="#bytes(java.lang.String,byte%5B%5D%5B%5D,boolean%5B%5D)" tabindex="0">bytes(String, byte[][], boolean[])</a></li>
+<li><a href="#fixed(int,byte%5B%5D%5B%5D)" tabindex="0">fixed(int, byte[][])</a></li>
+<li><a href="#fixed(java.lang.String,byte%5B%5D%5B%5D)" tabindex="0">fixed(String, byte[][])</a></li>
+<li><a href="#fixed(int,byte%5B%5D%5B%5D,dev.hardwood.Validity)" tabindex="0">fixed(int, byte[][], Validity)</a></li>
+<li><a href="#fixed(java.lang.String,byte%5B%5D%5B%5D,dev.hardwood.Validity)" tabindex="0">fixed(String, byte[][], Validity)</a></li>
+<li><a href="#fixed(int,byte%5B%5D%5B%5D,boolean%5B%5D)" tabindex="0">fixed(int, byte[][], boolean[])</a></li>
+<li><a href="#fixed(java.lang.String,byte%5B%5D%5B%5D,boolean%5B%5D)" tabindex="0">fixed(String, byte[][], boolean[])</a></li>
 </ol>
 </li>
 </ol>
@@ -196,6 +208,46 @@ column.</p>
 <div class="block">Adds the values for an <code>OPTIONAL BOOLEAN</code> column, addressed by name.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bytes(int,byte%5B%5D%5B%5D)" class="member-name-link">bytes</a><wbr>(int&nbsp;columnIndex,
+ byte[][]&nbsp;values)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED BYTE_ARRAY</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bytes(int,byte%5B%5D%5B%5D,boolean%5B%5D)" class="member-name-link">bytes</a><wbr>(int&nbsp;columnIndex,
+ byte[][]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL BYTE_ARRAY</code> column, addressed by index, with a plain mask.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bytes(int,byte%5B%5D%5B%5D,dev.hardwood.Validity)" class="member-name-link">bytes</a><wbr>(int&nbsp;columnIndex,
+ byte[][]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL BYTE_ARRAY</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bytes(java.lang.String,byte%5B%5D%5B%5D)" class="member-name-link">bytes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED BYTE_ARRAY</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bytes(java.lang.String,byte%5B%5D%5B%5D,boolean%5B%5D)" class="member-name-link">bytes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL BYTE_ARRAY</code> column, addressed by name, with a plain mask.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#bytes(java.lang.String,byte%5B%5D%5B%5D,dev.hardwood.Validity)" class="member-name-link">bytes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL BYTE_ARRAY</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doubles(int,double%5B%5D)" class="member-name-link">doubles</a><wbr>(int&nbsp;columnIndex,
  double[]&nbsp;values)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -234,6 +286,48 @@ column.</p>
  <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds the values for an <code>OPTIONAL DOUBLE</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fixed(int,byte%5B%5D%5B%5D)" class="member-name-link">fixed</a><wbr>(int&nbsp;columnIndex,
+ byte[][]&nbsp;values)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED FIXED_LEN_BYTE_ARRAY</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fixed(int,byte%5B%5D%5B%5D,boolean%5B%5D)" class="member-name-link">fixed</a><wbr>(int&nbsp;columnIndex,
+ byte[][]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL FIXED_LEN_BYTE_ARRAY</code> column, addressed by index, with a
+plain mask.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fixed(int,byte%5B%5D%5B%5D,dev.hardwood.Validity)" class="member-name-link">fixed</a><wbr>(int&nbsp;columnIndex,
+ byte[][]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL FIXED_LEN_BYTE_ARRAY</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fixed(java.lang.String,byte%5B%5D%5B%5D)" class="member-name-link">fixed</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED FIXED_LEN_BYTE_ARRAY</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fixed(java.lang.String,byte%5B%5D%5B%5D,boolean%5B%5D)" class="member-name-link">fixed</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL FIXED_LEN_BYTE_ARRAY</code> column, addressed by name, with a
+plain mask.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fixed(java.lang.String,byte%5B%5D%5B%5D,dev.hardwood.Validity)" class="member-name-link">fixed</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL FIXED_LEN_BYTE_ARRAY</code> column, addressed by name.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#floats(int,float%5B%5D)" class="member-name-link">floats</a><wbr>(int&nbsp;columnIndex,
@@ -1116,6 +1210,242 @@ plain mask.</div>
  boolean[]&nbsp;values,
  boolean[]&nbsp;nulls)</span></div>
 <div class="block">Adds the values for an <code>OPTIONAL BOOLEAN</code> column, addressed by name, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes(int,byte[][])">
+<h3>bytes</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">bytes</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ byte[][]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED BYTE_ARRAY</code> column, addressed by index. Each value is a
+<code>byte[]</code>; the arrays are referenced, not copied.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes(java.lang.String,byte[][])">
+<h3>bytes</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">bytes</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED BYTE_ARRAY</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes(int,byte[][],dev.hardwood.Validity)">
+<h3>bytes</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">bytes</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ byte[][]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL BYTE_ARRAY</code> column, addressed by index.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes(java.lang.String,byte[][],dev.hardwood.Validity)">
+<h3>bytes</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">bytes</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL BYTE_ARRAY</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes(int,byte[][],boolean[])">
+<h3>bytes</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">bytes</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ byte[][]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL BYTE_ARRAY</code> column, addressed by index, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes(java.lang.String,byte[][],boolean[])">
+<h3>bytes</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">bytes</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL BYTE_ARRAY</code> column, addressed by name, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="fixed(int,byte[][])">
+<h3>fixed</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">fixed</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ byte[][]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED FIXED_LEN_BYTE_ARRAY</code> column, addressed by index. Every
+present value must be exactly the column's declared type length.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="fixed(java.lang.String,byte[][])">
+<h3>fixed</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">fixed</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED FIXED_LEN_BYTE_ARRAY</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="fixed(int,byte[][],dev.hardwood.Validity)">
+<h3>fixed</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">fixed</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ byte[][]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL FIXED_LEN_BYTE_ARRAY</code> column, addressed by index.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="fixed(java.lang.String,byte[][],dev.hardwood.Validity)">
+<h3>fixed</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">fixed</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL FIXED_LEN_BYTE_ARRAY</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="fixed(int,byte[][],boolean[])">
+<h3>fixed</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">fixed</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ byte[][]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL FIXED_LEN_BYTE_ARRAY</code> column, addressed by index, with a
+plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="fixed(java.lang.String,byte[][],boolean[])">
+<h3>fixed</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">fixed</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ byte[][]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL FIXED_LEN_BYTE_ARRAY</code> column, addressed by name, with a
+plain mask.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>

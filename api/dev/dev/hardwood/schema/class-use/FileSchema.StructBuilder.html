@@ -83,25 +83,34 @@ loadScripts(document, 'script');</script>
 <div class="block">Append a primitive field.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FileSchema.StructBuilder.</span><code><a href="../FileSchema.StructBuilder.html#list(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">list</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;listName,
+<div class="col-second odd-row-color"><span class="type-name-label">FileSchema.StructBuilder.</span><code><a href="../FileSchema.StructBuilder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int)" class="member-name-link">addColumn</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ <a href="../../metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
  <a href="../../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a>&gt;&nbsp;element)</code></div>
+ int&nbsp;typeLength)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Append a nested <code>LIST</code> field.</div>
+<div class="block">Append a primitive field, giving the fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code>
+column.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FileSchema.StructBuilder.</span><code><a href="../FileSchema.StructBuilder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" class="member-name-link">map</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mapName,
+<div class="col-second even-row-color"><span class="type-name-label">FileSchema.StructBuilder.</span><code><a href="../FileSchema.StructBuilder.html#list(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">list</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;listName,
+ <a href="../../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a>&gt;&nbsp;element)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Append a nested <code>LIST</code> field.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FileSchema.StructBuilder.</span><code><a href="../FileSchema.StructBuilder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" class="member-name-link">map</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mapName,
  <a href="../../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
  <a href="../../metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;keyType,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a>&gt;&nbsp;value)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Append a nested <code>MAP</code> field.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FileSchema.StructBuilder.</span><code><a href="../FileSchema.StructBuilder.html#struct(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">struct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;structName,
+<div class="col-first even-row-color"><code><a href="../FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FileSchema.StructBuilder.</span><code><a href="../FileSchema.StructBuilder.html#struct(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">struct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;structName,
  <a href="../../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a>&gt;&nbsp;filler)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Append a nested <code>struct</code> field.</div>
 </div>
 </div>

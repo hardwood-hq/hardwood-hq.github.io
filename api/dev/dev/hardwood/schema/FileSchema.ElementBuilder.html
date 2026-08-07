@@ -60,6 +60,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" tabindex="0">primitive(PhysicalType, RepetitionType)</a></li>
+<li><a href="#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int)" tabindex="0">primitive(PhysicalType, RepetitionType, int)</a></li>
 <li><a href="#struct(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" tabindex="0">struct(RepetitionType, Consumer)</a></li>
 <li><a href="#list(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" tabindex="0">list(RepetitionType, Consumer)</a></li>
 <li><a href="#map(dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" tabindex="0">map(RepetitionType, PhysicalType, Consumer)</a></li>
@@ -123,9 +124,17 @@ inside a list and <code>value</code> inside a map.</div>
 <div class="block">Declare a primitive element.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#struct(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">struct</a><wbr>(<a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int)" class="member-name-link">primitive</a><wbr>(<a href="../metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+ <a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
+ int&nbsp;typeLength)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Declare a primitive element, giving the fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code>
+element.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#struct(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">struct</a><wbr>(<a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Declare a <code>struct</code> element.</div>
 </div>
 </div>
@@ -152,6 +161,27 @@ inside a list and <code>value</code> inside a map.</div>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">primitive</span><wbr><span class="parameters">(<a href="../metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
  <a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition)</span></div>
 <div class="block">Declare a primitive element.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the type is <code>FIXED_LEN_BYTE_ARRAY</code> (use the
+type-length overload)</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int)">
+<h3>primitive</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">primitive</span><wbr><span class="parameters">(<a href="../metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+ <a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
+ int&nbsp;typeLength)</span></div>
+<div class="block">Declare a primitive element, giving the fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code>
+element.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>typeLength</code> does not match the type</dd>
+</dl>
 </div>
 </section>
 </li>

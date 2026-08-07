@@ -64,6 +64,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" tabindex="0">DEFAULT_ROW_GROUP_TARGET_BYTES</a></li>
 <li><a href="#DEFAULT_CREATED_BY" tabindex="0">DEFAULT_CREATED_BY</a></li>
 <li><a href="#DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES" tabindex="0">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</a></li>
+<li><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" tabindex="0">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></li>
 <li><a href="#DEFAULT_CODEC" tabindex="0">DEFAULT_CODEC</a></li>
 </ol>
 </li>
@@ -76,6 +77,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#createdBy()" tabindex="0">createdBy()</a></li>
 <li><a href="#enableDictionary()" tabindex="0">enableDictionary()</a></li>
 <li><a href="#dictionaryPageLimitBytes()" tabindex="0">dictionaryPageLimitBytes()</a></li>
+<li><a href="#statisticsTruncationLength()" tabindex="0">statisticsTruncationLength()</a></li>
 <li><a href="#codec()" tabindex="0">codec()</a></li>
 </ol>
 </li>
@@ -162,6 +164,12 @@ chunk falls back to <code>PLAIN</code>.</div>
 <div class="col-last even-row-color">
 <div class="block">Default row-group target: 128 MiB of uncompressed data per row group.</div>
 </div>
+<div class="col-first odd-row-color"><code>static final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Default statistics truncation length: <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> bounds longer than
+64 bytes are truncated and flagged inexact.</div>
+</div>
 </div>
 </section>
 </li>
@@ -215,6 +223,12 @@ chunk falls back to <code>PLAIN</code>.</div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Uncompressed byte threshold at which a row group is flushed.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The maximum length of a <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound before it is
+truncated (and flagged inexact).</div>
 </div>
 </div>
 </div>
@@ -303,6 +317,24 @@ chunk falls back to <code>PLAIN</code>.</div>
 </section>
 </li>
 <li>
+<section class="detail" id="DEFAULT_STATISTICS_TRUNCATION_LENGTH">
+<h3>DEFAULT_STATISTICS_TRUNCATION_LENGTH</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">DEFAULT_STATISTICS_TRUNCATION_LENGTH</span></div>
+<div class="block">Default statistics truncation length: <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> bounds longer than
+64 bytes are truncated and flagged inexact.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../constant-values.html#dev.hardwood.writer.WriterConfig.DEFAULT_STATISTICS_TRUNCATION_LENGTH">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="DEFAULT_CODEC">
 <h3>DEFAULT_CODEC</h3>
 <div class="horizontal-scroll">
@@ -382,6 +414,16 @@ default only avoids imposing the ZSTD dependency on callers who did not ask to c
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">dictionaryPageLimitBytes</span>()</div>
 <div class="block">The dictionary size in bytes at which a column chunk falls back to <code>PLAIN</code>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="statisticsTruncationLength()">
+<h3>statisticsTruncationLength</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">statisticsTruncationLength</span>()</div>
+<div class="block">The maximum length of a <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound before it is
+truncated (and flagged inexact).</div>
 </div>
 </section>
 </li>

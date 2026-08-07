@@ -60,6 +60,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
 <li><a href="#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean)" tabindex="0">Statistics(byte[], byte[], Long, Long, boolean)</a></li>
+<li><a href="#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean,boolean,boolean)" tabindex="0">Statistics(byte[], byte[], Long, Long, boolean, boolean, boolean)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -72,6 +73,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#nullCount()" tabindex="0">nullCount()</a></li>
 <li><a href="#distinctCount()" tabindex="0">distinctCount()</a></li>
 <li><a href="#isMinMaxDeprecated()" tabindex="0">isMinMaxDeprecated()</a></li>
+<li><a href="#isMinValueExact()" tabindex="0">isMinValueExact()</a></li>
+<li><a href="#isMaxValueExact()" tabindex="0">isMaxValueExact()</a></li>
 </ol>
 </li>
 </ol>
@@ -93,15 +96,22 @@ loadScripts(document, 'script');</script>
 <dd><code><span id="param-maxValue">maxValue</span></code> - maximum value encoded as raw bytes (little-endian), or <code>null</code> if absent</dd>
 <dd><code><span id="param-nullCount">nullCount</span></code> - number of null values in the column chunk, or <code>null</code> if absent</dd>
 <dd><code><span id="param-distinctCount">distinctCount</span></code> - number of distinct values in the column chunk, or <code>null</code> if absent</dd>
+<dd><code><span id="param-isMinMaxDeprecated">isMinMaxDeprecated</span></code> - whether the bounds came from the deprecated <code>min</code> / <code>max</code> fields</dd>
+<dd><code><span id="param-isMinValueExact">isMinValueExact</span></code> - whether <code>minValue</code> is the exact minimum (not a truncated lower bound)</dd>
+<dd><code><span id="param-isMaxValueExact">isMaxValueExact</span></code> - whether <code>maxValue</code> is the exact maximum (not a truncated upper bound)</dd>
 </dl>
 <hr>
 <object type="image/svg+xml" data="Statistics.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">Statistics</span>(byte[]&nbsp;minValue, byte[]&nbsp;maxValue, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nullCount, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount, boolean&nbsp;isMinMaxDeprecated)
+<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">Statistics</span>(byte[]&nbsp;minValue, byte[]&nbsp;maxValue, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nullCount, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount, boolean&nbsp;isMinMaxDeprecated, boolean&nbsp;isMinValueExact, boolean&nbsp;isMaxValueExact)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block"><p>Column chunk statistics for min/max values, null count, and distinct count.</p>
 <p>Used for predicate push-down: row groups whose statistics prove that no rows
 can match a filter predicate are skipped entirely.</p>
+<p>The <code>min</code> / <code>max</code> bounds may be <strong>truncated</strong> approximations for long <code>BYTE_ARRAY</code> values,
+in which case <code>isMinValueExact</code> / <code>isMaxValueExact</code> is <code>false</code> and the stored bound only
+brackets the true extreme (a truncated <code>minValue</code> is <code>&lt;=</code> every value, a truncated
+<code>maxValue</code> is <code>&gt;=</code> every value). A fixed-width bound is always exact.</p>
 </div>
 <dl class="notes">
 <dt>See Also:</dt>
@@ -129,6 +139,17 @@ can match a filter predicate are skipped entirely.</p>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount,
  boolean&nbsp;isMinMaxDeprecated)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Statistics whose bounds are exact — the common case for every fixed-width type and any
+untruncated bound.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean,boolean,boolean)" class="member-name-link">Statistics</a><wbr>(byte[]&nbsp;minValue,
+ byte[]&nbsp;maxValue,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nullCount,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount,
+ boolean&nbsp;isMinMaxDeprecated,
+ boolean&nbsp;isMinValueExact,
+ boolean&nbsp;isMaxValueExact)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates an instance of a <code>Statistics</code> record class.</div>
 </div>
 </div>
@@ -161,9 +182,19 @@ can match a filter predicate are skipped entirely.</p>
 <div class="block">Returns a hash code value for this object.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isMinMaxDeprecated()" class="member-name-link">isMinMaxDeprecated</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isMaxValueExact()" class="member-name-link">isMaxValueExact</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <code>isMinMaxDeprecated</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-isMaxValueExact"><code>isMaxValueExact</code></a> record component.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isMinMaxDeprecated()" class="member-name-link">isMinMaxDeprecated</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-isMinMaxDeprecated"><code>isMinMaxDeprecated</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isMinValueExact()" class="member-name-link">isMinValueExact</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-isMinValueExact"><code>isMinValueExact</code></a> record component.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>byte[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxValue()" class="member-name-link">maxValue</a>()</code></div>
@@ -211,6 +242,22 @@ can match a filter predicate are skipped entirely.</p>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nullCount,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount,
  boolean&nbsp;isMinMaxDeprecated)</span></div>
+<div class="block">Statistics whose bounds are exact — the common case for every fixed-width type and any
+untruncated bound.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(byte[],byte[],java.lang.Long,java.lang.Long,boolean,boolean,boolean)">
+<h3>Statistics</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Statistics</span><wbr><span class="parameters">(byte[]&nbsp;minValue,
+ byte[]&nbsp;maxValue,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nullCount,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount,
+ boolean&nbsp;isMinMaxDeprecated,
+ boolean&nbsp;isMinValueExact,
+ boolean&nbsp;isMaxValueExact)</span></div>
 <div class="block">Creates an instance of a <code>Statistics</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -218,7 +265,9 @@ can match a filter predicate are skipped entirely.</p>
 <dd><code>maxValue</code> - the value for the <a href="#param-maxValue"><code>maxValue</code></a> record component</dd>
 <dd><code>nullCount</code> - the value for the <a href="#param-nullCount"><code>nullCount</code></a> record component</dd>
 <dd><code>distinctCount</code> - the value for the <a href="#param-distinctCount"><code>distinctCount</code></a> record component</dd>
-<dd><code>isMinMaxDeprecated</code> - the value for the <code>isMinMaxDeprecated</code> record component</dd>
+<dd><code>isMinMaxDeprecated</code> - the value for the <a href="#param-isMinMaxDeprecated"><code>isMinMaxDeprecated</code></a> record component</dd>
+<dd><code>isMinValueExact</code> - the value for the <a href="#param-isMinValueExact"><code>isMinValueExact</code></a> record component</dd>
+<dd><code>isMaxValueExact</code> - the value for the <a href="#param-isMaxValueExact"><code>isMaxValueExact</code></a> record component</dd>
 </dl>
 </div>
 </section>
@@ -335,10 +384,36 @@ can match a filter predicate are skipped entirely.</p>
 <h3>isMinMaxDeprecated</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMinMaxDeprecated</span>()</div>
-<div class="block">Returns the value of the <code>isMinMaxDeprecated</code> record component.</div>
+<div class="block">Returns the value of the <a href="#param-isMinMaxDeprecated"><code>isMinMaxDeprecated</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the value of the <code>isMinMaxDeprecated</code> record component</dd>
+<dd>the value of the <a href="#param-isMinMaxDeprecated"><code>isMinMaxDeprecated</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isMinValueExact()">
+<h3>isMinValueExact</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMinValueExact</span>()</div>
+<div class="block">Returns the value of the <a href="#param-isMinValueExact"><code>isMinValueExact</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-isMinValueExact"><code>isMinValueExact</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isMaxValueExact()">
+<h3>isMaxValueExact</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMaxValueExact</span>()</div>
+<div class="block">Returns the value of the <a href="#param-isMaxValueExact"><code>isMaxValueExact</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-isMaxValueExact"><code>isMaxValueExact</code></a> record component</dd>
 </dl>
 </div>
 </section>

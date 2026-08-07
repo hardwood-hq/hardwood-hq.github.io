@@ -64,6 +64,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#createdBy(java.lang.String)" tabindex="0">createdBy(String)</a></li>
 <li><a href="#enableDictionary(boolean)" tabindex="0">enableDictionary(boolean)</a></li>
 <li><a href="#dictionaryPageLimitBytes(int)" tabindex="0">dictionaryPageLimitBytes(int)</a></li>
+<li><a href="#statisticsTruncationLength(int)" tabindex="0">statisticsTruncationLength(int)</a></li>
 <li><a href="#codec(dev.hardwood.metadata.CompressionCodec)" tabindex="0">codec(CompressionCodec)</a></li>
 <li><a href="#build()" tabindex="0">build()</a></li>
 </ol>
@@ -140,6 +141,12 @@ must be at least one <code>INT32</code> (4 bytes) so at least one value always f
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the row-group target; must be positive.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the maximum <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound length; must be
+positive.</div>
+</div>
 </div>
 </div>
 </div>
@@ -201,6 +208,16 @@ written as <code>PLAIN</code> with no dictionary page.</div>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">dictionaryPageLimitBytes</span><wbr><span class="parameters">(int&nbsp;dictionaryPageLimitBytes)</span></div>
 <div class="block">Sets the dictionary size in bytes past which a column chunk falls back to <code>PLAIN</code>;
 must be at least one <code>INT32</code> (4 bytes) so at least one value always fits.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="statisticsTruncationLength(int)">
+<h3>statisticsTruncationLength</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">statisticsTruncationLength</span><wbr><span class="parameters">(int&nbsp;statisticsTruncationLength)</span></div>
+<div class="block">Sets the maximum <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound length; must be
+positive. A bound longer than this is truncated and flagged inexact.</div>
 </div>
 </section>
 </li>
