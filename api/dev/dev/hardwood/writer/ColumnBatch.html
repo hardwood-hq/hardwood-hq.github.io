@@ -69,6 +69,30 @@ loadScripts(document, 'script');</script>
 <li><a href="#ints(java.lang.String,int%5B%5D,dev.hardwood.Validity)" tabindex="0">ints(String, int[], Validity)</a></li>
 <li><a href="#ints(int,int%5B%5D,boolean%5B%5D)" tabindex="0">ints(int, int[], boolean[])</a></li>
 <li><a href="#ints(java.lang.String,int%5B%5D,boolean%5B%5D)" tabindex="0">ints(String, int[], boolean[])</a></li>
+<li><a href="#longs(int,long%5B%5D)" tabindex="0">longs(int, long[])</a></li>
+<li><a href="#longs(java.lang.String,long%5B%5D)" tabindex="0">longs(String, long[])</a></li>
+<li><a href="#longs(int,long%5B%5D,dev.hardwood.Validity)" tabindex="0">longs(int, long[], Validity)</a></li>
+<li><a href="#longs(java.lang.String,long%5B%5D,dev.hardwood.Validity)" tabindex="0">longs(String, long[], Validity)</a></li>
+<li><a href="#longs(int,long%5B%5D,boolean%5B%5D)" tabindex="0">longs(int, long[], boolean[])</a></li>
+<li><a href="#longs(java.lang.String,long%5B%5D,boolean%5B%5D)" tabindex="0">longs(String, long[], boolean[])</a></li>
+<li><a href="#floats(int,float%5B%5D)" tabindex="0">floats(int, float[])</a></li>
+<li><a href="#floats(java.lang.String,float%5B%5D)" tabindex="0">floats(String, float[])</a></li>
+<li><a href="#floats(int,float%5B%5D,dev.hardwood.Validity)" tabindex="0">floats(int, float[], Validity)</a></li>
+<li><a href="#floats(java.lang.String,float%5B%5D,dev.hardwood.Validity)" tabindex="0">floats(String, float[], Validity)</a></li>
+<li><a href="#floats(int,float%5B%5D,boolean%5B%5D)" tabindex="0">floats(int, float[], boolean[])</a></li>
+<li><a href="#floats(java.lang.String,float%5B%5D,boolean%5B%5D)" tabindex="0">floats(String, float[], boolean[])</a></li>
+<li><a href="#doubles(int,double%5B%5D)" tabindex="0">doubles(int, double[])</a></li>
+<li><a href="#doubles(java.lang.String,double%5B%5D)" tabindex="0">doubles(String, double[])</a></li>
+<li><a href="#doubles(int,double%5B%5D,dev.hardwood.Validity)" tabindex="0">doubles(int, double[], Validity)</a></li>
+<li><a href="#doubles(java.lang.String,double%5B%5D,dev.hardwood.Validity)" tabindex="0">doubles(String, double[], Validity)</a></li>
+<li><a href="#doubles(int,double%5B%5D,boolean%5B%5D)" tabindex="0">doubles(int, double[], boolean[])</a></li>
+<li><a href="#doubles(java.lang.String,double%5B%5D,boolean%5B%5D)" tabindex="0">doubles(String, double[], boolean[])</a></li>
+<li><a href="#booleans(int,boolean%5B%5D)" tabindex="0">booleans(int, boolean[])</a></li>
+<li><a href="#booleans(java.lang.String,boolean%5B%5D)" tabindex="0">booleans(String, boolean[])</a></li>
+<li><a href="#booleans(int,boolean%5B%5D,dev.hardwood.Validity)" tabindex="0">booleans(int, boolean[], Validity)</a></li>
+<li><a href="#booleans(java.lang.String,boolean%5B%5D,dev.hardwood.Validity)" tabindex="0">booleans(String, boolean[], Validity)</a></li>
+<li><a href="#booleans(int,boolean%5B%5D,boolean%5B%5D)" tabindex="0">booleans(int, boolean[], boolean[])</a></li>
+<li><a href="#booleans(java.lang.String,boolean%5B%5D,boolean%5B%5D)" tabindex="0">booleans(String, boolean[], boolean[])</a></li>
 </ol>
 </li>
 </ol>
@@ -93,7 +117,7 @@ number of values, which is the batch's row count.</p>
 to the schema, hands it to a filler that populates the columns, then submits it — so
 there is no separate build or submit step to forget. Columns are addressed by index or
 by name, and the schema binding lets every identifier be validated as it is added — an
-unknown name, an out-of-range index, a non-<code>INT32</code> column, or setting the same column
+unknown name, an out-of-range index, a column of the wrong physical type, or setting the same column
 twice (whether by index or name) all fail eagerly rather than at write time.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">writer.writeBatch(b -&gt; b
         .ints(0, idColumn)
@@ -132,6 +156,126 @@ column.</p>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#booleans(int,boolean%5B%5D)" class="member-name-link">booleans</a><wbr>(int&nbsp;columnIndex,
+ boolean[]&nbsp;values)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED BOOLEAN</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#booleans(int,boolean%5B%5D,boolean%5B%5D)" class="member-name-link">booleans</a><wbr>(int&nbsp;columnIndex,
+ boolean[]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL BOOLEAN</code> column, addressed by index, with a plain mask.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#booleans(int,boolean%5B%5D,dev.hardwood.Validity)" class="member-name-link">booleans</a><wbr>(int&nbsp;columnIndex,
+ boolean[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL BOOLEAN</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#booleans(java.lang.String,boolean%5B%5D)" class="member-name-link">booleans</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ boolean[]&nbsp;values)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED BOOLEAN</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#booleans(java.lang.String,boolean%5B%5D,boolean%5B%5D)" class="member-name-link">booleans</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ boolean[]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL BOOLEAN</code> column, addressed by name, with a plain mask.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#booleans(java.lang.String,boolean%5B%5D,dev.hardwood.Validity)" class="member-name-link">booleans</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ boolean[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL BOOLEAN</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doubles(int,double%5B%5D)" class="member-name-link">doubles</a><wbr>(int&nbsp;columnIndex,
+ double[]&nbsp;values)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED DOUBLE</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doubles(int,double%5B%5D,boolean%5B%5D)" class="member-name-link">doubles</a><wbr>(int&nbsp;columnIndex,
+ double[]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL DOUBLE</code> column, addressed by index, with a plain mask.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doubles(int,double%5B%5D,dev.hardwood.Validity)" class="member-name-link">doubles</a><wbr>(int&nbsp;columnIndex,
+ double[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL DOUBLE</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doubles(java.lang.String,double%5B%5D)" class="member-name-link">doubles</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ double[]&nbsp;values)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED DOUBLE</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doubles(java.lang.String,double%5B%5D,boolean%5B%5D)" class="member-name-link">doubles</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ double[]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL DOUBLE</code> column, addressed by name, with a plain mask.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doubles(java.lang.String,double%5B%5D,dev.hardwood.Validity)" class="member-name-link">doubles</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ double[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL DOUBLE</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#floats(int,float%5B%5D)" class="member-name-link">floats</a><wbr>(int&nbsp;columnIndex,
+ float[]&nbsp;values)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED FLOAT</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#floats(int,float%5B%5D,boolean%5B%5D)" class="member-name-link">floats</a><wbr>(int&nbsp;columnIndex,
+ float[]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL FLOAT</code> column, addressed by index, with a plain mask.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#floats(int,float%5B%5D,dev.hardwood.Validity)" class="member-name-link">floats</a><wbr>(int&nbsp;columnIndex,
+ float[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL FLOAT</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#floats(java.lang.String,float%5B%5D)" class="member-name-link">floats</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ float[]&nbsp;values)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED FLOAT</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#floats(java.lang.String,float%5B%5D,boolean%5B%5D)" class="member-name-link">floats</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ float[]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL FLOAT</code> column, addressed by name, with a plain mask.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#floats(java.lang.String,float%5B%5D,dev.hardwood.Validity)" class="member-name-link">floats</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ float[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL FLOAT</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ints(int,int%5B%5D)" class="member-name-link">ints</a><wbr>(int&nbsp;columnIndex,
  int[]&nbsp;values)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -142,8 +286,8 @@ column.</p>
  int[]&nbsp;values,
  boolean[]&nbsp;nulls)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index, with nulls given
-as a plain mask.</div>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index, with nulls given as a
+plain mask.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)" class="member-name-link">ints</a><wbr>(int&nbsp;columnIndex,
@@ -163,8 +307,8 @@ as a plain mask.</div>
  int[]&nbsp;values,
  boolean[]&nbsp;nulls)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name, with nulls given
-as a plain mask.</div>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name, with nulls given as a
+plain mask.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#ints(java.lang.String,int%5B%5D,dev.hardwood.Validity)" class="member-name-link">ints</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
@@ -186,6 +330,46 @@ as a plain mask.</div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the entry offsets of a <code>LIST</code> together with its per-instance nulls (which lists
 are themselves absent), distinct from an empty list carrying a zero-delta offset.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#longs(int,long%5B%5D)" class="member-name-link">longs</a><wbr>(int&nbsp;columnIndex,
+ long[]&nbsp;values)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED INT64</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#longs(int,long%5B%5D,boolean%5B%5D)" class="member-name-link">longs</a><wbr>(int&nbsp;columnIndex,
+ long[]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL INT64</code> column, addressed by index, with a plain mask.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#longs(int,long%5B%5D,dev.hardwood.Validity)" class="member-name-link">longs</a><wbr>(int&nbsp;columnIndex,
+ long[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL INT64</code> column, addressed by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#longs(java.lang.String,long%5B%5D)" class="member-name-link">longs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ long[]&nbsp;values)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for a <code>REQUIRED INT64</code> column, addressed by name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#longs(java.lang.String,long%5B%5D,boolean%5B%5D)" class="member-name-link">longs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ long[]&nbsp;values,
+ boolean[]&nbsp;nulls)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL INT64</code> column, addressed by name, with a plain mask.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#longs(java.lang.String,long%5B%5D,dev.hardwood.Validity)" class="member-name-link">longs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ long[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds the values for an <code>OPTIONAL INT64</code> column, addressed by name.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#map(java.lang.String,int%5B%5D)" class="member-name-link">map</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mapPath,
@@ -353,7 +537,9 @@ map is already set, or <code>offsets</code> is empty</dd>
  int[]&nbsp;values)</span></div>
 <div class="block"><p>Adds the values for a <code>REQUIRED INT32</code> column, addressed by index.</p>
 <p>The array is referenced, not copied, so it must not be mutated until the batch
-has been written.</p>
+has been written. Every physical type has the same setter shapes (<code>longs</code>, <code>floats</code>,
+<code>doubles</code>, <code>booleans</code>, …): by index or name, all-present or nullable (<a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> or
+<code>boolean[]</code> mask).</p>
 </div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -362,8 +548,9 @@ has been written.</p>
 <dt>Returns:</dt>
 <dd>this batch, for chaining</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is
-already set, or the length does not match the other columns in this batch</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is not
+<code>INT32</code>, the column is already set, or the length does not match the other
+columns in this batch</dd>
 </dl>
 </div>
 </section>
@@ -374,19 +561,14 @@ already set, or the length does not match the other columns in this batch</dd>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">ints</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
  int[]&nbsp;values)</span></div>
-<div class="block"><p>Adds the values for a <code>REQUIRED INT32</code> column, addressed by name.</p>
-<p>The array is referenced, not copied, so it must not be mutated until the batch
-has been written.</p>
-</div>
+<div class="block">Adds the values for a <code>REQUIRED INT32</code> column, addressed by name.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>columnName</code> - the column's name</dd>
-<dd><code>values</code> - the column's values for this batch</dd>
-<dt>Returns:</dt>
-<dd>this batch, for chaining</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column has that name, the column is already
-set (by name or index), or the length does not match the other columns</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
 </dl>
 </div>
 </section>
@@ -399,11 +581,8 @@ set (by name or index), or the length does not match the other columns</dd>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">ints</span><wbr><span class="parameters">(int&nbsp;columnIndex,
  int[]&nbsp;values,
  <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
-<div class="block"><p>Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index.</p>
-<p>The values array is referenced, not copied, so it must not be mutated until the
-batch has been written; it is full length — one slot per row — and the entry at a
-null row is ignored.</p>
-</div>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index. The values array is
+full length — one slot per row — and the entry at a null row is ignored.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>columnIndex</code> - zero-based leaf-column index</dd>
@@ -413,7 +592,7 @@ null row is ignored.</p>
 <dd>this batch, for chaining</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is not
-<code>OPTIONAL</code>, or the column is already set</dd>
+<code>OPTIONAL INT32</code>, or the column is already set</dd>
 </dl>
 </div>
 </section>
@@ -428,15 +607,12 @@ null row is ignored.</p>
  <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
 <div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>columnName</code> - the column's name</dd>
-<dd><code>values</code> - the column's values for this batch</dd>
-<dd><code>nulls</code> - the column's nulls; <code>nulls.isNull(i)</code> marks row <code>i</code> null</dd>
-<dt>Returns:</dt>
-<dd>this batch, for chaining</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column has that name, the column is not
-<code>OPTIONAL</code>, or the column is already set</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
 </dl>
 </div>
 </section>
@@ -449,10 +625,9 @@ null row is ignored.</p>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">ints</span><wbr><span class="parameters">(int&nbsp;columnIndex,
  int[]&nbsp;values,
  boolean[]&nbsp;nulls)</span></div>
-<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index, with nulls given
-as a plain mask. Convenience sugar over [#ints(int, int[], Validity)] and
-<a href="../Validity.html#ofNulls(boolean%5B%5D)"><code>Validity.ofNulls(boolean[])</code></a>; unlike the <a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> form, the mask length is checked against
-the values.</div>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by index, with nulls given as a
+plain mask. Convenience sugar over [#ints(int, int[], Validity)] and <a href="../Validity.html#ofNulls(boolean%5B%5D)"><code>Validity.ofNulls(boolean[])</code></a>;
+unlike the <a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> form, the mask length is checked against the values.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>columnIndex</code> - zero-based leaf-column index</dd>
@@ -462,7 +637,7 @@ the values.</div>
 <dd>this batch, for chaining</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is not
-<code>OPTIONAL</code>, the column is already set, or the lengths do not agree</dd>
+<code>OPTIONAL INT32</code>, the column is already set, or the lengths do not agree</dd>
 </dl>
 </div>
 </section>
@@ -475,19 +650,479 @@ the values.</div>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">ints</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
  int[]&nbsp;values,
  boolean[]&nbsp;nulls)</span></div>
-<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name, with nulls given
-as a plain mask. Convenience sugar over [#ints(String, int[], Validity)] and
-<a href="../Validity.html#ofNulls(boolean%5B%5D)"><code>Validity.ofNulls(boolean[])</code></a>.</div>
+<div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name, with nulls given as a
+plain mask.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>columnName</code> - the column's name</dd>
-<dd><code>values</code> - the column's values for this batch</dd>
-<dd><code>nulls</code> - the per-row null mask; <code>nulls[i] == true</code> marks row <code>i</code> null</dd>
-<dt>Returns:</dt>
-<dd>this batch, for chaining</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column has that name, the column is not
-<code>OPTIONAL</code>, the column is already set, or the lengths do not agree</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="longs(int,long[])">
+<h3>longs</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">longs</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ long[]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED INT64</code> column, addressed by index.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="longs(java.lang.String,long[])">
+<h3>longs</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">longs</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ long[]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED INT64</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="longs(int,long[],dev.hardwood.Validity)">
+<h3>longs</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">longs</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ long[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL INT64</code> column, addressed by index.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="longs(java.lang.String,long[],dev.hardwood.Validity)">
+<h3>longs</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">longs</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ long[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL INT64</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="longs(int,long[],boolean[])">
+<h3>longs</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">longs</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ long[]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL INT64</code> column, addressed by index, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="longs(java.lang.String,long[],boolean[])">
+<h3>longs</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">longs</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ long[]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL INT64</code> column, addressed by name, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="floats(int,float[])">
+<h3>floats</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">floats</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ float[]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED FLOAT</code> column, addressed by index.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="floats(java.lang.String,float[])">
+<h3>floats</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">floats</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ float[]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED FLOAT</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="floats(int,float[],dev.hardwood.Validity)">
+<h3>floats</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">floats</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ float[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL FLOAT</code> column, addressed by index.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="floats(java.lang.String,float[],dev.hardwood.Validity)">
+<h3>floats</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">floats</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ float[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL FLOAT</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="floats(int,float[],boolean[])">
+<h3>floats</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">floats</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ float[]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL FLOAT</code> column, addressed by index, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="floats(java.lang.String,float[],boolean[])">
+<h3>floats</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">floats</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ float[]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL FLOAT</code> column, addressed by name, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="doubles(int,double[])">
+<h3>doubles</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">doubles</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ double[]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED DOUBLE</code> column, addressed by index.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="doubles(java.lang.String,double[])">
+<h3>doubles</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">doubles</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ double[]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED DOUBLE</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="doubles(int,double[],dev.hardwood.Validity)">
+<h3>doubles</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">doubles</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ double[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL DOUBLE</code> column, addressed by index.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="doubles(java.lang.String,double[],dev.hardwood.Validity)">
+<h3>doubles</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">doubles</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ double[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL DOUBLE</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="doubles(int,double[],boolean[])">
+<h3>doubles</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">doubles</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ double[]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL DOUBLE</code> column, addressed by index, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="doubles(java.lang.String,double[],boolean[])">
+<h3>doubles</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">doubles</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ double[]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL DOUBLE</code> column, addressed by name, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="booleans(int,boolean[])">
+<h3>booleans</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">booleans</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ boolean[]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED BOOLEAN</code> column, addressed by index.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="booleans(java.lang.String,boolean[])">
+<h3>booleans</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">booleans</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ boolean[]&nbsp;values)</span></div>
+<div class="block">Adds the values for a <code>REQUIRED BOOLEAN</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="booleans(int,boolean[],dev.hardwood.Validity)">
+<h3>booleans</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">booleans</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ boolean[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL BOOLEAN</code> column, addressed by index.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="booleans(java.lang.String,boolean[],dev.hardwood.Validity)">
+<h3>booleans</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">booleans</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ boolean[]&nbsp;values,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL BOOLEAN</code> column, addressed by name.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,dev.hardwood.Validity)"><code>ints(int, int[], Validity)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="booleans(int,boolean[],boolean[])">
+<h3>booleans</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">booleans</span><wbr><span class="parameters">(int&nbsp;columnIndex,
+ boolean[]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL BOOLEAN</code> column, addressed by index, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="booleans(java.lang.String,boolean[],boolean[])">
+<h3>booleans</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">booleans</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName,
+ boolean[]&nbsp;values,
+ boolean[]&nbsp;nulls)</span></div>
+<div class="block">Adds the values for an <code>OPTIONAL BOOLEAN</code> column, addressed by name, with a plain mask.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#ints(int,int%5B%5D,boolean%5B%5D)"><code>ints(int, int[], boolean[])</code></a></li>
+</ul>
+</dd>
 </dl>
 </div>
 </section>

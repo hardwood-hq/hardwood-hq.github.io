@@ -86,9 +86,10 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
 <div class="block"><p>Writes a Parquet file through a columnar batch API.</p>
-<p>This increment writes <code>INT32</code> columns — flat <code>REQUIRED</code> / <code>OPTIONAL</code>, nested inside
-<code>REQUIRED</code> / <code>OPTIONAL</code> <code>struct</code> groups, and inside <code>LIST</code>s and <code>MAP</code>s (including lists
-of lists, lists of structs, and maps of any in-scope value). Data is supplied as
+<p>This increment writes the fixed-width primitive types — <code>BOOLEAN</code>, <code>INT32</code>, <code>INT64</code>,
+<code>FLOAT</code>, <code>DOUBLE</code> — flat <code>REQUIRED</code> / <code>OPTIONAL</code>, nested inside <code>REQUIRED</code> / <code>OPTIONAL</code>
+<code>struct</code> groups, and inside <code>LIST</code>s and <code>MAP</code>s (including lists of lists, lists of structs,
+and maps of any in-scope value). Data is supplied as
 <a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a> slices; the writer packs each column into size-bounded data pages — a
 levelled column's pages carrying an RLE definition-level stream ahead of the values — and
 flushes a row group once its buffered data reaches the configured target, so peak memory is
@@ -169,7 +170,8 @@ data crosses the row-group target.</div>
 <dd>an open writer</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the destination cannot be opened</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema has a non-<code>INT32</code> column</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema has a column of an unsupported
+physical type</dd>
 </dl>
 </div>
 </section>
@@ -192,8 +194,8 @@ data crosses the row-group target.</div>
 <dd>an open writer</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the destination cannot be opened</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema has a non-<code>INT32</code> column, or the
-configured codec cannot be written</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema has a column of an unsupported
+physical type, or the configured codec cannot be written</dd>
 </dl>
 </div>
 </section>
