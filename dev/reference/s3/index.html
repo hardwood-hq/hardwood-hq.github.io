@@ -1444,6 +1444,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#footer-pre-fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Footer pre-fetch
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#range-backing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Range backing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fetch-cost-counters" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1740,6 +1762,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#footer-pre-fetch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Footer pre-fetch
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#range-backing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Range backing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fetch-cost-counters" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1850,16 +1894,80 @@ endpoints, and multi-file reads — see <a href="../../how-to/s3/">Reading from 
 <td>internal</td>
 <td>Caller-supplied client for full transport control. The caller is responsible for closing it — <code>S3Source.close()</code> will not.</td>
 </tr>
+<tr>
+<td><code>rangeBacking(RangeBacking)</code></td>
+<td><code>RangeBacking.NONE</code></td>
+<td>Whether files opened from this source cache the byte ranges they fetch. See <a href="#range-backing">Range backing</a>.</td>
+</tr>
+<tr>
+<td><code>tempDir(Path)</code></td>
+<td><code>java.io.tmpdir</code></td>
+<td>Directory holding the sparse backing file under <code>RangeBacking.SPARSE_TEMPFILE</code>. Ignored under <code>RangeBacking.NONE</code>.</td>
+</tr>
 </tbody>
 </table>
 <p>When the retry budget is exhausted, the last failure is re-thrown as an <code>IOException</code>. For HTTP
 errors the message has the form <code>GET s3://&lt;bucket&gt;/&lt;key&gt; failed: HTTP &lt;status&gt;</code>; for network errors
 the original <code>IOException</code> message is preserved.</p>
+<h2 id="footer-pre-fetch">Footer pre-fetch<a class="headerlink" href="#footer-pre-fetch" title="Permanent link">&para;</a></h2>
+<p><code>open()</code> issues one GET for the last 64 KB of the object — the whole object if it is
+smaller. That single round-trip discovers the object size, so there is never a
+separate HEAD request. Those bytes are kept for as long as the file is open, and any
+read falling entirely inside that trailing window is answered without a further
+request.</p>
+<p>For most files the window also carries the Parquet footer, which is why opening a
+file usually costs one GET. It is a cost heuristic rather than a guarantee: footer
+size grows with row groups × columns and with the size of the per-column statistics,
+so a wide schema, a heavily split file, or long string min/max values can push the
+footer past 64 KB. Reading it then costs one extra GET and nothing more — the window
+bounds request count, never what is readable.</p>
+<p>This applies to every <code>S3InputFile</code>, independent of the range backing below.</p>
+<h2 id="range-backing">Range backing<a class="headerlink" href="#range-backing" title="Permanent link">&para;</a></h2>
+<p><code>RangeBacking</code> sets whether an <code>S3InputFile</code> also keeps the bytes it fetches outside
+that window:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>NONE</code> (default)</td>
+<td>Nothing beyond the footer pre-fetch is kept. Every other <code>readRange</code> issues an HTTP GET, including a repeat read of a range already fetched.</td>
+</tr>
+<tr>
+<td><code>SPARSE_TEMPFILE</code></td>
+<td>Fetched ranges are written into a sparse temp file mmapped into the process. A read covered by already-fetched bytes is served from the mapping with no HTTP GET; a read spanning a gap fetches only the missing sub-ranges.</td>
+</tr>
+</tbody>
+</table>
+<p>The value changes how many HTTP requests go out, not what a read returns — both give
+the reader identical bytes. The cache is per <code>S3InputFile</code> and lives until that file
+is closed.</p>
+<p><code>SPARSE_TEMPFILE</code> applies to a whole <code>S3Source</code>, so it suits workloads that re-read
+the same byte ranges — <code>hardwood dive</code> opts in for every file it opens. Its
+properties:</p>
+<ul>
+<li>Disk and memory footprint scale with bytes fetched, not with file size, on
+  filesystems that support sparse files (ext4, xfs, apfs, ntfs).</li>
+<li>Files larger than <code>Integer.MAX_VALUE</code> bytes (2 GB) cannot be range-backed; <code>open()</code>
+  throws an <code>IOException</code> naming the limit. Read those with <code>RangeBacking.NONE</code>.</li>
+<li>The backing file is created in <code>tempDir</code>, which must exist and be writeable with
+  room for the worst-case bytes fetched per file. <code>S3Source.builder().build()</code> rejects
+  a directory that is missing or not writeable.</li>
+<li><code>close()</code> deletes the backing file, but the mapping behind it is released by the
+  garbage collector, so the address space — and on Windows, where a mapped file cannot
+  be deleted, the file itself until JVM exit — outlives the <code>close()</code> call.</li>
+</ul>
 <h2 id="fetch-cost-counters">Fetch-cost counters<a class="headerlink" href="#fetch-cost-counters" title="Permanent link">&para;</a></h2>
 <p>Each <code>S3InputFile</code> tracks the network I/O it has performed since <code>open()</code>:</p>
 <ul>
-<li><code>networkRequestCount()</code> — HTTP GET requests issued: the footer tail fetch plus every
-  column-chunk range fetch. Tail-cache hits are not counted.</li>
+<li><code>networkRequestCount()</code> — HTTP GET requests issued: the <a href="#footer-pre-fetch">footer pre-fetch</a>
+  plus every column-chunk range fetch. Reads answered from the pre-fetched footer window
+  are not counted, nor are reads answered from the cache under
+  <code>RangeBacking.SPARSE_TEMPFILE</code>.</li>
 <li><code>networkBytesFetched()</code> — total bytes fetched across those requests, counted the same way.</li>
 </ul>
 <p>Read the counters before the try-with-resources block exits, while the <code>S3InputFile</code> is still open.</p>
@@ -1919,8 +2027,8 @@ the original <code>IOException</code> message is preserved.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4ef50317dd029686ec9dc2025e03fb6758bb6e48" target="_blank" rel="noopener">
-      4ef50317
+    <a href="https://github.com/hardwood-hq/hardwood/tree/991063e8dc3449c4bd023a28386d6a01321e8363" target="_blank" rel="noopener">
+      991063e8
     </a>
   
 </div>

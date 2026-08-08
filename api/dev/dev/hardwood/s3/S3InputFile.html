@@ -89,17 +89,21 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></span></div>
 <div class="block"><p><a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> backed by an object in Amazon S3 (or an S3-compatible service).</p>
-<p>Each <a href="#readRange(long,int)"><code>readRange(long, int)</code></a> call issues a signed HTTP <code>GET</code> request with a
-byte-range header, so only the requested bytes are transferred.</p>
+<p>A <a href="#readRange(long,int)"><code>readRange(long, int)</code></a> call that cannot be answered locally issues a signed
+HTTP <code>GET</code> request with a byte-range header, so only the requested
+bytes are transferred.</p>
 <p><a href="#open()"><code>open()</code></a> uses a suffix-range GET instead of a HEAD request. This
 discovers the file length from the <code>Content-Range</code> response header
 and pre-fetches the Parquet footer (which sits at the end of the file) in
-the same round-trip — eliminating a separate HEAD request per file.</p>
+the same round-trip — eliminating a separate HEAD request per file.
+Those tail bytes are retained for as long as the file is open, and a
+read falling entirely inside that window is answered from them
+without a request.</p>
 <p>When the owning <a href="S3Source.html" title="class in dev.hardwood.s3"><code>S3Source</code></a> is configured with
 <a href="RangeBacking.html#SPARSE_TEMPFILE"><code>RangeBacking.SPARSE_TEMPFILE</code></a>, an internal mmap-backed range cache
 serves repeat reads of the same byte ranges without re-issuing HTTP
 requests. The cache is invisible at the API surface — the same
-counters (<code>networkRequestCount</code>, <code>networkBytesFetched</code>) reflect
+counters (<a href="#networkRequestCount()"><code>networkRequestCount()</code></a>, <a href="#networkBytesFetched()"><code>networkBytesFetched()</code></a>) reflect
 only network traffic in either mode.</p>
 <p>Thread-safe once <a href="#open()"><code>open()</code></a> has been called.</p>
 </div>
@@ -214,7 +218,8 @@ Must be called before <a href="../InputFile.html#readRange(long,int)"><code>Inpu
 <section class="detail" id="length()">
 <h3>length</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">length</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">length</span>()
+            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../InputFile.html#length()">InputFile</a></code></span></div>
 <div class="block">Returns the total size of the file in bytes.</div>
 <dl class="notes">
@@ -222,6 +227,8 @@ Must be called before <a href="../InputFile.html#readRange(long,int)"><code>Inpu
 <dd><code><a href="../InputFile.html#length()">length</a></code>&nbsp;in interface&nbsp;<code><a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></code></dd>
 <dt>Returns:</dt>
 <dd>the file size</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the size cannot be determined</dd>
 </dl>
 </div>
 </section>
@@ -266,7 +273,8 @@ Must be called before <a href="../InputFile.html#readRange(long,int)"><code>Inpu
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">networkRequestCount</span>()</div>
 <div class="block">Number of HTTP requests issued against the object since <a href="#open()"><code>open()</code></a>.
 Counts the suffix-range tail fetch from <code>open</code> plus every
-network-fetch <a href="#readRange(long,int)"><code>readRange(long, int)</code></a> call. Tail-cache hits do not count.</div>
+network-fetch <a href="#readRange(long,int)"><code>readRange(long, int)</code></a> call. Tail-cache and range-cache hits
+do not count.</div>
 </div>
 </section>
 </li>
@@ -278,7 +286,7 @@ network-fetch <a href="#readRange(long,int)"><code>readRange(long, int)</code></
 <div class="block">Number of bytes fetched from the network since <a href="#open()"><code>open()</code></a>. The tail
 fetch from <code>open</code> contributes its actual response size; each
 network-fetch <a href="#readRange(long,int)"><code>readRange(long, int)</code></a> contributes the requested length.
-Tail-cache hits do not count.</div>
+Tail-cache and range-cache hits do not count.</div>
 </div>
 </section>
 </li>

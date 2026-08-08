@@ -295,10 +295,13 @@ for interactive workloads that re-read the same byte ranges
 <h3>tempDir</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></span>&nbsp;<span class="element-name">tempDir</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;tempDir)</span></div>
-<div class="block">Sets the temp directory used by <a href="RangeBacking.html#SPARSE_TEMPFILE"><code>RangeBacking.SPARSE_TEMPFILE</code></a>
+<div class="block"><p>Sets the temp directory used by <a href="RangeBacking.html#SPARSE_TEMPFILE"><code>RangeBacking.SPARSE_TEMPFILE</code></a>
 for the sparse-file backing. Defaults to the JVM's
 <code>java.io.tmpdir</code>. Ignored when range backing is
-<a href="RangeBacking.html#NONE"><code>RangeBacking.NONE</code></a>.</div>
+<a href="RangeBacking.html#NONE"><code>RangeBacking.NONE</code></a>.</p>
+<p>Under <a href="RangeBacking.html#SPARSE_TEMPFILE"><code>RangeBacking.SPARSE_TEMPFILE</code></a> the directory must exist
+and be writeable; <a href="#build()"><code>build()</code></a> rejects it otherwise.</p>
+</div>
 </div>
 </section>
 </li>
