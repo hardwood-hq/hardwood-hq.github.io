@@ -581,7 +581,7 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dd>
 <div class="block">Metadata for a column chunk.</div>
 </dd>
-<dt><a href="dev/hardwood/metadata/ColumnMetaData.html#%3Cinit%3E(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics,java.lang.Long,java.lang.Integer)" class="member-name-link">ColumnMetaData(PhysicalType, List, FieldPath, CompressionCodec, long, long, long, Map, long, Long, Statistics, GeospatialStatistics, Long, Integer)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
+<dt><a href="dev/hardwood/metadata/ColumnMetaData.html#%3Cinit%3E(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics,java.lang.Long,java.lang.Integer,java.util.List)" class="member-name-link">ColumnMetaData(PhysicalType, List, FieldPath, CompressionCodec, long, long, long, Map, long, Long, Statistics, GeospatialStatistics, Long, Integer, List)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>ColumnMetaData</code> record class.</div>
 </dd>
@@ -680,6 +680,10 @@ every row group, no filter.</div>
 <dd>
 <div class="block">Legacy converted types in Parquet schema (used by PyArrow for LIST/MAP annotation).</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/PageEncodingStats.html#count()" class="member-name-link">count()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageEncodingStats.html" title="class in dev.hardwood.metadata">PageEncodingStats</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/PageEncodingStats.html#param-count"><code>count</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/Hardwood.html#create()" class="member-name-link">create()</a> - Static method in class dev.hardwood.<a href="dev/hardwood/Hardwood.html" title="class in dev.hardwood">Hardwood</a></dt>
 <dd>
 <div class="block">Create a new Hardwood instance with a thread pool sized to available processors.</div>
@@ -744,6 +748,17 @@ created via <a href="dev/hardwood/HardwoodContext.html#create(int)"><code>Hardwo
 </dl>
 <h2 class="title" id="I:D">D</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/metadata/PageType.html#DATA_PAGE" class="member-name-link">DATA_PAGE</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageType.html" title="enum class in dev.hardwood.metadata">PageType</a></dt>
+<dd>
+<div class="block">A v1 data page: the repetition levels, definition levels and values are compressed
+together as a single payload.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/PageType.html#DATA_PAGE_V2" class="member-name-link">DATA_PAGE_V2</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageType.html" title="enum class in dev.hardwood.metadata">PageType</a></dt>
+<dd>
+<div class="block">A v2 data page: the repetition and definition levels are stored uncompressed and
+length-prefixed ahead of the compressed values, so they can be read without decompressing
+the page.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#dataPageOffset()" class="member-name-link">dataPageOffset()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-dataPageOffset"><code>dataPageOffset</code></a> record component.</div>
@@ -898,6 +913,10 @@ chunk falls back to <code>PLAIN</code>.</div>
 <dd>
 <div class="block">Parquet file writer with a columnar API.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/PageType.html#DICTIONARY_PAGE" class="member-name-link">DICTIONARY_PAGE</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageType.html" title="enum class in dev.hardwood.metadata">PageType</a></dt>
+<dd>
+<div class="block">The dictionary for a column chunk.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#dictionaryPageLimitBytes()" class="member-name-link">dictionaryPageLimitBytes()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
 <div class="block">The dictionary size in bytes at which a column chunk falls back to <code>PLAIN</code>.</div>
@@ -979,6 +998,10 @@ file at the destination.</div>
 <dd>
 <div class="block">Enables or disables dictionary encoding.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/PageEncodingStats.html#encoding()" class="member-name-link">encoding()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageEncodingStats.html" title="class in dev.hardwood.metadata">PageEncodingStats</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/PageEncodingStats.html#param-encoding"><code>encoding</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/Encoding.html" class="type-name-link" title="enum class in dev.hardwood.metadata">Encoding</a> - Enum Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
 <div class="block">Encoding types for Parquet data.</div>
@@ -986,6 +1009,10 @@ file at the destination.</div>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#encodings()" class="member-name-link">encodings()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-encodings"><code>encodings</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ColumnMetaData.html#encodingStats()" class="member-name-link">encodingStats()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-encodingStats"><code>encodingStats</code></a> record component.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html#endExclusive()" class="member-name-link">endExclusive()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a></dt>
 <dd>
@@ -1138,6 +1165,10 @@ file at the destination.</div>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/OffsetIndex.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/OffsetIndex.html" title="class in dev.hardwood.metadata">OffsetIndex</a></dt>
+<dd>
+<div class="block">Indicates whether some other object is "equal to" this one.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/PageEncodingStats.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageEncodingStats.html" title="class in dev.hardwood.metadata">PageEncodingStats</a></dt>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
@@ -2253,6 +2284,10 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/PageEncodingStats.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageEncodingStats.html" title="class in dev.hardwood.metadata">PageEncodingStats</a></dt>
+<dd>
+<div class="block">Returns a hash code value for this object.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/PageLocation.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageLocation.html" title="class in dev.hardwood.metadata">PageLocation</a></dt>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
@@ -2418,6 +2453,10 @@ and transport settings.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#in(java.lang.String,long...)" class="member-name-link">in(String, long...)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/metadata/PageType.html#INDEX_PAGE" class="member-name-link">INDEX_PAGE</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageType.html" title="enum class in dev.hardwood.metadata">PageType</a></dt>
+<dd>
+<div class="block">A page holding an index into the column chunk.</div>
+</dd>
 <dt><a href="dev/hardwood/s3/S3Source.html#inputFile(java.lang.String)" class="member-name-link">inputFile(String)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>
 <div class="block">Creates an <a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
@@ -3481,6 +3520,15 @@ current batch.&quot;</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/PageDecodedEvent.html#%3Cinit%3E()" class="member-name-link">PageDecodedEvent()</a> - Constructor for class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PageDecodedEvent.html" title="class in dev.hardwood.jfr">PageDecodedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/metadata/PageEncodingStats.html" class="type-name-link" title="class in dev.hardwood.metadata">PageEncodingStats</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
+<dd>
+<div class="block">The number of pages a writer produced for one combination of page type and encoding within a
+column chunk.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/PageEncodingStats.html#%3Cinit%3E(dev.hardwood.metadata.PageType,dev.hardwood.metadata.Encoding,int)" class="member-name-link">PageEncodingStats(PageType, Encoding, int)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageEncodingStats.html" title="class in dev.hardwood.metadata">PageEncodingStats</a></dt>
+<dd>
+<div class="block">Creates an instance of a <code>PageEncodingStats</code> record class.</div>
+</dd>
 <dt><a href="dev/hardwood/jfr/PageFilterEvent.html" class="type-name-link" title="class in dev.hardwood.jfr">PageFilterEvent</a> - Class in <a href="dev/hardwood/jfr/package-summary.html">dev.hardwood.jfr</a></dt>
 <dd>
 <div class="block">JFR event emitted when pages are filtered by Column Index predicate push-down.</div>
@@ -3510,6 +3558,14 @@ current batch.&quot;</div>
 <dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#pageTargetBytes(int)" class="member-name-link">pageTargetBytes(int)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
 <dd>
 <div class="block">Sets the page target; must be at least one <code>INT32</code> (4 bytes).</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/PageEncodingStats.html#pageType()" class="member-name-link">pageType()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageEncodingStats.html" title="class in dev.hardwood.metadata">PageEncodingStats</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/PageEncodingStats.html#param-pageType"><code>pageType</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/PageType.html" class="type-name-link" title="enum class in dev.hardwood.metadata">PageType</a> - Enum Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
+<dd>
+<div class="block">The kind of page stored in a column chunk.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html" class="type-name-link" title="class in dev.hardwood.reader">ParquetFileReader</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
@@ -4229,6 +4285,10 @@ followed by each node in pre-order, groups carrying their child count.</div>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/PageEncodingStats.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageEncodingStats.html" title="class in dev.hardwood.metadata">PageEncodingStats</a></dt>
+<dd>
+<div class="block">Returns a string representation of this record class.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/PageLocation.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageLocation.html" title="class in dev.hardwood.metadata">PageLocation</a></dt>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
@@ -4453,6 +4513,10 @@ ordering added to the Parquet format after this release.</div>
 <dd>
 <div class="block">Placeholder for unknown/unsupported encodings found in metadata.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/PageType.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageType.html" title="enum class in dev.hardwood.metadata">PageType</a></dt>
+<dd>
+<div class="block">Placeholder for a page type found in metadata that is not recognized.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html#UNORDERED" class="member-name-link">UNORDERED</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#UTF8" class="member-name-link">UTF8</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
@@ -4564,6 +4628,10 @@ writer accepts it as a column's null mask.</div>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/PageType.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageType.html" title="enum class in dev.hardwood.metadata">PageType</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/PhysicalType.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
@@ -4619,6 +4687,11 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.TimeUnit.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.TimeUnit.html" title="enum class in dev.hardwood.metadata">LogicalType.TimeUnit</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/PageType.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageType.html" title="enum class in dev.hardwood.metadata">PageType</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>

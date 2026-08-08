@@ -1696,7 +1696,7 @@
 <ul>
 <li><strong>FileMetaData</strong> — top-level: row count, schema, key-value metadata (e.g. Spark schema, pandas metadata), the writer that produced the file (<code>createdBy</code>), and the per-column statistics ordering (<code>columnOrders</code>)</li>
 <li><strong>RowGroup</strong> — a horizontal partition of the data; each row group contains all columns for a subset of rows</li>
-<li><strong>ColumnChunk</strong> — one column within a row group; holds compression codec, byte sizes, and optional statistics (min/max values, null count) used for predicate pushdown. Per-chunk byte ranges for the column index and offset index (when present in the file) are exposed via <code>columnIndexOffset</code>/<code>columnIndexLength</code> and <code>offsetIndexOffset</code>/<code>offsetIndexLength</code> on <code>ColumnChunk</code>. The bloom-filter byte range (<code>bloomFilterOffset</code>/<code>bloomFilterLength</code>) is exposed on <code>ColumnMetaData</code>, matching its position in the Parquet Thrift schema.</li>
+<li><strong>ColumnChunk</strong> — one column within a row group; holds compression codec, byte sizes, and optional statistics (min/max values, null count) used for predicate pushdown. Per-chunk byte ranges for the column index and offset index (when present in the file) are exposed via <code>columnIndexOffset</code>/<code>columnIndexLength</code> and <code>offsetIndexOffset</code>/<code>offsetIndexLength</code> on <code>ColumnChunk</code>. The bloom-filter byte range (<code>bloomFilterOffset</code>/<code>bloomFilterLength</code>) is exposed on <code>ColumnMetaData</code>, matching its position in the Parquet Thrift schema. <code>ColumnMetaData.encodingStats()</code> returns the chunk's page counts per (page type, encoding) pair as a list of <code>PageEncodingStats</code>, empty when the file omits the field. A page type this version does not recognize is reported as <code>PageType.UNKNOWN</code>.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.ColumnChunk</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.ColumnMetaData</span><span class="p">;</span>
@@ -1811,8 +1811,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/991063e8dc3449c4bd023a28386d6a01321e8363" target="_blank" rel="noopener">
-      991063e8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a774806c0c77a46fae8f07d2e6b66f25ad1eed2a" target="_blank" rel="noopener">
+      a774806c
     </a>
   
 </div>
