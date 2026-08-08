@@ -2143,8 +2143,10 @@ encoding automatically:</p>
   binary (<code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code>) columns that carry a Bloom filter, and to <code>in</code>
   predicates on the integer and binary types. It runs automatically during row-group pruning,
   alongside statistics, and skips a row group when the value is provably absent. For <code>FLOAT</code> /
-  <code>DOUBLE</code>, <code>eq(-0.0)</code> and <code>eq(NaN)</code> are not pruned by the Bloom filter. Range predicates (<code>lt</code>,
-  <code>gt</code>, …) and <code>notEq</code> are unaffected — a Bloom filter answers only membership.</li>
+  <code>DOUBLE</code>, <code>eq(NaN)</code> is not pruned by the Bloom filter — raw-bit hashing distinguishes NaN
+  payloads that <code>Float.compare</code> / <code>Double.compare</code> treat as equal, so a Bloom miss cannot prove a
+  NaN absent; <code>eq(-0.0)</code> is pruned normally. Range predicates (<code>lt</code>, <code>gt</code>, …) and <code>notEq</code> are
+  unaffected — a Bloom filter answers only membership.</li>
 <li><strong>Dictionary-based filtering is not supported
   (<a href="https://github.com/hardwood-hq/hardwood/issues/196">#196</a>).</strong> Dictionary-encoded columns
   are not checked for predicate matches before decoding.</li>
@@ -2339,8 +2341,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2b33ff5ef848e822a1bfd06397717d8b8c00685e" target="_blank" rel="noopener">
-      2b33ff5e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4ef50317dd029686ec9dc2025e03fb6758bb6e48" target="_blank" rel="noopener">
+      4ef50317
     </a>
   
 </div>
