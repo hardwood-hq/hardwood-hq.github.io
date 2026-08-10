@@ -334,7 +334,7 @@ timestamp) values.</div>
 <div class="block"><p>Get an element by index, decoded to its logical-type representation.</p>
 <p>Returns the value in the same form as the typed accessors below:
 <code>Integer</code> / <code>Long</code> / <code>Float</code> / <code>Double</code> / <code>Boolean</code> for primitives,
-<code>String</code> for STRING, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a> for DATE, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a> for TIME,
+<code>String</code> for STRING / ENUM / JSON, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a> for DATE, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a> for TIME,
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> for TIMESTAMP, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> for DECIMAL, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link"><code>UUID</code></a> for UUID,
 <a href="PqInterval.html" title="class in dev.hardwood.row"><code>PqInterval</code></a> for INTERVAL, and <code>byte[]</code> for BYTE_ARRAY / FIXED_LEN_BYTE_ARRAY
 with no logical-type annotation. Nested groups surface as
@@ -391,7 +391,7 @@ the <code>getRawValue</code> accessors on <code>RowReader</code> / <a href="PqSt
 <p>Returns <code>Integer</code> / <code>Long</code> / <code>Float</code> / <code>Double</code> / <code>Boolean</code> / <code>byte[]</code>
 for the physical storage type — <code>Long</code> micros instead of <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a>
 for TIMESTAMP(MICROS), unscaled <code>byte[]</code> instead of <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> for
-DECIMAL, <code>byte[]</code> instead of <code>String</code> for STRING / JSON, etc. Nested
+DECIMAL, <code>byte[]</code> instead of <code>String</code> for STRING / ENUM / JSON, etc. Nested
 groups have no distinct raw form and surface as the same
 <a href="PqStruct.html" title="interface in dev.hardwood.row"><code>PqStruct</code></a> / <a href="PqList.html" title="interface in dev.hardwood.row"><code>PqList</code></a> / <a href="PqMap.html" title="interface in dev.hardwood.row"><code>PqMap</code></a> flyweight returned by <a href="#get(int)"><code>get(int)</code></a>.</p>
 </div>

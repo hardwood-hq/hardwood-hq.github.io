@@ -1421,6 +1421,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#enum-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ENUM columns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#legacy-int96-timestamps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1817,6 +1828,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#enum-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ENUM columns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#legacy-int96-timestamps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1947,7 +1969,7 @@ type-mismatch contracts every accessor obeys. For the task-oriented walkthrough,
 <tr>
 <td><code>getString</code></td>
 <td>BYTE_ARRAY</td>
-<td>STRING or JSON</td>
+<td>STRING, ENUM, or JSON</td>
 <td><code>String</code></td>
 </tr>
 <tr>
@@ -2056,6 +2078,11 @@ widening is lossless — half-precision NaN, ±Infinity, and signed zero round-t
 original NaN bit pattern is preserved (the Parquet spec does not canonicalize NaNs on write). Use
 <code>Float.isNaN(value)</code> for NaN checks rather than equality. As with all primitive accessors,
 <code>isNull()</code> must be checked before <code>getFloat()</code> since FLOAT16 columns can be optional.</p>
+<h2 id="enum-columns">ENUM columns<a class="headerlink" href="#enum-columns" title="Permanent link">&para;</a></h2>
+<p><code>getString</code> accepts ENUM columns (<code>BYTE_ARRAY</code> annotated with the <code>ENUM</code> logical type) and decodes
+the UTF-8 payload to the symbol name, exactly as for a STRING column. The generic <code>getValue</code>
+accessor and the <code>PqList</code> / <code>PqStruct</code> / <code>PqMap</code> flyweights return the same <code>String</code>, at the top
+level and in every nested position. <code>getBinary</code> still yields the undecoded bytes.</p>
 <h2 id="legacy-int96-timestamps">Legacy INT96 timestamps<a class="headerlink" href="#legacy-int96-timestamps" title="Permanent link">&para;</a></h2>
 <p>Parquet files written by older versions of Apache Spark and Hive store timestamps in the deprecated
 INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> detects INT96
@@ -2085,7 +2112,12 @@ caller-side opt-in:</p>
 <td><code>String</code></td>
 </tr>
 <tr>
-<td><code>ENUM</code>, <code>BSON</code></td>
+<td><code>ENUM</code></td>
+<td><code>getString</code></td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>BSON</code></td>
 <td><code>getBinary</code></td>
 <td><code>byte[]</code></td>
 </tr>
@@ -2200,8 +2232,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/137575151a5248210941a9a4b6c9ad6ea64f5d3f" target="_blank" rel="noopener">
-      13757515
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ef446e6326347fcaaef1ae9887f4f9df1dbefca9" target="_blank" rel="noopener">
+      ef446e63
     </a>
   
 </div>
