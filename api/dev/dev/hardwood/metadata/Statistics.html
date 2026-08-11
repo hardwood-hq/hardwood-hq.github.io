@@ -60,7 +60,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
 <li><a href="#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean)" tabindex="0">Statistics(byte[], byte[], Long, Long, boolean)</a></li>
-<li><a href="#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean,boolean,boolean)" tabindex="0">Statistics(byte[], byte[], Long, Long, boolean, boolean, boolean)</a></li>
+<li><a href="#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean,boolean,boolean,java.lang.Long)" tabindex="0">Statistics(byte[], byte[], Long, Long, boolean, boolean, boolean, Long)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -75,6 +75,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#isMinMaxDeprecated()" tabindex="0">isMinMaxDeprecated()</a></li>
 <li><a href="#isMinValueExact()" tabindex="0">isMinValueExact()</a></li>
 <li><a href="#isMaxValueExact()" tabindex="0">isMaxValueExact()</a></li>
+<li><a href="#nanCount()" tabindex="0">nanCount()</a></li>
 </ol>
 </li>
 </ol>
@@ -99,11 +100,15 @@ loadScripts(document, 'script');</script>
 <dd><code><span id="param-isMinMaxDeprecated">isMinMaxDeprecated</span></code> - whether the bounds came from the deprecated <code>min</code> / <code>max</code> fields</dd>
 <dd><code><span id="param-isMinValueExact">isMinValueExact</span></code> - whether <code>minValue</code> is the exact minimum (not a truncated lower bound)</dd>
 <dd><code><span id="param-isMaxValueExact">isMaxValueExact</span></code> - whether <code>maxValue</code> is the exact maximum (not a truncated upper bound)</dd>
+<dd><code><span id="param-nanCount">nanCount</span></code> - number of NaN values in the column chunk, or <code>null</code> if absent. Only
+meaningful for <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> columns. NaN sits outside the
+ordering of <code>minValue</code>/<code>maxValue</code>, so those bounds say nothing about how many
+NaN values a chunk holds</dd>
 </dl>
 <hr>
 <object type="image/svg+xml" data="Statistics.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">Statistics</span>(byte[]&nbsp;minValue, byte[]&nbsp;maxValue, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nullCount, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount, boolean&nbsp;isMinMaxDeprecated, boolean&nbsp;isMinValueExact, boolean&nbsp;isMaxValueExact)
+<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">Statistics</span>(byte[]&nbsp;minValue, byte[]&nbsp;maxValue, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nullCount, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount, boolean&nbsp;isMinMaxDeprecated, boolean&nbsp;isMinValueExact, boolean&nbsp;isMaxValueExact, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nanCount)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block"><p>Column chunk statistics for min/max values, null count, and distinct count.</p>
 <p>Used for predicate push-down: row groups whose statistics prove that no rows
@@ -139,16 +144,17 @@ brackets the true extreme (a truncated <code>minValue</code> is <code>&lt;=</cod
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount,
  boolean&nbsp;isMinMaxDeprecated)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Statistics whose bounds are exact — the common case for every fixed-width type and any
-untruncated bound.</div>
+<div class="block">Statistics whose bounds are exact and whose NaN count was not recorded — the common case
+for every fixed-width type and any untruncated bound.</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean,boolean,boolean)" class="member-name-link">Statistics</a><wbr>(byte[]&nbsp;minValue,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean,boolean,boolean,java.lang.Long)" class="member-name-link">Statistics</a><wbr>(byte[]&nbsp;minValue,
  byte[]&nbsp;maxValue,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nullCount,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount,
  boolean&nbsp;isMinMaxDeprecated,
  boolean&nbsp;isMinValueExact,
- boolean&nbsp;isMaxValueExact)</code></div>
+ boolean&nbsp;isMaxValueExact,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nanCount)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Creates an instance of a <code>Statistics</code> record class.</div>
 </div>
@@ -207,13 +213,18 @@ untruncated bound.</div>
 <div class="block">Returns the value of the <a href="#param-minValue"><code>minValue</code></a> record component.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nullCount()" class="member-name-link">nullCount</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nanCount()" class="member-name-link">nanCount</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-nanCount"><code>nanCount</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nullCount()" class="member-name-link">nullCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-nullCount"><code>nullCount</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a string representation of this record class.</div>
 </div>
 </div>
@@ -242,13 +253,13 @@ untruncated bound.</div>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nullCount,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount,
  boolean&nbsp;isMinMaxDeprecated)</span></div>
-<div class="block">Statistics whose bounds are exact — the common case for every fixed-width type and any
-untruncated bound.</div>
+<div class="block">Statistics whose bounds are exact and whose NaN count was not recorded — the common case
+for every fixed-width type and any untruncated bound.</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(byte[],byte[],java.lang.Long,java.lang.Long,boolean,boolean,boolean)">
+<section class="detail" id="&lt;init&gt;(byte[],byte[],java.lang.Long,java.lang.Long,boolean,boolean,boolean,java.lang.Long)">
 <h3>Statistics</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Statistics</span><wbr><span class="parameters">(byte[]&nbsp;minValue,
@@ -257,7 +268,8 @@ untruncated bound.</div>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;distinctCount,
  boolean&nbsp;isMinMaxDeprecated,
  boolean&nbsp;isMinValueExact,
- boolean&nbsp;isMaxValueExact)</span></div>
+ boolean&nbsp;isMaxValueExact,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;nanCount)</span></div>
 <div class="block">Creates an instance of a <code>Statistics</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -268,6 +280,7 @@ untruncated bound.</div>
 <dd><code>isMinMaxDeprecated</code> - the value for the <a href="#param-isMinMaxDeprecated"><code>isMinMaxDeprecated</code></a> record component</dd>
 <dd><code>isMinValueExact</code> - the value for the <a href="#param-isMinValueExact"><code>isMinValueExact</code></a> record component</dd>
 <dd><code>isMaxValueExact</code> - the value for the <a href="#param-isMaxValueExact"><code>isMaxValueExact</code></a> record component</dd>
+<dd><code>nanCount</code> - the value for the <a href="#param-nanCount"><code>nanCount</code></a> record component</dd>
 </dl>
 </div>
 </section>
@@ -414,6 +427,19 @@ untruncated bound.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the value of the <a href="#param-isMaxValueExact"><code>isMaxValueExact</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="nanCount()">
+<h3>nanCount</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></span>&nbsp;<span class="element-name">nanCount</span>()</div>
+<div class="block">Returns the value of the <a href="#param-nanCount"><code>nanCount</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-nanCount"><code>nanCount</code></a> record component</dd>
 </dl>
 </div>
 </section>

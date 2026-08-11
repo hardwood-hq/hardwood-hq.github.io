@@ -561,7 +561,7 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dd>
 <div class="block">Column index for a column chunk, providing per-page min/max statistics for page-level filtering.</div>
 </dd>
-<dt><a href="dev/hardwood/metadata/ColumnIndex.html#%3Cinit%3E(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,java.util.List)" class="member-name-link">ColumnIndex(List, List, List, ColumnIndex.BoundaryOrder, List)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
+<dt><a href="dev/hardwood/metadata/ColumnIndex.html#%3Cinit%3E(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long%5B%5D,long%5B%5D,long%5B%5D,long%5B%5D)" class="member-name-link">ColumnIndex(List, List, List, ColumnIndex.BoundaryOrder, long[], long[], long[], long[])</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>ColumnIndex</code> record class.</div>
 </dd>
@@ -581,7 +581,7 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dd>
 <div class="block">Metadata for a column chunk.</div>
 </dd>
-<dt><a href="dev/hardwood/metadata/ColumnMetaData.html#%3Cinit%3E(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics,java.lang.Long,java.lang.Integer,java.util.List)" class="member-name-link">ColumnMetaData(PhysicalType, List, FieldPath, CompressionCodec, long, long, long, Map, long, Long, Statistics, GeospatialStatistics, Long, Integer, List)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
+<dt><a href="dev/hardwood/metadata/ColumnMetaData.html#%3Cinit%3E(dev.hardwood.metadata.PhysicalType,java.util.List,dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.CompressionCodec,long,long,long,java.util.Map,long,java.lang.Long,dev.hardwood.metadata.Statistics,dev.hardwood.metadata.GeospatialStatistics,java.lang.Long,java.lang.Integer,java.util.List,dev.hardwood.metadata.SizeStatistics)" class="member-name-link">ColumnMetaData(PhysicalType, List, FieldPath, CompressionCodec, long, long, long, Map, long, Long, Statistics, GeospatialStatistics, Long, Integer, List, SizeStatistics)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>ColumnMetaData</code> record class.</div>
 </dd>
@@ -854,6 +854,19 @@ chunk falls back to <code>PLAIN</code>.</div>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#defaults()" class="member-name-link">defaults()</a> - Static method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
 <div class="block">The default configuration.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SizeStatistics.html#definitionLevelHistogram()" class="member-name-link">definitionLevelHistogram()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SizeStatistics.html" title="class in dev.hardwood.metadata">SizeStatistics</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SizeStatistics.html#param-definitionLevelHistogram"><code>definitionLevelHistogram</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ColumnIndex.html#definitionLevelHistogram(int)" class="member-name-link">definitionLevelHistogram(int)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
+<dd>
+<div class="block">Returns one page's slice of <a href="dev/hardwood/metadata/ColumnIndex.html#definitionLevelHistograms()"><code>ColumnIndex.definitionLevelHistograms()</code></a>, or <code>null</code> if the file
+records no definition-level histogram for this chunk.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ColumnIndex.html#definitionLevelHistograms()" class="member-name-link">definitionLevelHistograms()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnIndex.html#param-definitionLevelHistograms"><code>definitionLevelHistograms</code></a> record component.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.Not.html#delegate()" class="member-name-link">delegate()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.Not.html" title="class in dev.hardwood.reader">FilterPredicate.Not</a></dt>
 <dd>
@@ -1181,6 +1194,10 @@ file at the destination.</div>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/SchemaElement.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></dt>
+<dd>
+<div class="block">Indicates whether some other object is "equal to" this one.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SizeStatistics.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SizeStatistics.html" title="class in dev.hardwood.metadata">SizeStatistics</a></dt>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
@@ -2300,6 +2317,10 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/SizeStatistics.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SizeStatistics.html" title="class in dev.hardwood.metadata">SizeStatistics</a></dt>
+<dd>
+<div class="block">Returns a hash code value for this object.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/Statistics.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
@@ -3194,6 +3215,14 @@ are themselves absent), distinct from an empty map carrying a zero-delta offset.
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.PrimitiveNode.html#param-name"><code>name</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/Statistics.html#nanCount()" class="member-name-link">nanCount()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/Statistics.html#param-nanCount"><code>nanCount</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ColumnIndex.html#nanCounts()" class="member-name-link">nanCounts()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnIndex.html#param-nanCounts"><code>nanCounts</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.TimeUnit.html#NANOS" class="member-name-link">NANOS</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.TimeUnit.html" title="enum class in dev.hardwood.metadata">LogicalType.TimeUnit</a></dt>
 <dd>
 <div class="block">Nanosecond resolution.</div>
@@ -3372,7 +3401,7 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Offset index for a column chunk, providing page locations for direct lookup.</div>
 </dd>
-<dt><a href="dev/hardwood/metadata/OffsetIndex.html#%3Cinit%3E(java.util.List)" class="member-name-link">OffsetIndex(List)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/OffsetIndex.html" title="class in dev.hardwood.metadata">OffsetIndex</a></dt>
+<dt><a href="dev/hardwood/metadata/OffsetIndex.html#%3Cinit%3E(java.util.List,long%5B%5D)" class="member-name-link">OffsetIndex(List, long[])</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/OffsetIndex.html" title="class in dev.hardwood.metadata">OffsetIndex</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>OffsetIndex</code> record class.</div>
 </dd>
@@ -3760,6 +3789,19 @@ source.</div>
 <dd>
 <div class="block">A <code>LIST</code> or <code>MAP</code>-annotated group.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/SizeStatistics.html#repetitionLevelHistogram()" class="member-name-link">repetitionLevelHistogram()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SizeStatistics.html" title="class in dev.hardwood.metadata">SizeStatistics</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SizeStatistics.html#param-repetitionLevelHistogram"><code>repetitionLevelHistogram</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ColumnIndex.html#repetitionLevelHistogram(int)" class="member-name-link">repetitionLevelHistogram(int)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
+<dd>
+<div class="block">Returns one page's slice of <a href="dev/hardwood/metadata/ColumnIndex.html#repetitionLevelHistograms()"><code>ColumnIndex.repetitionLevelHistograms()</code></a>, or <code>null</code> if the file
+records no repetition-level histogram for this chunk.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ColumnIndex.html#repetitionLevelHistograms()" class="member-name-link">repetitionLevelHistograms()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnIndex.html#param-repetitionLevelHistograms"><code>repetitionLevelHistograms</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/SchemaElement.html#repetitionType()" class="member-name-link">repetitionType()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SchemaElement.html#param-repetitionType"><code>repetitionType</code></a> record component.</div>
@@ -3990,6 +4032,19 @@ multi-file reading.</div>
 <dd>
 <div class="block">Number of elements in the array.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/ColumnMetaData.html#sizeStatistics()" class="member-name-link">sizeStatistics()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-sizeStatistics"><code>sizeStatistics</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SizeStatistics.html" class="type-name-link" title="class in dev.hardwood.metadata">SizeStatistics</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
+<dd>
+<div class="block">Size statistics for a column chunk: the unencoded size of its <code>BYTE_ARRAY</code> data
+and its repetition- and definition-level histograms.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SizeStatistics.html#%3Cinit%3E(java.lang.Long,long%5B%5D,long%5B%5D)" class="member-name-link">SizeStatistics(Long, long[], long[])</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SizeStatistics.html" title="class in dev.hardwood.metadata">SizeStatistics</a></dt>
+<dd>
+<div class="block">Creates an instance of a <code>SizeStatistics</code> record class.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html#skip(long)" class="member-name-link">skip(long)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.RowReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></dt>
 <dd>
 <div class="block">Skip leading rows before reading — SQL <code>OFFSET</code>.</div>
@@ -4023,10 +4078,10 @@ process.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/Statistics.html#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean)" class="member-name-link">Statistics(byte[], byte[], Long, Long, boolean)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
 <dd>
-<div class="block">Statistics whose bounds are exact — the common case for every fixed-width type and any
-untruncated bound.</div>
+<div class="block">Statistics whose bounds are exact and whose NaN count was not recorded — the common case
+for every fixed-width type and any untruncated bound.</div>
 </dd>
-<dt><a href="dev/hardwood/metadata/Statistics.html#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean,boolean,boolean)" class="member-name-link">Statistics(byte[], byte[], Long, Long, boolean, boolean, boolean)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
+<dt><a href="dev/hardwood/metadata/Statistics.html#%3Cinit%3E(byte%5B%5D,byte%5B%5D,java.lang.Long,java.lang.Long,boolean,boolean,boolean,java.lang.Long)" class="member-name-link">Statistics(byte[], byte[], Long, Long, boolean, boolean, boolean, Long)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>Statistics</code> record class.</div>
 </dd>
@@ -4301,6 +4356,10 @@ followed by each node in pre-order, groups carrying their child count.</div>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/SizeStatistics.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SizeStatistics.html" title="class in dev.hardwood.metadata">SizeStatistics</a></dt>
+<dd>
+<div class="block">Returns a string representation of this record class.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/Statistics.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
@@ -4496,6 +4555,14 @@ followed by each node in pre-order, groups carrying their child count.</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/PageDecodedEvent.html#uncompressedSize" class="member-name-link">uncompressedSize</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PageDecodedEvent.html" title="class in dev.hardwood.jfr">PageDecodedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/metadata/OffsetIndex.html#unencodedByteArrayDataBytes()" class="member-name-link">unencodedByteArrayDataBytes()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/OffsetIndex.html" title="class in dev.hardwood.metadata">OffsetIndex</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/OffsetIndex.html#param-unencodedByteArrayDataBytes"><code>unencodedByteArrayDataBytes</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SizeStatistics.html#unencodedByteArrayDataBytes()" class="member-name-link">unencodedByteArrayDataBytes()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SizeStatistics.html" title="class in dev.hardwood.metadata">SizeStatistics</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SizeStatistics.html#param-unencodedByteArrayDataBytes"><code>unencodedByteArrayDataBytes</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.TimestampType.html#unit()" class="member-name-link">unit()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.TimestampType.html" title="class in dev.hardwood.metadata">LogicalType.TimestampType</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/LogicalType.TimestampType.html#param-unit"><code>unit</code></a> record component.</div>

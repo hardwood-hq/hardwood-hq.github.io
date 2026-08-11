@@ -60,12 +60,14 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
-<li><a href="#%3Cinit%3E(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,java.util.List)" tabindex="0">ColumnIndex(List, List, List, ColumnIndex.BoundaryOrder, List)</a></li>
+<li><a href="#%3Cinit%3E(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long%5B%5D,long%5B%5D,long%5B%5D,long%5B%5D)" tabindex="0">ColumnIndex(List, List, List, ColumnIndex.BoundaryOrder, long[], long[], long[], long[])</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#getPageCount()" tabindex="0">getPageCount()</a></li>
+<li><a href="#repetitionLevelHistogram(int)" tabindex="0">repetitionLevelHistogram(int)</a></li>
+<li><a href="#definitionLevelHistogram(int)" tabindex="0">definitionLevelHistogram(int)</a></li>
 <li><a href="#toString()" tabindex="0">toString()</a></li>
 <li><a href="#hashCode()" tabindex="0">hashCode()</a></li>
 <li><a href="#equals(java.lang.Object)" tabindex="0">equals(Object)</a></li>
@@ -74,6 +76,9 @@ loadScripts(document, 'script');</script>
 <li><a href="#maxValues()" tabindex="0">maxValues()</a></li>
 <li><a href="#boundaryOrder()" tabindex="0">boundaryOrder()</a></li>
 <li><a href="#nullCounts()" tabindex="0">nullCounts()</a></li>
+<li><a href="#repetitionLevelHistograms()" tabindex="0">repetitionLevelHistograms()</a></li>
+<li><a href="#definitionLevelHistograms()" tabindex="0">definitionLevelHistograms()</a></li>
+<li><a href="#nanCounts()" tabindex="0">nanCounts()</a></li>
 </ol>
 </li>
 </ol>
@@ -96,13 +101,28 @@ loadScripts(document, 'script');</script>
 <dd><code><span id="param-maxValues">maxValues</span></code> - per-page maximum values in the column's physical sort order</dd>
 <dd><code><span id="param-boundaryOrder">boundaryOrder</span></code> - ordering of min/max values: UNORDERED, ASCENDING, or DESCENDING</dd>
 <dd><code><span id="param-nullCounts">nullCounts</span></code> - per-page null counts, or <code>null</code> if not available</dd>
+<dd><code><span id="param-repetitionLevelHistograms">repetitionLevelHistograms</span></code> - per-page repetition-level histograms concatenated
+page-major, or <code>null</code> if not available. See the note on layout above</dd>
+<dd><code><span id="param-definitionLevelHistograms">definitionLevelHistograms</span></code> - per-page definition-level histograms concatenated
+page-major, or <code>null</code> if not available</dd>
+<dd><code><span id="param-nanCounts">nanCounts</span></code> - per-page NaN counts, or <code>null</code> if not available. Only meaningful for
+<code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> columns, whose NaN values sit outside the ordering
+of <code>minValues</code>/<code>maxValues</code></dd>
 </dl>
 <hr>
 <object type="image/svg+xml" data="ColumnIndex.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">ColumnIndex</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;nullPages, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;minValues, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;maxValues, <a href="ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a>&nbsp;boundaryOrder, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&gt;&nbsp;nullCounts)
+<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">ColumnIndex</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;nullPages, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;minValues, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;maxValues, <a href="ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a>&nbsp;boundaryOrder, long[]&nbsp;nullCounts, long[]&nbsp;repetitionLevelHistograms, long[]&nbsp;definitionLevelHistograms, long[]&nbsp;nanCounts)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
-<div class="block">Column index for a column chunk, providing per-page min/max statistics for page-level filtering.</div>
+<div class="block"><p>Column index for a column chunk, providing per-page min/max statistics for page-level filtering.</p>
+<p>The level histograms hold one histogram per page, concatenated into a single array in
+page order: with <code>maxLevel + 1</code> entries per page, page <code>p</code> occupies the range from
+<code>p * (maxLevel + 1)</code> up to <code>(p + 1) * (maxLevel + 1)</code>.
+<a href="#repetitionLevelHistogram(int)"><code>repetitionLevelHistogram(int)</code></a> and <a href="#definitionLevelHistogram(int)"><code>definitionLevelHistogram(int)</code></a> slice one page out.</p>
+<p>The per-page count arrays are the values as the file recorded them and are not copied
+on the way in or out. An absent array is <code>null</code>, which stays distinct from a
+zero-length one the writer recorded as empty.</p>
+</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -141,11 +161,14 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,java.util.List)" class="member-name-link">ColumnIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;nullPages,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long%5B%5D,long%5B%5D,long%5B%5D,long%5B%5D)" class="member-name-link">ColumnIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;nullPages,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;minValues,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;maxValues,
  <a href="ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a>&nbsp;boundaryOrder,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&gt;&nbsp;nullCounts)</code></div>
+ long[]&nbsp;nullCounts,
+ long[]&nbsp;repetitionLevelHistograms,
+ long[]&nbsp;definitionLevelHistograms,
+ long[]&nbsp;nanCounts)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>ColumnIndex</code> record class.</div>
 </div>
@@ -167,6 +190,17 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#boundaryOrder()" class="member-name-link">boundaryOrder</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-boundaryOrder"><code>boundaryOrder</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#definitionLevelHistogram(int)" class="member-name-link">definitionLevelHistogram</a><wbr>(int&nbsp;pageIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns one page's slice of <a href="#definitionLevelHistograms()"><code>definitionLevelHistograms()</code></a>, or <code>null</code> if the file
+records no definition-level histogram for this chunk.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#definitionLevelHistograms()" class="member-name-link">definitionLevelHistograms</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-definitionLevelHistograms"><code>definitionLevelHistograms</code></a> record component.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</code></div>
@@ -193,19 +227,35 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-minValues"><code>minValues</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nullCounts()" class="member-name-link">nullCounts</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nanCounts()" class="member-name-link">nanCounts</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-nanCounts"><code>nanCounts</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nullCounts()" class="member-name-link">nullCounts</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-nullCounts"><code>nullCounts</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nullPages()" class="member-name-link">nullPages</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nullPages()" class="member-name-link">nullPages</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-nullPages"><code>nullPages</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#repetitionLevelHistogram(int)" class="member-name-link">repetitionLevelHistogram</a><wbr>(int&nbsp;pageIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns one page's slice of <a href="#repetitionLevelHistograms()"><code>repetitionLevelHistograms()</code></a>, or <code>null</code> if the file
+records no repetition-level histogram for this chunk.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#repetitionLevelHistograms()" class="member-name-link">repetitionLevelHistograms</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-repetitionLevelHistograms"><code>repetitionLevelHistograms</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a string representation of this record class.</div>
 </div>
 </div>
@@ -226,14 +276,17 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,java.util.List)">
+<section class="detail" id="&lt;init&gt;(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long[],long[],long[],long[])">
 <h3>ColumnIndex</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ColumnIndex</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;nullPages,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;minValues,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;maxValues,
  <a href="ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a>&nbsp;boundaryOrder,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&gt;&nbsp;nullCounts)</span></div>
+ long[]&nbsp;nullCounts,
+ long[]&nbsp;repetitionLevelHistograms,
+ long[]&nbsp;definitionLevelHistograms,
+ long[]&nbsp;nanCounts)</span></div>
 <div class="block">Creates an instance of a <code>ColumnIndex</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -242,6 +295,9 @@ loadScripts(document, 'script');</script>
 <dd><code>maxValues</code> - the value for the <a href="#param-maxValues"><code>maxValues</code></a> record component</dd>
 <dd><code>boundaryOrder</code> - the value for the <a href="#param-boundaryOrder"><code>boundaryOrder</code></a> record component</dd>
 <dd><code>nullCounts</code> - the value for the <a href="#param-nullCounts"><code>nullCounts</code></a> record component</dd>
+<dd><code>repetitionLevelHistograms</code> - the value for the <a href="#param-repetitionLevelHistograms"><code>repetitionLevelHistograms</code></a> record component</dd>
+<dd><code>definitionLevelHistograms</code> - the value for the <a href="#param-definitionLevelHistograms"><code>definitionLevelHistograms</code></a> record component</dd>
+<dd><code>nanCounts</code> - the value for the <a href="#param-nanCounts"><code>nanCounts</code></a> record component</dd>
 </dl>
 </div>
 </section>
@@ -260,6 +316,42 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getPageCount</span>()</div>
 <div class="block">Returns the number of pages described by this index.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="repetitionLevelHistogram(int)">
+<h3>repetitionLevelHistogram</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long[]</span>&nbsp;<span class="element-name">repetitionLevelHistogram</span><wbr><span class="parameters">(int&nbsp;pageIndex)</span></div>
+<div class="block">Returns one page's slice of <a href="#repetitionLevelHistograms()"><code>repetitionLevelHistograms()</code></a>, or <code>null</code> if the file
+records no repetition-level histogram for this chunk.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pageIndex</code> - page to slice, in <code>[0, getPageCount())</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>pageIndex</code> is outside that range</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the histogram's length is not a whole number of
+pages, so no per-page stride describes it</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="definitionLevelHistogram(int)">
+<h3>definitionLevelHistogram</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long[]</span>&nbsp;<span class="element-name">definitionLevelHistogram</span><wbr><span class="parameters">(int&nbsp;pageIndex)</span></div>
+<div class="block">Returns one page's slice of <a href="#definitionLevelHistograms()"><code>definitionLevelHistograms()</code></a>, or <code>null</code> if the file
+records no definition-level histogram for this chunk.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pageIndex</code> - page to slice, in <code>[0, getPageCount())</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>pageIndex</code> is outside that range</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the histogram's length is not a whole number of
+pages, so no per-page stride describes it</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -366,11 +458,50 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="nullCounts()">
 <h3>nullCounts</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&gt;</span>&nbsp;<span class="element-name">nullCounts</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long[]</span>&nbsp;<span class="element-name">nullCounts</span>()</div>
 <div class="block">Returns the value of the <a href="#param-nullCounts"><code>nullCounts</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the value of the <a href="#param-nullCounts"><code>nullCounts</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="repetitionLevelHistograms()">
+<h3>repetitionLevelHistograms</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long[]</span>&nbsp;<span class="element-name">repetitionLevelHistograms</span>()</div>
+<div class="block">Returns the value of the <a href="#param-repetitionLevelHistograms"><code>repetitionLevelHistograms</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-repetitionLevelHistograms"><code>repetitionLevelHistograms</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="definitionLevelHistograms()">
+<h3>definitionLevelHistograms</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long[]</span>&nbsp;<span class="element-name">definitionLevelHistograms</span>()</div>
+<div class="block">Returns the value of the <a href="#param-definitionLevelHistograms"><code>definitionLevelHistograms</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-definitionLevelHistograms"><code>definitionLevelHistograms</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="nanCounts()">
+<h3>nanCounts</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long[]</span>&nbsp;<span class="element-name">nanCounts</span>()</div>
+<div class="block">Returns the value of the <a href="#param-nanCounts"><code>nanCounts</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-nanCounts"><code>nanCounts</code></a> record component</dd>
 </dl>
 </div>
 </section>
