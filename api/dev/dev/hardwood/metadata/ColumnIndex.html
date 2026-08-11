@@ -60,7 +60,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
-<li><a href="#%3Cinit%3E(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long%5B%5D,long%5B%5D,long%5B%5D,long%5B%5D)" tabindex="0">ColumnIndex(List, List, List, ColumnIndex.BoundaryOrder, long[], long[], long[], long[])</a></li>
+<li><a href="#%3Cinit%3E(boolean%5B%5D,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long%5B%5D,long%5B%5D,long%5B%5D,long%5B%5D)" tabindex="0">ColumnIndex(boolean[], List, List, ColumnIndex.BoundaryOrder, long[], long[], long[], long[])</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Record Components:</dt>
-<dd><code><span id="param-nullPages">nullPages</span></code> - boolean list indicating which pages contain only null values</dd>
+<dd><code><span id="param-nullPages">nullPages</span></code> - one flag per page, set for a page that contains only null values</dd>
 <dd><code><span id="param-minValues">minValues</span></code> - per-page minimum values in the column's physical sort order</dd>
 <dd><code><span id="param-maxValues">maxValues</span></code> - per-page maximum values in the column's physical sort order</dd>
 <dd><code><span id="param-boundaryOrder">boundaryOrder</span></code> - ordering of min/max values: UNORDERED, ASCENDING, or DESCENDING</dd>
@@ -112,15 +112,15 @@ of <code>minValues</code>/<code>maxValues</code></dd>
 <hr>
 <object type="image/svg+xml" data="ColumnIndex.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">ColumnIndex</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;nullPages, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;minValues, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;maxValues, <a href="ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a>&nbsp;boundaryOrder, long[]&nbsp;nullCounts, long[]&nbsp;repetitionLevelHistograms, long[]&nbsp;definitionLevelHistograms, long[]&nbsp;nanCounts)
+<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">ColumnIndex</span>(boolean[]&nbsp;nullPages, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;minValues, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;maxValues, <a href="ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a>&nbsp;boundaryOrder, long[]&nbsp;nullCounts, long[]&nbsp;repetitionLevelHistograms, long[]&nbsp;definitionLevelHistograms, long[]&nbsp;nanCounts)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block"><p>Column index for a column chunk, providing per-page min/max statistics for page-level filtering.</p>
 <p>The level histograms hold one histogram per page, concatenated into a single array in
 page order: with <code>maxLevel + 1</code> entries per page, page <code>p</code> occupies the range from
 <code>p * (maxLevel + 1)</code> up to <code>(p + 1) * (maxLevel + 1)</code>.
 <a href="#repetitionLevelHistogram(int)"><code>repetitionLevelHistogram(int)</code></a> and <a href="#definitionLevelHistogram(int)"><code>definitionLevelHistogram(int)</code></a> slice one page out.</p>
-<p>The per-page count arrays are the values as the file recorded them and are not copied
-on the way in or out. An absent array is <code>null</code>, which stays distinct from a
+<p>The per-page arrays are the values as the file recorded them and are not copied
+on the way in or out. An absent optional array is <code>null</code>, which stays distinct from a
 zero-length one the writer recorded as empty.</p>
 </div>
 <dl class="notes">
@@ -161,7 +161,7 @@ zero-length one the writer recorded as empty.</p>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long%5B%5D,long%5B%5D,long%5B%5D,long%5B%5D)" class="member-name-link">ColumnIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;nullPages,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(boolean%5B%5D,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long%5B%5D,long%5B%5D,long%5B%5D,long%5B%5D)" class="member-name-link">ColumnIndex</a><wbr>(boolean[]&nbsp;nullPages,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;minValues,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;maxValues,
  <a href="ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a>&nbsp;boundaryOrder,
@@ -237,7 +237,7 @@ records no definition-level histogram for this chunk.</div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-nullCounts"><code>nullCounts</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nullPages()" class="member-name-link">nullPages</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-nullPages"><code>nullPages</code></a> record component.</div>
@@ -276,10 +276,10 @@ records no repetition-level histogram for this chunk.</div>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long[],long[],long[],long[])">
+<section class="detail" id="&lt;init&gt;(boolean[],java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long[],long[],long[],long[])">
 <h3>ColumnIndex</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ColumnIndex</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;nullPages,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ColumnIndex</span><wbr><span class="parameters">(boolean[]&nbsp;nullPages,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;minValues,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;&nbsp;maxValues,
  <a href="ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a>&nbsp;boundaryOrder,
@@ -406,7 +406,7 @@ pages, so no per-page stride describes it</dd>
 <section class="detail" id="nullPages()">
 <h3>nullPages</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;</span>&nbsp;<span class="element-name">nullPages</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean[]</span>&nbsp;<span class="element-name">nullPages</span>()</div>
 <div class="block">Returns the value of the <a href="#param-nullPages"><code>nullPages</code></a> record component.</div>
 <dl class="notes">
 <dt>Returns:</dt>

@@ -59,11 +59,12 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
-<li><a href="#%3Cinit%3E(dev.hardwood.metadata.ColumnMetaData,java.lang.Long,java.lang.Integer,java.lang.Long,java.lang.Integer)" tabindex="0">ColumnChunk(ColumnMetaData, Long, Integer, Long, Integer)</a></li>
+<li><a href="#%3Cinit%3E(dev.hardwood.metadata.ColumnMetaData,java.lang.Long,java.lang.Integer,java.lang.Long,java.lang.Integer,java.lang.String)" tabindex="0">ColumnChunk(ColumnMetaData, Long, Integer, Long, Integer, String)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
+<li><a href="#requireSameFile()" tabindex="0">requireSameFile()</a></li>
 <li><a href="#chunkStartOffset()" tabindex="0">chunkStartOffset()</a></li>
 <li><a href="#toString()" tabindex="0">toString()</a></li>
 <li><a href="#hashCode()" tabindex="0">hashCode()</a></li>
@@ -73,6 +74,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#offsetIndexLength()" tabindex="0">offsetIndexLength()</a></li>
 <li><a href="#columnIndexOffset()" tabindex="0">columnIndexOffset()</a></li>
 <li><a href="#columnIndexLength()" tabindex="0">columnIndexLength()</a></li>
+<li><a href="#filePath()" tabindex="0">filePath()</a></li>
 </ol>
 </li>
 </ol>
@@ -95,11 +97,15 @@ loadScripts(document, 'script');</script>
 <dd><code><span id="param-offsetIndexLength">offsetIndexLength</span></code> - length of the offset index in bytes, or <code>null</code> if absent</dd>
 <dd><code><span id="param-columnIndexOffset">columnIndexOffset</span></code> - file offset of the column index for this column chunk, or <code>null</code> if absent</dd>
 <dd><code><span id="param-columnIndexLength">columnIndexLength</span></code> - length of the column index in bytes, or <code>null</code> if absent</dd>
+<dd><code><span id="param-filePath">filePath</span></code> - file holding this chunk's data under the legacy split-file layout, or the empty
+string — never <code>null</code> — when the data sits in the file being read, as it does in every
+layout Hardwood can decode. Reading a chunk with a non-empty <code>filePath</code> fails; its
+metadata is still readable</dd>
 </dl>
 <hr>
 <object type="image/svg+xml" data="ColumnChunk.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">ColumnChunk</span>(<a href="ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a>&nbsp;metaData, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;offsetIndexOffset, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;offsetIndexLength, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;columnIndexOffset, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;columnIndexLength)
+<div class="type-signature"><span class="modifiers">public record </span><span class="element-name type-name-label">ColumnChunk</span>(<a href="ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a>&nbsp;metaData, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;offsetIndexOffset, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;offsetIndexLength, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;columnIndexOffset, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;columnIndexLength, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filePath)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a></span></div>
 <div class="block">Column chunk metadata.</div>
 <dl class="notes">
@@ -123,13 +129,16 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(dev.hardwood.metadata.ColumnMetaData,java.lang.Long,java.lang.Integer,java.lang.Long,java.lang.Integer)" class="member-name-link">ColumnChunk</a><wbr>(<a href="ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a>&nbsp;metaData,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(dev.hardwood.metadata.ColumnMetaData,java.lang.Long,java.lang.Integer,java.lang.Long,java.lang.Integer,java.lang.String)" class="member-name-link">ColumnChunk</a><wbr>(<a href="ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a>&nbsp;metaData,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;offsetIndexOffset,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;offsetIndexLength,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;columnIndexOffset,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;columnIndexLength)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;columnIndexLength,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filePath)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates an instance of a <code>ColumnChunk</code> record class.</div>
+<div class="block">A <code>null</code> <code>filePath</code> is normalised to the empty string, so the two ways of saying &quot;this
+file&quot; — the field absent and the field set to the empty string the spec allows — have one
+representation, and <a href="#requireSameFile()"><code>requireSameFile()</code></a> has nothing to guard against.</div>
 </div>
 </div>
 </section>
@@ -165,25 +174,35 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#filePath()" class="member-name-link">filePath</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-filePath"><code>filePath</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a hash code value for this object.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#metaData()" class="member-name-link">metaData</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#metaData()" class="member-name-link">metaData</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-metaData"><code>metaData</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#offsetIndexLength()" class="member-name-link">offsetIndexLength</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#offsetIndexLength()" class="member-name-link">offsetIndexLength</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-offsetIndexLength"><code>offsetIndexLength</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#offsetIndexOffset()" class="member-name-link">offsetIndexOffset</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#offsetIndexOffset()" class="member-name-link">offsetIndexOffset</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-offsetIndexOffset"><code>offsetIndexOffset</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#requireSameFile()" class="member-name-link">requireSameFile</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Fails unless this chunk's data sits in the file being read.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
@@ -208,23 +227,18 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(dev.hardwood.metadata.ColumnMetaData,java.lang.Long,java.lang.Integer,java.lang.Long,java.lang.Integer)">
+<section class="detail" id="&lt;init&gt;(dev.hardwood.metadata.ColumnMetaData,java.lang.Long,java.lang.Integer,java.lang.Long,java.lang.Integer,java.lang.String)">
 <h3>ColumnChunk</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ColumnChunk</span><wbr><span class="parameters">(<a href="ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a>&nbsp;metaData,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;offsetIndexOffset,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;offsetIndexLength,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;columnIndexOffset,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;columnIndexLength)</span></div>
-<div class="block">Creates an instance of a <code>ColumnChunk</code> record class.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>metaData</code> - the value for the <a href="#param-metaData"><code>metaData</code></a> record component</dd>
-<dd><code>offsetIndexOffset</code> - the value for the <a href="#param-offsetIndexOffset"><code>offsetIndexOffset</code></a> record component</dd>
-<dd><code>offsetIndexLength</code> - the value for the <a href="#param-offsetIndexLength"><code>offsetIndexLength</code></a> record component</dd>
-<dd><code>columnIndexOffset</code> - the value for the <a href="#param-columnIndexOffset"><code>columnIndexOffset</code></a> record component</dd>
-<dd><code>columnIndexLength</code> - the value for the <a href="#param-columnIndexLength"><code>columnIndexLength</code></a> record component</dd>
-</dl>
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;columnIndexLength,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filePath)</span></div>
+<div class="block">A <code>null</code> <code>filePath</code> is normalised to the empty string, so the two ways of saying &quot;this
+file&quot; — the field absent and the field set to the empty string the spec allows — have one
+representation, and <a href="#requireSameFile()"><code>requireSameFile()</code></a> has nothing to guard against.</div>
 </div>
 </section>
 </li>
@@ -236,6 +250,27 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="requireSameFile()">
+<h3>requireSameFile</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">requireSameFile</span>()
+                     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><p>Fails unless this chunk's data sits in the file being read.</p>
+<p>A non-empty <code>filePath</code> puts the data in a different file — the legacy split-file layout,
+which Hardwood does not read. Every offset in the chunk's metadata then addresses that
+other file, so following <code>data_page_offset</code> here would decode whatever happens to sit at
+that offset in this one and hand it back as data.</p>
+<p>This is checked where the data is about to be read rather than while parsing the footer,
+so that the metadata of such a file stays inspectable.</p>
+</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if this chunk's data lives in another file</dd>
+</dl>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="chunkStartOffset()">
 <h3>chunkStartOffset</h3>
@@ -353,6 +388,19 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the value of the <a href="#param-columnIndexLength"><code>columnIndexLength</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="filePath()">
+<h3>filePath</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">filePath</span>()</div>
+<div class="block">Returns the value of the <a href="#param-filePath"><code>filePath</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-filePath"><code>filePath</code></a> record component</dd>
 </dl>
 </div>
 </section>

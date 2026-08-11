@@ -543,9 +543,11 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dd>
 <div class="block">Column chunk metadata.</div>
 </dd>
-<dt><a href="dev/hardwood/metadata/ColumnChunk.html#%3Cinit%3E(dev.hardwood.metadata.ColumnMetaData,java.lang.Long,java.lang.Integer,java.lang.Long,java.lang.Integer)" class="member-name-link">ColumnChunk(ColumnMetaData, Long, Integer, Long, Integer)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnChunk.html" title="class in dev.hardwood.metadata">ColumnChunk</a></dt>
+<dt><a href="dev/hardwood/metadata/ColumnChunk.html#%3Cinit%3E(dev.hardwood.metadata.ColumnMetaData,java.lang.Long,java.lang.Integer,java.lang.Long,java.lang.Integer,java.lang.String)" class="member-name-link">ColumnChunk(ColumnMetaData, Long, Integer, Long, Integer, String)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnChunk.html" title="class in dev.hardwood.metadata">ColumnChunk</a></dt>
 <dd>
-<div class="block">Creates an instance of a <code>ColumnChunk</code> record class.</div>
+<div class="block">A <code>null</code> <code>filePath</code> is normalised to the empty string, so the two ways of saying &quot;this
+file&quot; — the field absent and the field set to the empty string the spec allows — have one
+representation, and <a href="dev/hardwood/metadata/ColumnChunk.html#requireSameFile()"><code>ColumnChunk.requireSameFile()</code></a> has nothing to guard against.</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/FileOpenedEvent.html#columnCount" class="member-name-link">columnCount</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/FileOpenedEvent.html" title="class in dev.hardwood.jfr">FileOpenedEvent</a></dt>
 <dd>&nbsp;</dd>
@@ -561,7 +563,7 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dd>
 <div class="block">Column index for a column chunk, providing per-page min/max statistics for page-level filtering.</div>
 </dd>
-<dt><a href="dev/hardwood/metadata/ColumnIndex.html#%3Cinit%3E(java.util.List,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long%5B%5D,long%5B%5D,long%5B%5D,long%5B%5D)" class="member-name-link">ColumnIndex(List, List, List, ColumnIndex.BoundaryOrder, long[], long[], long[], long[])</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
+<dt><a href="dev/hardwood/metadata/ColumnIndex.html#%3Cinit%3E(boolean%5B%5D,java.util.List,java.util.List,dev.hardwood.metadata.ColumnIndex.BoundaryOrder,long%5B%5D,long%5B%5D,long%5B%5D,long%5B%5D)" class="member-name-link">ColumnIndex(boolean[], List, List, ColumnIndex.BoundaryOrder, long[], long[], long[], long[])</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>ColumnIndex</code> record class.</div>
 </dd>
@@ -1383,6 +1385,10 @@ Variants, or absent.</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/FileOpenedEvent.html#%3Cinit%3E()" class="member-name-link">FileOpenedEvent()</a> - Constructor for class dev.hardwood.jfr.<a href="dev/hardwood/jfr/FileOpenedEvent.html" title="class in dev.hardwood.jfr">FileOpenedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/metadata/ColumnChunk.html#filePath()" class="member-name-link">filePath()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnChunk.html" title="class in dev.hardwood.metadata">ColumnChunk</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnChunk.html#param-filePath"><code>filePath</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
 <dd>
 <div class="block">Root schema container representing the complete Parquet schema.</div>
@@ -3834,6 +3840,10 @@ records no repetition-level histogram for this chunk.</div>
 <dd>
 <div class="block">Field must be present; nulls are not allowed.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/ColumnChunk.html#requireSameFile()" class="member-name-link">requireSameFile()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnChunk.html" title="class in dev.hardwood.metadata">ColumnChunk</a></dt>
+<dd>
+<div class="block">Fails unless this chunk's data sits in the file being read.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/Encoding.html#RLE" class="member-name-link">RLE</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a></dt>
 <dd>
 <div class="block">Run-length / bit-packed hybrid encoding.</div>
@@ -4579,6 +4589,10 @@ ordering added to the Parquet format after this release.</div>
 <dt><a href="dev/hardwood/metadata/Encoding.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a></dt>
 <dd>
 <div class="block">Placeholder for unknown/unsupported encodings found in metadata.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html" title="enum class in dev.hardwood.metadata">LogicalType.EdgeInterpolationAlgorithm</a></dt>
+<dd>
+<div class="block">An algorithm added to the format after this release.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/PageType.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageType.html" title="enum class in dev.hardwood.metadata">PageType</a></dt>
 <dd>

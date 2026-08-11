@@ -86,13 +86,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../ColumnChunk.html#%3Cinit%3E(dev.hardwood.metadata.ColumnMetaData,java.lang.Long,java.lang.Integer,java.lang.Long,java.lang.Integer)" class="member-name-link">ColumnChunk</a><wbr>(<a href="../ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a>&nbsp;metaData,
+<div class="col-second even-row-color"><code><a href="../ColumnChunk.html#%3Cinit%3E(dev.hardwood.metadata.ColumnMetaData,java.lang.Long,java.lang.Integer,java.lang.Long,java.lang.Integer,java.lang.String)" class="member-name-link">ColumnChunk</a><wbr>(<a href="../ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a>&nbsp;metaData,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;offsetIndexOffset,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;offsetIndexLength,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Long.html" title="class or interface in java.lang" class="external-link">Long</a>&nbsp;columnIndexOffset,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;columnIndexLength)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;columnIndexLength,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;filePath)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates an instance of a <code>ColumnChunk</code> record class.</div>
+<div class="block">A <code>null</code> <code>filePath</code> is normalised to the empty string, so the two ways of saying &quot;this
+file&quot; — the field absent and the field set to the empty string the spec allows — have one
+representation, and <a href="../ColumnChunk.html#requireSameFile()"><code>ColumnChunk.requireSameFile()</code></a> has nothing to guard against.</div>
 </div>
 </div>
 </section>
