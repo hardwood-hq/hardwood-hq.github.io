@@ -2034,7 +2034,7 @@ run the CLI via Docker without installing it locally — see the <a href="#docke
 </tr>
 <tr>
 <td><code>hardwood inspect columns</code></td>
-<td>Show compressed and uncompressed byte sizes per column, ranked</td>
+<td>Rank columns by size, with each column's share of the file, its compression, its data-page encoding and dictionary cardinality, and its unencoded size</td>
 </tr>
 <tr>
 <td><code>hardwood inspect rowgroups</code></td>
@@ -2066,17 +2066,26 @@ run the CLI via Docker without installing it locally — see the <a href="#docke
 <a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Convert to CSV</span>
 <a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1"># Show dictionary entries for a column (first 50 entries per row group by default)</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1"># Rank columns by size: share of the file, compression, encoding, unencoded size</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># Show all dictionary entries for a column (--limit 0 means unlimited)</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category<span class="w"> </span>--limit<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># Per-row-group detail and named level histograms for one column</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--column<span class="w"> </span>order.tags.list.element
 <a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1"># Convert first 100 rows to JSON</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1"># Restrict that detail to a single row group</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--column<span class="w"> </span>order.tags.list.element<span class="w"> </span>--row-group<span class="w"> </span><span class="m">0</span>
 <a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>
-<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="c1"># Convert last 50 rows to CSV</span>
-<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span>-50<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="c1"># Show dictionary entries for a column (first 50 entries per row group by default)</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="c1"># Show all dictionary entries for a column (--limit 0 means unlimited)</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category<span class="w"> </span>--limit<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="c1"># Convert first 100 rows to JSON</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="c1"># Convert last 50 rows to CSV</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span>-50<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
 <h2 id="interactive-exploration-dive">Interactive exploration (<code>dive</code>)<a class="headerlink" href="#interactive-exploration-dive" title="Permanent link">&para;</a></h2>
 <p><code>hardwood dive</code> launches a terminal UI for interactively navigating a Parquet file's structure:</p>
@@ -2094,11 +2103,21 @@ navigable session. Typical things to reach for it for:</p>
   filter the tree to leaves matching a substring.</li>
 <li><strong>Spot the heavy column chunks</strong> in a row group — Row groups → Column
   chunks ranks by compressed size with the codec and dictionary flag
-  alongside.</li>
+  alongside. Schema → a leaf column → the row-group table does the same
+  across row groups for one column, and adds its unencoded size.</li>
 <li><strong>Check page-level statistics and indexes</strong> — drill from a chunk into
   Pages, Column index, or Offset index; <code>Enter</code> on a page opens the
   full thrift header, including inline statistics when no Column Index
   is present.</li>
+<li><strong>See where a column's size and nulls come from</strong> — Column chunk
+  detail groups its facts into Identity, Storage, Content and Layout.
+  Storage carries the unencoded size, what it expands to from disk, and
+  the encoding the data pages use with its dictionary's cardinality;
+  Content the record and present-value counts. <code>l</code> adds the repetition
+  and definition level histograms with each level named after the schema
+  node it belongs to, so an absent field reads differently from an empty
+  list. The pane scrolls with <code>↑↓</code> when it has focus; its title shows a
+  line range whenever anything is below the fold.</li>
 <li><strong>Inspect dictionary entries</strong> for a column — Dictionary screen with
   <code>/</code> substring filter; <code>Enter</code> reveals the full untruncated value of
   the highlighted entry.</li>
@@ -2157,6 +2176,14 @@ navigable session. Typical things to reach for it for:</p>
 <td>Toggle logical / physical value rendering (screen-specific: Pages, Column index, Dictionary, Data preview, Column chunk detail)</td>
 </tr>
 <tr>
+<td><code>l</code></td>
+<td>Toggle the repetition / definition level histograms (Column chunk detail)</td>
+</tr>
+<tr>
+<td><code>↑</code> / <code>↓</code></td>
+<td>Scroll the facts pane when it has focus (Column chunk detail)</td>
+</tr>
+<tr>
 <td><code>e</code> / <code>c</code></td>
 <td>Expand / collapse all (Schema tree; Data preview row modal)</td>
 </tr>
@@ -2201,6 +2228,7 @@ now.</p>
 <figure><a href="../../assets/cli/03-2-rg-detail.svg"><img alt="Row group detail screen" src="../../assets/cli/03-2-rg-detail.svg" width="720" /></a><figcaption>Row group detail</figcaption></figure>
 <figure><a href="../../assets/cli/03-3-rg-column-chunks.svg"><img alt="Column chunks screen" src="../../assets/cli/03-3-rg-column-chunks.svg" width="720" /></a><figcaption>Column chunks</figcaption></figure>
 <figure><a href="../../assets/cli/03-4-rg-column-chunk-detail.svg"><img alt="Column chunk detail screen" src="../../assets/cli/03-4-rg-column-chunk-detail.svg" width="720" /></a><figcaption>Column chunk detail — facts pane plus drill menu</figcaption></figure>
+<figure><a href="../../assets/cli/03-5-rg-column-chunk-levels.svg"><img alt="Column chunk level histograms" src="../../assets/cli/03-5-rg-column-chunk-levels.svg" width="720" /></a><figcaption>Column chunk detail with <code>l</code> — repetition and definition level histograms</figcaption></figure>
 <figure><a href="../../assets/cli/04-pages-header-modal.svg"><img alt="Pages screen with page-header modal" src="../../assets/cli/04-pages-header-modal.svg" width="720" /></a><figcaption>Pages — page-header modal on Enter</figcaption></figure>
 <figure><a href="../../assets/cli/05-dict-search.svg"><img alt="Dictionary screen with inline search" src="../../assets/cli/05-dict-search.svg" width="720" /></a><figcaption>Dictionary — <code>/</code> inline search</figcaption></figure>
 <figure><a href="../../assets/cli/06-data-scrolled-right.svg"><img alt="Data preview screen scrolled right" src="../../assets/cli/06-data-scrolled-right.svg" width="720" /></a><figcaption>Data preview — scrolled right across the column window</figcaption></figure>
@@ -2375,8 +2403,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/33fd9ba7f084eae5e7e533824fa43100864c3845" target="_blank" rel="noopener">
-      33fd9ba7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fe7eda764a91a0e57c7987daf66aac831a6866aa" target="_blank" rel="noopener">
+      fe7eda76
     </a>
   
 </div>
