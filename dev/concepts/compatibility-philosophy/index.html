@@ -1914,8 +1914,8 @@ all operators, including under <code>not(...)</code>. The cost is that a user po
 parquet-java may see fewer rows; the benefit is that filter algebra behaves predictably and
 matches what a SQL engine would do.</p>
 <p>The looser behavior is one explicit composition away when you want it:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// parquet-java&#39;s notEq semantics: &quot;not equal to v, OR null&quot;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">or</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">notEq</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">),</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">));</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// parquet-java's notEq semantics: "not equal to v, OR null"</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">or</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">notEq</span><span class="p">(</span><span class="s">"x"</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">),</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="s">"x"</span><span class="p">));</span>
 </code></pre></div>
 <p>Making null-inclusion explicit, rather than hiding it inside one operator's special case, is the
 point — the reader can see in the code which rows the filter admits.</p>
@@ -1993,8 +1993,8 @@ the classpath — see <a href="../../how-to/compat/">parquet-java Compatibility<
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/1181da448912bfb891216a867e4139c888a1bbb5" target="_blank" rel="noopener">
-      1181da44
+    <a href="https://github.com/hardwood-hq/hardwood/tree/33fd9ba7f084eae5e7e533824fa43100864c3845" target="_blank" rel="noopener">
+      33fd9ba7
     </a>
   
 </div>
