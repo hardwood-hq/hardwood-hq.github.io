@@ -1920,12 +1920,14 @@ matches what a SQL engine would do.</p>
 <p>Making null-inclusion explicit, rather than hiding it inside one operator's special case, is the
 point — the reader can see in the code which rows the filter admits.</p>
 <h3 id="schema-validation-across-multiple-files">Schema validation across multiple files<a class="headerlink" href="#schema-validation-across-multiple-files" title="Permanent link">&para;</a></h3>
-<p>When a reader spans multiple files, the first file's schema is the reference, and every
-subsequent file is validated against it <em>as it is opened</em>: each column the read touches — the
-projected ones plus any a filter tests — must exist with a matching physical type, logical type,
-repetition type, fixed byte length, and enclosing groups of the same nullability and
-repeatedness, or a <code>SchemaIncompatibleException</code> is thrown up front. A silently mismatched
-column that produced garbage values mid-stream would be the worse outcome.</p>
+<p>When a data reader spans multiple files, the first file's schema is the reference, and each
+subsequent file reached by the data-reader plan is validated against it: every column the read
+touches — the projected ones plus any a filter tests — must exist with a matching physical type,
+logical type, repetition type, fixed byte length, and enclosing groups of the same nullability and
+repeatedness, or a <code>SchemaIncompatibleException</code> is thrown up front, rather than surfacing as
+garbage values halfway through a scan.</p>
+<p>Which columns a read touches is known only once a reader is planned, so that is when the check
+runs. Inspecting a file's metadata reports the footer as it is on disk and does not run it.</p>
 <p>The match is by field path, never by position. A Parquet footer lists column chunks in the order
 of the schema's flattened leaves, so a column's ordinal belongs to the file that was written, not
 to the column; two files that declare the same columns in a different order describe the same
@@ -1993,8 +1995,8 @@ the classpath — see <a href="../../how-to/compat/">parquet-java Compatibility<
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/aa82eaf773d525861348afbcac8fa957afdb8177" target="_blank" rel="noopener">
-      aa82eaf7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f814f0d641f8c91f08c31b37f8d5d1441e01ff93" target="_blank" rel="noopener">
+      f814f0d6
     </a>
   
 </div>

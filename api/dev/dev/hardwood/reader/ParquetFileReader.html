@@ -66,6 +66,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext)" tabindex="0">openAll(List, HardwoodContext)</a></li>
 <li><a href="#openAll(java.util.List,dev.hardwood.HardwoodContext,dev.hardwood.reader.ReaderConfig)" tabindex="0">openAll(List, HardwoodContext, ReaderConfig)</a></li>
 <li><a href="#getFileMetaData()" tabindex="0">getFileMetaData()</a></li>
+<li><a href="#getFileCount()" tabindex="0">getFileCount()</a></li>
+<li><a href="#getFileMetaData(int)" tabindex="0">getFileMetaData(int)</a></li>
 <li><a href="#getFileSchema()" tabindex="0">getFileSchema()</a></li>
 <li><a href="#isMultiFile()" tabindex="0">isMultiFile()</a></li>
 <li><a href="#rowReader()" tabindex="0">rowReader()</a></li>
@@ -119,6 +121,11 @@ try (Hardwood hardwood = Hardwood.create();
     }
 }
 </code></pre>
+<p><strong>After close:</strong> the metadata accessors split on whether they can read from
+disk. <a href="#getFileMetaData(int)"><code>getFileMetaData(int)</code></a> may have to load a footer, so it throws
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a> once the reader is closed. <a href="#getFileCount()"><code>getFileCount()</code></a>,
+<a href="#getFileMetaData()"><code>getFileMetaData()</code></a> and <a href="#getFileSchema()"><code>getFileSchema()</code></a> are served from state already in
+memory and stay usable.</p>
 <p><strong>Limitation:</strong> When using the default memory-mapped <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a>, the file
 itself may be arbitrarily large, but each individual column chunk must be at
 most 2 GB (<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html#MAX_VALUE" title="class or interface in java.lang" class="external-link"><code>Integer.MAX_VALUE</code></a> bytes) of compressed data. The in-memory and
@@ -211,10 +218,20 @@ group of the named column with no filter.</div>
 <div class="block">Shortcut for <a href="#buildColumnReaders(dev.hardwood.schema.ColumnProjection)"><code>buildColumnReaders(ColumnProjection)</code></a>.build() —
 every row group, no filter.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFileMetaData()" class="member-name-link">getFileMetaData</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFileCount()" class="member-name-link">getFileCount</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Number of physical input files represented by this reader.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFileMetaData()" class="member-name-link">getFileMetaData</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">File metadata of the first input file.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFileMetaData(int)" class="member-name-link">getFileMetaData</a><wbr>(int&nbsp;fileIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the metadata of one physical input file.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFileSchema()" class="member-name-link">getFileSchema</a>()</code></div>
@@ -394,9 +411,50 @@ opened eagerly so any I/O or metadata error surfaces immediately.</div>
 <h3>getFileMetaData</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></span>&nbsp;<span class="element-name">getFileMetaData</span>()</div>
-<div class="block">File metadata of the first input file. For multi-file readers,
-per-file metadata for files beyond the first is not exposed; open
-those files individually to inspect their metadata.</div>
+<div class="block">File metadata of the first input file.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFileCount()">
+<h3>getFileCount</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getFileCount</span>()</div>
+<div class="block"><p>Number of physical input files represented by this reader.</p>
+<p>This method performs no I/O.</p>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFileMetaData(int)">
+<h3>getFileMetaData</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></span>&nbsp;<span class="element-name">getFileMetaData</span><wbr><span class="parameters">(int&nbsp;fileIndex)</span>
+                             throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><p>Returns the metadata of one physical input file.</p>
+<p>Files are indexed in the order supplied to <a href="#openAll(java.util.List)"><code>openAll(List)</code></a>. Metadata
+for the first file is read when the reader is opened; metadata for later
+files is read on first access or data-reader prefetch. In-progress,
+successful, and failed loads are cached for this reader's lifetime, and
+this synchronous accessor joins a load already in progress. Close and
+reopen the reader to retry a failed load or inspect a changed file.</p>
+<p>This method returns the physical file's footer without performing
+projection- or filter-specific cross-file schema validation. That
+validation occurs when a row or column reader is planned.</p>
+<p>Input files must not be modified while this reader is open.</p>
+</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>fileIndex</code> - zero-based physical input file index</dd>
+<dt>Returns:</dt>
+<dd>metadata parsed from that file's footer</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>fileIndex</code> is outside
+<code>[0, getFileCount())</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this reader is closed</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the file cannot be opened or its footer cannot be read</dd>
+</dl>
 </div>
 </section>
 </li>

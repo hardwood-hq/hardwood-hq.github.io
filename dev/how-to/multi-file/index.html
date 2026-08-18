@@ -1717,7 +1717,16 @@
 <a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p">}</span>
 </code></pre></div>
 <p>Cross-file prefetching is automatic: when pages from file N are running low, pages from file N+1 are already being prefetched. This eliminates I/O stalls at file boundaries.</p>
-<p>The schema of the first file is the reference schema. Each subsequent file is validated against it as it is opened. Columns are matched by field path, so files may declare them in any order. Every projected column, and every column a filter predicate tests, must exist with a matching physical type, logical type, repetition type, and fixed byte length, and its enclosing groups must match in nullability and repeatedness, otherwise a <code>SchemaIncompatibleException</code> is thrown. Columns that are neither projected nor filtered on are not checked, so files may carry additional columns or omit unused ones. With no explicit projection, all columns of the first file are projected and therefore required in every subsequent file.</p>
+<p>The schema of the first file is the reference schema. When a data reader is planned, each
+subsequent file reached by the data-reader plan is validated against it for that reader's
+projection and filter. Merely inspecting a file's metadata does not perform this
+projection-specific validation. Columns are matched by field path, so files may declare them in
+any order. Every projected column, and every column a filter predicate tests, must exist with a
+matching physical type, logical type, repetition type, and fixed byte length, and its enclosing
+groups must match in nullability and repeatedness, otherwise a <code>SchemaIncompatibleException</code> is
+thrown. Columns that are neither projected nor filtered on are not checked, so files may carry
+additional columns or omit unused ones. With no explicit projection, all columns of the first file
+are projected and therefore required in every subsequent file reached by the data-reader plan.</p>
 <p>By default, <code>Hardwood.create()</code> sizes the thread pool to the number of available processors. To control the decode parallelism, create a <code>HardwoodContext</code> of the desired size and pass it to <code>Hardwood.create(HardwoodContext)</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.HardwoodContext</span><span class="p">;</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -1778,8 +1787,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/aa82eaf773d525861348afbcac8fa957afdb8177" target="_blank" rel="noopener">
-      aa82eaf7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f814f0d641f8c91f08c31b37f8d5d1441e01ff93" target="_blank" rel="noopener">
+      f814f0d6
     </a>
   
 </div>
