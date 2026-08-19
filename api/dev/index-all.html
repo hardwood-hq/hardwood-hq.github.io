@@ -57,6 +57,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/s3/S3Credentials.html#param-accessKeyId"><code>accessKeyId</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addBinary(byte%5B%5D)" class="member-name-link">addBinary(byte[])</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addBoolean(boolean)" class="member-name-link">addBoolean(boolean)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a <code>BOOLEAN</code> entry.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.Builder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
 <dd>
 <div class="block">Append a primitive column.</div>
@@ -92,6 +100,75 @@ length of a <code>FIXED_LEN_BYTE_ARRAY</code> column.</div>
 <dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType, LogicalType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
 <dd>
 <div class="block">Append a primitive field carrying a logical type annotation.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addDate(java.time.LocalDate)" class="member-name-link">addDate(LocalDate)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a <code>DATE</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addDecimal(java.math.BigDecimal)" class="member-name-link">addDecimal(BigDecimal)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a <code>DECIMAL</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addDouble(double)" class="member-name-link">addDouble(double)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a <code>DOUBLE</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/MapBuilder.html#addEntry(java.util.function.Consumer)" class="member-name-link">addEntry(Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/MapBuilder.html" title="interface in dev.hardwood.writer">MapBuilder</a></dt>
+<dd>
+<div class="block">Appends one entry, populating its <code>key</code> and <code>value</code> fields through <code>filler</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addFloat(float)" class="member-name-link">addFloat(float)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a <code>FLOAT</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addInt(int)" class="member-name-link">addInt(int)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends an <code>INT32</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addInterval(dev.hardwood.row.PqInterval)" class="member-name-link">addInterval(PqInterval)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends an <code>INTERVAL</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addList(java.util.function.Consumer)" class="member-name-link">addList(Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a nested list entry, populating it through <code>filler</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addLocalTimestamp(java.time.LocalDateTime)" class="member-name-link">addLocalTimestamp(LocalDateTime)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a local-wall-clock <code>TIMESTAMP</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addLong(long)" class="member-name-link">addLong(long)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends an <code>INT64</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addMap(java.util.function.Consumer)" class="member-name-link">addMap(Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a map entry, populating it through <code>filler</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addNull()" class="member-name-link">addNull()</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a null entry, which occupies a position in the list — distinct from the list
+itself being absent, and from the list being empty.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addString(java.lang.String)" class="member-name-link">addString(String)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a <code>STRING</code>, <code>ENUM</code> or <code>JSON</code> entry from its UTF-8 bytes.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addStruct(java.util.function.Consumer)" class="member-name-link">addStruct(Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a struct entry, populating it through <code>filler</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addTime(java.time.LocalTime)" class="member-name-link">addTime(LocalTime)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a <code>TIME</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addTimestamp(java.time.Instant)" class="member-name-link">addTimestamp(Instant)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a UTC-adjusted <code>TIMESTAMP</code> entry.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addUuid(java.util.UUID)" class="member-name-link">addUuid(UUID)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a <code>UUID</code> entry.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/ColumnProjection.html#all()" class="member-name-link">all()</a> - Static method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a></dt>
 <dd>
@@ -855,6 +932,11 @@ chunk falls back to <code>PLAIN</code>.</div>
 <dd>
 <div class="block">Default page target: 1 MiB of uncompressed values per data page.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Default precision-loss policy: reject a value the column cannot hold exactly, rather
+than silently dropping the digits that do not fit.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
 <div class="block">Default row-group target: 128 MiB of uncompressed data per row group.</div>
@@ -946,7 +1028,7 @@ records no definition-level histogram for this chunk.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a> - package dev.hardwood.writer</dt>
 <dd>
-<div class="block">Parquet file writer with a columnar API.</div>
+<div class="block">Parquet file writer, with a columnar and a row-oriented API over one core.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/PageType.html#DICTIONARY_PAGE" class="member-name-link">DICTIONARY_PAGE</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageType.html" title="enum class in dev.hardwood.metadata">PageType</a></dt>
 <dd>
@@ -2880,6 +2962,10 @@ are themselves absent), distinct from an empty list carrying a zero-delta offset
 <dd>
 <div class="block">List of elements.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html" class="type-name-link" title="interface in dev.hardwood.writer">ListBuilder</a> - Interface in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">Appends the entries of one <code>LIST</code> instance.</div>
+</dd>
 <dt><a href="dev/hardwood/row/PqList.html#lists()" class="member-name-link">lists()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>
 <div class="block">View the elements as a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of nested lists.</div>
@@ -3166,6 +3252,10 @@ being the common case.</div>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#MAP_KEY_VALUE" class="member-name-link">MAP_KEY_VALUE</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">Intermediate group inside a MAP; contains key and value fields.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/MapBuilder.html" class="type-name-link" title="interface in dev.hardwood.writer">MapBuilder</a> - Interface in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">Appends the entries of one <code>MAP</code> instance.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqList.html#maps()" class="member-name-link">maps()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>
@@ -3779,6 +3869,22 @@ the <code>VARIANT</code> logical type.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SchemaElement.html#param-precision"><code>precision</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#precisionLossPolicy()" class="member-name-link">precisionLossPolicy()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">What <a href="dev/hardwood/writer/RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column can hold.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#precisionLossPolicy(dev.hardwood.writer.PrecisionLossPolicy)" class="member-name-link">precisionLossPolicy(PrecisionLossPolicy)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets what <a href="dev/hardwood/writer/RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column
+can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> with microseconds written to a
+<code>TIMESTAMP(MILLIS)</code> column, say; must be non-null.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/PrecisionLossPolicy.html" class="type-name-link" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a> - Enum Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">What <a href="dev/hardwood/writer/RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than the column it is written
+to can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> with microseconds into a <code>TIMESTAMP(MILLIS)</code> column,
+a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> with three decimals into a <code>DECIMAL(_, 2)</code> column.</div>
+</dd>
 <dt><a href="dev/hardwood/jfr/PrefetchMissEvent.html" class="type-name-link" title="class in dev.hardwood.jfr">PrefetchMissEvent</a> - Class in <a href="dev/hardwood/jfr/package-summary.html">dev.hardwood.jfr</a></dt>
 <dd>
 <div class="block">JFR event emitted when the prefetch queue cannot supply a decoded page in time.</div>
@@ -3875,6 +3981,10 @@ source.</div>
 <dt><a href="dev/hardwood/s3/S3Source.Builder.html#region(java.lang.String)" class="member-name-link">region(String)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></dt>
 <dd>
 <div class="block">Sets the AWS region (e.g. <code>&quot;eu-west-1&quot;</code>, <code>&quot;auto&quot;</code>).</div>
+</dd>
+<dt><a href="dev/hardwood/writer/PrecisionLossPolicy.html#REJECT" class="member-name-link">REJECT</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></dt>
+<dd>
+<div class="block">Reject the value, naming the field and the column's declared unit or scale.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/RepetitionType.html#REPEATED" class="member-name-link">REPEATED</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a></dt>
 <dd>
@@ -4025,6 +4135,16 @@ column with no filter.</div>
 <dd>
 <div class="block">Provides row-oriented iteration over a Parquet file.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#rowWriter()" class="member-name-link">rowWriter()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
+<dd>
+<div class="block">Returns the row-oriented view over this file: a record-shaped API for callers that
+hold records rather than columns.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/RowWriter.html" class="type-name-link" title="class in dev.hardwood.writer">RowWriter</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">Writes a Parquet file record by record, over the same columnar core <a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>
+exposes through <a href="dev/hardwood/writer/ParquetFileWriter.html#writeBatch(java.util.function.Consumer)"><code>ParquetFileWriter.writeBatch(Consumer)</code></a>.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:S">S</h2>
 <dl class="index">
@@ -4103,6 +4223,82 @@ column with no filter.</div>
 <dt><a href="dev/hardwood/s3/S3Credentials.html#sessionToken()" class="member-name-link">sessionToken()</a> - Method in record class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Credentials.html" title="class in dev.hardwood.s3">S3Credentials</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/s3/S3Credentials.html#param-sessionToken"><code>sessionToken</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setBinary(java.lang.String,byte%5B%5D)" class="member-name-link">setBinary(String, byte[])</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> field from its bytes, which are
+referenced rather than copied and must not be mutated until the record is written.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setBoolean(java.lang.String,boolean)" class="member-name-link">setBoolean(String, boolean)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>BOOLEAN</code> field.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setDate(java.lang.String,java.time.LocalDate)" class="member-name-link">setDate(String, LocalDate)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets an <code>INT32</code> field annotated <code>DATE</code>, as days since the Unix epoch.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setDecimal(java.lang.String,java.math.BigDecimal)" class="member-name-link">setDecimal(String, BigDecimal)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a field annotated <code>DECIMAL</code>, in whichever of <code>INT32</code>, <code>INT64</code>, <code>BYTE_ARRAY</code> or
+<code>FIXED_LEN_BYTE_ARRAY</code> the column declares.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setDouble(java.lang.String,double)" class="member-name-link">setDouble(String, double)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>DOUBLE</code> field.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setFloat(java.lang.String,float)" class="member-name-link">setFloat(String, float)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>FLOAT</code> field.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setInt(java.lang.String,int)" class="member-name-link">setInt(String, int)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets an <code>INT32</code> field.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setInterval(java.lang.String,dev.hardwood.row.PqInterval)" class="member-name-link">setInterval(String, PqInterval)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>FIXED_LEN_BYTE_ARRAY(12)</code> field annotated <code>INTERVAL</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setList(java.lang.String,java.util.function.Consumer)" class="member-name-link">setList(String, Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>LIST</code> field, appending its entries through <code>filler</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setLocalTimestamp(java.lang.String,java.time.LocalDateTime)" class="member-name-link">setLocalTimestamp(String, LocalDateTime)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setLong(java.lang.String,long)" class="member-name-link">setLong(String, long)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets an <code>INT64</code> field.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setMap(java.lang.String,java.util.function.Consumer)" class="member-name-link">setMap(String, Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>MAP</code> field, appending its entries through <code>filler</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setNull(java.lang.String)" class="member-name-link">setNull(String)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a field null.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setString(java.lang.String,java.lang.String)" class="member-name-link">setString(String, String)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>BYTE_ARRAY</code> field annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code>, or unannotated, from
+the value's UTF-8 bytes.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setStruct(java.lang.String,java.util.function.Consumer)" class="member-name-link">setStruct(String, Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a nested struct field, populating it through <code>filler</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setTime(java.lang.String,java.time.LocalTime)" class="member-name-link">setTime(String, LocalTime)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a field annotated <code>TIME</code>, in the unit the annotation declares.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setTimestamp(java.lang.String,java.time.Instant)" class="member-name-link">setTimestamp(String, Instant)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit
+the annotation declares.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setUuid(java.lang.String,java.util.UUID)" class="member-name-link">setUuid(String, UUID)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>FIXED_LEN_BYTE_ARRAY(16)</code> field annotated <code>UUID</code>.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.SignedBinaryColumnPredicate.html#%3Cinit%3E(java.lang.String,dev.hardwood.reader.FilterPredicate.Operator,byte%5B%5D)" class="member-name-link">SignedBinaryColumnPredicate(String, FilterPredicate.Operator, byte[])</a> - Constructor for record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.SignedBinaryColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.SignedBinaryColumnPredicate</a></dt>
 <dd>
@@ -4237,6 +4433,10 @@ dot-separated path.</div>
 <dt><a href="dev/hardwood/row/StructAccessor.html" class="type-name-link" title="interface in dev.hardwood.row">StructAccessor</a> - Interface in <a href="dev/hardwood/row/package-summary.html">dev.hardwood.row</a></dt>
 <dd>
 <div class="block">Parquet-struct access interface.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html" class="type-name-link" title="interface in dev.hardwood.writer">StructBuilder</a> - Interface in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">Sets the fields of one struct — a record being written, or a struct nested inside one.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqList.html#structs()" class="member-name-link">structs()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>
@@ -4600,6 +4800,10 @@ followed by each node in pre-order, groups carrying their child count.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-totalUncompressedSize"><code>totalUncompressedSize</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/PrecisionLossPolicy.html#TRUNCATE" class="member-name-link">TRUNCATE</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></dt>
+<dd>
+<div class="block">Drop the digits the column cannot hold, and write the value.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#type()" class="member-name-link">type()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-type"><code>type</code></a> record component.</div>
@@ -4829,6 +5033,10 @@ writer accepts it as a column's null mask.</div>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/PrecisionLossPolicy.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
@@ -4915,6 +5123,11 @@ the order they are declared.</div>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/PrecisionLossPolicy.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
 <dt><a href="dev/hardwood/row/PqList.html#variants()" class="member-name-link">variants()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>
 <div class="block">View the elements as a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="dev/hardwood/row/PqVariant.html" title="interface in dev.hardwood.row"><code>PqVariant</code></a> values.</div>
@@ -4965,6 +5178,10 @@ data crosses the row-group target.</div>
 <dt><a href="dev/hardwood/writer/WriterConfig.Builder.html" class="type-name-link" title="class in dev.hardwood.writer">WriterConfig.Builder</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
 <dd>
 <div class="block">Builder for <a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/RowWriter.html#writeRow(java.util.function.Consumer)" class="member-name-link">writeRow(Consumer)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></dt>
+<dd>
+<div class="block">Writes one record.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:X">X</h2>

@@ -61,6 +61,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" tabindex="0">create(OutputFile, FileSchema)</a></li>
 <li><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)" tabindex="0">create(OutputFile, FileSchema, WriterConfig)</a></li>
 <li><a href="#writeBatch(java.util.function.Consumer)" tabindex="0">writeBatch(Consumer)</a></li>
+<li><a href="#rowWriter()" tabindex="0">rowWriter()</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
 </ol>
 </li>
@@ -131,9 +132,15 @@ through <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>W
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Opens a writer, writing the leading magic bytes.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeBatch(java.util.function.Consumer)" class="member-name-link">writeBatch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a>&gt;&nbsp;filler)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowWriter()" class="member-name-link">rowWriter</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the row-oriented view over this file: a record-shaped API for callers that
+hold records rather than columns.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeBatch(java.util.function.Consumer)" class="member-name-link">writeBatch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a>&gt;&nbsp;filler)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Writes one aligned batch of column values, flushing row groups as the buffered
 data crosses the row-group target.</div>
 </div>
@@ -218,7 +225,37 @@ separate build or submit step to forget.</p>
 <dd><code>filler</code> - populates the batch's columns; must cover every column exactly once</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the write fails</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the batch does not cover every column</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the batch does not cover every column, or its
+per-layer inputs do not agree on a record count</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema has a shape the writer cannot
+produce</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed, or <a href="#rowWriter()"><code>rowWriter()</code></a> has already
+been used on this file</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="rowWriter()">
+<h3>rowWriter</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></span>&nbsp;<span class="element-name">rowWriter</span>()</div>
+<div class="block"><p>Returns the row-oriented view over this file: a record-shaped API for callers that
+hold records rather than columns. It stages records into batches and submits them
+through <a href="#writeBatch(java.util.function.Consumer)"><code>writeBatch(Consumer)</code></a>, so the file it produces is the one the columnar API produces
+for the same data.</p>
+<p>The file writer keeps ownership: the returned view is not closeable, and its pending
+records are written by <a href="#close()"><code>close()</code></a>. The same instance is returned on every call.</p>
+</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the row-oriented view over this file</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed, or <a href="#writeBatch(java.util.function.Consumer)"><code>writeBatch(Consumer)</code></a> has already
+been used on this file</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema has a shape the writer cannot
+produce record by record</dd>
 </dl>
 </div>
 </section>

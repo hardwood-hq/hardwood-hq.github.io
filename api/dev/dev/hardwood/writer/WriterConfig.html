@@ -66,6 +66,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES" tabindex="0">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</a></li>
 <li><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" tabindex="0">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></li>
 <li><a href="#DEFAULT_CODEC" tabindex="0">DEFAULT_CODEC</a></li>
+<li><a href="#DEFAULT_PRECISION_LOSS_POLICY" tabindex="0">DEFAULT_PRECISION_LOSS_POLICY</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -79,6 +80,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#dictionaryPageLimitBytes()" tabindex="0">dictionaryPageLimitBytes()</a></li>
 <li><a href="#statisticsTruncationLength()" tabindex="0">statisticsTruncationLength()</a></li>
 <li><a href="#codec()" tabindex="0">codec()</a></li>
+<li><a href="#precisionLossPolicy()" tabindex="0">precisionLossPolicy()</a></li>
 </ol>
 </li>
 </ol>
@@ -161,14 +163,20 @@ chunk falls back to <code>PLAIN</code>.</div>
 <div class="col-last odd-row-color">
 <div class="block">Default page target: 1 MiB of uncompressed values per data page.</div>
 </div>
-<div class="col-first even-row-color"><code>static final long</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Default precision-loss policy: reject a value the column cannot hold exactly, rather
+than silently dropping the digits that do not fit.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final long</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default row-group target: 128 MiB of uncompressed data per row group.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default statistics truncation length: <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> bounds longer than
 64 bytes are truncated and flagged inexact.</div>
 </div>
@@ -221,14 +229,19 @@ chunk falls back to <code>PLAIN</code>.</div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Maximum uncompressed bytes of values per data page.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy()" class="member-name-link">precisionLossPolicy</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">What <a href="RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column can hold.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Uncompressed byte threshold at which a row group is flushed.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The maximum length of a <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound before it is
 truncated (and flagged inexact).</div>
 </div>
@@ -347,6 +360,16 @@ default only avoids imposing the ZSTD dependency on callers who did not ask to c
 </div>
 </section>
 </li>
+<li>
+<section class="detail" id="DEFAULT_PRECISION_LOSS_POLICY">
+<h3>DEFAULT_PRECISION_LOSS_POLICY</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></span>&nbsp;<span class="element-name">DEFAULT_PRECISION_LOSS_POLICY</span></div>
+<div class="block">Default precision-loss policy: reject a value the column cannot hold exactly, rather
+than silently dropping the digits that do not fit.</div>
+</div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -434,6 +457,15 @@ truncated (and flagged inexact).</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></span>&nbsp;<span class="element-name">codec</span>()</div>
 <div class="block">The codec each page body is compressed with.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="precisionLossPolicy()">
+<h3>precisionLossPolicy</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></span>&nbsp;<span class="element-name">precisionLossPolicy</span>()</div>
+<div class="block">What <a href="RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column can hold.</div>
 </div>
 </section>
 </li>

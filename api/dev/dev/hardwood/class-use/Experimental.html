@@ -69,7 +69,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><a href="#dev.hardwood.writer">dev.hardwood.writer</a></div>
 <div class="col-last even-row-color">
-<div class="block">Parquet file writer with a columnar API.</div>
+<div class="block">Parquet file writer, with a columnar and a row-oriented API over one core.</div>
 </div>
 </div>
 <section class="class-uses">
@@ -116,6 +116,40 @@ writer accepts it as a column's null mask.</div>
 <li>
 <section class="detail" id="dev.hardwood.writer">
 <h2>Uses of <a href="../Experimental.html" title="annotation interface in dev.hardwood">Experimental</a> in <a href="../writer/package-summary.html">dev.hardwood.writer</a></h2>
+<div class="caption"><span>Classes in <a href="../writer/package-summary.html">dev.hardwood.writer</a> with annotations of type <a href="../Experimental.html" title="annotation interface in dev.hardwood">Experimental</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../writer/ListBuilder.html" class="type-name-link" title="interface in dev.hardwood.writer">ListBuilder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Appends the entries of one <code>LIST</code> instance.</div>
+</div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../writer/MapBuilder.html" class="type-name-link" title="interface in dev.hardwood.writer">MapBuilder</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Appends the entries of one <code>MAP</code> instance.</div>
+</div>
+<div class="col-first even-row-color"><code>enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../writer/PrecisionLossPolicy.html" class="type-name-link" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">What <a href="../writer/RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than the column it is written
+to can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> with microseconds into a <code>TIMESTAMP(MILLIS)</code> column,
+a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> with three decimals into a <code>DECIMAL(_, 2)</code> column.</div>
+</div>
+<div class="col-first odd-row-color"><code>final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../writer/RowWriter.html" class="type-name-link" title="class in dev.hardwood.writer">RowWriter</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Writes a Parquet file record by record, over the same columnar core <a href="../writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>
+exposes through <a href="../writer/ParquetFileWriter.html#writeBatch(java.util.function.Consumer)"><code>ParquetFileWriter.writeBatch(Consumer)</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../writer/StructBuilder.html" class="type-name-link" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Sets the fields of one struct — a record being written, or a struct nested inside one.</div>
+</div>
+</div>
 <div class="caption"><span>Methods in <a href="../writer/package-summary.html">dev.hardwood.writer</a> with annotations of type <a href="../Experimental.html" title="annotation interface in dev.hardwood">Experimental</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -349,10 +383,16 @@ are themselves absent), distinct from an empty list carrying a zero-delta offset
 <div class="block">Sets the entry offsets of a <code>MAP</code> together with its per-instance nulls (which maps
 are themselves absent), distinct from an empty map carrying a zero-delta offset.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ColumnBatch.</span><code><a href="../writer/ColumnBatch.html#struct(java.lang.String,dev.hardwood.Validity)" class="member-name-link">struct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;structPath,
- <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-first even-row-color"><code><a href="../writer/RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParquetFileWriter.</span><code><a href="../writer/ParquetFileWriter.html#rowWriter()" class="member-name-link">rowWriter</a>()</code></div>
 <div class="col-last even-row-color">
+<div class="block">Returns the row-oriented view over this file: a record-shaped API for callers that
+hold records rather than columns.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ColumnBatch.</span><code><a href="../writer/ColumnBatch.html#struct(java.lang.String,dev.hardwood.Validity)" class="member-name-link">struct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;structPath,
+ <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Sets the per-instance nulls of an <code>OPTIONAL</code> <code>struct</code> group, addressed by its
 dot-separated path.</div>
 </div>

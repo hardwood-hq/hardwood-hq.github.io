@@ -62,7 +62,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="#dev.hardwood.writer">dev.hardwood.writer</a></div>
 <div class="col-last even-row-color">
-<div class="block">Parquet file writer with a columnar API.</div>
+<div class="block">Parquet file writer, with a columnar and a row-oriented API over one core.</div>
 </div>
 </div>
 <section class="class-uses">
@@ -107,13 +107,20 @@ must be at least one <code>INT32</code> (4 bytes) so at least one value always f
 <div class="block">Sets the page target; must be at least one <code>INT32</code> (4 bytes).</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#rowGroupTargetBytes(long)" class="member-name-link">rowGroupTargetBytes</a><wbr>(long&nbsp;rowGroupTargetBytes)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#precisionLossPolicy(dev.hardwood.writer.PrecisionLossPolicy)" class="member-name-link">precisionLossPolicy</a><wbr>(<a href="../PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a>&nbsp;precisionLossPolicy)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Sets the row-group target; must be positive.</div>
+<div class="block">Sets what <a href="../RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column
+can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> with microseconds written to a
+<code>TIMESTAMP(MILLIS)</code> column, say; must be non-null.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#rowGroupTargetBytes(long)" class="member-name-link">rowGroupTargetBytes</a><wbr>(long&nbsp;rowGroupTargetBytes)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Sets the row-group target; must be positive.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Sets the maximum <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound length; must be
 positive.</div>
 </div>

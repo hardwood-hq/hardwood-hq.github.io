@@ -63,6 +63,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Value types for nested Parquet structures accessed through <a href="../../reader/RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a>.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#dev.hardwood.writer">dev.hardwood.writer</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Parquet file writer, with a columnar and a row-oriented API over one core.</div>
+</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -99,6 +103,28 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">PqList.</span><code><a href="../PqList.html#intervals()" class="member-name-link">intervals</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">View the elements as a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="../PqInterval.html" title="class in dev.hardwood.row"><code>PqInterval</code></a> values.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dev.hardwood.writer">
+<h2>Uses of <a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a> in <a href="../../writer/package-summary.html">dev.hardwood.writer</a></h2>
+<div class="caption"><span>Methods in <a href="../../writer/package-summary.html">dev.hardwood.writer</a> with parameters of type <a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ListBuilder.</span><code><a href="../../writer/ListBuilder.html#addInterval(dev.hardwood.row.PqInterval)" class="member-name-link">addInterval</a><wbr>(<a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Appends an <code>INTERVAL</code> entry.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StructBuilder.</span><code><a href="../../writer/StructBuilder.html#setInterval(java.lang.String,dev.hardwood.row.PqInterval)" class="member-name-link">setInterval</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sets a <code>FIXED_LEN_BYTE_ARRAY(12)</code> field annotated <code>INTERVAL</code>.</div>
 </div>
 </div>
 </section>
