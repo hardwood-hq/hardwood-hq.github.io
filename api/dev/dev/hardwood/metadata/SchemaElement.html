@@ -64,6 +64,13 @@ loadScripts(document, 'script');</script>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
+<li><a href="#root(java.lang.String,int)" tabindex="0">root(String, int)</a></li>
+<li><a href="#group(java.lang.String,dev.hardwood.metadata.RepetitionType,int)" tabindex="0">group(String, RepetitionType, int)</a></li>
+<li><a href="#group(java.lang.String,dev.hardwood.metadata.RepetitionType,int,dev.hardwood.metadata.LogicalType)" tabindex="0">group(String, RepetitionType, int, LogicalType)</a></li>
+<li><a href="#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" tabindex="0">primitive(String, PhysicalType, RepetitionType)</a></li>
+<li><a href="#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)" tabindex="0">primitive(String, PhysicalType, RepetitionType, LogicalType)</a></li>
+<li><a href="#fixedLengthPrimitive(java.lang.String,int,dev.hardwood.metadata.RepetitionType)" tabindex="0">fixedLengthPrimitive(String, int, RepetitionType)</a></li>
+<li><a href="#fixedLengthPrimitive(java.lang.String,int,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)" tabindex="0">fixedLengthPrimitive(String, int, RepetitionType, LogicalType)</a></li>
 <li><a href="#isGroup()" tabindex="0">isGroup()</a></li>
 <li><a href="#isPrimitive()" tabindex="0">isPrimitive()</a></li>
 <li><a href="#toString()" tabindex="0">toString()</a></li>
@@ -98,7 +105,8 @@ loadScripts(document, 'script');</script>
 <dt>Record Components:</dt>
 <dd><code><span id="param-name">name</span></code> - column or group name</dd>
 <dd><code><span id="param-type">type</span></code> - physical type of this element, or <code>null</code> for group nodes</dd>
-<dd><code><span id="param-typeLength">typeLength</span></code> - fixed byte length for <a href="PhysicalType.html#FIXED_LEN_BYTE_ARRAY"><code>PhysicalType.FIXED_LEN_BYTE_ARRAY</code></a> columns, or <code>null</code> otherwise</dd>
+<dd><code><span id="param-typeLength">typeLength</span></code> - byte length of the values for <a href="PhysicalType.html#FIXED_LEN_BYTE_ARRAY"><code>PhysicalType.FIXED_LEN_BYTE_ARRAY</code></a>; for any other
+physical type, it denotes the maximum bit length used to store a value; or, <code>null</code> otherwise</dd>
 <dd><code><span id="param-repetitionType">repetitionType</span></code> - repetition level (required, optional, or repeated)</dd>
 <dd><code><span id="param-numChildren">numChildren</span></code> - number of child elements for group nodes, or <code>null</code> for primitive nodes</dd>
 <dd><code><span id="param-convertedType">convertedType</span></code> - legacy converted type annotation, or <code>null</code> if absent</dd>
@@ -155,7 +163,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -175,6 +183,36 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fieldId()" class="member-name-link">fieldId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-fieldId"><code>fieldId</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fixedLengthPrimitive(java.lang.String,int,dev.hardwood.metadata.RepetitionType)" class="member-name-link">fixedLengthPrimitive</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;typeLength,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a <a href="PhysicalType.html#FIXED_LEN_BYTE_ARRAY"><code>PhysicalType.FIXED_LEN_BYTE_ARRAY</code></a> element.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fixedLengthPrimitive(java.lang.String,int,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)" class="member-name-link">fixedLengthPrimitive</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;typeLength,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType,
+ <a href="LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a <a href="PhysicalType.html#FIXED_LEN_BYTE_ARRAY"><code>PhysicalType.FIXED_LEN_BYTE_ARRAY</code></a> element.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#group(java.lang.String,dev.hardwood.metadata.RepetitionType,int)" class="member-name-link">group</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType,
+ int&nbsp;numChildren)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a group element.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#group(java.lang.String,dev.hardwood.metadata.RepetitionType,int,dev.hardwood.metadata.LogicalType)" class="member-name-link">group</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType,
+ int&nbsp;numChildren,
+ <a href="LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a group element.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
@@ -211,29 +249,50 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-precision"><code>precision</code></a> record component.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">primitive</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a primitive element</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)" class="member-name-link">primitive</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType,
+ <a href="LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a primitive element.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#repetitionType()" class="member-name-link">repetitionType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-repetitionType"><code>repetitionType</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scale()" class="member-name-link">scale</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <a href="#param-scale"><code>scale</code></a> record component.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns a string representation of this record class.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#type()" class="member-name-link">type</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the value of the <a href="#param-type"><code>type</code></a> record component.</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#root(java.lang.String,int)" class="member-name-link">root</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;numChildren)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a root group element, which carries no repetition.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeLength()" class="member-name-link">typeLength</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#scale()" class="member-name-link">scale</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-scale"><code>scale</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a string representation of this record class.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#type()" class="member-name-link">type</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-type"><code>type</code></a> record component.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#typeLength()" class="member-name-link">typeLength</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-typeLength"><code>typeLength</code></a> record component.</div>
 </div>
 </div>
@@ -292,6 +351,159 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="root(java.lang.String,int)">
+<h3>root</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></span>&nbsp;<span class="element-name">root</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;numChildren)</span></div>
+<div class="block">Creates a root group element, which carries no repetition.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - group name; the root group is named <code>&quot;schema&quot;</code> by convention</dd>
+<dd><code>numChildren</code> - number of child elements, zero or more</dd>
+<dt>Returns:</dt>
+<dd>the group element</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>numChildren</code> is negative</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="group(java.lang.String,dev.hardwood.metadata.RepetitionType,int)">
+<h3>group</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></span>&nbsp;<span class="element-name">group</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType,
+ int&nbsp;numChildren)</span></div>
+<div class="block">Creates a group element.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - group name</dd>
+<dd><code>repetitionType</code> - repetition level; only the root element may omit it, via <a href="#root(java.lang.String,int)"><code>root(String, int)</code></a></dd>
+<dd><code>numChildren</code> - number of child elements, zero or more</dd>
+<dt>Returns:</dt>
+<dd>the group element</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>repetitionType</code> is <code>null</code> or <code>numChildren</code> is negative</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="group(java.lang.String,dev.hardwood.metadata.RepetitionType,int,dev.hardwood.metadata.LogicalType)">
+<h3>group</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></span>&nbsp;<span class="element-name">group</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType,
+ int&nbsp;numChildren,
+ <a href="LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType)</span></div>
+<div class="block">Creates a group element.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - group name</dd>
+<dd><code>repetitionType</code> - repetition level; only the root element may omit it, via <a href="#root(java.lang.String,int)"><code>root(String, int)</code></a></dd>
+<dd><code>numChildren</code> - number of child elements, zero or more</dd>
+<dd><code>logicalType</code> - logical type annotation, or <code>null</code> for none</dd>
+<dt>Returns:</dt>
+<dd>the group element</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>repetitionType</code> is <code>null</code> or <code>numChildren</code> is negative</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)">
+<h3>primitive</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></span>&nbsp;<span class="element-name">primitive</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType)</span></div>
+<div class="block">Creates a primitive element</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - column name</dd>
+<dd><code>type</code> - physical type</dd>
+<dd><code>repetitionType</code> - repetition level</dd>
+<dt>Returns:</dt>
+<dd>the primitive element</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>repetitionType</code> is <code>null</code>, or <code>type</code> is <code>null</code> or is
+<a href="PhysicalType.html#FIXED_LEN_BYTE_ARRAY"><code>PhysicalType.FIXED_LEN_BYTE_ARRAY</code></a>, which needs a width</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)">
+<h3>primitive</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></span>&nbsp;<span class="element-name">primitive</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType,
+ <a href="LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType)</span></div>
+<div class="block">Creates a primitive element.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - column name</dd>
+<dd><code>type</code> - physical type</dd>
+<dd><code>repetitionType</code> - repetition level</dd>
+<dd><code>logicalType</code> - nullable logical type annotation</dd>
+<dt>Returns:</dt>
+<dd>the primitive element</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>repetitionType</code> is <code>null</code>, or <code>type</code> is <code>null</code> or is
+<a href="PhysicalType.html#FIXED_LEN_BYTE_ARRAY"><code>PhysicalType.FIXED_LEN_BYTE_ARRAY</code></a>, which needs a width</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="fixedLengthPrimitive(java.lang.String,int,dev.hardwood.metadata.RepetitionType)">
+<h3>fixedLengthPrimitive</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></span>&nbsp;<span class="element-name">fixedLengthPrimitive</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;typeLength,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType)</span></div>
+<div class="block">Creates a <a href="PhysicalType.html#FIXED_LEN_BYTE_ARRAY"><code>PhysicalType.FIXED_LEN_BYTE_ARRAY</code></a> element.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - column name</dd>
+<dd><code>typeLength</code> - fixed byte length: must be positive</dd>
+<dd><code>repetitionType</code> - repetition level</dd>
+<dt>Returns:</dt>
+<dd>the fixed-length primitive element</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>repetitionType</code> is <code>null</code> or <code>typeLength</code> is not positive</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="fixedLengthPrimitive(java.lang.String,int,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)">
+<h3>fixedLengthPrimitive</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></span>&nbsp;<span class="element-name">fixedLengthPrimitive</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;typeLength,
+ <a href="RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType,
+ <a href="LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType)</span></div>
+<div class="block">Creates a <a href="PhysicalType.html#FIXED_LEN_BYTE_ARRAY"><code>PhysicalType.FIXED_LEN_BYTE_ARRAY</code></a> element.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - column name</dd>
+<dd><code>typeLength</code> - fixed byte length: must be positive</dd>
+<dd><code>repetitionType</code> - repetition level</dd>
+<dd><code>logicalType</code> - nullable logical type annotation</dd>
+<dt>Returns:</dt>
+<dd>the fixed-length primitive element</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>repetitionType</code> is <code>null</code> or <code>typeLength</code> is not positive</dd>
+</dl>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="isGroup()">
 <h3>isGroup</h3>
