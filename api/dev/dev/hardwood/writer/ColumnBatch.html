@@ -131,6 +131,11 @@ there is no separate build or submit step to forget. Columns are addressed by in
 by name, and the schema binding lets every identifier be validated as it is added — an
 unknown name, an out-of-range index, a column of the wrong physical type, or setting the same column
 twice (whether by index or name) all fail eagerly rather than at write time.</p>
+<p>The values are checked as eagerly. A value outside the range its column's annotation
+declares — 300 on a <code>UINT_8</code> column, an unscaled value of more digits than a <code>DECIMAL</code>'s
+precision — is rejected where it is handed over, because writing it produces a file whose
+values fall outside the range its own annotation declares. The values at rows a column's
+<a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> marks null are never encoded, and so are never checked.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">writer.writeBatch(b -&gt; b
         .ints(0, idColumn)
         .ints(&quot;value&quot;, valueColumn));
@@ -643,8 +648,8 @@ has been written. Every physical type has the same setter shapes (<code>longs</c
 <dd>this batch, for chaining</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is not
-<code>INT32</code>, the column is already set, or the length does not match the other
-columns in this batch</dd>
+<code>INT32</code>, the column is already set, a value falls outside the range the column's
+annotation declares, or the length does not match the other columns in this batch</dd>
 </dl>
 </div>
 </section>
@@ -686,7 +691,8 @@ full length — one slot per row — and the entry at a null row is ignored.</di
 <dd>this batch, for chaining</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is not
-<code>OPTIONAL INT32</code>, or the column is already set</dd>
+<code>OPTIONAL INT32</code>, the column is already set, or a value at a present row falls
+outside the range the column's annotation declares</dd>
 </dl>
 </div>
 </section>

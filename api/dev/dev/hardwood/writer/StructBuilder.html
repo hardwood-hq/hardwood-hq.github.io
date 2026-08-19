@@ -260,8 +260,10 @@ the annotation declares.</div>
 <p>The value is stored as declared: a <code>DATE</code>, <code>TIME(MILLIS)</code> or <code>DECIMAL</code> annotation on
 the column does not change what this setter writes, so it is the raw-value escape
 hatch alongside <a href="#setDate(java.lang.String,java.time.LocalDate)"><code>setDate(String, LocalDate)</code></a> and friends — mirroring the reader, whose <code>getInt</code> returns
-the stored <code>int</code> whatever the annotation. An <code>INT(8)</code> or <code>INT(16)</code> annotation
-range-checks the value against what it can hold, signed or unsigned; <code>UINT_32</code> does not,
+the stored <code>int</code> whatever the annotation. The value is still range-checked against what
+the annotation can hold: an <code>INT(8)</code> or <code>INT(16)</code> bounds it to that width, signed or
+unsigned, a <code>TIME</code> to the times of day its unit can spell, and a <code>DECIMAL</code> to the digits
+its precision declares. <code>UINT_32</code> bounds nothing,
 because every bit pattern is one of its values and a negative <code>int</code> is the only way to
 spell one above <code>Integer.MAX_VALUE</code>.</p>
 </div>
@@ -379,8 +381,8 @@ the value's UTF-8 bytes. A <code>null</code> value sets the field null.</div>
  byte[]&nbsp;value)</span></div>
 <div class="block">Sets a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> field from its bytes, which are
 referenced rather than copied and must not be mutated until the record is written. A
-<code>FIXED_LEN_BYTE_ARRAY</code> field requires exactly its declared length. A <code>null</code> value sets
-the field null.</div>
+<code>FIXED_LEN_BYTE_ARRAY</code> field requires exactly its declared length, and a <code>DECIMAL</code> field
+an unscaled value the declared precision holds. A <code>null</code> value sets the field null.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
