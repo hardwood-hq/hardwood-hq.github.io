@@ -63,7 +63,6 @@ loadScripts(document, 'script');</script>
 <li><a href="#DEFAULT_PAGE_TARGET_BYTES" tabindex="0">DEFAULT_PAGE_TARGET_BYTES</a></li>
 <li><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" tabindex="0">DEFAULT_ROW_GROUP_TARGET_BYTES</a></li>
 <li><a href="#DEFAULT_CREATED_BY" tabindex="0">DEFAULT_CREATED_BY</a></li>
-<li><a href="#DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES" tabindex="0">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</a></li>
 <li><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" tabindex="0">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></li>
 <li><a href="#DEFAULT_CODEC" tabindex="0">DEFAULT_CODEC</a></li>
 <li><a href="#DEFAULT_PRECISION_LOSS_POLICY" tabindex="0">DEFAULT_PRECISION_LOSS_POLICY</a></li>
@@ -77,7 +76,6 @@ loadScripts(document, 'script');</script>
 <li><a href="#rowGroupTargetBytes()" tabindex="0">rowGroupTargetBytes()</a></li>
 <li><a href="#createdBy()" tabindex="0">createdBy()</a></li>
 <li><a href="#enableDictionary()" tabindex="0">enableDictionary()</a></li>
-<li><a href="#dictionaryPageLimitBytes()" tabindex="0">dictionaryPageLimitBytes()</a></li>
 <li><a href="#statisticsTruncationLength()" tabindex="0">statisticsTruncationLength()</a></li>
 <li><a href="#codec()" tabindex="0">codec()</a></li>
 <li><a href="#precisionLossPolicy()" tabindex="0">precisionLossPolicy()</a></li>
@@ -153,30 +151,24 @@ otherwise <code>UNCOMPRESSED</code>.</div>
 example <code>hardwood version 1.1.0 (build a093aab)</code>.</div>
 </div>
 <div class="col-first even-row-color"><code>static final int</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES" class="member-name-link">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Default dictionary page-size limit: 1 MiB of dictionary values before a column
-chunk falls back to <code>PLAIN</code>.</div>
-</div>
-<div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a></code></div>
-<div class="col-last odd-row-color">
 <div class="block">Default page target: 1 MiB of uncompressed values per data page.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default precision-loss policy: reject a value the column cannot hold exactly, rather
 than silently dropping the digits that do not fit.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final long</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final long</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default row-group target: 128 MiB of uncompressed data per row group.</div>
 </div>
-<div class="col-first even-row-color"><code>static final int</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default statistics truncation length: <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> bounds longer than
 64 bytes are truncated and flagged inexact.</div>
 </div>
@@ -214,34 +206,29 @@ than silently dropping the digits that do not fit.</div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">The default configuration.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dictionaryPageLimitBytes()" class="member-name-link">dictionaryPageLimitBytes</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableDictionary()" class="member-name-link">enableDictionary</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">The dictionary size in bytes at which a column chunk falls back to <code>PLAIN</code>.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableDictionary()" class="member-name-link">enableDictionary</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Whether eligible columns are dictionary-encoded (with <code>PLAIN</code> fallback on overflow).</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes()" class="member-name-link">pageTargetBytes</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Maximum uncompressed bytes of values per data page.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy()" class="member-name-link">precisionLossPolicy</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">What <a href="RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column can hold.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Uncompressed byte threshold at which a row group is flushed.</div>
+<div class="block">Whether eligible columns may be dictionary-encoded, where that is the smaller encoding.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes()" class="member-name-link">pageTargetBytes</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Maximum uncompressed bytes of values per data page.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy()" class="member-name-link">precisionLossPolicy</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">What <a href="RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column can hold.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Uncompressed byte threshold at which a row group is flushed.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The maximum length of a <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound before it is
 truncated (and flagged inexact).</div>
 </div>
@@ -309,24 +296,6 @@ itself reports <code>unknown</code> in place of the version or the hash.</p>
 <p>A reader that cannot parse this field cannot tell which writer produced the file, and
 applies its writer-specific correctness workarounds to it by default.</p>
 </div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES">
-<h3>DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES</span></div>
-<div class="block">Default dictionary page-size limit: 1 MiB of dictionary values before a column
-chunk falls back to <code>PLAIN</code>.</div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../constant-values.html#dev.hardwood.writer.WriterConfig.DEFAULT_DICTIONARY_PAGE_LIMIT_BYTES">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
 </div>
 </section>
 </li>
@@ -428,16 +397,7 @@ than silently dropping the digits that do not fit.</div>
 <h3>enableDictionary</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">enableDictionary</span>()</div>
-<div class="block">Whether eligible columns are dictionary-encoded (with <code>PLAIN</code> fallback on overflow).</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="dictionaryPageLimitBytes()">
-<h3>dictionaryPageLimitBytes</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">dictionaryPageLimitBytes</span>()</div>
-<div class="block">The dictionary size in bytes at which a column chunk falls back to <code>PLAIN</code>.</div>
+<div class="block">Whether eligible columns may be dictionary-encoded, where that is the smaller encoding.</div>
 </div>
 </section>
 </li>
