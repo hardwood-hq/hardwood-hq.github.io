@@ -2162,6 +2162,11 @@ encoding automatically:</p>
 <p>Filters work with all reader types: <code>RowReader</code>, <code>ColumnReader</code>, <code>AvroRowReader</code>, and across multi-file readers.</p>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
 <ul>
+<li><strong>Predicates apply to leaf columns only
+  (<a href="https://github.com/hardwood-hq/hardwood/issues/977">#977</a>).</strong> A name that denotes a group — a
+  struct, a <code>LIST</code>, or a <code>MAP</code> — is rejected with <code>IllegalArgumentException</code> at reader creation, as
+  is any leaf below a repeated group. Filter on a leaf instead: <code>isNull("address.city")</code> rather
+  than <code>isNull("address")</code>. Column projection accepts a group name; predicates do not.</li>
 <li><strong>Record-level filtering only applies to flat schemas
   (<a href="https://github.com/hardwood-hq/hardwood/issues/222">#222</a>).</strong> When the schema contains
   nested columns (structs, lists, or maps), record-level filtering is not active. Row-group
@@ -2369,8 +2374,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/e53c52dc2c27b11d207181b5622eeeb3f52a5787" target="_blank" rel="noopener">
-      e53c52dc
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a21e774f358d5b3985f804f0b9bfcfdc95c1bf73" target="_blank" rel="noopener">
+      a21e774f
     </a>
   
 </div>

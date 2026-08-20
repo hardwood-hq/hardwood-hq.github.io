@@ -249,8 +249,8 @@ For nested schemas, it contains each intermediate group name
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">matchesDottedName</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dottedName)</span></div>
 <div class="block"><p>Returns true if this path matches the given dotted name.</p>
 <p>A dotted name like <code>&quot;address.zip&quot;</code> matches the path <code>[&quot;address&quot;, &quot;zip&quot;]</code>.
-A prefix match is allowed: <code>&quot;address&quot;</code> matches <code>[&quot;address&quot;, &quot;zip&quot;]</code>
-(useful for filtering on a top-level field that contains nested columns).</p>
+A prefix match is allowed: <code>&quot;address&quot;</code> matches <code>[&quot;address&quot;, &quot;zip&quot;]</code>, so a group name
+selects every leaf below it.</p>
 </div>
 <dl class="notes">
 <dt>Parameters:</dt>
