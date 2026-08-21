@@ -1922,9 +1922,20 @@ buffer.</div>
 <dd>
 <div class="block">Get the number of fields in this record.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#getFieldCount()" class="member-name-link">getFieldCount()</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">The number of fields this struct declares — the record's top-level fields for the
+builder <a href="dev/hardwood/writer/RowWriter.html#writeRow(java.util.function.Consumer)"><code>RowWriter.writeRow(Consumer)</code></a> hands over, and a nested struct's own fields for the one
+<a href="dev/hardwood/writer/StructBuilder.html#setStruct(java.lang.String,java.util.function.Consumer)"><code>StructBuilder.setStruct(String, Consumer)</code></a> does.</div>
+</dd>
 <dt><a href="dev/hardwood/row/FieldAccessor.html#getFieldName(int)" class="member-name-link">getFieldName(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/FieldAccessor.html" title="interface in dev.hardwood.row">FieldAccessor</a></dt>
 <dd>
 <div class="block">Get the name of a field by index.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#getFieldName(int)" class="member-name-link">getFieldName(int)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">The name of the field at <code>fieldIndex</code>, the inverse of the resolution the by-name
+setters perform.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#getFileCount()" class="member-name-link">getFileCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>
@@ -4257,77 +4268,149 @@ exposes through <a href="dev/hardwood/writer/ParquetFileWriter.html#writeBatch(j
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/s3/S3Credentials.html#param-sessionToken"><code>sessionToken</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setBinary(int,byte%5B%5D)" class="member-name-link">setBinary(int, byte[])</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> field by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setBinary(java.lang.String,byte%5B%5D)" class="member-name-link">setBinary(String, byte[])</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> field from its bytes, which are
 referenced rather than copied and must not be mutated until the record is written.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setBoolean(int,boolean)" class="member-name-link">setBoolean(int, boolean)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>BOOLEAN</code> field by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setBoolean(java.lang.String,boolean)" class="member-name-link">setBoolean(String, boolean)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a <code>BOOLEAN</code> field.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setDate(int,java.time.LocalDate)" class="member-name-link">setDate(int, LocalDate)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>DATE</code> field by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setDate(java.lang.String,java.time.LocalDate)" class="member-name-link">setDate(String, LocalDate)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets an <code>INT32</code> field annotated <code>DATE</code>, as days since the Unix epoch.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setDecimal(int,java.math.BigDecimal)" class="member-name-link">setDecimal(int, BigDecimal)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>DECIMAL</code> field by index.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setDecimal(java.lang.String,java.math.BigDecimal)" class="member-name-link">setDecimal(String, BigDecimal)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a field annotated <code>DECIMAL</code>, in whichever of <code>INT32</code>, <code>INT64</code>, <code>BYTE_ARRAY</code> or
 <code>FIXED_LEN_BYTE_ARRAY</code> the column declares.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setDouble(int,double)" class="member-name-link">setDouble(int, double)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>DOUBLE</code> field by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setDouble(java.lang.String,double)" class="member-name-link">setDouble(String, double)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a <code>DOUBLE</code> field.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setFloat(int,float)" class="member-name-link">setFloat(int, float)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>FLOAT</code> field by index.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setFloat(java.lang.String,float)" class="member-name-link">setFloat(String, float)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a <code>FLOAT</code> field.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setInt(int,int)" class="member-name-link">setInt(int, int)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets an <code>INT32</code> field by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setInt(java.lang.String,int)" class="member-name-link">setInt(String, int)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets an <code>INT32</code> field.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setInterval(int,dev.hardwood.row.PqInterval)" class="member-name-link">setInterval(int, PqInterval)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets an <code>INTERVAL</code> field by index.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setInterval(java.lang.String,dev.hardwood.row.PqInterval)" class="member-name-link">setInterval(String, PqInterval)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a <code>FIXED_LEN_BYTE_ARRAY(12)</code> field annotated <code>INTERVAL</code>.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setList(int,java.util.function.Consumer)" class="member-name-link">setList(int, Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>LIST</code> field by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setList(java.lang.String,java.util.function.Consumer)" class="member-name-link">setList(String, Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a <code>LIST</code> field, appending its entries through <code>filler</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setLocalTimestamp(int,java.time.LocalDateTime)" class="member-name-link">setLocalTimestamp(int, LocalDateTime)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a local-wall-clock <code>TIMESTAMP</code> field by index.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setLocalTimestamp(java.lang.String,java.time.LocalDateTime)" class="member-name-link">setLocalTimestamp(String, LocalDateTime)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setLong(int,long)" class="member-name-link">setLong(int, long)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets an <code>INT64</code> field by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setLong(java.lang.String,long)" class="member-name-link">setLong(String, long)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets an <code>INT64</code> field.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setMap(int,java.util.function.Consumer)" class="member-name-link">setMap(int, Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>MAP</code> field by index.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setMap(java.lang.String,java.util.function.Consumer)" class="member-name-link">setMap(String, Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a <code>MAP</code> field, appending its entries through <code>filler</code>.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setNull(int)" class="member-name-link">setNull(int)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a field null by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setNull(java.lang.String)" class="member-name-link">setNull(String)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a field null.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setString(int,java.lang.String)" class="member-name-link">setString(int, String)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>STRING</code>-shaped field by index.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setString(java.lang.String,java.lang.String)" class="member-name-link">setString(String, String)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a <code>BYTE_ARRAY</code> field annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code>, or unannotated, from
 the value's UTF-8 bytes.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setStruct(int,java.util.function.Consumer)" class="member-name-link">setStruct(int, Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a nested struct field by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setStruct(java.lang.String,java.util.function.Consumer)" class="member-name-link">setStruct(String, Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a nested struct field, populating it through <code>filler</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setTime(int,java.time.LocalTime)" class="member-name-link">setTime(int, LocalTime)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>TIME</code> field by index.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setTime(java.lang.String,java.time.LocalTime)" class="member-name-link">setTime(String, LocalTime)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a field annotated <code>TIME</code>, in the unit the annotation declares.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setTimestamp(int,java.time.Instant)" class="member-name-link">setTimestamp(int, Instant)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a UTC-adjusted <code>TIMESTAMP</code> field by index.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setTimestamp(java.lang.String,java.time.Instant)" class="member-name-link">setTimestamp(String, Instant)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit
 the annotation declares.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setUuid(int,java.util.UUID)" class="member-name-link">setUuid(int, UUID)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>UUID</code> field by index.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setUuid(java.lang.String,java.util.UUID)" class="member-name-link">setUuid(String, UUID)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>

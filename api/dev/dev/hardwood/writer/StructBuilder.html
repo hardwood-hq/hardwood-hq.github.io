@@ -76,6 +76,26 @@ loadScripts(document, 'script');</script>
 <li><a href="#setStruct(java.lang.String,java.util.function.Consumer)" tabindex="0">setStruct(String, Consumer)</a></li>
 <li><a href="#setList(java.lang.String,java.util.function.Consumer)" tabindex="0">setList(String, Consumer)</a></li>
 <li><a href="#setMap(java.lang.String,java.util.function.Consumer)" tabindex="0">setMap(String, Consumer)</a></li>
+<li><a href="#getFieldCount()" tabindex="0">getFieldCount()</a></li>
+<li><a href="#getFieldName(int)" tabindex="0">getFieldName(int)</a></li>
+<li><a href="#setInt(int,int)" tabindex="0">setInt(int, int)</a></li>
+<li><a href="#setLong(int,long)" tabindex="0">setLong(int, long)</a></li>
+<li><a href="#setFloat(int,float)" tabindex="0">setFloat(int, float)</a></li>
+<li><a href="#setDouble(int,double)" tabindex="0">setDouble(int, double)</a></li>
+<li><a href="#setBoolean(int,boolean)" tabindex="0">setBoolean(int, boolean)</a></li>
+<li><a href="#setString(int,java.lang.String)" tabindex="0">setString(int, String)</a></li>
+<li><a href="#setBinary(int,byte%5B%5D)" tabindex="0">setBinary(int, byte[])</a></li>
+<li><a href="#setDate(int,java.time.LocalDate)" tabindex="0">setDate(int, LocalDate)</a></li>
+<li><a href="#setTime(int,java.time.LocalTime)" tabindex="0">setTime(int, LocalTime)</a></li>
+<li><a href="#setTimestamp(int,java.time.Instant)" tabindex="0">setTimestamp(int, Instant)</a></li>
+<li><a href="#setLocalTimestamp(int,java.time.LocalDateTime)" tabindex="0">setLocalTimestamp(int, LocalDateTime)</a></li>
+<li><a href="#setDecimal(int,java.math.BigDecimal)" tabindex="0">setDecimal(int, BigDecimal)</a></li>
+<li><a href="#setUuid(int,java.util.UUID)" tabindex="0">setUuid(int, UUID)</a></li>
+<li><a href="#setInterval(int,dev.hardwood.row.PqInterval)" tabindex="0">setInterval(int, PqInterval)</a></li>
+<li><a href="#setNull(int)" tabindex="0">setNull(int)</a></li>
+<li><a href="#setStruct(int,java.util.function.Consumer)" tabindex="0">setStruct(int, Consumer)</a></li>
+<li><a href="#setList(int,java.util.function.Consumer)" tabindex="0">setList(int, Consumer)</a></li>
+<li><a href="#setMap(int,java.util.function.Consumer)" tabindex="0">setMap(int, Consumer)</a></li>
 </ol>
 </li>
 </ol>
@@ -93,14 +113,26 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public interface </span><span class="element-name type-name-label">StructBuilder</span></div>
 <div class="block"><p>Sets the fields of one struct — a record being written, or a struct nested inside one.</p>
 <p>A record is a struct, so <a href="RowWriter.html#writeRow(java.util.function.Consumer)"><code>RowWriter.writeRow(Consumer)</code></a> hands the same builder a nested
-<a href="#setStruct(java.lang.String,java.util.function.Consumer)"><code>setStruct(String, Consumer)</code></a> does. Fields are addressed by the name they carry in the schema; the
-synthetic <code>list</code> / <code>element</code> and <code>key_value</code> groups a <code>LIST</code> or <code>MAP</code> introduces are never
-spelled by the caller.</p>
+<a href="#setStruct(java.lang.String,java.util.function.Consumer)"><code>setStruct(String, Consumer)</code></a> does. Fields are addressed by the name they carry in the schema, or by their
+position in it; the synthetic <code>list</code> / <code>element</code> and <code>key_value</code> groups a <code>LIST</code> or <code>MAP</code>
+introduces are never spelled by the caller.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">rows.writeRow(row -&gt; row
         .setLong(&quot;id&quot;, 1)
         .setString(&quot;name&quot;, &quot;hardwood&quot;)
         .setStruct(&quot;address&quot;, address -&gt; address.setString(&quot;city&quot;, &quot;Berlin&quot;)));
 </code></pre>
+<p>Every setter has an index-taking mirror, and <a href="#getFieldCount()"><code>getFieldCount()</code></a> and <a href="#getFieldName(int)"><code>getFieldName(int)</code></a> report
+the positions those indices address — the same pair <a href="../row/FieldAccessor.html" title="interface in dev.hardwood.row"><code>FieldAccessor</code></a>
+exposes on the read side.</p>
+<p>A loop that walks a row's fields by index can therefore read back and write forward
+through the same positions, <strong>provided the write schema mirrors what was read</strong>. The
+reader's index is the position in <em>projected</em> schema order; this one is the position in
+the write schema's declaration order. They are the same position when the whole file is
+read into its own schema, and they diverge under a projection: reading three of ten
+columns and writing into the ten-column schema shifts every position, and where the
+columns that land on each other happen to share a type the values are written to the
+wrong fields rather than rejected. Comparing <a href="#getFieldName(int)"><code>getFieldName(int)</code></a> against the reader's for
+each index costs one string comparison per field and turns that into a failure.</p>
 <p>A field that is never set is written as null if it is <code>OPTIONAL</code>, and fails the record if
 it is <code>REQUIRED</code>; <a href="#setNull(java.lang.String)"><code>setNull(String)</code></a> states the same thing explicitly, and a <code>null</code> value handed
 to any of the object-typed setters does too. Setting the same field twice within one
@@ -125,12 +157,37 @@ afterwards throws <a href="https://docs.oracle.com/en/java/javase/21/docs/api/ja
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFieldCount()" class="member-name-link">getFieldCount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">The number of fields this struct declares — the record's top-level fields for the
+builder <a href="RowWriter.html#writeRow(java.util.function.Consumer)"><code>RowWriter.writeRow(Consumer)</code></a> hands over, and a nested struct's own fields for the one
+<a href="#setStruct(java.lang.String,java.util.function.Consumer)"><code>setStruct(String, Consumer)</code></a> does.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFieldName(int)" class="member-name-link">getFieldName</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">The name of the field at <code>fieldIndex</code>, the inverse of the resolution the by-name
+setters perform.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setBinary(java.lang.String,byte%5B%5D)" class="member-name-link">setBinary</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setBinary(int,byte%5B%5D)" class="member-name-link">setBinary</a><wbr>(int&nbsp;fieldIndex,
  byte[]&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> field by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setBinary(java.lang.String,byte%5B%5D)" class="member-name-link">setBinary</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ byte[]&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> field from its bytes, which are
 referenced rather than copied and must not be mutated until the record is written.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setBoolean(int,boolean)" class="member-name-link">setBoolean</a><wbr>(int&nbsp;fieldIndex,
+ boolean&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>BOOLEAN</code> field by index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setBoolean(java.lang.String,boolean)" class="member-name-link">setBoolean</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -139,10 +196,22 @@ referenced rather than copied and must not be mutated until the record is writte
 <div class="block">Sets a <code>BOOLEAN</code> field.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDate(java.lang.String,java.time.LocalDate)" class="member-name-link">setDate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDate(int,java.time.LocalDate)" class="member-name-link">setDate</a><wbr>(int&nbsp;fieldIndex,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>DATE</code> field by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDate(java.lang.String,java.time.LocalDate)" class="member-name-link">setDate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets an <code>INT32</code> field annotated <code>DATE</code>, as days since the Unix epoch.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDecimal(int,java.math.BigDecimal)" class="member-name-link">setDecimal</a><wbr>(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>DECIMAL</code> field by index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDecimal(java.lang.String,java.math.BigDecimal)" class="member-name-link">setDecimal</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -152,10 +221,22 @@ referenced rather than copied and must not be mutated until the record is writte
 <code>FIXED_LEN_BYTE_ARRAY</code> the column declares.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDouble(java.lang.String,double)" class="member-name-link">setDouble</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDouble(int,double)" class="member-name-link">setDouble</a><wbr>(int&nbsp;fieldIndex,
  double&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>DOUBLE</code> field by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDouble(java.lang.String,double)" class="member-name-link">setDouble</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ double&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets a <code>DOUBLE</code> field.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setFloat(int,float)" class="member-name-link">setFloat</a><wbr>(int&nbsp;fieldIndex,
+ float&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>FLOAT</code> field by index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setFloat(java.lang.String,float)" class="member-name-link">setFloat</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -164,10 +245,22 @@ referenced rather than copied and must not be mutated until the record is writte
 <div class="block">Sets a <code>FLOAT</code> field.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setInt(java.lang.String,int)" class="member-name-link">setInt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setInt(int,int)" class="member-name-link">setInt</a><wbr>(int&nbsp;fieldIndex,
  int&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets an <code>INT32</code> field by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setInt(java.lang.String,int)" class="member-name-link">setInt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets an <code>INT32</code> field.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setInterval(int,dev.hardwood.row.PqInterval)" class="member-name-link">setInterval</a><wbr>(int&nbsp;fieldIndex,
+ <a href="../row/PqInterval.html" title="class in dev.hardwood.row">PqInterval</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets an <code>INTERVAL</code> field by index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setInterval(java.lang.String,dev.hardwood.row.PqInterval)" class="member-name-link">setInterval</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -176,10 +269,22 @@ referenced rather than copied and must not be mutated until the record is writte
 <div class="block">Sets a <code>FIXED_LEN_BYTE_ARRAY(12)</code> field annotated <code>INTERVAL</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setList(java.lang.String,java.util.function.Consumer)" class="member-name-link">setList</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setList(int,java.util.function.Consumer)" class="member-name-link">setList</a><wbr>(int&nbsp;fieldIndex,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a>&gt;&nbsp;filler)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>LIST</code> field by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setList(java.lang.String,java.util.function.Consumer)" class="member-name-link">setList</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets a <code>LIST</code> field, appending its entries through <code>filler</code>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLocalTimestamp(int,java.time.LocalDateTime)" class="member-name-link">setLocalTimestamp</a><wbr>(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a local-wall-clock <code>TIMESTAMP</code> field by index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLocalTimestamp(java.lang.String,java.time.LocalDateTime)" class="member-name-link">setLocalTimestamp</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -188,10 +293,22 @@ referenced rather than copied and must not be mutated until the record is writte
 <div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLong(java.lang.String,long)" class="member-name-link">setLong</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLong(int,long)" class="member-name-link">setLong</a><wbr>(int&nbsp;fieldIndex,
  long&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets an <code>INT64</code> field by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLong(java.lang.String,long)" class="member-name-link">setLong</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ long&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets an <code>INT64</code> field.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setMap(int,java.util.function.Consumer)" class="member-name-link">setMap</a><wbr>(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="MapBuilder.html" title="interface in dev.hardwood.writer">MapBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>MAP</code> field by index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setMap(java.lang.String,java.util.function.Consumer)" class="member-name-link">setMap</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -200,9 +317,20 @@ referenced rather than copied and must not be mutated until the record is writte
 <div class="block">Sets a <code>MAP</code> field, appending its entries through <code>filler</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setNull(java.lang.String)" class="member-name-link">setNull</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setNull(int)" class="member-name-link">setNull</a><wbr>(int&nbsp;fieldIndex)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a field null by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setNull(java.lang.String)" class="member-name-link">setNull</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets a field null.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setString(int,java.lang.String)" class="member-name-link">setString</a><wbr>(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>STRING</code>-shaped field by index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setString(java.lang.String,java.lang.String)" class="member-name-link">setString</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -212,10 +340,22 @@ referenced rather than copied and must not be mutated until the record is writte
 the value's UTF-8 bytes.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStruct(java.lang.String,java.util.function.Consumer)" class="member-name-link">setStruct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStruct(int,java.util.function.Consumer)" class="member-name-link">setStruct</a><wbr>(int&nbsp;fieldIndex,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a>&gt;&nbsp;filler)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a nested struct field by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStruct(java.lang.String,java.util.function.Consumer)" class="member-name-link">setStruct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets a nested struct field, populating it through <code>filler</code>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setTime(int,java.time.LocalTime)" class="member-name-link">setTime</a><wbr>(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>TIME</code> field by index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setTime(java.lang.String,java.time.LocalTime)" class="member-name-link">setTime</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -224,11 +364,23 @@ the value's UTF-8 bytes.</div>
 <div class="block">Sets a field annotated <code>TIME</code>, in the unit the annotation declares.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setTimestamp(java.lang.String,java.time.Instant)" class="member-name-link">setTimestamp</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setTimestamp(int,java.time.Instant)" class="member-name-link">setTimestamp</a><wbr>(int&nbsp;fieldIndex,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a UTC-adjusted <code>TIMESTAMP</code> field by index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setTimestamp(java.lang.String,java.time.Instant)" class="member-name-link">setTimestamp</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit
 the annotation declares.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setUuid(int,java.util.UUID)" class="member-name-link">setUuid</a><wbr>(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>UUID</code> field by index.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setUuid(java.lang.String,java.util.UUID)" class="member-name-link">setUuid</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -620,6 +772,386 @@ map are distinct and both writable.</div>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the schema has no such field, the field is not a
 <code>MAP</code> group, or the field is already set in this scope</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFieldCount()">
+<h3>getFieldCount</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getFieldCount</span>()</div>
+<div class="block">The number of fields this struct declares — the record's top-level fields for the
+builder <a href="RowWriter.html#writeRow(java.util.function.Consumer)"><code>RowWriter.writeRow(Consumer)</code></a> hands over, and a nested struct's own fields for the one
+<a href="#setStruct(java.lang.String,java.util.function.Consumer)"><code>setStruct(String, Consumer)</code></a> does. A <code>MAP</code> entry declares two, <code>key</code> and <code>value</code>.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the field count</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFieldName(int)">
+<h3>getFieldName</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFieldName</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">The name of the field at <code>fieldIndex</code>, the inverse of the resolution the by-name
+setters perform.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>fieldIndex</code> - the field index, <code>0</code>-based</dd>
+<dt>Returns:</dt>
+<dd>the field name</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>fieldIndex</code> is not in <code>[0, getFieldCount())</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setInt(int,int)">
+<h3>setInt</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setInt</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ int&nbsp;value)</span></div>
+<div class="block">Sets an <code>INT32</code> field by index. See <a href="#setInt(java.lang.String,int)"><code>setInt(String, int)</code></a>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>fieldIndex</code> - the field index, <code>0</code>-based</dd>
+<dd><code>value</code> - the value</dd>
+<dt>Returns:</dt>
+<dd>this builder, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>fieldIndex</code> is not in <code>[0, getFieldCount())</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field is not <code>INT32</code>, the field is already set
+in this scope, or the value is out of range for the field's annotation</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setLong(int,long)">
+<h3>setLong</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setLong</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ long&nbsp;value)</span></div>
+<div class="block">Sets an <code>INT64</code> field by index. See <a href="#setLong(java.lang.String,long)"><code>setLong(String, long)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setFloat(int,float)">
+<h3>setFloat</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setFloat</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ float&nbsp;value)</span></div>
+<div class="block">Sets a <code>FLOAT</code> field by index. See <a href="#setFloat(java.lang.String,float)"><code>setFloat(String, float)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setDouble(int,double)">
+<h3>setDouble</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setDouble</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ double&nbsp;value)</span></div>
+<div class="block">Sets a <code>DOUBLE</code> field by index. See <a href="#setDouble(java.lang.String,double)"><code>setDouble(String, double)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setBoolean(int,boolean)">
+<h3>setBoolean</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setBoolean</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ boolean&nbsp;value)</span></div>
+<div class="block">Sets a <code>BOOLEAN</code> field by index. See <a href="#setBoolean(java.lang.String,boolean)"><code>setBoolean(String, boolean)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setString(int,java.lang.String)">
+<h3>setString</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setString</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</span></div>
+<div class="block">Sets a <code>STRING</code>-shaped field by index. See <a href="#setString(java.lang.String,java.lang.String)"><code>setString(String, String)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setBinary(int,byte[])">
+<h3>setBinary</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setBinary</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ byte[]&nbsp;value)</span></div>
+<div class="block">Sets a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> field by index. See
+[#setBinary(String, byte[])].</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setDate(int,java.time.LocalDate)">
+<h3>setDate</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setDate</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;value)</span></div>
+<div class="block">Sets a <code>DATE</code> field by index. See <a href="#setDate(java.lang.String,java.time.LocalDate)"><code>setDate(String, LocalDate)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setTime(int,java.time.LocalTime)">
+<h3>setTime</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setTime</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a>&nbsp;value)</span></div>
+<div class="block">Sets a <code>TIME</code> field by index. See <a href="#setTime(java.lang.String,java.time.LocalTime)"><code>setTime(String, LocalTime)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setTimestamp(int,java.time.Instant)">
+<h3>setTimestamp</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setTimestamp</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</span></div>
+<div class="block">Sets a UTC-adjusted <code>TIMESTAMP</code> field by index. See <a href="#setTimestamp(java.lang.String,java.time.Instant)"><code>setTimestamp(String, Instant)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setLocalTimestamp(int,java.time.LocalDateTime)">
+<h3>setLocalTimestamp</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setLocalTimestamp</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;value)</span></div>
+<div class="block">Sets a local-wall-clock <code>TIMESTAMP</code> field by index. See
+<a href="#setLocalTimestamp(java.lang.String,java.time.LocalDateTime)"><code>setLocalTimestamp(String, LocalDateTime)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setDecimal(int,java.math.BigDecimal)">
+<h3>setDecimal</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setDecimal</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</span></div>
+<div class="block">Sets a <code>DECIMAL</code> field by index. See <a href="#setDecimal(java.lang.String,java.math.BigDecimal)"><code>setDecimal(String, BigDecimal)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setUuid(int,java.util.UUID)">
+<h3>setUuid</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setUuid</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;value)</span></div>
+<div class="block">Sets a <code>UUID</code> field by index. See <a href="#setUuid(java.lang.String,java.util.UUID)"><code>setUuid(String, UUID)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setInterval(int,dev.hardwood.row.PqInterval)">
+<h3>setInterval</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setInterval</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="../row/PqInterval.html" title="class in dev.hardwood.row">PqInterval</a>&nbsp;value)</span></div>
+<div class="block">Sets an <code>INTERVAL</code> field by index. See <a href="#setInterval(java.lang.String,dev.hardwood.row.PqInterval)"><code>setInterval(String, PqInterval)</code></a>.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setInt(int,int)"><code>setInt(int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setNull(int)">
+<h3>setNull</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setNull</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Sets a field null by index. See <a href="#setNull(java.lang.String)"><code>setNull(String)</code></a>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>fieldIndex</code> - the field index, <code>0</code>-based</dd>
+<dt>Returns:</dt>
+<dd>this builder, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>fieldIndex</code> is not in <code>[0, getFieldCount())</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field is <code>REQUIRED</code>, or the field is already
+set in this scope</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setStruct(int,java.util.function.Consumer)">
+<h3>setStruct</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setStruct</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a>&gt;&nbsp;filler)</span></div>
+<div class="block">Sets a nested struct field by index. See <a href="#setStruct(java.lang.String,java.util.function.Consumer)"><code>setStruct(String, Consumer)</code></a>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>fieldIndex</code> - the field index, <code>0</code>-based</dd>
+<dd><code>filler</code> - populates the nested struct</dd>
+<dt>Returns:</dt>
+<dd>this builder, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>fieldIndex</code> is not in <code>[0, getFieldCount())</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field is not a struct group, or the field is
+already set in this scope</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setList(int,java.util.function.Consumer)">
+<h3>setList</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setList</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a>&gt;&nbsp;filler)</span></div>
+<div class="block">Sets a <code>LIST</code> field by index. See <a href="#setList(java.lang.String,java.util.function.Consumer)"><code>setList(String, Consumer)</code></a>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>fieldIndex</code> - the field index, <code>0</code>-based</dd>
+<dd><code>filler</code> - appends the list's entries</dd>
+<dt>Returns:</dt>
+<dd>this builder, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>fieldIndex</code> is not in <code>[0, getFieldCount())</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field is not a <code>LIST</code> group, or the field is
+already set in this scope</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setMap(int,java.util.function.Consumer)">
+<h3>setMap</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setMap</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="MapBuilder.html" title="interface in dev.hardwood.writer">MapBuilder</a>&gt;&nbsp;filler)</span></div>
+<div class="block">Sets a <code>MAP</code> field by index. See <a href="#setMap(java.lang.String,java.util.function.Consumer)"><code>setMap(String, Consumer)</code></a>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>fieldIndex</code> - the field index, <code>0</code>-based</dd>
+<dd><code>filler</code> - appends the map's entries</dd>
+<dt>Returns:</dt>
+<dd>this builder, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>fieldIndex</code> is not in <code>[0, getFieldCount())</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field is not a <code>MAP</code> group, or the field is
+already set in this scope</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
 </dl>
 </div>
