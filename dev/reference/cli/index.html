@@ -2193,8 +2193,10 @@ navigable session. Typical things to reach for it for:</p>
   <code>/</code> substring filter; <code>Enter</code> reveals the full untruncated value of
   the highlighted entry.</li>
 <li><strong>Preview a few rows</strong> without exporting — Data preview paginates with
-  <code>PgDn</code>/<code>PgUp</code> (<code>g</code>/<code>G</code> for first/last); <code>Enter</code> opens a per-row modal
-  where each field can be expanded inline.</li>
+  <code>PgDn</code>/<code>PgUp</code> (<code>g</code>/<code>G</code> for first/last); <code>Enter</code> opens a per-row modal.
+  In the modal <code>↑</code>/<code>↓</code> step between the fields whose full value isn't
+  already on screen, <code>Enter</code> expands the focused one inline, and
+  <code>PgDn</code>/<code>PgUp</code> scroll the body.</li>
 <li><strong>Decode key/value metadata</strong> — Spark JSON schemas pretty-print, Arrow
   IPC schemas decode to a hex dump.</li>
 <li><strong>Compare a column across row groups</strong> — from Schema, <code>Enter</code> on a
@@ -2220,7 +2222,7 @@ navigable session. Typical things to reach for it for:</p>
 </tr>
 <tr>
 <td><code>PgDn</code> / <code>PgUp</code> (or <code>Shift-↓</code> / <code>Shift-↑</code>)</td>
-<td>Page down / up</td>
+<td>Page down / up; scroll the body of the Data preview row modal</td>
 </tr>
 <tr>
 <td><code>g</code> / <code>G</code></td>
@@ -2474,8 +2476,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/8564fdfdb2ba4dd9f341ca37c60aab912108b9ee" target="_blank" rel="noopener">
-      8564fdfd
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4a543aa8f4cb50d95ef1e5912cead1c6063d38af" target="_blank" rel="noopener">
+      4a543aa8
     </a>
   
 </div>
