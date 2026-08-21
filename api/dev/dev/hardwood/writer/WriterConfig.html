@@ -66,6 +66,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" tabindex="0">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></li>
 <li><a href="#DEFAULT_CODEC" tabindex="0">DEFAULT_CODEC</a></li>
 <li><a href="#DEFAULT_PRECISION_LOSS_POLICY" tabindex="0">DEFAULT_PRECISION_LOSS_POLICY</a></li>
+<li><a href="#DEFAULT_ENCODING" tabindex="0">DEFAULT_ENCODING</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -75,7 +76,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#pageTargetBytes()" tabindex="0">pageTargetBytes()</a></li>
 <li><a href="#rowGroupTargetBytes()" tabindex="0">rowGroupTargetBytes()</a></li>
 <li><a href="#createdBy()" tabindex="0">createdBy()</a></li>
-<li><a href="#enableDictionary()" tabindex="0">enableDictionary()</a></li>
+<li><a href="#defaultEncoding()" tabindex="0">defaultEncoding()</a></li>
+<li><a href="#columnEncodings()" tabindex="0">columnEncodings()</a></li>
 <li><a href="#statisticsTruncationLength()" tabindex="0">statisticsTruncationLength()</a></li>
 <li><a href="#codec()" tabindex="0">codec()</a></li>
 <li><a href="#precisionLossPolicy()" tabindex="0">precisionLossPolicy()</a></li>
@@ -105,6 +107,9 @@ many uncompressed bytes.</li>
 <li><strong>Row-group target</strong> — the writer flushes a row group once its buffered
 uncompressed data reaches this many bytes, bounding how much it holds in memory.</li>
 </ul>
+<p>How a column's values are stored is a <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer"><code>ColumnEncoding</code></a>, set file-wide or per leaf column;
+how the resulting page bodies are compressed is the <a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata"><code>CompressionCodec</code></a>. Both are configured
+here rather than on the schema.</p>
 <p>Obtain the defaults with <a href="#defaults()"><code>defaults()</code></a> or override individual knobs through <a href="#builder()"><code>builder()</code></a>.</p>
 </div>
 </div>
@@ -150,25 +155,31 @@ otherwise <code>UNCOMPRESSED</code>.</div>
 <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> convention Parquet readers parse — for
 example <code>hardwood version 1.1.0 (build a093aab)</code>.</div>
 </div>
-<div class="col-first even-row-color"><code>static final int</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_ENCODING" class="member-name-link">DEFAULT_ENCODING</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Default encoding policy: <a href="ColumnEncoding.html#AUTO"><code>ColumnEncoding.AUTO</code></a>, leaving each column chunk's encoding to
+the size comparison the writer makes once the row group is buffered.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default page target: 1 MiB of uncompressed values per data page.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default precision-loss policy: reject a value the column cannot hold exactly, rather
 than silently dropping the digits that do not fit.</div>
 </div>
-<div class="col-first even-row-color"><code>static final long</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final long</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default row-group target: 128 MiB of uncompressed data per row group.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default statistics truncation length: <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> bounds longer than
 64 bytes are truncated and flagged inexact.</div>
 </div>
@@ -196,39 +207,44 @@ than silently dropping the digits that do not fit.</div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The codec each page body is compressed with.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createdBy()" class="member-name-link">createdBy</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>, <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#columnEncodings()" class="member-name-link">columnEncodings</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The per-column encoding policies, keyed by dotted leaf path.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createdBy()" class="member-name-link">createdBy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The <code>created_by</code> identifier written into the file footer.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#defaultEncoding()" class="member-name-link">defaultEncoding</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The encoding policy for columns with no override of their own.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#defaults()" class="member-name-link">defaults</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">The default configuration.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableDictionary()" class="member-name-link">enableDictionary</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes()" class="member-name-link">pageTargetBytes</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Whether eligible columns may be dictionary-encoded, where that is the smaller encoding.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes()" class="member-name-link">pageTargetBytes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Maximum uncompressed bytes of values per data page.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy()" class="member-name-link">precisionLossPolicy</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy()" class="member-name-link">precisionLossPolicy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">What <a href="RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column can hold.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Uncompressed byte threshold at which a row group is flushed.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The maximum length of a <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound before it is
 truncated (and flagged inexact).</div>
 </div>
@@ -339,6 +355,16 @@ than silently dropping the digits that do not fit.</div>
 </div>
 </section>
 </li>
+<li>
+<section class="detail" id="DEFAULT_ENCODING">
+<h3>DEFAULT_ENCODING</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></span>&nbsp;<span class="element-name">DEFAULT_ENCODING</span></div>
+<div class="block">Default encoding policy: <a href="ColumnEncoding.html#AUTO"><code>ColumnEncoding.AUTO</code></a>, leaving each column chunk's encoding to
+the size comparison the writer makes once the row group is buffered.</div>
+</div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -393,11 +419,21 @@ than silently dropping the digits that do not fit.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="enableDictionary()">
-<h3>enableDictionary</h3>
+<section class="detail" id="defaultEncoding()">
+<h3>defaultEncoding</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">enableDictionary</span>()</div>
-<div class="block">Whether eligible columns may be dictionary-encoded, where that is the smaller encoding.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></span>&nbsp;<span class="element-name">defaultEncoding</span>()</div>
+<div class="block">The encoding policy for columns with no override of their own.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="columnEncodings()">
+<h3>columnEncodings</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>, <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a>&gt;</span>&nbsp;<span class="element-name">columnEncodings</span>()</div>
+<div class="block">The per-column encoding policies, keyed by dotted leaf path. Unmodifiable, and empty
+where no column was named.</div>
 </div>
 </section>
 </li>

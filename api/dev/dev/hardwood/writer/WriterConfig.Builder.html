@@ -62,7 +62,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#pageTargetBytes(int)" tabindex="0">pageTargetBytes(int)</a></li>
 <li><a href="#rowGroupTargetBytes(long)" tabindex="0">rowGroupTargetBytes(long)</a></li>
 <li><a href="#createdBy(java.lang.String)" tabindex="0">createdBy(String)</a></li>
-<li><a href="#enableDictionary(boolean)" tabindex="0">enableDictionary(boolean)</a></li>
+<li><a href="#encoding(dev.hardwood.writer.ColumnEncoding)" tabindex="0">encoding(ColumnEncoding)</a></li>
+<li><a href="#encoding(java.lang.String,dev.hardwood.writer.ColumnEncoding)" tabindex="0">encoding(String, ColumnEncoding)</a></li>
 <li><a href="#statisticsTruncationLength(int)" tabindex="0">statisticsTruncationLength(int)</a></li>
 <li><a href="#codec(dev.hardwood.metadata.CompressionCodec)" tabindex="0">codec(CompressionCodec)</a></li>
 <li><a href="#precisionLossPolicy(dev.hardwood.writer.PrecisionLossPolicy)" tabindex="0">precisionLossPolicy(PrecisionLossPolicy)</a></li>
@@ -121,30 +122,38 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the <code>created_by</code> footer identifier; must be non-null.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enableDictionary(boolean)" class="member-name-link">enableDictionary</a><wbr>(boolean&nbsp;enableDictionary)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#encoding(dev.hardwood.writer.ColumnEncoding)" class="member-name-link">encoding</a><wbr>(<a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a>&nbsp;encoding)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Enables or disables dictionary encoding.</div>
+<div class="block">Sets the encoding policy for every column without an override of its own; must be
+non-null.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes(int)" class="member-name-link">pageTargetBytes</a><wbr>(int&nbsp;pageTargetBytes)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#encoding(java.lang.String,dev.hardwood.writer.ColumnEncoding)" class="member-name-link">encoding</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnPath,
+ <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a>&nbsp;encoding)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the page target; must be at least one <code>INT32</code> (4 bytes).</div>
+<div class="block">Sets the encoding policy for one leaf column, overriding the file-wide default; both
+arguments must be non-null.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy(dev.hardwood.writer.PrecisionLossPolicy)" class="member-name-link">precisionLossPolicy</a><wbr>(<a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a>&nbsp;precisionLossPolicy)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes(int)" class="member-name-link">pageTargetBytes</a><wbr>(int&nbsp;pageTargetBytes)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the page target; must be at least one <code>INT32</code> (4 bytes).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy(dev.hardwood.writer.PrecisionLossPolicy)" class="member-name-link">precisionLossPolicy</a><wbr>(<a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a>&nbsp;precisionLossPolicy)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets what <a href="RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column
 can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> with microseconds written to a
 <code>TIMESTAMP(MILLIS)</code> column, say; must be non-null.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes(long)" class="member-name-link">rowGroupTargetBytes</a><wbr>(long&nbsp;rowGroupTargetBytes)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes(long)" class="member-name-link">rowGroupTargetBytes</a><wbr>(long&nbsp;rowGroupTargetBytes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the row-group target; must be positive.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the maximum <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound length; must be
 positive.</div>
 </div>
@@ -193,14 +202,32 @@ positive.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="enableDictionary(boolean)">
-<h3>enableDictionary</h3>
+<section class="detail" id="encoding(dev.hardwood.writer.ColumnEncoding)">
+<h3>encoding</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">enableDictionary</span><wbr><span class="parameters">(boolean&nbsp;enableDictionary)</span></div>
-<div class="block">Enables or disables dictionary encoding. When enabled — the default — a column chunk is
-dictionary-encoded where that produces less than writing its values <code>PLAIN</code>, decided
-per chunk from the values it holds. When disabled, every chunk is written <code>PLAIN</code> with
-no dictionary page.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">encoding</span><wbr><span class="parameters">(<a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a>&nbsp;encoding)</span></div>
+<div class="block"><p>Sets the encoding policy for every column without an override of its own; must be
+non-null. Defaults to <a href="ColumnEncoding.html#AUTO"><code>ColumnEncoding.AUTO</code></a>.</p>
+<p>A default that no column of the schema can carry is rejected when the writer is
+created, so a file-wide <code>BYTE_STREAM_SPLIT</code> over a schema holding a <code>BYTE_ARRAY</code>
+column fails rather than quietly resolving that column to something else.</p>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="encoding(java.lang.String,dev.hardwood.writer.ColumnEncoding)">
+<h3>encoding</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">encoding</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnPath,
+ <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a>&nbsp;encoding)</span></div>
+<div class="block"><p>Sets the encoding policy for one leaf column, overriding the file-wide default; both
+arguments must be non-null.</p>
+<p>The column is named by its <strong>dotted leaf path</strong> as the schema spells it, synthetic
+<code>list.element</code> and <code>key_value.key</code> segments included — <code>readings.list.element</code>, not
+<code>readings</code>. A path matching no leaf column of the schema, or a policy its physical
+type cannot carry, is rejected when the writer is created.</p>
+</div>
 </div>
 </section>
 </li>
@@ -219,9 +246,16 @@ positive. A bound longer than this is truncated and flagged inexact.</div>
 <h3>codec</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">codec</span><wbr><span class="parameters">(<a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a>&nbsp;codec)</span></div>
-<div class="block">Sets the codec each page body is compressed with; must be non-null. Only
-<code>UNCOMPRESSED</code> and <code>ZSTD</code> are currently supported on the write path, and a
-non-<code>UNCOMPRESSED</code> codec requires its library on the classpath.</div>
+<div class="block"><p>Sets the codec each page body is compressed with; must be non-null.</p>
+<p><code>UNCOMPRESSED</code>, <code>GZIP</code>, <code>SNAPPY</code>, <code>ZSTD</code>, <code>LZ4_RAW</code> and <code>BROTLI</code> are written.
+Everything but the first two needs its library on the classpath, which is checked
+when the writer is created rather than here.</p>
+<p>The other two members of <a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata"><code>CompressionCodec</code></a> are not produced, and neither is
+waiting on a later release. <code>LZ4</code> names the Hadoop framing the format deprecated in
+favour of <code>LZ4_RAW</code>; files already written with it are still read, so the refusal is
+on this side only. <code>LZO</code> has no maintained JVM implementation and is refused in both
+directions. Asking for either fails when the writer is created.</p>
+</div>
 </div>
 </section>
 </li>

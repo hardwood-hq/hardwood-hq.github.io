@@ -258,6 +258,10 @@ itself being absent, and from the list being empty.</div>
 <dd>
 <div class="block">Extract a UUID (16 bytes, big-endian).</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ColumnEncoding.html#AUTO" class="member-name-link">AUTO</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></dt>
+<dd>
+<div class="block">Let the writer choose, per column chunk, between a dictionary and <code>PLAIN</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/avro/AvroReaders.html" class="type-name-link" title="class in dev.hardwood.avro">AvroReaders</a> - Class in <a href="dev/hardwood/avro/package-summary.html">dev.hardwood.avro</a></dt>
 <dd>
 <div class="block">Factory for creating <a href="dev/hardwood/avro/AvroRowReader.html" title="class in dev.hardwood.avro"><code>AvroRowReader</code></a> instances from a
@@ -464,6 +468,10 @@ filter, and head/tail row limit.</div>
 <dd>
 <div class="block">Byte-stream split encoding for floating-point data.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ColumnEncoding.html#BYTE_STREAM_SPLIT" class="member-name-link">BYTE_STREAM_SPLIT</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></dt>
+<dd>
+<div class="block">A value's bytes scattered across one stream per byte position.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/RowGroupPredicate.html#byteRange(long,long)" class="member-name-link">byteRange(long, long)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a></dt>
 <dd>
 <div class="block">Keep row groups whose data midpoint — start of the first column chunk plus half of
@@ -646,6 +654,15 @@ representation, and <a href="dev/hardwood/metadata/ColumnChunk.html#requireSameF
 </dd>
 <dt><a href="dev/hardwood/jfr/FileOpenedEvent.html#columnCount" class="member-name-link">columnCount</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/FileOpenedEvent.html" title="class in dev.hardwood.jfr">FileOpenedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/writer/ColumnEncoding.html" class="type-name-link" title="enum class in dev.hardwood.writer">ColumnEncoding</a> - Enum Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">How a column's values are encoded, set file-wide or per leaf column through
+<a href="dev/hardwood/writer/WriterConfig.Builder.html#encoding(dev.hardwood.writer.ColumnEncoding)"><code>WriterConfig.Builder.encoding(ColumnEncoding)</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#columnEncodings()" class="member-name-link">columnEncodings()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">The per-column encoding policies, keyed by dotted leaf path.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/ColumnSchema.html#columnIndex()" class="member-name-link">columnIndex()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/schema/ColumnSchema.html#param-columnIndex"><code>columnIndex</code></a> record component.</div>
@@ -923,6 +940,11 @@ otherwise <code>UNCOMPRESSED</code>.</div>
 <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> convention Parquet readers parse — for
 example <code>hardwood version 1.1.0 (build a093aab)</code>.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_ENCODING" class="member-name-link">DEFAULT_ENCODING</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Default encoding policy: <a href="dev/hardwood/writer/ColumnEncoding.html#AUTO"><code>ColumnEncoding.AUTO</code></a>, leaving each column chunk's encoding to
+the size comparison the writer makes once the row group is buffered.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
 <div class="block">Default page target: 1 MiB of uncompressed values per data page.</div>
@@ -945,6 +967,10 @@ than silently dropping the digits that do not fit.</div>
 <dd>
 <div class="block">Returns a provider backed by the full AWS default credential chain
 (env vars, <code>~/.aws/credentials</code>, EC2/ECS instance profile, SSO, web identity, etc.).</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#defaultEncoding()" class="member-name-link">defaultEncoding()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">The encoding policy for columns with no override of their own.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ReaderConfig.html#defaults()" class="member-name-link">defaults()</a> - Static method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ReaderConfig.html" title="class in dev.hardwood.reader">ReaderConfig</a></dt>
 <dd>
@@ -975,13 +1001,27 @@ records no definition-level histogram for this chunk.</div>
 <dd>
 <div class="block">Delta encoding for integers.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ColumnEncoding.html#DELTA_BINARY_PACKED" class="member-name-link">DELTA_BINARY_PACKED</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></dt>
+<dd>
+<div class="block">Differences between neighbouring values, bit-packed against the smallest difference in
+each block.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/Encoding.html#DELTA_BYTE_ARRAY" class="member-name-link">DELTA_BYTE_ARRAY</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a></dt>
 <dd>
 <div class="block">Incremental (delta) encoding for byte arrays.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ColumnEncoding.html#DELTA_BYTE_ARRAY" class="member-name-link">DELTA_BYTE_ARRAY</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></dt>
+<dd>
+<div class="block">Each value carrying only what it does not share with the value before it.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/Encoding.html#DELTA_LENGTH_BYTE_ARRAY" class="member-name-link">DELTA_LENGTH_BYTE_ARRAY</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a></dt>
 <dd>
 <div class="block">Delta encoding for byte array lengths.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ColumnEncoding.html#DELTA_LENGTH_BYTE_ARRAY" class="member-name-link">DELTA_LENGTH_BYTE_ARRAY</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></dt>
+<dd>
+<div class="block">The lengths delta-encoded ahead of the values, which is cheaper than <code>PLAIN</code>'s
+per-value 4-byte length prefix wherever the lengths are similar.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html#DESCENDING" class="member-name-link">DESCENDING</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a></dt>
 <dd>&nbsp;</dd>
@@ -1093,17 +1133,19 @@ file at the destination.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/FieldPath.html#param-elements"><code>elements</code></a> record component.</div>
 </dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.html#enableDictionary()" class="member-name-link">enableDictionary()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
-<dd>
-<div class="block">Whether eligible columns may be dictionary-encoded, where that is the smaller encoding.</div>
-</dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#enableDictionary(boolean)" class="member-name-link">enableDictionary(boolean)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
-<dd>
-<div class="block">Enables or disables dictionary encoding.</div>
-</dd>
 <dt><a href="dev/hardwood/metadata/PageEncodingStats.html#encoding()" class="member-name-link">encoding()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageEncodingStats.html" title="class in dev.hardwood.metadata">PageEncodingStats</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/PageEncodingStats.html#param-encoding"><code>encoding</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#encoding(dev.hardwood.writer.ColumnEncoding)" class="member-name-link">encoding(ColumnEncoding)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets the encoding policy for every column without an override of its own; must be
+non-null.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#encoding(java.lang.String,dev.hardwood.writer.ColumnEncoding)" class="member-name-link">encoding(String, ColumnEncoding)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets the encoding policy for one leaf column, overriding the file-wide default; both
+arguments must be non-null.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/Encoding.html" class="type-name-link" title="enum class in dev.hardwood.metadata">Encoding</a> - Enum Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
@@ -3789,6 +3831,11 @@ row limit.</div>
 <dd>
 <div class="block">Plain encoding: values are stored back-to-back.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ColumnEncoding.html#PLAIN" class="member-name-link">PLAIN</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></dt>
+<dd>
+<div class="block">Values as they are: fixed-width types little-endian, <code>BYTE_ARRAY</code> behind a 4-byte length
+prefix.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/Encoding.html#PLAIN_DICTIONARY" class="member-name-link">PLAIN_DICTIONARY</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a></dt>
 <dd>
 <div class="block">Dictionary encoding using a plain-encoded dictionary page (deprecated in favor of <a href="dev/hardwood/metadata/Encoding.html#RLE_DICTIONARY"><code>Encoding.RLE_DICTIONARY</code></a>).</div>
@@ -5019,6 +5066,10 @@ writer accepts it as a column's null mask.</div>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ColumnEncoding.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/PrecisionLossPolicy.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
@@ -5105,6 +5156,11 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/RangeBacking.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.s3.<a href="dev/hardwood/s3/RangeBacking.html" title="enum class in dev.hardwood.s3">RangeBacking</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ColumnEncoding.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>

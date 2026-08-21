@@ -94,11 +94,11 @@ of lists, lists of structs, and maps of any in-scope value). Data is supplied as
 <a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a> slices; the writer packs each column into size-bounded data pages — a
 levelled column's pages carrying an RLE definition-level stream ahead of the values — and
 flushes a row group once its buffered data reaches the configured target, so peak memory is
-bounded regardless of how much is written. Columns are dictionary-encoded by default (a
-dictionary page plus <code>RLE_DICTIONARY</code> index pages), falling back to <code>PLAIN</code> when the
-dictionary grows past the configured limit. Each page body is compressed with the
-configured codec (<code>ZSTD</code> by default, or <code>UNCOMPRESSED</code>). All of these are configurable
-through <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>. The row groups and footer are finalized on <a href="#close()"><code>close()</code></a>.</p>
+bounded regardless of how much is written. Each column chunk is encoded one way throughout:
+by default the writer weighs a dictionary against <code>PLAIN</code> once the row group is buffered and
+takes the smaller, or a <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer"><code>ColumnEncoding</code></a> set per column names the encoding outright. Each page
+body is compressed with the configured codec (<code>ZSTD</code> by default). All of these are
+configurable through <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>. The row groups and footer are finalized on <a href="#close()"><code>close()</code></a>.</p>
 <p>The file is produced front to back and is valid only after <code>close()</code> returns.</p>
 </div>
 </div>
@@ -203,6 +203,8 @@ physical type</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the destination cannot be opened</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema has a column of an unsupported
 physical type, or the configured codec cannot be written</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if an encoding policy names a column the schema does not
+have, or one its physical type cannot carry</dd>
 </dl>
 </div>
 </section>
