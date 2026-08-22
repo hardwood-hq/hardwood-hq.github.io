@@ -1550,6 +1550,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#key-value-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key-value metadata
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#interactive-exploration-dive" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1895,6 +1906,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#key-value-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key-value metadata
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#interactive-exploration-dive" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2056,7 +2078,7 @@ run the CLI via Docker without installing it locally — see the <a href="#docke
 <tbody>
 <tr>
 <td><code>hardwood info</code></td>
-<td>Display high-level file information</td>
+<td>Display high-level file information, including key-value metadata</td>
 </tr>
 <tr>
 <td><code>hardwood schema</code></td>
@@ -2107,38 +2129,41 @@ run the CLI via Docker without installing it locally — see the <a href="#docke
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># Print the schema as Avro or Protobuf</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-F<span class="w"> </span>AVRO<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Show first 20 rows</span>
-<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">20</span><span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Print the full value of one key-value metadata entry</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>hardwood<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--kv-key<span class="w"> </span>ARROW:schema
 <a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
-<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># Show last 5 rows</span>
-<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span>-5<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1"># Show first 20 rows</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">20</span><span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Show all rows</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Show last 5 rows</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span>-5<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
-<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1"># Convert to CSV</span>
-<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="c1"># Show all rows</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>
-<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># Rank columns by size: share of the file, compression, encoding, unencoded size</span>
-<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># Convert to CSV</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
-<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1"># Per-row-group detail and named level histograms for one column</span>
-<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--column<span class="w"> </span>order.tags.list.element
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="c1"># Rank columns by size: share of the file, compression, encoding, unencoded size</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>
-<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="c1"># Restrict that detail to a single row group</span>
-<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--column<span class="w"> </span>order.tags.list.element<span class="w"> </span>--row-group<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="c1"># Per-row-group detail and named level histograms for one column</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--column<span class="w"> </span>order.tags.list.element
 <a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
-<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="c1"># Show dictionary entries for a column (first 50 entries per row group by default)</span>
-<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="c1"># Restrict that detail to a single row group</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--column<span class="w"> </span>order.tags.list.element<span class="w"> </span>--row-group<span class="w"> </span><span class="m">0</span>
 <a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>
-<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="c1"># Show all dictionary entries for a column (--limit 0 means unlimited)</span>
-<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category<span class="w"> </span>--limit<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="c1"># Show dictionary entries for a column (first 50 entries per row group by default)</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category
 <a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
-<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="c1"># Convert first 100 rows to JSON</span>
-<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="c1"># Show all dictionary entries for a column (--limit 0 means unlimited)</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category<span class="w"> </span>--limit<span class="w"> </span><span class="m">0</span>
 <a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>
-<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="c1"># Convert last 50 rows to CSV</span>
-<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span>-50<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="c1"># Convert first 100 rows to JSON</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="c1"># Convert last 50 rows to CSV</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span>-50<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
 <h2 id="schema-output-formats">Schema output formats<a class="headerlink" href="#schema-output-formats" title="Permanent link">&para;</a></h2>
 <p><code>hardwood schema</code> prints the Parquet schema in its native form by default.
@@ -2158,9 +2183,30 @@ in Avro:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// Parquet name: total (usd)</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">optional</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="na">total__usd_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 </code></pre></div>
+<h2 id="key-value-metadata">Key-value metadata<a class="headerlink" href="#key-value-metadata" title="Permanent link">&para;</a></h2>
+<p><code>hardwood info</code> prints a file's key-value metadata below the size summary, one
+line per entry: the key, its value's byte length, and the value itself. Values
+wider than 60 columns are truncated with a trailing <code>…</code>, since these routinely
+carry kilobytes of embedded JSON (e.g.
+<code>org.apache.spark.sql.parquet.row.metadata</code>) or a base64-encoded Arrow IPC
+schema (<code>ARROW:schema</code>). Control characters in a value print as <code>·</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Key/Value Metadata (3):
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  ARROW:schema                               4.1 KiB  /////5AEAABAAAAAAAAKAAwABgAFAAgACgAAAAABBAA…
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  org.apache.spark.sql.parquet.row.metadata  1.8 KiB  {"type":"struct","fields":[{"name":"order_i…
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>  writer.build                                     —
+</code></pre></div>
+<p>An entry may carry a key with no value at all, which is distinct from a key
+whose value is empty. The size column tells the two apart: <code>—</code> for a value that
+is absent, <code>0 B</code> for one that is present and empty.</p>
+<p>Pass <code>--kv-key &lt;name&gt;</code> to print one entry's value in full, untruncated and with
+no substitutions, and no other output — safe to pipe into another tool:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>hardwood<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--kv-key<span class="w"> </span>ARROW:schema<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span>xxd<span class="w"> </span><span class="p">|</span><span class="w"> </span>head
+</code></pre></div>
+<p><code>--kv-key</code> exits non-zero if the file has no entry under that name, or if the
+entry has no value.</p>
 <h2 id="interactive-exploration-dive">Interactive exploration (<code>dive</code>)<a class="headerlink" href="#interactive-exploration-dive" title="Permanent link">&para;</a></h2>
 <p><code>hardwood dive</code> launches a terminal UI for interactively navigating a Parquet file's structure:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>hardwood<span class="w"> </span>dive<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>hardwood<span class="w"> </span>dive<span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
 <p><code>dive</code> requires an interactive terminal. When stdin or stdout is not a TTY (e.g., a <code>docker run</code> without <code>-it</code>, or output piped to a file), it exits with an error instead of launching the UI.</p>
 <script src="https://asciinema.org/a/992284.js" id="asciicast-992284" async="true"></script>
@@ -2339,8 +2385,8 @@ search. Press <code>/</code> to enter search-edit mode:</p>
 filter applied but exits edit mode). The table re-filters live as you type.</p>
 <h2 id="reading-files-from-s3">Reading Files from S3<a class="headerlink" href="#reading-files-from-s3" title="Permanent link">&para;</a></h2>
 <p>All commands accept <code>s3://</code> URIs via the <code>-f</code> flag:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
 <p>The CLI resolves credentials via the standard AWS credential chain (<code>AWS_ACCESS_KEY_ID</code> / <code>AWS_SECRET_ACCESS_KEY</code> / <code>AWS_SESSION_TOKEN</code> environment variables, <code>~/.aws/credentials</code>, SSO, EC2/ECS instance profiles, web identity). See the <a href="../../how-to/s3/">S3 module page</a> for the resolution order and provider details.</p>
 <p>The CLI additionally reads these environment variables:</p>
@@ -2391,41 +2437,41 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
 </tbody>
 </table>
 <p>Source the one for your shell to enable tab completion for commands, options, and arguments:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
 </code></pre></div>
 <p>To make it permanent, add the line above to your shell's startup file (e.g. <code>~/.bashrc</code>, <code>~/.zshrc</code>).</p>
 <h2 id="use-with-ai-coding-agents">Use with AI coding agents<a class="headerlink" href="#use-with-ai-coding-agents" title="Permanent link">&para;</a></h2>
 <p>The repository ships an <a href="https://agentskills.io">Agent Skill</a> at <code>skills/hardwood-cli/</code> that teaches an AI coding agent when and how to reach for the CLI while debugging Parquet read/write code (checking schema and physical/logical types, diagnosing why predicate pushdown or page skipping isn't happening, reading dictionary entries, and so on).</p>
 <p>For <a href="https://claude.com/claude-code">Claude Code</a>, it is packaged as the <code>hardwood</code> plugin, distributed from the <a href="https://github.com/hardwood-hq/hardwood-skills"><code>hardwood-skills</code></a> marketplace. Install it once — inside Claude Code, run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>/plugin marketplace add hardwood-hq/hardwood-skills
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>/plugin install hardwood@hardwood-skills
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>/plugin marketplace add hardwood-hq/hardwood-skills
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>/plugin install hardwood@hardwood-skills
 </code></pre></div>
 <p>After installing, the skill loads automatically in future sessions whenever a task involves a Parquet file. It drives the <code>hardwood</code> binary, so ensure <code>hardwood</code> is on your <code>PATH</code> (from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">release page</a> or the Docker image below).</p>
 <p>For other agent harnesses — or a Claude Code setup without the plugin — copy <code>skills/hardwood-cli/SKILL.md</code> into that tool's skills directory (for Claude Code that is <code>~/.claude/skills/hardwood-cli/</code>).</p>
 <h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
 <p>A minimal Fedora-based Docker image is published to the GitHub Container Registry for Linux amd64 and arm64:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access
 </code></pre></div>
 <p>Run any command by passing it after the image name:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span>--help
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span>--help
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
 </code></pre></div>
 <p>Mount a local directory to access files on the host:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span>schema<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span>schema<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
 </code></pre></div>
 <p>The <code>dive</code> TUI needs an interactive terminal, so pass <code>-it</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span>dive<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span>dive<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
 </code></pre></div>
 <p>Start an interactive shell with tab completion pre-loaded:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access
 </code></pre></div>
 
 
@@ -2476,8 +2522,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4a543aa8f4cb50d95ef1e5912cead1c6063d38af" target="_blank" rel="noopener">
-      4a543aa8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8fad4162480d17747c3075404a5376ca7846dfe8" target="_blank" rel="noopener">
+      8fad4162
     </a>
   
 </div>
