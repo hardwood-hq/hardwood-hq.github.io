@@ -1549,6 +1549,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#file-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Metadata
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-value-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key-value metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#created_by" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1556,6 +1579,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2034,6 +2062,29 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#file-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Metadata
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-value-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key-value metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#created_by" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2041,6 +2092,11 @@
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2194,18 +2250,14 @@
 <td>Longest <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound. A longer bound is truncated and flagged inexact. Must be positive.</td>
 </tr>
 <tr>
-<td><code>createdBy(String)</code></td>
-<td><code>hardwood version &lt;version&gt; (build &lt;hash&gt;)</code></td>
-<td>The footer's <code>created_by</code> identifier.</td>
-</tr>
-<tr>
 <td><code>precisionLossPolicy(PrecisionLossPolicy)</code></td>
 <td><code>REJECT</code></td>
 <td>What the row-oriented layer does with a value carrying more precision than its column can hold.</td>
 </tr>
 </tbody>
 </table>
-<p>Each option has a getter that reads the configured value back — <code>pageTargetBytes()</code>, <code>rowGroupTargetBytes()</code>, <code>codec()</code>, <code>statisticsTruncationLength()</code>, <code>createdBy()</code>, <code>precisionLossPolicy()</code>, and, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
+<p>Each option has a getter that reads the configured value back — <code>pageTargetBytes()</code>, <code>rowGroupTargetBytes()</code>, <code>codec()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, and, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
+<p>The footer's key-value metadata and its <code>created_by</code> identifier are set on the <code>ParquetFileWriter</code> itself; see <a href="#file-metadata">File Metadata</a>.</p>
 <h2 id="encodings">Encodings<a class="headerlink" href="#encodings" title="Permanent link">&para;</a></h2>
 <p><code>ColumnEncoding</code> sets how a column's values are encoded, file-wide or per leaf column. <code>AUTO</code> leaves the choice to the writer; every other member names an encoding outright, and a column that names one builds no dictionary.</p>
 <table>
@@ -2536,11 +2588,46 @@
 <li><strong><code>distinct_count</code></strong> is written where the chunk still knows its cardinality exactly: any chunk under <code>AUTO</code> that interned its values to the end, whichever encoding the flush-time comparison then chose, and any <code>BOOLEAN</code> chunk, which knows its cardinality without a dictionary. It is absent for a chunk written under a named encoding, and for one that stopped interning part-way — which happens when the dictionary outgrows the writer's analysis budget, and when repeated size probes find it losing to <code>PLAIN</code>.</li>
 </ul>
 <p>Page-level index structures (OffsetIndex, ColumnIndex), Bloom filters, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not yet written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
-<h2 id="created_by"><code>created_by</code><a class="headerlink" href="#created_by" title="Permanent link">&para;</a></h2>
-<p>The default identifier follows the convention Parquet readers parse, naming the library, its version and the build it came from:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hardwood version &lt;version&gt; (build &lt;commit&gt;)
+<h2 id="file-metadata">File Metadata<a class="headerlink" href="#file-metadata" title="Permanent link">&para;</a></h2>
+<p>Two footer fields are set on the <code>ParquetFileWriter</code> itself, at any point until <code>close()</code> writes the footer: the file's key-value metadata and its <code>created_by</code> identifier.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keyValueMetadata(String key, String value)</code></td>
+<td>Adds one key-value entry, replacing any value already held for that key.</td>
+</tr>
+<tr>
+<td><code>keyValueMetadata(Map&lt;String, String&gt; metadata)</code></td>
+<td>Adds every entry of the map, leaving entries it does not name in place.</td>
+</tr>
+<tr>
+<td><code>createdBy(String createdBy)</code></td>
+<td>Replaces the <code>created_by</code> identifier.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"ARROW:schema"</span><span class="p">,</span><span class="w"> </span><span class="n">encodedArrowSchema</span><span class="p">);</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">().</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">));</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"row.count"</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="na">length</span><span class="p">));</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">}</span>
 </code></pre></div>
-<p><code>createdBy(String)</code> replaces it. Readers that key compatibility workarounds off this field expect the <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> shape; a bare application name is rejected by some of them.</p>
+<h3 id="key-value-metadata">Key-value metadata<a class="headerlink" href="#key-value-metadata" title="Permanent link">&para;</a></h3>
+<p><code>key_value_metadata</code> is application-defined: Parquet does not interpret it, and the writer validates nothing beyond requiring a key. It is where <code>ARROW:schema</code>, the pandas descriptor, <code>org.apache.spark.sql.parquet.row.metadata</code> and the table-format stamps live.</p>
+<p>Entries reach the file in the order they were added. A <code>null</code> value writes a key carrying no value, which the format allows and which is what a reader reports as a <code>null</code> — so the map <code>FileMetaData.keyValueMetadata()</code> returns can be passed straight to <code>keyValueMetadata(Map)</code> to reproduce another file's metadata exactly. A file given no entries carries no <code>key_value_metadata</code> field at all.</p>
+<p>Because the methods are callable until <code>close()</code>, a value the caller knows only once the data is written — a row count, a digest over what was produced — can still be stamped on the file.</p>
+<p>Reading the field back is covered in <a href="../../how-to/metadata/">Read File Metadata</a>.</p>
+<h3 id="created_by"><code>created_by</code><a class="headerlink" href="#created_by" title="Permanent link">&para;</a></h3>
+<p>The default identifier follows the convention Parquet readers parse, naming the library, its version and the build it came from:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>hardwood version &lt;version&gt; (build &lt;commit&gt;)
+</code></pre></div>
+<p><code>ParquetFileWriter.DEFAULT_CREATED_BY</code> holds it. <code>createdBy(String)</code> replaces it; readers that key compatibility workarounds off this field expect the <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> shape, and a bare application name is rejected by some of them.</p>
 <h2 id="what-the-writer-rejects">What the Writer Rejects<a class="headerlink" href="#what-the-writer-rejects" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2556,7 +2643,7 @@
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
-<td>An unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>REQUIRED</code> field left unset by a record</td>
+<td>A <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>REQUIRED</code> field left unset by a record</td>
 </tr>
 <tr>
 <td><code>IndexOutOfBoundsException</code></td>
@@ -2564,7 +2651,7 @@
 </tr>
 <tr>
 <td><code>IllegalStateException</code></td>
-<td>Writing after <code>close()</code>; using both write APIs on one file; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned</td>
+<td>Writing, or setting key-value metadata or <code>created_by</code>, after <code>close()</code>; using both write APIs on one file; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned</td>
 </tr>
 <tr>
 <td><code>IOException</code></td>
@@ -2623,8 +2710,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a4a3fa3e8e084097295cc5588f523acdceff04fe" target="_blank" rel="noopener">
-      a4a3fa3e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a1c74d92f4ab5767419d1e5bf6ac479190ec4b7d" target="_blank" rel="noopener">
+      a1c74d92
     </a>
   
 </div>

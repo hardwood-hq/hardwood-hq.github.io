@@ -55,11 +55,20 @@ loadScripts(document, 'script');</script>
 <div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
+<ol class="toc-list">
+<li><a href="#DEFAULT_CREATED_BY" tabindex="0">DEFAULT_CREATED_BY</a></li>
+</ol>
+</li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" tabindex="0">create(OutputFile, FileSchema)</a></li>
 <li><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)" tabindex="0">create(OutputFile, FileSchema, WriterConfig)</a></li>
+<li><a href="#keyValueMetadata(java.lang.String,java.lang.String)" tabindex="0">keyValueMetadata(String, String)</a></li>
+<li><a href="#keyValueMetadata(java.util.Map)" tabindex="0">keyValueMetadata(Map)</a></li>
+<li><a href="#createdBy(java.lang.String)" tabindex="0">createdBy(String)</a></li>
 <li><a href="#columnWriter()" tabindex="0">columnWriter()</a></li>
 <li><a href="#rowWriter()" tabindex="0">rowWriter()</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
@@ -107,6 +116,25 @@ configurable through <a href="WriterConfig.html" title="class in dev.hardwood.wr
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_CREATED_BY" class="member-name-link">DEFAULT_CREATED_BY</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Default <code>created_by</code> identifier written into the file footer, in the
+<code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> convention Parquet readers parse — for
+example <code>hardwood version 1.1.0 (build a093aab)</code>.</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
@@ -140,9 +168,27 @@ hold columns rather than records.</div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Opens a writer, writing the leading magic bytes.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowWriter()" class="member-name-link">rowWriter</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createdBy(java.lang.String)" class="member-name-link">createdBy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;createdBy)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Replaces the footer's <code>created_by</code> identifier, which defaults to <a href="#DEFAULT_CREATED_BY"><code>DEFAULT_CREATED_BY</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyValueMetadata(java.lang.String,java.lang.String)" class="member-name-link">keyValueMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Stamps one application-defined key-value pair onto the file footer, replacing any value
+already held for that key.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyValueMetadata(java.util.Map)" class="member-name-link">keyValueMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;metadata)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Stamps every entry of <code>metadata</code> onto the file footer, replacing any value already held
+for a key it names and leaving the rest in place.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowWriter()" class="member-name-link">rowWriter</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the row-oriented view over this file: a record-shaped API for callers that
 hold records rather than columns.</div>
 </div>
@@ -158,6 +204,30 @@ hold records rather than columns.</div>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="DEFAULT_CREATED_BY">
+<h3>DEFAULT_CREATED_BY</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">DEFAULT_CREATED_BY</span></div>
+<div class="block"><p>Default <code>created_by</code> identifier written into the file footer, in the
+<code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> convention Parquet readers parse — for
+example <code>hardwood version 1.1.0 (build a093aab)</code>. The hash carries a <code>-dirty</code> suffix
+when the working tree was not clean at build time, and a build that cannot identify
+itself reports <code>unknown</code> in place of the version or the hash.</p>
+<p>A reader that cannot parse this field cannot tell which writer produced the file, and
+applies its writer-specific correctness workarounds to it by default.</p>
+</div>
+</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
@@ -207,6 +277,79 @@ physical type</dd>
 physical type, or the configured codec cannot be written</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if an encoding policy names a column the schema does not
 have, or one its physical type cannot carry</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="keyValueMetadata(java.lang.String,java.lang.String)">
+<h3>keyValueMetadata</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">keyValueMetadata</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</span></div>
+<div class="block"><p>Stamps one application-defined key-value pair onto the file footer, replacing any value
+already held for that key.</p>
+<p>The footer's <code>key_value_metadata</code> is where the ecosystem records what a schema alone
+does not carry — <code>ARROW:schema</code>, <code>pandas</code>, Spark's
+<code>org.apache.spark.sql.parquet.row.metadata</code>, and the table-format stamps. Parquet itself
+does not interpret these entries, and nothing here validates them beyond requiring a key.</p>
+<p>Callable until <a href="#close()"><code>close()</code></a>, so a value the caller knows only once the data is written — a
+row count, a digest over what was produced — can still be stated.</p>
+</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>key</code> - the entry's key</dd>
+<dd><code>value</code> - the entry's value, or <code>null</code> to write a key carrying no value, which the
+format allows and which is how a key read from such a file is written back</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>key</code> is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="keyValueMetadata(java.util.Map)">
+<h3>keyValueMetadata</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">keyValueMetadata</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;metadata)</span></div>
+<div class="block"><p>Stamps every entry of <code>metadata</code> onto the file footer, replacing any value already held
+for a key it names and leaving the rest in place.</p>
+<p>Passing the map a reader returns from <code>FileMetaData.keyValueMetadata()</code> reproduces that
+file's application metadata, entries carrying no value included.</p>
+</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>metadata</code> - the entries to add</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>metadata</code> is <code>null</code> or holds a <code>null</code> key</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#keyValueMetadata(java.lang.String,java.lang.String)"><code>keyValueMetadata(String, String)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="createdBy(java.lang.String)">
+<h3>createdBy</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createdBy</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;createdBy)</span></div>
+<div class="block"><p>Replaces the footer's <code>created_by</code> identifier, which defaults to <a href="#DEFAULT_CREATED_BY"><code>DEFAULT_CREATED_BY</code></a>.</p>
+<p>Readers that key compatibility workarounds off this field expect the
+<code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> shape; a bare application name is rejected by
+some of them.</p>
+</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>createdBy</code> - the identifier to write</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>createdBy</code> is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed</dd>
 </dl>
 </div>
 </section>

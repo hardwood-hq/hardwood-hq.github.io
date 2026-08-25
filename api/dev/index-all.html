@@ -840,13 +840,9 @@ created via <a href="dev/hardwood/HardwoodContext.html#create(int)"><code>Hardwo
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/FileMetaData.html#param-createdBy"><code>createdBy</code></a> record component.</div>
 </dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.html#createdBy()" class="member-name-link">createdBy()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#createdBy(java.lang.String)" class="member-name-link">createdBy(String)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
 <dd>
-<div class="block">The <code>created_by</code> identifier written into the file footer.</div>
-</dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#createdBy(java.lang.String)" class="member-name-link">createdBy(String)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
-<dd>
-<div class="block">Sets the <code>created_by</code> footer identifier; must be non-null.</div>
+<div class="block">Replaces the footer's <code>created_by</code> identifier, which defaults to <a href="dev/hardwood/writer/ParquetFileWriter.html#DEFAULT_CREATED_BY"><code>ParquetFileWriter.DEFAULT_CREATED_BY</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3CredentialsProvider.html#credentials()" class="member-name-link">credentials()</a> - Method in interface dev.hardwood.s3.<a href="dev/hardwood/s3/S3CredentialsProvider.html" title="interface in dev.hardwood.s3">S3CredentialsProvider</a></dt>
 <dd>
@@ -943,7 +939,7 @@ the page.</div>
 <div class="block">Default page compression codec: <code>ZSTD</code> when the zstd-jni library is on the classpath,
 otherwise <code>UNCOMPRESSED</code>.</div>
 </dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_CREATED_BY" class="member-name-link">DEFAULT_CREATED_BY</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#DEFAULT_CREATED_BY" class="member-name-link">DEFAULT_CREATED_BY</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
 <dd>
 <div class="block">Default <code>created_by</code> identifier written into the file footer, in the
 <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> convention Parquet readers parse — for
@@ -2967,6 +2963,16 @@ plain mask.</div>
 <dt><a href="dev/hardwood/metadata/FileMetaData.html#keyValueMetadata()" class="member-name-link">keyValueMetadata()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/FileMetaData.html#param-keyValueMetadata"><code>keyValueMetadata</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#keyValueMetadata(java.lang.String,java.lang.String)" class="member-name-link">keyValueMetadata(String, String)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
+<dd>
+<div class="block">Stamps one application-defined key-value pair onto the file footer, replacing any value
+already held for that key.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#keyValueMetadata(java.util.Map)" class="member-name-link">keyValueMetadata(Map)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
+<dd>
+<div class="block">Stamps every entry of <code>metadata</code> onto the file footer, replacing any value already held
+for a key it names and leaving the rest in place.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:L">L</h2>

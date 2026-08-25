@@ -1108,6 +1108,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stamping-metadata-on-the-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stamping Metadata on the File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#one-api-per-file" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2001,6 +2012,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#stamping-metadata-on-the-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stamping Metadata on the File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#one-api-per-file" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2172,6 +2194,18 @@
 <a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p>Every option, its default and what it rejects: <a href="../../reference/writer/">Writer Reference</a>.</p>
+<h2 id="stamping-metadata-on-the-file">Stamping Metadata on the File<a class="headerlink" href="#stamping-metadata-on-the-file" title="Permanent link">&para;</a></h2>
+<p>Set the footer's key-value metadata and its <code>created_by</code> identifier on the writer, at any point until <code>close()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"ARROW:schema"</span><span class="p">,</span><span class="w"> </span><span class="n">encodedArrowSchema</span><span class="p">);</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">createdBy</span><span class="p">(</span><span class="s">"myapp version 2.1.0 (build deadbeef)"</span><span class="p">);</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="c1">// ...</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"row.count"</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">rowCount</span><span class="p">));</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>Key-value metadata is application-defined and opaque to Parquet: it is where <code>ARROW:schema</code>, the pandas descriptor and the table-format stamps live. Passing the map <code>FileMetaData.keyValueMetadata()</code> returns reproduces another file's entries exactly. See <a href="../../reference/writer/#file-metadata">File Metadata</a>.</p>
 <h2 id="one-api-per-file">One API per File<a class="headerlink" href="#one-api-per-file" title="Permanent link">&para;</a></h2>
 <p>A file is written through one API or the other: calling both <code>columnWriter()</code> and <a href="../write-row-by-row/"><code>rowWriter()</code></a> on the same <code>ParquetFileWriter</code> is rejected, on the call that obtains the second view. The row-oriented layer stages records into batches and submits them through this same core, so it produces the same layout — see <a href="../#choosing-a-writer">Choosing a Writer</a>.</p>
 
@@ -2223,8 +2257,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a4a3fa3e8e084097295cc5588f523acdceff04fe" target="_blank" rel="noopener">
-      a4a3fa3e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a1c74d92f4ab5767419d1e5bf6ac479190ec4b7d" target="_blank" rel="noopener">
+      a1c74d92
     </a>
   
 </div>
