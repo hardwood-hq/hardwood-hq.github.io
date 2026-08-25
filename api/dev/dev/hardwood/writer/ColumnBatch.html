@@ -125,7 +125,7 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block"><p>One aligned slice of a file's columns. Every column in a batch must have the same
 number of values, which is the batch's row count.</p>
-<p>A batch is not constructed directly: <a href="ParquetFileWriter.html#writeBatch(java.util.function.Consumer)"><code>ParquetFileWriter.writeBatch(Consumer)</code></a> creates it, bound
+<p>A batch is not constructed directly: <a href="ColumnWriter.html#writeBatch(java.util.function.Consumer)"><code>ColumnWriter.writeBatch(Consumer)</code></a> creates it, bound
 to the schema, hands it to a filler that populates the columns, then submits it — so
 there is no separate build or submit step to forget. Columns are addressed by index or
 by name, and the schema binding lets every identifier be validated as it is added — an
@@ -136,7 +136,7 @@ declares — 300 on a <code>UINT_8</code> column, an unscaled value of more digi
 precision — is rejected where it is handed over, because writing it produces a file whose
 values fall outside the range its own annotation declares. The values at rows a column's
 <a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> marks null are never encoded, and so are never checked.</p>
-<pre style="white-space:pre-wrap;"><code class="language-java">writer.writeBatch(b -&gt; b
+<pre style="white-space:pre-wrap;"><code class="language-java">columns.writeBatch(b -&gt; b
         .ints(0, idColumn)
         .ints(&quot;value&quot;, valueColumn));
 </code></pre>
@@ -148,7 +148,7 @@ interface, the caller picks the representation through its factory: <a href="../
 for none, <a href="../Validity.html#ofNulls(boolean%5B%5D)"><code>Validity.ofNulls(boolean[])</code></a> to bridge a plain <code>boolean[]</code> mask, <a href="../Validity.html#of(long%5B%5D)"><code>Validity.of(long[])</code></a> for a
 packed present-bitmap — and, in the future, a sparse form — all consumed identically by
 the writer.</p>
-<pre><code class="language-java">writer.writeBatch(b -&gt; b
+<pre><code class="language-java">columns.writeBatch(b -&gt; b
         .ints(0, idColumn)
         .ints(&quot;value&quot;, valueColumn, valueNulls));       // boolean[] nulls, true = null
 </code></pre>
@@ -647,9 +647,10 @@ has been written. Every physical type has the same setter shapes (<code>longs</c
 <dt>Returns:</dt>
 <dd>this batch, for chaining</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is not
-<code>INT32</code>, the column is already set, a value falls outside the range the column's
-annotation declares, or the length does not match the other columns in this batch</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>columnIndex</code> is not in <code>[0, leaf column count)</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the column is not <code>INT32</code>, the column is already set,
+a value falls outside the range the column's annotation declares, or the length
+does not match the other columns in this batch</dd>
 </dl>
 </div>
 </section>
@@ -690,9 +691,10 @@ full length — one slot per row — and the entry at a null row is ignored.</di
 <dt>Returns:</dt>
 <dd>this batch, for chaining</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is not
-<code>OPTIONAL INT32</code>, the column is already set, or a value at a present row falls
-outside the range the column's annotation declares</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>columnIndex</code> is not in <code>[0, leaf column count)</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the column is not <code>OPTIONAL INT32</code>, the column is
+already set, or a value at a present row falls outside the range the column's
+annotation declares</dd>
 </dl>
 </div>
 </section>
@@ -736,8 +738,9 @@ unlike the <a href="../Validity.html" title="interface in dev.hardwood"><code>Va
 <dt>Returns:</dt>
 <dd>this batch, for chaining</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the index is out of range, the column is not
-<code>OPTIONAL INT32</code>, the column is already set, or the lengths do not agree</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if <code>columnIndex</code> is not in <code>[0, leaf column count)</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the column is not <code>OPTIONAL INT32</code>, the column is
+already set, or the lengths do not agree</dd>
 </dl>
 </div>
 </section>

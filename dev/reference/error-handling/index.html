@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A lightweight Java Parquet reader — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
+        <meta name="description" content="A lightweight Java Parquet reader and writer — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
       
       
       
@@ -940,6 +940,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/write-row-by-row/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write Row by Row
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/write-column-by-column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write Column by Column
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/metadata/" class="md-nav__link">
         
   
@@ -1037,6 +1093,34 @@
     
   
     How a Parquet File Is Laid Out
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/write-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Write Model
   
 
     
@@ -1317,6 +1401,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../writer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../accessors/" class="md-nav__link">
         
   
@@ -1410,6 +1522,24 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Handling
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -1426,6 +1556,47 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1680,6 +1851,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1715,7 +1916,8 @@
 
 -->
 <h1 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h1>
-<p>Hardwood throws specific exceptions for common error conditions:</p>
+<p>Hardwood throws specific exceptions for common error conditions.</p>
+<h2 id="reading">Reading<a class="headerlink" href="#reading" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1750,6 +1952,38 @@
 </tr>
 </tbody>
 </table>
+<h2 id="writing">Writing<a class="headerlink" href="#writing" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>IOException</code></td>
+<td>The destination cannot be created, written, or finalized. The writer discards its output rather than leaving a truncated file at the target path</td>
+</tr>
+<tr>
+<td><code>UnsupportedOperationException</code></td>
+<td>A schema column of an unsupported physical type (<code>INT96</code>); a refused compression codec (<code>LZ4</code>, <code>LZO</code>) or one whose library is not on the classpath; an <code>OPTIONAL</code> struct group directly enclosing a repeated field</td>
+</tr>
+<tr>
+<td><code>IllegalArgumentException</code></td>
+<td>An unknown column name or path, a setter that does not fit the column's type, a column set twice, a batch that leaves a column unset or whose arrays disagree in length, a null mask on a <code>REQUIRED</code> column, list offsets that do not describe the elements given, a value outside the range its annotation declares, or a <code>REQUIRED</code> field a record leaves unset</td>
+</tr>
+<tr>
+<td><code>IndexOutOfBoundsException</code></td>
+<td>A leaf-column index outside <code>[0, leaf column count)</code> on a <code>ColumnBatch</code> setter, or a field index outside <code>[0, getFieldCount())</code> on a <code>StructBuilder</code> setter</td>
+</tr>
+<tr>
+<td><code>IllegalStateException</code></td>
+<td>Writing after <code>close()</code>, using both write APIs on one file, or using a <code>ColumnBatch</code> or nested builder after its scope has ended</td>
+</tr>
+</tbody>
+</table>
+<p>For what each of these means in context, see the <a href="../writer/#what-the-writer-rejects">Writer Reference</a>.</p>
 
 
 
@@ -1799,8 +2033,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0283b8bdb6eabc1c1ee543bbd52b444c7045eb3d" target="_blank" rel="noopener">
-      0283b8bd
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a4a3fa3e8e084097295cc5588f523acdceff04fe" target="_blank" rel="noopener">
+      a4a3fa3e
     </a>
   
 </div>

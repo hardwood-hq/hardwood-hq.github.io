@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A lightweight Java Parquet reader — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
+        <meta name="description" content="A lightweight Java Parquet reader and writer — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
       
       
       
@@ -1076,6 +1076,62 @@
   
   
     <li class="md-nav__item">
+      <a href="../how-to/write-row-by-row/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write Row by Row
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to/write-column-by-column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write Column by Column
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../how-to/metadata/" class="md-nav__link">
         
   
@@ -1173,6 +1229,34 @@
     
   
     How a Parquet File Is Laid Out
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/write-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Write Model
   
 
     
@@ -1430,6 +1514,34 @@
     
   
     Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/writer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writer
   
 
     
@@ -1984,7 +2096,8 @@ Import it in your dependency management so you can declare Hardwood dependencies
 <p>Hardwood uses the Java Platform Logging API (<code>System.Logger</code>).
 Bindings are available for all popular logger implementations, for instance for <a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-jpl">log4j 2</a>.</p>
 <h3 id="compression-libraries">Compression Libraries<a class="headerlink" href="#compression-libraries" title="Permanent link">&para;</a></h3>
-<p>Hardwood supports reading Parquet files compressed with GZIP (built into Java), Snappy, ZSTD, LZ4, and Brotli. The compression libraries are optional dependencies—add only the ones you need. Snappy and ZSTD are the codecs most commonly seen in the wild; LZ4 and Brotli are rarer.</p>
+<p>Hardwood reads Parquet files compressed with GZIP (built into Java), Snappy, ZSTD, LZ4 in both of its framings, and Brotli. It writes all of those except the Hadoop-framed <code>LZ4</code>, which the Parquet format deprecated in favour of <code>LZ4_RAW</code>; files already written with it are still read. The compression libraries are optional dependencies—add only the ones you need. Snappy and ZSTD are the codecs most commonly seen in the wild; LZ4 and Brotli are rarer.</p>
+<p>Writing compresses with ZSTD where <code>zstd-jni</code> is on the classpath, and writes uncompressed pages where it is not, so add that dependency to get compressed output under the default configuration.</p>
 <table>
 <thead>
 <tr>
@@ -2005,7 +2118,7 @@ Bindings are available for all popular logger implementations, for instance for 
 <td><code>zstd-jni</code></td>
 </tr>
 <tr>
-<td>LZ4</td>
+<td>LZ4 (<code>LZ4_RAW</code> and Hadoop-framed <code>LZ4</code>)</td>
 <td><code>at.yawk.lz4</code></td>
 <td><code>lz4-java</code></td>
 </tr>
@@ -2108,8 +2221,8 @@ Bindings are available for all popular logger implementations, for instance for 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0283b8bdb6eabc1c1ee543bbd52b444c7045eb3d" target="_blank" rel="noopener">
-      0283b8bd
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a4a3fa3e8e084097295cc5588f523acdceff04fe" target="_blank" rel="noopener">
+      a4a3fa3e
     </a>
   
 </div>

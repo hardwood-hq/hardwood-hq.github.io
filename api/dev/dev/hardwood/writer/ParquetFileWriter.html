@@ -60,7 +60,7 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list">
 <li><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" tabindex="0">create(OutputFile, FileSchema)</a></li>
 <li><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)" tabindex="0">create(OutputFile, FileSchema, WriterConfig)</a></li>
-<li><a href="#writeBatch(java.util.function.Consumer)" tabindex="0">writeBatch(Consumer)</a></li>
+<li><a href="#columnWriter()" tabindex="0">columnWriter()</a></li>
 <li><a href="#rowWriter()" tabindex="0">rowWriter()</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
 </ol>
@@ -86,8 +86,10 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">ParquetFileWriter</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
-<div class="block"><p>Writes a Parquet file through a columnar batch API.</p>
-<p>This increment writes every primitive physical type — <code>BOOLEAN</code>, <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>,
+<div class="block"><p>Writes a Parquet file through a columnar or a row-oriented API: <a href="#columnWriter()"><code>columnWriter()</code></a> takes an
+aligned slice of typed arrays, <a href="#rowWriter()"><code>rowWriter()</code></a> takes one record at a time, and one file is
+written through one of the two, not both.</p>
+<p>Every primitive physical type is written — <code>BOOLEAN</code>, <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>,
 <code>DOUBLE</code>, <code>BYTE_ARRAY</code>, and <code>FIXED_LEN_BYTE_ARRAY</code> — flat <code>REQUIRED</code> / <code>OPTIONAL</code>, nested
 inside <code>REQUIRED</code> / <code>OPTIONAL</code> <code>struct</code> groups, and inside <code>LIST</code>s and <code>MAP</code>s (including lists
 of lists, lists of structs, and maps of any in-scope value). Data is supplied as
@@ -119,30 +121,30 @@ configurable through <a href="WriterConfig.html" title="class in dev.hardwood.wr
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" class="member-name-link">create</a><wbr>(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
- <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Opens a writer with the default <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>.</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnWriter.html" title="class in dev.hardwood.writer">ColumnWriter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#columnWriter()" class="member-name-link">columnWriter</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the column-oriented view over this file: a batch-shaped API for callers that
+hold columns rather than records.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)" class="member-name-link">create</a><wbr>(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" class="member-name-link">create</a><wbr>(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
+ <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Opens a writer with the default <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)" class="member-name-link">create</a><wbr>(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
  <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema,
  <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a>&nbsp;config)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Opens a writer, writing the leading magic bytes.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowWriter()" class="member-name-link">rowWriter</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowWriter()" class="member-name-link">rowWriter</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the row-oriented view over this file: a record-shaped API for callers that
 hold records rather than columns.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeBatch(java.util.function.Consumer)" class="member-name-link">writeBatch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a>&gt;&nbsp;filler)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Writes one aligned batch of column values, flushing row groups as the buffered
-data crosses the row-group target.</div>
 </div>
 </div>
 </div>
@@ -210,27 +212,20 @@ have, or one its physical type cannot carry</dd>
 </section>
 </li>
 <li>
-<section class="detail" id="writeBatch(java.util.function.Consumer)">
-<h3>writeBatch</h3>
+<section class="detail" id="columnWriter()">
+<h3>columnWriter</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeBatch</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a>&gt;&nbsp;filler)</span>
-                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block"><p>Writes one aligned batch of column values, flushing row groups as the buffered
-data crosses the row-group target. A batch that would overflow the current row
-group is split at the boundary.</p>
-<p>The writer creates the batch — bound to the schema — passes it to <code>filler</code> to be
-populated (columns addressed by index or name), then submits it. There is no
-separate build or submit step to forget.</p>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnWriter.html" title="class in dev.hardwood.writer">ColumnWriter</a></span>&nbsp;<span class="element-name">columnWriter</span>()</div>
+<div class="block"><p>Returns the column-oriented view over this file: a batch-shaped API for callers that
+hold columns rather than records. It takes an aligned slice of typed arrays through
+<a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a>, shreds it, and pages it into the file.</p>
+<p>The file writer keeps ownership: the returned view is not closeable, and the row group
+it has buffered is written by <a href="#close()"><code>close()</code></a>. The same instance is returned on every call.</p>
 </div>
 <dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>filler</code> - populates the batch's columns; must cover every column exactly once</dd>
+<dt>Returns:</dt>
+<dd>the column-oriented view over this file</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the write fails</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the batch does not cover every column, or its
-per-layer inputs do not agree on a record count</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema has a shape the writer cannot
-produce</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed, or <a href="#rowWriter()"><code>rowWriter()</code></a> has already
 been used on this file</dd>
 </dl>
@@ -245,8 +240,8 @@ been used on this file</dd>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></span>&nbsp;<span class="element-name">rowWriter</span>()</div>
 <div class="block"><p>Returns the row-oriented view over this file: a record-shaped API for callers that
 hold records rather than columns. It stages records into batches and submits them
-through <a href="#writeBatch(java.util.function.Consumer)"><code>writeBatch(Consumer)</code></a>, so the file it produces is the one the columnar API produces
-for the same data.</p>
+through <a href="ColumnWriter.html#writeBatch(java.util.function.Consumer)"><code>ColumnWriter.writeBatch(Consumer)</code></a>, so the file it produces is the one the columnar API
+produces for the same data.</p>
 <p>The file writer keeps ownership: the returned view is not closeable, and its pending
 records are written by <a href="#close()"><code>close()</code></a>. The same instance is returned on every call.</p>
 </div>
@@ -254,7 +249,7 @@ records are written by <a href="#close()"><code>close()</code></a>. The same ins
 <dt>Returns:</dt>
 <dd>the row-oriented view over this file</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed, or <a href="#writeBatch(java.util.function.Consumer)"><code>writeBatch(Consumer)</code></a> has already
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed, or <a href="#columnWriter()"><code>columnWriter()</code></a> has already
 been used on this file</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema has a shape the writer cannot
 produce record by record</dd>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="A lightweight Java Parquet reader — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
+        <meta name="description" content="A lightweight Java Parquet reader and writer — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
       
       
       
@@ -733,6 +733,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#choosing-a-writer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing a Writer
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1001,6 +1012,62 @@
   
   
     <li class="md-nav__item">
+      <a href="write-row-by-row/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write Row by Row
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="write-column-by-column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write Column by Column
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="metadata/" class="md-nav__link">
         
   
@@ -1098,6 +1165,34 @@
     
   
     How a Parquet File Is Laid Out
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../concepts/write-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Write Model
   
 
     
@@ -1355,6 +1450,34 @@
     
   
     Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/writer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writer
   
 
     
@@ -1745,6 +1868,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#choosing-a-writer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Choosing a Writer
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1782,7 +1916,7 @@
 
 -->
 <h1 id="how-to-guides">How-to Guides<a class="headerlink" href="#how-to-guides" title="Permanent link">&para;</a></h1>
-<p>Read Parquet files with Hardwood — pick the guide that matches what you need:</p>
+<p>Read and write Parquet files with Hardwood — pick the guide that matches what you need:</p>
 <ul>
 <li><a href="row-reader/"><strong>Read Row by Row</strong></a> — <code>RowReader</code>, typed accessors, nested structs / lists / maps.</li>
 <li><a href="column-reader/"><strong>Read Column by Column</strong></a> — <code>ColumnReader</code> and <code>ColumnReaders</code>, the layer model, hot-loop patterns.</li>
@@ -1793,6 +1927,8 @@
 <li><a href="compat/"><strong>Read with the parquet-java API</strong></a> — drop-in <code>org.apache.parquet.*</code> replacement (experimental).</li>
 <li><a href="variant/"><strong>Read Variant Columns</strong></a> — <code>getVariant</code> and the <code>PqVariant</code> API.</li>
 <li><a href="geospatial/"><strong>Read Geospatial Columns</strong></a> — GEOMETRY / GEOGRAPHY columns, bounding-box filter pushdown.</li>
+<li><a href="write-row-by-row/"><strong>Write Row by Row</strong></a> — <code>RowWriter</code>, typed setters, nested structs / lists / maps.</li>
+<li><a href="write-column-by-column/"><strong>Write Column by Column</strong></a> — <code>ColumnWriter</code>, typed arrays, nulls, per-layer offsets.</li>
 <li><a href="metadata/"><strong>Inspect File Metadata</strong></a> — file metadata, row groups, column chunks, schema introspection.</li>
 </ul>
 <div class="admonition example">
@@ -1838,7 +1974,14 @@ complete project you can clone and run with a single command. New to Hardwood? S
 </tbody>
 </table>
 <p>To read multiple files as a single dataset with cross-file prefetching, open the <code>ParquetFileReader</code> with a list of <code>InputFile</code>s via the <code>Hardwood</code> class — see <a href="multi-file/">Reading Multiple Files</a>.</p>
-<p>For the exceptions the readers can throw and when, see <a href="../reference/error-handling/">Error Handling</a>.</p>
+<h2 id="choosing-a-writer">Choosing a Writer<a class="headerlink" href="#choosing-a-writer" title="Permanent link">&para;</a></h2>
+<p>Writing mirrors the same split. Both APIs come from one <code>ParquetFileWriter</code> and produce the same layout, but a file is written through one of them, not both:</p>
+<ul>
+<li><strong><code>RowWriter</code></strong> — record-oriented, obtained from <code>writer.rowWriter()</code>. Fields are addressed by name, and logical-type values are written as the Java types the reader returns for them. Best when you hold records.</li>
+<li><strong><code>ColumnWriter</code></strong> — batch-oriented, obtained from <code>writer.columnWriter()</code>. Each <code>writeBatch</code> call takes one typed array per leaf column, plus per-layer validity and offsets for nested columns. Best when you already hold columns.</li>
+</ul>
+<p>For the model behind the file the writer produces — why the footer comes last, what bounds memory, and how the encoding is chosen — see <a href="../concepts/write-model/">The Write Model</a>.</p>
+<p>For the exceptions the readers and the writer can throw and when, see <a href="../reference/error-handling/">Error Handling</a>.</p>
 
 
 
@@ -1888,8 +2031,8 @@ complete project you can clone and run with a single command. New to Hardwood? S
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0283b8bdb6eabc1c1ee543bbd52b444c7045eb3d" target="_blank" rel="noopener">
-      0283b8bd
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a4a3fa3e8e084097295cc5588f523acdceff04fe" target="_blank" rel="noopener">
+      a4a3fa3e
     </a>
   
 </div>

@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://hardwood.dev/dev/reference/schema-element/">
+        <link rel="canonical" href="https://hardwood.dev/dev/reference/writer/">
       
       
-        <link rel="prev" href="../error-handling/">
+        <link rel="prev" href="../configuration/">
       
       
-        <link rel="next" href="../cli/">
+        <link rel="next" href="../accessors/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>SchemaElement - Hardwood</title>
+        <title>Writer - Hardwood</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#schemaelement" class="md-skip">
+        <a href="#writer-reference" class="md-skip">
           Skip to content
         </a>
       
@@ -124,7 +124,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              SchemaElement
+              Writer
             
           </span>
         </div>
@@ -1398,10 +1398,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../writer/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writer
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1417,6 +1444,136 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writer-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writer Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encodings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encodings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compression-codecs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression Codecs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#physical-types-and-columnar-setters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Types and Columnar Setters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logical-types-and-row-setters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logical Types and Row Setters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#value-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value Ranges
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statistics-written" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics Written
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#created_by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        created_by
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-writer-rejects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the Writer Rejects
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1538,37 +1695,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    SchemaElement
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../schema-element/" class="md-nav__link">
         
   
   
@@ -1584,103 +1714,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#factories" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Factories
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#repetition" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Repetition
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#name" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Name
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#type-length" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Type length
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#errors" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Errors
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#canonical-constructor" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Canonical constructor
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#node-kind" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Node kind
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -1913,10 +1946,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#factories" class="md-nav__link">
+  <a href="#schema" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Factories
+        Schema
       
     </span>
   </a>
@@ -1924,10 +1957,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#repetition" class="md-nav__link">
+  <a href="#writer-options" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Repetition
+        Writer Options
       
     </span>
   </a>
@@ -1935,10 +1968,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#name" class="md-nav__link">
+  <a href="#encodings" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Name
+        Encodings
       
     </span>
   </a>
@@ -1946,10 +1979,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#type-length" class="md-nav__link">
+  <a href="#compression-codecs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Type length
+        Compression Codecs
       
     </span>
   </a>
@@ -1957,10 +1990,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#errors" class="md-nav__link">
+  <a href="#physical-types-and-columnar-setters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Errors
+        Physical Types and Columnar Setters
       
     </span>
   </a>
@@ -1968,10 +2001,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#canonical-constructor" class="md-nav__link">
+  <a href="#logical-types-and-row-setters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Canonical constructor
+        Logical Types and Row Setters
       
     </span>
   </a>
@@ -1979,10 +2012,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#node-kind" class="md-nav__link">
+  <a href="#value-ranges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Node kind
+        Value Ranges
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statistics-written" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics Written
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#created_by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        created_by
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-writer-rejects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the Writer Rejects
       
     </span>
   </a>
@@ -2006,7 +2072,7 @@
 
 
   
-    <a href="https://github.com/hardwood-hq/hardwood/edit/main/docs/content/reference/schema-element.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/hardwood-hq/hardwood/edit/main/docs/content/reference/writer.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -2025,168 +2091,489 @@
      You may obtain a copy of the License at https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-<h1 id="schemaelement">SchemaElement<a class="headerlink" href="#schemaelement" title="Permanent link">&para;</a></h1>
-<p><code>dev.hardwood.metadata.SchemaElement</code> represents one element in the flat schema list in a Parquet footer. The list uses depth-first order.</p>
-<p><code>FileSchema.fromSchemaElements(List&lt;SchemaElement&gt;)</code> builds a schema tree from this list. <code>FileSchema.toSchemaElements()</code> creates the list again.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Use <a href="../../how-to/write-row-by-row/#writing-a-file"><code>FileSchema.builder(String)</code></a> to build a schema for writing. The builder checks the complete schema and calculates child counts. Use <code>SchemaElement</code> when you work with footer metadata.</p>
-</div>
-<h2 id="factories">Factories<a class="headerlink" href="#factories" title="Permanent link">&para;</a></h2>
-<p>The static factories build the common element kinds. Each factory sets the fields for its kind.</p>
-<table>
-<thead>
-<tr>
-<th>Factory</th>
-<th>Builds</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>root(name, numChildren)</code></td>
-<td>the root group, with no repetition</td>
-</tr>
-<tr>
-<td><code>group(name, repetition, numChildren)</code></td>
-<td>a group</td>
-</tr>
-<tr>
-<td><code>group(name, repetition, numChildren, logicalType)</code></td>
-<td>a group with a logical type</td>
-</tr>
-<tr>
-<td><code>primitive(name, type, repetition)</code></td>
-<td>a primitive column</td>
-</tr>
-<tr>
-<td><code>primitive(name, type, repetition, logicalType)</code></td>
-<td>a primitive column with a logical type</td>
-</tr>
-<tr>
-<td><code>fixedLengthPrimitive(name, typeLength, repetition)</code></td>
-<td>a <code>FIXED_LEN_BYTE_ARRAY</code> column</td>
-</tr>
-<tr>
-<td><code>fixedLengthPrimitive(name, typeLength, repetition, logicalType)</code></td>
-<td>a <code>FIXED_LEN_BYTE_ARRAY</code> column with a logical type</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.SchemaElement.fixedLengthPrimitive</span><span class="p">;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.SchemaElement.primitive</span><span class="p">;</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.SchemaElement.root</span><span class="p">;</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">List</span><span class="o">&lt;</span><span class="n">SchemaElement</span><span class="o">&gt;</span><span class="w"> </span><span class="n">elements</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">List</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="n">root</span><span class="p">(</span><span class="s">"schema"</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">),</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="n">primitive</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">INT64</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">),</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="n">primitive</span><span class="p">(</span><span class="s">"name"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">StringType</span><span class="p">()),</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">        </span><span class="n">fixedLengthPrimitive</span><span class="p">(</span><span class="s">"uuid"</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">UuidType</span><span class="p">()));</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">fromSchemaElements</span><span class="p">(</span><span class="n">elements</span><span class="p">);</span>
-</code></pre></div>
-<h2 id="repetition">Repetition<a class="headerlink" href="#repetition" title="Permanent link">&para;</a></h2>
-<p>The Parquet format leaves <code>repetition_type</code> unset on the root element and requires it on every other element.</p>
-<p><code>root</code> builds the root element with no repetition. The group and primitive factories require a non-null repetition value and reject a null one.</p>
-<p><code>fromSchemaElements</code> accepts an element with no repetition value, as a footer may carry one. It uses <code>REQUIRED</code> for the root and <code>OPTIONAL</code> for other elements. <code>FileSchema.toSchemaElements()</code> writes <code>REQUIRED</code> for the root of a schema built with <code>FileSchema.builder(String)</code>.</p>
-<h2 id="name">Name<a class="headerlink" href="#name" title="Permanent link">&para;</a></h2>
-<p>A valid Parquet footer has a name for each schema element. The Thrift field is required.</p>
-<p>A malformed or truncated footer can omit the name. The reader then creates an element with <code>name == null</code>. The factories pass a null name through without a check.</p>
-<h2 id="type-length">Type length<a class="headerlink" href="#type-length" title="Permanent link">&para;</a></h2>
-<p><code>typeLength</code> has a different meaning for each physical type:</p>
-<table>
-<thead>
-<tr>
-<th>Physical type</th>
-<th>Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>FIXED_LEN_BYTE_ARRAY</code></td>
-<td>the byte length of each value</td>
-</tr>
-<tr>
-<td>any other physical type</td>
-<td>the maximum bit length needed to store any value</td>
-</tr>
-</tbody>
-</table>
-<p><code>fixedLengthPrimitive</code> sets the physical type to <code>FIXED_LEN_BYTE_ARRAY</code> and takes the byte length as its second argument. <code>primitive</code> rejects <code>FIXED_LEN_BYTE_ARRAY</code>.</p>
-<p>The maximum bit length has no factory. Use the canonical constructor for it:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// An INT32 column with a maximum bit length of 3 - all values of this column can be stored with 3 bits.</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">SchemaElement</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SchemaElement</span><span class="p">(</span><span class="s">"tag"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">INT32</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">        </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w"> </span><span class="kc">null</span><span class="p">);</span>
-</code></pre></div>
-<p><code>typeLength</code> can be <code>null</code> in raw footer metadata. A writer must provide a positive length for a <code>FIXED_LEN_BYTE_ARRAY</code> column. A data reader also needs this length to decode its values.</p>
-<h2 id="errors">Errors<a class="headerlink" href="#errors" title="Permanent link">&para;</a></h2>
-<p>The factories throw <code>IllegalArgumentException</code> for these inputs:</p>
-<table>
-<thead>
-<tr>
-<th>Condition</th>
-<th>Factory</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>repetition</code> is <code>null</code></td>
-<td><code>group</code>, <code>primitive</code>, <code>fixedLengthPrimitive</code></td>
-</tr>
-<tr>
-<td><code>type</code> is <code>null</code></td>
-<td><code>primitive</code></td>
-</tr>
-<tr>
-<td><code>type</code> is <code>FIXED_LEN_BYTE_ARRAY</code></td>
-<td><code>primitive</code></td>
-</tr>
-<tr>
-<td><code>numChildren</code> is negative</td>
-<td><code>group</code>, <code>root</code></td>
-</tr>
-<tr>
-<td><code>typeLength</code> is zero or less</td>
-<td><code>fixedLengthPrimitive</code></td>
-</tr>
-</tbody>
-</table>
-<p>A factory checks one element. Rules for the complete list stay in <code>fromSchemaElements</code>. The method consumes the list in depth-first order and builds the schema tree.</p>
-<h2 id="canonical-constructor">Canonical constructor<a class="headerlink" href="#canonical-constructor" title="Permanent link">&para;</a></h2>
-<p>The record constructor takes the components in Hardwood record-component order:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">new</span><span class="w"> </span><span class="n">SchemaElement</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">typeLength</span><span class="p">,</span><span class="w"> </span><span class="n">repetitionType</span><span class="p">,</span><span class="w"> </span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">                  </span><span class="n">numChildren</span><span class="p">,</span><span class="w"> </span><span class="n">convertedType</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="p">,</span><span class="w"> </span><span class="n">precision</span><span class="p">,</span><span class="w"> </span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">                  </span><span class="n">fieldId</span><span class="p">,</span><span class="w"> </span><span class="n">logicalType</span><span class="p">);</span>
-</code></pre></div>
-<p>Use the constructor when the factories do not cover the metadata. The factories do not set <code>convertedType</code>, <code>scale</code>, <code>precision</code>, or <code>fieldId</code>.</p>
-<p>Use the constructor for:</p>
-<ul>
-<li>a legacy <code>ConvertedType</code> annotation, such as <code>ConvertedType.LIST</code> or <code>ConvertedType.MAP</code>;</li>
-<li>legacy decimal metadata with <code>scale</code> and <code>precision</code>;</li>
-<li>a Thrift <code>fieldId</code>;</li>
-<li>a <code>typeLength</code> on a column that is not <code>FIXED_LEN_BYTE_ARRAY</code>;</li>
-<li>an element with no repetition value that is not the root;</li>
-<li>a complete element decoded from a footer.</li>
-</ul>
-<h2 id="node-kind">Node kind<a class="headerlink" href="#node-kind" title="Permanent link">&para;</a></h2>
+<h1 id="writer-reference">Writer Reference<a class="headerlink" href="#writer-reference" title="Permanent link">&para;</a></h1>
+<p>Facts about the write path: how a schema is declared, the configuration options, the encodings and codecs the writer produces, the setters each column type accepts, and what it rejects. For task-oriented instructions see <a href="../../how-to/write-row-by-row/">Write Row by Row</a> and <a href="../../how-to/write-column-by-column/">Write Column by Column</a>.</p>
+<h2 id="schema">Schema<a class="headerlink" href="#schema" title="Permanent link">&para;</a></h2>
+<p>A file's schema is declared with <code>FileSchema.builder(String)</code> and built once; the same <code>FileSchema</code> is passed to <code>ParquetFileWriter.create</code>. Every method appends one field in declaration order, which is also the order the leaf-column indices follow.</p>
 <table>
 <thead>
 <tr>
 <th>Method</th>
-<th>Returns <code>true</code> when</th>
+<th>Declares</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>isGroup()</code></td>
-<td><code>type</code> is <code>null</code></td>
+<td><code>addColumn(name, type, repetition)</code></td>
+<td>a primitive column</td>
 </tr>
 <tr>
-<td><code>isPrimitive()</code></td>
-<td><code>type</code> is not <code>null</code></td>
+<td><code>addColumn(name, type, repetition, logicalType)</code></td>
+<td>a primitive column carrying an annotation</td>
+</tr>
+<tr>
+<td><code>addColumn(name, type, repetition, typeLength)</code></td>
+<td>a <code>FIXED_LEN_BYTE_ARRAY</code> column of the given byte length</td>
+</tr>
+<tr>
+<td><code>addColumn(name, type, repetition, typeLength, logicalType)</code></td>
+<td>both of the above</td>
+</tr>
+<tr>
+<td><code>struct(name, repetition, filler)</code></td>
+<td>a <code>struct</code> group whose fields <code>filler</code> declares</td>
+</tr>
+<tr>
+<td><code>list(name, repetition, element)</code></td>
+<td>a <code>LIST</code> group whose element <code>element</code> declares</td>
+</tr>
+<tr>
+<td><code>map(name, repetition, keyType[, keyTypeLength][, keyLogicalType], value)</code></td>
+<td>a <code>MAP</code> group with a <code>REQUIRED</code> key of <code>keyType</code> and a value <code>value</code> declares</td>
+</tr>
+<tr>
+<td><code>build()</code></td>
+<td>the <code>FileSchema</code></td>
 </tr>
 </tbody>
 </table>
-<p>A null physical type marks a group. <code>primitive</code> rejects a null type because it would create a group.</p>
+<p><code>repetition</code> is <code>REQUIRED</code> or <code>OPTIONAL</code>; <code>REPEATED</code> is rejected, repetition being what <code>list</code> and <code>map</code> express. <code>typeLength</code> is required and positive for <code>FIXED_LEN_BYTE_ARRAY</code> and rejected for every other type — so a <code>UUID</code>, <code>INTERVAL</code>, <code>FLOAT16</code> or fixed-width <code>DECIMAL</code> column is declared through a <code>typeLength</code> overload:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"event"</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">UuidType</span><span class="p">())</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">DecimalType</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">))</span><span class="w">   </span><span class="c1">// DecimalType takes (scale, precision)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p>Inside a <code>struct</code> filler the same methods appear on <code>FileSchema.StructBuilder</code>; a list element and a map value are declared on <code>FileSchema.ElementBuilder</code>, whose <code>primitive(type, repetition[, typeLength][, logicalType])</code>, <code>struct</code>, <code>list</code> and <code>map</code> carry no name, the surrounding layout supplying it.</p>
+<h2 id="writer-options">Writer Options<a class="headerlink" href="#writer-options" title="Permanent link">&para;</a></h2>
+<p>Write-time behaviour is configured with an immutable <code>WriterConfig</code>, passed to <code>ParquetFileWriter.create(out, schema, config)</code>. <code>WriterConfig.defaults()</code> returns the defaults, which the two-argument <code>create(out, schema)</code> uses.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">        </span><span class="p">.</span><span class="na">codec</span><span class="p">(</span><span class="n">CompressionCodec</span><span class="p">.</span><span class="na">ZSTD</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">        </span><span class="p">.</span><span class="na">rowGroupTargetBytes</span><span class="p">(</span><span class="mi">64L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="p">.</span><span class="na">encoding</span><span class="p">(</span><span class="s">"temperature"</span><span class="p">,</span><span class="w"> </span><span class="n">ColumnEncoding</span><span class="p">.</span><span class="na">BYTE_STREAM_SPLIT</span><span class="p">)</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pageTargetBytes(int)</code></td>
+<td><code>1 MiB</code></td>
+<td>Target size of one data page. Must be at least 4 bytes.</td>
+</tr>
+<tr>
+<td><code>rowGroupTargetBytes(long)</code></td>
+<td><code>128 MiB</code></td>
+<td>Uncompressed bytes buffered before a row group is flushed. The writer's memory bound. Must be positive.</td>
+</tr>
+<tr>
+<td><code>codec(CompressionCodec)</code></td>
+<td><code>ZSTD</code>, or <code>UNCOMPRESSED</code> when the ZSTD library is absent</td>
+<td>Codec each page body is compressed with.</td>
+</tr>
+<tr>
+<td><code>encoding(ColumnEncoding)</code></td>
+<td><code>AUTO</code></td>
+<td>Encoding policy for every column without an override of its own.</td>
+</tr>
+<tr>
+<td><code>encoding(String, ColumnEncoding)</code></td>
+<td>—</td>
+<td>Encoding policy for one leaf column, overriding the file-wide default.</td>
+</tr>
+<tr>
+<td><code>statisticsTruncationLength(int)</code></td>
+<td><code>64</code></td>
+<td>Longest <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound. A longer bound is truncated and flagged inexact. Must be positive.</td>
+</tr>
+<tr>
+<td><code>createdBy(String)</code></td>
+<td><code>hardwood version &lt;version&gt; (build &lt;hash&gt;)</code></td>
+<td>The footer's <code>created_by</code> identifier.</td>
+</tr>
+<tr>
+<td><code>precisionLossPolicy(PrecisionLossPolicy)</code></td>
+<td><code>REJECT</code></td>
+<td>What the row-oriented layer does with a value carrying more precision than its column can hold.</td>
+</tr>
+</tbody>
+</table>
+<p>Each option has a getter that reads the configured value back — <code>pageTargetBytes()</code>, <code>rowGroupTargetBytes()</code>, <code>codec()</code>, <code>statisticsTruncationLength()</code>, <code>createdBy()</code>, <code>precisionLossPolicy()</code>, and, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
+<h2 id="encodings">Encodings<a class="headerlink" href="#encodings" title="Permanent link">&para;</a></h2>
+<p><code>ColumnEncoding</code> sets how a column's values are encoded, file-wide or per leaf column. <code>AUTO</code> leaves the choice to the writer; every other member names an encoding outright, and a column that names one builds no dictionary.</p>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>What it writes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AUTO</code></td>
+<td>Per column chunk, whichever of a dictionary or <code>PLAIN</code> is smaller, measured once the row group is buffered. One column may be dictionary-encoded in one row group and <code>PLAIN</code> in the next.</td>
+</tr>
+<tr>
+<td><code>PLAIN</code></td>
+<td>Values as they are: fixed-width types little-endian, <code>BYTE_ARRAY</code> behind a 4-byte length prefix.</td>
+</tr>
+<tr>
+<td><code>DELTA_BINARY_PACKED</code></td>
+<td>Differences between neighbouring values, bit-packed per block. Suits sorted or slow-moving integers.</td>
+</tr>
+<tr>
+<td><code>DELTA_LENGTH_BYTE_ARRAY</code></td>
+<td>Lengths delta-encoded ahead of the values, cheaper than <code>PLAIN</code>'s per-value length prefix where the lengths are similar.</td>
+</tr>
+<tr>
+<td><code>DELTA_BYTE_ARRAY</code></td>
+<td>Each value carrying only what it does not share with the value before it. Suits sorted values with common prefixes.</td>
+</tr>
+<tr>
+<td><code>BYTE_STREAM_SPLIT</code></td>
+<td>A value's bytes scattered across one stream per byte position. Changes no page's size on its own; it changes how well the codec afterwards compresses floating-point data.</td>
+</tr>
+</tbody>
+</table>
+<p>An encoding is legal only for some physical types:</p>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Physical types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AUTO</code>, <code>PLAIN</code></td>
+<td>every writable type</td>
+</tr>
+<tr>
+<td><code>DELTA_BINARY_PACKED</code></td>
+<td><code>INT32</code>, <code>INT64</code></td>
+</tr>
+<tr>
+<td><code>DELTA_LENGTH_BYTE_ARRAY</code></td>
+<td><code>BYTE_ARRAY</code></td>
+</tr>
+<tr>
+<td><code>DELTA_BYTE_ARRAY</code></td>
+<td><code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
+</tr>
+<tr>
+<td><code>BYTE_STREAM_SPLIT</code></td>
+<td><code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
+</tr>
+</tbody>
+</table>
+<p>A policy naming a column whose type cannot carry it fails when the writer is created — a file-wide <code>BYTE_STREAM_SPLIT</code> over a schema holding a <code>BYTE_ARRAY</code> column included. A per-column override names the column by its <strong>dotted leaf path</strong> as the schema spells it, synthetic segments included: <code>readings.list.element</code>, not <code>readings</code>. A path matching no leaf column is rejected the same way.</p>
+<p>No policy demands a dictionary; it is an outcome <code>AUTO</code> may arrive at. A <code>BOOLEAN</code> column is never dictionary-encoded, so <code>AUTO</code> resolves it to <code>PLAIN</code> whatever its values are.</p>
+<h2 id="compression-codecs">Compression Codecs<a class="headerlink" href="#compression-codecs" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Codec</th>
+<th>Produced</th>
+<th>Library needed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UNCOMPRESSED</code></td>
+<td>yes</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>GZIP</code></td>
+<td>yes</td>
+<td>— (JDK)</td>
+</tr>
+<tr>
+<td><code>SNAPPY</code></td>
+<td>yes</td>
+<td><code>org.xerial.snappy:snappy-java</code></td>
+</tr>
+<tr>
+<td><code>ZSTD</code></td>
+<td>yes</td>
+<td><code>com.github.luben:zstd-jni</code></td>
+</tr>
+<tr>
+<td><code>LZ4_RAW</code></td>
+<td>yes</td>
+<td><code>at.yawk.lz4:lz4-java</code></td>
+</tr>
+<tr>
+<td><code>BROTLI</code></td>
+<td>yes</td>
+<td><code>com.aayushatharva.brotli4j:brotli4j</code></td>
+</tr>
+<tr>
+<td><code>LZ4</code></td>
+<td>no</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>LZO</code></td>
+<td>no</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>A missing library, and either of the two refused codecs, fails when the writer is created rather than mid-file. <code>LZ4</code> names the Hadoop framing the Parquet format deprecated in favour of <code>LZ4_RAW</code>; files already written with it are still read, so the refusal is on the write side only. <code>LZO</code> has no maintained JVM implementation under a licence this project can depend on, and is refused in both directions.</p>
+<h2 id="physical-types-and-columnar-setters">Physical Types and Columnar Setters<a class="headerlink" href="#physical-types-and-columnar-setters" title="Permanent link">&para;</a></h2>
+<p>Every physical type Parquet defines is written except <code>INT96</code>, which is deprecated and rejected when the writer is created. Each <code>ColumnBatch</code> setter comes in four shapes: by index or name, all-present or nullable (a <code>Validity</code> or a <code>boolean[]</code> mask).</p>
+<table>
+<thead>
+<tr>
+<th>Physical type</th>
+<th><code>ColumnBatch</code> setter</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BOOLEAN</code></td>
+<td><code>booleans</code></td>
+<td><code>boolean[]</code></td>
+</tr>
+<tr>
+<td><code>INT32</code></td>
+<td><code>ints</code></td>
+<td><code>int[]</code></td>
+</tr>
+<tr>
+<td><code>INT64</code></td>
+<td><code>longs</code></td>
+<td><code>long[]</code></td>
+</tr>
+<tr>
+<td><code>FLOAT</code></td>
+<td><code>floats</code></td>
+<td><code>float[]</code></td>
+</tr>
+<tr>
+<td><code>DOUBLE</code></td>
+<td><code>doubles</code></td>
+<td><code>double[]</code></td>
+</tr>
+<tr>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>bytes</code></td>
+<td><code>byte[][]</code></td>
+</tr>
+<tr>
+<td><code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td><code>fixed</code></td>
+<td><code>byte[][]</code>, each exactly the declared length</td>
+</tr>
+</tbody>
+</table>
+<p>The columnar API takes physical values and converts nothing: a <code>STRING</code> column is written through <code>bytes(...)</code> as UTF-8, a <code>DATE</code> column through <code>ints(...)</code> as days since the Unix epoch. Nesting is described through <code>struct(path, Validity)</code>, <code>list(path, offsets[, Validity])</code> and <code>map(path, offsets[, Validity])</code>.</p>
+<h2 id="logical-types-and-row-setters">Logical Types and Row Setters<a class="headerlink" href="#logical-types-and-row-setters" title="Permanent link">&para;</a></h2>
+<p>The row-oriented layer takes physical values through the setter named for the type, and converts logical-type values to the column's physical representation, taking the same Java types the reader returns. The physical setters apply whatever the column's annotation is: an <code>INT32</code> column annotated <code>DATE</code> accepts <code>setDate</code> and <code>setInt</code> alike, the one taking a <code>LocalDate</code> and the other the epoch day it converts to.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th><code>StructBuilder</code> setter</th>
+<th>Java type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BOOLEAN</code></td>
+<td><code>setBoolean</code></td>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<td><code>INT32</code></td>
+<td><code>setInt</code></td>
+<td><code>int</code></td>
+</tr>
+<tr>
+<td><code>INT64</code></td>
+<td><code>setLong</code></td>
+<td><code>long</code></td>
+</tr>
+<tr>
+<td><code>FLOAT</code></td>
+<td><code>setFloat</code></td>
+<td><code>float</code></td>
+</tr>
+<tr>
+<td><code>DOUBLE</code></td>
+<td><code>setDouble</code></td>
+<td><code>double</code></td>
+</tr>
+<tr>
+<td><code>BYTE_ARRAY</code> annotated <code>STRING</code>, <code>ENUM</code>, <code>JSON</code>, or unannotated</td>
+<td><code>setString</code></td>
+<td><code>String</code> (written as UTF-8)</td>
+</tr>
+<tr>
+<td><code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td><code>setBinary</code></td>
+<td><code>byte[]</code></td>
+</tr>
+<tr>
+<td><code>INT32</code> annotated <code>DATE</code></td>
+<td><code>setDate</code></td>
+<td><code>LocalDate</code></td>
+</tr>
+<tr>
+<td><code>INT32</code> / <code>INT64</code> annotated <code>TIME</code></td>
+<td><code>setTime</code></td>
+<td><code>LocalTime</code></td>
+</tr>
+<tr>
+<td><code>INT64</code> annotated <code>TIMESTAMP(_, UTC)</code></td>
+<td><code>setTimestamp</code></td>
+<td><code>Instant</code></td>
+</tr>
+<tr>
+<td><code>INT64</code> annotated <code>TIMESTAMP(_, local)</code></td>
+<td><code>setLocalTimestamp</code></td>
+<td><code>LocalDateTime</code></td>
+</tr>
+<tr>
+<td><code>INT32</code> / <code>INT64</code> / <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> annotated <code>DECIMAL</code></td>
+<td><code>setDecimal</code></td>
+<td><code>BigDecimal</code></td>
+</tr>
+<tr>
+<td><code>FIXED_LEN_BYTE_ARRAY(16)</code> annotated <code>UUID</code></td>
+<td><code>setUuid</code></td>
+<td><code>UUID</code></td>
+</tr>
+<tr>
+<td><code>FIXED_LEN_BYTE_ARRAY(12)</code> annotated <code>INTERVAL</code></td>
+<td><code>setInterval</code></td>
+<td><code>PqInterval</code></td>
+</tr>
+<tr>
+<td>any primitive</td>
+<td><code>setNull</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>struct</code> / <code>LIST</code> / <code>MAP</code> group</td>
+<td><code>setStruct</code> / <code>setList</code> / <code>setMap</code></td>
+<td>a filler over <code>StructBuilder</code> / <code>ListBuilder</code> / <code>MapBuilder</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>ListBuilder</code> has the same set as <code>addInt</code>, <code>addString</code>, <code>addStruct</code>, <code>addNull</code>, … and <code>MapBuilder</code> has <code>addEntry</code>, whose entry struct declares the two fields <code>key</code> and <code>value</code>.</p>
+<p>Timestamp columns split by <code>isAdjustedToUTC</code>, mirroring the reader's split between <code>getTimestamp</code> and <code>getLocalTimestamp</code>: using the wrong setter throws, so an instant is never silently reinterpreted. Both APIs also accept every setter by field index; see <a href="../../how-to/write-row-by-row/#addressing-fields-by-index">Addressing fields by index</a>.</p>
+<h2 id="value-ranges">Value Ranges<a class="headerlink" href="#value-ranges" title="Permanent link">&para;</a></h2>
+<p>Some annotations narrow what their physical type may hold. Where one does, both write APIs reject a stored value outside that range, naming the offending row or field:</p>
+<table>
+<thead>
+<tr>
+<th>Annotation</th>
+<th>Accepted values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INT(n)</code> signed, <code>n</code> &lt; physical width</td>
+<td><code>[-2^(n-1), 2^(n-1))</code></td>
+</tr>
+<tr>
+<td><code>INT(n)</code> unsigned, <code>n</code> &lt; physical width</td>
+<td><code>[0, 2^n)</code></td>
+</tr>
+<tr>
+<td><code>TIME(unit, _)</code></td>
+<td><code>[0, one day in unit)</code> — the annotation defines the value as elapsed time after midnight</td>
+</tr>
+<tr>
+<td><code>DECIMAL(p, s)</code></td>
+<td>an unscaled value of at most <code>p</code> digits</td>
+</tr>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td>no value at all; every row must be null, so the column is set through a setter taking a null mask</td>
+</tr>
+</tbody>
+</table>
+<p>Every other annotation narrows nothing, and its column is not scanned per value. <code>DATE</code> and <code>TIMESTAMP</code> are the ones worth naming: every <code>INT32</code> is a day offset the reader materializes, and every <code>INT64</code> is a timestamp in any of the three units, so there is no value for the columnar API to reject. <code>INT(32)</code>, <code>INT(64)</code> and their unsigned forms likewise admit every value of their physical type — a large unsigned value is spelled as a negative, which is also how the reader returns it.</p>
+<p>Two checks are not annotations and always apply: a <code>FIXED_LEN_BYTE_ARRAY</code> value must be exactly the length the column declares, and a present value of a binary column must not be <code>null</code>. The value at a row a <code>Validity</code> marks null is never encoded, so it is never checked.</p>
+<p>An annotation over binary <em>content</em> is not a range, and the writer does not inspect it. A value passed to <code>bytes(...)</code> or <code>fixed(...)</code> is written as given, whether the column is annotated <code>STRING</code>, <code>ENUM</code>, <code>JSON</code>, <code>BSON</code>, <code>VARIANT</code>, <code>GEOMETRY</code> or <code>GEOGRAPHY</code> — encoding a <code>STRING</code> column's values as UTF-8, and producing well-formed payloads under the others, is the caller's to do. Bytes that are not valid UTF-8 are written and read back as replacement characters rather than rejected. <code>StructBuilder.setString</code> takes a <code>String</code> and encodes it, so the row-oriented layer cannot produce that.</p>
+<p><code>PrecisionLossPolicy</code> governs <strong>precision</strong> only, and only on the row-oriented layer — the columnar API converts nothing, so nothing there can lose precision:</p>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REJECT</code> (default)</td>
+<td>Reject a value carrying digits the column's unit or scale cannot hold, naming the field. A value that is exact at the column's unit or scale is written normally.</td>
+</tr>
+<tr>
+<td><code>TRUNCATE</code></td>
+<td>Drop the digits that do not fit: a <code>TIME</code> / <code>TIMESTAMP</code> value is floored to the column's unit, a <code>DECIMAL</code> rescaled with <code>RoundingMode.DOWN</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>A value the column cannot represent at all — a <code>LocalDate</code> beyond the <code>INT32</code> day range, an unscaled decimal wider than the declared precision — is rejected under either policy. This is a conversion check on the row-oriented layer, where a Java type wider than the column is what makes it reachable; the columnar API is handed the stored value directly.</p>
+<h2 id="statistics-written">Statistics Written<a class="headerlink" href="#statistics-written" title="Permanent link">&para;</a></h2>
+<p>Every column chunk carries <code>null_count</code>. <code>min</code> / <code>max</code> are computed under the column's <code>ColumnOrder</code> during encoding and written to the preferred <code>min_value</code> / <code>max_value</code> fields; the deprecated <code>min</code> / <code>max</code> fields are not written.</p>
+<ul>
+<li><strong>Bounds are omitted where their order is undefined.</strong> A column annotated <code>INTERVAL</code>, <code>UNKNOWN</code>, <code>VARIANT</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>LIST</code> or <code>MAP</code> writes its null count alone, parquet-format leaving those orderings unspecified — a bound in an order the reader cannot know would prune away live rows. An all-null chunk has no bounds to write either.</li>
+<li><strong>Truncation.</strong> <code>BYTE_ARRAY</code> bounds longer than <code>statisticsTruncationLength</code> are truncated and flagged inexact (<code>is_min_value_exact</code> / <code>is_max_value_exact</code> = <code>false</code>). Fixed-width types write those flags as <code>true</code>.</li>
+<li><strong><code>nan_count</code></strong> is written for every <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> chunk, including when it is zero — a recorded zero is what lets a reader prove a chunk holds no NaN. No other type writes the field.</li>
+<li><strong><code>distinct_count</code></strong> is written where the chunk still knows its cardinality exactly: any chunk under <code>AUTO</code> that interned its values to the end, whichever encoding the flush-time comparison then chose, and any <code>BOOLEAN</code> chunk, which knows its cardinality without a dictionary. It is absent for a chunk written under a named encoding, and for one that stopped interning part-way — which happens when the dictionary outgrows the writer's analysis budget, and when repeated size probes find it losing to <code>PLAIN</code>.</li>
+</ul>
+<p>Page-level index structures (OffsetIndex, ColumnIndex), Bloom filters, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not yet written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
+<h2 id="created_by"><code>created_by</code><a class="headerlink" href="#created_by" title="Permanent link">&para;</a></h2>
+<p>The default identifier follows the convention Parquet readers parse, naming the library, its version and the build it came from:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>hardwood version &lt;version&gt; (build &lt;commit&gt;)
+</code></pre></div>
+<p><code>createdBy(String)</code> replaces it. Readers that key compatibility workarounds off this field expect the <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> shape; a bare application name is rejected by some of them.</p>
+<h2 id="what-the-writer-rejects">What the Writer Rejects<a class="headerlink" href="#what-the-writer-rejects" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UnsupportedOperationException</code></td>
+<td>A schema column of an unsupported physical type (<code>INT96</code>); a refused codec (<code>LZ4</code>, <code>LZO</code>) or one whose library is missing; an <code>OPTIONAL</code> struct group directly enclosing a repeated field</td>
+</tr>
+<tr>
+<td><code>IllegalArgumentException</code></td>
+<td>An unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>REQUIRED</code> field left unset by a record</td>
+</tr>
+<tr>
+<td><code>IndexOutOfBoundsException</code></td>
+<td>A leaf-column index outside <code>[0, leaf column count)</code> on a <code>ColumnBatch</code> setter, or a field index outside <code>[0, getFieldCount())</code> on a <code>StructBuilder</code> setter</td>
+</tr>
+<tr>
+<td><code>IllegalStateException</code></td>
+<td>Writing after <code>close()</code>; using both write APIs on one file; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned</td>
+</tr>
+<tr>
+<td><code>IOException</code></td>
+<td>The destination cannot be created, written, or finalized</td>
+</tr>
+</tbody>
+</table>
+<p>An <code>OPTIONAL</code> struct group that encloses a repeated field is the one nested shape the writer cannot produce, although Hardwood reads files containing it; it is tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/1026">#1026</a>.</p>
+<p>A <code>ParquetFileWriter</code> that cannot finish a valid file discards its output, leaving nothing at the destination.</p>
 
 
 

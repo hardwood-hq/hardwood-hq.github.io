@@ -752,6 +752,15 @@ every row group, no filter.</div>
 <dd>
 <div class="block">Creates an instance of a <code>ColumnSchema</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#columnWriter()" class="member-name-link">columnWriter()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
+<dd>
+<div class="block">Returns the column-oriented view over this file: a batch-shaped API for callers that
+hold columns rather than records.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/ColumnWriter.html" class="type-name-link" title="class in dev.hardwood.writer">ColumnWriter</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">Writes a Parquet file one aligned batch of columns at a time.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/PageLocation.html#compressedPageSize()" class="member-name-link">compressedPageSize()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageLocation.html" title="class in dev.hardwood.metadata">PageLocation</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/PageLocation.html#param-compressedPageSize"><code>compressedPageSize</code></a> record component.</div>
@@ -3823,7 +3832,9 @@ row limit.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/ParquetFileWriter.html" class="type-name-link" title="class in dev.hardwood.writer">ParquetFileWriter</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
 <dd>
-<div class="block">Writes a Parquet file through a columnar batch API.</div>
+<div class="block">Writes a Parquet file through a columnar or a row-oriented API: <a href="dev/hardwood/writer/ParquetFileWriter.html#columnWriter()"><code>ParquetFileWriter.columnWriter()</code></a> takes an
+aligned slice of typed arrays, <a href="dev/hardwood/writer/ParquetFileWriter.html#rowWriter()"><code>ParquetFileWriter.rowWriter()</code></a> takes one record at a time, and one file is
+written through one of the two, not both.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#pathInSchema()" class="member-name-link">pathInSchema()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
@@ -4186,8 +4197,8 @@ hold records rather than columns.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/RowWriter.html" class="type-name-link" title="class in dev.hardwood.writer">RowWriter</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
 <dd>
-<div class="block">Writes a Parquet file record by record, over the same columnar core <a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>
-exposes through <a href="dev/hardwood/writer/ParquetFileWriter.html#writeBatch(java.util.function.Consumer)"><code>ParquetFileWriter.writeBatch(Consumer)</code></a>.</div>
+<div class="block">Writes a Parquet file record by record, over the same columnar core <a href="dev/hardwood/writer/ColumnWriter.html" title="class in dev.hardwood.writer"><code>ColumnWriter</code></a>
+exposes through <a href="dev/hardwood/writer/ColumnWriter.html#writeBatch(java.util.function.Consumer)"><code>ColumnWriter.writeBatch(Consumer)</code></a>.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:S">S</h2>
@@ -5291,7 +5302,7 @@ does not match what the accessor expects — for example, calling
 <dd>
 <div class="block">Appends the remaining bytes of <code>data</code> to the file.</div>
 </dd>
-<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#writeBatch(java.util.function.Consumer)" class="member-name-link">writeBatch(Consumer)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
+<dt><a href="dev/hardwood/writer/ColumnWriter.html#writeBatch(java.util.function.Consumer)" class="member-name-link">writeBatch(Consumer)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnWriter.html" title="class in dev.hardwood.writer">ColumnWriter</a></dt>
 <dd>
 <div class="block">Writes one aligned batch of column values, flushing row groups as the buffered
 data crosses the row-group target.</div>
