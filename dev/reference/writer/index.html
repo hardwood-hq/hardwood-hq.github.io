@@ -1596,6 +1596,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="What the Writer Rejects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema Shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
     </ul>
@@ -2108,6 +2125,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="What the Writer Rejects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema Shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2639,7 +2673,7 @@
 <tbody>
 <tr>
 <td><code>UnsupportedOperationException</code></td>
-<td>A schema column of an unsupported physical type (<code>INT96</code>); a refused codec (<code>LZ4</code>, <code>LZO</code>) or one whose library is missing; an <code>OPTIONAL</code> struct group directly enclosing a repeated field</td>
+<td>A schema column of an unsupported physical type (<code>INT96</code>); a refused codec (<code>LZ4</code>, <code>LZO</code>) or one whose library is missing; a <a href="#schema-shapes">schema shape</a> the writer cannot produce</td>
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
@@ -2659,7 +2693,17 @@
 </tr>
 </tbody>
 </table>
-<p>An <code>OPTIONAL</code> struct group that encloses a repeated field is the one nested shape the writer cannot produce, although Hardwood reads files containing it; it is tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/1026">#1026</a>.</p>
+<h3 id="schema-shapes">Schema Shapes<a class="headerlink" href="#schema-shapes" title="Permanent link">&para;</a></h3>
+<p>Repetition is writable wherever a <code>LIST</code> or <code>MAP</code> annotation accounts for it. An annotated group is <code>REQUIRED</code> or <code>OPTIONAL</code> and holds exactly one <code>REPEATED</code> entry, which for a <code>MAP</code> is a group of <code>key</code> and <code>value</code>. That admits the canonical three-level <code>LIST</code> and two-level <code>MAP</code> layouts <code>FileSchema.builder</code> declares, and the legacy two-level lists a schema read from an existing file may carry: <code>LIST { repeated element }</code>, whose entry is the element, and <code>LIST { repeated group element { … } }</code>, whose entry is an element struct.</p>
+<p>Every other arrangement of repetition is rejected when the writer is created, since nothing in the schema says where its entries begin and end:</p>
+<ul>
+<li>a <code>REPEATED</code> field — leaf or group — whose parent carries neither annotation;</li>
+<li>a <code>LIST</code> or <code>MAP</code> group that is itself <code>REPEATED</code>;</li>
+<li>a <code>LIST</code> or <code>MAP</code> group holding anything other than its single <code>REPEATED</code> entry;</li>
+<li>a <code>MAP</code> whose entry is a leaf rather than a group.</li>
+</ul>
+<p>An <code>OPTIONAL</code> struct group enclosing a repeated field is rejected as well, although Hardwood reads files containing it; it is tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/1026">#1026</a>.</p>
+<p>The row API reaches a list's values through an element node below the entry, which the legacy two-level lists do not have, so <code>rowWriter()</code> refuses those two shapes and <code>columnWriter()</code> writes them. <code>rowWriter()</code> also requires sibling field names to be unique, which the <code>ColumnBatch</code> indices and dotted paths do not.</p>
 <p>A <code>ParquetFileWriter</code> that cannot finish a valid file discards its output, leaving nothing at the destination.</p>
 
 
@@ -2710,8 +2754,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/afd795d5b7f9531ccd91f7e4e128a38aae2183f8" target="_blank" rel="noopener">
-      afd795d5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/7cd8e9e848bd7b0d2f679dc888bd79f3fa6aebbb" target="_blank" rel="noopener">
+      7cd8e9e8
     </a>
   
 </div>

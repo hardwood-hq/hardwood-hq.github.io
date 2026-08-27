@@ -2176,8 +2176,9 @@
 <p>Offsets are validated: they must start at <code>0</code>, be non-decreasing, and end at exactly the number of entries the element column holds.</p>
 <div class="admonition note">
 <p class="admonition-title">One nested shape is not writable yet</p>
-<p>An <code>OPTIONAL</code> struct group directly enclosing a repeated field — what Arrow-based writers produce for a nullable struct holding a list — is rejected by both write APIs with an <code>UnsupportedOperationException</code> naming the group. Hardwood reads such files; writing them is tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/1026">#1026</a>.</p>
+<p>An <code>OPTIONAL</code> struct group directly enclosing a repeated field — what Arrow-based writers produce for a nullable struct holding a list — is rejected by <code>ParquetFileWriter.create</code> with an <code>UnsupportedOperationException</code> naming the group. Hardwood reads such files; writing them is tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/1026">#1026</a>.</p>
 </div>
+<p>The <code>list</code> and <code>map</code> verbs address the entry offsets of a <code>LIST</code> or <code>MAP</code> group, and a repeated field the annotation does not account for has no offsets to address — so <code>create</code> rejects one, listed under <a href="../../reference/writer/#schema-shapes">Schema Shapes</a>. A schema read back from an existing file may carry a legacy two-level list, <code>LIST { repeated element }</code> or <code>LIST { repeated group element { … } }</code>; both are writable here, addressed through the annotated group's path exactly as the three-level layout is.</p>
 <h2 id="batch-size">Batch Size<a class="headerlink" href="#batch-size" title="Permanent link">&para;</a></h2>
 <p>Batch boundaries leave no trace in the file. The writer distributes each batch's values into per-column page buffers, cuts pages at the page target, and flushes a row group once the buffered data reaches the row-group target; a batch larger than the row-group target is split at that boundary.</p>
 <p>Submit whole columns as one large batch, or stream many small ones and discard each after handing it over; the file is the same either way. Memory is bounded by <code>rowGroupTargetBytes</code> whatever the batch size — see <a href="../../concepts/write-model/">The Write Model</a>.</p>
@@ -2257,8 +2258,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/afd795d5b7f9531ccd91f7e4e128a38aae2183f8" target="_blank" rel="noopener">
-      afd795d5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/7cd8e9e848bd7b0d2f679dc888bd79f3fa6aebbb" target="_blank" rel="noopener">
+      7cd8e9e8
     </a>
   
 </div>

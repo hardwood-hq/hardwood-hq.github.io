@@ -2171,7 +2171,8 @@
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">                </span><span class="p">.</span><span class="na">addList</span><span class="p">(</span><span class="n">inner</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">inner</span><span class="p">.</span><span class="na">addInt</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="na">addInt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">                </span><span class="p">.</span><span class="na">addList</span><span class="p">(</span><span class="n">inner</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">inner</span><span class="p">.</span><span class="na">addInt</span><span class="p">(</span><span class="mi">3</span><span class="p">))));</span>
 </code></pre></div>
-<p>One nested shape cannot be written yet: an <code>OPTIONAL</code> struct group directly enclosing a repeated field — what Arrow-based writers produce for a nullable struct holding a list. <code>rowWriter()</code> rejects such a schema up front, naming the group. Hardwood reads such files; writing them is tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/1026">#1026</a>.</p>
+<p>One nested shape cannot be written yet: an <code>OPTIONAL</code> struct group directly enclosing a repeated field — what Arrow-based writers produce for a nullable struct holding a list. <code>ParquetFileWriter.create</code> rejects such a schema, naming the group. Hardwood reads such files; writing them is tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/1026">#1026</a>.</p>
+<p>Two shapes the columnar API writes are out of reach here: the legacy two-level lists, <code>LIST { repeated element }</code> and <code>LIST { repeated group element { … } }</code>. The builders reach a list's values through an element node below the entry, and in both of those the entry is the element. <code>rowWriter()</code> rejects them, naming the group; <a href="../write-column-by-column/">Column by Column</a> writes them.</p>
 <p>A builder is valid only inside the filler it was handed to. Retaining one and using it after its scope has ended is rejected rather than writing into a later record.</p>
 <h2 id="addressing-fields-by-index">Addressing Fields by Index<a class="headerlink" href="#addressing-fields-by-index" title="Permanent link">&para;</a></h2>
 <p>Every by-name setter has a by-index twin, addressing a field by its position in the struct being filled. <code>getFieldCount()</code> and <code>getFieldName(int)</code> report the positions, which lets code that walks a record's fields uniformly write them back without knowing their names.</p>
@@ -2271,8 +2272,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/afd795d5b7f9531ccd91f7e4e128a38aae2183f8" target="_blank" rel="noopener">
-      afd795d5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/7cd8e9e848bd7b0d2f679dc888bd79f3fa6aebbb" target="_blank" rel="noopener">
+      7cd8e9e8
     </a>
   
 </div>
