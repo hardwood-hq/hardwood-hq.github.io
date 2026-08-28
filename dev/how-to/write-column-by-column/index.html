@@ -2165,7 +2165,7 @@
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">        </span><span class="p">.</span><span class="na">list</span><span class="p">(</span><span class="s">"phones"</span><span class="p">,</span><span class="w"> </span><span class="n">offsets</span><span class="p">,</span><span class="w"> </span><span class="n">listNulls</span><span class="p">)</span>
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">        </span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="s">"phones.list.element"</span><span class="p">,</span><span class="w"> </span><span class="n">elements</span><span class="p">,</span><span class="w"> </span><span class="n">elementNulls</span><span class="p">));</span>
 </code></pre></div>
-<p>An empty list and an absent list are different values: the empty list carries a zero delta, the absent one is marked in the list's <code>Validity</code> and must carry a zero delta as well.</p>
+<p>An empty list and an absent list are different values: the empty list carries a zero delta, the absent one is marked in the list's <code>Validity</code> and must carry a zero delta as well. The same holds one level up: where an enclosing struct is marked absent, a list or map beneath it has no entries, so its offsets must carry a zero delta at that row.</p>
 <p><strong>Maps</strong> work the same way — <code>map(...)</code> sets one offsets array shared by the two leaves under <code>key_value</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">columns</span><span class="p">.</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">        </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="s">"props"</span><span class="p">,</span><span class="w"> </span><span class="n">offsets</span><span class="p">,</span><span class="w"> </span><span class="n">mapNulls</span><span class="p">)</span>
@@ -2174,10 +2174,6 @@
 </code></pre></div>
 <p>Layers compose to any depth: <code>list("m.list.element", innerOffsets)</code> describes the inner list of a list of lists, whose values sit at <code>m.list.element.list.element</code>.</p>
 <p>Offsets are validated: they must start at <code>0</code>, be non-decreasing, and end at exactly the number of entries the element column holds.</p>
-<div class="admonition note">
-<p class="admonition-title">One nested shape is not writable yet</p>
-<p>An <code>OPTIONAL</code> struct group directly enclosing a repeated field — what Arrow-based writers produce for a nullable struct holding a list — is rejected by <code>ParquetFileWriter.create</code> with an <code>UnsupportedOperationException</code> naming the group. Hardwood reads such files; writing them is tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/1026">#1026</a>.</p>
-</div>
 <p>The <code>list</code> and <code>map</code> verbs address the entry offsets of a <code>LIST</code> or <code>MAP</code> group, and a repeated field the annotation does not account for has no offsets to address — so <code>create</code> rejects one, listed under <a href="../../reference/writer/#schema-shapes">Schema Shapes</a>. A schema read back from an existing file may carry a legacy two-level list, <code>LIST { repeated element }</code> or <code>LIST { repeated group element { … } }</code>; both are writable here, addressed through the annotated group's path exactly as the three-level layout is.</p>
 <h2 id="batch-size">Batch Size<a class="headerlink" href="#batch-size" title="Permanent link">&para;</a></h2>
 <p>Batch boundaries leave no trace in the file. The writer distributes each batch's values into per-column buffers, flushes a row group once those reach the row-group target, and cuts the pages as the row group is written out; a batch larger than the row-group target is split at that boundary.</p>
@@ -2258,8 +2254,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/cf88e6127e1bcefc86c144e8b26875ccf9709919" target="_blank" rel="noopener">
-      cf88e612
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8575e8095a828dd4b11030207d411e6b083e7a88" target="_blank" rel="noopener">
+      8575e809
     </a>
   
 </div>
