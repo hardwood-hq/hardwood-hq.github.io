@@ -1651,6 +1651,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#convert-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convert output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#schema-output-formats" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2018,6 +2029,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#convert-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convert output
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#schema-output-formats" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2224,7 +2246,7 @@ run the CLI via Docker without installing it locally — see the <a href="#docke
 </tr>
 <tr>
 <td><code>hardwood convert</code></td>
-<td>Convert a Parquet file to CSV or JSON (head, tail, or all); Variant columns are emitted as a JSON string in CSV and as a native JSON subtree in JSON</td>
+<td>Convert a Parquet file to CSV or JSON (head, tail, or all); JSON output writes numbers and booleans as JSON scalars and a null as <code>null</code>; Variant columns are emitted as a JSON string in CSV and as a native JSON subtree in JSON</td>
 </tr>
 <tr>
 <td><code>hardwood footer</code></td>
@@ -2298,7 +2320,31 @@ run the CLI via Docker without installing it locally — see the <a href="#docke
 <a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>
 <a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="c1"># Convert last 50 rows to CSV</span>
 <a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span>-50<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a>
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="c1"># Convert to CSV, writing \N for null values</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>--null-string<span class="w"> </span><span class="s1">'\N'</span><span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
+<h2 id="convert-output">Convert output<a class="headerlink" href="#convert-output" title="Permanent link">&para;</a></h2>
+<p><code>hardwood convert --format json</code> writes JSON numbers and booleans for
+non-repeated <code>BOOLEAN</code>, <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, and <code>DOUBLE</code> fields that
+carry no logical annotation or an <code>INT</code> annotation. Date, time, timestamp,
+decimal, UUID, interval, <code>FLOAT16</code>, <code>INT96</code>, byte-array, and nested values are
+JSON strings.</p>
+<p>Finite floating-point values are JSON numbers. <code>NaN</code>, <code>Infinity</code>, and
+<code>-Infinity</code> are JSON strings, because JSON has no non-finite number values.</p>
+<p>Unsigned integers are JSON numbers, including values above the signed 64-bit
+range such as <code>18446744073709551615</code>. A JSON parser that represents numbers as
+IEEE 754 doubles — most JavaScript ones do — reads such a value at reduced
+precision; a parser with a big-integer mode reads it exactly.</p>
+<p>A null is <code>null</code> in JSON. In CSV it is an empty field, which an empty string
+value also produces, so the two read the same. Pass <code>--null-string VALUE</code> to
+write something else for a null; the CSV quoting rules apply to that value like
+any other. <code>--null-string</code> is a CSV option — combining it with <code>--format json</code>
+is an error.</p>
+<p><code>--null-string</code> covers whole fields and flattened struct leaves. A null nested
+inside a rendered list, map, or struct cell is the text <code>null</code> in that cell. A
+Variant holding the Variant null is the text <code>null</code> too: that is a value the
+column carries, not an absent one.</p>
 <h2 id="schema-output-formats">Schema output formats<a class="headerlink" href="#schema-output-formats" title="Permanent link">&para;</a></h2>
 <p><code>hardwood schema</code> prints the Parquet schema in its native form by default.
 <code>-F AVRO</code> and <code>-F PROTO</code> render it as an Avro schema or a Protobuf message
@@ -2677,8 +2723,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/10bc6cdd54dd7d0c11e642764928c6c2b3edb4e8" target="_blank" rel="noopener">
-      10bc6cdd
+    <a href="https://github.com/hardwood-hq/hardwood/tree/cf88e6127e1bcefc86c144e8b26875ccf9709919" target="_blank" rel="noopener">
+      cf88e612
     </a>
   
 </div>

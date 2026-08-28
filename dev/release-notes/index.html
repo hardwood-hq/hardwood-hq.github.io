@@ -2030,6 +2030,8 @@
 <li>Shell completion scripts are now generated for zsh and fish in addition to bash</li>
 <li>The native <code>hardwood</code> binary now reads LZ4 and LZ4_RAW compressed files</li>
 <li>Byte sizes printed by the CLI and the <code>dive</code> TUI carry binary unit labels (<code>KiB</code>, <code>MiB</code>, <code>GiB</code>), matching the 1024-based scaling they have always used</li>
+<li><code>hardwood convert --format json</code> writes numbers and booleans as JSON scalars instead of quoted strings, and a null as <code>null</code> instead of the string <code>"null"</code></li>
+<li><code>hardwood convert --format csv</code> writes a null as an empty field instead of the text <code>null</code>, which collided with a string value of <code>null</code>; the new <code>--null-string</code> option picks a different representation, e.g. <code>--null-string '\N'</code></li>
 </ul>
 <h2 id="100final-2026-06-25">1.0.0.Final (2026-06-25)<a class="headerlink" href="#100final-2026-06-25" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.morling.dev/blog/hardwood-1-0-fast-lightweight-apache-parquet-reader-for-the-jvm/">Announcement blog post</a> · <a href="/api-changes/1.0.0.Final/">API changes</a></p>
@@ -2174,8 +2176,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/10bc6cdd54dd7d0c11e642764928c6c2b3edb4e8" target="_blank" rel="noopener">
-      10bc6cdd
+    <a href="https://github.com/hardwood-hq/hardwood/tree/cf88e6127e1bcefc86c144e8b26875ccf9709919" target="_blank" rel="noopener">
+      cf88e612
     </a>
   
 </div>
