@@ -2071,29 +2071,24 @@
 <tr>
 <td><code>dev.hardwood.PageFilter</code></td>
 <td>Filter</td>
-<td>Pages filtered by Column Index predicate pushdown. Fields: file, rowGroupIndex, column, totalPages, pagesKept, pagesSkipped</td>
+<td>Pages filtered by Column Index predicate pushdown, one event per column chunk considered. Fields: file, rowGroupIndex, column, totalPages, pagesKept, pagesSkipped</td>
 </tr>
 <tr>
 <td><code>dev.hardwood.RecordFilter</code></td>
 <td>Filter</td>
-<td>Records filtered by record-level predicate evaluation. Fields: totalRecords, recordsKept, recordsSkipped</td>
+<td>Records filtered by record-level predicate evaluation, one event per file read. Fields: file, totalRecords, recordsKept, recordsSkipped</td>
 </tr>
 <tr>
 <td><code>dev.hardwood.BatchWait</code></td>
 <td>Pipeline</td>
-<td>Consumer blocked waiting for the assembly pipeline. Fields: column</td>
-</tr>
-<tr>
-<td><code>dev.hardwood.PrefetchMiss</code></td>
-<td>Pipeline</td>
-<td>Prefetch queue miss requiring synchronous decode. Fields: file, column, newDepth, queueEmpty</td>
+<td>Consumer blocked waiting for the assembly pipeline; the event's duration is the stall. Fields: column</td>
 </tr>
 </tbody>
 </table>
 <p>Events appear under the <strong>Hardwood</strong> category in JDK Mission Control (JMC) or any JFR analysis tool. Use them to identify:</p>
 <ul>
-<li><strong>I/O bottlenecks</strong> — large <code>FileMapping</code> durations or frequent <code>PrefetchMiss</code> events</li>
-<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were dropped by statistics/bloom pushdown and <code>RowGroupByteRangeFilter</code> how many were excluded by split selection; <code>PageFilter</code> shows how many pages were skipped within surviving row groups; <code>RecordFilter</code> shows how many individual records were filtered out</li>
+<li><strong>I/O bottlenecks</strong> — large <code>FileMapping</code> durations</li>
+<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were dropped by statistics/bloom pushdown and <code>RowGroupByteRangeFilter</code> how many were excluded by split selection; <code>PageFilter</code> shows how many of a column chunk's pages survived the Column Index within a row group that was kept, with no event for a column chunk the Column Index did not narrow — including a chunk that has no Column Index, whose pages are instead dropped from page-header statistics and are not reported; <code>RecordFilter</code> shows how many individual records the predicate decided on per file once that pruning is done</li>
 <li><strong>Decode hotspots</strong> — <code>PageDecoded</code> events with large uncompressed sizes or high frequency</li>
 <li><strong>Pipeline stalls</strong> — <code>BatchWait</code> events indicate the reader is waiting for decoded data</li>
 </ul>
@@ -2202,8 +2197,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/daa14840431086018e237f8ceb2bc5000255de47" target="_blank" rel="noopener">
-      daa14840
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e29c863af3bd36fde2f9d4625c547ba4bfad19bc" target="_blank" rel="noopener">
+      e29c863a
     </a>
   
 </div>

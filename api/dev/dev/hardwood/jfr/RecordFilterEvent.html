@@ -60,6 +60,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#field-detail" tabindex="0">Field Details</a>
 <ol class="toc-list">
+<li><a href="#file" tabindex="0">file</a></li>
 <li><a href="#totalRecords" tabindex="0">totalRecords</a></li>
 <li><a href="#recordsKept" tabindex="0">recordsKept</a></li>
 <li><a href="#recordsSkipped" tabindex="0">recordsSkipped</a></li>
@@ -88,7 +89,19 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RecordFilterEvent</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.jfr/jdk/jfr/Event.html" title="class or interface in jdk.jfr" class="external-link">Event</a></span></div>
-<div class="block">JFR event emitted when records are filtered by record-level predicate evaluation.</div>
+<div class="block"><p>JFR event emitted when records are filtered by record-level predicate evaluation.</p>
+<p>One event per file a read touched, committed when the read moves on to the next
+file and when the reader is closed — so a reader that is never closed reports
+nothing for the file it ended on.</p>
+<p>Record-level filtering is what remains after row-group statistics and the Column
+Index have narrowed the read, so <code>totalRecords</code> counts the records the predicate
+actually decided on, not the rows in the file: rows in pruned row groups and pages
+never reach it, and a read that stops early — <code>head(N)</code>, or a caller that stops
+consuming and closes — counts only as far as it got.</p>
+<p>The counts are the predicate's selectivity rather than the matcher's workload: a
+row group whose statistics prove every one of its rows matches contributes them as
+evaluated and kept, though none was tested individually.</p>
+</div>
 </div>
 </section>
 <section class="summary">
@@ -102,15 +115,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>long</code></div>
-<div class="col-second even-row-color"><code><a href="#recordsKept" class="member-name-link">recordsKept</a></code></div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#file" class="member-name-link">file</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>long</code></div>
-<div class="col-second odd-row-color"><code><a href="#recordsSkipped" class="member-name-link">recordsSkipped</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#recordsKept" class="member-name-link">recordsKept</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>long</code></div>
-<div class="col-second even-row-color"><code><a href="#totalRecords" class="member-name-link">totalRecords</a></code></div>
+<div class="col-second even-row-color"><code><a href="#recordsSkipped" class="member-name-link">recordsSkipped</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>long</code></div>
+<div class="col-second odd-row-color"><code><a href="#totalRecords" class="member-name-link">totalRecords</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -148,6 +164,14 @@ loadScripts(document, 'script');</script>
 <section class="field-details" id="field-detail">
 <h2>Field Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="file">
+<h3>file</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">file</span></div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="totalRecords">
 <h3>totalRecords</h3>

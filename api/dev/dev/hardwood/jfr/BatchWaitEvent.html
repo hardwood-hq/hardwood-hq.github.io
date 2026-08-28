@@ -89,7 +89,9 @@ loadScripts(document, 'script');</script>
 <div class="block"><p>JFR event emitted when the consumer thread blocks waiting for a batch
 to be assembled by the assembly thread.</p>
 <p>This event indicates that the decode/assembly pipeline cannot keep up
-with the consumer, causing the consumer to stall.</p>
+with the consumer, causing the consumer to stall. The event's duration is
+the length of the stall, and it is recorded on the stalled consumer thread.
+A read that never outruns its pipeline emits no event at all.</p>
 </div>
 </div>
 </section>
