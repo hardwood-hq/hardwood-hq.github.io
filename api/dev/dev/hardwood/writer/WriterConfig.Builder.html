@@ -60,7 +60,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#pageTargetBytes(int)" tabindex="0">pageTargetBytes(int)</a></li>
-<li><a href="#rowGroupTargetBytes(long)" tabindex="0">rowGroupTargetBytes(long)</a></li>
+<li><a href="#rowGroupBufferTargetBytes(long)" tabindex="0">rowGroupBufferTargetBytes(long)</a></li>
+<li><a href="#rowGroupTargetRows(long)" tabindex="0">rowGroupTargetRows(long)</a></li>
 <li><a href="#encoding(dev.hardwood.writer.ColumnEncoding)" tabindex="0">encoding(ColumnEncoding)</a></li>
 <li><a href="#encoding(java.lang.String,dev.hardwood.writer.ColumnEncoding)" tabindex="0">encoding(String, ColumnEncoding)</a></li>
 <li><a href="#statisticsTruncationLength(int)" tabindex="0">statisticsTruncationLength(int)</a></li>
@@ -141,13 +142,18 @@ can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java
 <code>TIMESTAMP(MILLIS)</code> column, say; must be non-null.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetBytes(long)" class="member-name-link">rowGroupTargetBytes</a><wbr>(long&nbsp;rowGroupTargetBytes)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupBufferTargetBytes(long)" class="member-name-link">rowGroupBufferTargetBytes</a><wbr>(long&nbsp;rowGroupBufferTargetBytes)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the row-group target; must be positive.</div>
+<div class="block">Sets the byte threshold at which a row group is cut; must be positive.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetRows(long)" class="member-name-link">rowGroupTargetRows</a><wbr>(long&nbsp;rowGroupTargetRows)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the record count at which a row group is cut; must be positive.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the maximum <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound length; must be
 positive.</div>
 </div>
@@ -178,11 +184,42 @@ positive.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="rowGroupTargetBytes(long)">
-<h3>rowGroupTargetBytes</h3>
+<section class="detail" id="rowGroupBufferTargetBytes(long)">
+<h3>rowGroupBufferTargetBytes</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">rowGroupTargetBytes</span><wbr><span class="parameters">(long&nbsp;rowGroupTargetBytes)</span></div>
-<div class="block">Sets the row-group target; must be positive.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">rowGroupBufferTargetBytes</span><wbr><span class="parameters">(long&nbsp;rowGroupBufferTargetBytes)</span></div>
+<div class="block"><p>Sets the byte threshold at which a row group is cut; must be positive.</p>
+<p>The bytes counted are the bytes the writer holds for the open row group: the level
+streams, the dictionary indices, the value stores and the dictionaries. This is the
+writer's memory control, and peak heap follows it. Two things sit on top: the buffers
+hold more than they are charged for while they grow — the value stores by half again,
+the level streams and packed content and every dictionary's arrays by double — and a
+schema with enough columns that each one's share falls below the floor under a
+column's buffers opens at a multiple of the target. Neither grows with how much is
+written.</p>
+<p>It is not the size the row group takes on disk. That is smaller by whatever the
+encoding and the codec win, which is a property of the data rather than of this
+setting. A row group passes this threshold by at most one record, a record not being
+divisible across row groups.</p>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="rowGroupTargetRows(long)">
+<h3>rowGroupTargetRows</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">rowGroupTargetRows</span><wbr><span class="parameters">(long&nbsp;rowGroupTargetRows)</span></div>
+<div class="block"><p>Sets the record count at which a row group is cut; must be positive.</p>
+<p>This is the control over how a file is banded, and the row groups it produces hold
+exactly this many records apart from the last. A row group is cut at this count or at
+<code>rowGroupBufferTargetBytes</code>, whichever is reached first, so a row target set above
+what the buffer target allows has no effect beyond it.</p>
+<p>A structural ceiling sits under both: a chunk accumulates into <code>int</code>-indexed buffers,
+so a row group holds at most <code>Integer.MAX_VALUE - 8</code> records however many are asked
+for. A target above that is that ceiling, which is what makes <code>Long.MAX_VALUE</code> the way
+to say &quot;no row limit, cut on bytes alone&quot;.</p>
+</div>
 </div>
 </section>
 </li>

@@ -2180,8 +2180,8 @@
 </div>
 <p>The <code>list</code> and <code>map</code> verbs address the entry offsets of a <code>LIST</code> or <code>MAP</code> group, and a repeated field the annotation does not account for has no offsets to address — so <code>create</code> rejects one, listed under <a href="../../reference/writer/#schema-shapes">Schema Shapes</a>. A schema read back from an existing file may carry a legacy two-level list, <code>LIST { repeated element }</code> or <code>LIST { repeated group element { … } }</code>; both are writable here, addressed through the annotated group's path exactly as the three-level layout is.</p>
 <h2 id="batch-size">Batch Size<a class="headerlink" href="#batch-size" title="Permanent link">&para;</a></h2>
-<p>Batch boundaries leave no trace in the file. The writer distributes each batch's values into per-column page buffers, cuts pages at the page target, and flushes a row group once the buffered data reaches the row-group target; a batch larger than the row-group target is split at that boundary.</p>
-<p>Submit whole columns as one large batch, or stream many small ones and discard each after handing it over; the file is the same either way. Memory is bounded by <code>rowGroupTargetBytes</code> whatever the batch size — see <a href="../../concepts/write-model/">The Write Model</a>.</p>
+<p>Batch boundaries leave no trace in the file. The writer distributes each batch's values into per-column buffers, flushes a row group once those reach the row-group target, and cuts the pages as the row group is written out; a batch larger than the row-group target is split at that boundary.</p>
+<p>Submit whole columns as one large batch, or stream many small ones and discard each after handing it over; the file is the same either way. What the writer holds follows <code>rowGroupBufferTargetBytes</code> rather than the batch size — see <a href="../../concepts/write-model/">The Write Model</a>.</p>
 <h2 id="configuring-the-writer">Configuring the Writer<a class="headerlink" href="#configuring-the-writer" title="Permanent link">&para;</a></h2>
 <p><code>WriterConfig</code> carries the page and row-group targets, the compression codec and the per-column encoding policy. Pass one to <code>create</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.CompressionCodec</span><span class="p">;</span>
@@ -2190,7 +2190,7 @@
 <a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
 <a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
 <a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">        </span><span class="p">.</span><span class="na">codec</span><span class="p">(</span><span class="n">CompressionCodec</span><span class="p">.</span><span class="na">ZSTD</span><span class="p">)</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="p">.</span><span class="na">rowGroupTargetBytes</span><span class="p">(</span><span class="mi">64L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="p">.</span><span class="na">rowGroupBufferTargetBytes</span><span class="p">(</span><span class="mi">64L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
 <a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="p">.</span><span class="na">encoding</span><span class="p">(</span><span class="s">"temperature"</span><span class="p">,</span><span class="w"> </span><span class="n">ColumnEncoding</span><span class="p">.</span><span class="na">BYTE_STREAM_SPLIT</span><span class="p">)</span>
 <a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
@@ -2258,8 +2258,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/7cd8e9e848bd7b0d2f679dc888bd79f3fa6aebbb" target="_blank" rel="noopener">
-      7cd8e9e8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/2c71576d4c23d55f41bf2e883265f7bd230b93a8" target="_blank" rel="noopener">
+      2c71576d
     </a>
   
 </div>

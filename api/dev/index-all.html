@@ -952,16 +952,20 @@ the size comparison the writer makes once the row group is buffered.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
-<div class="block">Default page target: 1 MiB of uncompressed values per data page.</div>
+<div class="block">Default page target: 1 MiB of encoded values per data page.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
 <div class="block">Default precision-loss policy: reject a value the column cannot hold exactly, rather
 than silently dropping the digits that do not fit.</div>
 </dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_ROW_GROUP_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_BYTES</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
-<div class="block">Default row-group target: 128 MiB of uncompressed data per row group.</div>
+<div class="block">Default row-group buffer target: 128 MiB of buffered values per row group.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_ROW_GROUP_TARGET_ROWS" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_ROWS</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Default row-group row target: 1,048,576 records.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
@@ -3804,7 +3808,7 @@ column chunk.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#pageTargetBytes()" class="member-name-link">pageTargetBytes()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
-<div class="block">Maximum uncompressed bytes of values per data page.</div>
+<div class="block">Encoded-byte threshold at which a data page is cut.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#pageTargetBytes(int)" class="member-name-link">pageTargetBytes(int)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
 <dd>
@@ -4124,6 +4128,14 @@ records no repetition-level histogram for this chunk.</div>
 <dd>
 <div class="block">Creates an instance of a <code>RowGroup</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#rowGroupBufferTargetBytes()" class="member-name-link">rowGroupBufferTargetBytes()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Byte threshold at which a row group is cut, counted as the bytes the writer holds for it.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#rowGroupBufferTargetBytes(long)" class="member-name-link">rowGroupBufferTargetBytes(long)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets the byte threshold at which a row group is cut; must be positive.</div>
+</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupByteRangeFilterEvent.html" class="type-name-link" title="class in dev.hardwood.jfr">RowGroupByteRangeFilterEvent</a> - Class in <a href="dev/hardwood/jfr/package-summary.html">dev.hardwood.jfr</a></dt>
 <dd>
 <div class="block">JFR event emitted when row groups are selected by a byte-range row-group predicate
@@ -4175,13 +4187,13 @@ records no repetition-level histogram for this chunk.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupFilterEvent.html#rowGroupsSkipped" class="member-name-link">rowGroupsSkipped</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupFilterEvent</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.html#rowGroupTargetBytes()" class="member-name-link">rowGroupTargetBytes()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#rowGroupTargetRows()" class="member-name-link">rowGroupTargetRows()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
-<div class="block">Uncompressed byte threshold at which a row group is flushed.</div>
+<div class="block">Record count at which a row group is cut.</div>
 </dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#rowGroupTargetBytes(long)" class="member-name-link">rowGroupTargetBytes(long)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#rowGroupTargetRows(long)" class="member-name-link">rowGroupTargetRows(long)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
 <dd>
-<div class="block">Sets the row-group target; must be positive.</div>
+<div class="block">Sets the record count at which a row group is cut; must be positive.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#rowReader()" class="member-name-link">rowReader()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>

@@ -104,8 +104,11 @@ inside <code>REQUIRED</code> / <code>OPTIONAL</code> <code>struct</code> groups,
 of lists, lists of structs, and maps of any in-scope value). Data is supplied as
 <a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a> slices; the writer packs each column into size-bounded data pages — a
 levelled column's pages carrying an RLE definition-level stream ahead of the values — and
-flushes a row group once its buffered data reaches the configured target, so peak memory is
-bounded regardless of how much is written. Each column chunk is encoded one way throughout:
+flushes a row group once the bytes it holds for that group reach the configured target. Each
+row group is buffered, written and forgotten, so what the writer holds follows the target
+rather than the size of the file — and the target counts what is held, so it is that number
+and not a multiple of it, give or take the slack the value stores carry from growing
+geometrically. Each column chunk is encoded one way throughout:
 by default the writer weighs a dictionary against <code>PLAIN</code> once the row group is buffered and
 takes the smaller, or a <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer"><code>ColumnEncoding</code></a> set per column names the encoding outright. Each page
 body is compressed with the configured codec (<code>ZSTD</code> by default). All of these are

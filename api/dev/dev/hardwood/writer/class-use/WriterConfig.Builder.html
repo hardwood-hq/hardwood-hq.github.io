@@ -111,13 +111,18 @@ can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java
 <code>TIMESTAMP(MILLIS)</code> column, say; must be non-null.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#rowGroupTargetBytes(long)" class="member-name-link">rowGroupTargetBytes</a><wbr>(long&nbsp;rowGroupTargetBytes)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#rowGroupBufferTargetBytes(long)" class="member-name-link">rowGroupBufferTargetBytes</a><wbr>(long&nbsp;rowGroupBufferTargetBytes)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Sets the row-group target; must be positive.</div>
+<div class="block">Sets the byte threshold at which a row group is cut; must be positive.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#rowGroupTargetRows(long)" class="member-name-link">rowGroupTargetRows</a><wbr>(long&nbsp;rowGroupTargetRows)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Sets the record count at which a row group is cut; must be positive.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Sets the maximum <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound length; must be
 positive.</div>
 </div>
