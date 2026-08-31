@@ -1265,6 +1265,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#several-columns-means-one-columnreaders-not-several-columnreaders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Several columns means one ColumnReaders, not several ColumnReaders
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#they-are-not-exclusive" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1924,6 +1935,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#several-columns-means-one-columnreaders-not-several-columnreaders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Several columns means one ColumnReaders, not several ColumnReaders
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#they-are-not-exclusive" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2038,6 +2060,20 @@ model is the price <code>ColumnReader</code> pays for not allocating, and the re
 scans. The full mechanics — layer counts per schema shape, the empty-vs-null distinction, the
 hot-loop null-check shapes — are documented in
 <a href="../../how-to/column-reader/">Read Column by Column</a>.</p>
+<h2 id="several-columns-means-one-columnreaders-not-several-columnreaders">Several columns means one <code>ColumnReaders</code>, not several <code>ColumnReader</code>s<a class="headerlink" href="#several-columns-means-one-columnreaders-not-several-columnreaders" title="Permanent link">&para;</a></h2>
+<p>A <code>ColumnReader</code> is a cursor over one column, and each one built separately is sized for itself.
+Batch capacity is a byte budget divided by the widths of the columns that reader projects, so a
+<code>BYTE_ARRAY</code> column batches at fewer rows than an <code>INT32</code> one over the same file, and a filtered
+reader is sized for its predicate's columns as well as its own. Two readers built independently
+therefore reach different rows on their <em>n</em>th batch.</p>
+<p>That makes <code>while (a.nextBatch() &amp; b.nextBatch())</code> the wrong shape for reading two columns of the
+same rows: the loop stops when whichever reader has the larger batches runs out, and the values it
+took from each on any given turn came from different rows. Neither reader reports a problem,
+because neither has one — each is a complete, correct read of its own column.</p>
+<p><code>ColumnReaders</code> is the multi-column read. Its readers share one row-group iterator and one batch
+size, and <code>ColumnReaders.nextBatch()</code> advances all of them together and checks that they agree.
+Reach for a bare <code>ColumnReader</code> when you want one column, and for <code>ColumnReaders</code> the moment you
+want two.</p>
 <h2 id="they-are-not-exclusive">They are not exclusive<a class="headerlink" href="#they-are-not-exclusive" title="Permanent link">&para;</a></h2>
 <p>Nothing forces a single choice per file. A pipeline can open a <code>ColumnReader</code> to compute an
 aggregate over one column and a <code>RowReader</code> elsewhere to materialize matching records — both
@@ -2099,8 +2135,8 @@ not per program.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/1793df6c3fcd8c5e85669ce8192b350e17dbd54e" target="_blank" rel="noopener">
-      1793df6c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e343d48e399a393543276bdeec827755205bd7e3" target="_blank" rel="noopener">
+      e343d48e
     </a>
   
 </div>

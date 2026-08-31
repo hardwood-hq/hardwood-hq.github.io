@@ -260,17 +260,23 @@ only (phantom slots from null/empty parents are excluded).</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">nextBatch</span>()</div>
 <div class="block"><p>Advance to the next batch.</p>
-<p><strong>Multi-column alignment.</strong> Every <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> over the same file produces
-batches at the same row boundaries — call <code>nextBatch()</code> on each in turn and they
-will report identical <a href="#getRecordCount()"><code>getRecordCount()</code></a>s for the matching batch. This holds
-because the per-column drain workers all use the same internal batch capacity and
-every reader observes the same total row count per row group.</p>
-<p>Consumers reading multiple columns in lockstep should generally prefer
-<a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> (obtained from
-<a href="ParquetFileReader.html#buildColumnReaders(dev.hardwood.schema.ColumnProjection)"><code>ParquetFileReader.buildColumnReaders(dev.hardwood.schema.ColumnProjection)</code></a>),
-which shares a single <code>RowGroupIterator</code> across all
-columns and exposes a single coordinated <a href="ColumnReaders.html#nextBatch()"><code>ColumnReaders.nextBatch()</code></a> that drives
-every reader and validates alignment in one call.</p>
+<p><strong>One reader advances only itself.</strong> Readers built separately — each from its own
+<a href="ParquetFileReader.html#buildColumnReader(java.lang.String)"><code>ParquetFileReader.buildColumnReader(String)</code></a> — are independent cursors, and the
+batch a reader hands out is sized for the columns <em>it</em> reads. A batch of a
+<code>BYTE_ARRAY</code> column therefore covers fewer rows than a batch of an <code>INT32</code> one over
+the same file, and a filtered reader is sized for its predicate's columns as well as
+its own. Two such readers reach different rows on their nth batch.</p>
+<p>So do not pair them: <code>while (a.nextBatch() &amp; b.nextBatch())</code> ends when whichever
+reader has the larger batches runs out first, and the values it took from each on any
+given turn are from different rows. Neither reader reports anything wrong, because
+neither is wrong — each is a complete, correct read of its own column.</p>
+<p>To read several columns of the same rows, use <a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a>, from
+<a href="ParquetFileReader.html#buildColumnReaders(dev.hardwood.schema.ColumnProjection)"><code>ParquetFileReader.buildColumnReaders(dev.hardwood.schema.ColumnProjection)</code></a>. Its
+readers share one <code>RowGroupIterator</code> and one batch size,
+and <a href="ColumnReaders.html#nextBatch()"><code>ColumnReaders.nextBatch()</code></a> advances them together and checks that their record
+counts agree. Advance them through that method rather than this one: this method moves
+a single reader, so calling it on one member of a <a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> leaves the rest
+behind on the batch they already hold.</p>
 </div>
 <dl class="notes">
 <dt>Returns:</dt>
