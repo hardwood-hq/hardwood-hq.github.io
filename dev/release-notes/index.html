@@ -2028,7 +2028,7 @@
 <ul>
 <li>Parquet files can be written — <code>RowWriter</code> a record at a time, <code>ColumnWriter</code> in aligned batches of primitive arrays — over the full type system, nested structs, lists and maps included<ul>
 <li>Every encoding and compression codec the format defines, bar the deprecated <code>LZ4</code> framing and <code>LZO</code></li>
-<li>Statistics, <code>nan_count</code>, the column and offset indexes and <code>SizeStatistics</code> are written; DuckDB and parquet-java read the files back in CI</li>
+<li>Statistics and <code>nan_count</code> are written, page indexes and <code>SizeStatistics</code> are not</li>
 <li>Footer key-value metadata and the <code>created_by</code> identifier are set on <code>ParquetFileWriter</code>, at any point until <code>close()</code> writes the footer</li>
 </ul>
 </li>
@@ -2216,8 +2216,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/1f32f33b87b09fb54acebffc7bfbfb7ad4b763bc" target="_blank" rel="noopener">
-      1f32f33b
+    <a href="https://github.com/hardwood-hq/hardwood/tree/bbcd25929e799ac10949a07e2cbd7282b8fd40a9" target="_blank" rel="noopener">
+      bbcd2592
     </a>
   
 </div>
