@@ -2001,16 +2001,20 @@
 <h1 id="hardwood">Hardwood<a class="headerlink" href="#hardwood" title="Permanent link">&para;</a></h1>
 <p><em>A modern lightweight Java reader and writer for the <a href="https://parquet.apache.org/">Apache Parquet</a> file format.
 Available as a Java library and a command-line tool.</em></p>
-<div class="admonition success">
-<p class="admonition-title">Hardwood 1.0 is out!</p>
-<p>Hardwood 1.0 is released — read the <a href="https://www.morling.dev/blog/hardwood-1-0-fast-lightweight-apache-parquet-reader-for-the-jvm/">announcement blog post</a> for the story behind the project and what it can do.</p>
+<div class="admonition news">
+<p class="admonition-title">What's new</p>
+<ul>
+<li><strong>2026-08-31</strong> — <a href="https://www.morling.dev/blog/parquet-file-write-support-bloom-filters-improved-performance-hardwood-1-1-0-beta1/">Hardwood 1.1.0.Beta1</a>: Parquet write support, Bloom filter pruning, faster reads</li>
+<li><strong>2026-06-25</strong> — <a href="https://www.morling.dev/blog/hardwood-1-0-fast-lightweight-apache-parquet-reader-for-the-jvm/">Hardwood 1.0</a>: the release announcement and the story behind the project</li>
+<li><strong>2026-06-01</strong> — <a href="https://www.youtube.com/watch?v=9Ov0Cn_ArHE">Confluent Developer Podcast, Ep. 31</a>: Gunnar Morling on building a new Parquet parser with AI</li>
+</ul>
 </div>
 <h2 id="why-hardwood">Why Hardwood<a class="headerlink" href="#why-hardwood" title="Permanent link">&para;</a></h2>
 <p>Hardwood gives applications fast and efficient support for reading and writing Parquet, without pulling in Hadoop, Avro, or the wider <a href="https://github.com/apache/parquet-java">parquet-java</a> dependency tree.
 It is built to be:</p>
 <ul>
 <li><strong>Light-weight</strong>: Zero transitive dependencies beyond optional compression libraries (Snappy, ZSTD, LZ4, Brotli)</li>
-<li><strong>Fast</strong>: Hardwood aims to be the fastest Parquet reader and writer for the JVM — the <a href="https://www.morling.dev/blog/hardwood-1-0-fast-lightweight-apache-parquet-reader-for-the-jvm/#_performance">1.0 read benchmarks</a> are published</li>
+<li><strong>Fast</strong>: Hardwood aims to be the fastest Parquet reader and writer for the JVM (<a href="https://www.morling.dev/blog/hardwood-1-0-fast-lightweight-apache-parquet-reader-for-the-jvm/#_performance">1.0 read benchmarks</a>)</li>
 <li><strong>Complete</strong>: Read and write support for flat and nested schemas, every logical type, every primitive type in current use, and the encodings and codecs in current use, with new format additions tracked as they land</li>
 <li><strong>Scalable</strong>: Hardwood is multi-threaded at the core, pages are decoded in parallel, with cross-file prefetching for multi-file reads</li>
 <li><strong>Embeddable</strong>: The Hardwood library can be used in GraalVM native binaries; WASM support coming soon (<a href="/experiments/dive-web/">preview</a>)</li>
@@ -2079,8 +2083,8 @@ Writing targets local files through <code>OutputFile.of(Path)</code>; output to 
 </ul>
 <h2 id="articles-talks-podcasts">Articles, talks &amp; podcasts<a class="headerlink" href="#articles-talks-podcasts" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="https://www.morling.dev/blog/hardwood-new-parser-for-apache-parquet/">Hardwood: A New Parser for Apache Parquet</a> (project announcement)</li>
-<li><a href="https://www.morling.dev/blog/hardwood-1-0-fast-lightweight-apache-parquet-reader-for-the-jvm/">Hardwood 1.0: A Fast, Lightweight Apache Parquet Reader for the JVM</a> (release announcement)</li>
+<li><a href="https://www.morling.dev/blog/hardwood-new-parser-for-apache-parquet/">Hardwood: A New Parser for Apache Parquet</a> (original project announcement)</li>
+<li><a href="https://www.youtube.com/watch?v=9Ov0Cn_ArHE">Building a New Parquet Engine with AI</a> (Confluent Developer podcast)</li>
 <li><a href="https://www.infoq.com/news/2026/07/hardwood-java-parquet/">Hardwood Promises High-Speed JVM Apache Parquet Processing with Zero Mandatory Dependencies</a> (InfoQ article)</li>
 <li><a href="https://speakerdeck.com/gunnarmorling/hardwood-building-a-parquet-parser-from-scratch-with-a-little-help-from-ai">Hardwood: Building a Parquet Parser From Scratch (With a Little Help From AI)</a> (conference talk)</li>
 <li><a href="https://www.youtube.com/watch?v=teqFSSQEtCw">GitHub Open Source Friday with Gunnar Morling</a> (GitHub podcast)</li>
@@ -2135,8 +2139,8 @@ Writing targets local files through <code>OutputFile.of(Path)</code>; output to 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bbcd25929e799ac10949a07e2cbd7282b8fd40a9" target="_blank" rel="noopener">
-      bbcd2592
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d902812ee4ebd9a7c2358e16510246cbe37bf8a1" target="_blank" rel="noopener">
+      d902812e
     </a>
   
 </div>
