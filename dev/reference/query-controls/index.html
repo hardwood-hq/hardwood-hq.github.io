@@ -1963,7 +1963,9 @@ row-group and page skipping.</p>
 <p>The logical-type factories validate the column's logical type at reader creation: <code>BigDecimal</code>
 predicates require a <code>DECIMAL</code> column and <code>UUID</code> predicates require a <code>UUID</code> column. Applying them
 to a plain <code>FIXED_LEN_BYTE_ARRAY</code> column without the corresponding logical-type annotation throws
-<code>IllegalArgumentException</code>. Raw physical-type predicates (<code>int</code>, <code>long</code>, etc.) remain available for
+<code>IllegalArgumentException</code>. A <code>BigDecimal</code> predicate reads a <code>DECIMAL</code> stored as <code>INT32</code>, <code>INT64</code>
+or <code>FIXED_LEN_BYTE_ARRAY</code>; one stored as <code>BYTE_ARRAY</code> is rejected with the same exception.
+Raw physical-type predicates (<code>int</code>, <code>long</code>, etc.) remain available for
 columns without logical types or for filtering on the underlying physical value directly. Filters
 work with all reader types — <code>RowReader</code>, <code>ColumnReader</code>, <code>AvroRowReader</code>, and across multi-file
 readers.</p>
@@ -2043,8 +2045,8 @@ readers.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d902812ee4ebd9a7c2358e16510246cbe37bf8a1" target="_blank" rel="noopener">
-      d902812e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b8e6ff73e98aa2281e980ce4ef168acae2c71608" target="_blank" rel="noopener">
+      b8e6ff73
     </a>
   
 </div>

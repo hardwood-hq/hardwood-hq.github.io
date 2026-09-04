@@ -60,6 +60,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
 <li><a href="#%3Cinit%3E(java.lang.String)" tabindex="0">SchemaIncompatibleException(String)</a></li>
+<li><a href="#%3Cinit%3E(java.lang.String,java.lang.Throwable)" tabindex="0">SchemaIncompatibleException(String, Throwable)</a></li>
 </ol>
 </li>
 </ol>
@@ -97,7 +98,9 @@ length, and enclosing groups of the same nullability and repeatedness. Columns
 that are neither projected nor filtered on are not checked.</p>
 <p>Also thrown, for a read of any size, when a file's footer is internally
 inconsistent: the column chunks a row group lists disagree with the schema about
-which leaf they hold.</p>
+which leaf they hold, or a touched <code>FIXED_LEN_BYTE_ARRAY</code> column declares no
+<code>type_length</code> — which is optional in the format but required to decode the column —
+or declares one that is not positive.</p>
 </div>
 <dl class="notes">
 <dt>See Also:</dt>
@@ -121,6 +124,9 @@ which leaf they hold.</p>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">SchemaIncompatibleException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.Throwable)" class="member-name-link">SchemaIncompatibleException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -150,6 +156,15 @@ which leaf they hold.</p>
 <h3>SchemaIncompatibleException</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SchemaIncompatibleException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message)</span></div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.Throwable)">
+<h3>SchemaIncompatibleException</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SchemaIncompatibleException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause)</span></div>
 </div>
 </section>
 </li>
