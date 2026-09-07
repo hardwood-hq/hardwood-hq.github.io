@@ -1770,6 +1770,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#110-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.0-SNAPSHOT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#110beta1-2026-08-31" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1908,6 +1919,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#110-snapshot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1.0-SNAPSHOT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#110beta1-2026-08-31" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2022,6 +2044,13 @@
 -->
 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
 <p>See <a href="https://github.com/hardwood-hq/hardwood/releases">GitHub Releases</a> for downloads and more information.</p>
+<h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
+<ul>
+<li>A multi-file read opens each file as it reaches it, rather than opening every file when the reader is built, so the time to the first row no longer grows with the number of files (<a href="https://github.com/hardwood-hq/hardwood/issues/1107">#1107</a>).<ul>
+<li>A later file's I/O errors, and any <code>SchemaIncompatibleException</code> its schema raises, now surface from the reading loop rather than from <code>ParquetFileReader.openAll(...)</code> or <code>build()</code> — always before any row of that file is returned. Code that catches those around reader construction alone should catch them around iteration too.</li>
+</ul>
+</li>
+</ul>
 <h2 id="110beta1-2026-08-31">1.1.0.Beta1 (2026-08-31)<a class="headerlink" href="#110beta1-2026-08-31" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.morling.dev/blog/parquet-file-write-support-bloom-filters-improved-performance-hardwood-1-1-0-beta1/">Announcement blog post</a> ·
 <a href="/api-changes/1.1.0.Beta1/">API changes</a></p>
@@ -2217,8 +2246,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a5b2c3cb29de10bb9f0e20449f9a0cadb3b6029a" target="_blank" rel="noopener">
-      a5b2c3cb
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ea5f1beb94116f207cdcd53edcc1782525d2768f" target="_blank" rel="noopener">
+      ea5f1beb
     </a>
   
 </div>

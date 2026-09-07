@@ -2064,10 +2064,13 @@ point — the reader can see in the code which rows the filter admits.</p>
 subsequent file reached by the data-reader plan is validated against it: every column the read
 touches — the projected ones plus any a filter tests — must exist with a matching physical type,
 logical type, repetition type, fixed byte length, and enclosing groups of the same nullability and
-repeatedness, or a <code>SchemaIncompatibleException</code> is thrown up front, rather than surfacing as
-garbage values halfway through a scan.</p>
+repeatedness, or a <code>SchemaIncompatibleException</code> is thrown rather than the mismatch surfacing as
+garbage values.</p>
 <p>Which columns a read touches is known only once a reader is planned, so that is when the check
-runs. Inspecting a file's metadata reports the footer as it is on disk and does not run it.</p>
+runs. A file is planned as the read arrives at it, so a mismatch in a later file is raised while
+iterating rather than when the reader is built — but always before any row of that file is
+returned, which is what keeps a mismatch from being read as data. Inspecting a file's metadata
+reports the footer as it is on disk and does not run the check.</p>
 <p>The match is by field path, never by position. A Parquet footer lists column chunks in the order
 of the schema's flattened leaves, so a column's ordinal belongs to the file that was written, not
 to the column; two files that declare the same columns in a different order describe the same
@@ -2135,8 +2138,8 @@ the classpath — see <a href="../../how-to/compat/">parquet-java Compatibility<
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a5b2c3cb29de10bb9f0e20449f9a0cadb3b6029a" target="_blank" rel="noopener">
-      a5b2c3cb
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ea5f1beb94116f207cdcd53edcc1782525d2768f" target="_blank" rel="noopener">
+      ea5f1beb
     </a>
   
 </div>
