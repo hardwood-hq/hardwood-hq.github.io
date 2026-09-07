@@ -94,14 +94,14 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>
 </dl>
 <hr>
 <object type="image/svg+xml" data="ParquetFileReader.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ParquetFileReader</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></span></div>
+implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
 <div class="block"><p>Reader for one or more Parquet files.</p>
 <p>A reader opened over a list of files exposes the schema of the first file
 and reads rows / column batches across all files in order, with
@@ -484,9 +484,14 @@ validation occurs when a row or column reader is planned.</p>
 <section class="detail" id="rowReader()">
 <h3>rowReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></span>&nbsp;<span class="element-name">rowReader</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></span>&nbsp;<span class="element-name">rowReader</span>()
+                    throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Shortcut for <a href="#buildRowReader()"><code>buildRowReader()</code></a>.build() — read every row of every
 column with no filter.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
 </div>
 </section>
 </li>
@@ -504,9 +509,14 @@ and head/tail limit.</div>
 <section class="detail" id="columnReader(java.lang.String)">
 <h3>columnReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">columnReader</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">columnReader</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;columnName)</span>
+                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Shortcut for <a href="#buildColumnReader(java.lang.String)"><code>buildColumnReader(String)</code></a>.build() — read every row
 group of the named column with no filter. Single-file only.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
 </div>
 </section>
 </li>
@@ -514,10 +524,15 @@ group of the named column with no filter. Single-file only.</div>
 <section class="detail" id="columnReader(int)">
 <h3>columnReader</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">columnReader</span><wbr><span class="parameters">(int&nbsp;columnIndex)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">columnReader</span><wbr><span class="parameters">(int&nbsp;columnIndex)</span>
+                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Shortcut for <a href="#buildColumnReader(int)"><code>buildColumnReader(int)</code></a>.build() — read every row
 group of the column at the given index with no filter. Single-file
 only.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
 </div>
 </section>
 </li>
@@ -544,9 +559,14 @@ Single-file only.</div>
 <section class="detail" id="columnReaders(dev.hardwood.schema.ColumnProjection)">
 <h3>columnReaders</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></span>&nbsp;<span class="element-name">columnReaders</span><wbr><span class="parameters">(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></span>&nbsp;<span class="element-name">columnReaders</span><wbr><span class="parameters">(<a href="../schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a>&nbsp;projection)</span>
+                            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Shortcut for <a href="#buildColumnReaders(dev.hardwood.schema.ColumnProjection)"><code>buildColumnReaders(ColumnProjection)</code></a>.build() —
 every row group, no filter. Works for single- and multi-file.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
 </div>
 </section>
 </li>
@@ -569,6 +589,8 @@ access to a column projection. Works for single- and multi-file.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>

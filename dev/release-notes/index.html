@@ -2051,6 +2051,26 @@
 </ul>
 </li>
 </ul>
+<p><strong>Breaking Changes:</strong></p>
+<ul>
+<li>
+<p>The reader's exception model separates what the transport got wrong from what the file did, so a failure says whether trying again can help (<a href="https://github.com/hardwood-hq/hardwood/issues/1104">#1104</a>).</p>
+<ul>
+<li><code>IOException</code> now means the transport — a read that failed, a connection reset — and is declared where the reader reaches the file: <code>RowReader.hasNext</code>/<code>next</code>/<code>close</code> and <code>ColumnReader.nextBatch</code>/<code>close</code>, as <code>ParquetFileWriter</code> has always declared it. <strong>The canonical idiom is unaffected</strong>, because <code>ParquetFileReader.open(...)</code> already declared <code>IOException</code> and so the enclosing method already handles it:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rows</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="n">rows</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
+</code></pre></div>
+<p>What does need a change is a method that receives an already-open reader and reads from it without otherwise touching <code>IOException</code> — a helper like <code>void print(RowReader rows)</code> — and any read inside a lambda whose functional interface forbids a checked exception, such as <code>forEach</code> or <code>Stream.map</code>.
+- A corrupt file now raises the new unchecked <code>ParquetReadException</code> rather than <code>IOException</code>: bad magic, a corrupt footer, a malformed page index, a misplaced dictionary page, a failed checksum, values that will not decode. <code>SchemaIncompatibleException</code> extends it. <strong>This one is silent</strong> — a <code>catch (IOException)</code> written for corruption keeps compiling and stops catching. It is released alongside the <code>throws</code> clauses deliberately, so the compile error brings you to the error handling the silent change would otherwise slip past.
+- A row group whose page-index region exceeds 2 GB now raises <code>UnsupportedOperationException</code> where it used to raise <code>IOException</code>. <strong>Silent, like the one above</strong> — a <code>catch (IOException)</code> written for it keeps compiling and stops catching.
+- <code>RowReader</code> and <code>ColumnReader</code> implement <code>Closeable</code>, as <code>ParquetFileWriter</code> and <code>InputFile</code> already did.</p>
+</li>
+</ul>
 <h2 id="110beta1-2026-08-31">1.1.0.Beta1 (2026-08-31)<a class="headerlink" href="#110beta1-2026-08-31" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.morling.dev/blog/parquet-file-write-support-bloom-filters-improved-performance-hardwood-1-1-0-beta1/">Announcement blog post</a> ·
 <a href="/api-changes/1.1.0.Beta1/">API changes</a></p>
@@ -2246,8 +2266,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4cde6c124be6599abced142b09f5e2f39731aaec" target="_blank" rel="noopener">
-      4cde6c12
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ccf090147281c7564349946645e48e231870e77f" target="_blank" rel="noopener">
+      ccf09014
     </a>
   
 </div>

@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Hardwood API report — HEAD (4cde6c12) vs 1.1.0.Beta1</title>
+<title>Hardwood API report — HEAD (ccf09014) vs 1.1.0.Beta1</title>
 <style>
 body {
     font-family: Verdana;
@@ -173,7 +173,7 @@ ul {
 </head>
 <body>
 <h1>Hardwood API report</h1>
-<p><a href="https://github.com/hardwood-hq/hardwood/commit/4cde6c124be6599abced142b09f5e2f39731aaec" target="_blank" rel="noopener">HEAD (4cde6c12)</a> vs <a href="https://github.com/hardwood-hq/hardwood/commit/fe06a5d09d299c20c21823692c574edfdf780189" target="_blank" rel="noopener">1.1.0.Beta1</a> &mdash; generated 2026-09-07T08:29:47Z</p>
+<p><a href="https://github.com/hardwood-hq/hardwood/commit/ccf090147281c7564349946645e48e231870e77f" target="_blank" rel="noopener">HEAD (ccf09014)</a> vs <a href="https://github.com/hardwood-hq/hardwood/commit/fe06a5d09d299c20c21823692c574edfdf780189" target="_blank" rel="noopener">1.1.0.Beta1</a> &mdash; generated 2026-09-07T09:59:35Z</p>
 <ul>
   <li><a href="#hardwood-core">hardwood-core</a></li>
   <li><a href="#hardwood-avro">hardwood-avro</a></li>
@@ -201,7 +201,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-09-07T08:29:46.969+0000
+				2026-09-07T09:59:35.119+0000
 			</td>
 		</tr>
 		<tr>
@@ -243,7 +243,7 @@ ul {
 		<tr>
 			<td id="semver-label">Semantic Versioning:</td>
 			<td id="semver-version">
-				0.0.1
+				0.1.0
 			</td>
 		</tr>
 	</table>
@@ -266,11 +266,81 @@ ul {
 		<tbody>
 		<tr>
 	<td>
-		<span class="modified">MODIFIED</span>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.reader.ColumnReader">
+			dev.hardwood.reader.ColumnReader
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.reader.ColumnReaders">
+			dev.hardwood.reader.ColumnReaders
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
 	</td>
 	<td>
 		<a href="#dev.hardwood.reader.ParquetFileReader">
 			dev.hardwood.reader.ParquetFileReader
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder">
+			dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder">
+			dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.reader.ParquetFileReader$RowReaderBuilder">
+			dev.hardwood.reader.ParquetFileReader$RowReaderBuilder
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="new">NEW</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.reader.ParquetReadException">
+			dev.hardwood.reader.ParquetReadException
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.reader.RowReader">
+			dev.hardwood.reader.RowReader
 		</a>
 	</td>
 </tr>
@@ -284,6 +354,16 @@ ul {
 		</a>
 	</td>
 </tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.writer.ParquetFileWriter">
+			dev.hardwood.writer.ParquetFileWriter
+		</a>
+	</td>
+</tr>
 
 		</tbody>
 	</table>
@@ -292,16 +372,746 @@ ul {
 <span>Binary incompatible changes are marked with (!) while source incompatible changes are marked with (*).</span>
 </div>
 <div>
+	<div class="class" id="dev.hardwood.reader.ColumnReader">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.ColumnReader"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.reader.ColumnReader
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		<div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>INTERFACE_ADDED</td></tr>
+
+		</tbody>
+	</table>
+</div>
+
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			<span class="label_class_member">Interfaces:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Interface</td>
+		<td>Compatibility Changes</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.Closeable</td>
+<td>n.a.</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">void</span></td>
+<td>close()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			494
+		</td>
+		<td>
+			512
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">boolean</span></td>
+<td>nextBatch()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			176
+		</td>
+		<td>
+			187
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.reader.ColumnReaders">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.ColumnReaders"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.reader.ColumnReaders
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		<div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>INTERFACE_ADDED</td></tr>
+
+		</tbody>
+	</table>
+</div>
+
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			<span class="label_class_member">Interfaces:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Interface</td>
+		<td>Compatibility Changes</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.Closeable</td>
+<td>n.a.</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">void</span></td>
+<td>close()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			273
+		</td>
+		<td>
+			282
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">boolean</span></td>
+<td>nextBatch()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			207
+		</td>
+		<td>
+			216
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
 	<div class="class" id="dev.hardwood.reader.ParquetFileReader">
 		<div class="class_header">
 			<span class="label">
 				<a name="dev.hardwood.reader.ParquetFileReader"></a>
-				<span class="modified">MODIFIED</span>
+				<span class="modified">MODIFIED&#160;(*)</span>
 				
 				<span class="modifier unchanged">public</span>
 
 				<span class="unchanged">class</span>
 &#160;dev.hardwood.reader.ParquetFileReader
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		<div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>INTERFACE_ADDED</td></tr>
+
+		</tbody>
+	</table>
+</div>
+
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			<span class="label_class_member">Interfaces:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Interface</td>
+		<td>Compatibility Changes</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.Closeable</td>
+<td>n.a.</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">dev.hardwood.reader.ColumnReader</span></td>
+<td>columnReader(<span class="method_parameter unchanged">java.lang.String</span>)</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			330
+		</td>
+		<td>
+			336
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">dev.hardwood.reader.ColumnReader</span></td>
+<td>columnReader(<span class="method_parameter unchanged">int</span>)</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			337
+		</td>
+		<td>
+			343
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">dev.hardwood.reader.ColumnReaders</span></td>
+<td>columnReaders(<span class="method_parameter unchanged">dev.hardwood.schema.ColumnProjection</span>)</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			358
+		</td>
+		<td>
+			364
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">dev.hardwood.reader.RowReader</span></td>
+<td>rowReader()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			314
+		</td>
+		<td>
+			320
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">final</span>
+<span class="modifier unchanged">static</span>
+<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.reader.ParquetFileReader$ColumnReaderBuilder
 			</span>
 			<a href="#toc" class="toc_link">top</a>
 		</div>
@@ -324,7 +1134,767 @@ ul {
 			
 		</div>
 		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">dev.hardwood.reader.ColumnReader</span></td>
+<td>build()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			961
+		</td>
+		<td>
+			991
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">final</span>
+<span class="modifier unchanged">static</span>
+<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.reader.ParquetFileReader$ColumnReadersBuilder
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
 			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">dev.hardwood.reader.ColumnReaders</span></td>
+<td>build()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			1033
+		</td>
+		<td>
+			1063
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.reader.ParquetFileReader$RowReaderBuilder">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.ParquetFileReader$RowReaderBuilder"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">final</span>
+<span class="modifier unchanged">static</span>
+<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.reader.ParquetFileReader$RowReaderBuilder
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">dev.hardwood.reader.RowReader</span></td>
+<td>build()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			867
+		</td>
+		<td>
+			897
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.reader.ParquetReadException">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.ParquetReadException"></a>
+				<span class="new">NEW</span>
+				<span class="new">&#160;(Serializable compatible)&#160;</span>
+				<span class="modifier new">public</span>
+
+				<span class="new">class</span>
+&#160;dev.hardwood.reader.ParquetReadException
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		<div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>INTERFACE_ADDED</td></tr>
+
+		</tbody>
+	</table>
+</div>
+
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			<span class="label_class_member">Superclass:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Superclass</td>
+		<td>Compatibility Changes</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.lang.RuntimeException</td>
+<td>n.a.</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		<div class="class_interfaces">
+			<span class="label_class_member">Interfaces:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Interface</td>
+		<td>Compatibility Changes</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.Serializable</td>
+<td>n.a.</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		<div class="class_serialVersionUid">
+	<table>
+		<thead>
+		<tr>
+			<td></td>
+			<td>Serializable</td>
+			<td>default serialVersionUID</td>
+			<td>serialVersionUID in class</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+<td class="matrix_layout">Old</td><td class="modified">false</td>
+<td class="modified">n.a.</td>
+<td class="modified">n.a.</td>
+</tr>
+<tr>
+<td class="matrix_layout">New</td><td class="modified">true</td>
+<td class="modified">4387959956388447437</td>
+<td class="modified">1</td>
+</tr>
+
+		</tbody>
+	</table>
+</div>
+
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			<span class="label_class_member">Constructors:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Constructor</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td>ParquetReadException(<span class="method_parameter unchanged">java.lang.String</span>)</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			35
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td>ParquetReadException(<span class="method_parameter unchanged">java.lang.String</span>, <span class="method_parameter unchanged">java.lang.Throwable</span>)</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			39
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		<div class="class_methods">
+			
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.reader.RowReader">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.reader.RowReader"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">public</span>
+<span class="modifier unchanged">abstract</span>
+
+				<span class="unchanged">interface</span>
+&#160;dev.hardwood.reader.RowReader
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		<div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>INTERFACE_ADDED</td></tr>
+
+		</tbody>
+	</table>
+</div>
+
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			<span class="label_class_member">Interfaces:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Interface</td>
+		<td>Compatibility Changes</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.Closeable</td>
+<td>n.a.</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+<span class="modifier unchanged">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">void</span></td>
+<td>close()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+<span class="modifier unchanged">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">boolean</span></td>
+<td>hasNext()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+<span class="modifier unchanged">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">void</span></td>
+<td>next()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
 		</div>
 		
 	</div>
@@ -335,7 +1905,7 @@ ul {
 			<span class="label">
 				<a name="dev.hardwood.reader.SchemaIncompatibleException"></a>
 				<span class="modified">MODIFIED</span>
-				<span class="removed">&#160;(Serializable incompatible(!): default serialVersionUID changed)&#160;</span>
+				<span class="removed">&#160;(Serializable incompatible(!): superclass modified)&#160;</span>
 				<span class="modifier unchanged">public</span>
 
 				<span class="unchanged">class</span>
@@ -360,9 +1930,23 @@ ul {
 	</thead>
 	<tbody>
 	<tr>
-<td><span class="unchanged">UNCHANGED</span></td>
-<td>java.lang.RuntimeException</td>
-<td>n.a.</td>
+<td><span class="modified">MODIFIED</span></td>
+<td>dev.hardwood.reader.ParquetReadException(&lt;-&#160;java.lang.RuntimeException)</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>SUPERCLASS_ADDED</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
 </tr>
 
 	</tbody>
@@ -437,7 +2021,7 @@ ul {
 			n.a.
 		</td>
 		<td>
-			31
+			34
 		</td>
 	</tr>
 	</tbody>
@@ -448,6 +2032,45 @@ ul {
 	</tbody>
 </table>
 
+		</div>
+		<div class="class_methods">
+			
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.writer.ParquetFileWriter">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.writer.ParquetFileWriter"></a>
+				<span class="modified">MODIFIED</span>
+				
+				<span class="modifier unchanged">final</span>
+<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.writer.ParquetFileWriter
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
 		</div>
 		<div class="class_methods">
 			
@@ -476,7 +2099,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-09-07T08:29:47.267+0000
+				2026-09-07T09:59:35.411+0000
 			</td>
 		</tr>
 		<tr>
@@ -518,14 +2141,557 @@ ul {
 		<tr>
 			<td id="semver-label">Semantic Versioning:</td>
 			<td id="semver-version">
-				0.0.1
+				0.1.0
 			</td>
 		</tr>
 	</table>
 </div>
 
+<ul>
+<li>
+<a href="#toc">Classes</a>
+</li>
+</ul>
+<div class="toc" id="toc">
+	<span class="label">Classes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Status</td>
+			<td>Fully Qualified Name</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.avro.AvroReaders">
+			dev.hardwood.avro.AvroReaders
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.avro.AvroReaders$RowReaderBuilder">
+			dev.hardwood.avro.AvroReaders$RowReaderBuilder
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.avro.AvroRowReader">
+			dev.hardwood.avro.AvroRowReader
+		</a>
+	</td>
+</tr>
+
+		</tbody>
+	</table>
+</div>
 <div class="explanations">
 <span>Binary incompatible changes are marked with (!) while source incompatible changes are marked with (*).</span>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.avro.AvroReaders">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.avro.AvroReaders"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">final</span>
+<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.avro.AvroReaders
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">static</span>
+<span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">dev.hardwood.avro.AvroRowReader</span></td>
+<td>rowReader(<span class="method_parameter unchanged">dev.hardwood.reader.ParquetFileReader</span>)</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			40
+		</td>
+		<td>
+			42
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.avro.AvroReaders$RowReaderBuilder">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.avro.AvroReaders$RowReaderBuilder"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">final</span>
+<span class="modifier unchanged">static</span>
+<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.avro.AvroReaders$RowReaderBuilder
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">dev.hardwood.avro.AvroRowReader</span></td>
+<td>build()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			100
+		</td>
+		<td>
+			102
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.avro.AvroRowReader">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.avro.AvroRowReader"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.avro.AvroRowReader
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		<div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>INTERFACE_ADDED</td></tr>
+
+		</tbody>
+	</table>
+</div>
+
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			<span class="label_class_member">Interfaces:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Interface</td>
+		<td>Compatibility Changes</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.Closeable</td>
+<td>n.a.</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">void</span></td>
+<td>close()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			125
+		</td>
+		<td>
+			127
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">boolean</span></td>
+<td>hasNext()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			105
+		</td>
+		<td>
+			107
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="modified">MODIFIED&#160;(*)</span></td>
+<td><span class="modifier unchanged">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type unchanged">org.apache.avro.generic.GenericRecord</span></td>
+<td>next()</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Status:</td>
+		<td>Name:</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.io.IOException</td>
+</tr>
+
+	</tbody>
+</table>
+</td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NOW_THROWS_CHECKED_EXCEPTION</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			112
+		</td>
+		<td>
+			114
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
 </div>
 <hr>
 <h1 id="hardwood-s3">hardwood-s3</h1>
@@ -548,7 +2714,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-09-07T08:29:47.078+0000
+				2026-09-07T09:59:35.224+0000
 			</td>
 		</tr>
 		<tr>
@@ -620,7 +2786,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-09-07T08:29:47.168+0000
+				2026-09-07T09:59:35.306+0000
 			</td>
 		</tr>
 		<tr>
