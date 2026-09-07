@@ -101,7 +101,7 @@ row-group targets, the codec and the dictionary settings for either.</p>
 </li>
 <li>
 <div id="class-summary">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button><button id="class-summary-tab3" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab3', 2)" class="table-tab">Enum Classes</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button><button id="class-summary-tab3" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab3', 2)" class="table-tab">Enum Classes</button><button id="class-summary-tab5" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab5', 2)" class="table-tab">Exception Classes</button></div>
 <div id="class-summary.tabpanel" role="tabpanel" aria-labelledby="class-summary-tab0">
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
@@ -133,27 +133,32 @@ row-group targets, the codec and the dictionary settings for either.</p>
 aligned slice of typed arrays, <a href="ParquetFileWriter.html#rowWriter()"><code>ParquetFileWriter.rowWriter()</code></a> takes one record at a time, and one file is
 written through one of the two, not both.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab3"><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab3">
+<div class="col-first even-row-color class-summary class-summary-tab5"><a href="ParquetWriteException.html" title="class in dev.hardwood.writer">ParquetWriteException</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab5">
+<div class="block">Thrown when the writer cannot produce the file, for a reason that is neither
+the caller's misuse nor the destination failing.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">
 <div class="block">What <a href="RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than the column it is written
 to can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> with microseconds into a <code>TIMESTAMP(MILLIS)</code> column,
 a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> with three decimals into a <code>DECIMAL(_, 2)</code> column.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Writes a Parquet file record by record, over the same columnar core <a href="ColumnWriter.html" title="class in dev.hardwood.writer"><code>ColumnWriter</code></a>
 exposes through <a href="ColumnWriter.html#writeBatch(java.util.function.Consumer)"><code>ColumnWriter.writeBatch(Consumer)</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Sets the fields of one struct — a record being written, or a struct nested inside one.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Tuning knobs for <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Builder for <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>.</div>
 </div>
 </div>

@@ -254,8 +254,7 @@ representation, and <a href="#requireSameFile()"><code>requireSameFile()</code><
 <section class="detail" id="requireSameFile()">
 <h3>requireSameFile</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">requireSameFile</span>()
-                     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">requireSameFile</span>()</div>
 <div class="block"><p>Fails unless this chunk's data sits in the file being read.</p>
 <p>A non-empty <code>filePath</code> puts the data in a different file — the legacy split-file layout,
 which Hardwood does not read. Every offset in the chunk's metadata then addresses that
@@ -263,10 +262,12 @@ other file, so following <code>data_page_offset</code> here would decode whateve
 that offset in this one and hand it back as data.</p>
 <p>This is checked where the data is about to be read rather than while parsing the footer,
 so that the metadata of such a file stays inspectable.</p>
+<p>The file is correct — the split-file layout is legal Parquet — and this reader does not
+read it, which is a limit of this library rather than a fault in the file.</p>
 </div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if this chunk's data lives in another file</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if this chunk's data lives in another file</dd>
 </dl>
 </div>
 </section>

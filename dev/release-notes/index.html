@@ -2068,7 +2068,12 @@
 <p>What does need a change is a method that receives an already-open reader and reads from it without otherwise touching <code>IOException</code> — a helper like <code>void print(RowReader rows)</code> — and any read inside a lambda whose functional interface forbids a checked exception, such as <code>forEach</code> or <code>Stream.map</code>.
 - A corrupt file now raises the new unchecked <code>ParquetReadException</code> rather than <code>IOException</code>: bad magic, a corrupt footer, a malformed page index, a misplaced dictionary page, a failed checksum, values that will not decode. <code>SchemaIncompatibleException</code> extends it. <strong>This one is silent</strong> — a <code>catch (IOException)</code> written for corruption keeps compiling and stops catching. It is released alongside the <code>throws</code> clauses deliberately, so the compile error brings you to the error handling the silent change would otherwise slip past.
 - A row group whose page-index region exceeds 2 GB now raises <code>UnsupportedOperationException</code> where it used to raise <code>IOException</code>. <strong>Silent, like the one above</strong> — a <code>catch (IOException)</code> written for it keeps compiling and stops catching.
-- <code>RowReader</code> and <code>ColumnReader</code> implement <code>Closeable</code>, as <code>ParquetFileWriter</code> and <code>InputFile</code> already did.</p>
+- <code>RowReader</code> and <code>ColumnReader</code> implement <code>Closeable</code>, as <code>ParquetFileWriter</code> and <code>InputFile</code> already did.
+- A page that will not decompress and a dictionary that will not decode now raise <code>ParquetReadException</code> too. Decompressing and parsing work on bytes already in memory, so they cannot fail at I/O and no longer say they can. <strong>Silent, like the two above.</strong>
+- A codec library that is absent, or a native one that will not load, now reaches you as the <code>UnsupportedOperationException</code> it always was on other paths. On the dictionary path it was being caught and reported as a failed read, which buried the message naming the dependency to add.
+- A column chunk stored in a separate file (the legacy split-file layout) and a file over 2 GB opened with the mmap-backed range cache now raise <code>UnsupportedOperationException</code> rather than <code>IOException</code>. Both files are correct; it is Hardwood that will not read them. <strong>Silent.</strong>
+- The writer raises the new unchecked <code>ParquetWriteException</code> when a compression codec rejects a page body, where it used to raise <code>IOException</code>. Nothing you passed was wrong and the destination is not involved, so retrying cannot help. <strong>Silent.</strong>
+- A corrupt value inside the metadata — a malformed bloom filter header, a geospatial bounding box missing a required field, a decimal scale or precision that cannot be, an unknown physical type, repetition type, codec or time unit — now raises <code>ParquetReadException</code> rather than <code>IllegalArgumentException</code> or <code>IllegalStateException</code>. These are the file being wrong, not your call being wrong. <strong>Silent.</strong> Both types keep their meaning for calls that really are mistakes, such as asking for a column outside the projection.</p>
 </li>
 </ul>
 <h2 id="110beta1-2026-08-31">1.1.0.Beta1 (2026-08-31)<a class="headerlink" href="#110beta1-2026-08-31" title="Permanent link">&para;</a></h2>
@@ -2266,8 +2271,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ccf090147281c7564349946645e48e231870e77f" target="_blank" rel="noopener">
-      ccf09014
+    <a href="https://github.com/hardwood-hq/hardwood/tree/db6d1bf5f21bbc619fc7deb88dec300dba3bb7bf" target="_blank" rel="noopener">
+      db6d1bf5
     </a>
   
 </div>
