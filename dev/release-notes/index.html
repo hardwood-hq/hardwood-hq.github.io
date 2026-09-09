@@ -2055,6 +2055,9 @@
 <li>A later file's I/O errors, and any <code>SchemaIncompatibleException</code> its schema raises, now surface from the reading loop rather than from <code>ParquetFileReader.openAll(...)</code> or <code>build()</code> — always before any row of that file is returned. Code that catches those around reader construction alone should catch them around iteration too.</li>
 </ul>
 </li>
+<li>
+<p>Every <code>LogicalType</code> member has a static factory, and those are the documented way to construct one — <code>LogicalType.string()</code>, <code>LogicalType.decimal(18, 2)</code>, <code>LogicalType.timestamp(true, TimeUnit.MICROS)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>). The parameterless ones return a shared instance, which the reader now hands back instead of allocating a record per column while it decodes a footer. The record constructors still work.</p>
+</li>
 </ul>
 <p><strong>Breaking Changes:</strong></p>
 <ul>
@@ -2079,6 +2082,9 @@
 - A column chunk stored in a separate file (the legacy split-file layout) and a file over 2 GB opened with the mmap-backed range cache now raise <code>UnsupportedOperationException</code> rather than <code>IOException</code>. Both files are correct; it is Hardwood that will not read them. <strong>Silent.</strong>
 - The writer raises the new unchecked <code>ParquetWriteException</code> when a compression codec rejects a page body, where it used to raise <code>IOException</code>. Nothing you passed was wrong and the destination is not involved, so retrying cannot help. <strong>Silent.</strong>
 - A corrupt value inside the metadata — a malformed bloom filter header, a geospatial bounding box missing a required field, a decimal scale or precision that cannot be, an unknown physical type, repetition type, codec or time unit — now raises <code>ParquetReadException</code> rather than <code>IllegalArgumentException</code> or <code>IllegalStateException</code>. These are the file being wrong, not your call being wrong. <strong>Silent.</strong> Both types keep their meaning for calls that really are mistakes, such as asking for a column outside the projection.</p>
+</li>
+<li>
+<p><code>LogicalType.DecimalType</code> takes its precision before its scale, where it used to take scale first (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>). Every other decimal API takes them in that order — SQL's <code>DECIMAL(p, s)</code>, Arrow, Avro, Iceberg, parquet-cpp — and it is the order the annotation renders in. Only <code>parquet.thrift</code>'s field declaration and the APIs that mirror it read the other way. <strong>This one is silent</strong>, because a swapped call still compiles: <code>LogicalType.decimal(...)</code> rejects a scale above the precision, which catches a transposed pair at the call site, but a column whose scale equals its precision passes either way.</p>
 </li>
 </ul>
 <h2 id="110beta1-2026-08-31">1.1.0.Beta1 (2026-08-31)<a class="headerlink" href="#110beta1-2026-08-31" title="Permanent link">&para;</a></h2>
@@ -2276,8 +2282,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/7d283f5039e3ce53c206ecf37f3a5e28007db5dc" target="_blank" rel="noopener">
-      7d283f50
+    <a href="https://github.com/hardwood-hq/hardwood/tree/50b60a0b936ea55dad06076d1760c3f0e8e49f6b" target="_blank" rel="noopener">
+      50b60a0b
     </a>
   
 </div>

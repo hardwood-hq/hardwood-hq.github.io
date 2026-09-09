@@ -388,6 +388,10 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Brotli compression (high ratio).</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#bson()" class="member-name-link">bson()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>BSON</code> annotation, for a BSON document stored as a byte array.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#BSON" class="member-name-link">BSON</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">BSON document stored as a byte array.</div>
@@ -882,6 +886,10 @@ the page.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-dataPageOffset"><code>dataPageOffset</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#date()" class="member-name-link">date()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>DATE</code> annotation, for a calendar date in days since the Unix epoch.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#DATE" class="member-name-link">DATE</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">Calendar date (days since Unix epoch), stored as INT32.</div>
@@ -905,6 +913,10 @@ the page.</div>
 <dt><a href="dev/hardwood/row/PqInterval.html#days()" class="member-name-link">days()</a> - Method in record class dev.hardwood.row.<a href="dev/hardwood/row/PqInterval.html" title="class in dev.hardwood.row">PqInterval</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/row/PqInterval.html#param-days"><code>days</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#decimal(int,int)" class="member-name-link">decimal(int, int)</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>DECIMAL</code> annotation, for a decimal of a given precision and scale.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#DECIMAL" class="member-name-link">DECIMAL</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
@@ -1179,6 +1191,10 @@ arguments must be non-null.</div>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#ENUM" class="member-name-link">ENUM</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">Enum stored as a UTF-8 string.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#enumType()" class="member-name-link">enumType()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>ENUM</code> annotation, for an enum stored as a UTF-8 string.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.EnumType.html#%3Cinit%3E()" class="member-name-link">EnumType()</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.EnumType.html" title="class in dev.hardwood.metadata">LogicalType.EnumType</a></dt>
 <dd>
@@ -1700,6 +1716,11 @@ plain mask.</div>
 <dd>
 <div class="block">IEEE 32-bit floating point.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#float16()" class="member-name-link">float16()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>FLOAT16</code> annotation, for an IEEE 754 half-precision float stored as a 2-byte
+fixed-length byte array.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.Float16Type.html#%3Cinit%3E()" class="member-name-link">Float16Type()</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>Float16Type</code> record class.</div>
@@ -1759,9 +1780,17 @@ plain mask.</div>
 </dl>
 <h2 class="title" id="I:G">G</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/metadata/LogicalType.html#geography(java.lang.String,dev.hardwood.metadata.LogicalType.EdgeInterpolationAlgorithm)" class="member-name-link">geography(String, LogicalType.EdgeInterpolationAlgorithm)</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>GEOGRAPHY</code> annotation, for geodesic geospatial values in a given CRS.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.GeographyType.html#%3Cinit%3E(java.lang.String,dev.hardwood.metadata.LogicalType.EdgeInterpolationAlgorithm)" class="member-name-link">GeographyType(String, LogicalType.EdgeInterpolationAlgorithm)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.GeographyType.html" title="class in dev.hardwood.metadata">LogicalType.GeographyType</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>GeographyType</code> record class.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#geometry(java.lang.String)" class="member-name-link">geometry(String)</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>GEOMETRY</code> annotation, for planar geospatial values in a given CRS.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.GeometryType.html#%3Cinit%3E(java.lang.String)" class="member-name-link">GeometryType(String)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.GeometryType.html" title="class in dev.hardwood.metadata">LogicalType.GeometryType</a></dt>
 <dd>
@@ -2742,6 +2771,10 @@ and transport settings.</div>
 <dd>
 <div class="block">Creates an instance of a <code>IntersectsPredicate</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#interval()" class="member-name-link">interval()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>INTERVAL</code> annotation, for an interval stored as a 12-byte fixed-length byte array.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#INTERVAL" class="member-name-link">INTERVAL</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">Interval stored as a 12-byte fixed-length byte array.</div>
@@ -2787,6 +2820,10 @@ plain mask.</div>
 <dt><a href="dev/hardwood/writer/ColumnBatch.html#ints(java.lang.String,int%5B%5D,dev.hardwood.Validity)" class="member-name-link">ints(String, int[], Validity)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
 <dd>
 <div class="block">Adds the values for an <code>OPTIONAL INT32</code> column, addressed by name.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#intType(int,boolean)" class="member-name-link">intType(int, boolean)</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>INT</code> annotation, for an integer of a given bit width and signedness.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.IntType.html#%3Cinit%3E(int,boolean)" class="member-name-link">IntType(int, boolean)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.IntType.html" title="class in dev.hardwood.metadata">LogicalType.IntType</a></dt>
 <dd>
@@ -2949,6 +2986,10 @@ plain mask.</div>
 </dl>
 <h2 class="title" id="I:J">J</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/metadata/LogicalType.html#json()" class="member-name-link">json()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>JSON</code> annotation, for a JSON document stored as a UTF-8 string.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#JSON" class="member-name-link">JSON</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">JSON document stored as a UTF-8 string.</div>
@@ -2997,6 +3038,10 @@ for a key it names and leaving the rest in place.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3InputFile.html#length()" class="member-name-link">length()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3">S3InputFile</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#list()" class="member-name-link">list()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>LIST</code> annotation, for a group holding a repeated element.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#list(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">list(RepetitionType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
 <dd>
 <div class="block">Declare a nested <code>LIST</code> element.</div>
@@ -3069,7 +3114,7 @@ timestamp) values.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.DecimalType.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.DecimalType</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
-<div class="block">Decimal with fixed scale and precision.</div>
+<div class="block">Decimal with fixed precision and scale.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html" class="type-name-link" title="enum class in dev.hardwood.metadata">LogicalType.EdgeInterpolationAlgorithm</a> - Enum Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
@@ -3256,6 +3301,10 @@ Variant spec.</div>
 </dl>
 <h2 class="title" id="I:M">M</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/metadata/LogicalType.html#map()" class="member-name-link">map()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>MAP</code> annotation, for a group holding key-value pairs.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#map(dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,int,dev.hardwood.metadata.LogicalType,java.util.function.Consumer)" class="member-name-link">map(RepetitionType, PhysicalType, int, LogicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
 <dd>
 <div class="block">Declare a nested <code>MAP</code> element whose key carries a logical type annotation, giving the
@@ -3559,6 +3608,10 @@ current batch.&quot;</div>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.html#nullPages()" class="member-name-link">nullPages()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnIndex.html#param-nullPages"><code>nullPages</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#nullType()" class="member-name-link">nullType()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>NULL</code> annotation, for a column whose every value is null.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.NullType.html#%3Cinit%3E()" class="member-name-link">NullType()</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.NullType.html" title="class in dev.hardwood.metadata">LogicalType.NullType</a></dt>
 <dd>
@@ -4564,6 +4617,10 @@ positive.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupScannedEvent.html#STRATEGY_SEQUENTIAL" class="member-name-link">STRATEGY_SEQUENTIAL</a> - Static variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupScannedEvent.html" title="class in dev.hardwood.jfr">RowGroupScannedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#string()" class="member-name-link">string()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>STRING</code> annotation, for a UTF-8 encoded string.</div>
+</dd>
 <dt><a href="dev/hardwood/row/VariantType.html#STRING" class="member-name-link">STRING</a> - Enum constant in enum class dev.hardwood.row.<a href="dev/hardwood/row/VariantType.html" title="enum class in dev.hardwood.row">VariantType</a></dt>
 <dd>
 <div class="block">UTF-8 string.</div>
@@ -4627,6 +4684,10 @@ for the sparse-file backing.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html#THOMAS" class="member-name-link">THOMAS</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html" title="enum class in dev.hardwood.metadata">LogicalType.EdgeInterpolationAlgorithm</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#time(boolean,dev.hardwood.metadata.LogicalType.TimeUnit)" class="member-name-link">time(boolean, LogicalType.TimeUnit)</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>TIME</code> annotation, for a time of day of a given resolution.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#TIME_MICROS" class="member-name-link">TIME_MICROS</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">Time of day in microseconds, stored as INT64.</div>
@@ -4646,6 +4707,10 @@ for the sparse-file backing.</div>
 <dt><a href="dev/hardwood/row/PqList.html#times()" class="member-name-link">times()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>
 <div class="block">View the elements as a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a> values.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#timestamp(boolean,dev.hardwood.metadata.LogicalType.TimeUnit)" class="member-name-link">timestamp(boolean, LogicalType.TimeUnit)</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>TIMESTAMP</code> annotation, for a timestamp of a given resolution.</div>
 </dd>
 <dt><a href="dev/hardwood/row/VariantType.html#TIMESTAMP" class="member-name-link">TIMESTAMP</a> - Enum constant in enum class dev.hardwood.row.<a href="dev/hardwood/row/VariantType.html" title="enum class in dev.hardwood.row">VariantType</a></dt>
 <dd>
@@ -5067,6 +5132,10 @@ ordering added to the Parquet format after this release.</div>
 <dd>
 <div class="block">UTF-8 encoded character string.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#uuid()" class="member-name-link">uuid()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>UUID</code> annotation, for a UUID stored as a 16-byte fixed-length byte array.</div>
+</dd>
 <dt><a href="dev/hardwood/row/VariantType.html#UUID" class="member-name-link">UUID</a> - Enum constant in enum class dev.hardwood.row.<a href="dev/hardwood/row/VariantType.html" title="enum class in dev.hardwood.row">VariantType</a></dt>
 <dd>
 <div class="block">UUID stored as 16 bytes (big-endian).</div>
@@ -5303,6 +5372,10 @@ the order they are declared.</div>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#variant(int)" class="member-name-link">variant(int)</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>VARIANT</code> annotation, for a group holding a self-describing, semi-structured value.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqList.html#variants()" class="member-name-link">variants()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>

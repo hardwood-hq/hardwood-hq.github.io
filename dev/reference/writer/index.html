@@ -1469,6 +1469,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logical-type-factories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logical Type Factories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1999,6 +2016,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#logical-type-factories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logical Type Factories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2231,12 +2265,97 @@
 <p><code>repetition</code> is <code>REQUIRED</code> or <code>OPTIONAL</code>; <code>REPEATED</code> is rejected, repetition being what <code>list</code> and <code>map</code> express. <code>typeLength</code> is required and positive for <code>FIXED_LEN_BYTE_ARRAY</code> and rejected for every other type — so a <code>UUID</code>, <code>INTERVAL</code>, <code>FLOAT16</code> or fixed-width <code>DECIMAL</code> column is declared through a <code>typeLength</code> overload:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"event"</span><span class="p">)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">UuidType</span><span class="p">())</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">uuid</span><span class="p">())</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                </span><span class="k">new</span><span class="w"> </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">DecimalType</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">18</span><span class="p">))</span><span class="w">   </span><span class="c1">// DecimalType takes (scale, precision)</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p>Inside a <code>struct</code> filler the same methods appear on <code>FileSchema.StructBuilder</code>; a list element and a map value are declared on <code>FileSchema.ElementBuilder</code>, whose <code>primitive(type, repetition[, typeLength][, logicalType])</code>, <code>struct</code>, <code>list</code> and <code>map</code> carry no name, the surrounding layout supplying it.</p>
+<h3 id="logical-type-factories">Logical Type Factories<a class="headerlink" href="#logical-type-factories" title="Permanent link">&para;</a></h3>
+<p>An annotation is built with the <code>LogicalType</code> static factory of the same name. The parameterless factories return a shared instance.</p>
+<table>
+<thead>
+<tr>
+<th>Factory</th>
+<th>Annotation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LogicalType.string()</code></td>
+<td><code>STRING</code> — UTF-8 encoded string</td>
+</tr>
+<tr>
+<td><code>LogicalType.enumType()</code></td>
+<td><code>ENUM</code> — enum stored as a UTF-8 string</td>
+</tr>
+<tr>
+<td><code>LogicalType.uuid()</code></td>
+<td><code>UUID</code> — 16-byte fixed-length byte array</td>
+</tr>
+<tr>
+<td><code>LogicalType.date()</code></td>
+<td><code>DATE</code> — days since the Unix epoch</td>
+</tr>
+<tr>
+<td><code>LogicalType.json()</code></td>
+<td><code>JSON</code> — JSON document stored as a UTF-8 string</td>
+</tr>
+<tr>
+<td><code>LogicalType.bson()</code></td>
+<td><code>BSON</code> — BSON document stored as a byte array</td>
+</tr>
+<tr>
+<td><code>LogicalType.interval()</code></td>
+<td><code>INTERVAL</code> — 12-byte fixed-length byte array (months, days, millis)</td>
+</tr>
+<tr>
+<td><code>LogicalType.float16()</code></td>
+<td><code>FLOAT16</code> — IEEE 754 half-precision, 2-byte fixed-length byte array</td>
+</tr>
+<tr>
+<td><code>LogicalType.nullType()</code></td>
+<td><code>NULL</code> — every value in the column is null</td>
+</tr>
+<tr>
+<td><code>LogicalType.list()</code></td>
+<td><code>LIST</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.map()</code></td>
+<td><code>MAP</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.intType(bitWidth, isSigned)</code></td>
+<td><code>INT_8</code> … <code>UINT_64</code> — <code>bitWidth</code> is 8, 16, 32 or 64</td>
+</tr>
+<tr>
+<td><code>LogicalType.decimal(precision, scale)</code></td>
+<td><code>DECIMAL(precision, scale)</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.time(isAdjustedToUTC, unit)</code></td>
+<td><code>TIME</code> — <code>unit</code> is <code>TimeUnit.MILLIS</code>, <code>MICROS</code> or <code>NANOS</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.timestamp(isAdjustedToUTC, unit)</code></td>
+<td><code>TIMESTAMP</code> — same units</td>
+</tr>
+<tr>
+<td><code>LogicalType.variant(specVersion)</code></td>
+<td><code>VARIANT</code> — <code>specVersion</code> is <code>1</code>; the writer rejects a column carrying it</td>
+</tr>
+<tr>
+<td><code>LogicalType.geometry(crs)</code></td>
+<td><code>GEOMETRY</code> — <code>crs</code> defaults to <code>OGC:CRS84</code> when <code>null</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.geography(crs, edgeInterpolation)</code></td>
+<td><code>GEOGRAPHY</code> — <code>edgeInterpolation</code> is an <code>EdgeInterpolationAlgorithm</code></td>
+</tr>
+</tbody>
+</table>
+<p>Which Java value each annotation accepts is listed under <a href="#logical-types-and-row-setters">Logical Types and Row Setters</a>; a pairing of annotation and physical type the format does not define is rejected when the schema is built.</p>
 <h2 id="writer-options">Writer Options<a class="headerlink" href="#writer-options" title="Permanent link">&para;</a></h2>
 <p>Write-time behaviour is configured with an immutable <code>WriterConfig</code>, passed to <code>ParquetFileWriter.create(out, schema, config)</code>. <code>WriterConfig.defaults()</code> returns the defaults, which the two-argument <code>create(out, schema)</code> uses.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
@@ -2760,8 +2879,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/7d283f5039e3ce53c206ecf37f3a5e28007db5dc" target="_blank" rel="noopener">
-      7d283f50
+    <a href="https://github.com/hardwood-hq/hardwood/tree/50b60a0b936ea55dad06076d1760c3f0e8e49f6b" target="_blank" rel="noopener">
+      50b60a0b
     </a>
   
 </div>

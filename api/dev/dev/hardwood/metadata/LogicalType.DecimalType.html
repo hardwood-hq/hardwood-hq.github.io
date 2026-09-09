@@ -69,8 +69,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#toString()" tabindex="0">toString()</a></li>
 <li><a href="#hashCode()" tabindex="0">hashCode()</a></li>
 <li><a href="#equals(java.lang.Object)" tabindex="0">equals(Object)</a></li>
-<li><a href="#scale()" tabindex="0">scale()</a></li>
 <li><a href="#precision()" tabindex="0">precision()</a></li>
+<li><a href="#scale()" tabindex="0">scale()</a></li>
 </ol>
 </li>
 </ol>
@@ -88,8 +88,8 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Record Components:</dt>
-<dd><code><span id="param-scale">scale</span></code> - number of digits after the decimal point</dd>
 <dd><code><span id="param-precision">precision</span></code> - total number of digits (must be positive)</dd>
+<dd><code><span id="param-scale">scale</span></code> - number of digits after the decimal point (must not exceed the precision)</dd>
 </dl>
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
@@ -102,10 +102,10 @@ loadScripts(document, 'script');</script>
 <hr>
 <object type="image/svg+xml" data="LogicalType.DecimalType.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public static record </span><span class="element-name type-name-label">LogicalType.DecimalType</span>(int&nbsp;scale, int&nbsp;precision)
+<div class="type-signature"><span class="modifiers">public static record </span><span class="element-name type-name-label">LogicalType.DecimalType</span>(int&nbsp;precision, int&nbsp;scale)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a>
 implements <a href="LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></span></div>
-<div class="block">Decimal with fixed scale and precision.</div>
+<div class="block">Decimal with fixed precision and scale.</div>
 </div>
 </section>
 <section class="summary">
@@ -127,8 +127,8 @@ implements <a href="LogicalType.html" title="interface in dev.hardwood.metadata"
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">DecimalType</a><wbr>(int&nbsp;scale,
- int&nbsp;precision)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">DecimalType</a><wbr>(int&nbsp;precision,
+ int&nbsp;scale)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>DecimalType</code> record class.</div>
 </div>
@@ -192,13 +192,13 @@ implements <a href="LogicalType.html" title="interface in dev.hardwood.metadata"
 <section class="detail" id="&lt;init&gt;(int,int)">
 <h3>DecimalType</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DecimalType</span><wbr><span class="parameters">(int&nbsp;scale,
- int&nbsp;precision)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DecimalType</span><wbr><span class="parameters">(int&nbsp;precision,
+ int&nbsp;scale)</span></div>
 <div class="block">Creates an instance of a <code>DecimalType</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>scale</code> - the value for the <a href="#param-scale"><code>scale</code></a> record component</dd>
 <dd><code>precision</code> - the value for the <a href="#param-precision"><code>precision</code></a> record component</dd>
+<dd><code>scale</code> - the value for the <a href="#param-scale"><code>scale</code></a> record component</dd>
 </dl>
 </div>
 </section>
@@ -259,19 +259,6 @@ implements <a href="LogicalType.html" title="interface in dev.hardwood.metadata"
 </section>
 </li>
 <li>
-<section class="detail" id="scale()">
-<h3>scale</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">scale</span>()</div>
-<div class="block">Returns the value of the <a href="#param-scale"><code>scale</code></a> record component.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the value of the <a href="#param-scale"><code>scale</code></a> record component</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
 <section class="detail" id="precision()">
 <h3>precision</h3>
 <div class="horizontal-scroll">
@@ -280,6 +267,19 @@ implements <a href="LogicalType.html" title="interface in dev.hardwood.metadata"
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the value of the <a href="#param-precision"><code>precision</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="scale()">
+<h3>scale</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">scale</span>()</div>
+<div class="block">Returns the value of the <a href="#param-scale"><code>scale</code></a> record component.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-scale"><code>scale</code></a> record component</dd>
 </dl>
 </div>
 </section>

@@ -56,6 +56,29 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">Description</a></li>
 <li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#string()" tabindex="0">string()</a></li>
+<li><a href="#nullType()" tabindex="0">nullType()</a></li>
+<li><a href="#enumType()" tabindex="0">enumType()</a></li>
+<li><a href="#uuid()" tabindex="0">uuid()</a></li>
+<li><a href="#date()" tabindex="0">date()</a></li>
+<li><a href="#json()" tabindex="0">json()</a></li>
+<li><a href="#bson()" tabindex="0">bson()</a></li>
+<li><a href="#interval()" tabindex="0">interval()</a></li>
+<li><a href="#float16()" tabindex="0">float16()</a></li>
+<li><a href="#intType(int,boolean)" tabindex="0">intType(int, boolean)</a></li>
+<li><a href="#decimal(int,int)" tabindex="0">decimal(int, int)</a></li>
+<li><a href="#time(boolean,dev.hardwood.metadata.LogicalType.TimeUnit)" tabindex="0">time(boolean, LogicalType.TimeUnit)</a></li>
+<li><a href="#timestamp(boolean,dev.hardwood.metadata.LogicalType.TimeUnit)" tabindex="0">timestamp(boolean, LogicalType.TimeUnit)</a></li>
+<li><a href="#list()" tabindex="0">list()</a></li>
+<li><a href="#map()" tabindex="0">map()</a></li>
+<li><a href="#variant(int)" tabindex="0">variant(int)</a></li>
+<li><a href="#geometry(java.lang.String)" tabindex="0">geometry(String)</a></li>
+<li><a href="#geography(java.lang.String,dev.hardwood.metadata.LogicalType.EdgeInterpolationAlgorithm)" tabindex="0">geography(String, LogicalType.EdgeInterpolationAlgorithm)</a></li>
+</ol>
+</li>
 </ol>
 <button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
@@ -75,6 +98,9 @@ loadScripts(document, 'script');</script>
 <span class="permits">permits <a href="LogicalType.StringType.html" title="class in dev.hardwood.metadata">LogicalType.StringType</a>, <a href="LogicalType.EnumType.html" title="class in dev.hardwood.metadata">LogicalType.EnumType</a>, <a href="LogicalType.UuidType.html" title="class in dev.hardwood.metadata">LogicalType.UuidType</a>, <a href="LogicalType.IntType.html" title="class in dev.hardwood.metadata">LogicalType.IntType</a>, <a href="LogicalType.DecimalType.html" title="class in dev.hardwood.metadata">LogicalType.DecimalType</a>, <a href="LogicalType.DateType.html" title="class in dev.hardwood.metadata">LogicalType.DateType</a>, <a href="LogicalType.TimeType.html" title="class in dev.hardwood.metadata">LogicalType.TimeType</a>, <a href="LogicalType.TimestampType.html" title="class in dev.hardwood.metadata">LogicalType.TimestampType</a>, <a href="LogicalType.IntervalType.html" title="class in dev.hardwood.metadata">LogicalType.IntervalType</a>, <a href="LogicalType.JsonType.html" title="class in dev.hardwood.metadata">LogicalType.JsonType</a>, <a href="LogicalType.BsonType.html" title="class in dev.hardwood.metadata">LogicalType.BsonType</a>, <a href="LogicalType.ListType.html" title="class in dev.hardwood.metadata">LogicalType.ListType</a>, <a href="LogicalType.MapType.html" title="class in dev.hardwood.metadata">LogicalType.MapType</a>, <a href="LogicalType.VariantType.html" title="class in dev.hardwood.metadata">LogicalType.VariantType</a>, <a href="LogicalType.GeometryType.html" title="class in dev.hardwood.metadata">LogicalType.GeometryType</a>, <a href="LogicalType.GeographyType.html" title="class in dev.hardwood.metadata">LogicalType.GeographyType</a>, <a href="LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a>, <a href="LogicalType.NullType.html" title="class in dev.hardwood.metadata">LogicalType.NullType</a></span></div>
 <div class="block"><p>Logical types that provide semantic meaning to physical types.
 Sealed interface allows for parameterized types (e.g., DECIMAL with scale/precision).</p>
+<p>Construct a member through the static factory of the same name — <a href="#string()"><code>string()</code></a>,
+<a href="#decimal(int,int)"><code>decimal(int, int)</code></a>, and so on. The parameterless factories return a shared instance, so
+calling one twice yields the same object.</p>
 <p>Each implementation's <code>toString()</code> renders the Parquet-style annotation token shown in
 schema dumps and metadata views — <code>STRING</code>, <code>LIST</code>, <code>DECIMAL(10, 2)</code>, <code>TIMESTAMP(MICROS, UTC)</code>,
 and so on — not the default record representation.</p>
@@ -114,7 +140,7 @@ and so on — not the default record representation.</p>
 <div class="col-first even-row-color"><code>static final record&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="LogicalType.DecimalType.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.DecimalType</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Decimal with fixed scale and precision.</div>
+<div class="block">Decimal with fixed precision and scale.</div>
 </div>
 <div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="LogicalType.EdgeInterpolationAlgorithm.html" class="type-name-link" title="enum class in dev.hardwood.metadata">LogicalType.EdgeInterpolationAlgorithm</a></code></div>
@@ -204,6 +230,330 @@ and so on — not the default record representation.</p>
 Variant spec.</div>
 </div>
 </div>
+</section>
+</li>
+<!-- ========== METHOD SUMMARY =========== -->
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="caption"><span>Static Methods</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.BsonType.html" title="class in dev.hardwood.metadata">LogicalType.BsonType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#bson()" class="member-name-link">bson</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>BSON</code> annotation, for a BSON document stored as a byte array.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.DateType.html" title="class in dev.hardwood.metadata">LogicalType.DateType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#date()" class="member-name-link">date</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>DATE</code> annotation, for a calendar date in days since the Unix epoch.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.DecimalType.html" title="class in dev.hardwood.metadata">LogicalType.DecimalType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#decimal(int,int)" class="member-name-link">decimal</a><wbr>(int&nbsp;precision,
+ int&nbsp;scale)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>DECIMAL</code> annotation, for a decimal of a given precision and scale.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.EnumType.html" title="class in dev.hardwood.metadata">LogicalType.EnumType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#enumType()" class="member-name-link">enumType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>ENUM</code> annotation, for an enum stored as a UTF-8 string.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#float16()" class="member-name-link">float16</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>FLOAT16</code> annotation, for an IEEE 754 half-precision float stored as a 2-byte
+fixed-length byte array.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.GeographyType.html" title="class in dev.hardwood.metadata">LogicalType.GeographyType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#geography(java.lang.String,dev.hardwood.metadata.LogicalType.EdgeInterpolationAlgorithm)" class="member-name-link">geography</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;crs,
+ <a href="LogicalType.EdgeInterpolationAlgorithm.html" title="enum class in dev.hardwood.metadata">LogicalType.EdgeInterpolationAlgorithm</a>&nbsp;edgeInterpolation)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>GEOGRAPHY</code> annotation, for geodesic geospatial values in a given CRS.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.GeometryType.html" title="class in dev.hardwood.metadata">LogicalType.GeometryType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#geometry(java.lang.String)" class="member-name-link">geometry</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;crs)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>GEOMETRY</code> annotation, for planar geospatial values in a given CRS.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.IntervalType.html" title="class in dev.hardwood.metadata">LogicalType.IntervalType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#interval()" class="member-name-link">interval</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>INTERVAL</code> annotation, for an interval stored as a 12-byte fixed-length byte array.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.IntType.html" title="class in dev.hardwood.metadata">LogicalType.IntType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#intType(int,boolean)" class="member-name-link">intType</a><wbr>(int&nbsp;bitWidth,
+ boolean&nbsp;isSigned)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>INT</code> annotation, for an integer of a given bit width and signedness.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.JsonType.html" title="class in dev.hardwood.metadata">LogicalType.JsonType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#json()" class="member-name-link">json</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>JSON</code> annotation, for a JSON document stored as a UTF-8 string.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.ListType.html" title="class in dev.hardwood.metadata">LogicalType.ListType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#list()" class="member-name-link">list</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>LIST</code> annotation, for a group holding a repeated element.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.MapType.html" title="class in dev.hardwood.metadata">LogicalType.MapType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#map()" class="member-name-link">map</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>MAP</code> annotation, for a group holding key-value pairs.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.NullType.html" title="class in dev.hardwood.metadata">LogicalType.NullType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#nullType()" class="member-name-link">nullType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>NULL</code> annotation, for a column whose every value is null.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.StringType.html" title="class in dev.hardwood.metadata">LogicalType.StringType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#string()" class="member-name-link">string</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>STRING</code> annotation, for a UTF-8 encoded string.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.TimeType.html" title="class in dev.hardwood.metadata">LogicalType.TimeType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#time(boolean,dev.hardwood.metadata.LogicalType.TimeUnit)" class="member-name-link">time</a><wbr>(boolean&nbsp;isAdjustedToUTC,
+ <a href="LogicalType.TimeUnit.html" title="enum class in dev.hardwood.metadata">LogicalType.TimeUnit</a>&nbsp;unit)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>TIME</code> annotation, for a time of day of a given resolution.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.TimestampType.html" title="class in dev.hardwood.metadata">LogicalType.TimestampType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#timestamp(boolean,dev.hardwood.metadata.LogicalType.TimeUnit)" class="member-name-link">timestamp</a><wbr>(boolean&nbsp;isAdjustedToUTC,
+ <a href="LogicalType.TimeUnit.html" title="enum class in dev.hardwood.metadata">LogicalType.TimeUnit</a>&nbsp;unit)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>TIMESTAMP</code> annotation, for a timestamp of a given resolution.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.UuidType.html" title="class in dev.hardwood.metadata">LogicalType.UuidType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#uuid()" class="member-name-link">uuid</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>UUID</code> annotation, for a UUID stored as a 16-byte fixed-length byte array.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="LogicalType.VariantType.html" title="class in dev.hardwood.metadata">LogicalType.VariantType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#variant(int)" class="member-name-link">variant</a><wbr>(int&nbsp;specVersion)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">The <code>VARIANT</code> annotation, for a group holding a self-describing, semi-structured value.</div>
+</div>
+</div>
+</div>
+</section>
+</li>
+</ul>
+</section>
+<section class="details">
+<ul class="details-list">
+<!-- ============ METHOD DETAIL ========== -->
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="string()">
+<h3>string</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.StringType.html" title="class in dev.hardwood.metadata">LogicalType.StringType</a></span>&nbsp;<span class="element-name">string</span>()</div>
+<div class="block">The <code>STRING</code> annotation, for a UTF-8 encoded string.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="nullType()">
+<h3>nullType</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.NullType.html" title="class in dev.hardwood.metadata">LogicalType.NullType</a></span>&nbsp;<span class="element-name">nullType</span>()</div>
+<div class="block">The <code>NULL</code> annotation, for a column whose every value is null.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="enumType()">
+<h3>enumType</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.EnumType.html" title="class in dev.hardwood.metadata">LogicalType.EnumType</a></span>&nbsp;<span class="element-name">enumType</span>()</div>
+<div class="block">The <code>ENUM</code> annotation, for an enum stored as a UTF-8 string.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="uuid()">
+<h3>uuid</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.UuidType.html" title="class in dev.hardwood.metadata">LogicalType.UuidType</a></span>&nbsp;<span class="element-name">uuid</span>()</div>
+<div class="block">The <code>UUID</code> annotation, for a UUID stored as a 16-byte fixed-length byte array.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="date()">
+<h3>date</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.DateType.html" title="class in dev.hardwood.metadata">LogicalType.DateType</a></span>&nbsp;<span class="element-name">date</span>()</div>
+<div class="block">The <code>DATE</code> annotation, for a calendar date in days since the Unix epoch.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="json()">
+<h3>json</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.JsonType.html" title="class in dev.hardwood.metadata">LogicalType.JsonType</a></span>&nbsp;<span class="element-name">json</span>()</div>
+<div class="block">The <code>JSON</code> annotation, for a JSON document stored as a UTF-8 string.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="bson()">
+<h3>bson</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.BsonType.html" title="class in dev.hardwood.metadata">LogicalType.BsonType</a></span>&nbsp;<span class="element-name">bson</span>()</div>
+<div class="block">The <code>BSON</code> annotation, for a BSON document stored as a byte array.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="interval()">
+<h3>interval</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.IntervalType.html" title="class in dev.hardwood.metadata">LogicalType.IntervalType</a></span>&nbsp;<span class="element-name">interval</span>()</div>
+<div class="block">The <code>INTERVAL</code> annotation, for an interval stored as a 12-byte fixed-length byte array.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="float16()">
+<h3>float16</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a></span>&nbsp;<span class="element-name">float16</span>()</div>
+<div class="block">The <code>FLOAT16</code> annotation, for an IEEE 754 half-precision float stored as a 2-byte
+fixed-length byte array.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="intType(int,boolean)">
+<h3>intType</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.IntType.html" title="class in dev.hardwood.metadata">LogicalType.IntType</a></span>&nbsp;<span class="element-name">intType</span><wbr><span class="parameters">(int&nbsp;bitWidth,
+ boolean&nbsp;isSigned)</span></div>
+<div class="block">The <code>INT</code> annotation, for an integer of a given bit width and signedness.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>bitWidth</code> - number of bits (8, 16, 32, or 64)</dd>
+<dd><code>isSigned</code> - <code>true</code> for signed integers, <code>false</code> for unsigned</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="decimal(int,int)">
+<h3>decimal</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.DecimalType.html" title="class in dev.hardwood.metadata">LogicalType.DecimalType</a></span>&nbsp;<span class="element-name">decimal</span><wbr><span class="parameters">(int&nbsp;precision,
+ int&nbsp;scale)</span></div>
+<div class="block">The <code>DECIMAL</code> annotation, for a decimal of a given precision and scale.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>precision</code> - total number of digits (must be positive)</dd>
+<dd><code>scale</code> - number of digits after the decimal point</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="time(boolean,dev.hardwood.metadata.LogicalType.TimeUnit)">
+<h3>time</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.TimeType.html" title="class in dev.hardwood.metadata">LogicalType.TimeType</a></span>&nbsp;<span class="element-name">time</span><wbr><span class="parameters">(boolean&nbsp;isAdjustedToUTC,
+ <a href="LogicalType.TimeUnit.html" title="enum class in dev.hardwood.metadata">LogicalType.TimeUnit</a>&nbsp;unit)</span></div>
+<div class="block">The <code>TIME</code> annotation, for a time of day of a given resolution.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>isAdjustedToUTC</code> - <code>true</code> if the value is normalized to UTC</dd>
+<dd><code>unit</code> - time resolution (millis, micros, or nanos)</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="timestamp(boolean,dev.hardwood.metadata.LogicalType.TimeUnit)">
+<h3>timestamp</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.TimestampType.html" title="class in dev.hardwood.metadata">LogicalType.TimestampType</a></span>&nbsp;<span class="element-name">timestamp</span><wbr><span class="parameters">(boolean&nbsp;isAdjustedToUTC,
+ <a href="LogicalType.TimeUnit.html" title="enum class in dev.hardwood.metadata">LogicalType.TimeUnit</a>&nbsp;unit)</span></div>
+<div class="block">The <code>TIMESTAMP</code> annotation, for a timestamp of a given resolution.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>isAdjustedToUTC</code> - <code>true</code> if the value is normalized to UTC</dd>
+<dd><code>unit</code> - time resolution (millis, micros, or nanos)</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="list()">
+<h3>list</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.ListType.html" title="class in dev.hardwood.metadata">LogicalType.ListType</a></span>&nbsp;<span class="element-name">list</span>()</div>
+<div class="block">The <code>LIST</code> annotation, for a group holding a repeated element.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="map()">
+<h3>map</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.MapType.html" title="class in dev.hardwood.metadata">LogicalType.MapType</a></span>&nbsp;<span class="element-name">map</span>()</div>
+<div class="block">The <code>MAP</code> annotation, for a group holding key-value pairs.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="variant(int)">
+<h3>variant</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.VariantType.html" title="class in dev.hardwood.metadata">LogicalType.VariantType</a></span>&nbsp;<span class="element-name">variant</span><wbr><span class="parameters">(int&nbsp;specVersion)</span></div>
+<div class="block">The <code>VARIANT</code> annotation, for a group holding a self-describing, semi-structured value.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>specVersion</code> - spec version declared by the writer (currently always <code>1</code>)</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="geometry(java.lang.String)">
+<h3>geometry</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.GeometryType.html" title="class in dev.hardwood.metadata">LogicalType.GeometryType</a></span>&nbsp;<span class="element-name">geometry</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;crs)</span></div>
+<div class="block">The <code>GEOMETRY</code> annotation, for planar geospatial values in a given CRS.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>crs</code> - geospatial coordinate reference system, <code>OGC:CRS84</code> when <code>null</code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="geography(java.lang.String,dev.hardwood.metadata.LogicalType.EdgeInterpolationAlgorithm)">
+<h3>geography</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="LogicalType.GeographyType.html" title="class in dev.hardwood.metadata">LogicalType.GeographyType</a></span>&nbsp;<span class="element-name">geography</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;crs,
+ <a href="LogicalType.EdgeInterpolationAlgorithm.html" title="enum class in dev.hardwood.metadata">LogicalType.EdgeInterpolationAlgorithm</a>&nbsp;edgeInterpolation)</span></div>
+<div class="block">The <code>GEOGRAPHY</code> annotation, for geodesic geospatial values in a given CRS.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>crs</code> - geospatial coordinate reference system, <code>OGC:CRS84</code> when <code>null</code></dd>
+<dd><code>edgeInterpolation</code> - geodesic formulation, <a href="LogicalType.EdgeInterpolationAlgorithm.html#SPHERICAL"><code>LogicalType.EdgeInterpolationAlgorithm.SPHERICAL</code></a>
+when <code>null</code></dd>
+</dl>
+</div>
+</section>
+</li>
+</ul>
 </section>
 </li>
 </ul>
