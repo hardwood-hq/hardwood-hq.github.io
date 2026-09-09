@@ -1740,6 +1740,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#when-a-file-will-not-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When a file will not read
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#typical-drill-path" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2122,6 +2133,17 @@
     <span class="md-ellipsis">
       
         Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-a-file-will-not-read" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When a file will not read
       
     </span>
   </a>
@@ -2585,6 +2607,20 @@ now.</p>
 <li><strong>Dictionary</strong> — full-value modal on Enter and <code>/</code> inline search</li>
 <li><strong>Data preview</strong> — row values via <code>RowReader</code>; <code>←/→</code> scrolls the visible column window, <code>PgDn/PgUp</code> flips pages</li>
 </ul>
+<h3 id="when-a-file-will-not-read">When a file will not read<a class="headerlink" href="#when-a-file-will-not-read" title="Permanent link">&para;</a></h3>
+<p>Any screen that reads from the file shows a <strong>Read failed</strong> overlay in place of
+itself when the read does not come back. The session stays up: <code>Esc</code> leaves the
+screen, and the keys that move between pages, chunks or rows still work, so a
+damaged region can be stepped over rather than backed out of.</p>
+<p>The overlay carries the reader's own message, which names the file, the row
+group and the column the screen was reading:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>╭ Read failed ─────────────────────────────────────────────╮
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>│ [data.parquet: row group 0, column 'id'] PageHeader      │
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>│ field 15 — Unknown field type: 15                        │
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>│                                                          │
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>│ [Esc] back                                               │
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>╰──────────────────────────────────────────────────────────╯
+</code></pre></div>
 <p>A tour through the main screens (click any shot to open it full size):</p>
 <figure><a href="../../assets/cli/01-landing-overview.svg"><img alt="Overview screen" src="../../assets/cli/01-landing-overview.svg" width="720" /></a><figcaption>Overview</figcaption></figure>
 <figure><a href="../../assets/cli/02-schema-tree.svg"><img alt="Schema screen" src="../../assets/cli/02-schema-tree.svg" width="720" /></a><figcaption>Schema — expandable tree of groups and leaves</figcaption></figure>
@@ -2630,8 +2666,8 @@ search. Press <code>/</code> to enter search-edit mode:</p>
 filter applied but exits edit mode). The table re-filters live as you type.</p>
 <h2 id="reading-files-from-s3">Reading Files from S3<a class="headerlink" href="#reading-files-from-s3" title="Permanent link">&para;</a></h2>
 <p>All commands accept <code>s3://</code> URIs via the <code>-f</code> flag:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
 <p>The CLI resolves credentials via the standard AWS credential chain (<code>AWS_ACCESS_KEY_ID</code> / <code>AWS_SECRET_ACCESS_KEY</code> / <code>AWS_SESSION_TOKEN</code> environment variables, <code>~/.aws/credentials</code>, SSO, EC2/ECS instance profiles, web identity). See the <a href="../../how-to/s3/">S3 module page</a> for the resolution order and provider details.</p>
 <p>The CLI additionally reads these environment variables:</p>
@@ -2682,41 +2718,41 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
 </tbody>
 </table>
 <p>Source the one for your shell to enable tab completion for commands, options, and arguments:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
 </code></pre></div>
 <p>To make it permanent, add the line above to your shell's startup file (e.g. <code>~/.bashrc</code>, <code>~/.zshrc</code>).</p>
 <h2 id="use-with-ai-coding-agents">Use with AI coding agents<a class="headerlink" href="#use-with-ai-coding-agents" title="Permanent link">&para;</a></h2>
 <p>The repository ships an <a href="https://agentskills.io">Agent Skill</a> at <code>skills/hardwood-cli/</code> that teaches an AI coding agent when and how to reach for the CLI while debugging Parquet read/write code (checking schema and physical/logical types, diagnosing why predicate pushdown or page skipping isn't happening, reading dictionary entries, and so on).</p>
 <p>For <a href="https://claude.com/claude-code">Claude Code</a>, it is packaged as the <code>hardwood</code> plugin, distributed from the <a href="https://github.com/hardwood-hq/hardwood-skills"><code>hardwood-skills</code></a> marketplace. Install it once — inside Claude Code, run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>/plugin marketplace add hardwood-hq/hardwood-skills
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>/plugin install hardwood@hardwood-skills
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>/plugin marketplace add hardwood-hq/hardwood-skills
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>/plugin install hardwood@hardwood-skills
 </code></pre></div>
 <p>After installing, the skill loads automatically in future sessions whenever a task involves a Parquet file. It drives the <code>hardwood</code> binary, so ensure <code>hardwood</code> is on your <code>PATH</code> (from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">release page</a> or the Docker image below).</p>
 <p>For other agent harnesses — or a Claude Code setup without the plugin — copy <code>skills/hardwood-cli/SKILL.md</code> into that tool's skills directory (for Claude Code that is <code>~/.claude/skills/hardwood-cli/</code>).</p>
 <h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
 <p>A minimal Fedora-based Docker image is published to the GitHub Container Registry for Linux amd64 and arm64:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access
 </code></pre></div>
 <p>Run any command by passing it after the image name:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span>--help
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span>--help
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
 </code></pre></div>
 <p>Mount a local directory to access files on the host:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span>schema<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
-</code></pre></div>
-<p>The <code>dive</code> TUI needs an interactive terminal, so pass <code>-it</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span>dive<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span>schema<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
 </code></pre></div>
-<p>Start an interactive shell with tab completion pre-loaded:</p>
+<p>The <code>dive</code> TUI needs an interactive terminal, so pass <code>-it</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span>dive<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+</code></pre></div>
+<p>Start an interactive shell with tab completion pre-loaded:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access
 </code></pre></div>
 
 
@@ -2767,8 +2803,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/87dc6e48daf0ecaabf2e373d2885902297e6602c" target="_blank" rel="noopener">
-      87dc6e48
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a2232c407294063b7d65a38ae800b18c185c60bc" target="_blank" rel="noopener">
+      a2232c40
     </a>
   
 </div>
