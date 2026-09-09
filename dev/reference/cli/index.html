@@ -2612,6 +2612,10 @@ now.</p>
 itself when the read does not come back. The session stays up: <code>Esc</code> leaves the
 screen, and the keys that move between pages, chunks or rows still work, so a
 damaged region can be stepped over rather than backed out of.</p>
+<p>A message longer than the box scrolls first: while there is more of it below,
+<code>↑/↓</code>, <code>PgUp/PgDn</code> and <code>g/G</code> move the message rather than the screen under it,
+and reach the screen again once it is at its end. The hint row along the bottom
+of the box says which of them are doing that.</p>
 <p>The overlay carries the reader's own message, which names the file, the row
 group and the column the screen was reading:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>╭ Read failed ─────────────────────────────────────────────╮
@@ -2803,8 +2807,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/edf06e1c1bfbdf820a8fe3b42374ac10d7a64ac4" target="_blank" rel="noopener">
-      edf06e1c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/97e78648666d0bd5b86421be09ed0c54971ae79c" target="_blank" rel="noopener">
+      97e78648
     </a>
   
 </div>
