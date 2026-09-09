@@ -1573,18 +1573,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#reading" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reading
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Reading">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#the-read-failed" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1594,8 +1582,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#the-call-was-wrong" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1605,9 +1593,15 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#what-a-message-says" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What a message says
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1886,18 +1880,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#reading" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Reading
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Reading">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
   <a href="#the-read-failed" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1907,8 +1889,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#the-call-was-wrong" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1918,9 +1900,15 @@
   </a>
   
 </li>
-        
-      </ul>
-    </nav>
+      
+        <li class="md-nav__item">
+  <a href="#what-a-message-says" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What a message says
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1972,21 +1960,9 @@
 
 -->
 <h1 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h1>
-<p>Hardwood throws specific exceptions for common error conditions.</p>
-<h2 id="reading">Reading<a class="headerlink" href="#reading" title="Permanent link">&para;</a></h2>
-<p>A read that fails leaves you one decision: try again, or stop. The exception
-type answers it.</p>
-<blockquote>
-<p><strong>Trying again may help:</strong> <code>IOException</code>
-<strong>Trying again will not:</strong> <code>ParquetReadException</code>, <code>UnsupportedOperationException</code></p>
-</blockquote>
-<p><code>IOException</code> means the bytes did not arrive. Once they have, nothing about them
-changes on a second attempt, so parsing and decoding raise <code>ParquetReadException</code>
-instead — including for a page that will not decompress and a dictionary that will
-not decode.</p>
-<p>Every message names the file the reader was on. Exceptions raised for an invalid file add
-more detail, such as the file region, row group or column the read stopped at.</p>
-<h3 id="the-read-failed">The read failed<a class="headerlink" href="#the-read-failed" title="Permanent link">&para;</a></h3>
+<p>A failed read leaves you one decision — try again, or stop — and the exception type answers
+it. <strong>Trying again may help for <code>IOException</code>, and will not for anything else.</strong></p>
+<h2 id="the-read-failed">The read failed<a class="headerlink" href="#the-read-failed" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1997,11 +1973,11 @@ more detail, such as the file region, row group or column the read stopped at.</
 <tbody>
 <tr>
 <td><code>IOException</code></td>
-<td>Reading the file failed: a local-disk read error, an S3 transport failure (after retry exhaustion — see <a href="../../how-to/s3/">Read from S3</a>), a file that cannot be opened. Checked, and declared by every method that reaches the file: <code>ParquetFileReader.open</code>/<code>openAll</code>; the reader factories and their builders' <code>build()</code> — <code>rowReader</code>, <code>columnReader</code>, <code>columnReaders</code>; <code>RowReader.hasNext</code>/<code>next</code>/<code>close</code>; <code>ColumnReader.nextBatch</code>/<code>close</code>; <code>ColumnReaders.nextBatch</code>/<code>close</code></td>
+<td>The bytes did not arrive: a local-disk read error, an S3 transport failure (after retry exhaustion — see <a href="../../how-to/s3/">Read from S3</a>), a file that cannot be opened. Checked, and declared by every method that reaches the file: <code>ParquetFileReader.open</code>/<code>openAll</code>; the reader factories and their builders' <code>build()</code> — <code>rowReader</code>, <code>columnReader</code>, <code>columnReaders</code>; <code>RowReader.hasNext</code>/<code>next</code>/<code>close</code>; <code>ColumnReader.nextBatch</code>/<code>close</code>; <code>ColumnReaders.nextBatch</code>/<code>close</code></td>
 </tr>
 <tr>
 <td><code>ParquetReadException</code></td>
-<td>The file was read and is not valid Parquet: a bad magic number, a corrupt footer, a malformed page index, a dictionary page the metadata places outside its column chunk, a page whose checksum fails, values that do not decode. Unchecked</td>
+<td>They arrived and are not valid Parquet: a bad magic number, a corrupt footer, a malformed page index, a dictionary page the metadata places outside its column chunk, a page whose checksum fails, a page that will not decompress, values that do not decode. Unchecked</td>
 </tr>
 <tr>
 <td><code>SchemaIncompatibleException</code></td>
@@ -2013,9 +1989,7 @@ more detail, such as the file region, row group or column the read stopped at.</
 </tr>
 </tbody>
 </table>
-<h3 id="the-call-was-wrong">The call was wrong<a class="headerlink" href="#the-call-was-wrong" title="Permanent link">&para;</a></h3>
-<p>These are mistakes in the calling code rather than read failures. The message names the file
-and the column, and nothing about where in the file the read had got to.</p>
+<h2 id="the-call-was-wrong">The call was wrong<a class="headerlink" href="#the-call-was-wrong" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -2045,10 +2019,19 @@ and the column, and nothing about where in the file the read had got to.</p>
 <p>Requesting the wrong type for a column — <code>getLong</code> on an <code>INT32</code> column — is a programming
 error whose exception type is deliberately unspecified, and is covered in
 <a href="../accessors/#type-mismatches">Type mismatches</a>.</p>
-<p>Reading a <code>RowReader</code> inside a <code>Stream</code> or an <code>Iterator</code> means adapting a checked
-exception to an interface that cannot declare one. Wrap it in
-<code>UncheckedIOException</code> at that boundary and unwrap it where the stream is
-consumed; Hardwood itself raises <code>UncheckedIOException</code> from no public method.</p>
+<p>Hardwood raises <code>UncheckedIOException</code> from no public method. Reading a <code>RowReader</code> inside a
+<code>Stream</code> or an <code>Iterator</code> means wrapping the checked exception at that boundary yourself and
+unwrapping it where the stream is consumed.</p>
+<h2 id="what-a-message-says">What a message says<a class="headerlink" href="#what-a-message-says" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>[data.parquet: row group 0, column 'category', page 123] CRC mismatch: expected 609e7e3 but computed 2b0b086e
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>[data.parquet: row group 0, column 'category', dictionary page] CRC mismatch: expected 609e7e3 but computed 2b0b086e
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>[data.parquet] Not a Parquet file (invalid magic number at start)
+</code></pre></div>
+<p>Every message the reader composes names the file. A message for an invalid file also names
+the row group, column and page, leaving out any part the reader could not determine: a
+failure before a column chunk's pages are walked names no page, and one while the footer is
+parsed names only the file. A message for a wrong call names the file alone. An <code>IOException</code>
+an <code>InputFile</code> raises for itself is unprefixed.</p>
 <h2 id="writing">Writing<a class="headerlink" href="#writing" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2134,8 +2117,8 @@ consumed; Hardwood itself raises <code>UncheckedIOException</code> from no publi
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/167ffb439ded3b7b19d4f499f4b38c33655a4ba7" target="_blank" rel="noopener">
-      167ffb43
+    <a href="https://github.com/hardwood-hq/hardwood/tree/87dc6e48daf0ecaabf2e373d2885902297e6602c" target="_blank" rel="noopener">
+      87dc6e48
     </a>
   
 </div>
