@@ -1581,6 +1581,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Reading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-read-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The read failed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-call-was-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The call was wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1866,6 +1894,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Reading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-read-failed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The read failed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-call-was-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The call was wrong
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1928,6 +1984,9 @@ type answers it.</p>
 changes on a second attempt, so parsing and decoding raise <code>ParquetReadException</code>
 instead — including for a page that will not decompress and a dictionary that will
 not decode.</p>
+<p>Every message names the file the reader was on. Exceptions raised for an invalid file add
+more detail, such as the file region, row group or column the read stopped at.</p>
+<h3 id="the-read-failed">The read failed<a class="headerlink" href="#the-read-failed" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -1952,9 +2011,22 @@ not decode.</p>
 <td><code>UnsupportedOperationException</code></td>
 <td>The file is correct and Hardwood cannot read it: Parquet Modular Encryption, an encoding not implemented, a compression codec whose library is absent — the message names the dependency to add — a column chunk stored in a separate file (the legacy split-file layout), a row group whose page-index region exceeds 2 GB, or a file over 2 GB opened with the mmap-backed range cache</td>
 </tr>
+</tbody>
+</table>
+<h3 id="the-call-was-wrong">The call was wrong<a class="headerlink" href="#the-call-was-wrong" title="Permanent link">&para;</a></h3>
+<p>These are mistakes in the calling code rather than read failures. The message names the file
+and the column, and nothing about where in the file the read had got to.</p>
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td><code>IllegalArgumentException</code></td>
-<td>Accessing a column not in the projection, or an invalid column name</td>
+<td>Accessing a column not in the projection, an invalid column name, or asking a column for a type it does not hold — <code>getFloat</code> on a column that is neither <code>FLOAT</code> nor <code>FLOAT16</code></td>
 </tr>
 <tr>
 <td><code>NullPointerException</code></td>
@@ -1970,8 +2042,9 @@ not decode.</p>
 </tr>
 </tbody>
 </table>
-<p>The last four are mistakes in the calling code rather than read failures, and no
-file is involved.</p>
+<p>Requesting the wrong type for a column — <code>getLong</code> on an <code>INT32</code> column — is a programming
+error whose exception type is deliberately unspecified, and is covered in
+<a href="../accessors/#type-mismatches">Type mismatches</a>.</p>
 <p>Reading a <code>RowReader</code> inside a <code>Stream</code> or an <code>Iterator</code> means adapting a checked
 exception to an interface that cannot declare one. Wrap it in
 <code>UncheckedIOException</code> at that boundary and unwrap it where the stream is
@@ -2061,8 +2134,8 @@ consumed; Hardwood itself raises <code>UncheckedIOException</code> from no publi
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/44183a135987c1814efa51942064d00995fd7b38" target="_blank" rel="noopener">
-      44183a13
+    <a href="https://github.com/hardwood-hq/hardwood/tree/13b8d93ed605da550561823a6e5fa5b885746afd" target="_blank" rel="noopener">
+      13b8d93e
     </a>
   
 </div>

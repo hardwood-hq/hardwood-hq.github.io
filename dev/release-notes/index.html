@@ -2046,7 +2046,12 @@
 <p>See <a href="https://github.com/hardwood-hq/hardwood/releases">GitHub Releases</a> for downloads and more information.</p>
 <h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
 <ul>
-<li>A multi-file read opens each file as it reaches it, rather than opening every file when the reader is built, so the time to the first row no longer grows with the number of files (<a href="https://github.com/hardwood-hq/hardwood/issues/1107">#1107</a>).<ul>
+<li>
+<p>A logical type annotation that a column's physical type cannot carry is now dropped, and the column is read as its physical type. Previously it surfaced as an <code>IllegalArgumentException</code> from whichever accessor first reached the column (<a href="https://github.com/hardwood-hq/hardwood/issues/1139">#1139</a>). <code>FLOAT16</code> is defined as a two-byte payload, so a column annotated <code>FLOAT16</code> that declares three bytes is invalid; <a href="https://github.com/apache/parquet-format/pull/606">parquet-format PR 606</a> specifies that readers ignore the annotation and use only the physical type. An annotation this version does not recognize is dropped the same way, so a file written against a newer format version can still be read. Both cases log a warning, naming the column and the reason, or the union field that was not recognized. <strong>What changes for you:</strong> <code>getFileSchema()</code> reports no logical type for such a column, <code>getValue</code> returns its physical value where it used to throw, and a logical accessor on it fails as it does on any unannotated column.</p>
+</li>
+<li>
+<p>A multi-file read opens each file as it reaches it, rather than opening every file when the reader is built, so the time to the first row no longer grows with the number of files (<a href="https://github.com/hardwood-hq/hardwood/issues/1107">#1107</a>).</p>
+<ul>
 <li>A later file's I/O errors, and any <code>SchemaIncompatibleException</code> its schema raises, now surface from the reading loop rather than from <code>ParquetFileReader.openAll(...)</code> or <code>build()</code> — always before any row of that file is returned. Code that catches those around reader construction alone should catch them around iteration too.</li>
 </ul>
 </li>
@@ -2271,8 +2276,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/44183a135987c1814efa51942064d00995fd7b38" target="_blank" rel="noopener">
-      44183a13
+    <a href="https://github.com/hardwood-hq/hardwood/tree/13b8d93ed605da550561823a6e5fa5b885746afd" target="_blank" rel="noopener">
+      13b8d93e
     </a>
   
 </div>
