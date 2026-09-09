@@ -2235,7 +2235,9 @@ level and in every nested position. <code>getBinary</code> still yields the unde
 <h2 id="legacy-int96-timestamps">Legacy INT96 timestamps<a class="headerlink" href="#legacy-int96-timestamps" title="Permanent link">&para;</a></h2>
 <p>Parquet files written by older versions of Apache Spark and Hive store timestamps in the deprecated
 INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> detects INT96
-automatically and decodes it to an <code>Instant</code>; no caller-side handling is required.</p>
+automatically and decodes it to an <code>Instant</code>; no caller-side handling is required. The generic
+<code>getValue</code> accessor and the <code>PqList</code> / <code>PqStruct</code> / <code>PqMap</code> flyweights return the same <code>Instant</code>, at
+the top level and in every nested position.</p>
 <h2 id="legacy-converted-type-annotations">Legacy converted-type annotations<a class="headerlink" href="#legacy-converted-type-annotations" title="Permanent link">&para;</a></h2>
 <p>Writers predating the modern logical-type union (older parquet-mr / Hive / Impala / Spark) annotate
 primitive columns with only a legacy <code>converted_type</code> and no <code>logicalType</code>. Hardwood promotes each
@@ -2381,8 +2383,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/13b8d93ed605da550561823a6e5fa5b885746afd" target="_blank" rel="noopener">
-      13b8d93e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/167ffb439ded3b7b19d4f499f4b38c33655a4ba7" target="_blank" rel="noopener">
+      167ffb43
     </a>
   
 </div>
