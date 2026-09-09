@@ -2227,6 +2227,7 @@
 </tr>
 </tbody>
 </table>
+<p>The writer requires at least one column: <code>build()</code> rejects a schema with no fields, and <code>ParquetFileWriter.create</code> rejects one built another way, such as the childless root a file that declares no columns is read as.</p>
 <p><code>repetition</code> is <code>REQUIRED</code> or <code>OPTIONAL</code>; <code>REPEATED</code> is rejected, repetition being what <code>list</code> and <code>map</code> express. <code>typeLength</code> is required and positive for <code>FIXED_LEN_BYTE_ARRAY</code> and rejected for every other type — so a <code>UUID</code>, <code>INTERVAL</code>, <code>FLOAT16</code> or fixed-width <code>DECIMAL</code> column is declared through a <code>typeLength</code> overload:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"event"</span><span class="p">)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
@@ -2683,7 +2684,7 @@
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
-<td>A <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>REQUIRED</code> field left unset by a record</td>
+<td>A schema with no columns; a <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>REQUIRED</code> field left unset by a record</td>
 </tr>
 <tr>
 <td><code>IndexOutOfBoundsException</code></td>
@@ -2759,8 +2760,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/001604d1e8d6c7f070e45065c6cdfa021a1e361d" target="_blank" rel="noopener">
-      001604d1
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f0e34944d037d7eaa565f30fd935c7960edb348b" target="_blank" rel="noopener">
+      f0e34944
     </a>
   
 </div>
