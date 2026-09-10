@@ -2197,20 +2197,21 @@
 <a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
 <a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1">// IN filter</span>
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">in</span><span class="p">(</span><span class="s">"department_id"</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">);</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">inStrings</span><span class="p">(</span><span class="s">"city"</span><span class="p">,</span><span class="w"> </span><span class="s">"NYC"</span><span class="p">,</span><span class="w"> </span><span class="s">"LA"</span><span class="p">,</span><span class="w"> </span><span class="s">"Chicago"</span><span class="p">);</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1">// NULL checks</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="s">"middle_name"</span><span class="p">);</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNotNull</span><span class="p">(</span><span class="s">"email"</span><span class="p">);</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">filter</span><span class="p">).</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">        </span><span class="c1">// Only rows from non-skipped row groups are returned</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="p">}</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">in</span><span class="p">(</span><span class="s">"temperature"</span><span class="p">,</span><span class="w"> </span><span class="mf">20.5</span><span class="p">,</span><span class="w"> </span><span class="mf">21.0</span><span class="p">,</span><span class="w"> </span><span class="mf">22.5</span><span class="p">);</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">inStrings</span><span class="p">(</span><span class="s">"city"</span><span class="p">,</span><span class="w"> </span><span class="s">"NYC"</span><span class="p">,</span><span class="w"> </span><span class="s">"LA"</span><span class="p">,</span><span class="w"> </span><span class="s">"Chicago"</span><span class="p">);</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="c1">// NULL checks</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="s">"middle_name"</span><span class="p">);</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNotNull</span><span class="p">(</span><span class="s">"email"</span><span class="p">);</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">filter</span><span class="p">).</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="c1">// Only rows from non-skipped row groups are returned</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="p">}</span>
 </code></pre></div>
 <p>For the full matrix of supported operators, comparable physical and logical types, and combinators, see <a href="../../reference/query-controls/#supported-filter-predicates">Query Controls</a>. All predicates, including those wrapped in <code>not</code>, are pushed down to the statistics level for row-group and page skipping.</p>
 <h3 id="null-handling">Null Handling<a class="headerlink" href="#null-handling" title="Permanent link">&para;</a></h3>
@@ -2284,20 +2285,29 @@ encoding automatically:</p>
   nested columns (structs, lists, or maps), record-level filtering is not active. Row-group
   and page-level statistics pushdown still apply, but non-matching rows within surviving pages
   will not be filtered out. A warning is logged when this occurs.</li>
-<li><strong>Bloom filter pushdown applies to <code>eq</code> predicates</strong> on <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code>, and
-  binary (<code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code>) columns that carry a Bloom filter, and to <code>in</code>
-  predicates on the integer and binary types. It runs automatically during row-group pruning,
-  alongside statistics, and skips a row group when the value is provably absent. For <code>FLOAT</code> /
-  <code>DOUBLE</code>, <code>eq(NaN)</code> is not pruned by the Bloom filter — raw-bit hashing distinguishes NaN
-  payloads that <code>Float.compare</code> / <code>Double.compare</code> treat as equal, so a Bloom miss cannot prove a
-  NaN absent; <code>eq(-0.0)</code> is pruned normally. A <code>BigDecimal</code> <code>eq</code> on a <code>DECIMAL</code> stored as
-  <code>BYTE_ARRAY</code> is pruned by neither the Bloom filter nor the dictionary: such a column may hold
-  the same number under more than one byte string, so a miss on the literal's own bytes does not
-  prove the value absent. Range predicates (<code>lt</code>, <code>gt</code>, …) and <code>notEq</code> are unaffected — a Bloom
-  filter answers only membership.</li>
-<li><strong>Dictionary-based filtering is not supported
-  (<a href="https://github.com/hardwood-hq/hardwood/issues/196">#196</a>).</strong> Dictionary-encoded columns
-  are not checked for predicate matches before decoding.</li>
+<li><strong>Bloom filter pushdown applies to <code>eq</code> and <code>in</code> predicates</strong> on <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>,
+  <code>DOUBLE</code>, and binary (<code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code>) columns that carry a Bloom
+  filter. It runs automatically during row-group pruning, alongside statistics, and skips a
+  row group when every probed value is provably absent. For <code>FLOAT</code> / <code>DOUBLE</code>,
+  <code>eq(NaN)</code> and any <code>in</code> list containing <code>NaN</code> are not pruned by the Bloom filter — raw-bit
+  hashing distinguishes NaN payloads that <code>Float.compare</code> / <code>Double.compare</code> treat as equal,
+  so a Bloom miss cannot prove a NaN absent; <code>eq(-0.0)</code> and signed zeros in an <code>in</code> list are
+  hashed at their own bit width and pruned normally. On a <code>FLOAT</code> column, an <code>in</code> probe with
+  no exact <code>float</code> representation is provably absent without consulting the filter. A
+  <code>BigDecimal</code> <code>eq</code> on a <code>DECIMAL</code> stored as <code>BYTE_ARRAY</code> is pruned by neither the Bloom
+  filter nor the dictionary: such a column may hold the same number under more than one byte
+  string, so a miss on the literal's own bytes does not prove the value absent. Range
+  predicates (<code>lt</code>, <code>gt</code>, …) and <code>notEq</code> are unaffected — a Bloom filter answers only
+  membership.</li>
+<li><strong>Dictionary-based filtering applies to equality and <code>in</code> predicates</strong> on <code>INT32</code>, <code>INT64</code>,
+  <code>FLOAT</code>, <code>DOUBLE</code>, and binary (<code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code>) columns, and to <code>FLOAT16</code>
+  equality. The dictionary is checked before any page is decoded, and the row group is skipped
+  when none of its stored values can match. It applies only to a column chunk whose encoding
+  statistics show that <em>every</em> one of its data pages is dictionary-encoded: a chunk with even one
+  plain-encoded page holds values the dictionary does not list, so its dictionary proves nothing.
+  Every other chunk is pruned by statistics alone. On a <code>FLOAT</code> column the stored values are
+  widened to <code>double</code> before comparison, and on <code>FLOAT16</code> to <code>float</code>, so a probe with no exact
+  representation in the stored width matches nothing.</li>
 </ul>
 <h2 id="column-projection">Column Projection<a class="headerlink" href="#column-projection" title="Permanent link">&para;</a></h2>
 <p>Column projection allows reading only a subset of columns from a Parquet file, improving performance by skipping I/O, decoding, and memory allocation for unneeded columns.</p>
@@ -2489,8 +2499,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/e3c610e653ed06eecf574ff8f24ee5ddfeead28d" target="_blank" rel="noopener">
-      e3c610e6
+    <a href="https://github.com/hardwood-hq/hardwood/tree/0dda56d75337f189b5a3959b7589d3fa03f9592f" target="_blank" rel="noopener">
+      0dda56d7
     </a>
   
 </div>

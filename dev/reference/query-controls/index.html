@@ -1956,7 +1956,7 @@ behavior of each control — predicate pushdown, projection, row limits, splits,
 </tr>
 <tr>
 <td>Set operators</td>
-<td><code>in</code> (int, long), <code>inStrings</code></td>
+<td><code>in</code> (int, long, double), <code>inStrings</code></td>
 </tr>
 <tr>
 <td>Null operators</td>
@@ -1980,6 +1980,11 @@ behavior of each control — predicate pushdown, projection, row limits, splits,
 </tr>
 </tbody>
 </table>
+<p><code>in(column, double...)</code> accepts FLOAT and DOUBLE columns only; other physical or logical
+types, including <code>FLOAT16</code>, throw <code>IllegalArgumentException</code> at reader creation. Comparisons
+use the <code>Double.compare</code> total order: all <code>NaN</code> values equal each other and <code>-0.0</code> differs
+from <code>+0.0</code>. On a <code>FLOAT</code> column, stored values are widened to <code>double</code> before comparison, so
+a probe with no exact <code>float</code> representation (e.g. <code>0.1</code>) never matches.</p>
 <p>All predicates, including those wrapped in <code>not</code>, are pushed down to the statistics level for
 row-group and page skipping.</p>
 <p>The logical-type factories validate the column's logical type at reader creation: <code>BigDecimal</code>
@@ -2094,8 +2099,8 @@ API and by <code>hardwood inspect</code> and <code>hardwood dive</code>.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/e3c610e653ed06eecf574ff8f24ee5ddfeead28d" target="_blank" rel="noopener">
-      e3c610e6
+    <a href="https://github.com/hardwood-hq/hardwood/tree/0dda56d75337f189b5a3959b7589d3fa03f9592f" target="_blank" rel="noopener">
+      0dda56d7
     </a>
   
 </div>
