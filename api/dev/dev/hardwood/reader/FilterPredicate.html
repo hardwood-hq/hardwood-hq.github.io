@@ -1025,7 +1025,8 @@ are never dropped.</p>
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></span>&nbsp;<span class="element-name">eq</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;value)</span></div>
 <div class="block">Creates an equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a> column (Parquet DATE logical type).
-The date is converted to days since the Unix epoch at evaluation time.</div>
+The column must carry the <code>DATE</code> logical type; the date is converted to days since the
+Unix epoch at reader creation.</div>
 </div>
 </section>
 </li>
@@ -1086,7 +1087,7 @@ The date is converted to days since the Unix epoch at evaluation time.</div>
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></span>&nbsp;<span class="element-name">eq</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</span></div>
 <div class="block">Creates an equals predicate for an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> column (Parquet TIMESTAMP logical type).
-The column's time unit is determined from the schema at evaluation time.</div>
+The column's time unit is determined from the schema at reader creation.</div>
 </div>
 </section>
 </li>
@@ -1147,7 +1148,7 @@ The column's time unit is determined from the schema at evaluation time.</div>
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></span>&nbsp;<span class="element-name">eq</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a>&nbsp;value)</span></div>
 <div class="block">Creates an equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a> column (Parquet TIME logical type).
-The column's time unit is determined from the schema at evaluation time.</div>
+The column's time unit is determined from the schema at reader creation.</div>
 </div>
 </section>
 </li>
@@ -1208,7 +1209,9 @@ The column's time unit is determined from the schema at evaluation time.</div>
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></span>&nbsp;<span class="element-name">eq</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</span></div>
 <div class="block">Creates an equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> column (Parquet DECIMAL logical type).
-The column's scale, precision, and physical type are determined from the schema at evaluation time.</div>
+The column's scale and physical type are read from the schema at reader creation, and the
+value is rescaled to the column's scale — padded where the column holds more, and rejected
+with <code>ArithmeticException</code> where it carries a digit the column's scale cannot hold.</div>
 </div>
 </section>
 </li>

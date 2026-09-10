@@ -2281,37 +2281,20 @@ encoding automatically:</p>
 <a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"request_id"</span><span class="p">,</span>
 <a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">    </span><span class="n">UUID</span><span class="p">.</span><span class="na">fromString</span><span class="p">(</span><span class="s">"550e8400-e29b-41d4-a716-446655440000"</span><span class="p">));</span>
 </code></pre></div>
-<p>The logical-type factories validate the column's logical type at reader creation: <code>BigDecimal</code> predicates require a <code>DECIMAL</code> column and <code>UUID</code> predicates require a <code>UUID</code> column. Applying them to a plain <code>FIXED_LEN_BYTE_ARRAY</code> column without the corresponding logical-type annotation throws <code>IllegalArgumentException</code>.</p>
-<p>Raw physical-type predicates (<code>int</code>, <code>long</code>, etc.) remain available for columns without logical types or for filtering on the underlying physical value directly.</p>
+<p>A column takes the literal type its annotation names — a <code>DECIMAL</code> column a <code>BigDecimal</code>, a <code>UUID</code> column a <code>UUID</code> — and rejects a literal belonging to a different annotation with <code>IllegalArgumentException</code> at reader creation. It also takes the literal for its own physical type, for filtering on the stored value directly. For what each column takes and the order it compares in, see <a href="../../reference/query-controls/#predicate-literals-by-column-type">Predicate literals by column type</a>.</p>
 <p>Filters work with all reader types: <code>RowReader</code>, <code>ColumnReader</code>, <code>AvroRowReader</code>, and across multi-file readers.</p>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>Predicates do not apply below a repeated path.</strong> A column or group nested inside a <code>LIST</code> or a
   <code>MAP</code> occurs many times per row, so no predicate on it has a single answer per row. Such a name
   is rejected with <code>IllegalArgumentException</code> at reader creation.</li>
-<li><strong>Bloom filter pushdown applies to <code>eq</code> and <code>in</code> predicates</strong> on <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>,
-  <code>DOUBLE</code>, and binary (<code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code>) columns that carry a Bloom
-  filter. It runs automatically during row-group pruning, alongside statistics, and skips a
-  row group when every probed value is provably absent. For <code>FLOAT</code> / <code>DOUBLE</code>,
-  <code>eq(NaN)</code> and any <code>in</code> list containing <code>NaN</code> are not pruned by the Bloom filter — raw-bit
-  hashing distinguishes NaN payloads that <code>Float.compare</code> / <code>Double.compare</code> treat as equal,
-  so a Bloom miss cannot prove a NaN absent; <code>eq(-0.0)</code> and signed zeros in an <code>in</code> list are
-  hashed at their own bit width and pruned normally. On a <code>FLOAT</code> column, an <code>in</code> probe with
-  no exact <code>float</code> representation is provably absent without consulting the filter. A
-  <code>BigDecimal</code> <code>eq</code> on a <code>DECIMAL</code> stored as <code>BYTE_ARRAY</code> is pruned by neither the Bloom
-  filter nor the dictionary: such a column may hold the same number under more than one byte
-  string, so a miss on the literal's own bytes does not prove the value absent. Range
-  predicates (<code>lt</code>, <code>gt</code>, …) and <code>notEq</code> are unaffected — a Bloom filter answers only
-  membership.</li>
-<li><strong>Dictionary-based filtering applies to equality and <code>in</code> predicates</strong> on <code>INT32</code>, <code>INT64</code>,
-  <code>FLOAT</code>, <code>DOUBLE</code>, and binary (<code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code>) columns, and to <code>FLOAT16</code>
-  equality. The dictionary is checked before any page is decoded, and the row group is skipped
-  when none of its stored values can match. It applies only to a column chunk whose encoding
-  statistics show that <em>every</em> one of its data pages is dictionary-encoded: a chunk with even one
-  plain-encoded page holds values the dictionary does not list, so its dictionary proves nothing.
-  Every other chunk is pruned by statistics alone. On a <code>FLOAT</code> column the stored values are
-  widened to <code>double</code> before comparison, and on <code>FLOAT16</code> to <code>float</code>, so a probe with no exact
-  representation in the stored width matches nothing.</li>
+<li><strong>A Bloom filter and a dictionary answer membership, not order.</strong> They sharpen <code>eq</code> and <code>in</code> on
+  integer, floating-point and binary columns; <code>lt</code>, <code>gt</code> and <code>notEq</code> are left to statistics alone.</li>
+<li><strong>Two equality probes cannot use either.</strong> <code>eq(NaN)</code>, or an <code>in</code> list holding one, is not
+  Bloom-pruned: raw-bit hashing distinguishes NaN payloads that <code>Double.compare</code> treats as equal,
+  so a miss cannot prove a NaN absent. An <code>eq</code> or <code>inStrings</code> on a <code>DECIMAL</code> stored as
+  <code>BYTE_ARRAY</code> is pruned by neither, since such a column may hold the same number under more than
+  one byte string, so a miss on a probe's own bytes does not prove the value absent.</li>
 </ul>
 <h2 id="column-projection">Column Projection<a class="headerlink" href="#column-projection" title="Permanent link">&para;</a></h2>
 <p>Column projection allows reading only a subset of columns from a Parquet file, improving performance by skipping I/O, decoding, and memory allocation for unneeded columns.</p>
@@ -2503,8 +2486,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9a87cb24819ad1cc5ca0a453d43fa7a182de536a" target="_blank" rel="noopener">
-      9a87cb24
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d426d50289d61eeabcd355d543a435da045519be" target="_blank" rel="noopener">
+      d426d502
     </a>
   
 </div>

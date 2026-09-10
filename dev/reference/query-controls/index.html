@@ -1528,6 +1528,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#predicate-literals-by-column-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predicate literals by column type
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#when-statistics-are-ignored" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1880,6 +1891,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#predicate-literals-by-column-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predicate literals by column type
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#when-statistics-are-ignored" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1963,12 +1985,8 @@ behavior of each control — predicate pushdown, projection, row limits, splits,
 <td><code>isNull</code>, <code>isNotNull</code> (any type)</td>
 </tr>
 <tr>
-<td>Physical types (comparison)</td>
-<td><code>int</code>, <code>long</code>, <code>float</code>, <code>double</code>, <code>boolean</code>, <code>String</code></td>
-</tr>
-<tr>
-<td>Logical types (comparison)</td>
-<td><code>LocalDate</code>, <code>Instant</code>, <code>LocalTime</code>, <code>BigDecimal</code>, <code>UUID</code></td>
+<td>Spatial operators</td>
+<td><code>intersects</code>, on a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column</td>
 </tr>
 <tr>
 <td>Combinators</td>
@@ -1976,24 +1994,179 @@ behavior of each control — predicate pushdown, projection, row limits, splits,
 </tr>
 <tr>
 <td>Column form</td>
-<td>Leaf columns only, by name or dot-separated path (<code>address.city</code>); group, <code>LIST</code>, and <code>MAP</code> names and leaves below a repeated group are rejected</td>
+<td>By name or dot-separated path (<code>address.city</code>). Comparison predicates take leaf columns only; <code>isNull</code> / <code>isNotNull</code> also take the name of a group — a struct, a <code>LIST</code> or a <code>MAP</code>. Any name below a repeated path is rejected</td>
 </tr>
 </tbody>
 </table>
-<p><code>in(column, double...)</code> accepts FLOAT and DOUBLE columns only; other physical or logical
-types, including <code>FLOAT16</code>, throw <code>IllegalArgumentException</code> at reader creation. Comparisons
-use the <code>Double.compare</code> total order: all <code>NaN</code> values equal each other and <code>-0.0</code> differs
-from <code>+0.0</code>. On a <code>FLOAT</code> column, stored values are widened to <code>double</code> before comparison, so
-a probe with no exact <code>float</code> representation (e.g. <code>0.1</code>) never matches.</p>
-<p>All predicates, including those wrapped in <code>not</code>, are pushed down to the statistics level for
-row-group and page skipping.</p>
-<p>The logical-type factories validate the column's logical type at reader creation: <code>BigDecimal</code>
-predicates require a <code>DECIMAL</code> column and <code>UUID</code> predicates require a <code>UUID</code> column. Applying them
-to a plain <code>FIXED_LEN_BYTE_ARRAY</code> column without the corresponding logical-type annotation throws
-<code>IllegalArgumentException</code>. Raw physical-type predicates (<code>int</code>, <code>long</code>, etc.) remain available for
-columns without logical types or for filtering on the underlying physical value directly. Filters
-work with all reader types — <code>RowReader</code>, <code>ColumnReader</code>, <code>AvroRowReader</code>, and across multi-file
-readers.</p>
+<p>All predicates, including those wrapped in <code>not</code>, are pushed down for row-group and page
+skipping. Filters work with all reader types — <code>RowReader</code>, <code>ColumnReader</code>,
+<code>AvroRowReader</code>, and across multi-file readers.</p>
+<h2 id="predicate-literals-by-column-type">Predicate literals by column type<a class="headerlink" href="#predicate-literals-by-column-type" title="Permanent link">&para;</a></h2>
+<p>A column takes the literal types listed for its physical type, and — where it carries an
+annotation — those listed for that annotation as well. Where both rows apply, the annotation
+names the order: a <code>UINT_32</code> column matches the <code>INT32</code> row and the <code>INT(32, isSigned = false)</code>
+row, and compares by unsigned magnitude. Set membership follows the same mapping: <code>in</code> on the
+<code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> columns, <code>inStrings</code> on those taking a <code>String</code>. A
+literal a column does not take throws <code>IllegalArgumentException</code> at reader creation.</p>
+<table>
+<thead>
+<tr>
+<th>Physical type</th>
+<th>Logical type</th>
+<th>Literal</th>
+<th>Compared as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BOOLEAN</code></td>
+<td></td>
+<td><code>boolean</code></td>
+<td>equality only (<code>eq</code>, <code>notEq</code>)</td>
+</tr>
+<tr>
+<td><code>INT32</code></td>
+<td></td>
+<td><code>int</code></td>
+<td>signed</td>
+</tr>
+<tr>
+<td><code>INT64</code></td>
+<td></td>
+<td><code>long</code></td>
+<td>signed</td>
+</tr>
+<tr>
+<td><code>FLOAT</code></td>
+<td></td>
+<td><code>float</code></td>
+<td>numeric</td>
+</tr>
+<tr>
+<td><code>DOUBLE</code></td>
+<td></td>
+<td><code>double</code></td>
+<td>numeric</td>
+</tr>
+<tr>
+<td><code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
+<td></td>
+<td><code>String</code></td>
+<td>unsigned lexicographic</td>
+</tr>
+<tr>
+<td><code>INT32</code>, <code>INT64</code></td>
+<td><code>INT(8/16/32/64, isSigned = true)</code></td>
+<td><code>int</code> / <code>long</code></td>
+<td>signed</td>
+</tr>
+<tr>
+<td><code>INT32</code>, <code>INT64</code></td>
+<td><code>INT(8/16/32/64, isSigned = false)</code></td>
+<td><code>int</code> / <code>long</code></td>
+<td>unsigned magnitude</td>
+</tr>
+<tr>
+<td><code>INT32</code></td>
+<td><code>DATE</code></td>
+<td><code>LocalDate</code></td>
+<td>days since the Unix epoch</td>
+</tr>
+<tr>
+<td><code>INT32</code> millis, <code>INT64</code> micros / nanos</td>
+<td><code>TIME</code></td>
+<td><code>LocalTime</code></td>
+<td>the column's time unit</td>
+</tr>
+<tr>
+<td><code>INT64</code></td>
+<td><code>TIMESTAMP</code></td>
+<td><code>Instant</code></td>
+<td>the column's time unit</td>
+</tr>
+<tr>
+<td><code>INT32</code>, <code>INT64</code>, <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td><code>DECIMAL</code></td>
+<td><code>BigDecimal</code>, <code>String</code></td>
+<td>the represented value, under all four physical types</td>
+</tr>
+<tr>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code>, <code>BSON</code></td>
+<td><code>String</code></td>
+<td>unsigned lexicographic</td>
+</tr>
+<tr>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>GEOMETRY</code>, <code>GEOGRAPHY</code></td>
+<td>four <code>double</code> bounds</td>
+<td>bounding-box overlap</td>
+</tr>
+<tr>
+<td><code>FIXED_LEN_BYTE_ARRAY(16)</code></td>
+<td><code>UUID</code></td>
+<td><code>UUID</code>, <code>String</code></td>
+<td>the 16 bytes, unsigned</td>
+</tr>
+<tr>
+<td><code>FIXED_LEN_BYTE_ARRAY(2)</code></td>
+<td><code>FLOAT16</code></td>
+<td><code>float</code>, <code>String</code></td>
+<td>numeric, widened to <code>float</code></td>
+</tr>
+<tr>
+<td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>INTERVAL</code></td>
+<td><code>String</code>, <code>inStrings</code></td>
+<td>the 12 bytes, unsigned; the format defines no order for <code>INTERVAL</code>, so only equality is meaningful</td>
+</tr>
+<tr>
+<td>any</td>
+<td><code>NULL</code></td>
+<td>the literal for the physical type</td>
+<td>nothing — every value is null, so no comparison matches</td>
+</tr>
+<tr>
+<td>group of two <code>BYTE_ARRAY</code></td>
+<td><code>VARIANT</code></td>
+<td><code>isNull</code>, <code>isNotNull</code></td>
+<td>whether the group is present</td>
+</tr>
+</tbody>
+</table>
+<p>A predicate on a <code>VARIANT</code> column reaches the group's presence, not the values inside it.
+Filtering on a shredded variant's sub-paths is in progress, tracked by
+<a href="https://github.com/hardwood-hq/hardwood/issues/309">#309</a>; the <code>metadata</code> and <code>value</code> leaves below
+the group take <code>BYTE_ARRAY</code> predicates as any leaf does, but they hold the encoded payload rather
+than the values a caller would filter on.</p>
+<p>A <code>FLOAT</code> or <code>DOUBLE</code> column compares by the <code>Double.compare</code> total order, so all <code>NaN</code> values
+equal each other and <code>-0.0</code> differs from <code>+0.0</code>. A <code>FLOAT</code> column's stored values widen to
+<code>double</code> first, so a probe with no exact <code>float</code> representation — <code>0.1</code>, say — never matches.</p>
+<p>A <code>BigDecimal</code> literal is rescaled to the column's scale before it is compared. A column with
+more scale than the literal pads it, so <code>99.99</code> against a <code>DECIMAL(scale = 4)</code> column compares
+as <code>99.9900</code>, and trailing zeros drop the same way. A literal carrying a digit the column's
+scale cannot hold throws <code>ArithmeticException</code> rather than rounding it away — <code>99.999</code> against
+a <code>DECIMAL(scale = 2)</code> column.</p>
+<p>An unsigned column's literal is the stored two's-complement bit pattern, the same form
+<a href="../accessors/">the accessors</a> hand back for it: <code>4_000_000_000</code> in a <code>UINT_32</code> column is the <code>int</code>
+<code>-294_967_296</code>, so a value read from a row can be passed straight back as a predicate literal.
+Write one with <code>Integer.parseUnsignedInt</code> / <code>Long.parseUnsignedLong</code>. Comparisons order by the
+unsigned magnitude regardless, so that literal is above every positive <code>int</code> rather than below
+zero.</p>
+<p>A column that carries an annotation also takes the literal for its physical type, comparing the
+value as it is stored: an <code>int</code> against a <code>DATE</code> column tests the epoch day directly.</p>
+<p><code>DECIMAL</code> and <code>FLOAT16</code> are the exceptions to <em>how</em> the bytes compare. Both order by the value
+their bytes stand for rather than by the bytes themselves, and their statistics are written in
+that order, so a <code>String</code> literal against either compares as the column does — a <code>DECIMAL</code> by its
+unscaled value, a <code>FLOAT16</code> by the number its two little-endian bytes encode — rather than as a
+byte string. A <code>FLOAT16</code> literal must be exactly two bytes.</p>
+<p><code>inStrings</code> compares each probe the same way, so on a <code>DECIMAL</code> a padded encoding of a probe is
+still a member, and on a <code>FLOAT16</code> each probe — exactly two bytes — is compared as the half it
+encodes. <code>in(double...)</code> on a <code>FLOAT16</code> compares against the decoded half as it does against a
+<code>FLOAT</code>'s widened value, so a probe no half represents, such as <code>0.1</code>, matches nothing.</p>
+<p>Note that a <code>String</code> literal is encoded as UTF-8, which reproduces a byte one-for-one only below
+<code>0x80</code>. A <code>DECIMAL</code>'s unscaled value sets the high bit for every negative number, so those are
+not expressible this way; reach for the <code>BigDecimal</code> factory instead.</p>
 <h2 id="when-statistics-are-ignored">When statistics are ignored<a class="headerlink" href="#when-statistics-are-ignored" title="Permanent link">&para;</a></h2>
 <p>Pruning compares a unit's <code>min</code> / <code>max</code> bounds. A pair a reader cannot compare against is
 ignored rather than trusted, so the row group or page is kept and its rows are read and filtered
@@ -2099,8 +2272,8 @@ API and by <code>hardwood inspect</code> and <code>hardwood dive</code>.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9a87cb24819ad1cc5ca0a453d43fa7a182de536a" target="_blank" rel="noopener">
-      9a87cb24
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d426d50289d61eeabcd355d543a435da045519be" target="_blank" rel="noopener">
+      d426d502
     </a>
   
 </div>

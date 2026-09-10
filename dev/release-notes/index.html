@@ -2073,6 +2073,15 @@
 <li>
 <p>Every <code>LogicalType</code> member has a static factory, and those are the documented way to construct one — <code>LogicalType.string()</code>, <code>LogicalType.decimal(18, 2)</code>, <code>LogicalType.timestamp(true, TimeUnit.MICROS)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>). The parameterless ones return a shared instance, which the reader now hands back instead of allocating a record per column while it decodes a footer. The record constructors still work.</p>
 </li>
+<li>
+<p>A <code>LocalDate</code> predicate requires the column to carry the <code>DATE</code> annotation, as its JavaDoc has always said (<a href="https://github.com/hardwood-hq/hardwood/issues/1141">#1141</a>). The annotation went unchecked before, so a <code>LocalDate</code> against a plain <code>INT32</code> column compared epoch days against unrelated integers and returned rows answering a different question, with nothing raised. <strong>What changes for you:</strong> such a call now throws <code>IllegalArgumentException</code> at reader creation. A plain <code>INT32</code> column that does hold epoch days is filtered by the day itself — <code>gt("d", (int) date.toEpochDay())</code>.</p>
+</li>
+<li>
+<p>A <code>String</code> predicate on a <code>DECIMAL</code> or <code>FLOAT16</code> column compares as the column does — a <code>DECIMAL</code> by its unscaled value, a <code>FLOAT16</code> by the number its two bytes encode — rather than as a byte string (<a href="https://github.com/hardwood-hq/hardwood/issues/1142">#1142</a>). Both order by the value their bytes stand for and record their statistics that way, so comparing byte-wise pruned row groups against bounds written in a different order and silently dropped matching rows. This is the comparison parquet-java applies, so a filter carried over through the compatibility shim answers the same. <code>inStrings</code> compares its probes the same way — which is also how parquet-java evaluates <code>In</code> — so a padded encoding of a <code>DECIMAL</code> probe is found; on a <code>FLOAT16</code> column each probe is compared as the half it encodes, and <code>in(double...)</code> accepts a <code>FLOAT16</code> column too.</p>
+</li>
+<li>
+<p>An ordered predicate on an <code>INT(bitWidth, isSigned = false)</code> column compares by unsigned magnitude, the order the column is written in (<a href="https://github.com/hardwood-hq/hardwood/issues/1144">#1144</a>). The comparison was signed before, so <code>lt</code>, <code>gt</code> and their siblings returned wrong rows on a column holding values above 2^31, and bounds straddling that point read as inverted and were discarded — costing those columns row-group and page skipping as well.</p>
+</li>
 </ul>
 <p><strong>Breaking Changes:</strong></p>
 <ul>
@@ -2297,8 +2306,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9a87cb24819ad1cc5ca0a453d43fa7a182de536a" target="_blank" rel="noopener">
-      9a87cb24
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d426d50289d61eeabcd355d543a435da045519be" target="_blank" rel="noopener">
+      d426d502
     </a>
   
 </div>
