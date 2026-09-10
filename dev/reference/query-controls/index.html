@@ -1528,6 +1528,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#when-statistics-are-ignored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When statistics are ignored
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#column-projection-forms" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1869,6 +1880,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#when-statistics-are-ignored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When statistics are ignored
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#column-projection-forms" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1967,6 +1989,35 @@ to a plain <code>FIXED_LEN_BYTE_ARRAY</code> column without the corresponding lo
 columns without logical types or for filtering on the underlying physical value directly. Filters
 work with all reader types — <code>RowReader</code>, <code>ColumnReader</code>, <code>AvroRowReader</code>, and across multi-file
 readers.</p>
+<h2 id="when-statistics-are-ignored">When statistics are ignored<a class="headerlink" href="#when-statistics-are-ignored" title="Permanent link">&para;</a></h2>
+<p>Pruning compares a unit's <code>min</code> / <code>max</code> bounds. A pair a reader cannot compare against is
+ignored rather than trusted, so the row group or page is kept and its rows are read and filtered
+one by one. Results are the same either way; only the I/O saved is lost. Bounds are ignored for
+one of three reasons:</p>
+<table>
+<thead>
+<tr>
+<th>Reason</th>
+<th>Bounds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The minimum sorts above the maximum</td>
+<td><code>min</code> and <code>max</code> are the wrong way round in the column's order, so the pair brackets nothing</td>
+</tr>
+<tr>
+<td>One of them is <code>NaN</code></td>
+<td>A <code>FLOAT</code>, <code>DOUBLE</code> or <code>FLOAT16</code> bound the Parquet spec forbids, sitting outside the column's ordering</td>
+</tr>
+<tr>
+<td>They come from the deprecated <code>min</code> / <code>max</code> fields</td>
+<td>Superseded by <code>min_value</code> / <code>max_value</code>; the deprecated pair compares unsigned whatever the column's type is, so its order is wrong for every signed one</td>
+</tr>
+</tbody>
+</table>
+<p>The bounds themselves are still reported as the file carries them, by <code>Statistics</code> on the metadata
+API and by <code>hardwood inspect</code> and <code>hardwood dive</code>.</p>
 <h2 id="column-projection-forms">Column projection forms<a class="headerlink" href="#column-projection-forms" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2043,8 +2094,8 @@ readers.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d1a7ba3a33cc3991a3eab28cc8f6c108c8258cbb" target="_blank" rel="noopener">
-      d1a7ba3a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e3c610e653ed06eecf574ff8f24ee5ddfeead28d" target="_blank" rel="noopener">
+      e3c610e6
     </a>
   
 </div>

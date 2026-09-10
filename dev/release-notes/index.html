@@ -2047,6 +2047,12 @@
 <h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
+<p>Statistics whose <code>min</code> sorts above its <code>max</code> no longer prune (<a href="https://github.com/hardwood-hq/hardwood/issues/1172">#1172</a>).</p>
+</li>
+<li>
+<p>Statistics carrying a null count and no bounds are no longer reported as carrying deprecated <code>min</code> / <code>max</code> bounds (<a href="https://github.com/hardwood-hq/hardwood/issues/1172">#1172</a>).</p>
+</li>
+<li>
 <p>A <code>ParquetFileReader</code> no longer retains a read's <code>RowGroupIterator</code> after the reader consuming it is closed (<a href="https://github.com/hardwood-hq/hardwood/issues/1170">#1170</a>).</p>
 </li>
 <li>
@@ -2285,8 +2291,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d1a7ba3a33cc3991a3eab28cc8f6c108c8258cbb" target="_blank" rel="noopener">
-      d1a7ba3a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e3c610e653ed06eecf574ff8f24ee5ddfeead28d" target="_blank" rel="noopener">
+      e3c610e6
     </a>
   
 </div>
