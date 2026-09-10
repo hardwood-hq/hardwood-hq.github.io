@@ -2047,6 +2047,9 @@
 <h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
+<p>A <code>ParquetFileReader</code> no longer retains a read's <code>RowGroupIterator</code> after the reader consuming it is closed (<a href="https://github.com/hardwood-hq/hardwood/issues/1170">#1170</a>).</p>
+</li>
+<li>
 <p>A logical type annotation that a column's physical type cannot carry is now dropped, and the column is read as its physical type. Previously it surfaced as an <code>IllegalArgumentException</code> from whichever accessor first reached the column (<a href="https://github.com/hardwood-hq/hardwood/issues/1139">#1139</a>). <code>FLOAT16</code> is defined as a two-byte payload, so a column annotated <code>FLOAT16</code> that declares three bytes is invalid; <a href="https://github.com/apache/parquet-format/pull/606">parquet-format PR 606</a> specifies that readers ignore the annotation and use only the physical type. An annotation this version does not recognize is dropped the same way, so a file written against a newer format version can still be read. Both cases log a warning, naming the column and the reason, or the union field that was not recognized. <strong>What changes for you:</strong> <code>getFileSchema()</code> reports no logical type for such a column, <code>getValue</code> returns its physical value where it used to throw, and a logical accessor on it fails as it does on any unannotated column.</p>
 </li>
 <li>
@@ -2282,8 +2285,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/50b60a0b936ea55dad06076d1760c3f0e8e49f6b" target="_blank" rel="noopener">
-      50b60a0b
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d79cc5dbe74401315920764eebb73181d2855900" target="_blank" rel="noopener">
+      d79cc5db
     </a>
   
 </div>
