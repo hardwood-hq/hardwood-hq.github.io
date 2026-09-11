@@ -2200,10 +2200,11 @@ normal control flow. If the column type isn't known statically, check it up fron
 <code>reader.getFileSchema().getColumn(name)</code> and inspect the returned <code>ColumnSchema</code>'s <code>type()</code> /
 <code>logicalType()</code> — see <a href="../../how-to/metadata/">Inspect File Metadata</a>.</p>
 <p>A column whose annotation its physical type cannot carry is not an error. <code>FLOAT16</code> is defined as
-a two-byte payload, so a <code>FLOAT16</code> column that declares three bytes is invalid. The format tells
-readers to ignore such an annotation rather than reject the file, so Hardwood drops it — and drops
-one it does not recognize at all — logging a warning in each case. The column is then reported and
-read as its physical type.</p>
+a two-byte payload, so a <code>FLOAT16</code> column that declares three bytes is invalid. So are a
+<code>TIME(MILLIS)</code> or an <code>INT(8)</code> on an <code>INT64</code>, and a <code>DECIMAL(12, 2)</code> on an <code>INT32</code>, which holds at
+most nine digits. The format tells readers to ignore such an annotation rather than reject the
+file, so Hardwood drops it — and drops one it does not recognize at all — logging a warning in each
+case. The column is then reported and read as its physical type.</p>
 <p><code>getFileSchema()</code> reports no logical type for it, <code>getValue</code> returns the physical value, and the
 physical accessors work. A logical accessor fails as it would on any unannotated column of that
 type. Statistics are compared under the physical type's ordering, and a logical-type predicate on
@@ -2383,8 +2384,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4fd41b1880bc643a49e97dde4e99ecb1dee762d3" target="_blank" rel="noopener">
-      4fd41b18
+    <a href="https://github.com/hardwood-hq/hardwood/tree/1353f0e733dff6cde164cdabdcf99894dee3a880" target="_blank" rel="noopener">
+      1353f0e7
     </a>
   
 </div>

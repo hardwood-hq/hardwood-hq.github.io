@@ -2055,13 +2055,13 @@ literal a column does not take throws <code>IllegalArgumentException</code> at r
 <td>unsigned lexicographic</td>
 </tr>
 <tr>
-<td><code>INT32</code>, <code>INT64</code></td>
+<td><code>INT32</code> 8/16/32-bit, <code>INT64</code> 64-bit</td>
 <td><code>INT(8/16/32/64, isSigned = true)</code></td>
 <td><code>int</code> / <code>long</code></td>
 <td>signed</td>
 </tr>
 <tr>
-<td><code>INT32</code>, <code>INT64</code></td>
+<td><code>INT32</code> 8/16/32-bit, <code>INT64</code> 64-bit</td>
 <td><code>INT(8/16/32/64, isSigned = false)</code></td>
 <td><code>int</code> / <code>long</code></td>
 <td>unsigned magnitude</td>
@@ -2085,7 +2085,7 @@ literal a column does not take throws <code>IllegalArgumentException</code> at r
 <td>the column's time unit</td>
 </tr>
 <tr>
-<td><code>INT32</code>, <code>INT64</code>, <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td><code>INT32</code> up to 9 digits, <code>INT64</code> up to 18, <code>FIXED_LEN_BYTE_ARRAY(n)</code> up to what <code>n</code> bytes hold, <code>BYTE_ARRAY</code> any</td>
 <td><code>DECIMAL</code></td>
 <td><code>BigDecimal</code>, <code>String</code></td>
 <td>the represented value, under all four physical types</td>
@@ -2288,8 +2288,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4fd41b1880bc643a49e97dde4e99ecb1dee762d3" target="_blank" rel="noopener">
-      4fd41b18
+    <a href="https://github.com/hardwood-hq/hardwood/tree/1353f0e733dff6cde164cdabdcf99894dee3a880" target="_blank" rel="noopener">
+      1353f0e7
     </a>
   
 </div>
