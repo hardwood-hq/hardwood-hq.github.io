@@ -2047,6 +2047,9 @@
 <h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
+<p>Row groups and pages are no longer pruned against <code>min</code> / <code>max</code> in a sort order the reader cannot read — a column annotated <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>UNKNOWN</code>, <code>LIST</code> or <code>MAP</code>, or one whose file declares an unrecognized <code>ColumnOrder</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1179">#1179</a>).</p>
+</li>
+<li>
 <p><code>isNull</code> and <code>isNotNull</code> accept the name of a group — a struct, a <code>LIST</code> or a <code>MAP</code> — testing whether the group itself is present rather than one of its fields (<a href="https://github.com/hardwood-hq/hardwood/issues/977">#977</a>).</p>
 </li>
 <li>
@@ -2306,8 +2309,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/7fee7de1f67716dc6698780848c4dbb6f3638091" target="_blank" rel="noopener">
-      7fee7de1
+    <a href="https://github.com/hardwood-hq/hardwood/tree/0f3dd1d4f898873e5233f38651c069d291a2531d" target="_blank" rel="noopener">
+      0f3dd1d4
     </a>
   
 </div>

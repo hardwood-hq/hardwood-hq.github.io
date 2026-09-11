@@ -2171,7 +2171,7 @@ not expressible this way; reach for the <code>BigDecimal</code> factory instead.
 <p>Pruning compares a unit's <code>min</code> / <code>max</code> bounds. A pair a reader cannot compare against is
 ignored rather than trusted, so the row group or page is kept and its rows are read and filtered
 one by one. Results are the same either way; only the I/O saved is lost. Bounds are ignored for
-one of three reasons:</p>
+one of five reasons:</p>
 <table>
 <thead>
 <tr>
@@ -2191,6 +2191,14 @@ one of three reasons:</p>
 <tr>
 <td>They come from the deprecated <code>min</code> / <code>max</code> fields</td>
 <td>Superseded by <code>min_value</code> / <code>max_value</code>; the deprecated pair compares unsigned whatever the column's type is, so its order is wrong for every signed one</td>
+</tr>
+<tr>
+<td>The column's annotation defines no order</td>
+<td>An <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>UNKNOWN</code>, <code>LIST</code> or <code>MAP</code> column, for which the Parquet spec defines no sort order</td>
+</tr>
+<tr>
+<td>The file declares a <code>ColumnOrder</code> this release does not recognize</td>
+<td>The Parquet spec directs a reader to ignore <code>min</code> / <code>max</code> under a column order it does not support; this applies to every column type</td>
 </tr>
 </tbody>
 </table>
@@ -2272,8 +2280,8 @@ API and by <code>hardwood inspect</code> and <code>hardwood dive</code>.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/7fee7de1f67716dc6698780848c4dbb6f3638091" target="_blank" rel="noopener">
-      7fee7de1
+    <a href="https://github.com/hardwood-hq/hardwood/tree/0f3dd1d4f898873e5233f38651c069d291a2531d" target="_blank" rel="noopener">
+      0f3dd1d4
     </a>
   
 </div>
