@@ -2189,7 +2189,7 @@ one of five reasons:</p>
 </tr>
 <tr>
 <td>One of them is <code>NaN</code></td>
-<td>A <code>FLOAT</code>, <code>DOUBLE</code> or <code>FLOAT16</code> bound the Parquet spec forbids, sitting outside the column's ordering</td>
+<td>A <code>FLOAT</code>, <code>DOUBLE</code> or <code>FLOAT16</code> bound. <code>TYPE_ORDER</code> forbids it; under <code>IEEE_754_TOTAL_ORDER</code> it marks a unit whose every non-null value is <code>NaN</code></td>
 </tr>
 <tr>
 <td>They come from the deprecated <code>min</code> / <code>max</code> fields</td>
@@ -2207,6 +2207,11 @@ one of five reasons:</p>
 </table>
 <p>The bounds themselves are still reported as the file carries them, by <code>Statistics</code> on the metadata
 API and by <code>hardwood inspect</code> and <code>hardwood dive</code>.</p>
+<p>Usable floating-point bounds cover a unit's non-<code>NaN</code> values only. A predicate that a <code>NaN</code>
+value satisfies — <code>notEq</code>, <code>gt</code> or <code>gtEq</code> against a number, or <code>eq</code>, <code>ltEq</code> or <code>gtEq</code> against
+<code>NaN</code> — prunes a <code>FLOAT</code>, <code>DOUBLE</code> or <code>FLOAT16</code> row group or page from its bounds only where the
+unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> and <code>ltEq</code> against a number, and <code>gt</code> against
+<code>NaN</code>, prune from the bounds alone.</p>
 <h2 id="column-projection-forms">Column projection forms<a class="headerlink" href="#column-projection-forms" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2283,8 +2288,8 @@ API and by <code>hardwood inspect</code> and <code>hardwood dive</code>.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/dcb17e39a86ec29bfa5a46a2c6eaad2c9796016e" target="_blank" rel="noopener">
-      dcb17e39
+    <a href="https://github.com/hardwood-hq/hardwood/tree/36176c486d769eafd8a0db6e3cd2ce021b2d251c" target="_blank" rel="noopener">
+      36176c48
     </a>
   
 </div>

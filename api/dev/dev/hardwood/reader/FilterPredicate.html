@@ -203,11 +203,12 @@ value. On a <code>FLOAT</code> column, stored values are widened to <code>double
 a probe with no exact <code>float</code> representation (e.g. <code>0.1</code>) never matches. <code>FLOAT16</code>
 columns are not supported and throw <code>IllegalArgumentException</code> at reader creation;
 express such filters as <code>or(eq(...), eq(...))</code> instead.</p>
-<p>Predicate pushdown is defensive against non-conformant writers: if a
-column's statistics carry <code>NaN</code> as <code>min</code> or <code>max</code> (forbidden by the
-Parquet spec, but produced by older / buggy writers), the bound is
-treated as no-bound and pruning is skipped on that side — matching rows
-are never dropped.</p>
+<p>Row-group and page pruning never drops a <code>NaN</code> row that a predicate
+matches. Statistics whose <code>min</code> or <code>max</code> is <code>NaN</code> are not used for pruning.
+A predicate that a <code>NaN</code> value satisfies — <code>notEq</code>, <code>gt</code> or <code>gtEq</code> against
+a number, or <code>eq</code>, <code>ltEq</code> or <code>gtEq</code> against <code>NaN</code> — prunes a <code>FLOAT</code>,
+<code>DOUBLE</code> or <code>FLOAT16</code> column from its statistics only where the row group
+or page records a <code>nan_count</code> of zero.</p>
 </div>
 </div>
 </section>
