@@ -2047,6 +2047,9 @@
 <h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
+<p>A <code>ColumnReader</code> filter on a <code>FLOAT16</code> column no longer throws <code>ClassCastException</code>, and one on a struct leaf no longer reads a leaf that is null under a present struct as a value (<a href="https://github.com/hardwood-hq/hardwood/issues/1197">#1197</a>).</p>
+</li>
+<li>
 <p>A <code>String</code>, <code>inStrings</code> or parquet-java <code>binaryColumn</code> literal on a <code>FIXED_LEN_BYTE_ARRAY</code> <code>DECIMAL</code> column that is narrower or wider than the column no longer drops row groups holding matching rows, and one whose value does not fit the column throws <code>ArithmeticException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1190">#1190</a>).</p>
 </li>
 <li>
@@ -2345,8 +2348,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/36176c486d769eafd8a0db6e3cd2ce021b2d251c" target="_blank" rel="noopener">
-      36176c48
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4fd41b1880bc643a49e97dde4e99ecb1dee762d3" target="_blank" rel="noopener">
+      4fd41b18
     </a>
   
 </div>
