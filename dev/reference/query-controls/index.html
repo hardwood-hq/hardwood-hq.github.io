@@ -2159,7 +2159,10 @@ value as it is stored: an <code>int</code> against a <code>DATE</code> column te
 their bytes stand for rather than by the bytes themselves, and their statistics are written in
 that order, so a <code>String</code> literal against either compares as the column does — a <code>DECIMAL</code> by its
 unscaled value, a <code>FLOAT16</code> by the number its two little-endian bytes encode — rather than as a
-byte string. A <code>FLOAT16</code> literal must be exactly two bytes.</p>
+byte string. A <code>FLOAT16</code> literal must be exactly two bytes. On a <code>FIXED_LEN_BYTE_ARRAY</code> <code>DECIMAL</code>,
+a literal of any length stands for the value it encodes and is brought to the column width:
+sign-extended when it is shorter, its leading sign-extension bytes dropped when it is longer. One
+whose value needs more bytes than the column holds throws <code>ArithmeticException</code>.</p>
 <p><code>inStrings</code> compares each probe the same way, so on a <code>DECIMAL</code> a padded encoding of a probe is
 still a member, and on a <code>FLOAT16</code> each probe — exactly two bytes — is compared as the half it
 encodes. <code>in(double...)</code> on a <code>FLOAT16</code> compares against the decoded half as it does against a
@@ -2280,8 +2283,8 @@ API and by <code>hardwood inspect</code> and <code>hardwood dive</code>.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/009211d520183cafa87b90d4cdc8a6fa958e3f26" target="_blank" rel="noopener">
-      009211d5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/dcb17e39a86ec29bfa5a46a2c6eaad2c9796016e" target="_blank" rel="noopener">
+      dcb17e39
     </a>
   
 </div>

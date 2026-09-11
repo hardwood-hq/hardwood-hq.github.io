@@ -2047,6 +2047,9 @@
 <h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
+<p>A <code>String</code>, <code>inStrings</code> or parquet-java <code>binaryColumn</code> literal on a <code>FIXED_LEN_BYTE_ARRAY</code> <code>DECIMAL</code> column that is narrower or wider than the column no longer drops row groups holding matching rows, and one whose value does not fit the column throws <code>ArithmeticException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1190">#1190</a>).</p>
+</li>
+<li>
 <p>Row groups and pages are no longer pruned against <code>min</code> / <code>max</code> in a sort order the reader cannot read — a column annotated <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>UNKNOWN</code>, <code>LIST</code> or <code>MAP</code>, or one whose file declares an unrecognized <code>ColumnOrder</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1179">#1179</a>).</p>
 </li>
 <li>
@@ -2106,6 +2109,9 @@
 </ul>
 <p><strong>Breaking Changes:</strong></p>
 <ul>
+<li>
+<p><code>FilterPredicate.SignedBinaryColumnPredicate</code> is removed; a <code>DECIMAL</code> column is filtered with the <code>BigDecimal</code> factories (<a href="https://github.com/hardwood-hq/hardwood/issues/1190">#1190</a>).</p>
+</li>
 <li>
 <p>The reader's exception model separates what the transport got wrong from what the file did, so a failure says whether trying again can help (<a href="https://github.com/hardwood-hq/hardwood/issues/1104">#1104</a>).</p>
 <ul>
@@ -2336,8 +2342,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/009211d520183cafa87b90d4cdc8a6fa958e3f26" target="_blank" rel="noopener">
-      009211d5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/dcb17e39a86ec29bfa5a46a2c6eaad2c9796016e" target="_blank" rel="noopener">
+      dcb17e39
     </a>
   
 </div>
