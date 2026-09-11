@@ -1662,6 +1662,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#value-rendering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value rendering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#schema-output-formats" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2062,6 +2073,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#value-rendering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value rendering
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#schema-output-formats" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2286,11 +2308,11 @@ run the CLI via Docker without installing it locally — see the <a href="#docke
 </tr>
 <tr>
 <td><code>hardwood print</code></td>
-<td>Print rows as an ASCII table (head, tail, or all); Variant columns are decoded to JSON-like text</td>
+<td>Print rows as an ASCII table (head, tail, or all); nested and Variant columns decode into a one-line display grammar</td>
 </tr>
 <tr>
 <td><code>hardwood convert</code></td>
-<td>Convert a Parquet file to CSV or JSON (head, tail, or all); JSON output writes numbers and booleans as JSON scalars and a null as <code>null</code>; Variant columns are emitted as a JSON string in CSV and as a native JSON subtree in JSON</td>
+<td>Convert a Parquet file to CSV or JSON (head, tail, or all); JSON output writes numbers and booleans as JSON scalars and a null as <code>null</code>; nested and Variant columns are emitted as JSON text in a single CSV cell and as native JSON in JSON</td>
 </tr>
 <tr>
 <td><code>hardwood footer</code></td>
@@ -2370,12 +2392,19 @@ run the CLI via Docker without installing it locally — see the <a href="#docke
 </code></pre></div>
 <h2 id="convert-output">Convert output<a class="headerlink" href="#convert-output" title="Permanent link">&para;</a></h2>
 <p><code>hardwood convert --format json</code> writes JSON numbers and booleans for
-non-repeated <code>BOOLEAN</code>, <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, and <code>DOUBLE</code> fields that
-carry no logical annotation or an <code>INT</code> annotation. Date, time, timestamp,
-decimal, UUID, interval, <code>FLOAT16</code>, <code>INT96</code>, byte-array, and nested values are
-JSON strings.</p>
+<code>BOOLEAN</code>, <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, and <code>DOUBLE</code> values that carry no
+logical annotation or an <code>INT</code> annotation. Date, time, timestamp, decimal,
+UUID, interval, <code>FLOAT16</code>, <code>INT96</code>, and byte-array values are JSON strings.
+Decimals are always plain strings — <code>0.0000001</code>, never <code>1E-7</code>.</p>
+<p>Nested values are native JSON: a struct is an object, a list or repeated field
+an array, and a map an object keyed by each map key's text. Values inside them
+follow the same rules as top-level fields. CSV has no nested structure, so a
+list, map, or Variant in a CSV cell is the same JSON as text.</p>
 <p>Finite floating-point values are JSON numbers. <code>NaN</code>, <code>Infinity</code>, and
-<code>-Infinity</code> are JSON strings, because JSON has no non-finite number values.</p>
+<code>-Infinity</code> are JSON strings, because JSON has no non-finite number values.
+This holds for floating-point values inside Variant columns too.</p>
+<p>String values are written verbatim, control characters included: JSON escapes
+them, and CSV quotes a field that holds a line feed or a carriage return.</p>
 <p>Unsigned integers are JSON numbers, including values above the signed 64-bit
 range such as <code>18446744073709551615</code>. A JSON parser that represents numbers as
 IEEE 754 doubles — most JavaScript ones do — reads such a value at reduced
@@ -2389,6 +2418,50 @@ is an error.</p>
 inside a rendered list, map, or struct cell is the text <code>null</code> in that cell. A
 Variant holding the Variant null is the text <code>null</code> too: that is a value the
 column carries, not an absent one.</p>
+<h2 id="value-rendering">Value rendering<a class="headerlink" href="#value-rendering" title="Permanent link">&para;</a></h2>
+<p>Every command spells a value of a given logical type the same way:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Timestamp adjusted to UTC, and <code>INT96</code></td>
+<td><code>2025-01-01T00:00:00Z</code></td>
+</tr>
+<tr>
+<td>Timestamp without a time zone</td>
+<td><code>2025-01-01T00:00</code></td>
+</tr>
+<tr>
+<td>Date</td>
+<td><code>2025-04-24</code></td>
+</tr>
+<tr>
+<td>Decimal</td>
+<td><code>0.0000001</code></td>
+</tr>
+<tr>
+<td>UUID</td>
+<td><code>f81d4fae-7dec-11d0-a765-00a0c91e6bf6</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>INT96</code> min/max statistics render as timestamps too.</p>
+<p><code>print</code> and <code>dive</code> render nested and Variant values in one unquoted display
+grammar: structs and maps as <code>{ a : 1 }</code>, lists as <code>[1, 2]</code>, Variant objects
+and arrays in the same shape. <code>convert</code> writes nested and Variant values as
+JSON: native in JSON output, JSON text in a CSV cell.</p>
+<p>In <code>print</code>, <code>dive</code>, <code>inspect</code> and <code>info</code>, a control character in a string
+value renders as <code>·</code>, and a value made entirely of control characters as
+<code>0x</code>-prefixed hex of its UTF-8 bytes. <code>convert</code> writes string values verbatim.</p>
+<p>A min/max statistic or dictionary entry that does not decode as its type
+renders in its stored form: bytes whose length does not match the type as
+<code>0x</code>-prefixed hex, a <code>TIME</code> outside a day as its stored integer. A malformed
+<code>UUID</code>, <code>INTERVAL</code> or <code>INT96</code> value in a row makes <code>print</code> and <code>convert</code> fail.</p>
 <h2 id="schema-output-formats">Schema output formats<a class="headerlink" href="#schema-output-formats" title="Permanent link">&para;</a></h2>
 <p><code>hardwood schema</code> prints the Parquet schema in its native form by default.
 <code>-F AVRO</code> and <code>-F PROTO</code> render it as an Avro schema or a Protobuf message
@@ -2413,7 +2486,9 @@ line per entry: the key, its value's byte length, and the value itself. Values
 wider than 60 columns are truncated with a trailing <code>…</code>, since these routinely
 carry kilobytes of embedded JSON (e.g.
 <code>org.apache.spark.sql.parquet.row.metadata</code>) or a base64-encoded Arrow IPC
-schema (<code>ARROW:schema</code>). Control characters in a value print as <code>·</code>:</p>
+schema (<code>ARROW:schema</code>). Control characters in a value print as <code>·</code>, and a
+value made entirely of control characters prints as <code>0x</code>-prefixed hex of its
+UTF-8 bytes:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Key/Value Metadata (3):
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  ARROW:schema                               4.1 KiB  /////5AEAABAAAAAAAAKAAwABgAFAAgACgAAAAABBAA…
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  org.apache.spark.sql.parquet.row.metadata  1.8 KiB  {"type":"struct","fields":[{"name":"order_i…
@@ -2451,8 +2526,9 @@ absent cell:</p>
 carries bytes the schema gives no interpretation for — text from a writer that
 omitted the <code>STRING</code> annotation, or an opaque payload such as WKB geometry, a
 Protobuf message or a hash. Every command decides from the bytes themselves:
-well-formed UTF-8 with no control characters prints as text, anything else
-prints as <code>0x</code>-prefixed lowercase hex. The same rule applies to values,
+well-formed UTF-8 with no control characters prints as text unless it starts
+with <code>0x</code>; anything else prints as <code>0x</code>-prefixed lowercase hex, so a <code>0x…</code>
+value always means bytes. The same rule applies to values,
 dictionary entries and min/max statistics alike, and to a byte-backed logical
 type whose payload length rules out its own decoder.</p>
 <p>Each table column holds 50 cells, and a value wider than that is cut with a
@@ -2807,8 +2883,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b5308464a4dc7e8f095c35d5bd24797221815e0c" target="_blank" rel="noopener">
-      b5308464
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6b6560c98e44f0845399d3a373d2ffd9e5393191" target="_blank" rel="noopener">
+      6b6560c9
     </a>
   
 </div>

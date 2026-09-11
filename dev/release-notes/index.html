@@ -2085,6 +2085,24 @@
 <li>
 <p>An ordered predicate on an <code>INT(bitWidth, isSigned = false)</code> column compares by unsigned magnitude, the order the column is written in (<a href="https://github.com/hardwood-hq/hardwood/issues/1144">#1144</a>). The comparison was signed before, so <code>lt</code>, <code>gt</code> and their siblings returned wrong rows on a column holding values above 2^31, and bounds straddling that point read as inverted and were discarded — costing those columns row-group and page skipping as well.</p>
 </li>
+<li>
+<p><code>print</code>, <code>convert</code>, <code>inspect</code> and <code>dive</code> spell a value of a given logical type the same way: decimals as plain strings (<code>0.0000001</code>, never <code>1E-7</code>), <code>INTERVAL</code> as <code>1mo 15d 3600000ms</code>, and <code>INT96</code> values and statistics as timestamps (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
+</li>
+<li>
+<p>Control characters in values shown by <code>print</code>, <code>dive</code>, <code>inspect</code> and <code>info</code> render as <code>·</code>, so they no longer break table rows or reach the terminal (<a href="https://github.com/hardwood-hq/hardwood/issues/865">#865</a>).</p>
+</li>
+<li>
+<p>A min/max statistic or dictionary entry that does not decode as its type renders in its stored form, <code>0x</code> hex or the stored integer, instead of failing <code>inspect</code> or blanking a <code>dive</code> screen (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
+</li>
+<li>
+<p><code>dive</code> renders unsigned integers inside structs, lists and maps as unsigned, and its physical toggle shows list elements' stored values (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
+</li>
+<li>
+<p><code>convert --format csv</code> quotes a field holding a carriage return (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
+</li>
+<li>
+<p><code>convert --format json</code> writes a non-finite Variant float as a JSON string and a Variant timestamp without a time zone without a trailing <code>Z</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
+</li>
 </ul>
 <p><strong>Breaking Changes:</strong></p>
 <ul>
@@ -2112,6 +2130,15 @@
 </li>
 <li>
 <p><code>LogicalType.DecimalType</code> takes its precision before its scale, where it used to take scale first (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>). Every other decimal API takes them in that order — SQL's <code>DECIMAL(p, s)</code>, Arrow, Avro, Iceberg, parquet-cpp — and it is the order the annotation renders in. Only <code>parquet.thrift</code>'s field declaration and the APIs that mirror it read the other way. <strong>This one is silent</strong>, because a swapped call still compiles: <code>LogicalType.decimal(...)</code> rejects a scale above the precision, which catches a transposed pair at the call site, but a column whose scale equals its precision passes either way.</p>
+</li>
+<li>
+<p><code>convert --format json</code> writes nested structs, lists, maps and repeated fields as native JSON objects and arrays instead of strings holding their display text (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
+</li>
+<li>
+<p><code>convert --format csv</code> writes a list or map cell as JSON text, as it does a Variant cell (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
+</li>
+<li>
+<p>An unannotated byte array whose text starts with <code>0x</code> renders as <code>0x</code>-prefixed hex on every surface, so a <code>0x…</code> value always means bytes (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
 </li>
 </ul>
 <h2 id="110beta1-2026-08-31">1.1.0.Beta1 (2026-08-31)<a class="headerlink" href="#110beta1-2026-08-31" title="Permanent link">&para;</a></h2>
@@ -2309,8 +2336,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b5308464a4dc7e8f095c35d5bd24797221815e0c" target="_blank" rel="noopener">
-      b5308464
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6b6560c98e44f0845399d3a373d2ffd9e5393191" target="_blank" rel="noopener">
+      6b6560c9
     </a>
   
 </div>
