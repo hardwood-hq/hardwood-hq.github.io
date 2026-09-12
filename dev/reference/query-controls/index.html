@@ -1536,6 +1536,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Predicate literals by column type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1910,6 +1927,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Predicate literals by column type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2000,7 +2034,7 @@ behavior of each control — predicate pushdown, projection, row limits, splits,
 </tr>
 <tr>
 <td>Set operators</td>
-<td><code>in</code> (int, long, double), <code>inStrings</code></td>
+<td><code>in</code> (int, long, double, <code>byte[]</code>), <code>inStrings</code></td>
 </tr>
 <tr>
 <td>Null operators</td>
@@ -2025,11 +2059,14 @@ skipping. Filters work with all reader types — <code>RowReader</code>, <code>C
 <code>AvroRowReader</code>, and across multi-file readers.</p>
 <h2 id="predicate-literals-by-column-type">Predicate literals by column type<a class="headerlink" href="#predicate-literals-by-column-type" title="Permanent link">&para;</a></h2>
 <p>A column takes the literal types listed for its physical type, and — where it carries an
-annotation — those listed for that annotation as well. Where both rows apply, the annotation
-names the order: a <code>UINT_32</code> column matches the <code>INT32</code> row and the <code>INT(32, isSigned = false)</code>
-row, and compares by unsigned magnitude. Set membership follows the same mapping: <code>in</code> on the
-<code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> columns, <code>inStrings</code> on those taking a <code>String</code>. A
-literal a column does not take throws <code>IllegalArgumentException</code> at reader creation.</p>
+annotation — those listed for that annotation as well. A <code>String</code> is the one literal that does
+not compose this way: it filters a <code>STRING</code>, an <code>ENUM</code>, a <code>JSON</code> and an unannotated <code>BYTE_ARRAY</code>,
+and no other binary column. Where both rows apply, the annotation names the order: a <code>UINT_32</code>
+column matches the <code>INT32</code> row and the <code>INT(32, isSigned = false)</code> row, and compares by unsigned
+magnitude. Set membership follows the same mapping: <code>in</code> on the
+<code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> columns and on every binary column, <code>inStrings</code>
+on those taking a <code>String</code>. A literal a column does not take throws <code>IllegalArgumentException</code> at
+reader creation.</p>
 <table>
 <thead>
 <tr>
@@ -2071,9 +2108,15 @@ literal a column does not take throws <code>IllegalArgumentException</code> at r
 <td>numeric</td>
 </tr>
 <tr>
-<td><code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
+<td><code>BYTE_ARRAY</code></td>
 <td></td>
-<td><code>String</code></td>
+<td><code>byte[]</code>; <code>String</code> where the column carries no annotation</td>
+<td>unsigned lexicographic</td>
+</tr>
+<tr>
+<td><code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
+<td></td>
+<td><code>byte[]</code> of <code>n</code> bytes</td>
 <td>unsigned lexicographic</td>
 </tr>
 <tr>
@@ -2107,15 +2150,27 @@ literal a column does not take throws <code>IllegalArgumentException</code> at r
 <td>the column's time unit</td>
 </tr>
 <tr>
-<td><code>INT32</code> up to 9 digits, <code>INT64</code> up to 18, <code>FIXED_LEN_BYTE_ARRAY(n)</code> up to what <code>n</code> bytes hold, <code>BYTE_ARRAY</code> any</td>
+<td><code>INT32</code> up to 9 digits, <code>INT64</code> up to 18</td>
 <td><code>DECIMAL</code></td>
-<td><code>BigDecimal</code>, <code>String</code></td>
-<td>the represented value, under all four physical types</td>
+<td><code>BigDecimal</code>; <code>int</code> / <code>long</code> unscaled</td>
+<td>the represented value</td>
+</tr>
+<tr>
+<td><code>FIXED_LEN_BYTE_ARRAY(n)</code> up to what <code>n</code> bytes hold, <code>BYTE_ARRAY</code> any</td>
+<td><code>DECIMAL</code></td>
+<td><code>BigDecimal</code>, <code>byte[]</code></td>
+<td>the represented value</td>
 </tr>
 <tr>
 <td><code>BYTE_ARRAY</code></td>
-<td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code>, <code>BSON</code></td>
-<td><code>String</code></td>
+<td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code></td>
+<td><code>String</code>, <code>byte[]</code></td>
+<td>unsigned lexicographic</td>
+</tr>
+<tr>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>BSON</code></td>
+<td><code>byte[]</code></td>
 <td>unsigned lexicographic</td>
 </tr>
 <tr>
@@ -2127,19 +2182,19 @@ literal a column does not take throws <code>IllegalArgumentException</code> at r
 <tr>
 <td><code>FIXED_LEN_BYTE_ARRAY(16)</code></td>
 <td><code>UUID</code></td>
-<td><code>UUID</code>, <code>String</code></td>
+<td><code>UUID</code>, <code>byte[]</code> of 16 bytes</td>
 <td>the 16 bytes, unsigned</td>
 </tr>
 <tr>
 <td><code>FIXED_LEN_BYTE_ARRAY(2)</code></td>
 <td><code>FLOAT16</code></td>
-<td><code>float</code>, <code>String</code></td>
+<td><code>float</code>, <code>byte[]</code> of 2 bytes</td>
 <td>numeric, widened to <code>float</code></td>
 </tr>
 <tr>
 <td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
 <td><code>INTERVAL</code></td>
-<td><code>String</code>, <code>inStrings</code></td>
+<td><code>byte[]</code> of 12 bytes</td>
 <td>the 12 bytes, unsigned; the format defines no order for <code>INTERVAL</code>, so only equality is meaningful</td>
 </tr>
 <tr>
@@ -2177,20 +2232,31 @@ unsigned magnitude regardless, so that literal is above every positive <code>int
 zero.</p>
 <p>A column that carries an annotation also takes the literal for its physical type, comparing the
 value as it is stored: an <code>int</code> against a <code>DATE</code> column tests the epoch day directly.</p>
+<h3 id="binary-columns">Binary columns<a class="headerlink" href="#binary-columns" title="Permanent link">&para;</a></h3>
+<p>The literal of a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> column is a <code>byte[]</code>, the stored bytes
+that <a href="../accessors/"><code>getBinary</code></a> returns. The factories copy the array, so a caller reusing it
+does not change a predicate already built.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC8</span><span class="w"> </span><span class="p">});</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">in</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC8</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC9</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
 <p><code>DECIMAL</code> and <code>FLOAT16</code> are the exceptions to <em>how</em> the bytes compare. Both order by the value
 their bytes stand for rather than by the bytes themselves, and their statistics are written in
-that order, so a <code>String</code> literal against either compares as the column does — a <code>DECIMAL</code> by its
+that order, so a <code>byte[]</code> literal against either compares as the column does — a <code>DECIMAL</code> by its
 unscaled value, a <code>FLOAT16</code> by the number its two little-endian bytes encode — rather than as a
 byte string. A <code>FLOAT16</code> literal must be exactly two bytes. On a <code>FIXED_LEN_BYTE_ARRAY</code> <code>DECIMAL</code>,
 a literal of any length stands for the value it encodes and is brought to the column width:
 sign-extended when it is shorter, its leading sign-extension bytes dropped when it is longer.</p>
-<p><code>inStrings</code> compares each probe the same way, so on a <code>DECIMAL</code> a padded encoding of a probe is
-still a member, and on a <code>FLOAT16</code> each probe — exactly two bytes — is compared as the half it
+<p><code>in(byte[]...)</code> compares each probe the same way, so on a <code>DECIMAL</code> a padded encoding of a probe
+is still a member, and on a <code>FLOAT16</code> each probe — exactly two bytes — is compared as the half it
 encodes. <code>in(double...)</code> on a <code>FLOAT16</code> compares against the decoded half as it does against a
 <code>FLOAT</code>'s widened value, so a probe no half represents, such as <code>0.1</code>, matches nothing.</p>
-<p>Note that a <code>String</code> literal is encoded as UTF-8, which reproduces a byte one-for-one only below
-<code>0x80</code>. A <code>DECIMAL</code>'s unscaled value sets the high bit for every negative number, so those are
-not expressible this way; reach for the <code>BigDecimal</code> factory instead.</p>
+<p>A <code>String</code> literal is the literal of a text column — <code>STRING</code>, <code>ENUM</code>, <code>JSON</code> and an unannotated
+<code>BYTE_ARRAY</code> — where its UTF-8 encoding is exactly the stored bytes. On any other binary column
+it throws <code>IllegalArgumentException</code> at reader creation, naming the literals the column does
+take. A <code>String</code> that is not well-formed UTF-16, such as one holding an unpaired surrogate, has
+no UTF-8 encoding and throws <code>IllegalArgumentException</code> when the predicate is built.</p>
+<p>Every factory rejects a null literal with a <code>NullPointerException</code> naming the argument.</p>
 <h2 id="literals-the-column-cannot-hold">Literals the column cannot hold<a class="headerlink" href="#literals-the-column-cannot-hold" title="Permanent link">&para;</a></h2>
 <p>A literal can be a value of the column's literal type that the column itself cannot store: finer
 than the time unit of a <code>TIMESTAMP</code> or <code>TIME</code>, carrying more decimal places than a <code>DECIMAL</code>'s
@@ -2200,11 +2266,11 @@ fixed-width column does not have, or a <code>float</code> no IEEE half represent
 literal. Against a value the column cannot store, <code>eq</code> could never match and <code>notEq</code> always
 would, so it throws <code>IllegalArgumentException</code> when the reader is built, naming the column, what
 bounds it and the literal:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// Column 'ts' holds a whole number of microseconds within the INT64 range;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1">// the equality literal 2024-05-01T12:00:00.000000500Z is not a value it can hold</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">reader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ts"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2024-05-01T12:00:00.000000500Z"</span><span class="p">)))</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// Column 'ts' holds a whole number of microseconds within the INT64 range;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">// the equality literal 2024-05-01T12:00:00.000000500Z is not a value it can hold</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">reader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ts"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2024-05-01T12:00:00.000000500Z"</span><span class="p">)))</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p>An ordered predicate (<code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code>) asks instead where the literal sits in the
 column's order, which every value of the literal type has an answer for, and is answered exactly.
@@ -2340,8 +2406,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/e324ef8aba9c1b063a17843c11ede952177c4c32" target="_blank" rel="noopener">
-      e324ef8a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/492358aac8088a76f9d0a007dc0f3847fa0e2550" target="_blank" rel="noopener">
+      492358aa
     </a>
   
 </div>

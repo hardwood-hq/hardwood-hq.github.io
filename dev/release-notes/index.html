@@ -2047,6 +2047,18 @@
 <h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
+<p><code>FilterPredicate</code> takes a <code>byte[]</code> literal on any binary column, through <code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code> and <code>in</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1181">#1181</a>).</p>
+</li>
+<li>
+<p>A <code>String</code> literal filters a column that holds text — a <code>STRING</code>, an <code>ENUM</code>, a <code>JSON</code> or an unannotated <code>BYTE_ARRAY</code> — and throws <code>IllegalArgumentException</code> on every other binary column, where a <code>byte[]</code> or the annotation's own literal type filters instead (<a href="https://github.com/hardwood-hq/hardwood/issues/1181">#1181</a>).</p>
+</li>
+<li>
+<p>A <code>String</code> literal that is not well-formed UTF-16 throws <code>IllegalArgumentException</code> when the predicate is built (<a href="https://github.com/hardwood-hq/hardwood/issues/1181">#1181</a>).</p>
+</li>
+<li>
+<p>Every <code>FilterPredicate</code> factory rejects a null literal with a <code>NullPointerException</code> naming the argument (<a href="https://github.com/hardwood-hq/hardwood/issues/1181">#1181</a>).</p>
+</li>
+<li>
 <p>An equality literal a column cannot hold throws <code>IllegalArgumentException</code>: an <code>Instant</code> or <code>LocalTime</code> finer than the column's time unit, a <code>BigDecimal</code> past its scale, a byte literal of a width a fixed-width column does not have, a <code>float</code> no IEEE half represents, and any literal outside the range of the <code>INT32</code> or <code>INT64</code> behind the column (<a href="https://github.com/hardwood-hq/hardwood/issues/1193">#1193</a>).</p>
 </li>
 <li>
@@ -2363,8 +2375,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/e324ef8aba9c1b063a17843c11ede952177c4c32" target="_blank" rel="noopener">
-      e324ef8a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/492358aac8088a76f9d0a007dc0f3847fa0e2550" target="_blank" rel="noopener">
+      492358aa
     </a>
   
 </div>

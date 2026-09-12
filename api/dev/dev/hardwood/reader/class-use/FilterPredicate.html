@@ -99,10 +99,15 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final record&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../FilterPredicate.BinaryColumnPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.BinaryColumnPredicate</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Predicate for a binary column, comparing the stored bytes as the column's annotation reads
+them.</div>
+</div>
 <div class="col-first even-row-color"><code>static final record&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../FilterPredicate.BinaryInPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.BinaryInPredicate</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Set-membership predicate for a binary column.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final record&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../FilterPredicate.BooleanColumnPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.BooleanColumnPredicate</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
@@ -164,6 +169,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="../FilterPredicate.Or.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.Or</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final record&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../FilterPredicate.StringColumnPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.StringColumnPredicate</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Predicate for a text column, comparing the literal's UTF-8 bytes.</div>
+</div>
+<div class="col-first even-row-color"><code>static final record&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../FilterPredicate.StringInPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.StringInPredicate</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Set-membership predicate for a text column.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final record&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../FilterPredicate.TimeColumnPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.TimeColumnPredicate</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Predicate for TIME columns.</div>
@@ -194,54 +209,70 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;value)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,double)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,byte%5B%5D)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ byte[]&nbsp;value)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an equals predicate for a binary column, whose literal is the stored bytes —
+the value <a href="../../row/StructAccessor.html#getBinary(int)"><code>StructAccessor.getBinary(int)</code></a> returns for it.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,double)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  double&nbsp;value)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,float)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,float)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  float&nbsp;value)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,int)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,int)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  int&nbsp;value)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,long)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- long&nbsp;value)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.lang.String)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,long)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ long&nbsp;value)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.math.BigDecimal)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.lang.String)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Creates an equals predicate for a text column, one of <code>STRING</code>, <code>ENUM</code>, <code>JSON</code> and an
+unannotated <code>BYTE_ARRAY</code>.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.math.BigDecimal)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Creates an equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> column (Parquet DECIMAL logical type).</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.time.Instant)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.time.Instant)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Creates an equals predicate for an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> column (Parquet TIMESTAMP logical type).</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.time.LocalDate)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.time.LocalDate)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Creates an equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a> column (Parquet DATE logical type).</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.time.LocalTime)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.time.LocalTime)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Creates an equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a> column (Parquet TIME logical type).</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.util.UUID)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#eq(java.lang.String,java.util.UUID)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Creates an equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link"><code>UUID</code></a> column (Parquet UUID logical type).</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gt(java.lang.String,byte%5B%5D)" class="member-name-link">gt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ byte[]&nbsp;value)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a greater-than predicate for a binary column.</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gt(java.lang.String,double)" class="member-name-link">gt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
@@ -262,7 +293,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gt(java.lang.String,java.lang.String)" class="member-name-link">gt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a greater-than predicate for a text column.</div>
+</div>
 <div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gt(java.lang.String,java.math.BigDecimal)" class="member-name-link">gt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
@@ -294,54 +327,69 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a greater-than predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link"><code>UUID</code></a> column.</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,double)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,byte%5B%5D)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ byte[]&nbsp;value)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a greater-than-or-equal predicate for a binary column.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,double)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  double&nbsp;value)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,float)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,float)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  float&nbsp;value)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,int)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,int)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  int&nbsp;value)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,long)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- long&nbsp;value)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.lang.String)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,long)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ long&nbsp;value)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.math.BigDecimal)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.lang.String)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Creates a greater-than-or-equal predicate for a text column.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.math.BigDecimal)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Creates a greater-than-or-equal predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> column.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.time.Instant)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.time.Instant)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Creates a greater-than-or-equal predicate for an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> column.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.time.LocalDate)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.time.LocalDate)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Creates a greater-than-or-equal predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a> column.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.time.LocalTime)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.time.LocalTime)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Creates a greater-than-or-equal predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a> column.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.util.UUID)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#gtEq(java.lang.String,java.util.UUID)" class="member-name-link">gtEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Creates a greater-than-or-equal predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link"><code>UUID</code></a> column.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#in(java.lang.String,byte%5B%5D...)" class="member-name-link">in</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ byte[]...&nbsp;values)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a set-membership predicate for a binary column, matching a row whose value is any
+of <code>values</code>.</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#in(java.lang.String,double...)" class="member-name-link">in</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
@@ -358,7 +406,10 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#inStrings(java.lang.String,java.lang.String...)" class="member-name-link">inStrings</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;values)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a set-membership predicate for a text column, matching a row whose value is any of
+<code>values</code>.</div>
+</div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#intersects(java.lang.String,double,double,double,double)" class="member-name-link">intersects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  double&nbsp;xmin,
@@ -379,54 +430,68 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a predicate that matches rows where the given column is null.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,double)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,byte%5B%5D)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ byte[]&nbsp;value)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a less-than predicate for a binary column.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,double)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  double&nbsp;value)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,float)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,float)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  float&nbsp;value)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,int)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,int)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  int&nbsp;value)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,long)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- long&nbsp;value)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.lang.String)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,long)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ long&nbsp;value)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.math.BigDecimal)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.lang.String)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Creates a less-than predicate for a text column.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.math.BigDecimal)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates a less-than predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> column.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.time.Instant)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.time.Instant)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Creates a less-than predicate for an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> column.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.time.LocalDate)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.time.LocalDate)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Creates a less-than predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a> column.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.time.LocalTime)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.time.LocalTime)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Creates a less-than predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a> column.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.util.UUID)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#lt(java.lang.String,java.util.UUID)" class="member-name-link">lt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Creates a less-than predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link"><code>UUID</code></a> column.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#ltEq(java.lang.String,byte%5B%5D)" class="member-name-link">ltEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ byte[]&nbsp;value)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a less-than-or-equal predicate for a binary column.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#ltEq(java.lang.String,double)" class="member-name-link">ltEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
@@ -447,7 +512,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#ltEq(java.lang.String,java.lang.String)" class="member-name-link">ltEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a less-than-or-equal predicate for a text column.</div>
+</div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#ltEq(java.lang.String,java.math.BigDecimal)" class="member-name-link">ltEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
@@ -486,62 +553,70 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;value)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,double)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,byte%5B%5D)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ byte[]&nbsp;value)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a not-equals predicate for a binary column.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,double)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  double&nbsp;value)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,float)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,float)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  float&nbsp;value)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,int)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,int)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  int&nbsp;value)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,long)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- long&nbsp;value)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.lang.String)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,long)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ long&nbsp;value)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.math.BigDecimal)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.lang.String)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Creates a not-equals predicate for a text column.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.math.BigDecimal)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link">BigDecimal</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates a not-equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> column.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.time.Instant)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.time.Instant)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Creates a not-equals predicate for an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> column.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.time.LocalDate)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.time.LocalDate)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link">LocalDate</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Creates a not-equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a> column.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.time.LocalTime)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.time.LocalTime)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Creates a not-equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a> column.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.util.UUID)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#notEq(java.lang.String,java.util.UUID)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Creates a not-equals predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link"><code>UUID</code></a> column.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#or(dev.hardwood.reader.FilterPredicate...)" class="member-name-link">or</a><wbr>(<a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>...&nbsp;filters)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#or(dev.hardwood.reader.FilterPredicate,dev.hardwood.reader.FilterPredicate)" class="member-name-link">or</a><wbr>(<a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;left,
- <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;right)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#or(dev.hardwood.reader.FilterPredicate...)" class="member-name-link">or</a><wbr>(<a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>...&nbsp;filters)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../FilterPredicate.html#or(dev.hardwood.reader.FilterPredicate,dev.hardwood.reader.FilterPredicate)" class="member-name-link">or</a><wbr>(<a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;left,
+ <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;right)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">dev.hardwood.reader</a> that return types with arguments of type <a href="../FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></span></div>
 <div class="summary-table three-column-summary">
