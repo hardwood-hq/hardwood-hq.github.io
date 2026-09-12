@@ -224,12 +224,12 @@ decoding.</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStringKey()" class="member-name-link">getStringKey</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get the key as a STRING.</div>
+<div class="block">Get the key as a String, decoded from UTF-8.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStringValue()" class="member-name-link">getStringValue</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get the value as a STRING.</div>
+<div class="block">Get the value as a String, decoded from UTF-8.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqStruct.html" title="interface in dev.hardwood.row">PqStruct</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStructValue()" class="member-name-link">getStructValue</a>()</code></div>
@@ -311,10 +311,13 @@ decoding.</div>
 <h3>getStringKey</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getStringKey</span>()</div>
-<div class="block">Get the key as a STRING.</div>
+<div class="block">Get the key as a String, decoded from UTF-8.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the string key value</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the key column does not hold text, as
+<a href="FieldAccessor.html#getString(java.lang.String)"><code>FieldAccessor.getString(String)</code></a> describes</dd>
 </dl>
 </div>
 </section>
@@ -448,10 +451,13 @@ a FIXED_LEN_BYTE_ARRAY-backed DECIMAL returns <code>byte[]</code>, not <a href="
 <h3>getStringValue</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getStringValue</span>()</div>
-<div class="block">Get the value as a STRING.</div>
+<div class="block">Get the value as a String, decoded from UTF-8.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the string value, or null if the value is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the value column does not hold text, as
+<a href="FieldAccessor.html#getString(java.lang.String)"><code>FieldAccessor.getString(String)</code></a> describes</dd>
 </dl>
 </div>
 </section>

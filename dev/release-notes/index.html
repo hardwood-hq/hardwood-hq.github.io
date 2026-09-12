@@ -2059,6 +2059,9 @@
 <p>Every <code>FilterPredicate</code> factory rejects a null literal with a <code>NullPointerException</code> naming the argument (<a href="https://github.com/hardwood-hq/hardwood/issues/1181">#1181</a>).</p>
 </li>
 <li>
+<p><code>getString</code> and <code>ColumnReader.getStrings</code> throw <code>IllegalArgumentException</code> on a column that does not hold text, where they used to decode its stored bytes as characters (<a href="https://github.com/hardwood-hq/hardwood/issues/1196">#1196</a>).</p>
+</li>
+<li>
 <p>An equality literal a column cannot hold throws <code>IllegalArgumentException</code>: an <code>Instant</code> or <code>LocalTime</code> finer than the column's time unit, a <code>BigDecimal</code> past its scale, a byte literal of a width a fixed-width column does not have, a <code>float</code> no IEEE half represents, and any literal outside the range of the <code>INT32</code> or <code>INT64</code> behind the column (<a href="https://github.com/hardwood-hq/hardwood/issues/1193">#1193</a>).</p>
 </li>
 <li>
@@ -2375,8 +2378,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/492358aac8088a76f9d0a007dc0f3847fa0e2550" target="_blank" rel="noopener">
-      492358aa
+    <a href="https://github.com/hardwood-hq/hardwood/tree/182ea87c0cbb72bd957a783547f5dba18c408658" target="_blank" rel="noopener">
+      182ea87c
     </a>
   
 </div>

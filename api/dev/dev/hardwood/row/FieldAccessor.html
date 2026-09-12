@@ -188,7 +188,7 @@ logical-type decoding.</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getString(java.lang.String)" class="member-name-link">getString</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Get a STRING, ENUM or JSON field value by name, decoded from UTF-8.</div>
+<div class="block">Get a text field value by name, decoded from UTF-8.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link">LocalTime</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTime(java.lang.String)" class="member-name-link">getTime</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
@@ -326,12 +326,18 @@ losslessly widened to single-precision <code>float</code>.</div>
 <h3>getString</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getString</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
-<div class="block">Get a STRING, ENUM or JSON field value by name, decoded from UTF-8.</div>
+<div class="block"><p>Get a text field value by name, decoded from UTF-8.</p>
+<p>The field has to hold text: a <code>BYTE_ARRAY</code> annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code>, or one
+carrying no annotation. Read any other binary field with <a href="#getBinary(java.lang.String)"><code>getBinary(String)</code></a> or the
+accessor for its annotation.</p>
+</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>name</code> - the field name</dd>
 <dt>Returns:</dt>
 <dd>the string value, or null if the field is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field does not hold text</dd>
 </dl>
 </div>
 </section>

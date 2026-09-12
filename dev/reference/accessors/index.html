@@ -1500,6 +1500,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#physical-accessors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical accessors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#text-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text columns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#null-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1935,6 +1957,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#physical-accessors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical accessors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#text-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text columns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#null-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2079,13 +2123,13 @@ type-mismatch contracts every accessor obeys. For the task-oriented walkthrough,
 <tr>
 <td><code>getInt</code></td>
 <td>INT32</td>
-<td></td>
+<td>any</td>
 <td><code>int</code></td>
 </tr>
 <tr>
 <td><code>getLong</code></td>
 <td>INT64</td>
-<td></td>
+<td>any</td>
 <td><code>long</code></td>
 </tr>
 <tr>
@@ -2102,14 +2146,14 @@ type-mismatch contracts every accessor obeys. For the task-oriented walkthrough,
 </tr>
 <tr>
 <td><code>getBinary</code></td>
-<td>BYTE_ARRAY or FIXED_LEN_BYTE_ARRAY</td>
-<td>BSON (optional)</td>
+<td>BYTE_ARRAY, FIXED_LEN_BYTE_ARRAY, or INT96</td>
+<td>any</td>
 <td><code>byte[]</code></td>
 </tr>
 <tr>
 <td><code>getString</code></td>
 <td>BYTE_ARRAY</td>
-<td>STRING, ENUM, or JSON</td>
+<td>STRING, ENUM, JSON, or none</td>
 <td><code>String</code></td>
 </tr>
 <tr>
@@ -2187,6 +2231,31 @@ type-mismatch contracts every accessor obeys. For the task-oriented walkthrough,
 </tbody>
 </table>
 <p>All methods are available as both <code>method(name)</code> and <code>method(index)</code>.</p>
+<h2 id="physical-accessors">Physical accessors<a class="headerlink" href="#physical-accessors" title="Permanent link">&para;</a></h2>
+<p><code>getInt</code>, <code>getLong</code> and <code>getBinary</code> read the stored value of any column their physical type
+holds, whatever it is annotated with. <code>getInt</code> reads a <code>DATE</code>, a <code>TIME(MILLIS)</code> and an <code>INT32</code>
+<code>DECIMAL</code> as well as a bare <code>INT32</code>; <code>getLong</code> reads a <code>TIMESTAMP</code>, a <code>TIME(MICROS)</code> or
+<code>TIME(NANOS)</code> and an <code>INT64</code> <code>DECIMAL</code>; <code>getBinary</code> reads every <code>BYTE_ARRAY</code>,
+<code>FIXED_LEN_BYTE_ARRAY</code> and <code>INT96</code> column, including a <code>DECIMAL</code>, a <code>UUID</code>, an <code>INTERVAL</code>, a
+<code>FLOAT16</code>, a <code>BSON</code> and a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> payload. Use them to skip the logical-type
+decode — see <a href="../../how-to/row-reader/#reading-the-physical-value">Reading the physical value</a>.</p>
+<h2 id="text-columns">Text columns<a class="headerlink" href="#text-columns" title="Permanent link">&para;</a></h2>
+<p><code>getString</code> reads a column whose stored bytes are the UTF-8 encoding of a string: a
+<code>BYTE_ARRAY</code> annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code>, or one carrying no annotation, which older
+writers used for text before the annotation existed. On any other column — a <code>DECIMAL</code>, a
+<code>UUID</code>, an <code>INTERVAL</code>, a <code>FLOAT16</code>, a <code>BSON</code>, a <code>GEOMETRY</code> or <code>GEOGRAPHY</code>, an <code>INT96</code>, a
+fixed-width <code>FIXED_LEN_BYTE_ARRAY</code>, or a column not held as bytes at all — it throws
+<code>IllegalArgumentException</code> naming the column and its type; read those through <code>getBinary</code> or the
+accessor for their annotation.</p>
+<p>The same columns are the ones a <code>String</code> filter literal applies to; see
+<a href="../query-controls/#binary-columns">Query Controls</a>. The rule holds for every string accessor:
+<code>getString</code> on <code>RowReader</code> and <code>PqStruct</code>, <code>strings()</code> on <code>PqList</code>, <code>getStringKey</code> /
+<code>getStringValue</code> on <code>PqMap.Entry</code>, and <code>ColumnReader.getStrings</code>.</p>
+<p>Where the refusal falls depends on the accessor. The per-value ones — <code>getString</code>,
+<code>getStringKey</code>, <code>getStringValue</code> — answer the null test first, so a null value reads as <code>null</code>
+whatever its column holds and the refusal comes on the first present value. <code>PqList.strings()</code>
+and <code>ColumnReader.getStrings()</code> ask about the column once for a whole run of values, and refuse
+one that does not hold text whatever its values are.</p>
 <h2 id="null-handling">Null handling<a class="headerlink" href="#null-handling" title="Permanent link">&para;</a></h2>
 <p>Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw
 <code>NullPointerException</code> if the field is null — always check <code>isNull()</code> first. Object accessors
@@ -2196,7 +2265,9 @@ type-mismatch contracts every accessor obeys. For the task-oriented walkthrough,
 <p>Requesting the wrong type for a column (e.g. <code>getInt</code> on a <code>LONG</code> column, <code>getDate</code> on a <code>STRING</code>
 column) is a programming error; the call fails at runtime with an unchecked exception. The
 specific exception type is unspecified and may change between releases — do not catch it as part of
-normal control flow. If the column type isn't known statically, check it up front via
+normal control flow. Reading a column that does not hold text as a string is specified: the string
+accessors listed under <a href="#text-columns">Text columns</a> throw <code>IllegalArgumentException</code>, as their
+<code>@throws</code> records. If the column type isn't known statically, check it up front via
 <code>reader.getFileSchema().getColumn(name)</code> and inspect the returned <code>ColumnSchema</code>'s <code>type()</code> /
 <code>logicalType()</code> — see <a href="../../how-to/metadata/">Inspect File Metadata</a>.</p>
 <p>A column whose annotation its physical type cannot carry is not an error. <code>FLOAT16</code> is defined as
@@ -2384,8 +2455,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/492358aac8088a76f9d0a007dc0f3847fa0e2550" target="_blank" rel="noopener">
-      492358aa
+    <a href="https://github.com/hardwood-hq/hardwood/tree/182ea87c0cbb72bd957a783547f5dba18c408658" target="_blank" rel="noopener">
+      182ea87c
     </a>
   
 </div>

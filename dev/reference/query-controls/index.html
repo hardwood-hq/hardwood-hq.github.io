@@ -2252,9 +2252,10 @@ is still a member, and on a <code>FLOAT16</code> each probe — exactly two byte
 encodes. <code>in(double...)</code> on a <code>FLOAT16</code> compares against the decoded half as it does against a
 <code>FLOAT</code>'s widened value, so a probe no half represents, such as <code>0.1</code>, matches nothing.</p>
 <p>A <code>String</code> literal is the literal of a text column — <code>STRING</code>, <code>ENUM</code>, <code>JSON</code> and an unannotated
-<code>BYTE_ARRAY</code> — where its UTF-8 encoding is exactly the stored bytes. On any other binary column
-it throws <code>IllegalArgumentException</code> at reader creation, naming the literals the column does
-take. A <code>String</code> that is not well-formed UTF-16, such as one holding an unpaired surrogate, has
+<code>BYTE_ARRAY</code> — where its UTF-8 encoding is exactly the stored bytes. These are the columns
+<a href="../accessors/#text-columns"><code>getString</code></a> reads. On any other binary column a <code>String</code>
+literal throws <code>IllegalArgumentException</code> at reader creation, naming the literals the column
+does take. A <code>String</code> that is not well-formed UTF-16, such as one holding an unpaired surrogate, has
 no UTF-8 encoding and throws <code>IllegalArgumentException</code> when the predicate is built.</p>
 <p>Every factory rejects a null literal with a <code>NullPointerException</code> naming the argument.</p>
 <h2 id="literals-the-column-cannot-hold">Literals the column cannot hold<a class="headerlink" href="#literals-the-column-cannot-hold" title="Permanent link">&para;</a></h2>
@@ -2406,8 +2407,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/492358aac8088a76f9d0a007dc0f3847fa0e2550" target="_blank" rel="noopener">
-      492358aa
+    <a href="https://github.com/hardwood-hq/hardwood/tree/182ea87c0cbb72bd957a783547f5dba18c408658" target="_blank" rel="noopener">
+      182ea87c
     </a>
   
 </div>

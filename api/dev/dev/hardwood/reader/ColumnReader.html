@@ -471,14 +471,23 @@ rather than indexing by record.</p>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getStrings</span>()</div>
 <div class="block"><p>Convenience: materialises one <code>String</code> per leaf value by UTF-8 decoding
 the slice of <a href="#getBinaryValues()"><code>getBinaryValues()</code></a> for each entry. Returns <code>null</code> at
-indexes where <a href="#getLeafValidity()"><code>getLeafValidity()</code></a> is unset. BSON columns are not
-string-decoded; use <a href="#getBinaries()"><code>getBinaries()</code></a> / <a href="#getBinaryValues()"><code>getBinaryValues()</code></a> for those.</p>
+indexes where <a href="#getLeafValidity()"><code>getLeafValidity()</code></a> is unset.</p>
+<p>The column has to hold text: a <code>BYTE_ARRAY</code> annotated <code>STRING</code>, <code>ENUM</code> or
+<code>JSON</code>, or one carrying no annotation. Every other binary column — a
+<code>DECIMAL</code>, a <code>UUID</code>, a <code>BSON</code>, an <code>INT96</code> — stores bytes that stand for
+something other than characters, and reading them as text is refused with
+an <code>IllegalArgumentException</code>; use <a href="#getBinaries()"><code>getBinaries()</code></a> / <a href="#getBinaryValues()"><code>getBinaryValues()</code></a>
+for those.</p>
 <p>The returned array has length <a href="#getValueCount()"><code>getValueCount()</code></a> — i.e. the <strong>real
 leaf count</strong>, not <a href="#getRecordCount()"><code>getRecordCount()</code></a>. For a flat column the two
 coincide; for <code>list&lt;string&gt;</code> and similar nested chains they
 differ, and lookups must go through the appropriate layer offsets
 rather than indexing by record.</p>
 </div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the column does not hold text</dd>
+</dl>
 </div>
 </section>
 </li>
