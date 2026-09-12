@@ -2282,6 +2282,7 @@ encoding automatically:</p>
 <a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="w">    </span><span class="n">UUID</span><span class="p">.</span><span class="na">fromString</span><span class="p">(</span><span class="s">"550e8400-e29b-41d4-a716-446655440000"</span><span class="p">));</span>
 </code></pre></div>
 <p>A column takes the literal type its annotation names — a <code>DECIMAL</code> column a <code>BigDecimal</code>, a <code>UUID</code> column a <code>UUID</code> — and rejects a literal belonging to a different annotation with <code>IllegalArgumentException</code> at reader creation. It also takes the literal for its own physical type, for filtering on the stored value directly. For what each column takes and the order it compares in, see <a href="../../reference/query-controls/#predicate-literals-by-column-type">Predicate literals by column type</a>.</p>
+<p>A literal the column cannot store — an <code>Instant</code> finer than its time unit, a <code>BigDecimal</code> past its scale, a value outside the range of the <code>INT32</code> or <code>INT64</code> behind it — is rejected for <code>eq</code>, <code>notEq</code> and the set forms, and answered exactly for <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code>. See <a href="../../reference/query-controls/#literals-the-column-cannot-hold">Literals the column cannot hold</a>.</p>
 <p>Filters work with all reader types: <code>RowReader</code>, <code>ColumnReader</code>, <code>AvroRowReader</code>, and across multi-file readers.</p>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
 <ul>
@@ -2290,6 +2291,9 @@ encoding automatically:</p>
   is rejected with <code>IllegalArgumentException</code> at reader creation.</li>
 <li><strong>A Bloom filter and a dictionary answer membership, not order.</strong> They sharpen <code>eq</code> and <code>in</code> on
   integer, floating-point and binary columns; <code>lt</code>, <code>gt</code> and <code>notEq</code> are left to statistics alone.</li>
+<li><strong>An unsatisfiable range prunes but does not push down further.</strong> A comparison whose literal
+  lies past the range the column's carrier holds matches every non-null row or none, and is
+  decided from the null count alone.</li>
 <li><strong>Two equality probes cannot use either.</strong> <code>eq(NaN)</code>, or an <code>in</code> list holding one, is not
   Bloom-pruned: raw-bit hashing distinguishes NaN payloads that <code>Double.compare</code> treats as equal,
   so a miss cannot prove a NaN absent. An <code>eq</code> or <code>inStrings</code> on a <code>DECIMAL</code> stored as
@@ -2486,8 +2490,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/1353f0e733dff6cde164cdabdcf99894dee3a880" target="_blank" rel="noopener">
-      1353f0e7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e324ef8aba9c1b063a17843c11ede952177c4c32" target="_blank" rel="noopener">
+      e324ef8a
     </a>
   
 </div>

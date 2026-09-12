@@ -2047,6 +2047,15 @@
 <h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
+<p>An equality literal a column cannot hold throws <code>IllegalArgumentException</code>: an <code>Instant</code> or <code>LocalTime</code> finer than the column's time unit, a <code>BigDecimal</code> past its scale, a byte literal of a width a fixed-width column does not have, a <code>float</code> no IEEE half represents, and any literal outside the range of the <code>INT32</code> or <code>INT64</code> behind the column (<a href="https://github.com/hardwood-hq/hardwood/issues/1193">#1193</a>).</p>
+</li>
+<li>
+<p>An ordered predicate whose literal the column cannot hold is answered exactly, where several such literals used to throw <code>ArithmeticException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1193">#1193</a>).</p>
+</li>
+<li>
+<p><code>not</code> over a predicate that matches every non-null row, or over one that matches none, no longer returns the rows the comparison leaves out for being null (<a href="https://github.com/hardwood-hq/hardwood/issues/1193">#1193</a>).</p>
+</li>
+<li>
 <p>A <code>TIME</code>, <code>INT</code> or <code>DECIMAL</code> annotation stored in a physical type that cannot hold it is dropped, and the column is read as its physical type: <code>TIME(MILLIS)</code> on <code>INT64</code>, <code>TIME(MICROS)</code> or <code>TIME(NANOS)</code> on <code>INT32</code>, <code>INT(8)</code>, <code>INT(16)</code> or <code>INT(32)</code> on <code>INT64</code>, <code>INT(64)</code> on <code>INT32</code>, and a <code>DECIMAL</code> with more digits than its <code>INT32</code>, <code>INT64</code> or <code>FIXED_LEN_BYTE_ARRAY</code> holds (<a href="https://github.com/hardwood-hq/hardwood/issues/1139">#1139</a>).</p>
 </li>
 <li>
@@ -2056,7 +2065,7 @@
 <p>A <code>ColumnReader</code> filter on a <code>FLOAT16</code> column no longer throws <code>ClassCastException</code>, and one on a struct leaf no longer reads a leaf that is null under a present struct as a value (<a href="https://github.com/hardwood-hq/hardwood/issues/1197">#1197</a>).</p>
 </li>
 <li>
-<p>A <code>String</code>, <code>inStrings</code> or parquet-java <code>binaryColumn</code> literal on a <code>FIXED_LEN_BYTE_ARRAY</code> <code>DECIMAL</code> column that is narrower or wider than the column no longer drops row groups holding matching rows, and one whose value does not fit the column throws <code>ArithmeticException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1190">#1190</a>).</p>
+<p>A <code>String</code>, <code>inStrings</code> or parquet-java <code>binaryColumn</code> literal on a <code>FIXED_LEN_BYTE_ARRAY</code> <code>DECIMAL</code> column that is narrower or wider than the column no longer drops row groups holding matching rows (<a href="https://github.com/hardwood-hq/hardwood/issues/1190">#1190</a>).</p>
 </li>
 <li>
 <p>Row groups and pages are no longer pruned against <code>min</code> / <code>max</code> in a sort order the reader cannot read — a column annotated <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>UNKNOWN</code>, <code>LIST</code> or <code>MAP</code>, or one whose file declares an unrecognized <code>ColumnOrder</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1179">#1179</a>).</p>
@@ -2354,8 +2363,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/1353f0e733dff6cde164cdabdcf99894dee3a880" target="_blank" rel="noopener">
-      1353f0e7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e324ef8aba9c1b063a17843c11ede952177c4c32" target="_blank" rel="noopener">
+      e324ef8a
     </a>
   
 </div>
