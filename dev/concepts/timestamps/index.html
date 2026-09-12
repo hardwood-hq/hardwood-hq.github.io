@@ -1986,6 +1986,10 @@ column's semantics, not the caller's expectation, win. The exact runtime contrac
 requires, the exception thrown) lives in <a href="../../reference/accessors/">Typed Accessors</a>. When a
 column's kind isn't known statically, branching on the flag — or the generic <code>getValue</code> accessor,
 which returns <code>Instant</code> or <code>LocalDateTime</code> per the flag — recovers the right type without a guess.</p>
+<p>Filter predicates follow the same split. A <code>FilterPredicate</code> literal on a UTC-adjusted column is an
+<code>Instant</code> and on a local one a <code>LocalDateTime</code>, so a predicate compares the same kind of value the
+column's accessor returns; the other kind is rejected when the reader is built, for the same reason
+the other accessor throws (see <a href="../../reference/query-controls/#predicate-literals-by-column-type">Predicate literals by column type</a>).</p>
 <h2 id="times-informational-flag">TIME's informational flag<a class="headerlink" href="#times-informational-flag" title="Permanent link">&para;</a></h2>
 <p>The TIME logical type carries the same <code>isAdjustedToUTC</code> flag, but the situation is different:
 <code>LocalTime</code> has no zone of its own, so there is no second Java type to split toward. <code>getTime</code>
@@ -2043,8 +2047,8 @@ reads them as <code>Instant</code> through <code>getTimestamp</code>.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5f2d4fdcd536d0bf72c1ce03ec9f50afab940053" target="_blank" rel="noopener">
-      5f2d4fdc
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d87911bbbecbf26501ce2898f2e974bd56e443f6" target="_blank" rel="noopener">
+      d87911bb
     </a>
   
 </div>

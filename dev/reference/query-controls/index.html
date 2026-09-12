@@ -2150,9 +2150,15 @@ express every set of two values.</p>
 </tr>
 <tr>
 <td><code>INT64</code></td>
-<td><code>TIMESTAMP</code></td>
+<td><code>TIMESTAMP(isAdjustedToUTC = true)</code>, and the legacy <code>TIMESTAMP_MILLIS</code> / <code>TIMESTAMP_MICROS</code></td>
 <td><code>Instant</code></td>
 <td>the column's time unit</td>
+</tr>
+<tr>
+<td><code>INT64</code></td>
+<td><code>TIMESTAMP(isAdjustedToUTC = false)</code></td>
+<td><code>LocalDateTime</code></td>
+<td>the wall clock, in the column's time unit</td>
 </tr>
 <tr>
 <td><code>INT32</code> up to 9 digits, <code>INT64</code> up to 18</td>
@@ -2418,8 +2424,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5f2d4fdcd536d0bf72c1ce03ec9f50afab940053" target="_blank" rel="noopener">
-      5f2d4fdc
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d87911bbbecbf26501ce2898f2e974bd56e443f6" target="_blank" rel="noopener">
+      d87911bb
     </a>
   
 </div>

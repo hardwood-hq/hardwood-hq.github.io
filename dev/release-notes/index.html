@@ -2074,6 +2074,12 @@
 <p><code>FilterPredicate.eq</code> and <code>notEq</code> take a <code>PqInterval</code> literal on an <code>INTERVAL</code> column (<a href="https://github.com/hardwood-hq/hardwood/issues/1183">#1183</a>).</p>
 </li>
 <li>
+<p><code>FilterPredicate</code> takes a <code>LocalDateTime</code> literal on a <code>TIMESTAMP</code> column with <code>isAdjustedToUTC = false</code>, through <code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1194">#1194</a>).</p>
+</li>
+<li>
+<p>An <code>Instant</code> literal on a <code>TIMESTAMP</code> column with <code>isAdjustedToUTC = false</code> throws <code>IllegalArgumentException</code>, where it used to compare the instant against the stored wall clock as though that were UTC (<a href="https://github.com/hardwood-hq/hardwood/issues/1194">#1194</a>).</p>
+</li>
+<li>
 <p><code>getString</code> and <code>ColumnReader.getStrings</code> throw <code>IllegalArgumentException</code> on a column that does not hold text, where they used to decode its stored bytes as characters (<a href="https://github.com/hardwood-hq/hardwood/issues/1196">#1196</a>).</p>
 </li>
 <li>
@@ -2393,8 +2399,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5f2d4fdcd536d0bf72c1ce03ec9f50afab940053" target="_blank" rel="noopener">
-      5f2d4fdc
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d87911bbbecbf26501ce2898f2e974bd56e443f6" target="_blank" rel="noopener">
+      d87911bb
     </a>
   
 </div>
