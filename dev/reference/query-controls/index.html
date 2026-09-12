@@ -2030,7 +2030,7 @@ behavior of each control — predicate pushdown, projection, row limits, splits,
 <tbody>
 <tr>
 <td>Comparison operators</td>
-<td><code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code></td>
+<td><code>eq</code>, <code>notEq</code> on every column; <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code> on a column whose type defines an order</td>
 </tr>
 <tr>
 <td>Set operators</td>
@@ -2042,7 +2042,7 @@ behavior of each control — predicate pushdown, projection, row limits, splits,
 </tr>
 <tr>
 <td>Spatial operators</td>
-<td><code>intersects</code>, on a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column</td>
+<td><code>intersects</code>, on a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column. It has no inverse, so <code>not</code> over a predicate holding one throws <code>IllegalArgumentException</code> at reader creation</td>
 </tr>
 <tr>
 <td>Combinators</td>
@@ -2067,6 +2067,11 @@ magnitude. Set membership follows the same mapping: <code>in</code> on the
 <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> columns and on every binary column, <code>inStrings</code>
 on those taking a <code>String</code>. A literal a column does not take throws <code>IllegalArgumentException</code> at
 reader creation.</p>
+<p><code>eq</code>, <code>notEq</code> and the set form are available on every column below. The ordered operators <code>lt</code>,
+<code>ltEq</code>, <code>gt</code> and <code>gtEq</code> are available on the types that define an order, which is every one except
+<code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code> and <code>NULL</code>; on those four they throw <code>IllegalArgumentException</code>
+at reader creation. <code>BOOLEAN</code> is the one type with no set form, since <code>eq</code>, <code>notEq</code> and <code>isNotNull</code>
+express every set of two values.</p>
 <table>
 <thead>
 <tr>
@@ -2081,7 +2086,7 @@ reader creation.</p>
 <td><code>BOOLEAN</code></td>
 <td></td>
 <td><code>boolean</code></td>
-<td>equality only (<code>eq</code>, <code>notEq</code>)</td>
+<td><code>false</code> before <code>true</code></td>
 </tr>
 <tr>
 <td><code>INT32</code></td>
@@ -2176,8 +2181,8 @@ reader creation.</p>
 <tr>
 <td><code>BYTE_ARRAY</code></td>
 <td><code>GEOMETRY</code>, <code>GEOGRAPHY</code></td>
-<td>four <code>double</code> bounds</td>
-<td>bounding-box overlap</td>
+<td><code>byte[]</code>; four <code>double</code> bounds for <code>intersects</code></td>
+<td>the WKB bytes, unsigned; <code>intersects</code> by bounding-box overlap</td>
 </tr>
 <tr>
 <td><code>FIXED_LEN_BYTE_ARRAY(16)</code></td>
@@ -2194,8 +2199,8 @@ reader creation.</p>
 <tr>
 <td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
 <td><code>INTERVAL</code></td>
-<td><code>byte[]</code> of 12 bytes</td>
-<td>the 12 bytes, unsigned; the format defines no order for <code>INTERVAL</code>, so only equality is meaningful</td>
+<td><code>PqInterval</code>, <code>byte[]</code> of 12 bytes</td>
+<td>the 12 bytes</td>
 </tr>
 <tr>
 <td>any</td>
@@ -2211,11 +2216,12 @@ reader creation.</p>
 </tr>
 </tbody>
 </table>
-<p>A predicate on a <code>VARIANT</code> column reaches the group's presence, not the values inside it.
-Filtering on a shredded variant's sub-paths is in progress, tracked by
-<a href="https://github.com/hardwood-hq/hardwood/issues/309">#309</a>; the <code>metadata</code> and <code>value</code> leaves below
-the group take <code>BYTE_ARRAY</code> predicates as any leaf does, but they hold the encoded payload rather
-than the values a caller would filter on.</p>
+<p>A predicate on a <code>VARIANT</code> column reaches the group's presence, not the values inside it. The
+<code>metadata</code> and <code>value</code> leaves below the group, and a shredded variant's <code>typed_value</code> leaves, hold
+the encoded variant, which <a href="../accessors/"><code>getVariant</code></a> reads off the group; they take <code>isNull</code> and
+<code>isNotNull</code> only, and any other predicate on one throws <code>IllegalArgumentException</code> at reader
+creation. Filtering on a shredded variant's sub-paths is in progress, tracked by
+<a href="https://github.com/hardwood-hq/hardwood/issues/309">#309</a>.</p>
 <p>A <code>FLOAT</code> or <code>DOUBLE</code> column compares by the <code>Double.compare</code> total order, so all <code>NaN</code> values
 equal each other and <code>-0.0</code> differs from <code>+0.0</code>. A <code>FLOAT</code> column's stored values widen to
 <code>double</code> first, so a probe with no exact <code>float</code> representation — <code>0.1</code>, say — never matches.</p>
@@ -2257,21 +2263,26 @@ encodes. <code>in(double...)</code> on a <code>FLOAT16</code> compares against t
 literal throws <code>IllegalArgumentException</code> at reader creation, naming the literals the column
 does take. A <code>String</code> that is not well-formed UTF-16, such as one holding an unpaired surrogate, has
 no UTF-8 encoding and throws <code>IllegalArgumentException</code> when the predicate is built.</p>
+<p>An <code>INTERVAL</code> column's other literal is the <code>PqInterval</code> that <a href="../accessors/"><code>getInterval</code></a>
+returns. Each of its three components is stored as an unsigned 32-bit value.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"uptime"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PqInterval</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3_600_000</span><span class="p">));</span>
+</code></pre></div>
 <p>Every factory rejects a null literal with a <code>NullPointerException</code> naming the argument.</p>
 <h2 id="literals-the-column-cannot-hold">Literals the column cannot hold<a class="headerlink" href="#literals-the-column-cannot-hold" title="Permanent link">&para;</a></h2>
 <p>A literal can be a value of the column's literal type that the column itself cannot store: finer
 than the time unit of a <code>TIMESTAMP</code> or <code>TIME</code>, carrying more decimal places than a <code>DECIMAL</code>'s
 scale, past the range of the <code>INT32</code> or <code>INT64</code> that holds the column's values, of a width a
-fixed-width column does not have, or a <code>float</code> no IEEE half represents.</p>
+fixed-width column does not have, a <code>float</code> no IEEE half represents, or a <code>PqInterval</code> with a
+component outside <code>[0, 4294967295]</code>.</p>
 <p>Equality (<code>eq</code>, <code>notEq</code>, a set form and its negation) asks whether a stored value <em>is</em> the
 literal. Against a value the column cannot store, <code>eq</code> could never match and <code>notEq</code> always
 would, so it throws <code>IllegalArgumentException</code> when the reader is built, naming the column, what
 bounds it and the literal:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// Column 'ts' holds a whole number of microseconds within the INT64 range;</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="c1">// the equality literal 2024-05-01T12:00:00.000000500Z is not a value it can hold</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">reader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ts"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2024-05-01T12:00:00.000000500Z"</span><span class="p">)))</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Column 'ts' holds a whole number of microseconds within the INT64 range;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">// the equality literal 2024-05-01T12:00:00.000000500Z is not a value it can hold</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">reader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ts"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2024-05-01T12:00:00.000000500Z"</span><span class="p">)))</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p>An ordered predicate (<code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code>) asks instead where the literal sits in the
 column's order, which every value of the literal type has an answer for, and is answered exactly.
@@ -2407,8 +2418,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/182ea87c0cbb72bd957a783547f5dba18c408658" target="_blank" rel="noopener">
-      182ea87c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5f2d4fdcd536d0bf72c1ce03ec9f50afab940053" target="_blank" rel="noopener">
+      5f2d4fdc
     </a>
   
 </div>

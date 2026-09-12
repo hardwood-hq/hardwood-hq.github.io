@@ -1932,7 +1932,7 @@
 <p><strong>Shredded Variants:</strong> Some writers store part of the payload in a typed sibling column (<code>typed_value</code>) alongside <code>value</code> for better compression and pushdown. Reassembly is transparent: <code>metadata()</code> and <code>value()</code> return canonical bytes regardless of whether the file was shredded, so <code>PqVariant</code> consumers see a single consistent representation.</p>
 <h2 id="current-limitations">Current limitations<a class="headerlink" href="#current-limitations" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>No Variant-aware predicate pushdown.</strong> Filter predicates against a Variant sub-path (e.g. <code>WHERE v.age &gt; 30</code>) aren't yet understood by the pushdown pipeline. Filtering still works against the file's physical shredded columns if you know the layout — a <code>FilterPredicate.gt("v.typed_value.age", 30)</code> gets row-group and page skipping via ordinary column statistics — but that ties query code to the writer's shredding strategy and misses any rows where the payload sits in the opaque <code>value</code> blob instead. Tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/309">#309</a>.</li>
+<li><strong>No Variant-aware predicate pushdown.</strong> Filter predicates against a Variant sub-path (e.g. <code>WHERE v.age &gt; 30</code>) aren't yet understood by the pushdown pipeline. The leaves below the group — <code>metadata</code>, <code>value</code> and a shredded variant's <code>typed_value</code> leaves — hold the encoded variant rather than values of their own, so a comparison or set predicate on one throws <code>IllegalArgumentException</code> at reader creation; they take <code>isNull</code> and <code>isNotNull</code> only. Filter on the Variant column itself for presence, and apply the value test per row against the <code>PqVariant</code> you read. Tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/309">#309</a>.</li>
 <li><strong>No path projection optimization.</strong> Reading only <code>v.age</code> from a Variant column still reassembles the whole Variant for each row rather than reading just the shredded <code>typed_value.age</code> column. Requires the same variant-aware planning as #309. Tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/700">#700</a>.</li>
 </ul>
 
@@ -1984,8 +1984,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/182ea87c0cbb72bd957a783547f5dba18c408658" target="_blank" rel="noopener">
-      182ea87c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5f2d4fdcd536d0bf72c1ce03ec9f50afab940053" target="_blank" rel="noopener">
+      5f2d4fdc
     </a>
   
 </div>

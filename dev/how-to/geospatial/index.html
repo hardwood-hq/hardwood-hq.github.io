@@ -2044,7 +2044,7 @@
 </code></pre></div>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
 <p><code>intersects</code> is <strong>coarse-grained</strong>: Hardwood drops row groups whose bounding box is disjoint from the query box, but every row in a surviving row group is returned. Rows whose individual geometry falls outside the query box are emitted along with truly intersecting ones. Apply your own per-row check on the WKB payload (e.g. via JTS) when you need exact geometric filtering — the bounding-box pushdown still saves the I/O for non-overlapping chunks.</p>
-<p>Negation of <code>intersects</code> is <strong>not supported</strong>: <code>FilterPredicate.not(FilterPredicate.intersects(...))</code> throws <code>UnsupportedOperationException</code> at resolve time. The chunk-level criterion for "no row intersects" requires bbox containment rather than overlap, and the per-row dual would require decoding every WKB payload inside the reader — which would pull a geometry library into the runtime. If you need "geometries outside this box", read without a spatial filter and apply the negation yourself against <code>getBinary("location")</code>.</p>
+<p>Negation of <code>intersects</code> is <strong>not supported</strong>: <code>FilterPredicate.not(FilterPredicate.intersects(...))</code>, or <code>not</code> over any predicate holding one, throws <code>IllegalArgumentException</code> at reader creation, naming the column. The chunk-level criterion for "no row intersects" requires bbox containment rather than overlap, and the per-row dual would require decoding every WKB payload inside the reader — which would pull a geometry library into the runtime. If you need "geometries outside this box", read without a spatial filter and apply the negation yourself against <code>getBinary("location")</code>.</p>
 <p>Both limitations are tracked by <a href="https://github.com/hardwood-hq/hardwood/issues/414">hardwood#414</a>, which proposes opt-in row-level evaluation via an optional WKB-decoder dependency.</p>
 
 
@@ -2095,8 +2095,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/182ea87c0cbb72bd957a783547f5dba18c408658" target="_blank" rel="noopener">
-      182ea87c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5f2d4fdcd536d0bf72c1ce03ec9f50afab940053" target="_blank" rel="noopener">
+      5f2d4fdc
     </a>
   
 </div>

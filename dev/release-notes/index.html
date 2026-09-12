@@ -2059,6 +2059,21 @@
 <p>Every <code>FilterPredicate</code> factory rejects a null literal with a <code>NullPointerException</code> naming the argument (<a href="https://github.com/hardwood-hq/hardwood/issues/1181">#1181</a>).</p>
 </li>
 <li>
+<p><code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> throw <code>IllegalArgumentException</code> on an <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code> or <code>NULL</code> column, whose values parquet-format puts in no order (<a href="https://github.com/hardwood-hq/hardwood/issues/1183">#1183</a>).</p>
+</li>
+<li>
+<p>A comparison or set predicate on a leaf below a <code>VARIANT</code> group throws <code>IllegalArgumentException</code>; those leaves hold the encoded variant and take <code>isNull</code> and <code>isNotNull</code> only (<a href="https://github.com/hardwood-hq/hardwood/issues/1183">#1183</a>).</p>
+</li>
+<li>
+<p><code>not</code> over a predicate holding an <code>intersects</code> throws <code>IllegalArgumentException</code> at reader creation, where it used to throw <code>UnsupportedOperationException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1183">#1183</a>).</p>
+</li>
+<li>
+<p>A <code>BOOLEAN</code> column takes <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code>, ordering <code>false</code> before <code>true</code>; they used to be answerable only through the record constructor and returned every non-null row (<a href="https://github.com/hardwood-hq/hardwood/issues/1183">#1183</a>).</p>
+</li>
+<li>
+<p><code>FilterPredicate.eq</code> and <code>notEq</code> take a <code>PqInterval</code> literal on an <code>INTERVAL</code> column (<a href="https://github.com/hardwood-hq/hardwood/issues/1183">#1183</a>).</p>
+</li>
+<li>
 <p><code>getString</code> and <code>ColumnReader.getStrings</code> throw <code>IllegalArgumentException</code> on a column that does not hold text, where they used to decode its stored bytes as characters (<a href="https://github.com/hardwood-hq/hardwood/issues/1196">#1196</a>).</p>
 </li>
 <li>
@@ -2378,8 +2393,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/182ea87c0cbb72bd957a783547f5dba18c408658" target="_blank" rel="noopener">
-      182ea87c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5f2d4fdcd536d0bf72c1ce03ec9f50afab940053" target="_blank" rel="noopener">
+      5f2d4fdc
     </a>
   
 </div>

@@ -614,6 +614,10 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dd>
 <div class="block">Returns the value of the <code>column</code> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html#column()" class="member-name-link">column()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntervalColumnPredicate</a></dt>
+<dd>
+<div class="block">Returns the value of the <code>column</code> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.IntInPredicate.html#column()" class="member-name-link">column()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntInPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntInPredicate</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>column</code> record component.</div>
@@ -1227,6 +1231,11 @@ the value <a href="dev/hardwood/row/StructAccessor.html#getBinary(int)"><code>St
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#eq(java.lang.String,long)" class="member-name-link">eq(String, long)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.html#eq(java.lang.String,dev.hardwood.row.PqInterval)" class="member-name-link">eq(String, PqInterval)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
+<dd>
+<div class="block">Creates an equals predicate for an <code>INTERVAL</code> column, whose literal is the
+<a href="dev/hardwood/row/PqInterval.html" title="class in dev.hardwood.row"><code>PqInterval</code></a> <a href="dev/hardwood/row/StructAccessor.html#getInterval(int)"><code>StructAccessor.getInterval(int)</code></a> returns for it.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#eq(java.lang.String,java.lang.String)" class="member-name-link">eq(String, String)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>
 <div class="block">Creates an equals predicate for a text column, one of <code>STRING</code>, <code>ENUM</code>, <code>JSON</code> and an
@@ -1427,6 +1436,10 @@ unannotated <code>BYTE_ARRAY</code>.</div>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.IntersectsPredicate.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntersectsPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntersectsPredicate</a></dt>
+<dd>
+<div class="block">Indicates whether some other object is "equal to" this one.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntervalColumnPredicate</a></dt>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
@@ -1661,6 +1674,11 @@ them.</div>
 <dt><a href="dev/hardwood/reader/FilterPredicate.IntersectsPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.IntersectsPredicate</a> - Record Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
 <div class="block">Predicate for spatial bounding box.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.IntervalColumnPredicate</a> - Record Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Predicate for an <code>INTERVAL</code> column, comparing the twelve stored bytes as the three
+unsigned 32-bit components they encode.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.IntInPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.IntInPredicate</a> - Record Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>&nbsp;</dd>
@@ -2367,6 +2385,10 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Creates an instance of a <code>GroupNode</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.html#gt(java.lang.String,boolean)" class="member-name-link">gt(String, boolean)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
+<dd>
+<div class="block">Creates a greater-than predicate for a <code>BOOLEAN</code> column.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#gt(java.lang.String,byte%5B%5D)" class="member-name-link">gt(String, byte[])</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>
 <div class="block">Creates a greater-than predicate for a binary column.</div>
@@ -2407,6 +2429,10 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.Operator.html#GT_EQ" class="member-name-link">GT_EQ</a> - Enum constant in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.Operator.html" title="enum class in dev.hardwood.reader">FilterPredicate.Operator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.html#gtEq(java.lang.String,boolean)" class="member-name-link">gtEq(String, boolean)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
+<dd>
+<div class="block">Creates a greater-than-or-equal predicate for a <code>BOOLEAN</code> column.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#gtEq(java.lang.String,byte%5B%5D)" class="member-name-link">gtEq(String, byte[])</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>
 <div class="block">Creates a greater-than-or-equal predicate for a binary column.</div>
@@ -2634,6 +2660,10 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntervalColumnPredicate</a></dt>
+<dd>
+<div class="block">Returns a hash code value for this object.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.IntInPredicate.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntInPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntInPredicate</a></dt>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
@@ -2846,6 +2876,10 @@ of <code>values</code>.</div>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#INTERVAL" class="member-name-link">INTERVAL</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">Interval stored as a 12-byte fixed-length byte array.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html#%3Cinit%3E(java.lang.String,dev.hardwood.reader.FilterPredicate.Operator,dev.hardwood.row.PqInterval)" class="member-name-link">IntervalColumnPredicate(String, FilterPredicate.Operator, PqInterval)</a> - Constructor for record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntervalColumnPredicate</a></dt>
+<dd>
+<div class="block">Creates an instance of a <code>IntervalColumnPredicate</code> record class.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqList.html#intervals()" class="member-name-link">intervals()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>
@@ -3290,6 +3324,11 @@ Variant spec.</div>
 <dd>
 <div class="block">Adds the values for an <code>OPTIONAL INT64</code> column, addressed by name.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.html#lt(java.lang.String,boolean)" class="member-name-link">lt(String, boolean)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
+<dd>
+<div class="block">Creates a less-than predicate for a <code>BOOLEAN</code> column, which orders <code>false</code> before <code>true</code>:
+<code>lt(column, true)</code> matches the rows holding <code>false</code>, and <code>lt(column, false)</code> matches none.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#lt(java.lang.String,byte%5B%5D)" class="member-name-link">lt(String, byte[])</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>
 <div class="block">Creates a less-than predicate for a binary column.</div>
@@ -3330,6 +3369,10 @@ Variant spec.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.Operator.html#LT_EQ" class="member-name-link">LT_EQ</a> - Enum constant in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.Operator.html" title="enum class in dev.hardwood.reader">FilterPredicate.Operator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.html#ltEq(java.lang.String,boolean)" class="member-name-link">ltEq(String, boolean)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
+<dd>
+<div class="block">Creates a less-than-or-equal predicate for a <code>BOOLEAN</code> column.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#ltEq(java.lang.String,byte%5B%5D)" class="member-name-link">ltEq(String, byte[])</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>
 <div class="block">Creates a less-than-or-equal predicate for a binary column.</div>
@@ -3651,6 +3694,10 @@ current batch.&quot;</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#notEq(java.lang.String,long)" class="member-name-link">notEq(String, long)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.html#notEq(java.lang.String,dev.hardwood.row.PqInterval)" class="member-name-link">notEq(String, PqInterval)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
+<dd>
+<div class="block">Creates a not-equals predicate for an <code>INTERVAL</code> column.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#notEq(java.lang.String,java.lang.String)" class="member-name-link">notEq(String, String)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>
 <div class="block">Creates a not-equals predicate for a text column.</div>
@@ -3822,6 +3869,10 @@ current batch.&quot;</div>
 <div class="block">Returns the value of the <code>op</code> record component.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.IntColumnPredicate.html#op()" class="member-name-link">op()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntColumnPredicate</a></dt>
+<dd>
+<div class="block">Returns the value of the <code>op</code> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html#op()" class="member-name-link">op()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntervalColumnPredicate</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>op</code> record component.</div>
 </dd>
@@ -5036,6 +5087,10 @@ followed by each node in pre-order, groups carrying their child count.</div>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntervalColumnPredicate</a></dt>
+<dd>
+<div class="block">Returns a string representation of this record class.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.IntInPredicate.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntInPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntInPredicate</a></dt>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
@@ -5288,6 +5343,10 @@ writer accepts it as a column's null mask.</div>
 <div class="block">Returns the value of the <code>value</code> record component.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.IntColumnPredicate.html#value()" class="member-name-link">value()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntColumnPredicate</a></dt>
+<dd>
+<div class="block">Returns the value of the <code>value</code> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html#value()" class="member-name-link">value()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.IntervalColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.IntervalColumnPredicate</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>value</code> record component.</div>
 </dd>
