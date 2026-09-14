@@ -2064,7 +2064,8 @@ not compose this way: it filters a <code>STRING</code>, an <code>ENUM</code>, a 
 and no other binary column. Where both rows apply, the annotation names the order: a <code>UINT_32</code>
 column matches the <code>INT32</code> row and the <code>INT(32, isSigned = false)</code> row, and compares by unsigned
 magnitude. Set membership follows the same mapping: <code>in</code> takes each literal type below but
-<code>boolean</code>, and each of its values is an equality literal. A literal a column does not take throws
+<code>boolean</code>, and each of its values is an equality literal. An empty set throws
+<code>IllegalArgumentException</code> when the predicate is built. A literal a column does not take throws
 <code>IllegalArgumentException</code> at reader creation.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">in</span><span class="p">(</span><span class="s">"status"</span><span class="p">,</span><span class="w"> </span><span class="s">"ACTIVE"</span><span class="p">,</span><span class="w"> </span><span class="s">"PENDING"</span><span class="p">);</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">in</span><span class="p">(</span><span class="s">"ratio"</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">);</span>
@@ -2481,8 +2482,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/fbd97e66defb429fd9d06712c7bdf52f7616d3fd" target="_blank" rel="noopener">
-      fbd97e66
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a37d549dfa7373544ea36055d25fc8eecbb3681f" target="_blank" rel="noopener">
+      a37d549d
     </a>
   
 </div>
