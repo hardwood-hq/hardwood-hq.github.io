@@ -2239,6 +2239,11 @@ holds, whatever it is annotated with. <code>getInt</code> reads a <code>DATE</co
 <code>FIXED_LEN_BYTE_ARRAY</code> and <code>INT96</code> column, including a <code>DECIMAL</code>, a <code>UUID</code>, an <code>INTERVAL</code>, a
 <code>FLOAT16</code>, a <code>BSON</code> and a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> payload. Use them to skip the logical-type
 decode — see <a href="../../how-to/row-reader/#reading-the-physical-value">Reading the physical value</a>.</p>
+<p><code>getValue</code> on a signed <code>INT(8)</code> or <code>INT(16)</code> column returns a <code>Byte</code> or a <code>Short</code>. A file can
+store a value outside the range its annotation states: <code>getValue</code> keeps the low 8 or 16 bits of
+such a value, so a stored <code>1000</code> reads as the <code>Byte</code> <code>-24</code>, while <code>getInt</code> returns it as stored.
+On an unsigned <code>INT(8)</code> or <code>INT(16)</code> column <code>getValue</code> returns the stored <code>Integer</code>. Filter
+predicates compare the value <code>getInt</code> returns.</p>
 <h2 id="text-columns">Text columns<a class="headerlink" href="#text-columns" title="Permanent link">&para;</a></h2>
 <p><code>getString</code> reads a column whose stored bytes are the UTF-8 encoding of a string: a
 <code>BYTE_ARRAY</code> annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code>, or one carrying no annotation, which older
@@ -2455,8 +2460,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5727b7e7e23de4c8adb6a401e23c8ce993bf86ed" target="_blank" rel="noopener">
-      5727b7e7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5dfc8da819e67afc107464fe097baa9d57fc7b18" target="_blank" rel="noopener">
+      5dfc8da8
     </a>
   
 </div>

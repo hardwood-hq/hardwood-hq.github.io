@@ -2320,9 +2320,10 @@ fixed-width <code>DECIMAL</code> instead reads the literal as the number it enco
 against a number past the column's width compares against the largest or smallest the width
 holds — so <code>lt</code> on a literal wider than the column returns every non-null row.</p>
 <p>An annotation's value range does not bound a literal. That covers the bit width of an <code>INT(8)</code>,
-the precision of a <code>DECIMAL</code> and the single day of a <code>TIME</code>: <a href="../accessors/">the accessors</a> return
-what a file stores, so <code>eq("i8", 1000)</code> on an <code>INT(8)</code> column is compared as given and matches no
-row of a file that keeps to its annotation.</p>
+the precision of a <code>DECIMAL</code> and the single day of a <code>TIME</code>: <a href="../accessors/#physical-accessors">the physical
+accessors</a> <code>getInt</code> and <code>getLong</code> return what a file stores, so
+<code>eq("i8", 1000)</code> on an <code>INT(8)</code> column is compared as given and matches no row of a file that keeps
+to its annotation.</p>
 <h2 id="when-statistics-are-ignored">When statistics are ignored<a class="headerlink" href="#when-statistics-are-ignored" title="Permanent link">&para;</a></h2>
 <p>Pruning compares a unit's <code>min</code> / <code>max</code> bounds. A pair a reader cannot compare against is
 ignored rather than trusted, so the row group or page is kept and its rows are read and filtered
@@ -2445,8 +2446,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5727b7e7e23de4c8adb6a401e23c8ce993bf86ed" target="_blank" rel="noopener">
-      5727b7e7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5dfc8da819e67afc107464fe097baa9d57fc7b18" target="_blank" rel="noopener">
+      5dfc8da8
     </a>
   
 </div>
