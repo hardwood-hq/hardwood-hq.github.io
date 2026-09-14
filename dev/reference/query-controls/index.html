@@ -2064,7 +2064,7 @@ not compose this way: it filters a <code>STRING</code>, an <code>ENUM</code>, a 
 and no other binary column. Where both rows apply, the annotation names the order: a <code>UINT_32</code>
 column matches the <code>INT32</code> row and the <code>INT(32, isSigned = false)</code> row, and compares by unsigned
 magnitude. Set membership follows the same mapping: <code>in</code> on the
-<code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> columns and on every binary column, <code>inStrings</code>
+<code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> columns, on every binary column and on <code>INT96</code>, <code>inStrings</code>
 on those taking a <code>String</code>. A literal a column does not take throws <code>IllegalArgumentException</code> at
 reader creation.</p>
 <p><code>eq</code>, <code>notEq</code> and the set form are available on every column below. The ordered operators <code>lt</code>,
@@ -2161,6 +2161,12 @@ express every set of two values.</p>
 <td>the wall clock, in the column's time unit</td>
 </tr>
 <tr>
+<td><code>INT96</code></td>
+<td></td>
+<td><code>Instant</code>, <code>byte[]</code> of 12 bytes</td>
+<td>the instant the value encodes</td>
+</tr>
+<tr>
 <td><code>INT32</code> up to 9 digits, <code>INT64</code> up to 18</td>
 <td><code>DECIMAL</code></td>
 <td><code>BigDecimal</code>; <code>int</code> / <code>long</code> unscaled</td>
@@ -2236,6 +2242,14 @@ more scale than the literal pads it, so <code>99.99</code> against a <code>DECIM
 as <code>99.9900</code>, and trailing zeros drop the same way. A literal carrying a digit the column's
 scale cannot hold follows the rule under
 <a href="#literals-the-column-cannot-hold">Literals the column cannot hold</a>.</p>
+<p>An <code>INT96</code> column is a legacy timestamp, which <a href="../accessors/"><code>getTimestamp</code></a> reads as an
+<code>Instant</code>. Its literals are that <code>Instant</code> and the 12 stored bytes that <code>getBinary</code> returns, and
+both compare as the instant the value encodes rather than as bytes. The format lets one instant be
+stored under more than one encoding, since the nanoseconds of the day are not bounded by one day,
+and every encoding of an instant matches a literal of it. A <code>byte[]</code> literal of any other length
+throws <code>IllegalArgumentException</code> at reader creation.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gtEq</span><span class="p">(</span><span class="s">"event_time"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2015-06-01T00:00:00Z"</span><span class="p">));</span>
+</code></pre></div>
 <p>An unsigned column's literal is the stored two's-complement bit pattern, the same form
 <a href="../accessors/">the accessors</a> hand back for it: <code>4_000_000_000</code> in a <code>UINT_32</code> column is the <code>int</code>
 <code>-294_967_296</code>, so a value read from a row can be passed straight back as a predicate literal.
@@ -2248,9 +2262,9 @@ value as it is stored: an <code>int</code> against a <code>DATE</code> column te
 <p>The literal of a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> column is a <code>byte[]</code>, the stored bytes
 that <a href="../accessors/"><code>getBinary</code></a> returns. The factories copy the array, so a caller reusing it
 does not change a predicate already built.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC8</span><span class="w"> </span><span class="p">});</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">in</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC8</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC9</span><span class="w"> </span><span class="p">});</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC8</span><span class="w"> </span><span class="p">});</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">in</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC8</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC9</span><span class="w"> </span><span class="p">});</span>
 </code></pre></div>
 <p><code>DECIMAL</code> and <code>FLOAT16</code> are the exceptions to <em>how</em> the bytes compare. Both order by the value
 their bytes stand for rather than by the bytes themselves, and their statistics are written in
@@ -2271,24 +2285,25 @@ does take. A <code>String</code> that is not well-formed UTF-16, such as one hol
 no UTF-8 encoding and throws <code>IllegalArgumentException</code> when the predicate is built.</p>
 <p>An <code>INTERVAL</code> column's other literal is the <code>PqInterval</code> that <a href="../accessors/"><code>getInterval</code></a>
 returns. Each of its three components is stored as an unsigned 32-bit value.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"uptime"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PqInterval</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3_600_000</span><span class="p">));</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"uptime"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PqInterval</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3_600_000</span><span class="p">));</span>
 </code></pre></div>
 <p>Every factory rejects a null literal with a <code>NullPointerException</code> naming the argument.</p>
 <h2 id="literals-the-column-cannot-hold">Literals the column cannot hold<a class="headerlink" href="#literals-the-column-cannot-hold" title="Permanent link">&para;</a></h2>
 <p>A literal can be a value of the column's literal type that the column itself cannot store: finer
 than the time unit of a <code>TIMESTAMP</code> or <code>TIME</code>, carrying more decimal places than a <code>DECIMAL</code>'s
 scale, past the range of the <code>INT32</code> or <code>INT64</code> that holds the column's values, of a width a
-fixed-width column does not have, a <code>float</code> no IEEE half represents, or a <code>PqInterval</code> with a
-component outside <code>[0, 4294967295]</code>.</p>
+fixed-width column does not have, a <code>float</code> no IEEE half represents, a <code>PqInterval</code> with a
+component outside <code>[0, 4294967295]</code>, or an <code>Instant</code> later or earlier than every instant an
+<code>INT96</code> column encodes.</p>
 <p>Equality (<code>eq</code>, <code>notEq</code>, a set form and its negation) asks whether a stored value <em>is</em> the
 literal. Against a value the column cannot store, <code>eq</code> could never match and <code>notEq</code> always
 would, so it throws <code>IllegalArgumentException</code> when the reader is built, naming the column, what
 bounds it and the literal:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Column 'ts' holds a whole number of microseconds within the INT64 range;</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">// the equality literal 2024-05-01T12:00:00.000000500Z is not a value it can hold</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">reader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ts"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2024-05-01T12:00:00.000000500Z"</span><span class="p">)))</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// Column 'ts' holds a whole number of microseconds within the INT64 range;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="c1">// the equality literal 2024-05-01T12:00:00.000000500Z is not a value it can hold</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">reader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ts"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2024-05-01T12:00:00.000000500Z"</span><span class="p">)))</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p>An ordered predicate (<code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code>) asks instead where the literal sits in the
 column's order, which every value of the literal type has an answer for, and is answered exactly.
@@ -2310,7 +2325,7 @@ row of a file that keeps to its annotation.</p>
 <p>Pruning compares a unit's <code>min</code> / <code>max</code> bounds. A pair a reader cannot compare against is
 ignored rather than trusted, so the row group or page is kept and its rows are read and filtered
 one by one. Results are the same either way; only the I/O saved is lost. Bounds are ignored for
-one of five reasons:</p>
+one of six reasons:</p>
 <table>
 <thead>
 <tr>
@@ -2334,6 +2349,10 @@ one of five reasons:</p>
 <tr>
 <td>The column's annotation defines no order</td>
 <td>An <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>UNKNOWN</code>, <code>LIST</code> or <code>MAP</code> column, for which the Parquet spec defines no sort order</td>
+</tr>
+<tr>
+<td>The column is <code>INT96</code></td>
+<td>The Parquet spec defines no sort order for <code>INT96</code>, and a recorded order does not follow the instants on every value</td>
 </tr>
 <tr>
 <td>The file declares a <code>ColumnOrder</code> this release does not recognize</td>
@@ -2424,8 +2443,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d87911bbbecbf26501ce2898f2e974bd56e443f6" target="_blank" rel="noopener">
-      d87911bb
+    <a href="https://github.com/hardwood-hq/hardwood/tree/dd6f135b486ff8d9f02f5c663f4c4b388c62895d" target="_blank" rel="noopener">
+      dd6f135b
     </a>
   
 </div>

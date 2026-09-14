@@ -281,7 +281,8 @@ them.</div>
 <div class="col-first odd-row-color"><code>static final record&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="FilterPredicate.InstantColumnPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.InstantColumnPredicate</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Predicate for TIMESTAMP columns with <code>isAdjustedToUTC = true</code>.</div>
+<div class="block">Predicate for TIMESTAMP columns with <code>isAdjustedToUTC = true</code> and for legacy <code>INT96</code>
+timestamp columns.</div>
 </div>
 <div class="col-first even-row-color"><code>static final record&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="FilterPredicate.IntColumnPredicate.html" class="type-name-link" title="class in dev.hardwood.reader">FilterPredicate.IntColumnPredicate</a></code></div>
@@ -420,7 +421,7 @@ unannotated <code>BYTE_ARRAY</code>.</div>
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
 <div class="block">Creates an equals predicate for an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> column (Parquet TIMESTAMP logical type with
-<code>isAdjustedToUTC = true</code>).</div>
+<code>isAdjustedToUTC = true</code>, or a legacy <code>INT96</code> timestamp).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#eq(java.lang.String,java.time.LocalDate)" class="member-name-link">eq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
@@ -1222,7 +1223,8 @@ the value <a href="../row/StructAccessor.html#getBinary(int)"><code>StructAccess
 <code>DECIMAL</code> reads them as the number they encode, a <code>FLOAT16</code> as the half its two bytes
 encode, and every other binary column compares them unsigned lexicographically. A
 fixed-width column takes an equality literal of its own width only, and a fixed-width
-<code>DECIMAL</code> any length whose value fits that width.</p>
+<code>DECIMAL</code> any length whose value fits that width. A legacy <code>INT96</code> timestamp column takes
+twelve bytes, compared as the instant they encode.</p>
 <p>The array is copied, so a caller reusing it does not change the predicate.</p>
 </div>
 </div>
@@ -1397,8 +1399,8 @@ Unix epoch at reader creation.</div>
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></span>&nbsp;<span class="element-name">eq</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</span></div>
 <div class="block">Creates an equals predicate for an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> column (Parquet TIMESTAMP logical type with
-<code>isAdjustedToUTC = true</code>). The column's time unit is determined from the schema at reader
-creation.</div>
+<code>isAdjustedToUTC = true</code>, or a legacy <code>INT96</code> timestamp). The column's time unit is
+determined from the schema at reader creation.</div>
 </div>
 </section>
 </li>

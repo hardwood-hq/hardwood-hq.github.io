@@ -2080,6 +2080,9 @@
 <p>An <code>Instant</code> literal on a <code>TIMESTAMP</code> column with <code>isAdjustedToUTC = false</code> throws <code>IllegalArgumentException</code>, where it used to compare the instant against the stored wall clock as though that were UTC (<a href="https://github.com/hardwood-hq/hardwood/issues/1194">#1194</a>).</p>
 </li>
 <li>
+<p><code>FilterPredicate</code> filters a legacy <code>INT96</code> timestamp column with an <code>Instant</code> or a 12-byte <code>byte[]</code> literal, through <code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code> and <code>in</code>, compared as the instant the value encodes (<a href="https://github.com/hardwood-hq/hardwood/issues/1192">#1192</a>).</p>
+</li>
+<li>
 <p><code>getString</code> and <code>ColumnReader.getStrings</code> throw <code>IllegalArgumentException</code> on a column that does not hold text, where they used to decode its stored bytes as characters (<a href="https://github.com/hardwood-hq/hardwood/issues/1196">#1196</a>).</p>
 </li>
 <li>
@@ -2399,8 +2402,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d87911bbbecbf26501ce2898f2e974bd56e443f6" target="_blank" rel="noopener">
-      d87911bb
+    <a href="https://github.com/hardwood-hq/hardwood/tree/dd6f135b486ff8d9f02f5c663f4c4b388c62895d" target="_blank" rel="noopener">
+      dd6f135b
     </a>
   
 </div>
