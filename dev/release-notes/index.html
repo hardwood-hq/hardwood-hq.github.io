@@ -2053,7 +2053,7 @@
 <p><code>FilterPredicate.inStrings</code> is deprecated in favour of <code>in(String, String...)</code>, which builds the same predicate (<a href="https://github.com/hardwood-hq/hardwood/issues/1178">#1178</a>).</p>
 </li>
 <li>
-<p><code>FilterPredicate</code> takes a <code>byte[]</code> literal on any binary column, through <code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code> and <code>in</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1181">#1181</a>).</p>
+<p><code>FilterPredicate</code> takes a <code>byte[]</code> literal on any binary column, through <code>eq</code>, <code>notEq</code> and <code>in</code>, and through <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> where the column's values order as their bytes (<a href="https://github.com/hardwood-hq/hardwood/issues/1181">#1181</a>).</p>
 </li>
 <li>
 <p>A <code>String</code> literal filters a column that holds text — a <code>STRING</code>, an <code>ENUM</code>, a <code>JSON</code> or an unannotated <code>BYTE_ARRAY</code> — and throws <code>IllegalArgumentException</code> on every other binary column, where a <code>byte[]</code> or the annotation's own literal type filters instead (<a href="https://github.com/hardwood-hq/hardwood/issues/1181">#1181</a>).</p>
@@ -2086,7 +2086,7 @@
 <p>An <code>Instant</code> literal on a <code>TIMESTAMP</code> column with <code>isAdjustedToUTC = false</code> throws <code>IllegalArgumentException</code>, where it used to compare the instant against the stored wall clock as though that were UTC (<a href="https://github.com/hardwood-hq/hardwood/issues/1194">#1194</a>).</p>
 </li>
 <li>
-<p><code>FilterPredicate</code> filters a legacy <code>INT96</code> timestamp column with an <code>Instant</code> or a 12-byte <code>byte[]</code> literal, through <code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code> and <code>in</code>, compared as the instant the value encodes (<a href="https://github.com/hardwood-hq/hardwood/issues/1192">#1192</a>).</p>
+<p><code>FilterPredicate</code> filters a legacy <code>INT96</code> timestamp column with an <code>Instant</code> literal through <code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code> and <code>in</code>, compared as the instant the value encodes, and with its 12 stored bytes through <code>eq</code>, <code>notEq</code> and <code>in</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1192">#1192</a>).</p>
 </li>
 <li>
 <p><code>getString</code> and <code>ColumnReader.getStrings</code> throw <code>IllegalArgumentException</code> on a column that does not hold text, where they used to decode its stored bytes as characters (<a href="https://github.com/hardwood-hq/hardwood/issues/1196">#1196</a>).</p>
@@ -2110,7 +2110,7 @@
 <p>A <code>ColumnReader</code> filter on a <code>FLOAT16</code> column no longer throws <code>ClassCastException</code>, and one on a struct leaf no longer reads a leaf that is null under a present struct as a value (<a href="https://github.com/hardwood-hq/hardwood/issues/1197">#1197</a>).</p>
 </li>
 <li>
-<p>A <code>String</code>, <code>inStrings</code> or parquet-java <code>binaryColumn</code> literal on a <code>FIXED_LEN_BYTE_ARRAY</code> <code>DECIMAL</code> column that is narrower or wider than the column no longer drops row groups holding matching rows (<a href="https://github.com/hardwood-hq/hardwood/issues/1190">#1190</a>).</p>
+<p>A parquet-java <code>binaryColumn</code> literal on a <code>FIXED_LEN_BYTE_ARRAY</code> <code>DECIMAL</code> column that is narrower or wider than the column no longer drops row groups holding matching rows (<a href="https://github.com/hardwood-hq/hardwood/issues/1190">#1190</a>).</p>
 </li>
 <li>
 <p>Row groups and pages are no longer pruned against <code>min</code> / <code>max</code> in a sort order the reader cannot read — a column annotated <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>UNKNOWN</code>, <code>LIST</code> or <code>MAP</code>, or one whose file declares an unrecognized <code>ColumnOrder</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1179">#1179</a>).</p>
@@ -2152,7 +2152,7 @@
 <p>A <code>LocalDate</code> predicate requires the column to carry the <code>DATE</code> annotation, as its JavaDoc has always said (<a href="https://github.com/hardwood-hq/hardwood/issues/1141">#1141</a>). The annotation went unchecked before, so a <code>LocalDate</code> against a plain <code>INT32</code> column compared epoch days against unrelated integers and returned rows answering a different question, with nothing raised. <strong>What changes for you:</strong> such a call now throws <code>IllegalArgumentException</code> at reader creation. A plain <code>INT32</code> column that does hold epoch days is filtered by the day itself — <code>gt("d", (int) date.toEpochDay())</code>.</p>
 </li>
 <li>
-<p>A <code>String</code> predicate on a <code>DECIMAL</code> or <code>FLOAT16</code> column compares as the column does — a <code>DECIMAL</code> by its unscaled value, a <code>FLOAT16</code> by the number its two bytes encode — rather than as a byte string (<a href="https://github.com/hardwood-hq/hardwood/issues/1142">#1142</a>). Both order by the value their bytes stand for and record their statistics that way, so comparing byte-wise pruned row groups against bounds written in a different order and silently dropped matching rows. This is the comparison parquet-java applies, so a filter carried over through the compatibility shim answers the same. <code>inStrings</code> compares its probes the same way — which is also how parquet-java evaluates <code>In</code> — so a padded encoding of a <code>DECIMAL</code> probe is found; on a <code>FLOAT16</code> column each probe is compared as the half it encodes.</p>
+<p>A parquet-java <code>binaryColumn</code> filter on a <code>DECIMAL</code> or <code>FLOAT16</code> column, through the compatibility shim, compares as the column does — by the number or the half its bytes encode — and no longer drops row groups holding matching rows (<a href="https://github.com/hardwood-hq/hardwood/issues/1142">#1142</a>).</p>
 </li>
 <li>
 <p>An ordered predicate on an <code>INT(bitWidth, isSigned = false)</code> column compares by unsigned magnitude, the order the column is written in (<a href="https://github.com/hardwood-hq/hardwood/issues/1144">#1144</a>). The comparison was signed before, so <code>lt</code>, <code>gt</code> and their siblings returned wrong rows on a column holding values above 2^31, and bounds straddling that point read as inverted and were discarded — costing those columns row-group and page skipping as well.</p>
@@ -2411,8 +2411,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/830be09396e1f0a7643445c30412c2be85644dfc" target="_blank" rel="noopener">
-      830be093
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fbd97e66defb429fd9d06712c7bdf52f7616d3fd" target="_blank" rel="noopener">
+      fbd97e66
     </a>
   
 </div>

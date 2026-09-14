@@ -2074,8 +2074,10 @@ magnitude. Set membership follows the same mapping: <code>in</code> takes each l
 <p><code>eq</code>, <code>notEq</code> and the set form are available on every column below. The ordered operators <code>lt</code>,
 <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> are available on the types that define an order, which is every one except
 <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code> and <code>NULL</code>; on those four they throw <code>IllegalArgumentException</code>
-at reader creation. <code>BOOLEAN</code> is the one type with no set form, since <code>eq</code>, <code>notEq</code> and <code>isNotNull</code>
-express every set of two values.</p>
+at reader creation. On a <code>DECIMAL</code>, <code>FLOAT16</code> or <code>INT96</code> column they take the typed literal, and a
+<code>byte[]</code> literal takes <code>eq</code>, <code>notEq</code> and the set form only (see <a href="#binary-columns">Binary columns</a>).
+<code>BOOLEAN</code> is the one type with no set form, since <code>eq</code>, <code>notEq</code> and <code>isNotNull</code> express every set
+of two values.</p>
 <table>
 <thead>
 <tr>
@@ -2168,7 +2170,7 @@ express every set of two values.</p>
 <td><code>INT96</code></td>
 <td></td>
 <td><code>Instant</code>, <code>byte[]</code> of 12 bytes</td>
-<td>the instant the value encodes</td>
+<td>the instant the value encodes; a <code>byte[]</code> as the stored bytes</td>
 </tr>
 <tr>
 <td><code>INT32</code> up to 9 digits, <code>INT64</code> up to 18</td>
@@ -2179,8 +2181,8 @@ express every set of two values.</p>
 <tr>
 <td><code>FIXED_LEN_BYTE_ARRAY(n)</code> up to what <code>n</code> bytes hold, <code>BYTE_ARRAY</code> any</td>
 <td><code>DECIMAL</code></td>
-<td><code>BigDecimal</code>, <code>byte[]</code></td>
-<td>the represented value</td>
+<td><code>BigDecimal</code>; <code>byte[]</code>, of <code>n</code> bytes on a <code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
+<td>the represented value; a <code>byte[]</code> as the stored bytes</td>
 </tr>
 <tr>
 <td><code>BYTE_ARRAY</code></td>
@@ -2210,7 +2212,7 @@ express every set of two values.</p>
 <td><code>FIXED_LEN_BYTE_ARRAY(2)</code></td>
 <td><code>FLOAT16</code></td>
 <td><code>float</code>, <code>byte[]</code> of 2 bytes</td>
-<td>numeric, widened to <code>float</code></td>
+<td>numeric, widened to <code>float</code>; a <code>byte[]</code> as the stored bytes</td>
 </tr>
 <tr>
 <td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
@@ -2246,11 +2248,11 @@ as <code>99.9900</code>, and trailing zeros drop the same way. A literal carryin
 scale cannot hold follows the rule under
 <a href="#literals-the-column-cannot-hold">Literals the column cannot hold</a>.</p>
 <p>An <code>INT96</code> column is a legacy timestamp, which <a href="../accessors/"><code>getTimestamp</code></a> reads as an
-<code>Instant</code>. Its literals are that <code>Instant</code> and the 12 stored bytes that <code>getBinary</code> returns, and
-both compare as the instant the value encodes rather than as bytes. The format lets one instant be
-stored under more than one encoding, since the nanoseconds of the day are not bounded by one day,
-and every encoding of an instant matches a literal of it. A <code>byte[]</code> literal of any other length
-throws <code>IllegalArgumentException</code> at reader creation.</p>
+<code>Instant</code>. An <code>Instant</code> literal compares as the instant the value encodes. The format lets one
+instant be stored under more than one encoding, since the nanoseconds of the day are not bounded by
+one day, and every encoding of an instant matches an <code>Instant</code> literal of it. The column also takes
+the 12 stored bytes that <code>getBinary</code> returns, which match the rows storing exactly those bytes; a
+<code>byte[]</code> literal of any other length throws <code>IllegalArgumentException</code> at reader creation.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gtEq</span><span class="p">(</span><span class="s">"event_time"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2015-06-01T00:00:00Z"</span><span class="p">));</span>
 </code></pre></div>
 <p>An unsigned column's literal is the stored two's-complement bit pattern, the same form
@@ -2269,16 +2271,45 @@ does not change a predicate already built.</p>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">in</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC8</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC9</span><span class="w"> </span><span class="p">});</span>
 </code></pre></div>
-<p><code>DECIMAL</code> and <code>FLOAT16</code> are the exceptions to <em>how</em> the bytes compare. Both order by the value
-their bytes stand for rather than by the bytes themselves, and their statistics are written in
-that order, so a <code>byte[]</code> literal against either compares as the column does — a <code>DECIMAL</code> by its
-unscaled value, a <code>FLOAT16</code> by the number its two little-endian bytes encode — rather than as a
-byte string. A <code>FLOAT16</code> literal must be exactly two bytes. On a <code>FIXED_LEN_BYTE_ARRAY</code> <code>DECIMAL</code>,
-a literal of any length stands for the value it encodes and is brought to the column width:
-sign-extended when it is shorter, its leading sign-extension bytes dropped when it is longer.</p>
-<p><code>in(byte[]...)</code> compares each probe the same way, so on a <code>DECIMAL</code> a padded encoding of a probe
-is still a member, and on a <code>FLOAT16</code> each probe — exactly two bytes — is compared as the half it
-encodes. <code>in(float...)</code> on a <code>FLOAT16</code> compares each probe against the decoded half.</p>
+<p>A <code>byte[]</code> literal matches the rows storing exactly its bytes, on every binary column. On most
+columns the values order as their bytes, unsigned, and a <code>byte[]</code> takes every operator. A
+<code>DECIMAL</code>, a <code>FLOAT16</code> and an <code>INT96</code> order by the value their bytes encode, and there a <code>byte[]</code>
+takes <code>eq</code>, <code>notEq</code> and <code>in</code> only; <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> with a <code>byte[]</code> throw
+<code>IllegalArgumentException</code> at reader creation, naming the <code>BigDecimal</code>, <code>float</code> or <code>Instant</code>
+literal that takes them.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th><code>byte[]</code> literal</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DECIMAL</code> over <code>BYTE_ARRAY</code></td>
+<td>any length</td>
+<td>the rows storing these bytes; a padded encoding of the same number is a different literal</td>
+</tr>
+<tr>
+<td><code>DECIMAL</code> over <code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
+<td><code>n</code> bytes</td>
+<td>the rows storing these bytes, which is the one encoding of the number</td>
+</tr>
+<tr>
+<td><code>FLOAT16</code></td>
+<td>2 bytes</td>
+<td>the rows storing these bytes; each <code>NaN</code> encoding is a different literal</td>
+</tr>
+<tr>
+<td><code>INT96</code></td>
+<td>12 bytes</td>
+<td>the rows storing these bytes; another encoding of the same instant is a different literal</td>
+</tr>
+</tbody>
+</table>
+<p>A <code>byte[]</code> literal of another length than the table gives throws <code>IllegalArgumentException</code> at
+reader creation.</p>
 <p>A <code>String</code> literal is the literal of a text column — <code>STRING</code>, <code>ENUM</code>, <code>JSON</code> and an unannotated
 <code>BYTE_ARRAY</code> — where its UTF-8 encoding is exactly the stored bytes. These are the columns
 <a href="../accessors/#text-columns"><code>getString</code></a> reads. On any other binary column a <code>String</code>
@@ -2315,10 +2346,10 @@ carrier holds, the predicate matches every non-null row or none: <code>lt("d", L
 <code>DATE</code> column returns every non-null row, and <code>gt("d", LocalDate.MAX)</code> returns none. A comparison
 never matches a null row, and <code>not</code> over one of these does not either.</p>
 <p>On a fixed-width column whose bytes compare as a byte string, a byte literal of another width
-compares as given for an ordered predicate, since the comparison is exact on it either way. A
-fixed-width <code>DECIMAL</code> instead reads the literal as the number it encodes, and an ordered predicate
-against a number past the column's width compares against the largest or smallest the width
-holds — so <code>lt</code> on a literal wider than the column returns every non-null row.</p>
+compares as given for an ordered predicate, since the comparison is exact on it either way. On a
+fixed-width <code>DECIMAL</code>, an ordered predicate against a <code>BigDecimal</code> past the column's width compares
+against the largest or smallest number the width holds — so <code>lt</code> on such a literal returns every
+non-null row.</p>
 <p>An annotation's value range does not bound a literal. That covers the bit width of an <code>INT(8)</code>,
 the precision of a <code>DECIMAL</code> and the single day of a <code>TIME</code>: <a href="../accessors/#physical-accessors">the physical
 accessors</a> <code>getInt</code> and <code>getLong</code> return what a file stores, so
@@ -2450,8 +2481,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/830be09396e1f0a7643445c30412c2be85644dfc" target="_blank" rel="noopener">
-      830be093
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fbd97e66defb429fd9d06712c7bdf52f7616d3fd" target="_blank" rel="noopener">
+      fbd97e66
     </a>
   
 </div>
