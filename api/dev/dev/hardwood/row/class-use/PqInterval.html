@@ -32,6 +32,7 @@ loadScripts(document, 'script');</script>
 <li><a href="../PqInterval.html">Class</a></li>
 <li class="nav-bar-cell1-rev">Use</li>
 <li><a href="../package-tree.html">Tree</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../search.html">Search</a></li>
 <li><a href="../../../../help-doc.html#use">Help</a></li>
@@ -88,6 +89,17 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the value of the <code>value</code> record component.</div>
 </div>
 </div>
+<div class="caption"><span>Methods in <a href="../../reader/package-summary.html">dev.hardwood.reader</a> that return types with arguments of type <a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.IntervalInPredicate.</span><code><a href="../../reader/FilterPredicate.IntervalInPredicate.html#values()" class="member-name-link">values</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the value of the <code>values</code> record component.</div>
+</div>
+</div>
 <div class="caption"><span>Methods in <a href="../../reader/package-summary.html">dev.hardwood.reader</a> with parameters of type <a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -101,9 +113,16 @@ loadScripts(document, 'script');</script>
 <a href="../PqInterval.html" title="class in dev.hardwood.row"><code>PqInterval</code></a> <a href="../StructAccessor.html#getInterval(int)"><code>StructAccessor.getInterval(int)</code></a> returns for it.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../../reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../../reader/FilterPredicate.html#notEq(java.lang.String,dev.hardwood.row.PqInterval)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
- <a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a>&nbsp;value)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../../reader/FilterPredicate.html#in(java.lang.String,dev.hardwood.row.PqInterval...)" class="member-name-link">in</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a>...&nbsp;values)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Creates a set-membership predicate for an <code>INTERVAL</code> column, matching a row whose value is
+any of <code>values</code>.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../../reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FilterPredicate.</span><code><a href="../../reader/FilterPredicate.html#notEq(java.lang.String,dev.hardwood.row.PqInterval)" class="member-name-link">notEq</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Creates a not-equals predicate for an <code>INTERVAL</code> column.</div>
 </div>
 </div>
@@ -118,6 +137,18 @@ loadScripts(document, 'script');</script>
  <a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>IntervalColumnPredicate</code> record class.</div>
+</div>
+</div>
+<div class="caption"><span>Constructor parameters in <a href="../../reader/package-summary.html">dev.hardwood.reader</a> with type arguments of type <a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../reader/FilterPredicate.IntervalInPredicate.html#%3Cinit%3E(java.lang.String,java.util.List)" class="member-name-link">IntervalInPredicate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../PqInterval.html" title="class in dev.hardwood.row">PqInterval</a>&gt;&nbsp;values)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an instance of a <code>IntervalInPredicate</code> record class.</div>
 </div>
 </div>
 </section>
