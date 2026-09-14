@@ -2328,7 +2328,7 @@ to its annotation.</p>
 <p>Pruning compares a unit's <code>min</code> / <code>max</code> bounds. A pair a reader cannot compare against is
 ignored rather than trusted, so the row group or page is kept and its rows are read and filtered
 one by one. Results are the same either way; only the I/O saved is lost. Bounds are ignored for
-one of six reasons:</p>
+one of seven reasons:</p>
 <table>
 <thead>
 <tr>
@@ -2356,6 +2356,10 @@ one of six reasons:</p>
 <tr>
 <td>The column is <code>INT96</code></td>
 <td>The Parquet spec defines no sort order for <code>INT96</code>, and a recorded order does not follow the instants on every value</td>
+</tr>
+<tr>
+<td>The column's annotation is dropped</td>
+<td>An annotation the column's physical type cannot carry, or one this release does not recognize, so the column is read as its physical type while its bounds were recorded in the annotation's order</td>
 </tr>
 <tr>
 <td>The file declares a <code>ColumnOrder</code> this release does not recognize</td>
@@ -2446,8 +2450,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5dfc8da819e67afc107464fe097baa9d57fc7b18" target="_blank" rel="noopener">
-      5dfc8da8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/9bd0bd9fac68bb4aad45cc592c258f9df2a49a83" target="_blank" rel="noopener">
+      9bd0bd9f
     </a>
   
 </div>

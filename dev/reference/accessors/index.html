@@ -2283,8 +2283,9 @@ file, so Hardwood drops it — and drops one it does not recognize at all — lo
 case. The column is then reported and read as its physical type.</p>
 <p><code>getFileSchema()</code> reports no logical type for it, <code>getValue</code> returns the physical value, and the
 physical accessors work. A logical accessor fails as it would on any unannotated column of that
-type. Statistics are compared under the physical type's ordering, and a logical-type predicate on
-the column is rejected at reader creation.</p>
+type. Its <code>min</code> / <code>max</code> statistics prune nothing (see
+<a href="../query-controls/#when-statistics-are-ignored">When statistics are ignored</a>), and a logical-type
+predicate on the column is rejected at reader creation.</p>
 <p>The <code>getTimestamp</code> / <code>getLocalTimestamp</code> pair is split along the column's <code>isAdjustedToUTC</code> flag:
 <code>getTimestamp</code> requires <code>isAdjustedToUTC = true</code> and returns <code>Instant</code>; <code>getLocalTimestamp</code>
 requires <code>isAdjustedToUTC = false</code> and returns <code>LocalDateTime</code>. Calling the wrong one for a column
@@ -2460,8 +2461,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5dfc8da819e67afc107464fe097baa9d57fc7b18" target="_blank" rel="noopener">
-      5dfc8da8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/9bd0bd9fac68bb4aad45cc592c258f9df2a49a83" target="_blank" rel="noopener">
+      9bd0bd9f
     </a>
   
 </div>
