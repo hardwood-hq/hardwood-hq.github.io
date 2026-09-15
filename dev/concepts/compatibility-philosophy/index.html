@@ -2017,9 +2017,8 @@
 -->
 <h1 id="compatibility-philosophy">Compatibility Philosophy<a class="headerlink" href="#compatibility-philosophy" title="Permanent link">&para;</a></h1>
 <p>Hardwood aims to read every file that Apache parquet-java reads, while in a few specific places
-applying <em>stricter</em> semantics than parquet-java does. That combination is deliberate, and the
-principle behind it makes the individual divergences read as a consistent stance rather than a
-list of quirks.</p>
+applying <em>stricter</em> semantics than parquet-java does. Each of those divergences follows from the
+principle described below.</p>
 <p>For the drop-in API and its exact behavior, see
 <a href="../../how-to/compat/">parquet-java Compatibility</a>; for the filter semantics, see
 <a href="../../how-to/query-controls/#null-handling">Filter, Project, Limit, and Split</a>.</p>
@@ -2027,13 +2026,13 @@ list of quirks.</p>
 <p>Two goals are in tension, and Hardwood resolves them on different axes:</p>
 <ul>
 <li><strong>Read what's out there.</strong> Parquet files in the wild were written by many tools across many
-  years — parquet-mr, Arrow, Spark, Hive, PyArrow — using legacy encodings, deprecated types,
+  years (parquet-mr, Arrow, Spark, Hive, PyArrow) using legacy encodings, deprecated types,
   and annotations that newer specs dropped. Hardwood reads these transparently: most legacy
   list-encoding variants, INT96 timestamps, the legacy <code>converted_type</code> annotations that
   predate the modern logical-type union, <code>NULL</code>-typed columns, FLOAT16. The tolerance also
   extends <em>forward</em>: a logical-type annotation newer than Hardwood recognizes is ignored rather
   than rejected, and the column's physical type is exposed, so a file written by a tool that
-  has adopted a future logical type still reads. On the <em>input</em> side, Hardwood is liberal — if
+  has adopted a future logical type still reads. On the <em>input</em> side, Hardwood is liberal: if
   parquet-java can read it, Hardwood aims to.</li>
 <li><strong>Don't silently produce wrong results.</strong> On the <em>semantic</em> side, where a behavior is a matter
   of correctness rather than file compatibility, Hardwood chooses the well-defined answer even
@@ -2046,7 +2045,7 @@ list of quirks.</p>
 <h3 id="sql-three-valued-logic-for-comparison-predicates">SQL three-valued logic for comparison predicates<a class="headerlink" href="#sql-three-valued-logic-for-comparison-predicates" title="Permanent link">&para;</a></h3>
 <p>The clearest case is <code>notEq</code> and its siblings. Hardwood applies uniform SQL three-valued logic
 to every comparison predicate: any comparison against a null column value yields UNKNOWN, and
-UNKNOWN rows are not returned. So <code>notEq("x", v)</code> does <strong>not</strong> return rows where <code>x</code> is null —
+UNKNOWN rows are not returned. So <code>notEq("x", v)</code> does <strong>not</strong> return rows where <code>x</code> is null,
 just as <code>eq</code>, <code>lt</code>, and the rest don't.</p>
 <p>parquet-java treats <code>null &lt;&gt; v</code> as true and so includes null rows in <code>notEq</code>, which breaks the
 SQL identity <code>not(gt(x, v)) ≡ ltEq(x, v)</code> on null rows. Hardwood preserves that identity across
@@ -2057,32 +2056,25 @@ matches what a SQL engine would do.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// parquet-java's notEq semantics: "not equal to v, OR null"</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">or</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">notEq</span><span class="p">(</span><span class="s">"x"</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">),</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="s">"x"</span><span class="p">));</span>
 </code></pre></div>
-<p>Making null-inclusion explicit, rather than hiding it inside one operator's special case, is the
-point — the reader can see in the code which rows the filter admits.</p>
+<p>Written this way, the null-inclusion is explicit, and the code shows which rows the filter admits.</p>
 <h3 id="schema-validation-across-multiple-files">Schema validation across multiple files<a class="headerlink" href="#schema-validation-across-multiple-files" title="Permanent link">&para;</a></h3>
-<p>When a data reader spans multiple files, the first file's schema is the reference, and each
-subsequent file reached by the data-reader plan is validated against it: every column the read
-touches — the projected ones plus any a filter tests — must exist with a matching physical type,
-logical type, repetition type, fixed byte length, and enclosing groups of the same nullability and
-repeatedness, or a <code>SchemaIncompatibleException</code> is thrown rather than the mismatch surfacing as
-garbage values.</p>
-<p>Which columns a read touches is known only once a reader is planned, so that is when the check
-runs. A file is planned as the read arrives at it, so a mismatch in a later file is raised while
-iterating rather than when the reader is built — but always before any row of that file is
-returned, which is what keeps a mismatch from being read as data. Inspecting a file's metadata
-reports the footer as it is on disk and does not run the check.</p>
+<p>When a data reader spans multiple files, the first file's schema is the reference. Every column a
+read touches in a later file must match it, or a <code>SchemaIncompatibleException</code> is thrown instead of
+the mismatch surfacing as garbage values. The check runs when the read reaches the file, before
+any of its rows is returned. <a href="../../how-to/multi-file/">Reading Multiple Files</a> lists what must
+match and when a mismatch surfaces.</p>
 <p>The match is by field path, never by position. A Parquet footer lists column chunks in the order
 of the schema's flattened leaves, so a column's ordinal belongs to the file that was written, not
 to the column; two files that declare the same columns in a different order describe the same
 data. Untouched columns aren't checked at all, so files may carry extra columns or drop unused
-ones — again liberal on the parts that don't affect correctness, strict on the parts that do. See
+ones: again liberal on the parts that don't affect correctness, strict on the parts that do. See
 <a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
 <h2 id="the-drop-in-compat-module">The drop-in compat module<a class="headerlink" href="#the-drop-in-compat-module" title="Permanent link">&para;</a></h2>
 <p>For callers who want parquet-java's <em>API</em> without rewriting code, the
 <code>hardwood-parquet-java-compat</code> module implements the <code>org.apache.parquet.*</code> interfaces backed by
 Hardwood. It is an API-compatibility shim, not a behavioral clone: filters routed through it
 still evaluate under Hardwood's semantics. The module is mutually exclusive with parquet-java on
-the classpath — see <a href="../../how-to/compat/">parquet-java Compatibility</a>.</p>
+the classpath; see <a href="../../how-to/compat/">parquet-java Compatibility</a>.</p>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../how-to/compat/">parquet-java Compatibility</a> — the drop-in API surface and its constraints.</li>
@@ -2138,8 +2130,8 @@ the classpath — see <a href="../../how-to/compat/">parquet-java Compatibility<
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

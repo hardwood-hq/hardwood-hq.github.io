@@ -1332,10 +1332,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#which-do-i-reach-for" class="md-nav__link">
+  <a href="#choosing-a-control" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Which do I reach for?
+        Choosing a control
       
     </span>
   </a>
@@ -1957,10 +1957,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#which-do-i-reach-for" class="md-nav__link">
+  <a href="#choosing-a-control" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Which do I reach for?
+        Choosing a control
       
     </span>
   </a>
@@ -2027,23 +2027,20 @@
 -->
 <h1 id="row-selection">Row Selection<a class="headerlink" href="#row-selection" title="Permanent link">&para;</a></h1>
 <p>You rarely want every row of a Parquet file. Hardwood gives a <code>RowReader</code> five controls for
-narrowing what comes back — <code>filter</code>, <code>head</code>, <code>tail</code>, <code>skip</code>, and the <code>byteRange</code> row-group
-predicate. They compose predictably once you hold one idea: <strong>row selection counts over the
-result set, not over the file.</strong> For the step-by-step recipes, see
-<a href="../../how-to/query-controls/">Predicate Pushdown, Projection, Limits, and Splits</a>.</p>
+narrowing what comes back: <code>filter</code>, <code>head</code>, <code>tail</code>, <code>skip</code>, and the <code>byteRange</code> row-group
+predicate. <strong>Row selection counts over the result set, not over the file.</strong></p>
 <h2 id="two-questions-which-rows-and-where-they-live">Two questions: which rows, and where they live<a class="headerlink" href="#two-questions-which-rows-and-where-they-live" title="Permanent link">&para;</a></h2>
 <p>Selection has two independent axes, and each control belongs to exactly one of them.</p>
 <ul>
-<li><strong>Which rows you want — the logical result.</strong> A <code>FilterPredicate</code> (<code>WHERE</code>), and the
+<li><strong>Which rows you want: the logical result.</strong> A <code>FilterPredicate</code> (<code>WHERE</code>), and the
   positional controls <code>head</code>, <code>tail</code>, and <code>skip</code>.</li>
-<li><strong>Where data lives in the file — the physical layout.</strong> <code>RowGroupPredicate.byteRange(...)</code>,
-  at row-group granularity. This is the lever for splitting a file across parallel readers, not
-  for shaping what a single reader returns.</li>
+<li><strong>Where data lives in the file: the physical layout.</strong> <code>RowGroupPredicate.byteRange(...)</code>,
+  at row-group granularity. This is the lever for splitting a file across parallel readers.</li>
 </ul>
 <p>Keeping these apart is what makes the controls predictable: physical positioning is <code>byteRange</code>'s
 job, and nothing else's.</p>
 <h2 id="the-result-set">The result set<a class="headerlink" href="#the-result-set" title="Permanent link">&para;</a></h2>
-<p>The <code>FilterPredicate</code> defines a <strong>result set</strong> — the rows that match, in file order. The
+<p>The <code>FilterPredicate</code> defines a <strong>result set</strong>: the rows that match, in file order. The
 positional controls count over that result set, exactly like SQL clauses count over the rows that
 survive a <code>WHERE</code>:</p>
 <table>
@@ -2073,30 +2070,30 @@ survive a <code>WHERE</code>:</p>
 </tbody>
 </table>
 <p>So <code>skip(n).head(k)</code> is <code>OFFSET n LIMIT k</code>: it returns at most <code>k</code> matching rows, starting after
-the first <code>n</code> matches. None of these count physical rows — a matching row sitting deep in the
+the first <code>n</code> matches. None of these count physical rows, so a matching row sitting deep in the
 file is still the first row <code>head(1)</code> returns. (<code>tail</code> is not in this table because it cannot
-combine with a filter — see <a href="#currently-supported-combinations">Currently supported combinations</a>.)</p>
+combine with a filter; see <a href="#currently-supported-combinations">Currently supported combinations</a>.)</p>
 <h2 id="the-no-filter-coincidence">The no-filter coincidence<a class="headerlink" href="#the-no-filter-coincidence" title="Permanent link">&para;</a></h2>
 <p>With <strong>no filter</strong>, every row matches, so the result set <em>is</em> the whole file and a logical
 position coincides with a physical one. That is the case where <code>skip(n)</code> can be a true seek:
-it begins at physical row <code>n</code>, and earlier row groups are never opened — an O(1-row-group) jump
-that fetches none of the bytes in between. <code>head(n)</code> is simply the first <code>n</code> rows of the file.</p>
+it begins at physical row <code>n</code>, and earlier row groups are never opened. It is an O(1-row-group) jump
+that fetches none of the bytes in between. <code>head(n)</code> is the first <code>n</code> rows of the file.</p>
 <p>Add a filter and the coincidence breaks. Row-group statistics bound the <em>values</em> in a group, not
 the <em>count</em> of rows that match, so the reader cannot know how many matches lie ahead without
 looking. <code>head</code> and <code>skip</code> then stream over the matched rows, decoding earlier groups to count
-them — though groups whose statistics prove no row can match are still skipped wholesale. This is
+them, though groups whose statistics prove no row can match are still skipped wholesale. This is
 why <code>skip(n)</code> is an O(1) seek without a filter but a forward scan with one: same control, but the
 relation it counts over changed.</p>
 <h2 id="physical-splitting-is-separate">Physical splitting is separate<a class="headerlink" href="#physical-splitting-is-separate" title="Permanent link">&para;</a></h2>
 <p><code>byteRange(start, end)</code> keeps a row group when its midpoint falls in <code>[start, end)</code>. Across a
-partition of the file into disjoint ranges, every row group lands in exactly one — the basis for
+partition of the file into disjoint ranges, every row group lands in exactly one, which is the basis for
 handing each parallel reader its own slice of the file. It composes with the logical controls by
 intersection: under <code>byteRange(...).filter(p).skip(n).head(k)</code>, the result set is the matching
 rows <em>within this reader's row groups</em>, and <code>skip</code>/<code>head</code> count over that.</p>
 <p>Reach for <code>byteRange</code> to decide <em>which bytes a reader owns</em>; reach for <code>filter</code>/<code>skip</code>/<code>head</code> to
 decide <em>which rows it returns</em>. Using <code>skip</code> to position a scan physically under a filter is the
-wrong tool — that is what <code>byteRange</code> is for.</p>
-<h2 id="which-do-i-reach-for">Which do I reach for?<a class="headerlink" href="#which-do-i-reach-for" title="Permanent link">&para;</a></h2>
+wrong tool; that is what <code>byteRange</code> is for.</p>
+<h2 id="choosing-a-control">Choosing a control<a class="headerlink" href="#choosing-a-control" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -2115,7 +2112,7 @@ wrong tool — that is what <code>byteRange</code> is for.</p>
 </tr>
 <tr>
 <td>row <code>n</code> of the file, ignoring content</td>
-<td><code>skip(n)</code> (no filter — a seek)</td>
+<td><code>skip(n)</code> (no filter: a seek)</td>
 </tr>
 <tr>
 <td>the last <code>n</code> rows of the file</td>
@@ -2189,8 +2186,8 @@ of the unfiltered file, or filter and keep the trailing matches yourself.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

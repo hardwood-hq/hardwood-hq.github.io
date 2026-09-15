@@ -1983,18 +1983,17 @@
 -->
 <h1 id="timestamp-semantics">Timestamp Semantics<a class="headerlink" href="#timestamp-semantics" title="Permanent link">&para;</a></h1>
 <p>The Parquet TIMESTAMP logical type carries an <code>isAdjustedToUTC</code> flag that picks between two
-genuinely different kinds of value. Hardwood splits its accessor surface along the same line — a
-<code>getTimestamp</code> that returns <code>Instant</code> and a <code>getLocalTimestamp</code> that returns <code>LocalDateTime</code> —
-rather than papering over the difference with a single accessor.</p>
+different kinds of value. Hardwood splits its accessor surface along the same line:
+<code>getTimestamp</code> returns an <code>Instant</code> and <code>getLocalTimestamp</code> returns a <code>LocalDateTime</code>.</p>
 <h2 id="two-kinds-of-timestamp">Two kinds of timestamp<a class="headerlink" href="#two-kinds-of-timestamp" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong><code>isAdjustedToUTC = true</code></strong> is an absolute point on the global timeline. The stored value counts
   time units since the Unix epoch in UTC, and it identifies the same moment everywhere. Java's
-  <code>Instant</code> models exactly this: a count from the epoch with no attached zone, comparable across
+  <code>Instant</code> models this: a count from the epoch with no attached zone, comparable across
   systems.</li>
 <li><strong><code>isAdjustedToUTC = false</code></strong> is a wall-clock reading — a calendar date and time-of-day with no
   zone information. "2026-06-04 09:00" means whatever local clock recorded it; it does <em>not</em> pin a
-  moment until a zone is supplied externally. Java's <code>LocalDateTime</code> models exactly this.</li>
+  moment until a zone is supplied externally. Java's <code>LocalDateTime</code> models it.</li>
 </ul>
 <p>The two are not interconvertible without a time zone, and silently treating one as the other shifts
 values by the local UTC offset — the classic source of off-by-hours bugs. A single accessor
@@ -2002,9 +2001,8 @@ returning one Java type would force that lossy coercion on half of all timestamp
 API keeps them distinct.</p>
 <h2 id="the-split-accessor-pair">The split accessor pair<a class="headerlink" href="#the-split-accessor-pair" title="Permanent link">&para;</a></h2>
 <p>Because the column's flag already records which kind it is, each accessor enforces the matching
-flag rather than guessing: <code>getTimestamp</code> is the <code>Instant</code> accessor and <code>getLocalTimestamp</code> the
-<code>LocalDateTime</code> one, and calling the wrong one for a column is a programming error that throws — the
-column's semantics, not the caller's expectation, win. The exact runtime contract (which flag each
+flag: <code>getTimestamp</code> is the <code>Instant</code> accessor and <code>getLocalTimestamp</code> the <code>LocalDateTime</code> one, and
+calling the wrong one for a column is a programming error that throws. The exact runtime contract (which flag each
 requires, the exception thrown) lives in <a href="../../reference/accessors/">Typed Accessors</a>. When a
 column's kind isn't known statically, branching on the flag — or the generic <code>getValue</code> accessor,
 which returns <code>Instant</code> or <code>LocalDateTime</code> per the flag — recovers the right type without a guess.</p>
@@ -2017,8 +2015,8 @@ the other accessor throws (see <a href="../../reference/query-controls/#predicat
 <code>LocalTime</code> has no zone of its own, so there is no second Java type to split toward. <code>getTime</code>
 returns <code>LocalTime</code> either way and the flag is purely informational.</p>
 <h2 id="two-physical-carriers">Two physical carriers<a class="headerlink" href="#two-physical-carriers" title="Permanent link">&para;</a></h2>
-<p>The TIMESTAMP annotation is stored in two physical types, and the choice between them is about
-range, not precision. Both count the same three units, milliseconds, microseconds and nanoseconds,
+<p>The TIMESTAMP annotation is stored in two physical types, which differ in the range they span.
+Both count the same three units, milliseconds, microseconds and nanoseconds,
 since the epoch. An <code>INT64</code> spans about 292 million years either side of 1970 in milliseconds and
 292,000 years in microseconds, but only about 585 years in nanoseconds, from 1677 to 2262. A
 <code>FIXED_LEN_BYTE_ARRAY(12)</code> holds the count in 96 bits, which spans every <code>Instant</code> in any unit.</p>
@@ -2085,8 +2083,8 @@ annotation.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

@@ -2006,14 +2006,14 @@
 <h1 id="the-concurrency-model">The Concurrency Model<a class="headerlink" href="#the-concurrency-model" title="Permanent link">&para;</a></h1>
 <p>Hardwood is multi-threaded at its core: a single reader, driven by a single consumer thread,
 keeps a pool of worker threads busy decoding ahead of where the consumer is reading.</p>
-<p>For the knobs themselves — pool sizing and the JFR events that expose pipeline behavior — see
+<p>For the knobs themselves (pool sizing and the JFR events that expose pipeline behavior), see
 <a href="../../reference/configuration/">Configuration</a> and
 <a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
 <h2 id="why-concurrency-is-built-in">Why concurrency is built in<a class="headerlink" href="#why-concurrency-is-built-in" title="Permanent link">&para;</a></h2>
 <p>The Parquet layout makes parallelism natural: a column chunk is a sequence of independently
 compressed pages (see <a href="../parquet-layout/">How a Parquet File Is Laid Out</a>). Decompressing and
 decoding a page is CPU-bound work that doesn't depend on its neighbors, so pages can be worked
-on concurrently. Hardwood exploits this without asking the caller to manage threads — you write
+on concurrently. Hardwood exploits this without asking the caller to manage threads: you write
 an ordinary single-threaded read loop, and the parallelism happens underneath it.</p>
 <h2 id="the-shared-pool-hardwood-and-hardwoodcontext">The shared pool: <code>Hardwood</code> and <code>HardwoodContext</code><a class="headerlink" href="#the-shared-pool-hardwood-and-hardwoodcontext" title="Permanent link">&para;</a></h2>
 <p>Worker threads live in a pool owned by a context, not by individual readers. There are two ways
@@ -2029,7 +2029,7 @@ that context comes into being:</p>
   closes it.</li>
 </ul>
 <p>Share one context across many reads. The pool is the expensive, reusable resource; readers are
-cheap and short-lived. This matters most when reading many files — see below.</p>
+cheap and short-lived. This matters most when reading many files, as described below.</p>
 <h2 id="the-assembly-pipeline">The assembly pipeline<a class="headerlink" href="#the-assembly-pipeline" title="Permanent link">&para;</a></h2>
 <p>For a single read, the reader runs an <strong>assembly pipeline</strong> ahead of the consumer. While
 your loop is processing the current batch (or row), pool threads are already decompressing and
@@ -2043,14 +2043,14 @@ keeping up with consumption.</p>
 <p>When a reader spans multiple files (via <code>Hardwood.openAll(...)</code>), prefetching crosses file
 boundaries: as the pages of file <em>N</em> run low, pages of file <em>N+1</em> are already being fetched and
 decoded. The transition between files doesn't stall the consumer. This is the main reason to open
-a multi-file reader rather than looping over single-file readers yourself — and the reason the
+a multi-file reader rather than looping over single-file readers yourself, and the reason the
 shared pool matters, since all the files draw on the same workers. See
 <a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
 <h2 id="what-this-means-for-your-code">What this means for your code<a class="headerlink" href="#what-this-means-for-your-code" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Drive one reader from one thread.</strong> A <code>RowReader</code> / <code>ColumnReader</code> / <code>ColumnReaders</code> instance
   is a stateful cursor meant to be advanced by a single consumer thread. The concurrency is
-  <em>internal</em> — you do not, and should not, call <code>next()</code> / <code>nextBatch()</code> on the same reader from
+  <em>internal</em>: do not call <code>next()</code> / <code>nextBatch()</code> on the same reader from
   multiple threads. This restricts advancing the cursor, not the data it returns: a <code>ColumnReader</code>
   allocates fresh batch arrays on every <code>nextBatch()</code> and never reuses them later, so you can fan a
   batch's arrays out to other threads for processing while the consumer thread moves on (see
@@ -2061,11 +2061,11 @@ shared pool matters, since all the files draw on the same workers. See
   <a href="../../how-to/query-controls/#split-aware-reading">split-aware reading</a>. Have them share a single
   <code>HardwoodContext</code> so they draw worker threads from one pool rather than each spinning up its
   own.</li>
-<li><strong>Size the pool to the workload, not the file.</strong> <code>HardwoodContext.create(n)</code> sets the number of
-  threads that decompress and decode pages — the bulk of the CPU — so <code>n</code> is the main throughput
+<li><strong>Size the pool to the workload.</strong> <code>HardwoodContext.create(n)</code> sets the number of
+  threads that decompress and decode pages, which is the bulk of the CPU, so <code>n</code> is the main throughput
   and CPU dial. The default (available processors) suits a process whose main job is reading
-  Parquet; lower it when Hardwood shares the machine with other heavy work. Two lighter stages —
-  fetching page bytes and assembling decoded values into batches — run on the JVM's virtual-thread
+  Parquet; lower it when Hardwood shares the machine with other heavy work. Two lighter stages,
+  fetching page bytes and assembling decoded values into batches, run on the JVM's virtual-thread
   carriers rather than this pool, so <code>n</code> does not bound them; for strict CPU isolation on a shared
   machine, also cap the carriers with <code>-Djdk.virtualThreadScheduler.parallelism</code>.</li>
 </ul>
@@ -2129,8 +2129,8 @@ shared pool matters, since all the files draw on the same workers. See
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

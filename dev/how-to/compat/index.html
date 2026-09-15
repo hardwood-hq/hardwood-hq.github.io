@@ -1938,19 +1938,19 @@
 
 -->
 <h1 id="parquet-java-compatibility">Parquet-Java Compatibility<a class="headerlink" href="#parquet-java-compatibility" title="Permanent link">&para;</a></h1>
-<p>If you have existing code that uses Apache parquet-java's <code>ParquetReader&lt;Group&gt;</code> API and want to switch to Hardwood without rewriting it, the <code>hardwood-parquet-java-compat</code> module provides a drop-in replacement. It implements the same <code>org.apache.parquet.*</code> interfaces backed by Hardwood's reader, so you get Hardwood's performance with minimal code changes.</p>
+<p>If you have existing code that uses Apache parquet-java's <code>ParquetReader&lt;Group&gt;</code> API and want to switch to Hardwood without rewriting it, the <code>hardwood-parquet-java-compat</code> module provides a drop-in replacement. It implements the same <code>org.apache.parquet.*</code> interfaces backed by Hardwood's reader.</p>
 <div class="admonition warning">
 <p class="admonition-title">Experimental</p>
 <p>The <code>hardwood-parquet-java-compat</code> module is experimental; its API surface and behavior may change in future releases without prior deprecation. This module is not yet available from Maven Central; instead, it needs to be built from source.</p>
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Mutually exclusive with parquet-java</p>
-<p>This module provides its own type shims in the <code>org.apache.parquet.*</code> namespace. It <strong>cannot</strong> be used alongside <code>parquet-java</code> on the same classpath — pick one or the other.</p>
+<p>This module provides its own type shims in the <code>org.apache.parquet.*</code> namespace. It <strong>cannot</strong> be used alongside <code>parquet-java</code> on the same classpath; pick one or the other.</p>
 </div>
 <p><strong>Features:</strong></p>
 <ul>
 <li>Provides <code>org.apache.parquet.*</code> namespace classes compatible with parquet-java</li>
-<li>Includes Hadoop shims (<code>Path</code>, <code>Configuration</code>) — no Hadoop dependency required</li>
+<li>Includes Hadoop shims (<code>Path</code>, <code>Configuration</code>), so no Hadoop dependency is required</li>
 <li>Supports S3 reading via <code>HadoopInputFile</code> with the same <code>fs.s3a.*</code> configuration properties</li>
 <li>Supports filter predicate pushdown with the standard <code>FilterApi</code> / <code>FilterCompat</code> classes</li>
 </ul>
@@ -1991,7 +1991,7 @@
 <a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="c1">// read as usual</span>
 <a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="p">}</span>
 </code></pre></div>
-<p>S3 support requires <code>hardwood-s3</code> on the classpath. The compat layer loads it via reflection — if missing, a clear error message indicates which dependency to add.</p>
+<p>S3 support requires <code>hardwood-s3</code> on the classpath. The compat layer loads it via reflection; if it is missing, the error message names the dependency to add.</p>
 <h2 id="filter-pushdown">Filter Pushdown<a class="headerlink" href="#filter-pushdown" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">org.apache.parquet.filter2.predicate.FilterApi.*</span><span class="p">;</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.parquet.filter2.compat.FilterCompat</span><span class="p">;</span>
@@ -2056,8 +2056,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

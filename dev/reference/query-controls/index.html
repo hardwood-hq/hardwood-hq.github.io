@@ -2016,9 +2016,8 @@
 
 -->
 <h1 id="query-controls">Query Controls<a class="headerlink" href="#query-controls" title="Permanent link">&para;</a></h1>
-<p>Look-it-up reference for the predicate and projection controls. For worked examples and the I/O
-behavior of each control — predicate pushdown, projection, row limits, splits, and skip — see
-<a href="../../how-to/query-controls/">Predicate Pushdown, Projection, Limits, and Splits</a>.</p>
+<p>The predicate and projection controls. For worked examples and the I/O behavior of each control,
+see <a href="../../how-to/query-controls/">Predicate Pushdown, Projection, Limits, and Splits</a>.</p>
 <h2 id="supported-filter-predicates">Supported filter predicates<a class="headerlink" href="#supported-filter-predicates" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2099,166 +2098,148 @@ of two values.</p>
 <table>
 <thead>
 <tr>
-<th>Physical type</th>
 <th>Logical type</th>
+<th>Physical type</th>
 <th>Literal</th>
 <th>Compared as</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td>none</td>
 <td><code>BOOLEAN</code></td>
-<td></td>
 <td><code>boolean</code></td>
 <td><code>false</code> before <code>true</code></td>
 </tr>
 <tr>
+<td>none</td>
 <td><code>INT32</code></td>
-<td></td>
 <td><code>int</code></td>
 <td>signed</td>
 </tr>
 <tr>
+<td>none</td>
 <td><code>INT64</code></td>
-<td></td>
 <td><code>long</code></td>
 <td>signed</td>
 </tr>
 <tr>
+<td>none</td>
 <td><code>FLOAT</code></td>
-<td></td>
 <td><code>float</code></td>
 <td>numeric</td>
 </tr>
 <tr>
+<td>none</td>
 <td><code>DOUBLE</code></td>
-<td></td>
 <td><code>double</code></td>
 <td>numeric</td>
 </tr>
 <tr>
+<td>none</td>
 <td><code>BYTE_ARRAY</code></td>
-<td></td>
-<td><code>byte[]</code>; <code>String</code> where the column carries no annotation</td>
+<td><code>byte[]</code>, <code>String</code></td>
 <td>unsigned lexicographic</td>
 </tr>
 <tr>
+<td>none</td>
 <td><code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
-<td></td>
 <td><code>byte[]</code> of <code>n</code> bytes</td>
 <td>unsigned lexicographic</td>
 </tr>
 <tr>
-<td><code>INT32</code> 8/16/32-bit, <code>INT64</code> 64-bit</td>
-<td><code>INT(8/16/32/64, isSigned = true)</code></td>
-<td><code>int</code> / <code>long</code></td>
-<td>signed</td>
-</tr>
-<tr>
-<td><code>INT32</code> 8/16/32-bit, <code>INT64</code> 64-bit</td>
-<td><code>INT(8/16/32/64, isSigned = false)</code></td>
-<td><code>int</code> / <code>long</code></td>
-<td>unsigned magnitude</td>
-</tr>
-<tr>
-<td><code>INT32</code></td>
-<td><code>DATE</code></td>
-<td><code>LocalDate</code></td>
-<td>days since the Unix epoch</td>
-</tr>
-<tr>
-<td><code>INT32</code> millis, <code>INT64</code> micros / nanos</td>
-<td><code>TIME</code></td>
-<td><code>LocalTime</code></td>
-<td>the column's time unit</td>
-</tr>
-<tr>
-<td><code>INT64</code></td>
-<td><code>TIMESTAMP(isAdjustedToUTC = true)</code>, and the legacy <code>TIMESTAMP_MILLIS</code> / <code>TIMESTAMP_MICROS</code></td>
-<td><code>Instant</code></td>
-<td>the column's time unit</td>
-</tr>
-<tr>
-<td><code>INT64</code></td>
-<td><code>TIMESTAMP(isAdjustedToUTC = false)</code></td>
-<td><code>LocalDateTime</code></td>
-<td>the wall clock, in the column's time unit</td>
-</tr>
-<tr>
-<td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
-<td><code>TIMESTAMP(isAdjustedToUTC = true)</code></td>
-<td><code>Instant</code>, <code>byte[]</code> of 12 bytes</td>
-<td>the column's time unit; a <code>byte[]</code> as the stored bytes</td>
-</tr>
-<tr>
-<td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
-<td><code>TIMESTAMP(isAdjustedToUTC = false)</code></td>
-<td><code>LocalDateTime</code>, <code>byte[]</code> of 12 bytes</td>
-<td>the wall clock, in the column's time unit; a <code>byte[]</code> as the stored bytes</td>
-</tr>
-<tr>
+<td>none</td>
 <td><code>INT96</code></td>
-<td></td>
 <td><code>Instant</code>, <code>byte[]</code> of 12 bytes</td>
 <td>the instant the value encodes; a <code>byte[]</code> as the stored bytes</td>
 </tr>
 <tr>
-<td><code>INT32</code> up to 9 digits, <code>INT64</code> up to 18</td>
-<td><code>DECIMAL</code></td>
-<td><code>BigDecimal</code>; <code>int</code> / <code>long</code> unscaled</td>
-<td>the represented value</td>
+<td><code>INT(8/16/32/64, isSigned = true)</code></td>
+<td><code>INT32</code> 8/16/32-bit<br><code>INT64</code> 64-bit</td>
+<td><code>int</code><br><code>long</code></td>
+<td>signed</td>
 </tr>
 <tr>
-<td><code>FIXED_LEN_BYTE_ARRAY(n)</code> up to what <code>n</code> bytes hold, <code>BYTE_ARRAY</code> any</td>
+<td><code>INT(8/16/32/64, isSigned = false)</code></td>
+<td><code>INT32</code> 8/16/32-bit<br><code>INT64</code> 64-bit</td>
+<td><code>int</code><br><code>long</code></td>
+<td>unsigned magnitude</td>
+</tr>
+<tr>
+<td><code>DATE</code></td>
+<td><code>INT32</code></td>
+<td><code>LocalDate</code></td>
+<td>days since the Unix epoch</td>
+</tr>
+<tr>
+<td><code>TIME</code></td>
+<td><code>INT32</code> millis<br><code>INT64</code> micros / nanos</td>
+<td><code>LocalTime</code></td>
+<td>the column's time unit</td>
+</tr>
+<tr>
+<td><code>TIMESTAMP(isAdjustedToUTC = true)</code>, and the legacy <code>TIMESTAMP_MILLIS</code> / <code>TIMESTAMP_MICROS</code> on <code>INT64</code></td>
+<td><code>INT64</code><br><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>Instant</code>; <code>byte[]</code> of 12 bytes on <code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td>the column's time unit; a <code>byte[]</code> as the stored bytes</td>
+</tr>
+<tr>
+<td><code>TIMESTAMP(isAdjustedToUTC = false)</code></td>
+<td><code>INT64</code><br><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>LocalDateTime</code>; <code>byte[]</code> of 12 bytes on <code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td>the wall clock, in the column's time unit; a <code>byte[]</code> as the stored bytes</td>
+</tr>
+<tr>
 <td><code>DECIMAL</code></td>
-<td><code>BigDecimal</code>; <code>byte[]</code>, of <code>n</code> bytes on a <code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
+<td><code>INT32</code> up to 9 digits<br><code>INT64</code> up to 18<br><code>FIXED_LEN_BYTE_ARRAY(n)</code> up to what <code>n</code> bytes hold<br><code>BYTE_ARRAY</code> any</td>
+<td><code>BigDecimal</code>; <code>int</code> / <code>long</code> unscaled on the integer carriers; <code>byte[]</code> on the binary carriers, of <code>n</code> bytes on <code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
 <td>the represented value; a <code>byte[]</code> as the stored bytes</td>
 </tr>
 <tr>
-<td><code>BYTE_ARRAY</code></td>
 <td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code></td>
+<td><code>BYTE_ARRAY</code></td>
 <td><code>String</code>, <code>byte[]</code></td>
 <td>unsigned lexicographic</td>
 </tr>
 <tr>
-<td><code>BYTE_ARRAY</code></td>
 <td><code>BSON</code></td>
+<td><code>BYTE_ARRAY</code></td>
 <td><code>byte[]</code></td>
 <td>unsigned lexicographic</td>
 </tr>
 <tr>
-<td><code>BYTE_ARRAY</code></td>
 <td><code>GEOMETRY</code>, <code>GEOGRAPHY</code></td>
+<td><code>BYTE_ARRAY</code></td>
 <td><code>byte[]</code>; four <code>double</code> bounds for <code>intersects</code></td>
 <td>the WKB bytes, unsigned; <code>intersects</code> by bounding-box overlap</td>
 </tr>
 <tr>
-<td><code>FIXED_LEN_BYTE_ARRAY(16)</code></td>
 <td><code>UUID</code></td>
+<td><code>FIXED_LEN_BYTE_ARRAY(16)</code></td>
 <td><code>UUID</code>, <code>byte[]</code> of 16 bytes</td>
 <td>the 16 bytes, unsigned</td>
 </tr>
 <tr>
-<td><code>FIXED_LEN_BYTE_ARRAY(2)</code></td>
 <td><code>FLOAT16</code></td>
+<td><code>FIXED_LEN_BYTE_ARRAY(2)</code></td>
 <td><code>float</code>, <code>byte[]</code> of 2 bytes</td>
 <td>numeric, widened to <code>float</code>; a <code>byte[]</code> as the stored bytes</td>
 </tr>
 <tr>
-<td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
 <td><code>INTERVAL</code></td>
+<td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
 <td><code>PqInterval</code>, <code>byte[]</code> of 12 bytes</td>
 <td>the 12 bytes</td>
 </tr>
 <tr>
-<td>any</td>
 <td><code>NULL</code></td>
+<td>any</td>
 <td>the literal for the physical type</td>
 <td>the stored value; a column that keeps to its annotation holds only nulls, so no comparison matches</td>
 </tr>
 <tr>
-<td>group of two <code>BYTE_ARRAY</code></td>
 <td><code>VARIANT</code></td>
+<td>group of two <code>BYTE_ARRAY</code></td>
 <td><code>isNull</code>, <code>isNotNull</code></td>
 <td>whether the group is present</td>
 </tr>
@@ -2521,8 +2502,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

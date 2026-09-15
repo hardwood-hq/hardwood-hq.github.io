@@ -1916,16 +1916,16 @@
 
 -->
 <h1 id="accessing-file-metadata">Accessing File Metadata<a class="headerlink" href="#accessing-file-metadata" title="Permanent link">&para;</a></h1>
-<p>Inspecting metadata before reading is useful for understanding file structure, choosing which columns to project, validating files in a pipeline, or building tooling. Hardwood exposes the full Parquet metadata hierarchy without reading any row data.</p>
+<p>Hardwood exposes the full Parquet metadata hierarchy of a file without reading any row data.</p>
 <div class="admonition example">
 <p class="admonition-title">Try it yourself</p>
-<p>Want to run it or explore the capabilities yourself? The <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/metadata-explorer"><strong>Metadata Explorer</strong></a> example describes a Parquet file from its footer alone — version, schema, and per-row-group column statistics.</p>
+<p>Want to run it or explore the capabilities yourself? The <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/metadata-explorer"><strong>Metadata Explorer</strong></a> example describes a Parquet file from its footer alone: version, schema, and per-row-group column statistics.</p>
 </div>
 <p>A Parquet file is organized as follows:</p>
 <ul>
 <li><strong>FileMetaData</strong> — top-level: row count, schema, key-value metadata (e.g. Spark schema, pandas metadata), the writer that produced the file (<code>createdBy</code>), and the per-column statistics ordering (<code>columnOrders</code>)</li>
 <li><strong>RowGroup</strong> — a horizontal partition of the data; each row group contains all columns for a subset of rows</li>
-<li><strong>ColumnChunk</strong> — one column within a row group; holds compression codec, byte sizes, and optional statistics (min/max values, null count) used for predicate pushdown. Per-chunk byte ranges for the column index and offset index (when present in the file) are exposed via <code>columnIndexOffset</code>/<code>columnIndexLength</code> and <code>offsetIndexOffset</code>/<code>offsetIndexLength</code> on <code>ColumnChunk</code>. The bloom-filter byte range (<code>bloomFilterOffset</code>/<code>bloomFilterLength</code>) is exposed on <code>ColumnMetaData</code>, matching its position in the Parquet Thrift schema. <code>ColumnMetaData.encodingStats()</code> returns the chunk's page counts per (page type, encoding) pair as a list of <code>PageEncodingStats</code>, empty when the file omits the field. A page type this version does not recognize is reported as <code>PageType.UNKNOWN</code>. An encoding this version does not recognize is reported as <code>Encoding.UNKNOWN</code>, in both <code>ColumnMetaData.encodings()</code> and <code>encodingStats()</code>; the metadata reads normally, and reading a page that uses such an encoding throws an <code>UnsupportedOperationException</code> naming the raw Thrift encoding value. <code>ColumnChunk.filePath()</code> is the file holding the chunk's data under the legacy split-file layout, and the empty string — never <code>null</code> — when the data sits in the file being read; <code>requireSameFile()</code> throws an <code>IOException</code> for the former, which is what reading such a chunk does.</li>
+<li><strong>ColumnChunk</strong> — one column within a row group; holds compression codec, byte sizes, and optional statistics (min/max values, null count) used for predicate pushdown. Per-chunk byte ranges for the column index and offset index (when present in the file) are exposed via <code>columnIndexOffset</code>/<code>columnIndexLength</code> and <code>offsetIndexOffset</code>/<code>offsetIndexLength</code> on <code>ColumnChunk</code>. The bloom-filter byte range (<code>bloomFilterOffset</code>/<code>bloomFilterLength</code>) is exposed on <code>ColumnMetaData</code>, matching its position in the Parquet Thrift schema. <code>ColumnMetaData.encodingStats()</code> returns the chunk's page counts per (page type, encoding) pair as a list of <code>PageEncodingStats</code>, empty when the file omits the field. A page type this version does not recognize is reported as <code>PageType.UNKNOWN</code>. An encoding this version does not recognize is reported as <code>Encoding.UNKNOWN</code>, in both <code>ColumnMetaData.encodings()</code> and <code>encodingStats()</code>; the metadata reads normally, and reading a page that uses such an encoding throws an <code>UnsupportedOperationException</code> naming the raw Thrift encoding value. <code>ColumnChunk.filePath()</code> is the file holding the chunk's data under the legacy split-file layout, and the empty string (never <code>null</code>) when the data sits in the file being read; <code>requireSameFile()</code> throws an <code>IOException</code> for the former, which is what reading such a chunk does.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.ColumnChunk</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.ColumnMetaData</span><span class="p">;</span>
@@ -2017,7 +2017,7 @@ Close and reopen the parent reader to retry a failed footer load or inspect a ch
 <p><code>ColumnMetaData.sizeStatistics()</code> reports how much data a column chunk holds, without reading any of it:</p>
 <ul>
 <li><code>unencodedByteArrayDataBytes()</code> — the size the chunk's <code>BYTE_ARRAY</code> values would occupy unencoded and uncompressed, which the on-disk sizes do not tell you</li>
-<li><code>definitionLevelHistogram()</code> — how many values sit at each definition level, <code>0</code> through the column's maximum. The entry at the maximum counts the non-null values; each lower entry counts the values that stop being present at that level — a null, or, on a repeated column, an empty list</li>
+<li><code>definitionLevelHistogram()</code> — how many values sit at each definition level, <code>0</code> through the column's maximum. The entry at the maximum counts the non-null values; each lower entry counts the values that stop being present at that level: a null, or, on a repeated column, an empty list</li>
 <li><code>repetitionLevelHistogram()</code> — how many values sit at each repetition level, <code>0</code> through the column's maximum. Entry <code>0</code> counts the values that start a new row, so it is the number of rows in the chunk; each higher entry counts the values that continue a repeated field at that level</li>
 </ul>
 <p>Every field is optional. A writer that omits one reports <code>null</code>, which is distinct from a value the writer recorded as empty or zero:</p>
@@ -2078,8 +2078,8 @@ Close and reopen the parent reader to retry a failed footer load or inspect a ch
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

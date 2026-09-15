@@ -2060,14 +2060,12 @@
 
 -->
 <h1 id="how-a-parquet-file-is-laid-out">How a Parquet File Is Laid Out<a class="headerlink" href="#how-a-parquet-file-is-laid-out" title="Permanent link">&para;</a></h1>
-<p>Most of Hardwood's behavior — column projection, predicate pushdown, parallel decode, split
-reading, etc. — follows directly from how the Parquet format arranges
-bytes on disk. Understanding that layout makes the rest of Hardwood's behavior fall out as
-consequences rather than rules to memorize.</p>
+<p>Most of Hardwood's behavior, such as column projection, predicate pushdown, parallel decode and
+split reading, follows directly from how the Parquet format arranges bytes on disk.</p>
 <p>To read this hierarchy programmatically at runtime, see <a href="../../how-to/metadata/">Inspect File Metadata</a>.</p>
 <h2 id="the-hierarchy">The hierarchy<a class="headerlink" href="#the-hierarchy" title="Permanent link">&para;</a></h2>
-<p>A Parquet file is a nested structure — row groups holding column chunks holding pages — and the
-metadata that records where each piece lives sits at the <em>end</em> of the file, not the start. Laid
+<p>A Parquet file is a nested structure of row groups holding column chunks holding pages, and the
+metadata that records where each piece lives sits at the <em>end</em> of the file. Laid
 out as bytes on disk, from the first byte to the last:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>+------------------------------------------------------------+
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>|  PAR1                       (4-byte magic, file start)     |
@@ -2092,14 +2090,14 @@ out as bytes on disk, from the first byte to the last:</p>
 <a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>|  footer length (4B)  |  PAR1                               |
 <a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>+------------------------------------------------------------+
 </code></pre></div>
-<p>The data comes first and the <strong>footer</strong> comes last — a Thrift metadata block describing every row
+<p>The data comes first and the <strong>footer</strong> comes last: a Thrift metadata block describing every row
 group and column chunk (their byte offsets, sizes, compression codecs, and statistics, plus the
 schema and optional page index), followed by the footer length and a closing <code>PAR1</code>. A reader
 starts at that trailing magic, steps back four bytes to read the footer length, then reads the
-footer to learn where every row group, column chunk, and page lives — before touching any values.</p>
+footer to learn where every row group, column chunk, and page lives before touching any values.</p>
 <h3 id="file">File<a class="headerlink" href="#file" title="Permanent link">&para;</a></h3>
 <p>The unit you open. Its defining feature is that the schema and the byte offsets of everything in
-the file are in the footer at the <em>end</em>, not the start. A reader seeks to the tail, reads the
+the file are in the footer at the <em>end</em>. A reader seeks to the tail, reads the
 footer, and from then on knows the exact byte range of every piece of data without scanning. A
 read of three columns out of fifty touches only those three columns' bytes.</p>
 <h3 id="row-group">Row group<a class="headerlink" href="#row-group" title="Permanent link">&para;</a></h3>
@@ -2107,35 +2105,35 @@ read of three columns out of fifty touches only those three columns' bytes.</p>
 file might be split into ten row groups of a million rows each. Row groups are the unit of:</p>
 <ul>
 <li><strong>Parallelism and splitting.</strong> Independent row groups can be decoded concurrently, and a file
-  can be partitioned across parallel readers at row-group boundaries — this is what
+  can be partitioned across parallel readers at row-group boundaries, which is what
   <a href="../../how-to/query-controls/#split-aware-reading">split-aware reading</a> assigns by byte range.</li>
 <li><strong>Coarse skipping.</strong> Each column chunk carries min/max statistics; if a row group's statistics
   prove no row can match a predicate, the entire row group is skipped before any data is read.</li>
 </ul>
 <h3 id="column-chunk">Column chunk<a class="headerlink" href="#column-chunk" title="Permanent link">&para;</a></h3>
 <p>The data for one column within one row group, stored contiguously. Because a column's values sit
-together — rather than interleaved with other columns as in a row-oriented format — they
+together (rather than interleaved with other columns as in a row-oriented format), they
 compress well (similar values adjacent) and can be read in isolation (projection). The footer
 records each chunk's compressed and uncompressed size, codec, and statistics.</p>
 <div class="admonition info">
 <p class="admonition-title">2 GB column-chunk limit</p>
 <p>A column chunk is addressed within Hardwood as a single in-memory region, so each chunk must
-be at most 2 GB of <em>compressed</em> data — the limit is per chunk, not per file. Local
+be at most 2 GB of <em>compressed</em> data. The limit is per chunk, not per file. Local
 memory-mapped files and S3-backed files may be arbitrarily large overall; the in-memory
 (<code>ByteBuffer</code>) backend additionally caps the <em>whole file</em> at 2 GB, and the <code>dive</code> TUI caps
 S3 files at 2 GB because its mmap-backed range cache uses <code>MappedByteBuffer</code>. For datasets
 that don't fit a single supported file, split the data into multiple files at write time and
-read them as one — see <a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
+read them as one; see <a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
 </div>
 <h3 id="page">Page<a class="headerlink" href="#page" title="Permanent link">&para;</a></h3>
-<p>A column chunk is divided into pages, and the page is where compression and encoding actually
-happen. A chunk typically begins with one <strong>dictionary page</strong> — the column's distinct values —
+<p>A column chunk is divided into pages, and the page is where compression and encoding
+happen. A chunk typically begins with one <strong>dictionary page</strong>, holding the column's distinct values,
 followed by <strong>data pages</strong> whose entries are indices into that dictionary. Each page is
 compressed independently, so the page is the smallest unit Hardwood decompresses and decodes,
 and therefore the smallest unit it can decode in parallel or skip.</p>
 <p>When a file carries a <strong>Column Index</strong> and <strong>Offset Index</strong> (per-page min/max statistics and
 byte offsets, stored near the footer), Hardwood can skip individual <em>pages</em> within a surviving
-row group — the second tier of <a href="../../how-to/query-controls/#predicate-pushdown-filter">predicate pushdown</a>.
+row group. This is the second tier of <a href="../../how-to/query-controls/#predicate-pushdown-filter">predicate pushdown</a>.
 On a remote backend like S3, a skipped page is never even fetched.</p>
 <h2 id="why-the-layout-matters">Why the layout matters<a class="headerlink" href="#why-the-layout-matters" title="Permanent link">&para;</a></h2>
 <p>Each capability elsewhere in the docs is the layout showing through:</p>
@@ -2171,10 +2169,10 @@ On a remote backend like S3, a skipped page is never even fetched.</p>
 </table>
 <h2 id="logical-structure-the-schema">Logical structure: the schema<a class="headerlink" href="#logical-structure-the-schema" title="Permanent link">&para;</a></h2>
 <p>Orthogonal to the physical hierarchy is the <strong>schema</strong>, also stored in the footer. Parquet's
-schema is a tree: leaf columns carry the actual values, and group nodes express nesting —
+schema is a tree: leaf columns carry the actual values, and group nodes express nesting:
 structs, lists, and maps. A leaf's position in that tree, together with Parquet's repetition and
 definition levels, encodes which values belong to which (possibly null, possibly empty) parent.
-How Hardwood surfaces that nesting differs between the two reader APIs — see
+How Hardwood surfaces that nesting differs between the two reader APIs; see
 <a href="../reader-models/">RowReader vs. ColumnReader</a>.</p>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2233,8 +2231,8 @@ How Hardwood surfaces that nesting differs between the two reader APIs — see
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

@@ -2115,9 +2115,8 @@
 -->
 <h1 id="typed-accessors">Typed Accessors<a class="headerlink" href="#typed-accessors" title="Permanent link">&para;</a></h1>
 <p><code>RowReader</code> — and the nested <code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code> flyweights — decode each column to its
-logical-type Java representation through typed accessor methods. This page is the full
-correspondence between accessor, Parquet type, and Java type, together with the null- and
-type-mismatch contracts every accessor obeys. For the task-oriented walkthrough, see
+logical-type Java representation through typed accessor methods, listed below with the
+Parquet and Java type of each and the null- and type-mismatch contracts every accessor obeys. For the task-oriented walkthrough, see
 <a href="../../how-to/row-reader/">Read Row by Row</a>.</p>
 <div class="admonition example">
 <p class="admonition-title">Try it yourself</p>
@@ -2130,124 +2129,124 @@ type-mismatch contracts every accessor obeys. For the task-oriented walkthrough,
 <thead>
 <tr>
 <th>Method</th>
-<th>Physical Type</th>
-<th>Logical Type</th>
-<th>Java Type</th>
+<th>Physical type</th>
+<th>Logical type</th>
+<th>Java type</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><code>getBoolean</code></td>
-<td>BOOLEAN</td>
-<td></td>
+<td><code>BOOLEAN</code></td>
+<td>none</td>
 <td><code>boolean</code></td>
 </tr>
 <tr>
 <td><code>getInt</code></td>
-<td>INT32</td>
+<td><code>INT32</code></td>
 <td>any</td>
 <td><code>int</code></td>
 </tr>
 <tr>
 <td><code>getLong</code></td>
-<td>INT64</td>
+<td><code>INT64</code></td>
 <td>any</td>
 <td><code>long</code></td>
 </tr>
 <tr>
 <td><code>getFloat</code></td>
-<td>FLOAT, or FIXED_LEN_BYTE_ARRAY(2)</td>
-<td>none on FLOAT; FLOAT16 on FIXED_LEN_BYTE_ARRAY(2)</td>
+<td><code>FLOAT</code><br><code>FIXED_LEN_BYTE_ARRAY(2)</code></td>
+<td>none<br><code>FLOAT16</code></td>
 <td><code>float</code></td>
 </tr>
 <tr>
 <td><code>getDouble</code></td>
-<td>DOUBLE</td>
-<td></td>
+<td><code>DOUBLE</code></td>
+<td>none</td>
 <td><code>double</code></td>
 </tr>
 <tr>
 <td><code>getBinary</code></td>
-<td>BYTE_ARRAY, FIXED_LEN_BYTE_ARRAY, or INT96</td>
+<td><code>BYTE_ARRAY</code><br><code>FIXED_LEN_BYTE_ARRAY</code><br><code>INT96</code></td>
 <td>any</td>
 <td><code>byte[]</code></td>
 </tr>
 <tr>
 <td><code>getString</code></td>
-<td>BYTE_ARRAY</td>
-<td>STRING, ENUM, JSON, or none</td>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code>, or none</td>
 <td><code>String</code></td>
 </tr>
 <tr>
 <td><code>getDate</code></td>
-<td>INT32</td>
-<td>DATE</td>
+<td><code>INT32</code></td>
+<td><code>DATE</code></td>
 <td><code>LocalDate</code></td>
 </tr>
 <tr>
 <td><code>getTime</code></td>
-<td>INT32 or INT64</td>
-<td>TIME</td>
+<td><code>INT32</code><br><code>INT64</code></td>
+<td><code>TIME</code></td>
 <td><code>LocalTime</code></td>
 </tr>
 <tr>
 <td><code>getTimestamp</code></td>
-<td>INT64, FIXED_LEN_BYTE_ARRAY(12), or legacy INT96</td>
-<td>TIMESTAMP (<code>isAdjustedToUTC = true</code>)</td>
+<td><code>INT64</code><br><code>FIXED_LEN_BYTE_ARRAY(12)</code><br><code>INT96</code></td>
+<td><code>TIMESTAMP(isAdjustedToUTC = true)</code>; none on <code>INT96</code></td>
 <td><code>Instant</code></td>
 </tr>
 <tr>
 <td><code>getLocalTimestamp</code></td>
-<td>INT64 or FIXED_LEN_BYTE_ARRAY(12)</td>
-<td>TIMESTAMP (<code>isAdjustedToUTC = false</code>)</td>
+<td><code>INT64</code><br><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>TIMESTAMP(isAdjustedToUTC = false)</code></td>
 <td><code>LocalDateTime</code></td>
 </tr>
 <tr>
 <td><code>getDecimal</code></td>
-<td>INT32, INT64, BYTE_ARRAY, or FIXED_LEN_BYTE_ARRAY</td>
-<td>DECIMAL</td>
+<td><code>INT32</code><br><code>INT64</code><br><code>BYTE_ARRAY</code><br><code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td><code>DECIMAL</code></td>
 <td><code>BigDecimal</code></td>
 </tr>
 <tr>
 <td><code>getUuid</code></td>
-<td>FIXED_LEN_BYTE_ARRAY</td>
-<td>UUID</td>
+<td><code>FIXED_LEN_BYTE_ARRAY(16)</code></td>
+<td><code>UUID</code></td>
 <td><code>UUID</code></td>
 </tr>
 <tr>
 <td><code>getInterval</code></td>
-<td>FIXED_LEN_BYTE_ARRAY(12)</td>
-<td>INTERVAL</td>
+<td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>INTERVAL</code></td>
 <td><code>PqInterval</code></td>
 </tr>
 <tr>
 <td><code>getStruct</code></td>
-<td></td>
-<td></td>
+<td>group</td>
+<td>none</td>
 <td><code>PqStruct</code></td>
 </tr>
 <tr>
 <td><code>getList</code></td>
-<td></td>
-<td>LIST</td>
+<td>group</td>
+<td><code>LIST</code></td>
 <td><code>PqList</code></td>
 </tr>
 <tr>
 <td><code>getMap</code></td>
-<td></td>
-<td>MAP</td>
+<td>group</td>
+<td><code>MAP</code></td>
 <td><code>PqMap</code></td>
 </tr>
 <tr>
 <td><code>getVariant</code></td>
-<td>BYTE_ARRAY pair</td>
-<td>VARIANT</td>
+<td>group of two <code>BYTE_ARRAY</code></td>
+<td><code>VARIANT</code></td>
 <td><code>PqVariant</code></td>
 </tr>
 <tr>
 <td><code>isNull</code></td>
-<td>Any</td>
-<td>Any</td>
+<td>any</td>
+<td>any</td>
 <td><code>boolean</code></td>
 </tr>
 </tbody>
@@ -2493,8 +2492,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

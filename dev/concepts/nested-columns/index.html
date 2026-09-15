@@ -2004,12 +2004,11 @@
 
 -->
 <h1 id="the-layer-model">The Layer Model<a class="headerlink" href="#the-layer-model" title="Permanent link">&para;</a></h1>
-<p><code>ColumnReader</code> hands you a column as flat, typed primitive arrays. For a nested column — a struct
-field, a list, a map, or any combination — those flat arrays need extra structure to say which
+<p><code>ColumnReader</code> hands you a column as flat, typed primitive arrays. For a nested column (a struct
+field, a list, a map, or any combination), those flat arrays need extra structure to say which
 leaf values belong to which record, and where the nulls and empty containers sit. The <strong>layer
-model</strong> is how <code>ColumnReader</code> expresses that structure without boxing or per-row objects. This page
-explains the model; for worked code against it, see
-<a href="../../how-to/column-reader/">Column-Oriented Reading</a>.</p>
+model</strong> is how <code>ColumnReader</code> expresses that structure without boxing or per-row objects. For
+worked code against it, see <a href="../../how-to/column-reader/">Column-Oriented Reading</a>.</p>
 <div class="admonition example">
 <p class="admonition-title">Try it yourself</p>
 <p>Want to run it or explore the capabilities yourself?
@@ -2019,8 +2018,8 @@ and map items from offsets without materializing rows, and
 same shapes through the Row API.</p>
 </div>
 <blockquote>
-<p><strong>A note on lineage.</strong> The layer model — flat value arrays, offset buffers, and set-bit-present
-validity bitmaps — takes inspiration from <a href="https://arrow.apache.org/">Apache Arrow</a>'s columnar
+<p><strong>A note on lineage.</strong> The layer model (flat value arrays, offset buffers, and set-bit-present
+validity bitmaps) takes inspiration from <a href="https://arrow.apache.org/">Apache Arrow</a>'s columnar
 representation, so the shapes feel familiar if you come from an Arrow-based engine. The
 resemblance is conceptual only: Hardwood implements no part of the Arrow specification, and the
 buffers are plain Java arrays rather than an Arrow-bit-compatible layout.</p>
@@ -2032,7 +2031,7 @@ along the chain contributes zero or one layer:</p>
 <thead>
 <tr>
 <th>Schema node</th>
-<th>Contributes layer?</th>
+<th>Adds a layer</th>
 <th>Layer kind</th>
 </tr>
 </thead>
@@ -2119,7 +2118,7 @@ needed.</p>
 <li><strong>REPEATED expands cardinality.</strong> Items at layer <code>k+1</code> equal <code>getLayerOffsets(k)[count(k)]</code>.
    REPEATED layers carry both validity and offsets.</li>
 </ol>
-<p>The leaf array and <code>getLayerOffsets</code> carry <strong>real items only</strong> — phantom slots from null/empty
+<p>The leaf array and <code>getLayerOffsets</code> carry <strong>real items only</strong>: phantom slots from null/empty
 parents at any <code>REPEATED</code> layer are excluded. <code>getValueCount()</code> returns the real leaf count.
 <code>STRUCT</code> layers do not expand or contract the item stream; only <code>REPEATED</code> layers add cardinality,
 via their offsets.</p>
@@ -2175,7 +2174,7 @@ via their offsets.</p>
 </tr>
 </tbody>
 </table>
-<p>Maps report as <code>REPEATED</code> — the layer enum does not distinguish map-shape from list-shape; consult
+<p>Maps report as <code>REPEATED</code>, since the layer enum does not distinguish map-shape from list-shape; consult
 <code>getColumnSchema()</code> if you need that distinction.</p>
 <h2 id="how-schema-nodes-map-to-layers">How schema nodes map to layers<a class="headerlink" href="#how-schema-nodes-map-to-layers" title="Permanent link">&para;</a></h2>
 <p>Because layers follow logical structure, the physical group nodes of a schema do not map one-to-one
@@ -2198,22 +2197,22 @@ above resolve any schema unambiguously. Take a <code>contacts</code> column whos
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      required byte_array name  ────►  leaf
 </code></pre></div>
 <p><code>getLayerCount()</code> is <code>2</code>, with kinds <code>[REPEATED, STRUCT]</code>. The list's own nullability is not a
-separate layer: a null <code>contacts</code> is recorded in <code>getLayerValidity(0)</code> of the <code>REPEATED</code> layer — the
+separate layer: a null <code>contacts</code> is recorded in <code>getLayerValidity(0)</code> of the <code>REPEATED</code> layer, giving the
 same layer shape a <code>required</code> list would have, differing only in that validity. Layer 1 is the
 <code>element</code> struct, which carries validity but no offsets, so <code>getLayerOffsets(1)</code> throws <code>Layer 1 is
 STRUCT, not REPEATED</code>.</p>
 <h2 id="logical-element-versus-physical-encoding">Logical element versus physical encoding<a class="headerlink" href="#logical-element-versus-physical-encoding" title="Permanent link">&para;</a></h2>
-<p>The same logical-over-physical split governs schema <em>navigation</em>, not just layers.
-<code>SchemaNode.GroupNode.getListElement()</code> returns a list's <strong>logical</strong> element — <em>what</em> the element
-is — independent of whether the list is physically 2-level or 3-level. For <code>list&lt;list&lt;int&gt;&gt;</code> the
+<p>Schema <em>navigation</em> follows the same logical-over-physical split as layers.
+<code>SchemaNode.GroupNode.getListElement()</code> returns a list's <strong>logical</strong> element (<em>what</em> the element
+is), independent of whether the list is physically 2-level or 3-level. For <code>list&lt;list&lt;int&gt;&gt;</code> the
 element is the inner <code>list&lt;int&gt;</code>; for <code>list&lt;int&gt;</code> it is the <code>int</code>. The encoding changes only <em>where</em>
-that element sits in the node tree, never what <code>getListElement()</code> resolves it to.</p>
+that element sits in the node tree.</p>
 <p>The returned node keeps all its physical attributes. In a standard 3-level list the element is the
 non-repeated child below the synthetic <code>repeated group</code>; in a legacy 2-level list the repeated field
 <em>is</em> the element, so the returned node is itself <code>REPEATED</code>. Counted structurally, a list's nesting
 depth is the number of <code>repeated</code> nodes on the path (equivalently, the leaf's maximum repetition
 level), not the number of <code>LIST</code> annotations. To walk to the leaf logically, recurse
-<code>getListElement()</code> while the result <code>isList()</code> — uniform across both encodings. To inspect the raw
+<code>getListElement()</code> while the result <code>isList()</code>, which works the same for both encodings. To inspect the raw
 physical tree instead, walk <code>children()</code>.</p>
 <h2 id="counts-at-each-layer">Counts at each layer<a class="headerlink" href="#counts-at-each-layer" title="Permanent link">&para;</a></h2>
 <p>Every per-layer buffer is sized to <code>count(k)</code>, defined recursively:</p>
@@ -2276,8 +2275,8 @@ descending.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

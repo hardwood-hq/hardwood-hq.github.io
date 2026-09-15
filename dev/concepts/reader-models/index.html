@@ -2004,9 +2004,8 @@
 
 -->
 <h1 id="rowreader-vs-columnreader">RowReader vs. ColumnReader<a class="headerlink" href="#rowreader-vs-columnreader" title="Permanent link">&para;</a></h1>
-<p>Hardwood offers two reader APIs over the same files: <code>RowReader</code> and <code>ColumnReader</code>. They exist
-for genuinely different reasons, and the trade-off between them is real. For a quick decision
-table on which to pick, see the <a href="../../how-to/#choosing-a-reader">How-to overview</a>.</p>
+<p>Hardwood offers two reader APIs over the same files: <code>RowReader</code> and <code>ColumnReader</code>. For a
+decision table on which to pick, see the <a href="../../how-to/#choosing-a-reader">How-to overview</a>.</p>
 <h2 id="one-file-two-shapes-of-access">One file, two shapes of access<a class="headerlink" href="#one-file-two-shapes-of-access" title="Permanent link">&para;</a></h2>
 <p>Parquet stores data by column (see <a href="../parquet-layout/">How a Parquet File Is Laid Out</a>). That
 single physical layout can be presented to a consumer in two different shapes, and which shape
@@ -2019,23 +2018,22 @@ fits depends on whether your code thinks in <em>records</em> or in <em>columns</
   (<code>double[]</code>, <code>int[]</code>, …) plus a <a href="/api/dev/dev/hardwood/Validity.html"><code>Validity</code></a>
   bitmap for nulls. You loop over the array directly.</li>
 </ul>
-<p>Both read the same bytes through the same pipeline. The difference is entirely in what they hand
-to your loop.</p>
+<p>Both read the same bytes through the same pipeline and differ in what they hand to your loop.</p>
 <h2 id="the-trade-off-ergonomics-vs-throughput">The trade-off: ergonomics vs. throughput<a class="headerlink" href="#the-trade-off-ergonomics-vs-throughput" title="Permanent link">&para;</a></h2>
 <p>The two APIs sit at opposite ends of an ergonomics-versus-throughput spectrum, because columnar
 storage and row-shaped access are a fundamental impedance mismatch.</p>
-<p><strong><code>RowReader</code> optimizes for ergonomics.</strong> Records are how most application code is written — you
+<p><strong><code>RowReader</code> optimizes for ergonomics.</strong> Records are how most application code is written: you
 want "this trip's distance and fare," not "the distance column and the fare column." To present
 a row, the reader must gather the current value from each projected column and, for nested data,
 reassemble structs, lists, and maps into the <a href="../../how-to/row-reader/"><code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code></a>
 flyweights. That reassembly, and the per-field accessor calls, cost CPU and sometimes boxing. For
 general-purpose reading that cost is invisible and the convenience is decisive.</p>
-<p><strong><code>ColumnReader</code> optimizes for throughput.</strong> Analytical work — summing a column, computing a
-distribution, scanning for matches — touches one or a few columns across many rows and never
+<p><strong><code>ColumnReader</code> optimizes for throughput.</strong> Analytical work, such as summing a column, computing a
+distribution or scanning for matches, touches one or a few columns across many rows and never
 needs a whole record assembled. <code>ColumnReader</code> skips the row-assembly step entirely and gives you
 the decoded values as a primitive array you iterate with no per-element method call and no
 boxing. On that kind of workload it is markedly faster; the cost is that <em>you</em> handle the layout
-(nulls via the bitmap, nested structure via offsets — see below), which is more to get right.</p>
+(nulls via the bitmap, nested structure via offsets; see below), which is more to get right.</p>
 <p>The rule of thumb that the <a href="../../how-to/#choosing-a-reader">decision table</a> encodes:</p>
 <ul>
 <li>Processing whole records, especially nested ones, with readability mattering more than peak
@@ -2052,14 +2050,13 @@ becomes concrete.</p>
 a container object. Each <code>OPTIONAL</code> group along a column's schema chain contributes a <code>STRUCT</code>
 layer (carrying a validity bitmap); each <code>LIST</code>/<code>MAP</code> group contributes a <code>REPEATED</code> layer
 (carrying validity <em>and</em> an offsets array that says which leaf values belong to which parent).
-The leaf values arrive as one flat primitive array holding real values only — phantom slots from
+The leaf values arrive as one flat primitive array holding real values only; phantom slots from
 null or empty parents are excluded. You walk the offsets and check the bitmaps to reconstruct
 whatever structure you need, with zero allocation in the hot loop.</p>
-<p>This is more work to consume than a <code>PqList</code>, which is exactly the trade-off restated: the layer
-model is the price <code>ColumnReader</code> pays for not allocating, and the reason it wins on analytical
-scans. The full mechanics — layer counts per schema shape, the empty-vs-null distinction, the
-hot-loop null-check shapes — are documented in
-<a href="../../how-to/column-reader/">Read Column by Column</a>.</p>
+<p>This is more work to consume than a <code>PqList</code>. The layer model is the price <code>ColumnReader</code> pays
+for not allocating, and the reason it wins on analytical scans. The full mechanics, including
+layer counts per schema shape, the empty-vs-null distinction and the hot-loop null-check shapes,
+are documented in <a href="../../how-to/column-reader/">Read Column by Column</a>.</p>
 <h2 id="several-columns-means-one-columnreaders-not-several-columnreaders">Several columns means one <code>ColumnReaders</code>, not several <code>ColumnReader</code>s<a class="headerlink" href="#several-columns-means-one-columnreaders-not-several-columnreaders" title="Permanent link">&para;</a></h2>
 <p>A <code>ColumnReader</code> is a cursor over one column, and each one built separately is sized for itself.
 Batch capacity is a byte budget divided by the widths of the columns that reader projects, so a
@@ -2069,16 +2066,15 @@ therefore reach different rows on their <em>n</em>th batch.</p>
 <p>That makes <code>while (a.nextBatch() &amp; b.nextBatch())</code> the wrong shape for reading two columns of the
 same rows: the loop stops when whichever reader has the larger batches runs out, and the values it
 took from each on any given turn came from different rows. Neither reader reports a problem,
-because neither has one — each is a complete, correct read of its own column.</p>
+because neither has one: each is a complete, correct read of its own column.</p>
 <p><code>ColumnReaders</code> is the multi-column read. Its readers share one row-group iterator and one batch
 size, and <code>ColumnReaders.nextBatch()</code> advances all of them together and checks that they agree.
 Reach for a bare <code>ColumnReader</code> when you want one column, and for <code>ColumnReaders</code> the moment you
 want two.</p>
 <h2 id="they-are-not-exclusive">They are not exclusive<a class="headerlink" href="#they-are-not-exclusive" title="Permanent link">&para;</a></h2>
 <p>Nothing forces a single choice per file. A pipeline can open a <code>ColumnReader</code> to compute an
-aggregate over one column and a <code>RowReader</code> elsewhere to materialize matching records — both
-against the same file, sharing one <a href="../concurrency-model/">context and worker pool</a>. Pick per task,
-not per program.</p>
+aggregate over one column and a <code>RowReader</code> elsewhere to materialize matching records, both
+against the same file, sharing one <a href="../concurrency-model/">context and worker pool</a>.</p>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../how-to/row-reader/">Read Row by Row</a> — the <code>RowReader</code> API in full.</li>
@@ -2135,8 +2131,8 @@ not per program.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

@@ -2190,7 +2190,7 @@
 <a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="w">        </span><span class="p">}</span>
 </code></pre></div>
 <p><code>PqMap.getValue(key)</code> returns <code>null</code> for both an absent key and a
-present-but-null value — call <code>containsKey(key)</code> to disambiguate.
+present-but-null value; call <code>containsKey(key)</code> to disambiguate.
 Lookup is supported by <code>String</code> / <code>int</code> / <code>long</code> / <code>byte[]</code> keys;
 long-tail key types (DATE / TIMESTAMP / DECIMAL / UUID) are reachable
 through <code>getEntries()</code> + <code>Entry.getKey()</code>. When a key appears more than
@@ -2200,8 +2200,8 @@ and surface the value of the last matching entry.</p>
 <h3 id="typed-accessor-methods">Typed Accessor Methods<a class="headerlink" href="#typed-accessor-methods" title="Permanent link">&para;</a></h3>
 <p>All accessor methods are available in two forms:</p>
 <ul>
-<li><strong>Name-based</strong> (e.g., <code>getInt("column_name")</code>) — convenient for ad-hoc access</li>
-<li><strong>Index-based</strong> (e.g., <code>getInt(columnIndex)</code>) — faster for performance-critical loops</li>
+<li><strong>Name-based</strong> (e.g., <code>getInt("column_name")</code>): convenient for ad-hoc access</li>
+<li><strong>Index-based</strong> (e.g., <code>getInt(columnIndex)</code>): faster for performance-critical loops</li>
 </ul>
 <p>The common scalar and nested types:</p>
 <table>
@@ -2266,14 +2266,14 @@ and surface the value of the last matching entry.</p>
 </tr>
 </tbody>
 </table>
-<p>For the complete correspondence — physical and logical types, the <code>getBinary</code> / <code>getInterval</code> /
-<code>getVariant</code> accessors, FLOAT16, BSON, INT96, and the legacy <code>converted_type</code> columns — plus the
+<p>For the complete correspondence (physical and logical types, the <code>getBinary</code> / <code>getInterval</code> /
+<code>getVariant</code> accessors, FLOAT16, BSON, INT96, and the legacy <code>converted_type</code> columns) and the
 null- and type-mismatch contracts, see <a href="../../reference/accessors/">Typed Accessors</a>.</p>
 <h4 id="null-and-type-mismatch-handling">Null and type-mismatch handling<a class="headerlink" href="#null-and-type-mismatch-handling" title="Permanent link">&para;</a></h4>
 <p>Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw
-<code>NullPointerException</code> on a null field — always check <code>isNull()</code> first; object accessors return
+<code>NullPointerException</code> on a null field, so check <code>isNull()</code> first; object accessors return
 <code>null</code>. Requesting the wrong type for a column fails at runtime with an unchecked exception. The
-full rules — including the split <code>getTimestamp</code> / <code>getLocalTimestamp</code> pair — are in
+full rules, including the split <code>getTimestamp</code> / <code>getLocalTimestamp</code> pair, are in
 <a href="../../reference/accessors/">Typed Accessors</a>; the reasoning behind the timestamp split is in
 <a href="../../concepts/timestamps/">Timestamp Semantics</a>.</p>
 <h4 id="index-based-access">Index-based access<a class="headerlink" href="#index-based-access" title="Permanent link">&para;</a></h4>
@@ -2291,17 +2291,17 @@ full rules — including the split <code>getTimestamp</code> / <code>getLocalTim
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">}</span>
 </code></pre></div>
 <h4 id="interval-columns">INTERVAL columns<a class="headerlink" href="#interval-columns" title="Permanent link">&para;</a></h4>
-<p><code>PqInterval</code> is a plain record with three <code>long</code> properties — <code>months()</code>, <code>days()</code>, and <code>milliseconds()</code>. Each holds an unsigned 32-bit value in the range <code>[0, 4_294_967_295]</code>, so no additional conversion is needed. The components are independent and not normalized. <code>INTERVAL</code> is one of the legacy <code>converted_type</code> annotations handled transparently — see <a href="../../reference/accessors/#legacy-converted-type-annotations">Legacy converted-type annotations</a>.</p>
+<p><code>PqInterval</code> is a plain record with three <code>long</code> properties: <code>months()</code>, <code>days()</code>, and <code>milliseconds()</code>. Each holds an unsigned 32-bit value in the range <code>[0, 4_294_967_295]</code>, so no additional conversion is needed. The components are independent and not normalized. <code>INTERVAL</code> is one of the legacy <code>converted_type</code> annotations handled transparently; see <a href="../../reference/accessors/#legacy-converted-type-annotations">Legacy converted-type annotations</a>.</p>
 <h4 id="null-columns">NULL columns<a class="headerlink" href="#null-columns" title="Permanent link">&para;</a></h4>
 <p>A column annotated with the <code>NULL</code> logical type (e.g. PyArrow's <code>pa.null()</code>) holds a null value at every row. <code>column.logicalType()</code> returns <code>LogicalType.NullType</code>; <code>isNull(name)</code> is always <code>true</code> and the typed/generic accessors return <code>null</code> accordingly. No separate accessor is needed.</p>
 <h4 id="bare-byte_array-columns">Bare <code>BYTE_ARRAY</code> columns<a class="headerlink" href="#bare-byte_array-columns" title="Permanent link">&para;</a></h4>
-<p><code>BYTE_ARRAY</code> columns without a <code>STRING</code> logical type annotation may hold arbitrary binary payloads (Protobuf, WKB, custom encodings). Generic accessors such as <code>PqList.get</code> and <code>PqList.iterator</code> surface these as <code>byte[]</code> rather than silently UTF-8 decoding them — invalid byte sequences would otherwise be replaced with <code>U+FFFD</code>. Call <code>getString</code> explicitly when the column is known to contain UTF-8 text from an older writer that omitted the <code>STRING</code> annotation.</p>
+<p><code>BYTE_ARRAY</code> columns without a <code>STRING</code> logical type annotation may hold arbitrary binary payloads (Protobuf, WKB, custom encodings). Generic accessors such as <code>PqList.get</code> and <code>PqList.iterator</code> surface these as <code>byte[]</code> rather than silently UTF-8 decoding them, which would replace invalid byte sequences with <code>U+FFFD</code>. Call <code>getString</code> explicitly when the column is known to contain UTF-8 text from an older writer that omitted the <code>STRING</code> annotation.</p>
 <h4 id="typed-accessors-on-pqlist-and-pqmapentry">Typed accessors on <code>PqList</code> and <code>PqMap.Entry</code><a class="headerlink" href="#typed-accessors-on-pqlist-and-pqmapentry" title="Permanent link">&para;</a></h4>
-<p>Both interfaces mirror the RowReader's typed accessor surface — <code>strings()</code> / <code>dates()</code> / <code>times()</code> / <code>timestamps()</code> / <code>decimals()</code> / <code>uuids()</code> / <code>intervals()</code> / <code>floats()</code> / <code>booleans()</code> on <code>PqList</code> (each returning <code>List&lt;T&gt;</code>); the matching <code>getStringValue()</code> / <code>getDateValue()</code> / <code>getIntervalValue()</code> / etc. on <code>PqMap.Entry</code>. Use these in preference to the generic <code>getValue()</code> when iterating over a list / map of a known logical type to avoid the boxed <code>Object</code> return.</p>
+<p>Both interfaces mirror the RowReader's typed accessor surface: <code>strings()</code> / <code>dates()</code> / <code>times()</code> / <code>timestamps()</code> / <code>decimals()</code> / <code>uuids()</code> / <code>intervals()</code> / <code>floats()</code> / <code>booleans()</code> on <code>PqList</code> (each returning <code>List&lt;T&gt;</code>); the matching <code>getStringValue()</code> / <code>getDateValue()</code> / <code>getIntervalValue()</code> / etc. on <code>PqMap.Entry</code>. Use these in preference to the generic <code>getValue()</code> when iterating over a list / map of a known logical type to avoid the boxed <code>Object</code> return.</p>
 <p><code>PqMap.Entry</code>'s typed <em>key</em> accessor surface is intentionally narrower: <code>getStringKey()</code> / <code>getIntKey()</code> / <code>getLongKey()</code> / <code>getBinaryKey()</code> cover the four high-frequency map key types. Long-tail key types (DATE / TIME / TIMESTAMP / DECIMAL / UUID) fall through to <code>getKey()</code> (decoded) and <code>getRawKey()</code> (raw).</p>
-<p><code>PqList.ints()</code> / <code>longs()</code> / <code>doubles()</code> return the specialized <code>PqIntList</code> / <code>PqLongList</code> / <code>PqDoubleList</code> types instead — these expose <code>PrimitiveIterator.OfInt</code> / <code>OfLong</code> / <code>OfDouble</code>, <code>int get(int)</code>, and <code>int[] toArray()</code> so primitive list iteration allocates no boxed wrappers. For nested <code>list&lt;list&lt;int&gt;&gt;</code> (or <code>&lt;long&gt;</code> / <code>&lt;double&gt;</code>), iterate the outer list via <code>lists()</code> and call <code>ints()</code> / <code>longs()</code> / <code>doubles()</code> on each inner <code>PqList</code>; primitive element access stays unboxed at any nesting depth.</p>
+<p><code>PqList.ints()</code> / <code>longs()</code> / <code>doubles()</code> return the specialized <code>PqIntList</code> / <code>PqLongList</code> / <code>PqDoubleList</code> types instead. These expose <code>PrimitiveIterator.OfInt</code> / <code>OfLong</code> / <code>OfDouble</code>, <code>int get(int)</code>, and <code>int[] toArray()</code> so primitive list iteration allocates no boxed wrappers. For nested <code>list&lt;list&lt;int&gt;&gt;</code> (or <code>&lt;long&gt;</code> / <code>&lt;double&gt;</code>), iterate the outer list via <code>lists()</code> and call <code>ints()</code> / <code>longs()</code> / <code>doubles()</code> on each inner <code>PqList</code>; primitive element access stays unboxed at any nesting depth.</p>
 <h4 id="reading-the-physical-value">Reading the physical value<a class="headerlink" href="#reading-the-physical-value" title="Permanent link">&para;</a></h4>
-<p>When you want the raw physical value rather than the decoded logical-type representation — e.g. the INT64 micros backing a <code>TIMESTAMP</code>, the INT32 days backing a <code>DATE</code>, or the unscaled INT32 / INT64 / <code>byte[]</code> backing a <code>DECIMAL</code> — call the <strong>typed primitive accessor that matches the column's physical type</strong>:</p>
+<p>When you want the raw physical value rather than the decoded logical-type representation (e.g. the INT64 micros backing a <code>TIMESTAMP</code>, the INT32 days backing a <code>DATE</code>, or the unscaled INT32 / INT64 / <code>byte[]</code> backing a <code>DECIMAL</code>), call the <strong>typed primitive accessor that matches the column's physical type</strong>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// TIMESTAMP column backed by INT64 micros</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kt">long</span><span class="w"> </span><span class="n">micros</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getLong</span><span class="p">(</span><span class="s">"created_at"</span><span class="p">);</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
@@ -2311,16 +2311,16 @@ full rules — including the split <code>getTimestamp</code> / <code>getLocalTim
 <a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1">// DECIMAL(precision, scale) column backed by INT64</span>
 <a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="kt">long</span><span class="w"> </span><span class="n">unscaled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getLong</span><span class="p">(</span><span class="s">"amount"</span><span class="p">);</span>
 </code></pre></div>
-<p><code>getInt</code> / <code>getLong</code> / <code>getFloat</code> / <code>getDouble</code> / <code>getBoolean</code> / <code>getBinary</code> accept any column whose physical type matches, regardless of the logical-type annotation — they read the underlying value directly. Use this whenever you already know the column's physical encoding and want to skip logical-type decoding.</p>
+<p><code>getInt</code> / <code>getLong</code> / <code>getFloat</code> / <code>getDouble</code> / <code>getBoolean</code> / <code>getBinary</code> accept any column whose physical type matches, regardless of the logical-type annotation, and read the underlying value directly. Use this whenever you already know the column's physical encoding and want to skip logical-type decoding.</p>
 <h4 id="decoded-generic-access">Decoded generic access<a class="headerlink" href="#decoded-generic-access" title="Permanent link">&para;</a></h4>
-<p>When the column type isn't known ahead of time — e.g. generic projection-driven readers, dump tools, schema-introspecting frameworks — the generic fallback accessors return values decoded to their logical-type representation:</p>
+<p>When the column type isn't known ahead of time (e.g. generic projection-driven readers, dump tools, schema-introspecting frameworks), the generic fallback accessors return values decoded to their logical-type representation:</p>
 <ul>
-<li><code>RowReader.getValue(name)</code> / <code>getValue(index)</code> — <code>Integer</code> / <code>Long</code> / <code>String</code> / <code>LocalDate</code> / <code>LocalTime</code> / <code>Instant</code> / <code>BigDecimal</code> / <code>UUID</code> / <code>PqInterval</code> / <code>PqVariant</code> / nested <code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code>, with <code>byte[]</code> for un-annotated <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> columns.</li>
-<li><code>PqStruct.getValue(name)</code> — same decoded mapping for nested struct fields.</li>
-<li><code>PqMap.Entry.getKey()</code> / <code>getValue()</code> — same decoded mapping for map keys and values.</li>
-<li><code>PqList.get(index)</code> / <code>PqList.values()</code> — same decoded mapping for list elements.</li>
+<li><code>RowReader.getValue(name)</code> / <code>getValue(index)</code>: <code>Integer</code> / <code>Long</code> / <code>String</code> / <code>LocalDate</code> / <code>LocalTime</code> / <code>Instant</code> / <code>BigDecimal</code> / <code>UUID</code> / <code>PqInterval</code> / <code>PqVariant</code> / nested <code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code>, with <code>byte[]</code> for un-annotated <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> columns.</li>
+<li><code>PqStruct.getValue(name)</code>: same decoded mapping for nested struct fields.</li>
+<li><code>PqMap.Entry.getKey()</code> / <code>getValue()</code>: same decoded mapping for map keys and values.</li>
+<li><code>PqList.get(index)</code> / <code>PqList.values()</code>: same decoded mapping for list elements.</li>
 </ul>
-<p>A parallel <code>getRawValue</code> family (<code>RowReader.getRawValue</code>, <code>PqStruct.getRawValue</code>, <code>PqMap.Entry.getRawKey</code> / <code>getRawValue</code>, <code>PqList.getRaw</code> / <code>rawValues</code>) returns the boxed physical value when even the physical type isn't known statically. In hot loops, prefer the typed primitive accessor described above — it avoids the boxing and the dispatch overhead.</p>
+<p>A parallel <code>getRawValue</code> family (<code>RowReader.getRawValue</code>, <code>PqStruct.getRawValue</code>, <code>PqMap.Entry.getRawKey</code> / <code>getRawValue</code>, <code>PqList.getRaw</code> / <code>rawValues</code>) returns the boxed physical value when even the physical type isn't known statically. In hot loops, prefer the typed primitive accessor described above, which avoids the boxing and the dispatch overhead.</p>
 <p>Nested groups (struct / list / map / variant) have no distinct "raw" form and are returned through their typed flyweight (<code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code> / <code>PqVariant</code>) in both modes.</p>
 
 
@@ -2371,8 +2371,8 @@ full rules — including the split <code>getTimestamp</code> / <code>getLocalTim
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

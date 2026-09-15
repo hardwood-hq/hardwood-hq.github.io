@@ -2280,9 +2280,9 @@
 
 -->
 <h1 id="cli">CLI<a class="headerlink" href="#cli" title="Permanent link">&para;</a></h1>
-<p>The <code>hardwood</code> CLI lets you inspect and convert Parquet files from the command line — useful for exploring datasets, debugging file structure, and quick format conversions without writing Java code. It reads local files and S3 URIs, and ships as a GraalVM native binary with instant startup.</p>
+<p>The <code>hardwood</code> CLI inspects and converts Parquet files from the command line. Its commands run non-interactively, for use in scripts and by <a href="#use-with-ai-coding-agents">AI coding agents</a>, and <a href="#interactive-exploration-dive"><code>hardwood dive</code></a> opens an interactive terminal UI for exploring a file by hand. It reads local files and S3 URIs, and ships as a GraalVM native binary with instant startup.</p>
 <p>Pre-built native binaries for Linux, macOS, and Windows are available from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">release page</a>. You can also
-run the CLI via Docker without installing it locally — see the <a href="#docker">Docker section below</a>.</p>
+run the CLI via Docker without installing it locally; see the <a href="#docker">Docker section below</a>.</p>
 <div class="admonition note">
 <p class="admonition-title">macOS</p>
 <p>The binary is not notarized. On first run, macOS Gatekeeper will block it. Remove the quarantine flag after extracting:</p>
@@ -2395,7 +2395,7 @@ run the CLI via Docker without installing it locally — see the <a href="#docke
 <code>BOOLEAN</code>, <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, and <code>DOUBLE</code> values that carry no
 logical annotation or an <code>INT</code> annotation. Date, time, timestamp, decimal,
 UUID, interval, <code>FLOAT16</code>, <code>INT96</code>, and byte-array values are JSON strings.
-Decimals are always plain strings — <code>0.0000001</code>, never <code>1E-7</code>.</p>
+Decimals are always plain strings: <code>0.0000001</code>, never <code>1E-7</code>.</p>
 <p>Nested values are native JSON: a struct is an object, a list or repeated field
 an array, and a map an object keyed by each map key's text. Values inside them
 follow the same rules as top-level fields. CSV has no nested structure, so a
@@ -2407,12 +2407,12 @@ This holds for floating-point values inside Variant columns too.</p>
 them, and CSV quotes a field that holds a line feed or a carriage return.</p>
 <p>Unsigned integers are JSON numbers, including values above the signed 64-bit
 range such as <code>18446744073709551615</code>. A JSON parser that represents numbers as
-IEEE 754 doubles — most JavaScript ones do — reads such a value at reduced
+IEEE 754 doubles (most JavaScript ones do) reads such a value at reduced
 precision; a parser with a big-integer mode reads it exactly.</p>
 <p>A null is <code>null</code> in JSON. In CSV it is an empty field, which an empty string
 value also produces, so the two read the same. Pass <code>--null-string VALUE</code> to
 write something else for a null; the CSV quoting rules apply to that value like
-any other. <code>--null-string</code> is a CSV option — combining it with <code>--format json</code>
+any other. <code>--null-string</code> is a CSV option; combining it with <code>--format json</code>
 is an error.</p>
 <p><code>--null-string</code> covers whole fields and flattened struct leaves. A null nested
 inside a rendered list, map, or struct cell is the text <code>null</code> in that cell. A
@@ -2472,7 +2472,7 @@ grammar are rewritten in both formats: each character outside <code>[A-Za-z0-9_]
 becomes <code>_</code>, a leading <code>_</code> is prepended to a name starting with a digit, and
 names that collide within one record or message after rewriting get a <code>_2</code>,
 <code>_3</code>, … suffix.</p>
-<p>A rewritten name keeps its Parquet name in the output — as a <code>doc</code> attribute
+<p>A rewritten name keeps its Parquet name in the output, as a <code>doc</code> attribute
 in Avro:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"total__usd_"</span><span class="p">,</span><span class="w"> </span><span class="nt">"doc"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Parquet name: total (usd)"</span><span class="p">,</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"double"</span><span class="w"> </span><span class="p">}</span>
 </code></pre></div>
@@ -2499,7 +2499,7 @@ whose value is empty. The size column tells the two apart: <code>—</code> for 
 is absent, <code>0 B</code> for one that is present and empty. See
 <a href="#absent-values">Absent values</a>.</p>
 <p>Pass <code>--kv-key &lt;name&gt;</code> to print one entry's value in full, untruncated and with
-no substitutions, and no other output — safe to pipe into another tool:</p>
+no substitutions, and no other output, so it is safe to pipe into another tool:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>hardwood<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--kv-key<span class="w"> </span>ARROW:schema<span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d<span class="w"> </span><span class="p">|</span><span class="w"> </span>xxd<span class="w"> </span><span class="p">|</span><span class="w"> </span>head
 </code></pre></div>
 <p><code>--kv-key</code> exits non-zero if the file has no entry under that name, or if the
@@ -2508,12 +2508,12 @@ entry has no value.</p>
 <p>Every command and every <code>dive</code> screen renders a quantity the file does not carry
 as <code>—</code>. A column's <code># Pages</code> without a page index, a page's <code>Min</code> and <code>Max</code>
 without statistics, a <code>Compression</code> with no uncompressed size to divide by, a
-key/value entry with no value — all read the same way, on both surfaces.</p>
+key/value entry with no value: all read the same way, on both surfaces.</p>
 <p>Absent is not the same as empty. <code>0 B</code>, <code>0</code>, and <code>""</code> are values the writer
 recorded; <code>—</code> says it recorded none.</p>
 <p>Absent is not the same as inapplicable either. <code>—</code> marks a quantity that could
-have been written and was not, so it is worth knowing about — rewriting the file
-with statistics or a page index fills it in. A quantity that cannot exist for the
+have been written and was not; rewriting the file with statistics or a page
+index fills it in. A quantity that cannot exist for the
 row at hand reads <code>N/A</code> instead: an index page has no data encoding, whatever the
 writer does. Only <code>—</code> says something is missing.</p>
 <p>A script reading these tables should match <code>—</code> (U+2014 EM DASH) to detect an
@@ -2523,7 +2523,7 @@ absent cell:</p>
 </code></pre></div>
 <h2 id="binary-values">Binary values<a class="headerlink" href="#binary-values" title="Permanent link">&para;</a></h2>
 <p>A <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> column with no logical-type annotation
-carries bytes the schema gives no interpretation for — text from a writer that
+carries bytes the schema gives no interpretation for: text from a writer that
 omitted the <code>STRING</code> annotation, or an opaque payload such as WKB geometry, a
 Protobuf message or a hash. Every command decides from the bytes themselves:
 well-formed UTF-8 with no control characters prints as text unless it starts
@@ -2663,10 +2663,8 @@ navigable session. Typical things to reach for it for:</p>
 </tr>
 </tbody>
 </table>
-<p>The keybar at the bottom of every screen lists the keys that are
-actually meaningful in the current context — so the menus above show the
-full vocabulary, but the keybar tells you which subset is live right
-now.</p>
+<p>The keybar at the bottom of every screen lists the keys that
+apply in the current context; the menus above list every key.</p>
 <p>Available screens:</p>
 <ul>
 <li><strong>Overview</strong></li>
@@ -2712,15 +2710,15 @@ group and the column the screen was reading:</p>
 <figure><a href="../../assets/cli/04-pages-header-modal.svg"><img alt="Pages screen with page-header modal" src="../../assets/cli/04-pages-header-modal.svg" width="720" /></a><figcaption>Pages — page-header modal on Enter</figcaption></figure>
 <figure><a href="../../assets/cli/05-dict-search.svg"><img alt="Dictionary screen with inline search" src="../../assets/cli/05-dict-search.svg" width="720" /></a><figcaption>Dictionary — <code>/</code> inline search</figcaption></figure>
 <figure><a href="../../assets/cli/06-data-scrolled-right.svg"><img alt="Data preview screen scrolled right" src="../../assets/cli/06-data-scrolled-right.svg" width="720" /></a><figcaption>Data preview — scrolled right across the column window</figcaption></figure>
-<p>Every screen shares a four-region layout — a top bar with file identity, a
+<p>Every screen shares a four-region layout: a top bar with file identity, a
 breadcrumb showing the navigation stack, the active screen body, and a keybar
 (all four visible in the Overview screenshot above).</p>
 <h3 id="typical-drill-path">Typical drill path<a class="headerlink" href="#typical-drill-path" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>Overview</strong> → pick <em>Row groups</em> from the drill menu.</li>
-<li><strong>Row groups</strong> → select a row, <em>Enter</em> — opens that row group's detail.</li>
-<li><strong>Row group detail</strong> → <em>Enter</em> — opens its column chunks.</li>
-<li><strong>Column chunks</strong> → select a column, <em>Enter</em> — opens the chunk detail.</li>
+<li><strong>Row groups</strong> → select a row, <em>Enter</em> to open that row group's detail.</li>
+<li><strong>Row group detail</strong> → <em>Enter</em> to open its column chunks.</li>
+<li><strong>Column chunks</strong> → select a column, <em>Enter</em> to open the chunk detail.</li>
 <li><strong>Column chunk detail</strong> (facts pane + drill menu) → pick <em>Pages</em>, <em>Column
    index</em>, <em>Offset index</em>, or <em>Dictionary</em>.</li>
 <li>Drill sub-screens (<em>Pages</em>, <em>Column index</em>, etc.) support <em>Esc</em> back up to
@@ -2729,8 +2727,8 @@ breadcrumb showing the navigation stack, the active screen body, and a keybar
 </ol>
 <p>Alternative entry: from <strong>Overview → Schema</strong>, navigate the tree of group and
 primitive nodes with <code>→</code> / <code>←</code>; <code>Enter</code> on a leaf drills into a
-<em>Column-across-row-groups</em> view — one row per row group showing that column's
-sizes, encoding, stats — and from there into the chunk detail.</p>
+<em>Column-across-row-groups</em> view (one row per row group showing that column's
+sizes, encoding, stats), and from there into the chunk detail.</p>
 <h3 id="inline-search">Inline search<a class="headerlink" href="#inline-search" title="Permanent link">&para;</a></h3>
 <p>The <strong>Schema</strong>, <strong>Column index</strong>, and <strong>Dictionary</strong> screens support inline
 search. Press <code>/</code> to enter search-edit mode:</p>
@@ -2803,12 +2801,12 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
 <p>To make it permanent, add the line above to your shell's startup file (e.g. <code>~/.bashrc</code>, <code>~/.zshrc</code>).</p>
 <h2 id="use-with-ai-coding-agents">Use with AI coding agents<a class="headerlink" href="#use-with-ai-coding-agents" title="Permanent link">&para;</a></h2>
 <p>The repository ships an <a href="https://agentskills.io">Agent Skill</a> at <code>skills/hardwood-cli/</code> that teaches an AI coding agent when and how to reach for the CLI while debugging Parquet read/write code (checking schema and physical/logical types, diagnosing why predicate pushdown or page skipping isn't happening, reading dictionary entries, and so on).</p>
-<p>For <a href="https://claude.com/claude-code">Claude Code</a>, it is packaged as the <code>hardwood</code> plugin, distributed from the <a href="https://github.com/hardwood-hq/hardwood-skills"><code>hardwood-skills</code></a> marketplace. Install it once — inside Claude Code, run:</p>
+<p>For <a href="https://claude.com/claude-code">Claude Code</a>, it is packaged as the <code>hardwood</code> plugin, distributed from the <a href="https://github.com/hardwood-hq/hardwood-skills"><code>hardwood-skills</code></a> marketplace. Install it once by running, inside Claude Code:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>/plugin marketplace add hardwood-hq/hardwood-skills
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>/plugin install hardwood@hardwood-skills
 </code></pre></div>
 <p>After installing, the skill loads automatically in future sessions whenever a task involves a Parquet file. It drives the <code>hardwood</code> binary, so ensure <code>hardwood</code> is on your <code>PATH</code> (from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">release page</a> or the Docker image below).</p>
-<p>For other agent harnesses — or a Claude Code setup without the plugin — copy <code>skills/hardwood-cli/SKILL.md</code> into that tool's skills directory (for Claude Code that is <code>~/.claude/skills/hardwood-cli/</code>).</p>
+<p>For other agent harnesses, or a Claude Code setup without the plugin, copy <code>skills/hardwood-cli/SKILL.md</code> into that tool's skills directory (for Claude Code that is <code>~/.claude/skills/hardwood-cli/</code>).</p>
 <h2 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h2>
 <p>A minimal Fedora-based Docker image is published to the GitHub Container Registry for Linux amd64 and arm64:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access
@@ -2883,8 +2881,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

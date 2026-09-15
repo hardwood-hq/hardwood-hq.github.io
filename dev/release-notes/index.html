@@ -2126,7 +2126,7 @@
 - A codec library that is absent, or a native one that will not load, now reaches you as the <code>UnsupportedOperationException</code> it always was on other paths. On the dictionary path it was being caught and reported as a failed read, which buried the message naming the dependency to add.
 - A column chunk stored in a separate file (the legacy split-file layout) and a file over 2 GB opened with the mmap-backed range cache now raise <code>UnsupportedOperationException</code> rather than <code>IOException</code>. Both files are correct; it is Hardwood that will not read them. <strong>Silent.</strong>
 - The writer raises the new unchecked <code>ParquetWriteException</code> when a compression codec rejects a page body, where it used to raise <code>IOException</code>. Nothing you passed was wrong and the destination is not involved, so retrying cannot help. <strong>Silent.</strong>
-- A corrupt value inside the metadata — a malformed bloom filter header, a geospatial bounding box missing a required field, a decimal scale or precision that cannot be, an unknown physical type, repetition type, codec or time unit — now raises <code>ParquetReadException</code> rather than <code>IllegalArgumentException</code> or <code>IllegalStateException</code>. These are the file being wrong, not your call being wrong. <strong>Silent.</strong> Both types keep their meaning for calls that really are mistakes, such as asking for a column outside the projection.</p>
+- A corrupt value inside the metadata — a malformed bloom filter header, a geospatial bounding box missing a required field, a decimal scale or precision that cannot be, an unknown physical type, repetition type, codec or time unit — now raises <code>ParquetReadException</code> rather than <code>IllegalArgumentException</code> or <code>IllegalStateException</code>. These all signal a corrupt file. <strong>Silent.</strong> Both types keep their meaning for calls that really are mistakes, such as asking for a column outside the projection.</p>
 </li>
 <li>
 <p><code>LogicalType.DecimalType</code> takes its precision before its scale, where it used to take scale first (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>). Every other decimal API takes them in that order — SQL's <code>DECIMAL(p, s)</code>, Arrow, Avro, Iceberg, parquet-cpp — and it is the order the annotation renders in. Only <code>parquet.thrift</code>'s field declaration and the APIs that mirror it read the other way. <strong>This one is silent</strong>, because a swapped call still compiles: <code>LogicalType.decimal(...)</code> rejects a scale above the precision, which catches a transposed pair at the call site, but a column whose scale equals its precision passes either way.</p>
@@ -2336,8 +2336,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

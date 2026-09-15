@@ -1982,8 +1982,8 @@
 
 -->
 <h1 id="s3-reference">S3 Reference<a class="headerlink" href="#s3-reference" title="Permanent link">&para;</a></h1>
-<p>Look-it-up reference for the <code>hardwood-s3</code> module. For worked examples — credentials, S3-compatible
-endpoints, and multi-file reads — see <a href="../../how-to/s3/">Reading from S3</a>.</p>
+<p>Options and behavior of the <code>hardwood-s3</code> module. For worked examples of credentials, S3-compatible
+endpoints and multi-file reads, see <a href="../../how-to/s3/">Reading from S3</a>.</p>
 <h2 id="s3source-builder-options"><code>S3Source</code> builder options<a class="headerlink" href="#s3source-builder-options" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2032,7 +2032,7 @@ endpoints, and multi-file reads — see <a href="../../how-to/s3/">Reading from 
 <tr>
 <td><code>httpClient(HttpClient)</code></td>
 <td>internal</td>
-<td>Caller-supplied client for full transport control. The caller is responsible for closing it — <code>S3Source.close()</code> will not.</td>
+<td>Caller-supplied client for full transport control. The caller is responsible for closing it; <code>S3Source.close()</code> will not.</td>
 </tr>
 <tr>
 <td><code>rangeBacking(RangeBacking)</code></td>
@@ -2050,7 +2050,7 @@ endpoints, and multi-file reads — see <a href="../../how-to/s3/">Reading from 
 errors the message has the form <code>GET s3://&lt;bucket&gt;/&lt;key&gt; failed: HTTP &lt;status&gt;</code>; for network errors
 the original <code>IOException</code> message is preserved.</p>
 <h2 id="footer-pre-fetch">Footer pre-fetch<a class="headerlink" href="#footer-pre-fetch" title="Permanent link">&para;</a></h2>
-<p><code>open()</code> issues one GET for the last 64 KB of the object — the whole object if it is
+<p><code>open()</code> issues one GET for the last 64 KB of the object, or the whole object if it is
 smaller. That single round-trip discovers the object size, so there is never a
 separate HEAD request. Those bytes are kept for as long as the file is open, and any
 read falling entirely inside that trailing window is answered without a further
@@ -2059,8 +2059,7 @@ request.</p>
 file usually costs one GET. It is a cost heuristic rather than a guarantee: footer
 size grows with row groups × columns and with the size of the per-column statistics,
 so a wide schema, a heavily split file, or long string min/max values can push the
-footer past 64 KB. Reading it then costs one extra GET and nothing more — the window
-bounds request count, never what is readable.</p>
+footer past 64 KB. Reading it then costs one extra GET.</p>
 <p>This applies to every <code>S3InputFile</code>, independent of the range backing below.</p>
 <h2 id="range-backing">Range backing<a class="headerlink" href="#range-backing" title="Permanent link">&para;</a></h2>
 <p><code>RangeBacking</code> sets whether an <code>S3InputFile</code> also keeps the bytes it fetches outside
@@ -2083,11 +2082,10 @@ that window:</p>
 </tr>
 </tbody>
 </table>
-<p>The value changes how many HTTP requests go out, not what a read returns — both give
-the reader identical bytes. The cache is per <code>S3InputFile</code> and lives until that file
-is closed.</p>
+<p>The value changes how many HTTP requests go out; both give the reader identical bytes.
+The cache is per <code>S3InputFile</code> and lives until that file is closed.</p>
 <p><code>SPARSE_TEMPFILE</code> applies to a whole <code>S3Source</code>, so it suits workloads that re-read
-the same byte ranges — <code>hardwood dive</code> opts in for every file it opens. Its
+the same byte ranges; <code>hardwood dive</code> opts in for every file it opens. Its
 properties:</p>
 <ul>
 <li>Disk and memory footprint scale with bytes fetched, not with file size, on
@@ -2098,8 +2096,8 @@ properties:</p>
   room for the worst-case bytes fetched per file. <code>S3Source.builder().build()</code> rejects
   a directory that is missing or not writeable.</li>
 <li><code>close()</code> deletes the backing file, but the mapping behind it is released by the
-  garbage collector, so the address space — and on Windows, where a mapped file cannot
-  be deleted, the file itself until JVM exit — outlives the <code>close()</code> call.</li>
+  garbage collector, so the address space outlives the <code>close()</code> call. On Windows, where a
+  mapped file cannot be deleted, the file itself also outlives it, until JVM exit.</li>
 </ul>
 <h2 id="fetch-cost-counters">Fetch-cost counters<a class="headerlink" href="#fetch-cost-counters" title="Permanent link">&para;</a></h2>
 <p>Each <code>S3InputFile</code> tracks the network I/O it has performed since <code>open()</code>:</p>
@@ -2167,8 +2165,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

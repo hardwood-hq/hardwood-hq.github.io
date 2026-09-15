@@ -1933,7 +1933,7 @@
 <h2 id="current-limitations">Current limitations<a class="headerlink" href="#current-limitations" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>No Variant-aware predicate pushdown.</strong> Filter predicates against a Variant sub-path (e.g. <code>WHERE v.age &gt; 30</code>) aren't yet understood by the pushdown pipeline. The leaves below the group — <code>metadata</code>, <code>value</code> and a shredded variant's <code>typed_value</code> leaves — hold the encoded variant rather than values of their own, so a comparison or set predicate on one throws <code>IllegalArgumentException</code> at reader creation; they take <code>isNull</code> and <code>isNotNull</code> only. Filter on the Variant column itself for presence, and apply the value test per row against the <code>PqVariant</code> you read. Tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/309">#309</a>.</li>
-<li><strong>No path projection optimization.</strong> Reading only <code>v.age</code> from a Variant column still reassembles the whole Variant for each row rather than reading just the shredded <code>typed_value.age</code> column. Requires the same variant-aware planning as #309. Tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/700">#700</a>.</li>
+<li><strong>No path projection optimization.</strong> Reading only <code>v.age</code> from a Variant column still reassembles the whole Variant for each row rather than reading only the shredded <code>typed_value.age</code> column. Requires the same variant-aware planning as #309. Tracked as <a href="https://github.com/hardwood-hq/hardwood/issues/700">#700</a>.</li>
 </ul>
 
 
@@ -1984,8 +1984,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

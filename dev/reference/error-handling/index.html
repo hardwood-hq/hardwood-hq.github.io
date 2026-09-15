@@ -1960,7 +1960,7 @@
 
 -->
 <h1 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h1>
-<p>A failed read leaves you one decision — try again, or stop — and the exception type answers
+<p>A failed read leaves you one decision, to try again or to stop, and the exception type answers
 it. <strong>Trying again may help for <code>IOException</code>, and will not for anything else.</strong></p>
 <h2 id="the-read-failed">The read failed<a class="headerlink" href="#the-read-failed" title="Permanent link">&para;</a></h2>
 <table>
@@ -1973,7 +1973,7 @@ it. <strong>Trying again may help for <code>IOException</code>, and will not for
 <tbody>
 <tr>
 <td><code>IOException</code></td>
-<td>The bytes did not arrive: a local-disk read error, an S3 transport failure (after retry exhaustion — see <a href="../../how-to/s3/">Read from S3</a>), a file that cannot be opened. Checked, and declared by every method that reaches the file: <code>ParquetFileReader.open</code>/<code>openAll</code>; the reader factories and their builders' <code>build()</code> — <code>rowReader</code>, <code>columnReader</code>, <code>columnReaders</code>; <code>RowReader.hasNext</code>/<code>next</code>/<code>close</code>; <code>ColumnReader.nextBatch</code>/<code>close</code>; <code>ColumnReaders.nextBatch</code>/<code>close</code></td>
+<td>The bytes did not arrive: a local-disk read error, an S3 transport failure (after retry exhaustion; see <a href="../../how-to/s3/">Read from S3</a>), a file that cannot be opened. Checked, and declared by every method that reaches the file: <code>ParquetFileReader.open</code>/<code>openAll</code>; the reader factories <code>rowReader</code>, <code>columnReader</code> and <code>columnReaders</code> and their builders' <code>build()</code>; <code>RowReader.hasNext</code>/<code>next</code>/<code>close</code>; <code>ColumnReader.nextBatch</code>/<code>close</code>; <code>ColumnReaders.nextBatch</code>/<code>close</code></td>
 </tr>
 <tr>
 <td><code>ParquetReadException</code></td>
@@ -1985,7 +1985,7 @@ it. <strong>Trying again may help for <code>IOException</code>, and will not for
 </tr>
 <tr>
 <td><code>UnsupportedOperationException</code></td>
-<td>The file is correct and Hardwood cannot read it: Parquet Modular Encryption, an encoding not implemented, a compression codec whose library is absent — the message names the dependency to add — a column chunk stored in a separate file (the legacy split-file layout), a row group whose page-index region exceeds 2 GB, or a file over 2 GB opened with the mmap-backed range cache</td>
+<td>The file is correct and Hardwood cannot read it: Parquet Modular Encryption, an encoding not implemented, a compression codec whose library is absent (the message names the dependency to add), a column chunk stored in a separate file (the legacy split-file layout), a row group whose page-index region exceeds 2 GB, or a file over 2 GB opened with the mmap-backed range cache</td>
 </tr>
 </tbody>
 </table>
@@ -2000,7 +2000,7 @@ it. <strong>Trying again may help for <code>IOException</code>, and will not for
 <tbody>
 <tr>
 <td><code>IllegalArgumentException</code></td>
-<td>Accessing a column not in the projection, an invalid column name, or asking a column for a type it does not hold — <code>getFloat</code> on a column that is neither <code>FLOAT</code> nor <code>FLOAT16</code></td>
+<td>Accessing a column not in the projection, an invalid column name, or asking a column for a type it does not hold, such as <code>getFloat</code> on a column that is neither <code>FLOAT</code> nor <code>FLOAT16</code></td>
 </tr>
 <tr>
 <td><code>NullPointerException</code></td>
@@ -2016,7 +2016,7 @@ it. <strong>Trying again may help for <code>IOException</code>, and will not for
 </tr>
 </tbody>
 </table>
-<p>Requesting the wrong type for a column — <code>getLong</code> on an <code>INT32</code> column — is a programming
+<p>Requesting the wrong type for a column, such as <code>getLong</code> on an <code>INT32</code> column, is a programming
 error whose exception type is deliberately unspecified, and is covered in
 <a href="../accessors/#type-mismatches">Type mismatches</a>.</p>
 <p>Hardwood raises <code>UncheckedIOException</code> from no public method. Reading a <code>RowReader</code> inside a
@@ -2051,7 +2051,7 @@ an <code>InputFile</code> raises for itself is unprefixed.</p>
 </tr>
 <tr>
 <td><code>UnsupportedOperationException</code></td>
-<td>A schema column of an unsupported physical type (<code>INT96</code>); a refused compression codec (<code>LZ4</code>, <code>LZO</code>), one whose library is not on the classpath, or one whose native library will not load; a schema shape the writer cannot produce — repetition no <code>LIST</code> or <code>MAP</code> annotation accounts for</td>
+<td>A schema column of an unsupported physical type (<code>INT96</code>); a refused compression codec (<code>LZ4</code>, <code>LZO</code>), one whose library is not on the classpath, or one whose native library will not load; a schema shape the writer cannot produce, namely repetition no <code>LIST</code> or <code>MAP</code> annotation accounts for</td>
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
@@ -2117,8 +2117,8 @@ an <code>InputFile</code> raises for itself is unprefixed.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>

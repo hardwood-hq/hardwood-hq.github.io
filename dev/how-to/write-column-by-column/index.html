@@ -2202,7 +2202,7 @@
 <a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"row.count"</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">rowCount</span><span class="p">));</span>
 <a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="p">}</span>
 </code></pre></div>
-<p>Key-value metadata is application-defined and opaque to Parquet: it is where <code>ARROW:schema</code>, the pandas descriptor and the table-format stamps live. Passing the map <code>FileMetaData.keyValueMetadata()</code> returns reproduces another file's entries exactly. See <a href="../../reference/writer/#file-metadata">File Metadata</a>.</p>
+<p>Passing the map <code>FileMetaData.keyValueMetadata()</code> returns reproduces another file's entries exactly. See <a href="../../reference/writer/#file-metadata">File Metadata</a> for what the entries hold and how they are written.</p>
 <h2 id="one-api-per-file">One API per File<a class="headerlink" href="#one-api-per-file" title="Permanent link">&para;</a></h2>
 <p>A file is written through one API or the other: calling both <code>columnWriter()</code> and <a href="../write-row-by-row/"><code>rowWriter()</code></a> on the same <code>ParquetFileWriter</code> is rejected, on the call that obtains the second view. The row-oriented layer stages records into batches and submits them through this same core, so it produces the same layout — see <a href="../#choosing-a-writer">Choosing a Writer</a>.</p>
 
@@ -2254,8 +2254,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2bcad6b82de2e9956612a634991dda52e5c9d3c2" target="_blank" rel="noopener">
-      2bcad6b8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
+      b7b33a4d
     </a>
   
 </div>
