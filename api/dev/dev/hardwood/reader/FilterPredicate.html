@@ -224,10 +224,11 @@ matter in practice:</p>
 <ul>
 <li><code>-0.0</code> is strictly less than <code>+0.0</code>. <code>eq(0.0)</code> matches only <code>+0.0</code>
 values; to match either zero, use <code>in(column, 0.0, -0.0)</code>.</li>
-<li><code>NaN</code> sorts above every finite value. <code>eq(NaN)</code> matches only <code>NaN</code>
-(whereas IEEE <code>NaN == anything</code> is always false). <code>lt</code> and <code>ltEq</code> against
-any value never match <code>NaN</code> rows; <code>gt</code> and <code>gtEq</code> against a finite value
-always include <code>NaN</code> rows.</li>
+<li><code>NaN</code> sorts above every other value, and every <code>NaN</code> equals every other.
+<code>eq(NaN)</code> matches only <code>NaN</code> (whereas IEEE <code>NaN == anything</code> is always
+false). <code>lt</code> against any value, and <code>ltEq</code> against a number, never match
+<code>NaN</code> rows; <code>gt</code> and <code>gtEq</code> against a number, and <code>ltEq</code> and <code>gtEq</code>
+against <code>NaN</code>, include them.</li>
 </ul>
 <p><code>in(column, float...)</code> and <code>in(column, double...)</code> apply the same total order to each
 listed value. <code>in(column, float...)</code> takes a <code>FLOAT</code> or <code>FLOAT16</code> column and
@@ -412,7 +413,9 @@ unsigned 32-bit components they encode.</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#and(dev.hardwood.reader.FilterPredicate...)" class="member-name-link">and</a><wbr>(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>...&nbsp;filters)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">Creates a conjunction of <code>filters</code>.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#and(dev.hardwood.reader.FilterPredicate,dev.hardwood.reader.FilterPredicate)" class="member-name-link">and</a><wbr>(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;left,
  <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;right)</code></div>
@@ -968,7 +971,9 @@ any of <code>values</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#or(dev.hardwood.reader.FilterPredicate...)" class="member-name-link">or</a><wbr>(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>...&nbsp;filters)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">Creates a disjunction of <code>filters</code>.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#or(dev.hardwood.reader.FilterPredicate,dev.hardwood.reader.FilterPredicate)" class="member-name-link">or</a><wbr>(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;left,
  <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>&nbsp;right)</code></div>
@@ -1284,8 +1289,9 @@ probe no IEEE half represents throws <code>IllegalArgumentException</code> at re
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</span></div>
 <div class="block">Creates an equals predicate for a text column, one of <code>STRING</code>, <code>ENUM</code>, <code>JSON</code> and an
 unannotated <code>BYTE_ARRAY</code>. The value compares as its UTF-8 bytes, which is what such a
-column stores. Any other column rejects a <code>String</code> with <code>IllegalArgumentException</code> at
-reader creation.</div>
+column stores. A row storing bytes that are not well-formed UTF-8 matches no <code>String</code>,
+including the one <code>getString</code> returns for it; filter it with its <code>byte[]</code>. Any other
+column rejects a <code>String</code> with <code>IllegalArgumentException</code> at reader creation.</div>
 </div>
 </section>
 </li>
@@ -1982,6 +1988,8 @@ any of <code>values</code>. Each probe is an equality literal, as for <a href="#
  double&nbsp;xmax,
  double&nbsp;ymax)</span></div>
 <div class="block"><p>Creates a predicate that matches column chunks whose bounding box intersects the given bounding box.</p>
+<p>A box with <code>xmin &gt; xmax</code> wraps across the antimeridian, covering <code>x &gt;= xmin</code> or
+<code>x &lt;= xmax</code>. A <code>NaN</code> bound throws <code>IllegalArgumentException</code>.</p>
 <p>The rows a bounding box does not cover are not a bounding box, so the predicate has no
 inverse: <code>not</code> over it, or over any predicate holding one, throws
 <code>IllegalArgumentException</code> at reader creation.</p>
@@ -2003,6 +2011,8 @@ inverse: <code>not</code> over it, or over any predicate holding one, throws
 <h3>and</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></span>&nbsp;<span class="element-name">and</span><wbr><span class="parameters">(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>...&nbsp;filters)</span></div>
+<div class="block">Creates a conjunction of <code>filters</code>. At least one is required; none throws
+<code>IllegalArgumentException</code>.</div>
 </div>
 </section>
 </li>
@@ -2020,6 +2030,8 @@ inverse: <code>not</code> over it, or over any predicate holding one, throws
 <h3>or</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></span>&nbsp;<span class="element-name">or</span><wbr><span class="parameters">(<a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a>...&nbsp;filters)</span></div>
+<div class="block">Creates a disjunction of <code>filters</code>. At least one is required; none throws
+<code>IllegalArgumentException</code>.</div>
 </div>
 </section>
 </li>

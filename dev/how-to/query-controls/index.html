@@ -2248,7 +2248,7 @@
 <p>Predicates on <code>float</code> and <code>double</code> columns use the <code>Float.compare</code> / <code>Double.compare</code> total order, not IEEE 754 equality. Two consequences matter in practice:</p>
 <ul>
 <li><code>-0.0</code> is strictly less than <code>+0.0</code>. <code>eq(0.0)</code> matches only <code>+0.0</code> values; to match either zero, use <code>in("c", 0.0, -0.0)</code>.</li>
-<li><code>NaN</code> sorts above every finite value. <code>eq(Float.NaN)</code> matches only <code>NaN</code> (whereas IEEE <code>NaN == anything</code> is always false). <code>lt</code> and <code>ltEq</code> against any value never match <code>NaN</code> rows; <code>gt</code> and <code>gtEq</code> against a finite value always include <code>NaN</code> rows.</li>
+<li><code>NaN</code> sorts above every other value, and every <code>NaN</code> equals every other. <code>eq(Float.NaN)</code> matches only <code>NaN</code> (whereas IEEE <code>NaN == anything</code> is always false). <code>lt</code> against any value, and <code>ltEq</code> against a number, never match <code>NaN</code> rows; <code>gt</code> and <code>gtEq</code> against a number, and <code>ltEq</code> and <code>gtEq</code> against <code>NaN</code>, include them.</li>
 </ul>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Match any NaN row</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">anyNaN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"score"</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="p">.</span><span class="na">NaN</span><span class="p">);</span>
@@ -2324,14 +2324,13 @@ literal.</p>
 <li><strong>An unsatisfiable range prunes but does not push down further.</strong> A comparison whose literal
   lies past the range the column's carrier holds matches every non-null row or none, and is
   decided from the null count alone.</li>
-<li><strong>Two equality probes cannot use either.</strong> <code>eq(NaN)</code>, or an <code>in</code> list holding one, is not
-  Bloom-pruned: raw-bit hashing distinguishes NaN payloads that <code>Double.compare</code> treats as equal,
-  so a miss cannot prove a NaN absent. An <code>eq</code> or <code>in</code> on a <code>DECIMAL</code> stored as
-  <code>BYTE_ARRAY</code> is pruned by neither, since such a column may hold the same number under more than
-  one byte string, so a miss on a probe's own bytes does not prove the value absent.</li>
-<li><strong>An <code>INT96</code> comparison does not prune.</strong> A comparison or set predicate on an <code>INT96</code> column
-  reads every row group and page and filters the rows one by one: neither the column's <code>min</code> /
-  <code>max</code> statistics, nor its dictionary, nor a Bloom filter decide it.</li>
+<li><strong>Some equality probes skip the Bloom filter or the dictionary.</strong> <code>eq(NaN)</code>, an <code>in</code> list
+  holding one, and a <code>float</code> on a <code>FLOAT16</code> column are not Bloom-pruned; the dictionary still
+  decides them. A <code>BigDecimal</code> on a <code>DECIMAL</code> stored as <code>BYTE_ARRAY</code> is pruned by neither.</li>
+<li><strong>An <code>INT96</code> comparison with an <code>Instant</code> does not prune.</strong> It reads every row group and page and
+  filters the rows one by one: neither the column's <code>min</code> / <code>max</code> statistics, nor its dictionary,
+  nor a Bloom filter decide it. An <code>eq</code> or <code>in</code> with the stored 12 bytes uses the Bloom filter and
+  the dictionary.</li>
 </ul>
 <h2 id="column-projection">Column Projection<a class="headerlink" href="#column-projection" title="Permanent link">&para;</a></h2>
 <p>Column projection allows reading only a subset of columns from a Parquet file, improving performance by skipping I/O, decoding, and memory allocation for unneeded columns.</p>
@@ -2523,8 +2522,8 @@ literal.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/f7d7f49abf55c495792e4794e7a54755080d2266" target="_blank" rel="noopener">
-      f7d7f49a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a3d7cce7fabfe11eb0c92bcca010a96fb60ef7d4" target="_blank" rel="noopener">
+      a3d7cce7
     </a>
   
 </div>

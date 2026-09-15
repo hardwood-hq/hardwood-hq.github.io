@@ -176,7 +176,9 @@ itself being absent, and from the list being empty.</div>
 <div class="block">Returns a projection that includes all columns.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#and(dev.hardwood.reader.FilterPredicate...)" class="member-name-link">and(FilterPredicate...)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a conjunction of <code>filters</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#and(dev.hardwood.reader.FilterPredicate,dev.hardwood.reader.FilterPredicate)" class="member-name-link">and(FilterPredicate, FilterPredicate)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/RowGroupPredicate.html#and(dev.hardwood.reader.RowGroupPredicate...)" class="member-name-link">and(RowGroupPredicate...)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a></dt>
@@ -3159,7 +3161,7 @@ plain mask.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.Operator.html#invert()" class="member-name-link">invert()</a> - Method in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.Operator.html" title="enum class in dev.hardwood.reader">FilterPredicate.Operator</a></dt>
 <dd>
-<div class="block">Returns the logical inverse of this operator, used to push NOT through leaf predicates.</div>
+<div class="block">Returns the logical inverse of this operator, which <code>not</code> applies to each leaf below it.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.TimestampType.html#isAdjustedToUTC()" class="member-name-link">isAdjustedToUTC()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.TimestampType.html" title="class in dev.hardwood.metadata">LogicalType.TimestampType</a></dt>
 <dd>
@@ -4195,7 +4197,9 @@ current batch.&quot;</div>
 <div class="block">The options set on this config, as an immutable map.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#or(dev.hardwood.reader.FilterPredicate...)" class="member-name-link">or(FilterPredicate...)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Creates a disjunction of <code>filters</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.html#or(dev.hardwood.reader.FilterPredicate,dev.hardwood.reader.FilterPredicate)" class="member-name-link">or(FilterPredicate, FilterPredicate)</a> - Static method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.Or.html#%3Cinit%3E(java.util.List)" class="member-name-link">Or(List)</a> - Constructor for record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.Or.html" title="class in dev.hardwood.reader">FilterPredicate.Or</a></dt>

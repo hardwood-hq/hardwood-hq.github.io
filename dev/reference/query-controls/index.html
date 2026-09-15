@@ -2042,11 +2042,11 @@ behavior of each control — predicate pushdown, projection, row limits, splits,
 </tr>
 <tr>
 <td>Spatial operators</td>
-<td><code>intersects</code>, on a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column. It skips row groups whose bounding box does not overlap the query box and returns every row of the others (see <a href="../../how-to/geospatial/">Geospatial</a>). It has no inverse, so <code>not</code> over a predicate holding one throws <code>IllegalArgumentException</code> at reader creation</td>
+<td><code>intersects</code>, on a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column. It skips row groups whose bounding box does not overlap the query box and returns every row of the others (see <a href="../../how-to/geospatial/">Geospatial</a>). A query box with <code>xmin &gt; xmax</code> wraps across the antimeridian on either type; a <code>NaN</code> bound throws <code>IllegalArgumentException</code> when the predicate is built. It has no inverse, so <code>not</code> over a predicate holding one throws <code>IllegalArgumentException</code> at reader creation</td>
 </tr>
 <tr>
 <td>Combinators</td>
-<td><code>and</code>, <code>or</code>, <code>not</code> (<code>and</code> / <code>or</code> accept varargs for three or more conditions)</td>
+<td><code>and</code>, <code>or</code>, <code>not</code> (<code>and</code> / <code>or</code> accept varargs for three or more conditions, and throw <code>IllegalArgumentException</code> when given none)</td>
 </tr>
 <tr>
 <td>Column form</td>
@@ -2254,7 +2254,7 @@ of two values.</p>
 <td>any</td>
 <td><code>NULL</code></td>
 <td>the literal for the physical type</td>
-<td>nothing — every value is null, so no comparison matches</td>
+<td>the stored value; a column that keeps to its annotation holds only nulls, so no comparison matches</td>
 </tr>
 <tr>
 <td>group of two <code>BYTE_ARRAY</code></td>
@@ -2350,7 +2350,10 @@ reader creation.</p>
 <a href="../accessors/#text-columns"><code>getString</code></a> reads. On any other binary column a <code>String</code>
 literal throws <code>IllegalArgumentException</code> at reader creation, naming the literals the column
 does take. A <code>String</code> that is not well-formed UTF-16, such as one holding an unpaired surrogate, has
-no UTF-8 encoding and throws <code>IllegalArgumentException</code> when the predicate is built.</p>
+no UTF-8 encoding and throws <code>IllegalArgumentException</code> when the predicate is built. A row whose
+stored bytes are not well-formed UTF-8 matches no <code>String</code> literal: <code>getString</code> replaces each
+malformed sequence with U+FFFD, so the string it returns for such a row does not match it. Filter
+such a row with its <code>byte[]</code>.</p>
 <p>An <code>INTERVAL</code> column's other literal is the <code>PqInterval</code> that <a href="../accessors/"><code>getInterval</code></a>
 returns. Each of its three components is stored as an unsigned 32-bit value.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"uptime"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PqInterval</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3_600_000</span><span class="p">));</span>
@@ -2419,7 +2422,7 @@ one of seven reasons:</p>
 </tr>
 <tr>
 <td>The column's annotation defines no order</td>
-<td>An <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>UNKNOWN</code>, <code>LIST</code> or <code>MAP</code> column, for which the Parquet spec defines no sort order</td>
+<td>An <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>LIST</code> or <code>MAP</code> column, for which the Parquet spec defines no sort order, or a <code>NULL</code> column</td>
 </tr>
 <tr>
 <td>The column is <code>INT96</code></td>
@@ -2518,8 +2521,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/f7d7f49abf55c495792e4794e7a54755080d2266" target="_blank" rel="noopener">
-      f7d7f49a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a3d7cce7fabfe11eb0c92bcca010a96fb60ef7d4" target="_blank" rel="noopener">
+      a3d7cce7
     </a>
   
 </div>

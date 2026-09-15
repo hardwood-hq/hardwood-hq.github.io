@@ -2098,6 +2098,9 @@
 <p>A filter predicate's literal must be a value the column's accessors return: a <code>String</code> filters only text columns, an <code>Instant</code> only UTC timestamps and a <code>LocalDate</code> only <code>DATE</code> columns. Other literals, ordered operators on types without an order, and equality literals the column cannot hold throw <code>IllegalArgumentException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>).</p>
 </li>
 <li>
+<p><code>intersects</code> with a <code>NaN</code> bound, and <code>and</code> / <code>or</code> with no children, throw <code>IllegalArgumentException</code> when the predicate is built (<a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>).</p>
+</li>
+<li>
 <p><code>getString</code> throws <code>IllegalArgumentException</code> on a column that does not hold text (<a href="https://github.com/hardwood-hq/hardwood/issues/1196">#1196</a>).</p>
 </li>
 <li>
@@ -2333,8 +2336,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/f7d7f49abf55c495792e4794e7a54755080d2266" target="_blank" rel="noopener">
-      f7d7f49a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a3d7cce7fabfe11eb0c92bcca010a96fb60ef7d4" target="_blank" rel="noopener">
+      a3d7cce7
     </a>
   
 </div>

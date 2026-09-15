@@ -2017,7 +2017,7 @@
 <a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="spatial-filter-pushdown">Spatial Filter Pushdown<a class="headerlink" href="#spatial-filter-pushdown" title="Permanent link">&para;</a></h3>
-<p><code>FilterPredicate.intersects(column, xmin, ymin, xmax, ymax)</code> produces a predicate that drops row groups and pages whose stored bounding box does not overlap the query box. The argument order follows the GeoJSON / WKT convention (bottom-left corner, then top-right corner). Antimeridian wrapping is handled automatically.</p>
+<p><code>FilterPredicate.intersects(column, xmin, ymin, xmax, ymax)</code> produces a predicate that drops row groups and pages whose stored bounding box does not overlap the query box. The argument order follows the GeoJSON / WKT convention (bottom-left corner, then top-right corner). Antimeridian wrapping is handled automatically, both for a stored box and for a query box with <code>xmin &gt; xmax</code>, which covers <code>x &gt;= xmin</code> or <code>x &lt;= xmax</code> on a <code>GEOMETRY</code> column as on a <code>GEOGRAPHY</code> one. A <code>NaN</code> bound throws <code>IllegalArgumentException</code> when the predicate is built.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.FilterPredicate</span><span class="p">;</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.RowReader</span><span class="p">;</span>
@@ -2095,8 +2095,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/f7d7f49abf55c495792e4794e7a54755080d2266" target="_blank" rel="noopener">
-      f7d7f49a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a3d7cce7fabfe11eb0c92bcca010a96fb60ef7d4" target="_blank" rel="noopener">
+      a3d7cce7
     </a>
   
 </div>
