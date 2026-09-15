@@ -2422,7 +2422,10 @@ caller-side opt-in:</p>
 UTC-normalized <code>Instant</code>, matching the parquet-format backward-compatibility rule for these
 annotations. Unsigned columns preserve the stored bit pattern — reinterpret with
 <code>Integer.toUnsignedLong</code> / <code>Long.toUnsignedString</code> for the unsigned magnitude. When a file carries
-both a <code>converted_type</code> and a modern <code>logicalType</code>, the <code>logicalType</code> takes precedence.</p>
+both a <code>converted_type</code> and a modern <code>logicalType</code>, the <code>logicalType</code> takes precedence, except where
+the <code>logicalType</code> is <code>UNKNOWN</code>: then the <code>converted_type</code> decides. parquet-java writes <code>INTERVAL</code>
+columns in that form, as <code>converted_type = INTERVAL</code> beside <code>logicalType = UNKNOWN</code>, and they read
+as <code>INTERVAL</code>.</p>
 <p>The MAP group annotation has a legacy form too: some older parquet-mr / Hive / Impala files annotate
 only the inner repeated <code>key_value</code> group with <code>MAP_KEY_VALUE</code> and leave the outer group unannotated.
 Hardwood recognizes this form as a map, so <code>getMap</code> returns a <code>PqMap</code> and the group's
@@ -2492,8 +2495,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b7b33a4dd7e8cc79cafe6c798765f51f988885a1" target="_blank" rel="noopener">
-      b7b33a4d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/273e1be25269d285506f86e2e66d033aef9434a2" target="_blank" rel="noopener">
+      273e1be2
     </a>
   
 </div>
