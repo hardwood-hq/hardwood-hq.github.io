@@ -1348,11 +1348,12 @@ reader creation.</div>
 <div class="block"><p>Creates an equals predicate for a binary column, whose literal is the stored bytes —
 the value <a href="../row/StructAccessor.html#getBinary(int)"><code>StructAccessor.getBinary(int)</code></a> returns for it. A row matches when it stores exactly these
 bytes.</p>
-<p>Ordered predicates compare the bytes unsigned lexicographically. A <code>DECIMAL</code>, a <code>FLOAT16</code>
-and a legacy <code>INT96</code> timestamp column order by the value their bytes encode, and take a
-<code>byte[]</code> for <code>eq</code>, <code>notEq</code> and <code>in</code> only; an ordered predicate on one takes a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a>,
-a <code>float</code> or an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a>. A fixed-width column takes an equality literal of its own width
-only, a <code>FLOAT16</code> two bytes and an <code>INT96</code> twelve.</p>
+<p>Ordered predicates compare the bytes unsigned lexicographically. A <code>DECIMAL</code>, a <code>FLOAT16</code>,
+a legacy <code>INT96</code> timestamp and a <code>FIXED_LEN_BYTE_ARRAY(12)</code> <code>TIMESTAMP</code> column order by the
+value their bytes encode, and take a <code>byte[]</code> for <code>eq</code>, <code>notEq</code> and <code>in</code> only; an ordered
+predicate on one takes a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a>, a <code>float</code>, an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> or a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link"><code>LocalDateTime</code></a>. A
+fixed-width column takes an equality literal of its own width only, a <code>FLOAT16</code> two bytes and
+an <code>INT96</code> twelve.</p>
 <p>The array is copied, so a caller reusing it does not change the predicate.</p>
 </div>
 </div>

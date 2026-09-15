@@ -1566,6 +1566,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#timestamps-over-fixed_len_byte_array12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timestamps over FIXED_LEN_BYTE_ARRAY(12)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#legacy-int96-timestamps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2023,6 +2034,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#timestamps-over-fixed_len_byte_array12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timestamps over FIXED_LEN_BYTE_ARRAY(12)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#legacy-int96-timestamps" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2170,13 +2192,13 @@ type-mismatch contracts every accessor obeys. For the task-oriented walkthrough,
 </tr>
 <tr>
 <td><code>getTimestamp</code></td>
-<td>INT64, or legacy INT96</td>
+<td>INT64, FIXED_LEN_BYTE_ARRAY(12), or legacy INT96</td>
 <td>TIMESTAMP (<code>isAdjustedToUTC = true</code>)</td>
 <td><code>Instant</code></td>
 </tr>
 <tr>
 <td><code>getLocalTimestamp</code></td>
-<td>INT64</td>
+<td>INT64 or FIXED_LEN_BYTE_ARRAY(12)</td>
 <td>TIMESTAMP (<code>isAdjustedToUTC = false</code>)</td>
 <td><code>LocalDateTime</code></td>
 </tr>
@@ -2234,10 +2256,11 @@ type-mismatch contracts every accessor obeys. For the task-oriented walkthrough,
 <h2 id="physical-accessors">Physical accessors<a class="headerlink" href="#physical-accessors" title="Permanent link">&para;</a></h2>
 <p><code>getInt</code>, <code>getLong</code> and <code>getBinary</code> read the stored value of any column their physical type
 holds, whatever it is annotated with. <code>getInt</code> reads a <code>DATE</code>, a <code>TIME(MILLIS)</code> and an <code>INT32</code>
-<code>DECIMAL</code> as well as a bare <code>INT32</code>; <code>getLong</code> reads a <code>TIMESTAMP</code>, a <code>TIME(MICROS)</code> or
+<code>DECIMAL</code> as well as a bare <code>INT32</code>; <code>getLong</code> reads an <code>INT64</code> <code>TIMESTAMP</code>, a <code>TIME(MICROS)</code> or
 <code>TIME(NANOS)</code> and an <code>INT64</code> <code>DECIMAL</code>; <code>getBinary</code> reads every <code>BYTE_ARRAY</code>,
 <code>FIXED_LEN_BYTE_ARRAY</code> and <code>INT96</code> column, including a <code>DECIMAL</code>, a <code>UUID</code>, an <code>INTERVAL</code>, a
-<code>FLOAT16</code>, a <code>BSON</code> and a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> payload. Use them to skip the logical-type
+<code>FLOAT16</code>, a <code>TIMESTAMP</code> over <code>FIXED_LEN_BYTE_ARRAY(12)</code>, a <code>BSON</code> and a <code>GEOMETRY</code> or <code>GEOGRAPHY</code>
+payload. Use them to skip the logical-type
 decode — see <a href="../../how-to/row-reader/#reading-the-physical-value">Reading the physical value</a>.</p>
 <p><code>getValue</code> on a signed <code>INT(8)</code> or <code>INT(16)</code> column returns a <code>Byte</code> or a <code>Short</code>. A file can
 store a value outside the range its annotation states: <code>getValue</code> keeps the low 8 or 16 bits of
@@ -2310,6 +2333,15 @@ original NaN bit pattern is preserved (the Parquet spec does not canonicalize Na
 the UTF-8 payload to the symbol name, exactly as for a STRING column. The generic <code>getValue</code>
 accessor and the <code>PqList</code> / <code>PqStruct</code> / <code>PqMap</code> flyweights return the same <code>String</code>, at the top
 level and in every nested position. <code>getBinary</code> still yields the undecoded bytes.</p>
+<h2 id="timestamps-over-fixed_len_byte_array12">Timestamps over FIXED_LEN_BYTE_ARRAY(12)<a class="headerlink" href="#timestamps-over-fixed_len_byte_array12" title="Permanent link">&para;</a></h2>
+<p>A <code>TIMESTAMP</code> column is stored in an <code>INT64</code> or in a <code>FIXED_LEN_BYTE_ARRAY(12)</code>. The 12 bytes hold a
+signed two's complement little-endian 96-bit count of the annotation's time unit since the Unix
+epoch, which spans the years 0001 to 9999 at every unit, nanoseconds included.</p>
+<p><code>getTimestamp</code>, <code>getLocalTimestamp</code>, <code>getValue</code> and the <code>PqList</code> / <code>PqStruct</code> / <code>PqMap</code> flyweights
+read both carriers alike and return the same <code>Instant</code> or <code>LocalDateTime</code>. <code>getBinary</code>,
+<code>getRawValue</code> and <code>ColumnReader</code> return the 12 stored bytes.</p>
+<p>A stored count outside the range of <code>Instant</code> or <code>LocalDateTime</code>, about a billion years either
+side of the epoch, throws <code>DateTimeException</code> naming the stored bytes; <code>getBinary</code> reads it.</p>
 <h2 id="legacy-int96-timestamps">Legacy INT96 timestamps<a class="headerlink" href="#legacy-int96-timestamps" title="Permanent link">&para;</a></h2>
 <p>Parquet files written by older versions of Apache Spark and Hive store timestamps in the deprecated
 INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> detects INT96
@@ -2461,8 +2493,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/87996c8801ec3bd08c96ff0d79cc2387057c9ae0" target="_blank" rel="noopener">
-      87996c88
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f7d7f49abf55c495792e4794e7a54755080d2266" target="_blank" rel="noopener">
+      f7d7f49a
     </a>
   
 </div>

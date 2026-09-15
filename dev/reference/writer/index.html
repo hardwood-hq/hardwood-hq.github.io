@@ -2339,7 +2339,7 @@
 </tr>
 <tr>
 <td><code>LogicalType.timestamp(isAdjustedToUTC, unit)</code></td>
-<td><code>TIMESTAMP</code> — same units</td>
+<td><code>TIMESTAMP</code> — same units, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
 </tr>
 <tr>
 <td><code>LogicalType.variant(specVersion)</code></td>
@@ -2646,12 +2646,12 @@
 <td><code>LocalTime</code></td>
 </tr>
 <tr>
-<td><code>INT64</code> annotated <code>TIMESTAMP(_, UTC)</code></td>
+<td><code>INT64</code> or <code>FIXED_LEN_BYTE_ARRAY(12)</code> annotated <code>TIMESTAMP(_, UTC)</code></td>
 <td><code>setTimestamp</code></td>
 <td><code>Instant</code></td>
 </tr>
 <tr>
-<td><code>INT64</code> annotated <code>TIMESTAMP(_, local)</code></td>
+<td><code>INT64</code> or <code>FIXED_LEN_BYTE_ARRAY(12)</code> annotated <code>TIMESTAMP(_, local)</code></td>
 <td><code>setLocalTimestamp</code></td>
 <td><code>LocalDateTime</code></td>
 </tr>
@@ -2684,6 +2684,34 @@
 </table>
 <p><code>ListBuilder</code> has the same set as <code>addInt</code>, <code>addString</code>, <code>addStruct</code>, <code>addNull</code>, … and <code>MapBuilder</code> has <code>addEntry</code>, whose entry struct declares the two fields <code>key</code> and <code>value</code>.</p>
 <p>Timestamp columns split by <code>isAdjustedToUTC</code>, mirroring the reader's split between <code>getTimestamp</code> and <code>getLocalTimestamp</code>: using the wrong setter throws, so an instant is never silently reinterpreted. Both APIs also accept every setter by field index; see <a href="../../how-to/write-row-by-row/#addressing-fields-by-index">Addressing fields by index</a>.</p>
+<p>A timestamp column's physical type sets the range of values it holds; its unit sets the precision on either:</p>
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th><code>INT64</code> holds</th>
+<th><code>FIXED_LEN_BYTE_ARRAY(12)</code> holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MILLIS</code></td>
+<td>about 292 million years either side of 1970</td>
+<td>every <code>Instant</code> and <code>LocalDateTime</code></td>
+</tr>
+<tr>
+<td><code>MICROS</code></td>
+<td>about 292,000 years either side of 1970</td>
+<td>every <code>Instant</code> and <code>LocalDateTime</code></td>
+</tr>
+<tr>
+<td><code>NANOS</code></td>
+<td>1677-09-21T00:12:43.145224192 to 2262-04-11T23:47:16.854775807</td>
+<td>every <code>Instant</code> and <code>LocalDateTime</code></td>
+</tr>
+</tbody>
+</table>
+<p>A value outside the range of an <code>INT64</code> column is rejected under either <code>PrecisionLossPolicy</code>.</p>
 <h2 id="value-ranges">Value Ranges<a class="headerlink" href="#value-ranges" title="Permanent link">&para;</a></h2>
 <p>Some annotations narrow what their physical type may hold. Where one does, both write APIs reject a stored value outside that range, naming the offending row or field:</p>
 <table>
@@ -2716,7 +2744,7 @@
 </tr>
 </tbody>
 </table>
-<p>Every other annotation narrows nothing, and its column is not scanned per value. <code>DATE</code> and <code>TIMESTAMP</code> are the ones worth naming: every <code>INT32</code> is a day offset the reader materializes, and every <code>INT64</code> is a timestamp in any of the three units, so there is no value for the columnar API to reject. <code>INT(32)</code>, <code>INT(64)</code> and their unsigned forms likewise admit every value of their physical type — a large unsigned value is spelled as a negative, which is also how the reader returns it.</p>
+<p>Every other annotation narrows nothing, and its column is not scanned per value. <code>DATE</code> and <code>TIMESTAMP</code> are the ones worth naming: every <code>INT32</code> is a day offset the reader materializes, and every <code>INT64</code> and every twelve bytes of a <code>FIXED_LEN_BYTE_ARRAY(12)</code> is a timestamp in any of the three units, so there is no value for the columnar API to reject. <code>INT(32)</code>, <code>INT(64)</code> and their unsigned forms likewise admit every value of their physical type — a large unsigned value is spelled as a negative, which is also how the reader returns it.</p>
 <p>Two checks are not annotations and always apply: a <code>FIXED_LEN_BYTE_ARRAY</code> value must be exactly the length the column declares, and a present value of a binary column must not be <code>null</code>. The value at a row a <code>Validity</code> marks null is never encoded, so it is never checked.</p>
 <p>An annotation over binary <em>content</em> is not a range, and the writer does not inspect it. A value passed to <code>bytes(...)</code> or <code>fixed(...)</code> is written as given, whether the column is annotated <code>STRING</code>, <code>ENUM</code>, <code>JSON</code>, <code>BSON</code>, <code>VARIANT</code>, <code>GEOMETRY</code> or <code>GEOGRAPHY</code> — encoding a <code>STRING</code> column's values as UTF-8, and producing well-formed payloads under the others, is the caller's to do. Bytes that are not valid UTF-8 are written and read back as replacement characters rather than rejected. <code>StructBuilder.setString</code> takes a <code>String</code> and encodes it, so the row-oriented layer cannot produce that.</p>
 <p><code>PrecisionLossPolicy</code> governs <strong>precision</strong> only, and only on the row-oriented layer — the columnar API converts nothing, so nothing there can lose precision:</p>
@@ -2879,8 +2907,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/87996c8801ec3bd08c96ff0d79cc2387057c9ae0" target="_blank" rel="noopener">
-      87996c88
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f7d7f49abf55c495792e4794e7a54755080d2266" target="_blank" rel="noopener">
+      f7d7f49a
     </a>
   
 </div>

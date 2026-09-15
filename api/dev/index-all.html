@@ -4839,7 +4839,8 @@ referenced rather than copied and must not be mutated until the record is writte
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setLocalTimestamp(java.lang.String,java.time.LocalDateTime)" class="member-name-link">setLocalTimestamp(String, LocalDateTime)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
-<div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>.</div>
+<div class="block">Sets a field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>, over an <code>INT64</code> or a
+<code>FIXED_LEN_BYTE_ARRAY(12)</code>.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setLong(int,long)" class="member-name-link">setLong(int, long)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
@@ -4896,8 +4897,8 @@ the value's UTF-8 bytes.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setTimestamp(java.lang.String,java.time.Instant)" class="member-name-link">setTimestamp(String, Instant)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
-<div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit
-the annotation declares.</div>
+<div class="block">Sets a field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit the
+annotation declares, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(12)</code>.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setUuid(int,java.util.UUID)" class="member-name-link">setUuid(int, UUID)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>

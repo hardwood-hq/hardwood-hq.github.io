@@ -1992,7 +1992,7 @@
 <a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="mi">1000L</span><span class="p">))</span>
 <a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-<p>Values are stored in Avro's standard representations: timestamps as <code>Long</code> (millis/micros since epoch), dates as <code>Integer</code> (days since epoch), decimals as <code>ByteBuffer</code>, binary data as <code>ByteBuffer</code>, and ENUM values as <code>String</code>. This matches the behavior of parquet-java's <code>AvroReadSupport</code>.</p>
+<p>Values are stored in Avro's standard representations: timestamps as <code>Long</code> (millis/micros since epoch), dates as <code>Integer</code> (days since epoch), decimals as <code>ByteBuffer</code>, binary data as <code>ByteBuffer</code>, and ENUM values as <code>String</code>. A <code>TIMESTAMP</code> over <code>FIXED_LEN_BYTE_ARRAY(12)</code> has no Avro counterpart and is a <code>fixed</code> of its 12 stored bytes, as an <code>INT96</code> is. This matches the behavior of parquet-java's <code>AvroReadSupport</code>.</p>
 <p>Avro maps always have string keys, so a Parquet map key must be a <code>BYTE_ARRAY</code> annotated as <code>STRING</code>, <code>ENUM</code>, or <code>JSON</code>. Building an <code>AvroRowReader</code> whose projection contains a map with any other key type — including an unannotated <code>BYTE_ARRAY</code> key, whose bytes are not necessarily text — fails with an error naming the map's path and its key type. The file's other columns are unaffected: narrow the projection to exclude the map, or read it through Hardwood's <code>RowReader</code>, which serves the key in its original type.</p>
 <h2 id="avro-names">Avro names<a class="headerlink" href="#avro-names" title="Permanent link">&para;</a></h2>
 <p>Avro names that already match <code>[A-Za-z_][A-Za-z0-9_]*</code> remain unchanged. Other Parquet names are rewritten to match the Avro grammar. The original name is available from the <code>hardwood.parquetName</code> property on the converted schema or field.</p>
@@ -2080,8 +2080,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/87996c8801ec3bd08c96ff0d79cc2387057c9ae0" target="_blank" rel="noopener">
-      87996c88
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f7d7f49abf55c495792e4794e7a54755080d2266" target="_blank" rel="noopener">
+      f7d7f49a
     </a>
   
 </div>

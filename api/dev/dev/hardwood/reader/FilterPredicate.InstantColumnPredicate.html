@@ -104,8 +104,8 @@ loadScripts(document, 'script');</script>
 implements <a href="FilterPredicate.html" title="interface in dev.hardwood.reader">FilterPredicate</a></span></div>
 <div class="block">Predicate for TIMESTAMP columns with <code>isAdjustedToUTC = true</code> and for legacy <code>INT96</code>
 timestamp columns. The <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> value is converted to the column's time unit (MILLIS,
-MICROS, or NANOS) at reader creation using the schema's <code>TimestampType</code>, or to the twelve
-bytes of an <code>INT96</code>.</div>
+MICROS, or NANOS) at reader creation using the schema's <code>TimestampType</code>, stored as the
+column's <code>INT64</code> or <code>FIXED_LEN_BYTE_ARRAY(12)</code> count, or to the twelve bytes of an <code>INT96</code>.</div>
 </div>
 </section>
 <section class="summary">

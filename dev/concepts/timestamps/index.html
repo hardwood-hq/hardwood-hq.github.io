@@ -1349,6 +1349,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#two-physical-carriers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two physical carriers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#legacy-int96" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1913,6 +1924,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#two-physical-carriers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two physical carriers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#legacy-int96" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1994,10 +2016,26 @@ the other accessor throws (see <a href="../../reference/query-controls/#predicat
 <p>The TIME logical type carries the same <code>isAdjustedToUTC</code> flag, but the situation is different:
 <code>LocalTime</code> has no zone of its own, so there is no second Java type to split toward. <code>getTime</code>
 returns <code>LocalTime</code> either way and the flag is purely informational.</p>
+<h2 id="two-physical-carriers">Two physical carriers<a class="headerlink" href="#two-physical-carriers" title="Permanent link">&para;</a></h2>
+<p>The TIMESTAMP annotation is stored in two physical types, and the choice between them is about
+range, not precision. Both count the same three units, milliseconds, microseconds and nanoseconds,
+since the epoch. An <code>INT64</code> spans about 292 million years either side of 1970 in milliseconds and
+292,000 years in microseconds, but only about 585 years in nanoseconds, from 1677 to 2262. A
+<code>FIXED_LEN_BYTE_ARRAY(12)</code> holds the count in 96 bits, which spans every <code>Instant</code> in any unit.</p>
+<p>So the 12-byte carrier matters for a column that needs nanosecond precision beyond 1677 to 2262,
+such as a SQL <code>TIMESTAMP(9)</code> covering the years 0001 to 9999. A millisecond or microsecond column
+reaches those years on an <code>INT64</code> already.</p>
+<p>The annotation means the same on both, so the accessors, the setters and the filter literals are
+the same too: a column of either carrier is an <code>Instant</code> or a <code>LocalDateTime</code> according to its
+<code>isAdjustedToUTC</code> flag, and an application reads and writes it without knowing which carrier it
+uses unless it reaches for the stored bytes.</p>
 <h2 id="legacy-int96">Legacy INT96<a class="headerlink" href="#legacy-int96" title="Permanent link">&para;</a></h2>
 <p>Timestamps written by older Spark and Hive in the deprecated INT96 physical type carry no
 <code>isAdjustedToUTC</code> field at all. By the Spark / Hive convention they denote instants, so Hardwood
 reads them as <code>Instant</code> through <code>getTimestamp</code>.</p>
+<p>An INT96 is 12 bytes wide, like the <code>FIXED_LEN_BYTE_ARRAY(12)</code> carrier, but packs a Julian day
+beside a count of nanoseconds of the day rather than one count from the epoch, and carries no
+annotation.</p>
 
 
 
@@ -2047,8 +2085,8 @@ reads them as <code>Instant</code> through <code>getTimestamp</code>.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/87996c8801ec3bd08c96ff0d79cc2387057c9ae0" target="_blank" rel="noopener">
-      87996c88
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f7d7f49abf55c495792e4794e7a54755080d2266" target="_blank" rel="noopener">
+      f7d7f49a
     </a>
   
 </div>

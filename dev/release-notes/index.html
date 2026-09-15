@@ -2050,6 +2050,9 @@
 <p>Filter predicates take every literal type a column's accessors return, adding <code>byte[]</code>, <code>LocalDateTime</code>, <code>PqInterval</code> and <code>Instant</code> on legacy <code>INT96</code> columns, and <code>in</code> for every literal type but <code>boolean</code>; <code>inStrings</code> is deprecated in favour of <code>in(String, String...)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/868">#868</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>).</p>
 </li>
 <li>
+<p><code>TIMESTAMP</code> columns over <code>FIXED_LEN_BYTE_ARRAY(12)</code>, which span the years 0001 to 9999 at nanosecond precision, are read, filtered and written (<a href="https://github.com/hardwood-hq/hardwood/issues/921">#921</a>).</p>
+</li>
+<li>
 <p><code>isNull</code> and <code>isNotNull</code> test whether a struct, <code>LIST</code> or <code>MAP</code> group is present (<a href="https://github.com/hardwood-hq/hardwood/issues/977">#977</a>).</p>
 </li>
 <li>
@@ -2330,8 +2333,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/87996c8801ec3bd08c96ff0d79cc2387057c9ae0" target="_blank" rel="noopener">
-      87996c88
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f7d7f49abf55c495792e4794e7a54755080d2266" target="_blank" rel="noopener">
+      f7d7f49a
     </a>
   
 </div>

@@ -195,7 +195,8 @@ referenced rather than copied and must not be mutated until the record is writte
 <div class="col-second odd-row-color"><span class="type-name-label">StructBuilder.</span><code><a href="../StructBuilder.html#setLocalTimestamp(java.lang.String,java.time.LocalDateTime)" class="member-name-link">setLocalTimestamp</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>.</div>
+<div class="block">Sets a field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>, over an <code>INT64</code> or a
+<code>FIXED_LEN_BYTE_ARRAY(12)</code>.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">StructBuilder.</span><code><a href="../StructBuilder.html#setLong(int,long)" class="member-name-link">setLong</a><wbr>(int&nbsp;fieldIndex,
@@ -278,8 +279,8 @@ the value's UTF-8 bytes.</div>
 <div class="col-second odd-row-color"><span class="type-name-label">StructBuilder.</span><code><a href="../StructBuilder.html#setTimestamp(java.lang.String,java.time.Instant)" class="member-name-link">setTimestamp</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit
-the annotation declares.</div>
+<div class="block">Sets a field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit the
+annotation declares, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(12)</code>.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">StructBuilder.</span><code><a href="../StructBuilder.html#setUuid(int,java.util.UUID)" class="member-name-link">setUuid</a><wbr>(int&nbsp;fieldIndex,

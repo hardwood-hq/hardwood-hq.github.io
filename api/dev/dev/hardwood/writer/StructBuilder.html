@@ -291,7 +291,8 @@ referenced rather than copied and must not be mutated until the record is writte
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLocalTimestamp(java.lang.String,java.time.LocalDateTime)" class="member-name-link">setLocalTimestamp</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>.</div>
+<div class="block">Sets a field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>, over an <code>INT64</code> or a
+<code>FIXED_LEN_BYTE_ARRAY(12)</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLong(int,long)" class="member-name-link">setLong</a><wbr>(int&nbsp;fieldIndex,
@@ -374,8 +375,8 @@ the value's UTF-8 bytes.</div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setTimestamp(java.lang.String,java.time.Instant)" class="member-name-link">setTimestamp</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit
-the annotation declares.</div>
+<div class="block">Sets a field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit the
+annotation declares, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(12)</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setUuid(int,java.util.UUID)" class="member-name-link">setUuid</a><wbr>(int&nbsp;fieldIndex,
@@ -592,10 +593,12 @@ configured <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setTimestamp</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link">Instant</a>&nbsp;value)</span></div>
-<div class="block"><p>Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit
-the annotation declares. A value carrying finer precision than the unit can hold is
-rejected, or narrowed, according to the configured <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer"><code>PrecisionLossPolicy</code></a>; one outside
-the range that unit spans is rejected under either. A <code>null</code> value sets the field null.</p>
+<div class="block"><p>Sets a field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = true</code>, in the unit the
+annotation declares, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(12)</code>. A value carrying finer
+precision than the unit can hold is rejected, or narrowed, according to the configured
+<a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer"><code>PrecisionLossPolicy</code></a>; one outside the range an <code>INT64</code> of that unit spans is rejected under
+either. A <code>FIXED_LEN_BYTE_ARRAY(12)</code> holds every <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a>. A <code>null</code> value sets the field
+null.</p>
 <p>A local-wall-clock column — <code>isAdjustedToUTC = false</code> — is written through
 <a href="#setLocalTimestamp(java.lang.String,java.time.LocalDateTime)"><code>setLocalTimestamp(String, LocalDateTime)</code></a> instead, mirroring the reader's split between <code>getTimestamp</code> and
 <code>getLocalTimestamp</code>; using the wrong one throws rather than silently reinterpreting
@@ -618,7 +621,8 @@ the instant.</p>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setLocalTimestamp</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link">LocalDateTime</a>&nbsp;value)</span></div>
-<div class="block">Sets an <code>INT64</code> field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>.</div>
+<div class="block">Sets a field annotated <code>TIMESTAMP</code> with <code>isAdjustedToUTC = false</code>, over an <code>INT64</code> or a
+<code>FIXED_LEN_BYTE_ARRAY(12)</code>.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>

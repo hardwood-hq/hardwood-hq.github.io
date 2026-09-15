@@ -2185,6 +2185,18 @@ of two values.</p>
 <td>the wall clock, in the column's time unit</td>
 </tr>
 <tr>
+<td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>TIMESTAMP(isAdjustedToUTC = true)</code></td>
+<td><code>Instant</code>, <code>byte[]</code> of 12 bytes</td>
+<td>the column's time unit; a <code>byte[]</code> as the stored bytes</td>
+</tr>
+<tr>
+<td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>TIMESTAMP(isAdjustedToUTC = false)</code></td>
+<td><code>LocalDateTime</code>, <code>byte[]</code> of 12 bytes</td>
+<td>the wall clock, in the column's time unit; a <code>byte[]</code> as the stored bytes</td>
+</tr>
+<tr>
 <td><code>INT96</code></td>
 <td></td>
 <td><code>Instant</code>, <code>byte[]</code> of 12 bytes</td>
@@ -2291,10 +2303,10 @@ does not change a predicate already built.</p>
 </code></pre></div>
 <p>A <code>byte[]</code> literal matches the rows storing exactly its bytes, on every binary column. On most
 columns the values order as their bytes, unsigned, and a <code>byte[]</code> takes every operator. A
-<code>DECIMAL</code>, a <code>FLOAT16</code> and an <code>INT96</code> order by the value their bytes encode, and there a <code>byte[]</code>
-takes <code>eq</code>, <code>notEq</code> and <code>in</code> only; <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> with a <code>byte[]</code> throw
-<code>IllegalArgumentException</code> at reader creation, naming the <code>BigDecimal</code>, <code>float</code> or <code>Instant</code>
-literal that takes them.</p>
+<code>DECIMAL</code>, a <code>FLOAT16</code>, an <code>INT96</code> and a <code>TIMESTAMP</code> over <code>FIXED_LEN_BYTE_ARRAY(12)</code> order by the
+value their bytes encode, and there a <code>byte[]</code> takes <code>eq</code>, <code>notEq</code> and <code>in</code> only; <code>lt</code>, <code>ltEq</code>, <code>gt</code>
+and <code>gtEq</code> with a <code>byte[]</code> throw <code>IllegalArgumentException</code> at reader creation, naming the
+<code>BigDecimal</code>, <code>float</code>, <code>Instant</code> or <code>LocalDateTime</code> literal that takes them.</p>
 <table>
 <thead>
 <tr>
@@ -2323,6 +2335,11 @@ literal that takes them.</p>
 <td><code>INT96</code></td>
 <td>12 bytes</td>
 <td>the rows storing these bytes; another encoding of the same instant is a different literal</td>
+</tr>
+<tr>
+<td><code>TIMESTAMP</code> over <code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td>12 bytes</td>
+<td>the rows storing these bytes, which is the one encoding of the value</td>
 </tr>
 </tbody>
 </table>
@@ -2501,8 +2518,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/87996c8801ec3bd08c96ff0d79cc2387057c9ae0" target="_blank" rel="noopener">
-      87996c88
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f7d7f49abf55c495792e4794e7a54755080d2266" target="_blank" rel="noopener">
+      f7d7f49a
     </a>
   
 </div>
