@@ -2480,6 +2480,31 @@ in Avro:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// Parquet name: total (usd)</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">optional</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="na">total__usd_</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
 </code></pre></div>
+<p>Lists and maps keep the element and value types of the Parquet schema in
+both formats. Positions where the target grammar cannot express
+nullability or nesting directly are wrapped: an optional list element or
+map value is a <code>["null", T]</code> union in Avro and a single-field wrapper
+message in Protobuf; a list inside a list, a list inside a map value, a map inside
+a list, and a map inside a map value become wrapper messages in Protobuf. A map whose
+<code>key_value</code> group carries no value renders with bare <code>null</code> values in
+Avro and an empty value message in Protobuf.</p>
+<p>Fixed-width columns keep their physical size: <code>fixed_len_byte_array(n)</code>
+and <code>int96</code> become named Avro <code>fixed</code> types of <code>n</code> and 12 bytes, and the
+<code>interval</code> and <code>float16</code> logical types map to shared 12- and 2-byte
+<code>fixed</code> types defined once per schema. Protobuf has no fixed-width scalar,
+so fixed-width values render as <code>bytes</code>, except UUID-annotated fixed arrays,
+which render as <code>string</code>; <code>int96</code> renders as <code>bytes</code> to keep all twelve bytes.</p>
+<p>Named types in Avro — records and fixed types — are unique by full name.
+Each carries a namespace derived from its position, so two records with
+the same Parquet name under different parents stay distinct:
+<code>Schema.Home.Address</code> and <code>Schema.Work.Address</code>. Candidates that still
+collide within one namespace get a <code>_2</code>, <code>_3</code>, … suffix on the <em>type</em>
+name; field names keep their own suffixes independently, so a field may
+read <code>address_2</code> while its type reads <code>Address_2</code>. A list or map field
+names a namespace for its own nested types, so it competes for that name
+with the record types declared beside it. The same
+uniqueness rule covers Protobuf message declarations, including the
+synthesized wrapper messages.</p>
 <h2 id="key-value-metadata">Key-value metadata<a class="headerlink" href="#key-value-metadata" title="Permanent link">&para;</a></h2>
 <p><code>hardwood info</code> prints a file's key-value metadata below the size summary, one
 line per entry: the key, its value's byte length, and the value itself. Values
@@ -2881,8 +2906,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/aceb7034e6fbaeb748185efde8c099c66bfde33c" target="_blank" rel="noopener">
-      aceb7034
+    <a href="https://github.com/hardwood-hq/hardwood/tree/19f13e256cb2e49a8331e2bd857d6cccd1bac0a8" target="_blank" rel="noopener">
+      19f13e25
     </a>
   
 </div>
