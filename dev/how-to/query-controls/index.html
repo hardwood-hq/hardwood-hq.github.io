@@ -2374,7 +2374,7 @@ literal.</p>
 <a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">}</span>
 </code></pre></div>
-<p>The filter column does not need to be in the projection; Hardwood reads the filter column's statistics for pushdown regardless.</p>
+<p>The filter column does not need to be in the projection. The projection is what the row exposes: a filter column outside it is not a field of the row at any depth, and is not addressable. Project a column you intend to read.</p>
 <h2 id="row-limit">Row Limit<a class="headerlink" href="#row-limit" title="Permanent link">&para;</a></h2>
 <p>A row limit instructs the reader to stop after the specified number of rows, avoiding unnecessary I/O and decoding. On remote backends like S3, only the row groups and pages needed to satisfy the limit are fetched.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// Read at most 100 rows</span>
@@ -2522,8 +2522,8 @@ literal.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a69670d150f3816f26eb3101db267c25e0c6782c" target="_blank" rel="noopener">
-      a69670d1
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e23ef3a569f1acd166de40a786e249953459b132" target="_blank" rel="noopener">
+      e23ef3a5
     </a>
   
 </div>

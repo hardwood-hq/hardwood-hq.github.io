@@ -2007,6 +2007,10 @@ it. <strong>Trying again may help for <code>IOException</code>, and will not for
 <td>Calling a primitive accessor (<code>getInt</code>, <code>getLong</code>, etc.) on a null field without checking <code>isNull()</code> first</td>
 </tr>
 <tr>
+<td><code>IndexOutOfBoundsException</code></td>
+<td>A field index outside <code>[0, getFieldCount())</code> on <code>getFieldName(int)</code>, on a <code>RowReader</code> or on a <code>PqStruct</code></td>
+</tr>
+<tr>
 <td><code>NoSuchElementException</code></td>
 <td>Calling <code>next()</code> on a <code>RowReader</code> when <code>hasNext()</code> returns <code>false</code></td>
 </tr>
@@ -2117,8 +2121,8 @@ an <code>InputFile</code> raises for itself is unprefixed.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a69670d150f3816f26eb3101db267c25e0c6782c" target="_blank" rel="noopener">
-      a69670d1
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e23ef3a569f1acd166de40a786e249953459b132" target="_blank" rel="noopener">
+      e23ef3a5
     </a>
   
 </div>
