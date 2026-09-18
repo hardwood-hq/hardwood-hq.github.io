@@ -1134,6 +1134,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../write-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handle Write Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../metadata/" class="md-nav__link">
         
   
@@ -2086,7 +2114,7 @@
 <a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="p">}</span>
 </code></pre></div>
 <p>The writer creates the <code>StructBuilder</code>, hands it to the filler, and stages the record when the filler returns — there is no separate build or submit step. <code>RowWriter</code> is not closeable: the <code>ParquetFileWriter</code> owns the file, and closing it writes the records still staged along with the footer.</p>
-<p>The file is produced front to back and the footer is written last, so <strong>it becomes a valid Parquet file only when <code>close()</code> returns</strong>. A writer abandoned before that leaves nothing readable at the destination.</p>
+<p>The file is produced front to back and the footer is written last, so <strong>it becomes a valid Parquet file only when <code>close()</code> returns</strong>. A writer abandoned before that leaves nothing readable at the destination. After a failure, see <a href="../write-failures/">Handle Write Failures</a>.</p>
 <h2 id="typed-setters">Typed Setters<a class="headerlink" href="#typed-setters" title="Permanent link">&para;</a></h2>
 <p>Each setter names the type of the field it writes, and a field's declared type decides which setter fits. <code>setBoolean</code>, <code>setInt</code>, <code>setLong</code>, <code>setFloat</code>, <code>setDouble</code> and <code>setBinary</code> write physical values; <code>setString</code>, <code>setDate</code>, <code>setTime</code>, <code>setTimestamp</code>, <code>setLocalTimestamp</code>, <code>setDecimal</code>, <code>setUuid</code> and <code>setInterval</code> write logical-type values, which the writer converts to the column's physical representation.</p>
 <p>Given a schema that also declares a <code>DECIMAL</code> <code>salary</code>, a <code>TIMESTAMP</code> <code>created_at</code> and a <code>UUID</code> <code>external_id</code>:</p>
@@ -2111,7 +2139,7 @@
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="p">.</span><span class="na">setLong</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="s">"name"</span><span class="p">,</span><span class="w"> </span><span class="s">"Katherine"</span><span class="p">));</span>
 </code></pre></div>
-<p>A <code>REQUIRED</code> field left unset fails the record. A failed record is staged in full or not at all: if the filler rejects a value or throws, everything it staged is discarded and the writer is left as it was, so the caller can handle the failure and carry on with the next record.</p>
+<p>A <code>REQUIRED</code> field left unset fails the record. A record that fails, because a value is rejected or the filler throws, fails the writer: <code>writeRow</code> accepts no more records, and <code>close()</code> discards the output rather than publishing the records written before it. See <a href="../write-failures/">Handle Write Failures</a>.</p>
 <h2 id="structs-lists-and-maps">Structs, Lists, and Maps<a class="headerlink" href="#structs-lists-and-maps" title="Permanent link">&para;</a></h2>
 <p>Nesting is entered with a filler per level. Fields are addressed by their user-visible names throughout — the synthetic <code>list.element</code> and <code>key_value</code> path segments Parquet's nested layout introduces never appear.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"person"</span><span class="p">)</span>
@@ -2271,8 +2299,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/835045a991e72d3bc2a5a43a2376cfbd7b33db51" target="_blank" rel="noopener">
-      835045a9
+    <a href="https://github.com/hardwood-hq/hardwood/tree/499869cbeea77126ea35e80c66620922a87b68af" target="_blank" rel="noopener">
+      499869cb
     </a>
   
 </div>

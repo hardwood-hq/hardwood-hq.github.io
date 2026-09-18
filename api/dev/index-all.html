@@ -54,6 +54,11 @@ loadScripts(document, 'script');</script>
 <a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:K">K</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<a href="#I:X">X</a>&nbsp;<a href="#I:Y">Y</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
 <h2 class="title" id="I:A">A</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/writer/ParquetFileWriter.html#abort()" class="member-name-link">abort()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
+<dd>
+<div class="block">Discards the output without publishing a file, leaving nothing at the destination, and
+closes the writer.</div>
+</dd>
 <dt><a href="dev/hardwood/s3/S3Credentials.html#accessKeyId()" class="member-name-link">accessKeyId()</a> - Method in record class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Credentials.html" title="class in dev.hardwood.s3">S3Credentials</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/s3/S3Credentials.html#param-accessKeyId"><code>accessKeyId</code></a> record component.</div>
@@ -550,7 +555,10 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dt><a href="dev/hardwood/s3/S3Source.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/writer/ParquetFileWriter.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Finishes the file: writes the row group still buffered and the footer, and publishes the
+file at the destination.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#codec()" class="member-name-link">codec()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-codec"><code>codec</code></a> record component.</div>

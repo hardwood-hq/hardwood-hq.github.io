@@ -73,6 +73,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#columnWriter()" tabindex="0">columnWriter()</a></li>
 <li><a href="#rowWriter()" tabindex="0">rowWriter()</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
+<li><a href="#abort()" tabindex="0">abort()</a></li>
 </ol>
 </li>
 </ol>
@@ -114,7 +115,10 @@ by default the writer weighs a dictionary against <code>PLAIN</code> once the ro
 takes the smaller, or a <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer"><code>ColumnEncoding</code></a> set per column names the encoding outright. Each page
 body is compressed with the configured codec (<code>ZSTD</code> by default). All of these are
 configurable through <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>. The row groups and footer are finalized on <a href="#close()"><code>close()</code></a>.</p>
-<p>The file is produced front to back and is valid only after <code>close()</code> returns.</p>
+<p>The file is produced front to back and is valid only after <code>close()</code> returns. A writer whose
+write has thrown accepts no more data, and <code>close()</code> discards its output rather than
+publishing the rows written before the failure. <a href="#abort()"><code>abort()</code></a> discards the output on a failure
+the writer does not see, such as one in the code producing the data.</p>
 </div>
 </div>
 </section>
@@ -151,48 +155,57 @@ example <code>hardwood version 1.1.0 (build a093aab)</code>.</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnWriter.html" title="class in dev.hardwood.writer">ColumnWriter</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#columnWriter()" class="member-name-link">columnWriter</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#abort()" class="member-name-link">abort</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Discards the output without publishing a file, leaving nothing at the destination, and
+closes the writer.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Finishes the file: writes the row group still buffered and the footer, and publishes the
+file at the destination.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnWriter.html" title="class in dev.hardwood.writer">ColumnWriter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#columnWriter()" class="member-name-link">columnWriter</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the column-oriented view over this file: a batch-shaped API for callers that
 hold columns rather than records.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" class="member-name-link">create</a><wbr>(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema)" class="member-name-link">create</a><wbr>(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
  <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Opens a writer with the default <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)" class="member-name-link">create</a><wbr>(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(dev.hardwood.OutputFile,dev.hardwood.schema.FileSchema,dev.hardwood.writer.WriterConfig)" class="member-name-link">create</a><wbr>(<a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a>&nbsp;out,
  <a href="../schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a>&nbsp;schema,
  <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a>&nbsp;config)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Opens a writer, writing the leading magic bytes.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createdBy(java.lang.String)" class="member-name-link">createdBy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;createdBy)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createdBy(java.lang.String)" class="member-name-link">createdBy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;createdBy)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Replaces the footer's <code>created_by</code> identifier, which defaults to <a href="#DEFAULT_CREATED_BY"><code>DEFAULT_CREATED_BY</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyValueMetadata(java.lang.String,java.lang.String)" class="member-name-link">keyValueMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyValueMetadata(java.lang.String,java.lang.String)" class="member-name-link">keyValueMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Stamps one application-defined key-value pair onto the file footer, replacing any value
 already held for that key.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyValueMetadata(java.util.Map)" class="member-name-link">keyValueMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;metadata)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyValueMetadata(java.util.Map)" class="member-name-link">keyValueMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;metadata)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Stamps every entry of <code>metadata</code> onto the file footer, replacing any value already held
 for a key it names and leaving the rest in place.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowWriter()" class="member-name-link">rowWriter</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowWriter()" class="member-name-link">rowWriter</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the row-oriented view over this file: a record-shaped API for callers that
 hold records rather than columns.</div>
 </div>
@@ -412,13 +425,56 @@ produce record by record</dd>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()
            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><p>Finishes the file: writes the row group still buffered and the footer, and publishes the
+file at the destination.</p>
+<p>If a write has thrown, the output is discarded instead, leaving nothing at the
+destination. A failure while finishing discards the output as well. Does nothing if the
+writer is already closed or aborted.</p>
+</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></code></dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the file cannot be finished, or a discarded output cannot be
+released</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="abort()">
+<h3>abort</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">abort</span>()
+           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><p>Discards the output without publishing a file, leaving nothing at the destination, and
+closes the writer.</p>
+<p>For a failure the writer does not see, such as one in the code producing the data:</p>
+<pre style="white-space:pre-wrap;"><code class="language-java">try (ParquetFileWriter writer = ParquetFileWriter.create(out, schema)) {
+    try {
+        produce(writer);
+    }
+    catch (Exception e) {
+        try {
+            writer.abort();
+        }
+        catch (IOException discardFailure) {
+            e.addSuppressed(discardFailure);
+        }
+        throw e;
+    }
+}
+</code></pre>
+<p>A failure of a write needs no call: <code>close()</code> discards the output of a writer whose write
+has thrown. Does nothing if the writer is already closed or aborted, so a file <code>close()</code>
+has published stays published.</p>
+</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the discarded output cannot be released, for example an upload
+that cannot be cancelled</dd>
 </dl>
 </div>
 </section>

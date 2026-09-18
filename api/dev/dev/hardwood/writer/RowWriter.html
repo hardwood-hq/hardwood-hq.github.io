@@ -153,10 +153,9 @@ closing it writes the records still staged here along with the footer.</p>
 <p>The writer creates the builder — bound to the schema — passes it to <code>filler</code> to be
 populated, then stages the record. A field the filler leaves unset is written as null
 if it is <code>OPTIONAL</code>, and fails the record if it is <code>REQUIRED</code>.</p>
-<p>A record that fails is staged in full or not at all: if the filler rejects a value or
-throws, everything it staged is discarded and the writer is left exactly as it was
-before the call, so the caller can handle the failure and carry on with the next
-record.</p>
+<p>Any exception fails the writer, whether the record is rejected, its <code>filler</code> throws, or a
+batch of staged records cannot be written: the writer accepts no more records, and
+<a href="ParquetFileWriter.html#close()"><code>ParquetFileWriter.close()</code></a> discards the output.</p>
 </div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -168,7 +167,7 @@ sets one twice, uses a setter that does not fit a field's declared type, or
 leaves a <code>REQUIRED</code> field unset</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if the filler addresses a field by an index the
 struct it is setting does not have</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed, or a previous write has failed</dd>
 </dl>
 </div>
 </section>

@@ -143,6 +143,9 @@ group is split at the boundary.</p>
 <p>The writer creates the batch — bound to the schema — passes it to <code>filler</code> to be
 populated (columns addressed by index or name), then submits it. There is no
 separate build or submit step to forget.</p>
+<p>Any exception fails the writer, whether the batch is rejected, its <code>filler</code> throws, or it
+cannot be written: the writer accepts no more data, and <a href="ParquetFileWriter.html#close()"><code>ParquetFileWriter.close()</code></a>
+discards the output.</p>
 </div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -153,7 +156,7 @@ separate build or submit step to forget.</p>
 per-layer inputs do not agree on a record count</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the schema has a shape the writer cannot
 produce</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed, or a previous write has failed</dd>
 </dl>
 </div>
 </section>

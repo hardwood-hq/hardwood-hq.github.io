@@ -996,6 +996,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/write-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handle Write Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/metadata/" class="md-nav__link">
         
   
@@ -1605,6 +1633,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#finishing-and-abandoning-a-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finishing and Abandoning a File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-the-writer-rejects" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2148,6 +2187,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finishing-and-abandoning-a-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finishing and Abandoning a File
+      
+    </span>
+  </a>
   
 </li>
       
@@ -2833,6 +2883,35 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>hardwood version &lt;version&gt; (build &lt;commit&gt;)
 </code></pre></div>
 <p><code>ParquetFileWriter.DEFAULT_CREATED_BY</code> holds it. <code>createdBy(String)</code> replaces it; readers that key compatibility workarounds off this field expect the <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> shape, and a bare application name is rejected by some of them.</p>
+<h2 id="finishing-and-abandoning-a-file">Finishing and Abandoning a File<a class="headerlink" href="#finishing-and-abandoning-a-file" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>close()</code></td>
+<td>Writes the buffered row group and the footer, and publishes the file at the destination</td>
+</tr>
+<tr>
+<td><code>close()</code> after the writer has failed</td>
+<td>Discards the output, leaving nothing at the destination</td>
+</tr>
+<tr>
+<td><code>abort()</code></td>
+<td>Discards the output and closes the writer</td>
+</tr>
+<tr>
+<td><code>close()</code> or <code>abort()</code> on a closed or aborted writer</td>
+<td>Nothing</td>
+</tr>
+</tbody>
+</table>
+<p>The writer fails when <code>ColumnWriter.writeBatch</code> or <code>RowWriter.writeRow</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#what-the-writer-rejects">What the Writer Rejects</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
+<p>A failure while <code>close()</code> finishes the file discards the output as well. When the output cannot be discarded, <code>close()</code> and <code>abort()</code> throw the <code>IOException</code>.</p>
 <h2 id="what-the-writer-rejects">What the Writer Rejects<a class="headerlink" href="#what-the-writer-rejects" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2856,7 +2935,7 @@
 </tr>
 <tr>
 <td><code>IllegalStateException</code></td>
-<td>Writing, or setting key-value metadata or <code>created_by</code>, after <code>close()</code>; using both write APIs on one file; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned</td>
+<td>Writing, or setting key-value metadata or <code>created_by</code>, after <code>close()</code>; writing after the writer has failed; using both write APIs on one file; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned</td>
 </tr>
 <tr>
 <td><code>IOException</code></td>
@@ -2874,7 +2953,6 @@
 <li>a <code>MAP</code> whose entry is a leaf rather than a group.</li>
 </ul>
 <p>The row API reaches a list's values through an element node below the entry, which the legacy two-level lists do not have, so <code>rowWriter()</code> refuses those two shapes and <code>columnWriter()</code> writes them. <code>rowWriter()</code> also requires sibling field names to be unique, which the <code>ColumnBatch</code> indices and dotted paths do not.</p>
-<p>A <code>ParquetFileWriter</code> that cannot finish a valid file discards its output, leaving nothing at the destination.</p>
 
 
 
@@ -2924,8 +3002,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/835045a991e72d3bc2a5a43a2376cfbd7b33db51" target="_blank" rel="noopener">
-      835045a9
+    <a href="https://github.com/hardwood-hq/hardwood/tree/499869cbeea77126ea35e80c66620922a87b68af" target="_blank" rel="noopener">
+      499869cb
     </a>
   
 </div>

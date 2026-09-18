@@ -16,7 +16,7 @@
         <link rel="prev" href="../write-row-by-row/">
       
       
-        <link rel="next" href="../metadata/">
+        <link rel="next" href="../write-failures/">
       
       
         
@@ -1145,6 +1145,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../write-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handle Write Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../metadata/" class="md-nav__link">
         
   
@@ -2099,7 +2127,7 @@
 <a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="p">}</span>
 </code></pre></div>
 <p>The writer creates the batch — bound to the schema — hands it to the filler, then submits it, so there is no separate build or submit step. <code>columnWriter()</code> returns the same view on every call, so it can be obtained once and kept; call <code>writeBatch</code> as often as there is data and the writer bands the values into pages and row groups itself.</p>
-<p>The file is produced front to back and the footer is written last, so <strong>it becomes a valid Parquet file only when <code>close()</code> returns</strong>. A writer abandoned before that leaves nothing readable at the destination.</p>
+<p>The file is produced front to back and the footer is written last, so <strong>it becomes a valid Parquet file only when <code>close()</code> returns</strong>. A writer abandoned before that leaves nothing readable at the destination. After a failure, see <a href="../write-failures/">Handle Write Failures</a>.</p>
 <h2 id="batch-rules">Batch Rules<a class="headerlink" href="#batch-rules" title="Permanent link">&para;</a></h2>
 <p>A batch is an atomic, aligned slice, and every rule below is checked as the values arrive:</p>
 <ul>
@@ -2254,8 +2282,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/835045a991e72d3bc2a5a43a2376cfbd7b33db51" target="_blank" rel="noopener">
-      835045a9
+    <a href="https://github.com/hardwood-hq/hardwood/tree/499869cbeea77126ea35e80c66620922a87b68af" target="_blank" rel="noopener">
+      499869cb
     </a>
   
 </div>

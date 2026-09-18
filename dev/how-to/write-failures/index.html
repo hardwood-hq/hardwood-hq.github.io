@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://hardwood.dev/dev/how-to/multi-file/">
+        <link rel="canonical" href="https://hardwood.dev/dev/how-to/write-failures/">
       
       
-        <link rel="prev" href="../query-controls/">
+        <link rel="prev" href="../write-column-by-column/">
       
       
-        <link rel="next" href="../avro/">
+        <link rel="next" href="../metadata/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Read Multiple Files as One Dataset - Hardwood</title>
+        <title>Handle Write Failures - Hardwood</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#reading-multiple-files" class="md-skip">
+        <a href="#handle-write-failures" class="md-skip">
           Skip to content
         </a>
       
@@ -124,7 +124,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Read Multiple Files as One Dataset
+              Handle Write Failures
             
           </span>
         </div>
@@ -772,19 +772,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../multi-file/" class="md-nav__link">
         
   
   
@@ -800,7 +791,6 @@
   
 
       </a>
-      
     </li>
   
 
@@ -1006,10 +996,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../write-failures/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handle Write Failures
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1025,6 +1042,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-write-throws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Write Throws
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-data-source-throws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Data Source Throws
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-output-cannot-be-discarded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Output Cannot Be Discarded
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1820,6 +1890,47 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-write-throws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Write Throws
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-data-source-throws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Data Source Throws
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-output-cannot-be-discarded" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Output Cannot Be Discarded
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1835,7 +1946,7 @@
 
 
   
-    <a href="https://github.com/hardwood-hq/hardwood/edit/main/docs/content/how-to/multi-file.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+    <a href="https://github.com/hardwood-hq/hardwood/edit/main/docs/content/how-to/write-failures.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
       
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
     </a>
@@ -1854,61 +1965,43 @@
      You may obtain a copy of the License at https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-<h1 id="reading-multiple-files">Reading Multiple Files<a class="headerlink" href="#reading-multiple-files" title="Permanent link">&para;</a></h1>
-<p>When processing multiple Parquet files, use the <code>Hardwood</code> class to share a thread pool across readers.
-<code>Hardwood.openAll(List&lt;InputFile&gt;)</code> returns a <code>ParquetFileReader</code> over many files. The same <code>RowReader</code>, <code>ColumnReader</code>, and <code>ColumnReaders</code> APIs apply.</p>
-<div class="admonition example">
-<p class="admonition-title">Try it yourself</p>
-<p>Want to run it or explore the capabilities yourself? <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/multi-file"><strong>Multi-File</strong></a> reads three months of data as one dataset, and <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/byte-buffer-source"><strong>Byte Buffer Source</strong></a> reads several in-memory <code>ByteBuffer</code>s as one dataset.</p>
-</div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.Hardwood</span><span class="p">;</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.InputFile</span><span class="p">;</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.RowReader</span><span class="p">;</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">List</span><span class="o">&lt;</span><span class="n">InputFile</span><span class="o">&gt;</span><span class="w"> </span><span class="n">files</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InputFile</span><span class="p">.</span><span class="na">ofPaths</span><span class="p">(</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"data_2024_01.parquet"</span><span class="p">),</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"data_2024_02.parquet"</span><span class="p">),</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="n">Path</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"data_2024_03.parquet"</span><span class="p">)</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">);</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Hardwood</span><span class="w"> </span><span class="n">hardwood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Hardwood</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">     </span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">parquet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hardwood</span><span class="p">.</span><span class="na">openAll</span><span class="p">(</span><span class="n">files</span><span class="p">);</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parquet</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">reader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">        </span><span class="n">reader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">        </span><span class="c1">// Access data using the same API as a single-file RowReader</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">getLong</span><span class="p">(</span><span class="s">"id"</span><span class="p">);</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">"name"</span><span class="p">);</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p">}</span>
+<h1 id="handle-write-failures">Handle Write Failures<a class="headerlink" href="#handle-write-failures" title="Permanent link">&para;</a></h1>
+<p>A <code>ParquetFileWriter</code> publishes its file on <code>close()</code>. When writing fails part way, the file should not be published, and how that happens depends on where the failure is raised.</p>
+<h2 id="a-write-throws">A Write Throws<a class="headerlink" href="#a-write-throws" title="Permanent link">&para;</a></h2>
+<p>No extra code is needed. When <code>ColumnWriter.writeBatch</code> or <code>RowWriter.writeRow</code> throws, the writer rejects further writes, and <code>close()</code> discards the output. This holds for every exception out of a write call: a rejected batch or record, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">ColumnWriter</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">();</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">chunks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="n">columns</span><span class="p">.</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">chunk</span><span class="p">));</span><span class="w">   </span><span class="c1">// throws: nothing is published</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
 </code></pre></div>
-<p>Cross-file prefetching is automatic: when pages from file N are running low, pages from file N+1 are already being prefetched. This eliminates I/O stalls at file boundaries.</p>
-<p>The schema of the first file is the reference schema. When a data reader is planned, each
-subsequent file reached by the data-reader plan is validated against it for that reader's
-projection and filter. Merely inspecting a file's metadata does not perform this
-projection-specific validation. Columns are matched by field path, so files may declare them in
-any order. Every projected column, and every column a filter predicate tests, must exist with a
-matching physical type, logical type, repetition type, and fixed byte length, and its enclosing
-groups must match in nullability and repeatedness, otherwise a <code>SchemaIncompatibleException</code> is
-thrown. A file is planned as the read arrives at it, so a mismatch in a later file surfaces from
-the reading loop rather than from the call that built the reader, and always before any row of
-that file is returned. Columns that are neither projected nor filtered on are not checked, so
-files may carry additional columns or omit unused ones. With no explicit projection, all columns
-of the first file are projected and therefore required in every subsequent file reached by the
-data-reader plan.</p>
-<p>By default, <code>Hardwood.create()</code> sizes the thread pool to the number of available processors. To control the decode parallelism, create a <code>HardwoodContext</code> of the desired size and pass it to <code>Hardwood.create(HardwoodContext)</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.HardwoodContext</span><span class="p">;</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">HardwoodContext</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HardwoodContext</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span><span class="w">  </span><span class="c1">// 4 threads</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">     </span><span class="n">Hardwood</span><span class="w"> </span><span class="n">hardwood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Hardwood</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">context</span><span class="p">);</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">     </span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">parquet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hardwood</span><span class="p">.</span><span class="na">openAll</span><span class="p">(</span><span class="n">files</span><span class="p">);</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parquet</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="c1">// ...</span>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+<p>A writer whose write call has thrown cannot be written to again, so skipping a rejected record and carrying on with the next is not possible: the file has to be written again from the start.</p>
+<h2 id="the-data-source-throws">The Data Source Throws<a class="headerlink" href="#the-data-source-throws" title="Permanent link">&para;</a></h2>
+<p>The writer does not see an exception raised by the code producing the data outside a filler, so <code>close()</code> would publish the rows written so far. Call <code>abort()</code> before the exception leaves the block:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">        </span><span class="n">ColumnWriter</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">();</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">            </span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="na">next</span><span class="p">();</span><span class="w">                          </span><span class="c1">// may throw</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">            </span><span class="n">columns</span><span class="p">.</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">chunk</span><span class="p">));</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">            </span><span class="n">writer</span><span class="p">.</span><span class="na">abort</span><span class="p">();</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">        </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">IOException</span><span class="w"> </span><span class="n">discardFailure</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">            </span><span class="n">e</span><span class="p">.</span><span class="na">addSuppressed</span><span class="p">(</span><span class="n">discardFailure</span><span class="p">);</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="n">e</span><span class="p">;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="p">}</span>
 </code></pre></div>
-<p>The caller owns the supplied context: it is not closed when the <code>Hardwood</code> instance is closed, so the same context — and its thread pool — can be reused across later reads and shared with single-file reads via <code>ParquetFileReader.open(InputFile, HardwoodContext)</code>.</p>
+<p><code>abort()</code> discards the output and closes the writer, so the <code>close()</code> at the end of the block does nothing. Call <code>abort()</code> the same way to abandon a file for any other reason.</p>
+<h2 id="the-output-cannot-be-discarded">The Output Cannot Be Discarded<a class="headerlink" href="#the-output-cannot-be-discarded" title="Permanent link">&para;</a></h2>
+<p>When the output cannot be released, <code>close()</code> or <code>abort()</code> throws the <code>IOException</code>. Adding it to the original exception with <code>addSuppressed</code>, as above, keeps both. On a local file, the temporary sibling of the target path (<code>&lt;name&gt;.hardwood-tmp</code>) may then be left behind.</p>
+<p>The complete rules are in the <a href="../../reference/writer/#finishing-and-abandoning-a-file">Writer Reference</a>.</p>
 
 
 
