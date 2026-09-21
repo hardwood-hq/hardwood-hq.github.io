@@ -1626,6 +1626,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../reference/reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../reference/writer/" class="md-nav__link">
         
   
@@ -2472,7 +2500,7 @@ literal.</p>
 <a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="p">}</span>
 </code></pre></div>
-<p>Tail mode cannot currently be combined with a filter predicate: the set of matching rows is not known from row-group statistics alone, so the reader cannot identify which row groups cover the last N matching rows without scanning the whole file. It is also mutually exclusive with <code>skip(long)</code>.</p>
+<p>Tail mode cannot be combined with a filter predicate: the set of matching rows is not known from row-group statistics alone, so the reader cannot identify which row groups cover the last N matching rows without scanning the whole file. It is also mutually exclusive with <code>skip(long)</code>.</p>
 <h3 id="skipping-rows-skip">Skipping Rows (<code>skip</code>)<a class="headerlink" href="#skipping-rows-skip" title="Permanent link">&para;</a></h3>
 <p>The <code>skip(long)</code> builder method is SQL <code>OFFSET</code>: it discards leading rows before reading. What "leading rows" means depends on whether a filter is present; see <a href="../../concepts/row-selection/">Row Selection</a> for the model.</p>
 <p><strong>Without a filter,</strong> <code>skip(n)</code> is a physical absolute row index. Earlier row groups are not opened, and their pages are not fetched or decoded, making this an O(1 row group) seek on remote backends, in contrast to walking <code>next()</code> from row 0.</p>
@@ -2550,8 +2578,8 @@ literal.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3163e0273ef8f55a158021dc47079cba43fc8170" target="_blank" rel="noopener">
-      3163e027
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
+      c28e2bf7
     </a>
   
 </div>

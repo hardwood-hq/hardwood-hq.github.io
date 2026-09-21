@@ -16,7 +16,7 @@
         <link rel="prev" href="../../concepts/compatibility-philosophy/">
       
       
-        <link rel="next" href="../writer/">
+        <link rel="next" href="../reader/">
       
       
         
@@ -1494,10 +1494,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reader-options" class="md-nav__link">
+  <a href="#reader-and-writer-options" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reader Options
+        Reader and Writer Options
       
     </span>
   </a>
@@ -1519,6 +1519,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1952,10 +1980,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#reader-options" class="md-nav__link">
+  <a href="#reader-and-writer-options" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reader Options
+        Reader and Writer Options
       
     </span>
   </a>
@@ -2120,45 +2148,8 @@
 <li><strong>Decode hotspots</strong> — <code>PageDecoded</code> events with large uncompressed sizes or high frequency</li>
 <li><strong>Pipeline stalls</strong> — <code>BatchWait</code> events indicate the reader is waiting for decoded data</li>
 </ul>
-<h2 id="reader-options">Reader Options<a class="headerlink" href="#reader-options" title="Permanent link">&para;</a></h2>
-<p>Read-time behaviour is configured with an immutable <code>ReaderConfig</code>, passed to <code>ParquetFileReader.open(...)</code>. It is separate from <code>HardwoodContext</code>, which holds the shared runtime resources (the decode thread pool and native decompression pools): a single context can back reads with different <code>ReaderConfig</code>s, so a behaviour knob never forces a fresh thread pool.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.HardwoodContext</span><span class="p">;</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ReaderConfig</span><span class="p">;</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">ReaderConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ReaderConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">        </span><span class="p">.</span><span class="na">option</span><span class="p">(</span><span class="s">"hardwood.fixed-list-fast-path"</span><span class="p">,</span><span class="w"> </span><span class="s">"true"</span><span class="p">)</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">HardwoodContext</span><span class="w"> </span><span class="n">context</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">HardwoodContext</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">     </span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">inputFile</span><span class="p">,</span><span class="w"> </span><span class="n">context</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="c1">// ...</span>
-<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="p">}</span>
-</code></pre></div>
-<p>Obtain the defaults with <code>ReaderConfig.defaults()</code>. The <code>open(inputFile)</code> and <code>open(inputFile, context)</code> overloads use the defaults.</p>
-<p>Write-time behaviour is configured separately, with a <code>WriterConfig</code> passed to <code>ParquetFileWriter.create(...)</code> — see the <a href="../writer/#writer-options">Writer Reference</a>.</p>
-<p>Options are string-keyed and keys are matched case-sensitively; boolean option values are compared case-insensitively. An unrecognised key is ignored (so a transitional flag can be retired without breaking callers) but logged at <code>WARNING</code>, so a typo in a live key surfaces rather than silently taking the default.</p>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>hardwood.fixed-list-fast-path</code></td>
-<td><code>false</code></td>
-<td>Set to <code>"true"</code> to decode fixed-size <code>LIST</code> columns (e.g. embedding vectors, where every row holds the same number of non-null elements) without reconstructing per-row definition and repetition levels. Off by default, so every column takes the general nested-decode path unless the option is enabled.</td>
-</tr>
-<tr>
-<td><code>hardwood.metadata-filtering</code></td>
-<td><code>true</code></td>
-<td>Set to <code>"false"</code> to disable metadata-based filtering: no row groups or pages are skipped from min/max statistics, bloom filters, dictionary pages, or page indexes, and filter predicates are instead evaluated against every decoded row. Filtered results then depend only on the data pages, for files whose footer or page-index metadata is unreliable.</td>
-</tr>
-</tbody>
-</table>
+<h2 id="reader-and-writer-options">Reader and Writer Options<a class="headerlink" href="#reader-and-writer-options" title="Permanent link">&para;</a></h2>
+<p>Read-time behaviour is configured with a <code>ReaderConfig</code> passed to <code>ParquetFileReader.open(...)</code>; see the <a href="../reader/#reader-options">Reader Reference</a>. Write-time behaviour is configured with a <code>WriterConfig</code> passed to <code>ParquetFileWriter.create(...)</code>; see the <a href="../writer/#writer-options">Writer Reference</a>.</p>
 <h2 id="system-properties-reference">System Properties Reference<a class="headerlink" href="#system-properties-reference" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2225,8 +2216,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3163e0273ef8f55a158021dc47079cba43fc8170" target="_blank" rel="noopener">
-      3163e027
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
+      c28e2bf7
     </a>
   
 </div>

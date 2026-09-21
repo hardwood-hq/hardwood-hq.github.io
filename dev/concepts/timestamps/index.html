@@ -1531,6 +1531,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../reference/reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../reference/writer/" class="md-nav__link">
         
   
@@ -2030,10 +2058,9 @@ API keeps them distinct.</p>
 <h2 id="the-split-accessor-pair">The split accessor pair<a class="headerlink" href="#the-split-accessor-pair" title="Permanent link">&para;</a></h2>
 <p>Because the column's flag already records which kind it is, each accessor enforces the matching
 flag: <code>getTimestamp</code> is the <code>Instant</code> accessor and <code>getLocalTimestamp</code> the <code>LocalDateTime</code> one, and
-calling the wrong one for a column is a programming error that throws. The exact runtime contract (which flag each
-requires, the exception thrown) lives in <a href="../../reference/accessors/">Typed Accessors</a>. When a
-column's kind isn't known statically, branching on the flag — or the generic <code>getValue</code> accessor,
-which returns <code>Instant</code> or <code>LocalDateTime</code> per the flag — recovers the right type without a guess.</p>
+calling the wrong one for a column is a programming error that throws. The exact runtime contract,
+including how to read a column whose kind isn't known statically, lives in
+<a href="../../reference/accessors/">Typed Accessors</a>.</p>
 <p>Filter predicates follow the same split. A <code>FilterPredicate</code> literal on a UTC-adjusted column is an
 <code>Instant</code> and on a local one a <code>LocalDateTime</code>, so a predicate compares the same kind of value the
 column's accessor returns; the other kind is rejected when the reader is built, for the same reason
@@ -2111,8 +2138,8 @@ annotation.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3163e0273ef8f55a158021dc47079cba43fc8170" target="_blank" rel="noopener">
-      3163e027
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
+      c28e2bf7
     </a>
   
 </div>

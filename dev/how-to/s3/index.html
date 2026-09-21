@@ -891,6 +891,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credentials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#multiple-files" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -980,10 +991,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#not-currently-supported" class="md-nav__link">
+  <a href="#not-supported" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Not currently supported
+        Not supported
       
     </span>
   </a>
@@ -1581,6 +1592,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../reference/reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../reference/writer/" class="md-nav__link">
         
   
@@ -1969,6 +2008,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#credentials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Credentials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#multiple-files" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2058,10 +2108,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#not-currently-supported" class="md-nav__link">
+  <a href="#not-supported" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Not currently supported
+        Not supported
       
     </span>
   </a>
@@ -2120,6 +2170,7 @@
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>hardwood-s3<span class="nt">&lt;/artifactId&gt;</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nt">&lt;/dependency&gt;</span>
 </code></pre></div>
+<h2 id="credentials">Credentials<a class="headerlink" href="#credentials" title="Permanent link">&para;</a></h2>
 <p>Read a file with static credentials:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.s3.S3Credentials</span><span class="p">;</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.s3.S3Source</span><span class="p">;</span>
@@ -2160,6 +2211,7 @@
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(</span><span class="n">SdkCredentialsProviders</span><span class="p">.</span><span class="na">defaultChain</span><span class="p">())</span>
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
+<p><code>defaultChain()</code> delegates to the AWS SDK's <code>DefaultCredentialsProvider</code>, which decides the order in which the sources are tried. <code>SdkCredentialsProviders.fromProfile("my-profile")</code> binds one named profile from <code>~/.aws/credentials</code> instead.</p>
 <h2 id="multiple-files">Multiple Files<a class="headerlink" href="#multiple-files" title="Permanent link">&para;</a></h2>
 <p>Read multiple files in the same bucket:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.Hardwood</span><span class="p">;</span>
@@ -2244,10 +2296,10 @@ examples below cover the common cases.</p>
 </div>
 <p>Column projection, row group filtering, and all other reader features work transparently with S3 files.</p>
 <h3 id="io-behavior">I/O Behavior<a class="headerlink" href="#io-behavior" title="Permanent link">&para;</a></h3>
-<p>When reading from S3, Hardwood coalesces column chunk reads within each row group into as few HTTP requests as possible (typically 1-2 per row group). Column projection, page-level predicate pushdown, and <code>maxRows</code> all narrow the byte ranges before coalescing, reducing the amount of data transferred.</p>
-<p>Without a <code>maxRows</code> limit, the reader fetches all projected (and filtered) column data for an entire row group when any column enters it. For large row groups (128 MB–1 GB is typical), this can transfer significant data even if the consumer stops reading early. To minimize data transfer for partial reads, set <code>maxRows</code> on the reader — this truncates each column's fetch to only the pages covering the needed rows.</p>
+<p>When reading from S3, Hardwood coalesces column chunk reads within each row group into as few HTTP requests as possible (typically 1-2 per row group). Column projection, page-level predicate pushdown, and <code>head(n)</code> on an unfiltered read all narrow the byte ranges before coalescing, reducing the amount of data transferred.</p>
+<p>Without a row limit, the reader fetches all projected (and filtered) column data for an entire row group when any column enters it. For large row groups (128 MB–1 GB is typical), this can transfer significant data even if the consumer stops reading early. To minimize data transfer for partial reads, set <code>head(n)</code> on the <code>buildRowReader()</code> builder; this truncates each column's fetch to only the pages covering the needed rows. With a filter, <code>head(n)</code> counts matching rows, which are not known before the pages are decoded, so it does not narrow the fetch.</p>
 <h3 id="measuring-fetch-cost">Measuring Fetch Cost<a class="headerlink" href="#measuring-fetch-cost" title="Permanent link">&para;</a></h3>
-<p>Each <code>S3InputFile</code> tracks the network I/O it has performed, which is useful for confirming that column projection, predicate pushdown, and <code>maxRows</code> reduced transfer — and for estimating S3 cost (GET requests plus bytes transferred):</p>
+<p>Each <code>S3InputFile</code> tracks the network I/O it has performed, which is useful for confirming that column projection, predicate pushdown, and <code>head(n)</code> reduced transfer — and for estimating S3 cost (GET requests plus bytes transferred):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.s3.S3InputFile</span><span class="p">;</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">S3InputFile</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="na">inputFile</span><span class="p">(</span><span class="s">"s3://my-bucket/data/trips.parquet"</span><span class="p">);</span>
@@ -2262,8 +2314,8 @@ examples below cover the common cases.</p>
 <a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="p">}</span>
 </code></pre></div>
 <p>Read the counters before the try-with-resources block exits, while the <code>S3InputFile</code> is still open. For the exact counting semantics of <code>networkRequestCount()</code> and <code>networkBytesFetched()</code>, see the <a href="../../reference/s3/#fetch-cost-counters">S3 Reference</a>.</p>
-<h3 id="not-currently-supported">Not currently supported<a class="headerlink" href="#not-currently-supported" title="Permanent link">&para;</a></h3>
-<p>Anonymous (unsigned) requests and requester-pays buckets are not supported — see the <a href="../../reference/s3/#not-currently-supported">S3 Reference</a> for details.</p>
+<h3 id="not-supported">Not supported<a class="headerlink" href="#not-supported" title="Permanent link">&para;</a></h3>
+<p>Anonymous (unsigned) requests and requester-pays buckets are not supported — see the <a href="../../reference/s3/#not-supported">S3 Reference</a> for details.</p>
 
 
 
@@ -2313,8 +2365,8 @@ examples below cover the common cases.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3163e0273ef8f55a158021dc47079cba43fc8170" target="_blank" rel="noopener">
-      3163e027
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
+      c28e2bf7
     </a>
   
 </div>

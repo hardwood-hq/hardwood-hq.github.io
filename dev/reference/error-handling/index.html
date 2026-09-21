@@ -1429,6 +1429,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../writer/" class="md-nav__link">
         
   
@@ -2065,41 +2093,7 @@ failure before a column chunk's pages are walked names no page, and one while th
 parsed names only the file. A message for a wrong call names the file alone. An <code>IOException</code>
 an <code>InputFile</code> raises for itself is unprefixed.</p>
 <h2 id="writing">Writing<a class="headerlink" href="#writing" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>Exception</th>
-<th>When</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>IOException</code></td>
-<td>The destination cannot be created, written, or finalized. The writer discards its output rather than leaving a truncated file at the target path</td>
-</tr>
-<tr>
-<td><code>ParquetWriteException</code></td>
-<td>The file could not be produced, for a reason that is neither your call nor the destination: a compression codec that rejects a page body. Unchecked</td>
-</tr>
-<tr>
-<td><code>UnsupportedOperationException</code></td>
-<td>A schema column of an unsupported physical type (<code>INT96</code>); a refused compression codec (<code>LZ4</code>, <code>LZO</code>), one whose library is not on the classpath, or one whose native library will not load; a schema shape the writer cannot produce, namely repetition no <code>LIST</code> or <code>MAP</code> annotation accounts for</td>
-</tr>
-<tr>
-<td><code>IllegalArgumentException</code></td>
-<td>A schema with no columns, an unknown column name or path, a setter that does not fit the column's type, a column set twice, a batch that leaves a column unset or whose arrays disagree in length, a null mask on a <code>REQUIRED</code> column, list offsets that do not describe the elements given, a value outside the range its annotation declares, or a <code>REQUIRED</code> field a record leaves unset</td>
-</tr>
-<tr>
-<td><code>IndexOutOfBoundsException</code></td>
-<td>A leaf-column index outside <code>[0, leaf column count)</code> on a <code>ColumnBatch</code> setter, or a field index outside <code>[0, getFieldCount())</code> on a <code>StructBuilder</code> setter</td>
-</tr>
-<tr>
-<td><code>IllegalStateException</code></td>
-<td>Writing after <code>close()</code>, using both write APIs on one file, or using a <code>ColumnBatch</code> or nested builder after its scope has ended</td>
-</tr>
-</tbody>
-</table>
-<p>For what each of these means in context, see the <a href="../writer/#what-the-writer-rejects">Writer Reference</a>.</p>
+<p>The exceptions a write can throw, the condition behind each, and the schema shapes the writer refuses are tabulated in the <a href="../writer/#what-the-writer-rejects">Writer Reference</a>.</p>
 
 
 
@@ -2149,8 +2143,8 @@ an <code>InputFile</code> raises for itself is unprefixed.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3163e0273ef8f55a158021dc47079cba43fc8170" target="_blank" rel="noopener">
-      3163e027
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
+      c28e2bf7
     </a>
   
 </div>

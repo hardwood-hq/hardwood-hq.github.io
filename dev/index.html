@@ -1537,6 +1537,34 @@
   
   
     <li class="md-nav__item">
+      <a href="reference/reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="reference/writer/" class="md-nav__link">
         
   
@@ -2045,7 +2073,7 @@ It is built to be:</p>
 <li><strong>Fast</strong>: Hardwood aims to be the fastest Parquet reader and writer for the JVM (<a href="https://www.morling.dev/blog/hardwood-1-0-fast-lightweight-apache-parquet-reader-for-the-jvm/#_performance">1.0 read benchmarks</a>)</li>
 <li><strong>Complete</strong>: Read and write support for flat and nested schemas, every logical type, every primitive type in current use, and the encodings and codecs in current use, with new format additions tracked as they land</li>
 <li><strong>Scalable</strong>: Hardwood is multi-threaded at the core, pages are decoded in parallel, with cross-file prefetching for multi-file reads</li>
-<li><strong>Embeddable</strong>: The Hardwood library can be used in GraalVM native binaries; WASM support coming soon (<a href="/experiments/dive-web/">preview</a>)</li>
+<li><strong>Embeddable</strong>: The Hardwood library can be used in GraalVM native binaries; a WASM build of <code>dive</code> runs in the browser as a <a href="/experiments/dive-web/">preview</a></li>
 <li><strong>Agent-friendly</strong>: Hardwood's CLI comes with a skill which lets your agents inspect and analyse Parquet files</li>
 <li><strong>Compatible</strong>: A <a href="how-to/compat/">drop-in shim module</a> facilitates migration from <code>parquet-java</code>, with documented divergences where Hardwood applies stricter semantics (e.g. SQL three-valued <code>notEq</code>)</li>
 </ul>
@@ -2090,11 +2118,10 @@ including an interactive TUI for exploring a file's schema, row groups, pages, a
 Alternatively, <a href="reference/cli/">install the Hardwood CLI</a> for working with Parquet files on the command line.</p>
 <p>The <a href="https://github.com/hardwood-hq/hardwood-examples">hardwood-examples</a> repository collects small, self-contained examples, one per concept, that you can clone and run with a single command.</p>
 <h2 id="status-and-limitations">Status and Limitations<a class="headerlink" href="#status-and-limitations" title="Permanent link">&para;</a></h2>
-<p>Hardwood 1.0 with read support is released and ready for production use.
-Support for writing Parquet files is under active development as of Hardwood 1.1.</p>
-<p>The Hardwood library supports reading arbitrarily large Parquet files, provided individual column chunks are not larger than 2 GB (see <a href="concepts/parquet-layout/">Parquet file layout</a>).
-The interactive <code>dive</code> TUI currently caps S3 files at 2 GB.
-Writing targets local files through <code>OutputFile.of(Path)</code>; output to object storage is coming soon.</p>
+<p>The read path is stable and suitable for production use; <code>ColumnReader</code>, with its <code>Validity</code> and <code>LayerKind</code> types, is annotated <code>@Experimental</code>, so its shape may still change.
+The write path ships both APIs described under <a href="how-to/#choosing-a-writer">Choosing a Writer</a>; the row-oriented <code>RowWriter</code> and its builders, and the <code>ColumnBatch</code> setters for nested and nullable columns, are annotated <code>@Experimental</code>, so their shape may still change.</p>
+<p>Writing targets local files through <code>OutputFile.of(Path)</code>.
+Reads have no file-size ceiling, but individual column chunks are capped at 2 GB, and some backends carry their own limits; see <a href="concepts/parquet-layout/#column-chunk">2 GB column-chunk limit</a>.</p>
 <h2 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">&para;</a></h2>
 <p>Forward-looking items tracked for post-1.0. None are committed to a specific release.</p>
 <ul>
@@ -2167,8 +2194,8 @@ Writing targets local files through <code>OutputFile.of(Path)</code>; output to 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3163e0273ef8f55a158021dc47079cba43fc8170" target="_blank" rel="noopener">
-      3163e027
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
+      c28e2bf7
     </a>
   
 </div>

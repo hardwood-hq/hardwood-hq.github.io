@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://hardwood.dev/dev/reference/writer/">
       
       
-        <link rel="prev" href="../configuration/">
+        <link rel="prev" href="../reader/">
       
       
         <link rel="next" href="../accessors/">
@@ -1409,6 +1409,34 @@
     
   
     Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
   
 
     
@@ -2923,7 +2951,7 @@
 <tbody>
 <tr>
 <td><code>UnsupportedOperationException</code></td>
-<td>A schema column of an unsupported physical type (<code>INT96</code>); a refused codec (<code>LZ4</code>, <code>LZO</code>) or one whose library is missing; a <a href="#schema-shapes">schema shape</a> the writer cannot produce</td>
+<td>A schema column of an unsupported physical type (<code>INT96</code>); a refused codec (<code>LZ4</code>, <code>LZO</code>), one whose library is missing, or one whose native library will not load; a <a href="#schema-shapes">schema shape</a> the writer cannot produce</td>
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
@@ -2940,6 +2968,10 @@
 <tr>
 <td><code>IOException</code></td>
 <td>The destination cannot be created, written, or finalized</td>
+</tr>
+<tr>
+<td><code>ParquetWriteException</code></td>
+<td>The file could not be produced for a reason that is neither the caller's input nor the destination: a compression codec that rejects a page body. Unchecked</td>
 </tr>
 </tbody>
 </table>
@@ -3002,8 +3034,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3163e0273ef8f55a158021dc47079cba43fc8170" target="_blank" rel="noopener">
-      3163e027
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
+      c28e2bf7
     </a>
   
 </div>

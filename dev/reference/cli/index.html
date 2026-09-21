@@ -1429,6 +1429,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../writer/" class="md-nav__link">
         
   
@@ -2800,7 +2828,7 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>hardwood<span class="w"> </span>schema<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
-<p>The CLI resolves credentials via the standard AWS credential chain (<code>AWS_ACCESS_KEY_ID</code> / <code>AWS_SECRET_ACCESS_KEY</code> / <code>AWS_SESSION_TOKEN</code> environment variables, <code>~/.aws/credentials</code>, SSO, EC2/ECS instance profiles, web identity). See the <a href="../../how-to/s3/">S3 module page</a> for the resolution order and provider details.</p>
+<p>The CLI resolves credentials through the AWS SDK's default credential chain (<code>AWS_ACCESS_KEY_ID</code> / <code>AWS_SECRET_ACCESS_KEY</code> / <code>AWS_SESSION_TOKEN</code> environment variables, <code>~/.aws/credentials</code>, SSO, EC2/ECS instance profiles, web identity), which decides the order in which those sources are tried. See <a href="../../how-to/s3/#credentials">Read from S3</a> for the credential options available to the library.</p>
 <p>The CLI additionally reads these environment variables:</p>
 <table>
 <thead>
@@ -2934,8 +2962,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3163e0273ef8f55a158021dc47079cba43fc8170" target="_blank" rel="noopener">
-      3163e027
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
+      c28e2bf7
     </a>
   
 </div>

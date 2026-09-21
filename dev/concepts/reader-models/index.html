@@ -1542,6 +1542,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../reference/reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../reference/writer/" class="md-nav__link">
         
   
@@ -2062,13 +2090,6 @@ needs a whole record assembled. <code>ColumnReader</code> skips the row-assembly
 the decoded values as a primitive array you iterate with no per-element method call and no
 boxing. On that kind of workload it is markedly faster; the cost is that <em>you</em> handle the layout
 (nulls via the bitmap, nested structure via offsets; see below), which is more to get right.</p>
-<p>The rule of thumb that the <a href="../../how-to/#choosing-a-reader">decision table</a> encodes:</p>
-<ul>
-<li>Processing whole records, especially nested ones, with readability mattering more than peak
-  throughput → <strong><code>RowReader</code></strong>.</li>
-<li>Aggregating or scanning a few columns over many rows, where throughput is the point →
-  <strong><code>ColumnReader</code></strong>.</li>
-</ul>
 <h2 id="the-layer-model">The layer model<a class="headerlink" href="#the-layer-model" title="Permanent link">&para;</a></h2>
 <p>The two APIs also differ in how they expose nesting, and this is where the throughput trade-off
 becomes concrete.</p>
@@ -2159,8 +2180,8 @@ against the same file, sharing one <a href="../concurrency-model/">context and w
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3163e0273ef8f55a158021dc47079cba43fc8170" target="_blank" rel="noopener">
-      3163e027
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
+      c28e2bf7
     </a>
   
 </div>

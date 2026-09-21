@@ -1562,6 +1562,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../reference/reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../reference/writer/" class="md-nav__link">
         
   
@@ -2124,7 +2152,7 @@ Import it in your dependency management so you can declare Hardwood dependencies
 <p>Hardwood uses the Java Platform Logging API (<code>System.Logger</code>).
 Bindings are available for all popular logger implementations, for instance for <a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-jpl">log4j 2</a>.</p>
 <h3 id="compression-libraries">Compression Libraries<a class="headerlink" href="#compression-libraries" title="Permanent link">&para;</a></h3>
-<p>Hardwood reads Parquet files compressed with GZIP (built into Java), Snappy, ZSTD, LZ4 in both of its framings, and Brotli. It writes all of those except the Hadoop-framed <code>LZ4</code>, which the Parquet format deprecated in favour of <code>LZ4_RAW</code>; files already written with it are still read. The compression libraries are optional dependencies; add only the ones you need. Snappy and ZSTD are the codecs most commonly seen in the wild; LZ4 and Brotli are rarer.</p>
+<p>Hardwood reads Parquet files compressed with GZIP (built into Java), Snappy, ZSTD, LZ4 in both of its framings, and Brotli. It writes all of those except the Hadoop-framed <code>LZ4</code>; the <a href="../reference/writer/#compression-codecs">Writer Reference</a> lists what each codec needs. The compression libraries are optional dependencies; add only the ones you need. Snappy and ZSTD are the codecs most commonly seen in the wild; LZ4 and Brotli are rarer.</p>
 <p>Writing compresses with ZSTD where <code>zstd-jni</code> is on the classpath, and writes uncompressed pages where it is not, so add that dependency to get compressed output under the default configuration.</p>
 <table>
 <thead>
@@ -2249,8 +2277,8 @@ Bindings are available for all popular logger implementations, for instance for 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3163e0273ef8f55a158021dc47079cba43fc8170" target="_blank" rel="noopener">
-      3163e027
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
+      c28e2bf7
     </a>
   
 </div>
