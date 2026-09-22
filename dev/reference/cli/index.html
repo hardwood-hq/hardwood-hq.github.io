@@ -1856,6 +1856,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#compression-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression libraries
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#shell-completion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2260,6 +2271,17 @@
     <span class="md-ellipsis">
       
         Reading Files from S3
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compression-libraries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression libraries
       
     </span>
   </a>
@@ -2852,6 +2874,28 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="compression-libraries">Compression libraries<a class="headerlink" href="#compression-libraries" title="Permanent link">&para;</a></h2>
+<p>The native binary contains the native libraries for the Snappy, ZSTD, LZ4 and Brotli codecs. On startup it writes them to the first usable one of these directories and loads them from there:</p>
+<table>
+<thead>
+<tr>
+<th>Directory</th>
+<th>Used when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&lt;temp dir&gt;/hardwood-&lt;user&gt;/</code>, where <code>&lt;temp dir&gt;</code> is <code>/tmp</code> on Linux, <code>$TMPDIR</code> on macOS and <code>%TEMP%</code> on Windows</td>
+<td>the default</td>
+</tr>
+<tr>
+<td><code>~/.hardwood/</code></td>
+<td>libraries in the temp directory cannot be loaded, e.g. because it is mounted <code>noexec</code></td>
+</tr>
+</tbody>
+</table>
+<p>A directory is used only if neither group nor others can write to it; a missing one is created with owner-only permissions. Later runs, including runs of newer Hardwood versions, reuse a file as long as the library it contains is unchanged.</p>
+<p>To load the libraries from a directory of your own instead, set <code>HARDWOOD_LIB_PATH</code> to that directory. A codec whose library is not in it falls back to the one contained in the binary.</p>
 <h2 id="shell-completion">Shell Completion<a class="headerlink" href="#shell-completion" title="Permanent link">&para;</a></h2>
 <p>The distribution includes completion scripts for Bash, Zsh, and Fish under <code>bin/</code>:</p>
 <table>
@@ -2962,8 +3006,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c89b196e86b745286c92de14fb6cb400e08c7809" target="_blank" rel="noopener">
-      c89b196e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/bf8bbb17ac978af40769b224bb24febf24ca291d" target="_blank" rel="noopener">
+      bf8bbb17
     </a>
   
 </div>
