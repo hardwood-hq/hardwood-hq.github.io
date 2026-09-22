@@ -2896,6 +2896,7 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
 </table>
 <p>A directory is used only if neither group nor others can write to it; a missing one is created with owner-only permissions. Later runs, including runs of newer Hardwood versions, reuse a file as long as the library it contains is unchanged.</p>
 <p>To load the libraries from a directory of your own instead, set <code>HARDWOOD_LIB_PATH</code> to that directory. A codec whose library is not in it falls back to the one contained in the binary.</p>
+<p>The <a href="#docker">Docker image</a> sets <code>HARDWOOD_LIB_PATH</code> to libraries stored in the image, so it writes nothing at startup and runs with <code>--read-only</code>.</p>
 <h2 id="shell-completion">Shell Completion<a class="headerlink" href="#shell-completion" title="Permanent link">&para;</a></h2>
 <p>The distribution includes completion scripts for Bash, Zsh, and Fish under <code>bin/</code>:</p>
 <table>
@@ -3006,8 +3007,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5625aef30c0a60380b8e73a37f9647b5a32ced84" target="_blank" rel="noopener">
-      5625aef3
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5a60a1497b95f36cc30d6e74e25884d03c988904" target="_blank" rel="noopener">
+      5a60a149
     </a>
   
 </div>
