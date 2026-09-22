@@ -2120,6 +2120,11 @@
 <td>Row groups dropped by statistics/bloom predicate pushdown. Fields: file, totalRowGroups, rowGroupsKept, rowGroupsSkipped, rowGroupsFullyMatching</td>
 </tr>
 <tr>
+<td><code>dev.hardwood.RowGroupDictionaryFilter</code></td>
+<td>Filter</td>
+<td>Row group dropped by dictionary predicate pushdown when the read reaches it, one event per row group dropped. <code>RowGroupFilter</code> counts that row group as kept. Fields: file, rowGroupIndex</td>
+</tr>
+<tr>
 <td><code>dev.hardwood.RowGroupByteRangeFilter</code></td>
 <td>Filter</td>
 <td>Row groups selected by a byte-range split predicate (split-aware reading). Fields: file, totalRowGroups, rowGroupsKept, rowGroupsSkipped</td>
@@ -2144,7 +2149,7 @@
 <p>Events appear under the <strong>Hardwood</strong> category in JDK Mission Control (JMC) or any JFR analysis tool. Use them to identify:</p>
 <ul>
 <li><strong>I/O bottlenecks</strong> — large <code>FileMapping</code> durations</li>
-<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were dropped by statistics/bloom pushdown and <code>RowGroupByteRangeFilter</code> how many were excluded by split selection; <code>PageFilter</code> shows how many of a column chunk's pages survived the Column Index within a row group that was kept, with no event for a column chunk the Column Index did not narrow — including a chunk that has no Column Index, whose pages are instead dropped from page-header statistics and are not reported; <code>RecordFilter</code> shows how many individual records the predicate decided on per file once that pruning is done</li>
+<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were dropped by statistics/bloom pushdown, <code>RowGroupDictionaryFilter</code> which were dropped by their dictionaries, and <code>RowGroupByteRangeFilter</code> how many were excluded by split selection; <code>PageFilter</code> shows how many of a column chunk's pages survived the Column Index within a row group that was kept, with no event for a column chunk the Column Index did not narrow — including a chunk that has no Column Index, whose pages are instead dropped from page-header statistics and are not reported; <code>RecordFilter</code> shows how many individual records the predicate decided on per file once that pruning is done</li>
 <li><strong>Decode hotspots</strong> — <code>PageDecoded</code> events with large uncompressed sizes or high frequency</li>
 <li><strong>Pipeline stalls</strong> — <code>BatchWait</code> events indicate the reader is waiting for decoded data</li>
 </ul>
@@ -2216,8 +2221,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c28e2bf7aca32f7a7555b9ee76083bc2aa79776f" target="_blank" rel="noopener">
-      c28e2bf7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c89b196e86b745286c92de14fb6cb400e08c7809" target="_blank" rel="noopener">
+      c89b196e
     </a>
   
 </div>

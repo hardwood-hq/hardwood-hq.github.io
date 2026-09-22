@@ -132,12 +132,18 @@ to be assembled by the assembly thread.</div>
 <div class="block">JFR event emitted when row groups are selected by a byte-range row-group predicate
 (split-aware reading).</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RowGroupFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupFilterEvent</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RowGroupDictionaryFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupDictionaryFilterEvent</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">JFR event emitted when row groups are filtered by a predicate push-down filter.</div>
+<div class="block">JFR event emitted when a row group's dictionaries prove that none of its rows matches the
+filter, once the read reaches the row group.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RowGroupScannedEvent.html" title="class in dev.hardwood.jfr">RowGroupScannedEvent</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RowGroupFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupFilterEvent</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">JFR event emitted once per file when its row groups are filtered by statistics and bloom
+filters, before any of them is read.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RowGroupScannedEvent.html" title="class in dev.hardwood.jfr">RowGroupScannedEvent</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">JFR event emitted when all pages in a row group column chunk have been scanned.</div>
 </div>
 </div>
