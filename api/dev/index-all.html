@@ -543,7 +543,9 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <div class="block">Releases the resources held by this reader.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReaders.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Releases the resources held by every reader of this group.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/RowReader.html#close()" class="member-name-link">close()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></dt>
@@ -796,8 +798,8 @@ every row group, no filter.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReaders.html" class="type-name-link" title="class in dev.hardwood.reader">ColumnReaders</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
-<div class="block">Holds multiple <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by a shared
-<code>RowGroupIterator</code> for batch-oriented projection reads.</div>
+<div class="block">Holds multiple <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by one shared decode
+pipeline for batch-oriented projection reads.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/RowGroup.html#columns()" class="member-name-link">columns()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/RowGroup.html" title="class in dev.hardwood.metadata">RowGroup</a></dt>
 <dd>
@@ -2386,7 +2388,8 @@ logical-type decoding.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReaders.html#getRecordCount()" class="member-name-link">getRecordCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></dt>
 <dd>
-<div class="block">Number of records in the most recently published batch.</div>
+<div class="block">Number of records in the group's current batch, whether <a href="dev/hardwood/reader/ColumnReaders.html#nextBatch()"><code>ColumnReaders.nextBatch()</code></a> or
+<a href="dev/hardwood/reader/ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on one of its readers advanced the group to it.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/FileSchema.html#getRootNode()" class="member-name-link">getRootNode()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></dt>
 <dd>

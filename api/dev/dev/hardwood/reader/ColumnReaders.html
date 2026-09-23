@@ -88,9 +88,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ColumnReaders</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
-<div class="block"><p>Holds multiple <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by a shared
-<code>RowGroupIterator</code> for batch-oriented projection reads. Works for both
-single- and multi-file <a href="ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a> inputs; the iterator
+<div class="block"><p>Holds multiple <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by one shared decode
+pipeline for batch-oriented projection reads. Works for both
+single- and multi-file <a href="ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a> inputs; the pipeline
 transparently handles cross-file prefetching when more than one file is
 involved.</p>
 <p>Use <a href="#nextBatch()"><code>nextBatch()</code></a> to advance every underlying reader in lockstep — this is
@@ -129,7 +129,9 @@ readers report matching record counts.</p>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Releases the resources held by every reader of this group.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnCount()" class="member-name-link">getColumnCount</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -148,7 +150,8 @@ readers report matching record counts.</p>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRecordCount()" class="member-name-link">getRecordCount</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Number of records in the most recently published batch.</div>
+<div class="block">Number of records in the group's current batch, whether <a href="#nextBatch()"><code>nextBatch()</code></a> or
+<a href="ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on one of its readers advanced the group to it.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextBatch()" class="member-name-link">nextBatch</a>()</code></div>
@@ -221,24 +224,23 @@ For nested columns, use the dot-separated field path (e.g. <code>&quot;address.z
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">nextBatch</span>()
                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block"><p>Advance every underlying <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> to its next batch in lockstep.</p>
-<p>All readers share the same <code>RowGroupIterator</code>, so they always publish batches at
-the same row boundaries. This method drives every reader once and returns:</p>
+<p>All readers share one pipeline, so they always publish batches at the same row
+boundaries. This method advances that pipeline once and returns:</p>
 <ul>
-<li><code>true</code> when every reader produced a new batch — callers can then read values
-via the per-column accessors. The aligned record count is exposed through
+<li><code>true</code> when a new batch is available — callers can then read values via the
+per-column accessors. The aligned record count is exposed through
 <a href="#getRecordCount()"><code>getRecordCount()</code></a>.</li>
-<li><code>false</code> when any reader is exhausted — partial advancement is impossible
-because all readers consume from the shared iterator, so once one is done they
+<li><code>false</code> when the readers are exhausted — partial advancement is impossible
+because all readers consume from the shared pipeline, so once one is done they
 all are.</li>
 </ul>
-<p>As a defensive guard, a mismatch between the readers' published record counts
+<p>As a defensive guard, a mismatch between the columns' decoded record counts
 throws <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>. Under correct internal behavior this can't
 happen — the guard exists to detect future regressions in the per-column drain
 workers, not to be triggered in production.</p>
-<p>This method is how these readers are advanced. <a href="ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on one of
-them moves that reader alone and leaves its siblings on the batch they already hold;
-the counts still match, so the guard above stays silent and every later batch pairs
-values from different rows.</p>
+<p>Calling <a href="ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on each reader in turn instead moves the group
+once as well: the first reader called advances it, and the others take up the same
+batch.</p>
 </div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -251,7 +253,8 @@ dictionary page the metadata places outside its column chunk, a page whose
 checksum fails, values that do not decode under the encoding declared for
 them. In a multi-file read this covers a later file that is not Parquet at
 all, or whose schema cannot be reconciled with the first file's</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the readers report mismatched record counts</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the readers report mismatched record counts, or the
+group was closed</dd>
 </dl>
 </div>
 </section>
@@ -261,9 +264,10 @@ all, or whose schema cannot be reconciled with the first file's</dd>
 <h3>getRecordCount</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRecordCount</span>()</div>
-<div class="block"><p>Number of records in the most recently published batch.</p>
-<p>Equal to every underlying reader's <a href="ColumnReader.html#getRecordCount()"><code>ColumnReader.getRecordCount()</code></a> — alignment is
-validated by <a href="#nextBatch()"><code>nextBatch()</code></a>.</p>
+<div class="block"><p>Number of records in the group's current batch, whether <a href="#nextBatch()"><code>nextBatch()</code></a> or
+<a href="ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on one of its readers advanced the group to it.</p>
+<p>Equal to every underlying reader's <a href="ColumnReader.html#getRecordCount()"><code>ColumnReader.getRecordCount()</code></a> once that reader
+has taken up the batch — alignment is validated when the group advances.</p>
 </div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -279,6 +283,7 @@ validated by <a href="#nextBatch()"><code>nextBatch()</code></a>.</p>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()
            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Releases the resources held by every reader of this group. Idempotent.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>
