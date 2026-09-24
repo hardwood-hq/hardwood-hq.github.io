@@ -2510,6 +2510,25 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
 </tr>
 </tbody>
 </table>
+<p>A <code>RowReader</code>'s accessors reach the projected columns only. A filter column outside the projection is decoded where the filter needs its values and is not readable through the row:</p>
+<table>
+<thead>
+<tr>
+<th>Access</th>
+<th>Raises</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>By name, on the row or on a <code>PqStruct</code></td>
+<td><code>IllegalArgumentException</code></td>
+</tr>
+<tr>
+<td>By index at or past <code>getFieldCount()</code>, on the row or on a <code>PqStruct</code></td>
+<td><code>IndexOutOfBoundsException</code></td>
+</tr>
+</tbody>
+</table>
 
 
 
@@ -2559,8 +2578,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ae813bb4d68c839635a4f9b827b9612e872a2dd6" target="_blank" rel="noopener">
-      ae813bb4
+    <a href="https://github.com/hardwood-hq/hardwood/tree/373147b3901623e757bbbd79a917d28fd270f1ad" target="_blank" rel="noopener">
+      373147b3
     </a>
   
 </div>

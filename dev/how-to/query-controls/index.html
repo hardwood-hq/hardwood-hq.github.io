@@ -2239,6 +2239,7 @@
 <li><strong>Page</strong> — within surviving row groups, the Column Index (per-page min/max statistics) is used to skip individual pages, avoiding unnecessary decompression and decoding. On remote backends like S3, only the matching pages are fetched, so the same skip also reduces network I/O.</li>
 <li><strong>Record</strong> — <code>buildRowReader().filter(filter).build()</code> evaluates the predicate against each decoded row and returns only rows that match.</li>
 </ol>
+<p>In a row group whose statistics prove that every row matches, the predicate is not evaluated, and a filter column outside the projection is neither fetched nor decoded.</p>
 <p>For spatial filtering on GEOMETRY / GEOGRAPHY columns, see <a href="../geospatial/">Geospatial Support</a>.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.FilterPredicate</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
@@ -2430,7 +2431,7 @@ literal.</p>
 <a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">}</span>
 </code></pre></div>
-<p>The filter column does not need to be in the projection. The projection is what the row exposes: a filter column outside it is not a field of the row at any depth, and is not addressable. Project a column you intend to read.</p>
+<p>The filter column does not need to be in the projection. The projection is what the row exposes: a filter column outside it is not a field of the row at any depth, and is not addressable (see <a href="../../reference/query-controls/#column-projection-forms">Query Controls</a> for the exceptions an accessor raises). Project a column you intend to read.</p>
 <h2 id="row-limit">Row Limit<a class="headerlink" href="#row-limit" title="Permanent link">&para;</a></h2>
 <p>A row limit instructs the reader to stop after the specified number of rows, avoiding unnecessary I/O and decoding. On remote backends like S3, only the row groups and pages needed to satisfy the limit are fetched.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// Read at most 100 rows</span>
@@ -2578,8 +2579,8 @@ literal.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ae813bb4d68c839635a4f9b827b9612e872a2dd6" target="_blank" rel="noopener">
-      ae813bb4
+    <a href="https://github.com/hardwood-hq/hardwood/tree/373147b3901623e757bbbd79a917d28fd270f1ad" target="_blank" rel="noopener">
+      373147b3
     </a>
   
 </div>
