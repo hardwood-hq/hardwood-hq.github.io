@@ -2121,6 +2121,9 @@
 <p>A filter column outside the projection is not read in row groups whose statistics prove every row matches, and a <code>RowReader</code> no longer resolves it by name (<a href="https://github.com/hardwood-hq/hardwood/issues/1274">#1274</a>).</p>
 </li>
 <li>
+<p>A filtered <code>ColumnReader</code> evaluates a predicate on a field of a required struct instead of throwing (<a href="https://github.com/hardwood-hq/hardwood/issues/1279">#1279</a>).</p>
+</li>
+<li>
 <p>A logical type annotation a column's physical type cannot carry, or one this release does not recognize, is ignored, and the column is read as its physical type (<a href="https://github.com/hardwood-hq/hardwood/issues/1139">#1139</a>).</p>
 </li>
 <li>
@@ -2404,8 +2407,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/373147b3901623e757bbbd79a917d28fd270f1ad" target="_blank" rel="noopener">
-      373147b3
+    <a href="https://github.com/hardwood-hq/hardwood/tree/168f16ebc42b4303090da3753b13679cc45e09a9" target="_blank" rel="noopener">
+      168f16eb
     </a>
   
 </div>
