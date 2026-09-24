@@ -95,7 +95,7 @@ transparently handles cross-file prefetching when more than one file is
 involved.</p>
 <p>Use <a href="#nextBatch()"><code>nextBatch()</code></a> to advance every underlying reader in lockstep — this is
 the structurally-safe path for multi-column consumption: a single call drives
-every reader, returns false when any is exhausted, and validates that the
+every reader, returns false when the readers are exhausted, and validates that the
 readers report matching record counts.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">try (ParquetFileReader parquet = ParquetFileReader.openAll(files);
      ColumnReaders columns = parquet.buildColumnReaders(

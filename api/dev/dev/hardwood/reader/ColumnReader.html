@@ -277,9 +277,9 @@ neither is wrong — each is a complete, correct read of its own column.</p>
 readers share one decode pipeline and one batch size. <a href="ColumnReaders.html#nextBatch()"><code>ColumnReaders.nextBatch()</code></a>
 advances the whole group in one call. Calling this method on each member in turn also
 moves the group once per turn: the first member called advances the group, and each
-other member takes up that same batch. A member called twice before its siblings
-advances the group twice, and the siblings then take up the later batch, skipping the
-one in between.</p>
+other member takes up that same batch. A member that the group has moved on by more
+than one batch since it last took one up would skip a batch, so this method throws
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a> for it instead.</p>
 </div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -292,7 +292,8 @@ dictionary page the metadata places outside its column chunk, a page whose
 checksum fails, values that do not decode under the encoding declared for
 them. In a multi-file read this covers a later file that is not Parquet at
 all, or whose schema cannot be reconciled with the first file's</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this reader, or any reader of its group, was closed</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this reader, or any reader of its group, was closed, or
+if the group moved on by more than one batch since this reader last took one up</dd>
 </dl>
 </div>
 </section>
