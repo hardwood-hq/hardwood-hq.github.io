@@ -1779,6 +1779,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#counts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Counts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#absent-values" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2194,6 +2205,17 @@
     <span class="md-ellipsis">
       
         Key-value metadata
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#counts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Counts
       
     </span>
   </a>
@@ -2617,9 +2639,9 @@ line per entry: the key, its value's byte length, and the value itself. Values
 wider than 60 columns are truncated with a trailing <code>…</code>, since these routinely
 carry kilobytes of embedded JSON (e.g.
 <code>org.apache.spark.sql.parquet.row.metadata</code>) or a base64-encoded Arrow IPC
-schema (<code>ARROW:schema</code>). Control characters in a value print as <code>·</code>, and a
-value made entirely of control characters prints as <code>0x</code>-prefixed hex of its
-UTF-8 bytes:</p>
+schema (<code>ARROW:schema</code>). Control characters in a key or a value print as <code>·</code>,
+and a key or value made entirely of control characters prints as <code>0x</code>-prefixed
+hex of its UTF-8 bytes:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Key/Value Metadata (3):
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>  ARROW:schema                               4.1 KiB  /////5AEAABAAAAAAAAKAAwABgAFAAgACgAAAAABBAA…
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>  org.apache.spark.sql.parquet.row.metadata  1.8 KiB  {"type":"struct","fields":[{"name":"order_i…
@@ -2635,6 +2657,8 @@ no substitutions, and no other output, so it is safe to pipe into another tool:<
 </code></pre></div>
 <p><code>--kv-key</code> exits non-zero if the file has no entry under that name, or if the
 entry has no value.</p>
+<h2 id="counts">Counts<a class="headerlink" href="#counts" title="Permanent link">&para;</a></h2>
+<p>Every command and every <code>dive</code> screen groups the digits of a count or a row index in threes with a comma: <code>1,048,576</code>. The <code>rowIndex</code> column of <code>hardwood print --row-index</code> is data rather than a figure about the file, and prints plain digits like the values beside it. A script that parses a count removes the commas first.</p>
 <h2 id="absent-values">Absent values<a class="headerlink" href="#absent-values" title="Permanent link">&para;</a></h2>
 <p>Every command and every <code>dive</code> screen renders a quantity the file does not carry
 as <code>—</code>. A column's <code># Pages</code> without a page index, a page's <code>Min</code> and <code>Max</code>
@@ -3035,8 +3059,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d58fe810ced77cc6cf8473d8bb7d817b783f8d1e" target="_blank" rel="noopener">
-      d58fe810
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c55aaa537d1fa7fdebc1c3cb18cabd50c52a0464" target="_blank" rel="noopener">
+      c55aaa53
     </a>
   
 </div>
