@@ -1649,6 +1649,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../reference/parquet-java-compat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    parquet-java Compat Filters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../reference/error-handling/" class="md-nav__link">
         
   
@@ -2060,9 +2088,13 @@
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetReader</span><span class="o">&lt;</span><span class="n">Group</span><span class="o">&gt;</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetReader</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">GroupReadSupport</span><span class="p">(),</span><span class="w"> </span><span class="n">path</span><span class="p">)</span>
 <a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">        </span><span class="p">.</span><span class="na">withFilter</span><span class="p">(</span><span class="n">FilterCompat</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">pred</span><span class="p">))</span>
 <a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="c1">// only rows from matching row groups are returned</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="c1">// only matching rows are returned</span>
 <a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">}</span>
 </code></pre></div>
+<p><code>in</code> and <code>notIn</code> take a <code>Set</code> of values:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">pred</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">(</span><span class="n">binaryColumn</span><span class="p">(</span><span class="s">"country"</span><span class="p">),</span><span class="w"> </span><span class="n">Set</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">Binary</span><span class="p">.</span><span class="na">fromString</span><span class="p">(</span><span class="s">"DE"</span><span class="p">),</span><span class="w"> </span><span class="n">Binary</span><span class="p">.</span><span class="na">fromString</span><span class="p">(</span><span class="s">"FR"</span><span class="p">)));</span>
+</code></pre></div>
+<p><a href="../../reference/parquet-java-compat/">parquet-java Compat Filters</a> lists the supported predicates, how a <code>Binary</code> literal converts on each column type, and how nulls are handled.</p>
 
 
 
@@ -2112,8 +2144,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d4cee3b267aa9c03a8efd4f09f3cedee03683540" target="_blank" rel="noopener">
-      d4cee3b2
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6e7155c5d26331652911fb7c52830f8bc02f0619" target="_blank" rel="noopener">
+      6e7155c5
     </a>
   
 </div>
