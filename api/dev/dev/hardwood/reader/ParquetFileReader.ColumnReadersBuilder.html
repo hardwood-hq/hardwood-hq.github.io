@@ -170,7 +170,9 @@ column that is not part of the projection. Default: no filter.</div>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></span>&nbsp;<span class="element-name">filter</span><wbr><span class="parameters">(<a href="RowGroupPredicate.html" title="interface in dev.hardwood.reader">RowGroupPredicate</a>&nbsp;rowGroupFilter)</span></div>
 <div class="block">Apply a row-group selection predicate (e.g. byte-range, for split-aware reading).
 Default: read every row group. Combines with <a href="#filter(dev.hardwood.reader.FilterPredicate)"><code>filter(FilterPredicate)</code></a> via
-intersection: a row group is read if and only if it passes both.</div>
+intersection: a row group is read if and only if it passes both.
+Single-file only: on a reader over several files, <code>build()</code> throws
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link"><code>UnsupportedOperationException</code></a>, since a byte range names positions in one file.</div>
 </div>
 </section>
 </li>

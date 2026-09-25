@@ -2487,6 +2487,7 @@ literal.</p>
 <a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">        </span><span class="n">RowGroupPredicate</span><span class="p">.</span><span class="na">byteRange</span><span class="p">(</span><span class="n">otherStart</span><span class="p">,</span><span class="w"> </span><span class="n">otherEnd</span><span class="p">)))</span>
 </code></pre></div>
 <p>The same <code>filter(RowGroupPredicate)</code> overload is available on <code>RowReaderBuilder</code> and <code>ColumnReadersBuilder</code>. On <code>RowReaderBuilder</code>, <code>skip(N)</code> and <code>head(N)</code> index over the <em>row-group-filtered</em> sequence: <code>skip(N)</code> skips <code>N</code> rows of the kept set, <code>head(N)</code> caps reading at <code>N</code> rows of the kept set. Combining <code>RowGroupPredicate</code> with <code>tail(N)</code> is rejected: tail mode requires a known total row count, which row-group filtering invalidates.</p>
+<p>A byte range names positions in one file, so <code>RowGroupPredicate</code> applies to a reader opened on a single file. On a reader opened with <code>openAll</code> over several files, <code>build()</code> throws <code>UnsupportedOperationException</code>; open one reader per split's file instead.</p>
 <h3 id="empty-ranges">Empty ranges<a class="headerlink" href="#empty-ranges" title="Permanent link">&para;</a></h3>
 <p><code>byteRange(start, end)</code> where <code>end &lt; start</code> is a documented empty range, for which the reader yields zero rows. This matches callers that pass <code>splitStart + splitLength</code> and tolerate long overflow on tail splits (a tail split with <code>length = Long.MAX_VALUE</code> overflows to a negative end, which your reader will then treat as empty if no preceding split has already covered the rest of the file).</p>
 <h3 id="reading-the-tail-of-a-file">Reading the Tail of a File<a class="headerlink" href="#reading-the-tail-of-a-file" title="Permanent link">&para;</a></h3>
@@ -2579,8 +2580,8 @@ literal.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/589a304fc2bb8489a46eb5d09aa5d0258ff0795c" target="_blank" rel="noopener">
-      589a304f
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d4cee3b267aa9c03a8efd4f09f3cedee03683540" target="_blank" rel="noopener">
+      d4cee3b2
     </a>
   
 </div>
