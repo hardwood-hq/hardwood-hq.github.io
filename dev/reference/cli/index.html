@@ -2731,16 +2731,17 @@ navigable session. Typical things to reach for it for:</p>
   Content the record and present-value counts. <code>l</code> adds the repetition
   and definition level histograms with each level named after the schema
   node it belongs to, so an absent field reads differently from an empty
-  list. The pane scrolls with <code>↑↓</code> when it has focus; its title shows a
-  line range whenever anything is below the fold.</li>
+  list. When the pane has focus, <code>↑↓</code>, <code>PgDn</code>/<code>PgUp</code> and <code>g</code>/<code>G</code> move a
+  cursor through its facts, passing over the group headings; its title
+  shows a line range whenever anything is below the fold.</li>
 <li><strong>Inspect dictionary entries</strong> for a column — Dictionary screen with
   <code>/</code> substring filter; <code>Enter</code> reveals the full untruncated value of
   the highlighted entry.</li>
 <li><strong>Preview a few rows</strong> without exporting — Data preview paginates with
   <code>PgDn</code>/<code>PgUp</code> (<code>g</code>/<code>G</code> for first/last); <code>Enter</code> opens a per-row modal.
-  In the modal <code>↑</code>/<code>↓</code> step between the fields whose full value isn't
-  already on screen, <code>Enter</code> expands the focused one inline, and
-  <code>PgDn</code>/<code>PgUp</code> scroll the body.</li>
+  In the modal the cursor stops on every line and moves with <code>↑</code>/<code>↓</code>,
+  <code>PgDn</code>/<code>PgUp</code> and <code>g</code>/<code>G</code>; <code>Enter</code> expands the field under the cursor
+  inline when its full value isn't already on screen.</li>
 <li><strong>Decode key/value metadata</strong> — Spark JSON schemas pretty-print, Arrow
   IPC schemas decode to a hex dump.</li>
 <li><strong>Compare a column across row groups</strong> — from Schema, <code>Enter</code> on a
@@ -2762,15 +2763,15 @@ navigable session. Typical things to reach for it for:</p>
 <tbody>
 <tr>
 <td><code>↑</code> / <code>↓</code></td>
-<td>Move selection</td>
+<td>Move the cursor one row in the focused pane (lists, menus, facts panes, the Data preview row modal)</td>
 </tr>
 <tr>
 <td><code>PgDn</code> / <code>PgUp</code> (or <code>Shift-↓</code> / <code>Shift-↑</code>)</td>
-<td>Page down / up; scroll the body of the Data preview row modal</td>
+<td>Move the cursor one page down / up</td>
 </tr>
 <tr>
 <td><code>g</code> / <code>G</code></td>
-<td>Jump to first / last row</td>
+<td>Move the cursor to the first / last row</td>
 </tr>
 <tr>
 <td><code>Enter</code></td>
@@ -2795,10 +2796,6 @@ navigable session. Typical things to reach for it for:</p>
 <tr>
 <td><code>l</code></td>
 <td>Toggle the repetition / definition level histograms (Column chunk detail)</td>
-</tr>
-<tr>
-<td><code>↑</code> / <code>↓</code></td>
-<td>Scroll the facts pane when it has focus (Column chunk detail)</td>
 </tr>
 <tr>
 <td><code>e</code> / <code>c</code></td>
@@ -3059,8 +3056,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c55aaa537d1fa7fdebc1c3cb18cabd50c52a0464" target="_blank" rel="noopener">
-      c55aaa53
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ce2a03a6fd76bf7a12222a203189caa15ac6b63a" target="_blank" rel="noopener">
+      ce2a03a6
     </a>
   
 </div>
