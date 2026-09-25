@@ -2898,6 +2898,7 @@
 <li><strong><code>nan_count</code></strong> is written for every <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> chunk, including when it is zero, since a recorded zero lets a reader prove a chunk holds no NaN. No other type writes the field.</li>
 <li><strong><code>distinct_count</code></strong> is written where the chunk still knows its cardinality exactly: any chunk under <code>AUTO</code> that interned its values to the end, whichever encoding the flush-time comparison then chose, and any <code>BOOLEAN</code> chunk, which knows its cardinality without a dictionary. It is absent for a chunk written under a named encoding, and for one that stopped interning part-way, which happens when repeated size probes find the dictionary losing to <code>PLAIN</code>.</li>
 </ul>
+<p>Every column chunk also carries <code>encoding_stats</code>: its page count per page type and encoding. A dictionary-encoded chunk lists one <code>PLAIN</code> dictionary page and all of its data pages as <code>RLE_DICTIONARY</code>, so a reader can prune its row group on the dictionary for an <code>eq</code> or <code>in</code> predicate (see <a href="../../how-to/query-controls/">Query Controls</a>). Any other chunk lists its data pages under the one value encoding it was written in.</p>
 <p>Page-level index structures (OffsetIndex, ColumnIndex), Bloom filters, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not yet written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
 <h2 id="file-metadata">File Metadata<a class="headerlink" href="#file-metadata" title="Permanent link">&para;</a></h2>
 <p>Two footer fields are set on the <code>ParquetFileWriter</code> itself, at any point until <code>close()</code> writes the footer: the file's key-value metadata and its <code>created_by</code> identifier.</p>
@@ -3062,8 +3063,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2cba6f90d765b67284cdcaa9297c7afe9f9c6def" target="_blank" rel="noopener">
-      2cba6f90
+    <a href="https://github.com/hardwood-hq/hardwood/tree/43d8a712519487d82fa87a254c013d86212e4b4b" target="_blank" rel="noopener">
+      43d8a712
     </a>
   
 </div>
