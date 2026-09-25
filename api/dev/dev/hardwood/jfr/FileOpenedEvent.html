@@ -92,9 +92,9 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.jfr/jdk/jfr/Event.html" title="class or interface in jdk.jfr" class="external-link">Event</a></span></div>
 <div class="block"><p>JFR event emitted when a Parquet file is opened and its metadata is read.</p>
 <p>This event spans the full open sequence: memory-mapping the file and
-parsing the Parquet footer metadata. It is emitted for both single-file
-reads (<code>ParquetFileReader.open()</code>) and multi-file reads
-(<code>FileManager.mapAndReadMetadata()</code>).</p>
+parsing the Parquet footer metadata. It is emitted for the first file when
+the reader is opened (<code>ParquetFileReader.open()</code>) and for each further file
+of a multi-file read as it is loaded (<code>FileMetadataCache</code>).</p>
 </div>
 </div>
 </section>

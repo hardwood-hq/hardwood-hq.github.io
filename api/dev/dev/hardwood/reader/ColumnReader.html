@@ -104,20 +104,22 @@ loadScripts(document, 'script');</script>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
 <div class="block"><p>Batch-oriented column reader for reading a single column across all row groups.</p>
 <p>Exposes a column's batch as typed leaf values plus a layer-model view of
-the schema chain between root and leaf. Each non-leaf node along the chain
+the schema chain between root and leaf. Each node along the chain
 contributes zero or one <a href="LayerKind.html" title="enum class in dev.hardwood.reader"><code>LayerKind</code></a> layer:</p>
 <ul>
 <li><code>OPTIONAL</code> group → <a href="LayerKind.html#STRUCT"><code>LayerKind.STRUCT</code></a></li>
 <li><code>LIST</code> / <code>MAP</code>-annotated group → <a href="LayerKind.html#REPEATED"><code>LayerKind.REPEATED</code></a></li>
+<li>unannotated <code>repeated</code> field (group or primitive leaf) outside a
+<code>LIST</code> / <code>MAP</code> scaffold → <a href="LayerKind.html#REPEATED"><code>LayerKind.REPEATED</code></a></li>
 <li><code>REQUIRED</code> group / synthetic LIST scaffolding → no layer</li>
 </ul>
 <p>Layers are numbered <code>0..getLayerCount() - 1</code> outermost-to-innermost. A flat
 column (no enclosing nullable groups, no repetition) reports
 <code>getLayerCount() == 0</code> and is queried solely through <a href="#getLeafValidity()"><code>getLeafValidity()</code></a>
 plus the typed value accessors.</p>
-<p><strong>Polarity:</strong> validity bitmaps carry <strong>set bit = present</strong> semantics. A
-<code>null</code> return is the sparse representation of &quot;every item at that scope
-is present in the current batch.&quot;</p>
+<p><strong>Polarity:</strong> validity bitmaps carry <strong>set bit = present</strong> semantics.
+<a href="../Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a> is the sparse representation of &quot;every item at that
+scope is present in the current batch.&quot;</p>
 <p><strong>Real items only.</strong> Layer offsets and the leaf array are sized to
 real-items-only counts. Phantom positions for null/empty parents are
 excluded; <code>getLayerOffsets(k)[i+1] - getLayerOffsets(k)[i] == 0</code>
@@ -126,7 +128,8 @@ null bit).</p>
 <p><strong>Array ownership.</strong> Every array and <a href="../Validity.html" title="interface in dev.hardwood"><code>Validity</code></a> handed back by an
 accessor (<a href="#getInts()"><code>getInts()</code></a>, <a href="#getLongs()"><code>getLongs()</code></a>, <a href="#getLayerOffsets(int)"><code>getLayerOffsets(int)</code></a>,
 <a href="#getLeafValidity()"><code>getLeafValidity()</code></a>, and the rest) belongs to the current batch and is
-freshly allocated by the <a href="#nextBatch()"><code>nextBatch()</code></a> call that produced it. A later
+freshly allocated by the <a href="#nextBatch()"><code>nextBatch()</code></a> call that produced it, except
+<a href="../Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a>, a shared immutable singleton. A later
 <a href="#nextBatch()"><code>nextBatch()</code></a> never reuses or overwrites an array returned for an
 earlier batch — so a returned array may be kept and read after the reader
 has advanced, including handed off to another thread for processing. The

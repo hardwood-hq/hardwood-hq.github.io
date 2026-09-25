@@ -223,7 +223,8 @@ is exhausted (SQL <code>LIMIT</code> over the filtered relation). Mutually exclu
 <div class="block">Limit to the last <code>tailRows</code> rows. Row groups that do not overlap
 the tail are skipped entirely, so pages for earlier row groups are
 never fetched or decoded — useful on remote backends. Mutually
-exclusive with <a href="#head(long)"><code>head(long)</code></a>, <code>filter</code>, and <code>skip</code>. Single-file only.</div>
+exclusive with <a href="#head(long)"><code>head(long)</code></a>, <a href="#filter(dev.hardwood.reader.FilterPredicate)"><code>filter(FilterPredicate)</code></a>,
+<a href="#filter(dev.hardwood.reader.RowGroupPredicate)"><code>filter(RowGroupPredicate)</code></a>, and <code>skip</code>. Single-file only.</div>
 </div>
 </section>
 </li>

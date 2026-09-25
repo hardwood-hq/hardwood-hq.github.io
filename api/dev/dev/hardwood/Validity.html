@@ -148,8 +148,8 @@ current batch.&quot;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#hasNulls()" class="member-name-link">hasNulls</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block"><code>true</code> iff at least one item at this scope is null in the current
-batch.</div>
+<div class="block"><code>false</code> for <a href="#NO_NULLS"><code>NO_NULLS</code></a>; <code>true</code> for a backed validity, regardless of
+its bits.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isNotNull(int)" class="member-name-link">isNotNull</a><wbr>(int&nbsp;i)</code></div>
@@ -234,11 +234,12 @@ current batch.&quot; Identity-stable across calls.</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="Validity.html" title="interface in dev.hardwood">Validity</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(long[]&nbsp;words)</span></div>
 <div class="block"><p>Wraps a packed <code>long[]</code> bitmap (set-bit = present storage).
-Returns <a href="#NO_NULLS"><code>NO_NULLS</code></a> when <code>words</code> is <code>null</code> (the sparse &quot;no nulls&quot;
-representation produced by the internal pipeline); otherwise
-returns a fresh backed instance holding the given bitmap. The
-wrapper does not copy — callers must not mutate the bitmap after
-handing it to a <code>Validity</code>.</p>
+Returns <a href="#NO_NULLS"><code>NO_NULLS</code></a> when <code>words</code> is <code>null</code>; otherwise returns a
+fresh backed instance holding the given bitmap. The caller passes
+<code>null</code> when no item is null: this method does not inspect the words,
+so a bitmap with every bit set still yields a backed instance, whose
+<a href="#hasNulls()"><code>hasNulls()</code></a> answers <code>true</code>. The wrapper does not copy — callers
+must not mutate the bitmap after handing it to a <code>Validity</code>.</p>
 <p>The caller is responsible for sizing the array to at least
 <code>(count + 63) &gt;&gt;&gt; 6</code> words for any <code>count</code> they later pass to
 <a href="#nullCount(int)"><code>nullCount(int)</code></a> / <a href="#nextNull(int,int)"><code>nextNull(int, int)</code></a> / <a href="#nextNotNull(int,int)"><code>nextNotNull(int, int)</code></a>, and for keeping
@@ -271,8 +272,10 @@ factories give more compact shapes for their respective cases.</div>
 <h3>hasNulls</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">hasNulls</span>()</div>
-<div class="block"><p><code>true</code> iff at least one item at this scope is null in the current
-batch. O(1). May help on hot loops as a per-batch fast-path gate:</p>
+<div class="block"><p><code>false</code> for <a href="#NO_NULLS"><code>NO_NULLS</code></a>; <code>true</code> for a backed validity, regardless of
+its bits. A <code>true</code> answer therefore means the batch may hold nulls,
+and a <code>false</code> answer means it holds none. O(1). May help on hot loops
+as a per-batch fast-path gate:</p>
 <pre><code class="language-java">if (!validity.hasNulls()) {
     // tight loop, no per-item check
 } else {

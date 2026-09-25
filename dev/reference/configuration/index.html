@@ -2098,7 +2098,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>-Dhardwood.uselibdeflate<span class="o">=</span><span class="nb">false</span>
 </code></pre></div>
 <h2 id="simd-acceleration-with-vector-api-java-22">SIMD Acceleration with Vector API (Java 22+)<a class="headerlink" href="#simd-acceleration-with-vector-api-java-22" title="Permanent link">&para;</a></h2>
-<p>Hardwood can use the Java Vector API (SIMD) to accelerate counting non-null values and dictionary lookups. SIMD requires <strong>Java 22 or newer</strong> and the Vector API incubator module, which is added with this JVM argument:</p>
+<p>Hardwood can use the Java Vector API (SIMD) to accelerate counting the non-null values of a page. SIMD requires <strong>Java 22 or newer</strong> and the Vector API incubator module, which is added with this JVM argument:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>--add-modules<span class="w"> </span>jdk.incubator.vector
 </code></pre></div>
 <p>With the module added, Hardwood uses SIMD when the CPU's preferred vector width holds at least four 32-bit values (128 bits). It uses the preferred width of the CPU: 128-bit for SSE/NEON, 256-bit for AVX2, 512-bit for AVX-512. On Java 21, without the module, or on a CPU with narrower vectors, Hardwood uses scalar implementations that produce the same results.</p>
@@ -2245,8 +2245,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/6ebebec083a65b7302242320b35767099c929002" target="_blank" rel="noopener">
-      6ebebec0
+    <a href="https://github.com/hardwood-hq/hardwood/tree/82a7562cf96f527aaa027408b772d25af5088c91" target="_blank" rel="noopener">
+      82a7562c
     </a>
   
 </div>

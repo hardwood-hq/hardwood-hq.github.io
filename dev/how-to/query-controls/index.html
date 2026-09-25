@@ -2530,7 +2530,7 @@ literal.</p>
 <a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="p">}</span>
 </code></pre></div>
-<p>Tail mode cannot be combined with a filter predicate: the set of matching rows is not known from row-group statistics alone, so the reader cannot identify which row groups cover the last N matching rows without scanning the whole file. It is also mutually exclusive with <code>skip(long)</code>.</p>
+<p>Tail mode reads a single file: on a reader opened with <code>openAll</code> over several files, <code>build()</code> throws <code>UnsupportedOperationException</code>. It cannot be combined with <code>head(long)</code>, <code>skip(long)</code>, a filter predicate or a <code>RowGroupPredicate</code>; <code>build()</code> throws <code>IllegalArgumentException</code> for any of these.</p>
 <h3 id="skipping-rows-skip">Skipping Rows (<code>skip</code>)<a class="headerlink" href="#skipping-rows-skip" title="Permanent link">&para;</a></h3>
 <p>The <code>skip(long)</code> builder method is SQL <code>OFFSET</code>: it discards leading rows before reading. What "leading rows" means depends on whether a filter is present; see <a href="../../concepts/row-selection/">Row Selection</a> for the model.</p>
 <p><strong>Without a filter,</strong> <code>skip(n)</code> is a physical absolute row index. Earlier row groups are not opened, and their pages are not fetched or decoded, making this an O(1 row group) seek on remote backends, in contrast to walking <code>next()</code> from row 0.</p>
@@ -2608,8 +2608,8 @@ literal.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/6ebebec083a65b7302242320b35767099c929002" target="_blank" rel="noopener">
-      6ebebec0
+    <a href="https://github.com/hardwood-hq/hardwood/tree/82a7562cf96f527aaa027408b772d25af5088c91" target="_blank" rel="noopener">
+      82a7562c
     </a>
   
 </div>

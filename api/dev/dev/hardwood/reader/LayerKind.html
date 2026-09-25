@@ -95,10 +95,11 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public enum </span><span class="element-name type-name-label">LayerKind</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="LayerKind.html" title="enum class in dev.hardwood.reader">LayerKind</a>&gt;</span></div>
 <div class="block"><p>Classifies a <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> layer between root and leaf.</p>
-<p>A layer is contributed by a user-authored <code>OPTIONAL</code> group (<a href="#STRUCT"><code>STRUCT</code></a>) or
-by a <code>LIST</code>/<code>MAP</code>-annotated group (<a href="#REPEATED"><code>REPEATED</code></a>). <code>REQUIRED</code> groups and the
-synthetic scaffolding inside a <code>LIST</code>/<code>MAP</code> (the inner <code>repeated group</code>)
-do not contribute layers.</p>
+<p>A layer is contributed by a user-authored <code>OPTIONAL</code> group (<a href="#STRUCT"><code>STRUCT</code></a>),
+by a <code>LIST</code>/<code>MAP</code>-annotated group (<a href="#REPEATED"><code>REPEATED</code></a>), or by an unannotated
+<code>repeated</code> field, group or primitive leaf, outside a <code>LIST</code>/<code>MAP</code> scaffold
+(<a href="#REPEATED"><code>REPEATED</code></a>). <code>REQUIRED</code> groups and the synthetic scaffolding inside a
+<code>LIST</code>/<code>MAP</code> (the inner <code>repeated group</code>) do not contribute layers.</p>
 <p>Stable for the lifetime of the <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> and safe to cache once at
 open time.</p>
 </div>
@@ -125,7 +126,8 @@ open time.</p>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="#REPEATED" class="member-name-link">REPEATED</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">A <code>LIST</code> or <code>MAP</code>-annotated group.</div>
+<div class="block">A <code>LIST</code> or <code>MAP</code>-annotated group, or an unannotated <code>repeated</code> field
+outside a <code>LIST</code>/<code>MAP</code> scaffold.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#STRUCT" class="member-name-link">STRUCT</a></code></div>
 <div class="col-last odd-row-color">
@@ -191,7 +193,8 @@ validity bitmap (<code>getLayerValidity</code>) but no offsets.</div>
 <h3>REPEATED</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="LayerKind.html" title="enum class in dev.hardwood.reader">LayerKind</a></span>&nbsp;<span class="element-name">REPEATED</span></div>
-<div class="block">A <code>LIST</code> or <code>MAP</code>-annotated group. Contributes both a validity bitmap
+<div class="block">A <code>LIST</code> or <code>MAP</code>-annotated group, or an unannotated <code>repeated</code> field
+outside a <code>LIST</code>/<code>MAP</code> scaffold. Contributes both a validity bitmap
 (for the list-itself-null distinction) and an offsets buffer
 (<code>getLayerOffsets</code>) that walks into the next inner layer's items.</div>
 </div>

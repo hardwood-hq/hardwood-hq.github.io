@@ -2930,8 +2930,8 @@ only (phantom slots from null/empty parents are excluded).</div>
 </dd>
 <dt><a href="dev/hardwood/Validity.html#hasNulls()" class="member-name-link">hasNulls()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
-<div class="block"><code>true</code> iff at least one item at this scope is null in the current
-batch.</div>
+<div class="block"><code>false</code> for <a href="dev/hardwood/Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a>; <code>true</code> for a backed validity, regardless of
+its bits.</div>
 </dd>
 <dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#head(long)" class="member-name-link">head(long)</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
 <dd>
@@ -4534,7 +4534,8 @@ source.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/LayerKind.html#REPEATED" class="member-name-link">REPEATED</a> - Enum constant in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/LayerKind.html" title="enum class in dev.hardwood.reader">LayerKind</a></dt>
 <dd>
-<div class="block">A <code>LIST</code> or <code>MAP</code>-annotated group.</div>
+<div class="block">A <code>LIST</code> or <code>MAP</code>-annotated group, or an unannotated <code>repeated</code> field
+outside a <code>LIST</code>/<code>MAP</code> scaffold.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/SizeStatistics.html#repetitionLevelHistogram()" class="member-name-link">repetitionLevelHistogram()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SizeStatistics.html" title="class in dev.hardwood.metadata">SizeStatistics</a></dt>
 <dd>
