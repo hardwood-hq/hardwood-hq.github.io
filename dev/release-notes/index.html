@@ -2164,6 +2164,9 @@
 <p>A <code>ParquetFileReader</code> no longer retains a read's <code>RowGroupIterator</code> after the reader consuming it is closed (<a href="https://github.com/hardwood-hq/hardwood/issues/1170">#1170</a>).</p>
 </li>
 <li>
+<p>A page whose header declares more values than its body holds raises a <code>ParquetReadException</code> instead of returning values left over from an earlier page (<a href="https://github.com/hardwood-hq/hardwood/issues/1308">#1308</a>).</p>
+</li>
+<li>
 <p>A multi-file read opens each file as it reaches it, rather than opening every file when the reader is built, so the time to the first row no longer grows with the number of files (<a href="https://github.com/hardwood-hq/hardwood/issues/1107">#1107</a>).</p>
 <ul>
 <li>A later file's I/O errors, and any <code>SchemaIncompatibleException</code> its schema raises, now surface from the reading loop rather than from <code>ParquetFileReader.openAll(...)</code> or <code>build()</code> — always before any row of that file is returned. Code that catches those around reader construction alone should catch them around iteration too.</li>
@@ -2435,8 +2438,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/487b32dfdc797dccde78bde423d4edb1b3ca4b2e" target="_blank" rel="noopener">
-      487b32df
+    <a href="https://github.com/hardwood-hq/hardwood/tree/0abc5a6859e2dca4806f1640e0c062df1feda144" target="_blank" rel="noopener">
+      0abc5a68
     </a>
   
 </div>
