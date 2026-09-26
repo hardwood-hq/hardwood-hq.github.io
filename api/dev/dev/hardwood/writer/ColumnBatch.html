@@ -124,8 +124,9 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">ColumnBatch</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block"><p>One aligned slice of a file's columns. Every column in a batch must have the same
-number of values, which is the batch's row count.</p>
+<div class="block"><p>One aligned slice of a file's columns. Every column outside a <code>LIST</code> or <code>MAP</code> must have
+the same number of values, which is the batch's row count; a leaf under a <code>LIST</code> or <code>MAP</code>
+holds the concatenated entries its offsets account for.</p>
 <p>A batch is not constructed directly: <a href="ColumnWriter.html#writeBatch(java.util.function.Consumer)"><code>ColumnWriter.writeBatch(Consumer)</code></a> creates it, bound
 to the schema, hands it to a filler that populates the columns, then submits it — so
 there is no separate build or submit step to forget. Columns are addressed by index or
@@ -542,7 +543,8 @@ group, or the group is already set in this batch</dd>
 <div class="block">Sets the entry offsets of a <code>LIST</code>, addressed by the list group's dot-separated path.
 <code>offsets</code> has length <code>parentCount + 1</code>; <code>offsets[i+1] - offsets[i]</code> is the number of
 entries of list <code>i</code>, and a zero delta is an empty list. The list's element leaf is
-filled separately through <a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a>, its values holding the concatenated entries.</div>
+filled separately through the setter for its type, its values holding the concatenated
+entries.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>listPath</code> - the list group's path (e.g. <code>&quot;phones&quot;</code>)</dd>
@@ -590,8 +592,8 @@ list is already set, or <code>offsets</code> is empty</dd>
 <div class="block">Sets the entry offsets of a <code>MAP</code>, addressed by the map group's dot-separated path.
 A thin alias over [#list(String, int[])]: the map's <code>key</code> and <code>value</code> leaves share
 this one offsets array, <code>offsets[i+1] - offsets[i]</code> being the number of entries of
-map <code>i</code>, and a zero delta an empty map. The key and value leaves are filled through
-<a href="#ints(int,int%5B%5D)"><code>ints(int, int[])</code></a> at <code>&lt;mapPath&gt;.key_value.key</code> and <code>&lt;mapPath&gt;.key_value.value</code>.</div>
+map <code>i</code>, and a zero delta an empty map. The key and value leaves are filled through the
+setters for their types at <code>&lt;mapPath&gt;.key_value.key</code> and <code>&lt;mapPath&gt;.key_value.value</code>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>mapPath</code> - the map group's path (e.g. <code>&quot;props&quot;</code>)</dd>

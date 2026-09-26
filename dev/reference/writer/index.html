@@ -2487,12 +2487,12 @@
 <tr>
 <td><code>rowGroupTargetRows(long)</code></td>
 <td><code>1,048,576</code></td>
-<td>Records per row group. The control over how a file is banded: row groups hold exactly this many records apart from the last. Binds for records narrower than about 128 bytes; above that the buffer target below cuts first. Must be positive; a target above the structural ceiling of <code>Integer.MAX_VALUE - 8</code> records is that ceiling, so <code>Long.MAX_VALUE</code> means "cut on bytes alone".</td>
+<td>Records per row group. The control over how a file is banded: row groups hold exactly this many records apart from the last. Binds for records narrower than about 128 bytes; above that the buffer target below cuts first. Must be positive; a target above the structural ceiling of <code>Integer.MAX_VALUE - 9</code> records is that ceiling, so <code>Long.MAX_VALUE</code> means "cut on bytes alone".</td>
 </tr>
 <tr>
 <td><code>rowGroupBufferTargetBytes(long)</code></td>
 <td><code>128 MiB</code></td>
-<td>Bytes the writer holds for the open row group before cutting it: level streams, dictionary indices, value stores and dictionaries. The memory control, and the number peak heap follows; what reaches the file is smaller by whatever the encoding and the codec win. A row group passes it by at most one record. See <a href="../../concepts/write-model/">The Write Model</a>. Must be positive.</td>
+<td>Bytes the writer holds for the open row group before cutting it: level streams, dictionary indices, value stores and dictionaries. The memory control, and the number peak heap follows; what reaches the file is smaller by whatever the encoding and the codec win. A row group passes it by at most one record. A row group is also cut before a repeated column's chunk would reach <code>Integer.MAX_VALUE - 8</code> values and nulls, or before any column chunk would pass <code>Integer.MAX_VALUE - 8</code> bytes of <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> values, so a target above 2 GiB can yield smaller row groups. See <a href="../../concepts/write-model/">The Write Model</a>. Must be positive.</td>
 </tr>
 <tr>
 <td><code>codec(CompressionCodec)</code></td>
@@ -2896,10 +2896,10 @@
 <li><strong>Bounds are omitted where their order is undefined.</strong> A column annotated <code>INTERVAL</code>, <code>UNKNOWN</code>, <code>VARIANT</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>LIST</code> or <code>MAP</code> writes its null count alone, parquet-format leaving those orderings unspecified; a bound in an order the reader cannot know would prune away live rows. An all-null chunk has no bounds to write either.</li>
 <li><strong>Truncation.</strong> <code>BYTE_ARRAY</code> bounds longer than <code>statisticsTruncationLength</code> are truncated and flagged inexact (<code>is_min_value_exact</code> / <code>is_max_value_exact</code> = <code>false</code>). Fixed-width types write those flags as <code>true</code>.</li>
 <li><strong><code>nan_count</code></strong> is written for every <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> chunk, including when it is zero, since a recorded zero lets a reader prove a chunk holds no NaN. No other type writes the field.</li>
-<li><strong><code>distinct_count</code></strong> is written where the chunk still knows its cardinality exactly: any chunk under <code>AUTO</code> that interned its values to the end, whichever encoding the flush-time comparison then chose, and any <code>BOOLEAN</code> chunk, which knows its cardinality without a dictionary. It is absent for a chunk written under a named encoding, and for one that stopped interning part-way, which happens when repeated size probes find the dictionary losing to <code>PLAIN</code>.</li>
+<li><strong><code>distinct_count</code></strong> is written where the chunk still knows its cardinality exactly: any chunk under <code>AUTO</code> that interned its values to the end, whichever encoding the flush-time comparison then chose, and any <code>BOOLEAN</code> chunk, which knows its cardinality without a dictionary. It is absent for any other chunk written under a named encoding, and for one that stopped interning part-way, which happens when repeated size probes find the dictionary losing to <code>PLAIN</code>.</li>
 </ul>
 <p>Every column chunk also carries <code>encoding_stats</code>: its page count per page type and encoding. A dictionary-encoded chunk lists one <code>PLAIN</code> dictionary page and all of its data pages as <code>RLE_DICTIONARY</code>, so a reader can prune its row group on the dictionary for an <code>eq</code> or <code>in</code> predicate (see <a href="../../how-to/query-controls/">Query Controls</a>). Any other chunk lists its data pages under the one value encoding it was written in.</p>
-<p>Page-level index structures (OffsetIndex, ColumnIndex), Bloom filters, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not yet written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
+<p>Page-level index structures (OffsetIndex, ColumnIndex), Bloom filters, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
 <h2 id="file-metadata">File Metadata<a class="headerlink" href="#file-metadata" title="Permanent link">&para;</a></h2>
 <p>Two footer fields are set on the <code>ParquetFileWriter</code> itself, at any point until <code>close()</code> writes the footer: the file's key-value metadata and its <code>created_by</code> identifier.</p>
 <table>
@@ -2984,7 +2984,7 @@
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
-<td>A schema with no columns; a <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>REQUIRED</code> field left unset by a record</td>
+<td>A schema with no columns; a <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>REQUIRED</code> field left unset by a record; a record whose values for one column pass what a column chunk can hold</td>
 </tr>
 <tr>
 <td><code>IndexOutOfBoundsException</code></td>
@@ -3064,8 +3064,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ed199a7c38642f978ad93319298af166f9483681" target="_blank" rel="noopener">
-      ed199a7c
+    <a href="https://github.com/hardwood-hq/hardwood/tree/57cf800f350e264fbe0aa83b73508236495804ad" target="_blank" rel="noopener">
+      57cf800f
     </a>
   
 </div>

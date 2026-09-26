@@ -217,7 +217,7 @@ exactly this many records apart from the last. A row group is cut at this count 
 <code>rowGroupBufferTargetBytes</code>, whichever is reached first, so a row target set above
 what the buffer target allows has no effect beyond it.</p>
 <p>A structural ceiling sits under both: a chunk accumulates into <code>int</code>-indexed buffers,
-so a row group holds at most <code>Integer.MAX_VALUE - 8</code> records however many are asked
+so a row group holds at most <code>Integer.MAX_VALUE - 9</code> records however many are asked
 for. A target above that is that ceiling, which is what makes <code>Long.MAX_VALUE</code> the way
 to say &quot;no row limit, cut on bytes alone&quot;.</p>
 </div>
