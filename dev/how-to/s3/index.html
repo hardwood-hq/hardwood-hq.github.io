@@ -2226,7 +2226,7 @@
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(()</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">fetchCredentialsFromVault</span><span class="p">())</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-<p>For the full AWS credential chain (env vars, <code>~/.aws/credentials</code>, EC2/ECS instance profile, SSO, web identity), add the optional <code>hardwood-aws-auth</code> module:</p>
+<p>To resolve credentials through the AWS credential chain (environment variables, profile files, container and instance metadata), add the optional <code>hardwood-aws-auth</code> module:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">&lt;dependency&gt;</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>dev.hardwood<span class="nt">&lt;/groupId&gt;</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>hardwood-aws-auth<span class="nt">&lt;/artifactId&gt;</span>
@@ -2239,7 +2239,7 @@
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(</span><span class="n">SdkCredentialsProviders</span><span class="p">.</span><span class="na">defaultChain</span><span class="p">())</span>
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-<p><code>defaultChain()</code> delegates to the AWS SDK's <code>DefaultCredentialsProvider</code>, which decides the order in which the sources are tried. <code>SdkCredentialsProviders.fromProfile("my-profile")</code> binds one named profile from <code>~/.aws/credentials</code> instead.</p>
+<p><code>defaultChain()</code> delegates to the AWS SDK's <code>DefaultCredentialsProvider</code>, which decides the order in which the sources are tried. <code>SdkCredentialsProviders.fromProfile("my-profile")</code> binds one named profile from <code>~/.aws/credentials</code> instead. SSO and web-identity profiles need the AWS SDK's <code>sso</code>, <code>ssooidc</code> and <code>sts</code> modules on the classpath; <code>hardwood-aws-auth</code> does not bring them.</p>
 <h2 id="multiple-files">Multiple Files<a class="headerlink" href="#multiple-files" title="Permanent link">&para;</a></h2>
 <p>Read multiple files in the same bucket:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.Hardwood</span><span class="p">;</span>
@@ -2324,7 +2324,7 @@ examples below cover the common cases.</p>
 </div>
 <p>Column projection, row group filtering, and all other reader features work transparently with S3 files.</p>
 <h3 id="io-behavior">I/O Behavior<a class="headerlink" href="#io-behavior" title="Permanent link">&para;</a></h3>
-<p>When reading from S3, Hardwood coalesces column chunk reads within each row group into as few HTTP requests as possible (typically 1-2 per row group). Column projection, page-level predicate pushdown, and <code>head(n)</code> on an unfiltered read all narrow the byte ranges before coalescing, reducing the amount of data transferred.</p>
+<p>When reading from S3, Hardwood coalesces column chunk reads within each row group into as few HTTP requests as possible. A row group whose column chunks have a page index costs one more request for the index, and a filtered read may add one request per dictionary or bloom filter it checks. Column projection, page-level predicate pushdown, and <code>head(n)</code> on an unfiltered read all narrow the byte ranges before coalescing, reducing the amount of data transferred.</p>
 <p>Without a row limit, the reader fetches all projected (and filtered) column data for an entire row group when any column enters it. For large row groups (128 MB–1 GB is typical), this can transfer significant data even if the consumer stops reading early. To minimize data transfer for partial reads, set <code>head(n)</code> on the <code>buildRowReader()</code> builder; this truncates each column's fetch to only the pages covering the needed rows. With a filter, <code>head(n)</code> counts matching rows, which are not known before the pages are decoded, so it does not narrow the fetch.</p>
 <h3 id="measuring-fetch-cost">Measuring Fetch Cost<a class="headerlink" href="#measuring-fetch-cost" title="Permanent link">&para;</a></h3>
 <p>Each <code>S3InputFile</code> tracks the network I/O it has performed, which is useful for confirming that column projection, predicate pushdown, and <code>head(n)</code> reduced transfer — and for estimating S3 cost (GET requests plus bytes transferred):</p>
@@ -2393,8 +2393,8 @@ examples below cover the common cases.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/59f077bf993adedba3997077db066c446f7737b7" target="_blank" rel="noopener">
-      59f077bf
+    <a href="https://github.com/hardwood-hq/hardwood/tree/eb3a00f6db13635081142d9d17747ffd23f2a70c" target="_blank" rel="noopener">
+      eb3a00f6
     </a>
   
 </div>

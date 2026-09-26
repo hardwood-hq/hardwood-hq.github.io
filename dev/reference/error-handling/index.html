@@ -2065,7 +2065,7 @@ it. <strong>Trying again may help for <code>IOException</code>, and will not for
 </tr>
 <tr>
 <td><code>SchemaIncompatibleException</code></td>
-<td>A <code>ParquetReadException</code>. In a multi-file read, a file whose schema cannot be reconciled with the first file's; or one file's footer disagreeing with itself about which leaf a column chunk holds</td>
+<td>A <code>ParquetReadException</code>. In a multi-file read, a file whose schema cannot be reconciled with the first file's; or one file's footer disagreeing with itself about which leaf a column chunk holds; or a <code>FIXED_LEN_BYTE_ARRAY</code> column the read touches that declares no positive width</td>
 </tr>
 <tr>
 <td><code>UnsupportedOperationException</code></td>
@@ -2102,6 +2102,10 @@ it. <strong>Trying again may help for <code>IOException</code>, and will not for
 <td><code>IllegalStateException</code></td>
 <td>Calling <code>ColumnReader</code> accessors before <code>nextBatch()</code>, calling <code>nextBatch()</code> on a reader obtained from <code>ColumnReaders</code>, or calling nested-column methods on a flat column; building a row or column reader from a closed <code>ParquetFileReader</code>, or while another thread closes it</td>
 </tr>
+<tr>
+<td><code>VariantTypeException</code></td>
+<td>Calling a <code>PqVariant</code> <code>as*()</code> method whose type does not match the variant's type tag, such as <code>asInt()</code> on a string. Unchecked</td>
+</tr>
 </tbody>
 </table>
 <p>Requesting the wrong type for a column, such as <code>getLong</code> on an <code>INT32</code> column, is a programming
@@ -2115,11 +2119,12 @@ unwrapping it where the stream is consumed.</p>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>[data.parquet: row group 0, column 'category', dictionary page] CRC mismatch: expected 609e7e3 but computed 2b0b086e
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>[data.parquet] Not a Parquet file (invalid magic number at end)
 </code></pre></div>
-<p>Every message the reader composes names the file. A message for an invalid file also names
+<p>Every message about a file names it. A message for an invalid file also names
 the row group, column and page, leaving out any part the reader could not determine: a
 failure before a column chunk's pages are walked names no page, and one while the footer is
-parsed names only the file. A message for a wrong call names the file alone. An <code>IOException</code>
-an <code>InputFile</code> raises for itself is unprefixed.</p>
+parsed names only the file. A message for a wrong call names at most the file. An <code>IOException</code>
+an <code>InputFile</code> raises while the first file is opened or its footer read carries only the
+<code>InputFile</code>'s own message.</p>
 <h2 id="writing">Writing<a class="headerlink" href="#writing" title="Permanent link">&para;</a></h2>
 <p>The exceptions a write can throw, the condition behind each, and the schema shapes the writer refuses are tabulated in the <a href="../writer/#what-the-writer-rejects">Writer Reference</a>.</p>
 
@@ -2171,8 +2176,8 @@ an <code>InputFile</code> raises for itself is unprefixed.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/59f077bf993adedba3997077db066c446f7737b7" target="_blank" rel="noopener">
-      59f077bf
+    <a href="https://github.com/hardwood-hq/hardwood/tree/eb3a00f6db13635081142d9d17747ffd23f2a70c" target="_blank" rel="noopener">
+      eb3a00f6
     </a>
   
 </div>

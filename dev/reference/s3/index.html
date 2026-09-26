@@ -2130,9 +2130,10 @@ endpoints and multi-file reads, see <a href="../../how-to/s3/">Reading from S3</
 </tr>
 </tbody>
 </table>
-<p>When the retry budget is exhausted, the last failure is re-thrown as an <code>IOException</code>. For HTTP
-errors the message has the form <code>GET s3://&lt;bucket&gt;/&lt;key&gt; failed: HTTP &lt;status&gt;</code>; for network errors
-the original <code>IOException</code> message is preserved.</p>
+<p>When the retry budget is exhausted, the read fails with an <code>IOException</code>. For an HTTP error
+status the message has the form <code>Failed to open s3://&lt;bucket&gt;/&lt;key&gt;: HTTP &lt;status&gt; &lt;body&gt;</code> when
+opening the file and <code>Failed to read range [&lt;start&gt;, &lt;end&gt;) from s3://&lt;bucket&gt;/&lt;key&gt;: HTTP &lt;status&gt; &lt;body&gt;</code>
+for a range read; for network errors the original <code>IOException</code> message is preserved.</p>
 <p>A range read must be answered with HTTP 206. An endpoint that ignores the <code>Range</code> header and
 answers HTTP 200 with the whole object makes the read fail with an <code>IOException</code> whose message
 has the form <code>Failed to read range [&lt;start&gt;, &lt;end&gt;) from s3://&lt;bucket&gt;/&lt;key&gt;: HTTP 200, expected 206; the endpoint ignored the Range header</code>.</p>
@@ -2179,7 +2180,7 @@ properties:</p>
 <li>Disk and memory footprint scale with bytes fetched, not with file size, on
   filesystems that support sparse files (ext4, xfs, apfs, ntfs).</li>
 <li>Files larger than <code>Integer.MAX_VALUE</code> bytes (2 GB) cannot be range-backed; <code>open()</code>
-  throws an <code>IOException</code> naming the limit. Read those with <code>RangeBacking.NONE</code>.</li>
+  throws an <code>UnsupportedOperationException</code> naming the limit. Read those with <code>RangeBacking.NONE</code>.</li>
 <li>The backing file is created in <code>tempDir</code>, which must exist and be writeable with
   room for the worst-case bytes fetched per file. <code>S3Source.builder().build()</code> rejects
   a directory that is missing or not writeable.</li>
@@ -2253,8 +2254,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/59f077bf993adedba3997077db066c446f7737b7" target="_blank" rel="noopener">
-      59f077bf
+    <a href="https://github.com/hardwood-hq/hardwood/tree/eb3a00f6db13635081142d9d17747ffd23f2a70c" target="_blank" rel="noopener">
+      eb3a00f6
     </a>
   
 </div>

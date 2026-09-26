@@ -135,10 +135,10 @@ files are closed when the reader is closed, or before the exception
 propagates when opening fails, including files the reader has not opened
 yet. A context the call creates is closed with them; a context passed in
 stays the caller's.</p>
-<p><strong>Limitation:</strong> When using the default memory-mapped <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a>, the file
-itself may be arbitrarily large, but each individual column chunk must be at
-most 2 GB (<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html#MAX_VALUE" title="class or interface in java.lang" class="external-link"><code>Integer.MAX_VALUE</code></a> bytes) of compressed data. The in-memory and
-object-store backends have a 2 GB limit on the whole file.</p>
+<p><strong>Limitation:</strong> A column chunk read without an OffsetIndex must be at most
+2 GB (<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html#MAX_VALUE" title="class or interface in java.lang" class="external-link"><code>Integer.MAX_VALUE</code></a> bytes) of compressed data. Files larger than 2 GB
+are read locally and from S3, except by the in-memory backend and by an S3
+file with <code>RangeBacking.SPARSE_TEMPFILE</code>, which are limited to 2 GB per file.</p>
 </div>
 </div>
 </section>

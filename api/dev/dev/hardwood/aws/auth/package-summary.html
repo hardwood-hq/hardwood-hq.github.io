@@ -69,8 +69,10 @@ loadScripts(document, 'script');</script>
 <div class="block"><p>Bridge between the AWS SDK credential chain and <a href="../../s3/S3Source.html" title="class in dev.hardwood.s3"><code>S3Source</code></a>.</p>
 <p><a href="SdkCredentialsProviders.html" title="class in dev.hardwood.aws.auth"><code>SdkCredentialsProviders</code></a> adapts AWS SDK <code>CredentialsProvider</code> instances
 into the <a href="../../s3/S3CredentialsProvider.html" title="interface in dev.hardwood.s3"><code>S3CredentialsProvider</code></a> interface used by
-<code>hardwood-s3</code>, enabling standard AWS credential resolution (environment
-variables, instance profiles, SSO, etc.).</p>
+<code>hardwood-s3</code>. The default chain resolves environment variables, profile
+files and container and instance metadata; SSO and web-identity profiles
+additionally need the AWS SDK's <code>sso</code>, <code>ssooidc</code> and <code>sts</code> modules on the
+classpath.</p>
 </div>
 </section>
 </div>

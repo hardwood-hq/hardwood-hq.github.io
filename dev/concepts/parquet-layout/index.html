@@ -2201,13 +2201,13 @@ compress well (similar values adjacent) and can be read in isolation (projection
 records each chunk's compressed and uncompressed size, codec, and statistics.</p>
 <div class="admonition info">
 <p class="admonition-title">2 GB column-chunk limit</p>
-<p>A column chunk is addressed within Hardwood as a single in-memory region, so each chunk must
-be at most 2 GB of <em>compressed</em> data. The limit is per chunk, not per file. Local
-memory-mapped files and S3-backed files may be arbitrarily large overall; the in-memory
-(<code>ByteBuffer</code>) backend additionally caps the <em>whole file</em> at 2 GB, and the <code>dive</code> TUI caps
-S3 files at 2 GB because its mmap-backed range cache uses <code>MappedByteBuffer</code>. For datasets
-that don't fit a single supported file, split the data into multiple files at write time and
-read them as one; see <a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
+<p>A column chunk read without an OffsetIndex must be at most 2 GB of <em>compressed</em> data; a
+chunk with an OffsetIndex is read in page groups and has no such limit. Files larger than
+2 GB are read both locally and from S3, except by the in-memory (<code>ByteBuffer</code>) backend and by
+an S3 file with <code>RangeBacking.SPARSE_TEMPFILE</code> (the <code>dive</code> TUI's S3 mode), which are limited
+to 2 GB per file. For datasets that don't fit a single supported file, split the data into
+multiple files at write time and read them as one; see
+<a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
 </div>
 <h3 id="page">Page<a class="headerlink" href="#page" title="Permanent link">&para;</a></h3>
 <p>A column chunk is divided into pages, and the page is where compression and encoding
@@ -2315,8 +2315,8 @@ How Hardwood surfaces that nesting differs between the two reader APIs; see
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/59f077bf993adedba3997077db066c446f7737b7" target="_blank" rel="noopener">
-      59f077bf
+    <a href="https://github.com/hardwood-hq/hardwood/tree/eb3a00f6db13635081142d9d17747ffd23f2a70c" target="_blank" rel="noopener">
+      eb3a00f6
     </a>
   
 </div>
