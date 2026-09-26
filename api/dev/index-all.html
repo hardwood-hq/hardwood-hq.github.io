@@ -2087,7 +2087,8 @@ buffer.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReaders.html#getColumnCount()" class="member-name-link">getColumnCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></dt>
 <dd>
-<div class="block">Get the number of projected columns.</div>
+<div class="block">Get the number of requested columns, counting a column once for every name in the
+projection that selects it.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/FileSchema.html#getColumnCount()" class="member-name-link">getColumnCount()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></dt>
 <dd>
@@ -2339,7 +2340,8 @@ field.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/ColumnProjection.html#getProjectedColumnNames()" class="member-name-link">getProjectedColumnNames()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a></dt>
 <dd>
-<div class="block">Returns the set of column names to project, or null if all columns are projected.</div>
+<div class="block">Returns the column names to project, in the order they were requested and including
+repeats, or null if all columns are projected.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqList.html#getRaw(int)" class="member-name-link">getRaw(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
 <dd>

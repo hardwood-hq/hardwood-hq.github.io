@@ -135,7 +135,8 @@ readers report matching record counts.</p>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnCount()" class="member-name-link">getColumnCount</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get the number of projected columns.</div>
+<div class="block">Get the number of requested columns, counting a column once for every name in the
+projection that selects it.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnReader(int)" class="member-name-link">getColumnReader</a><wbr>(int&nbsp;index)</code></div>
@@ -180,7 +181,8 @@ readers report matching record counts.</p>
 <h3>getColumnCount</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getColumnCount</span>()</div>
-<div class="block">Get the number of projected columns.</div>
+<div class="block">Get the number of requested columns, counting a column once for every name in the
+projection that selects it.</div>
 </div>
 </section>
 </li>
@@ -207,10 +209,18 @@ For nested columns, use the dot-separated field path (e.g. <code>&quot;address.z
 <h3>getColumnReader</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></span>&nbsp;<span class="element-name">getColumnReader</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
-<div class="block">Get the ColumnReader by index within the requested columns.</div>
+<div class="block"><p>Get the ColumnReader by index within the requested columns.</p>
+<p>Indices follow the order the projection names its columns in, one index for every leaf
+column a name selects. A name that selects several columns, such as a group or
+<a href="../schema/ColumnProjection.html#all()"><code>ColumnProjection.all()</code></a>, contributes them in schema order, so a column listed after a
+group in <code>columns(...)</code> sits after all of that group's leaf columns and moves when the
+group gains or loses a field. A column that several names select appears at each of
+their positions, with a reader of its own at each; <a href="#getColumnReader(java.lang.String)"><code>getColumnReader(String)</code></a> returns
+the first.</p>
+</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>index</code> - index within the requested column names (0-based)</dd>
+<dd><code>index</code> - index among the requested leaf columns (0-based)</dd>
 <dt>Returns:</dt>
 <dd>the ColumnReader at the given index</dd>
 </dl>

@@ -122,10 +122,11 @@ ColumnProjection.columns(&quot;address&quot;)       // parent group and all chil
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns a projection that includes only the specified columns.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProjectedColumnNames()" class="member-name-link">getProjectedColumnNames</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the set of column names to project, or null if all columns are projected.</div>
+<div class="block">Returns the column names to project, in the order they were requested and including
+repeats, or null if all columns are projected.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#projectsAll()" class="member-name-link">projectsAll</a>()</code></div>
@@ -164,11 +165,15 @@ ColumnProjection.columns(&quot;address&quot;)       // parent group and all chil
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ColumnProjection.html" title="class in dev.hardwood.schema">ColumnProjection</a></span>&nbsp;<span class="element-name">columns</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;names)</span></div>
 <div class="block"><p>Returns a projection that includes only the specified columns.</p>
-<p>For flat schemas, use simple column names. For nested schemas:</p>
+<p>Each name is a top-level field or the full dot-separated path to a nested field:</p>
 <ul>
+<li><code>&quot;id&quot;</code> - selects a top-level column</li>
 <li><code>&quot;address&quot;</code> - selects the parent group and all its children</li>
 <li><code>&quot;address.city&quot;</code> - selects only a specific nested field</li>
 </ul>
+<p>A nested field is reached by its full path only; <code>&quot;city&quot;</code> does not select <code>address.city</code>.
+Names may repeat or overlap, such as <code>&quot;address&quot;</code> and <code>&quot;address.city&quot;</code>. For the order in
+which readers expose the projected columns by index, see the column projection reference.</p>
 </div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -176,7 +181,7 @@ ColumnProjection.columns(&quot;address&quot;)       // parent group and all chil
 <dt>Returns:</dt>
 <dd>a projection containing only the specified columns</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column names are provided</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column names are provided, or a name is null or empty</dd>
 </dl>
 </div>
 </section>
@@ -194,8 +199,9 @@ ColumnProjection.columns(&quot;address&quot;)       // parent group and all chil
 <section class="detail" id="getProjectedColumnNames()">
 <h3>getProjectedColumnNames</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getProjectedColumnNames</span>()</div>
-<div class="block">Returns the set of column names to project, or null if all columns are projected.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getProjectedColumnNames</span>()</div>
+<div class="block">Returns the column names to project, in the order they were requested and including
+repeats, or null if all columns are projected.</div>
 </div>
 </section>
 </li>

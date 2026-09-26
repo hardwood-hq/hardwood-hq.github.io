@@ -112,7 +112,8 @@ with index-based mirrors of the <a href="FieldAccessor.html" title="interface in
 <p>Variant objects do not expose these methods — use <a href="PqVariantObject.html" title="interface in dev.hardwood.row"><code>PqVariantObject</code></a> for
 Variant navigation. By-index access lives here rather than on <a href="FieldAccessor.html" title="interface in dev.hardwood.row"><code>FieldAccessor</code></a>
 because the &quot;field index&quot; is meaningful for struct-shaped accessors (the
-position in projected schema order) but not for Variant objects (whose field
+position among the projected children, in the order the projection requests
+them) but not for Variant objects (whose field
 order is lexicographic on the metadata key dictionary and rarely matches what
 a caller would consider &quot;first&quot; / &quot;second&quot;).</p>
 <p>This interface makes no assumptions about mutability or lifecycle, allowing

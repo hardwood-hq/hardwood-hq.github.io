@@ -2285,7 +2285,7 @@ and surface the value of the last matching entry.</p>
 <p>All accessor methods are available in two forms:</p>
 <ul>
 <li><strong>Name-based</strong> (e.g., <code>getInt("column_name")</code>): convenient for ad-hoc access</li>
-<li><strong>Index-based</strong> (e.g., <code>getInt(columnIndex)</code>): faster for performance-critical loops</li>
+<li><strong>Index-based</strong> (e.g., <code>getInt(fieldIndex)</code>): faster for performance-critical loops</li>
 </ul>
 <p>The common scalar and nested types:</p>
 <table>
@@ -2361,7 +2361,7 @@ full rules, including the split <code>getTimestamp</code> / <code>getLocalTimest
 <a href="../../reference/accessors/">Typed Accessors</a>; the reasoning behind the timestamp split is in
 <a href="../../concepts/timestamps/">Timestamp Semantics</a>.</p>
 <h4 id="index-based-access">Index-based access<a class="headerlink" href="#index-based-access" title="Permanent link">&para;</a></h4>
-<p>For hot loops, look up field indices once outside the loop and pass them to the accessors instead of names. A field index is the field's position among the reader's projected top-level fields, in schema order; <code>getFieldCount()</code> and <code>getFieldName(int)</code> report those positions. It is not the file's leaf-column index (<code>ColumnSchema.columnIndex()</code>).</p>
+<p>For hot loops, look up field indices once outside the loop and pass them to the accessors instead of names. A field index is the field's position among the reader's projected top-level fields, in the order the projection requests them (see <a href="../../reference/query-controls/#index-order">Index order</a>); <code>getFieldCount()</code> and <code>getFieldName(int)</code> report those positions. It is not the file's leaf-column index (<code>ColumnSchema.columnIndex()</code>).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Resolve field indices once (before the loop)</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kt">int</span><span class="w"> </span><span class="n">idIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kt">int</span><span class="w"> </span><span class="n">nameIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">;</span>
@@ -2462,8 +2462,8 @@ full rules, including the split <code>getTimestamp</code> / <code>getLocalTimest
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/cceb6896f45f6c63ad1061ce05cc8bdadd70a909" target="_blank" rel="noopener">
-      cceb6896
+    <a href="https://github.com/hardwood-hq/hardwood/tree/1d8b9dca5d75aa17db43722538afc5c53d83055a" target="_blank" rel="noopener">
+      1d8b9dca
     </a>
   
 </div>
