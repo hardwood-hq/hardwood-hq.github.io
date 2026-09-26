@@ -3014,6 +3014,7 @@
 <li>a <code>MAP</code> whose entry is a leaf rather than a group.</li>
 </ul>
 <p>The row API reaches a list's values through an element node below the entry, which the legacy two-level lists do not have, so <code>rowWriter()</code> refuses those two shapes and <code>columnWriter()</code> writes them. <code>rowWriter()</code> also requires sibling field names to be unique, which the <code>ColumnBatch</code> indices and dotted paths do not.</p>
+<p>A column's maximum definition level and maximum repetition level must each be at most 255. A schema nested deeper is rejected with <code>UnsupportedOperationException</code> when the writer is created.</p>
 
 
 
@@ -3063,8 +3064,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/667c0bc7c3842ee815fb5257840cdbf14425728e" target="_blank" rel="noopener">
-      667c0bc7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d902ba2e0d6cedbd755469628ad877e27e48dc1b" target="_blank" rel="noopener">
+      d902ba2e
     </a>
   
 </div>
