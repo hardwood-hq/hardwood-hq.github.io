@@ -98,8 +98,10 @@ enabling alternative backends such as object stores or in-memory buffers.</p>
 <p>An <code>InputFile</code> starts in an unopened state. The <a href="#open()"><code>open()</code></a> method
 must be called before <a href="#readRange(long,int)"><code>readRange(long, int)</code></a> or <a href="#length()"><code>length()</code></a> can be used.
 The framework (<a href="Hardwood.html" title="class in dev.hardwood"><code>Hardwood</code></a>, <a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a>)
-calls <code>open()</code> automatically; callers only need to create instances via
-<a href="#of(java.nio.file.Path)"><code>of(Path)</code></a> and close them when done.</p>
+calls <code>open()</code> automatically and takes ownership of the files passed to it:
+the reader closes them when it is closed or when opening it fails. Callers
+create instances via <a href="#of(java.nio.file.Path)"><code>of(Path)</code></a> and close only files they have not handed
+to a reader. <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link"><code>Closeable.close()</code></a> may be called on a file that was never opened.</p>
 <p>Implementations must be safe for concurrent use from multiple threads once opened.
 The returned <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a> instances are owned by the caller and may
 be slices of a larger mapping or freshly allocated buffers, depending on

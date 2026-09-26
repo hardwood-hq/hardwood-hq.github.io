@@ -2168,7 +2168,16 @@
 <p>A <code>ParquetFileReader</code> no longer retains a read's <code>RowGroupIterator</code> after the reader consuming it is closed (<a href="https://github.com/hardwood-hq/hardwood/issues/1170">#1170</a>).</p>
 </li>
 <li>
+<p>When <code>ParquetFileReader.open(...)</code> or <code>openAll(...)</code> fails, every input file is closed, as is a context the call created, and closing a reader attempts every input file even when one fails with an unchecked exception (<a href="https://github.com/hardwood-hq/hardwood/issues/1322">#1322</a>).</p>
+</li>
+<li>
 <p>A page whose header declares more values than its body holds raises a <code>ParquetReadException</code> instead of returning values left over from an earlier page (<a href="https://github.com/hardwood-hq/hardwood/issues/1308">#1308</a>).</p>
+</li>
+<li>
+<p>Metadata that lacks a field the format requires (in the footer, the schema, a logical type annotation, a page header or the page index) or carries one with the wrong Thrift type raises a <code>ParquetReadException</code> instead of being read with default values, and a negative footer length raises one instead of an out-of-bounds read error. Key-value metadata holding an entry without a key is read as absent (<a href="https://github.com/hardwood-hq/hardwood/issues/1320">#1320</a>).</p>
+</li>
+<li>
+<p>Closing a <code>ParquetFileReader</code> closes the row and column readers it created that are still open, and waits for the prefetches they started, before it closes the input files; building a reader from a closed <code>ParquetFileReader</code>, or while another thread closes it, throws <code>IllegalStateException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1338">#1338</a>).</p>
 </li>
 <li>
 <p>A multi-file read opens each file as it reaches it, rather than opening every file when the reader is built, so the time to the first row no longer grows with the number of files (<a href="https://github.com/hardwood-hq/hardwood/issues/1107">#1107</a>).</p>
@@ -2442,8 +2451,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4ab0defc6bb3158efe2680fed0260d6b862a1d1f" target="_blank" rel="noopener">
-      4ab0defc
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a5c7fb3bcb2e48d66572539e5969957a5f6b0ecb" target="_blank" rel="noopener">
+      a5c7fb3b
     </a>
   
 </div>

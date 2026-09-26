@@ -2069,7 +2069,7 @@ it. <strong>Trying again may help for <code>IOException</code>, and will not for
 </tr>
 <tr>
 <td><code>UnsupportedOperationException</code></td>
-<td>The file is correct and Hardwood cannot read it: Parquet Modular Encryption, an encoding not implemented, a compression codec whose library is absent (the message names the dependency to add), a column chunk stored in a separate file (the legacy split-file layout), a row group whose page-index region exceeds 2 GB, or a file over 2 GB opened with the mmap-backed range cache</td>
+<td>The file is correct and Hardwood cannot read it: Parquet Modular Encryption, an encoding not implemented, a compression codec whose library is absent (the message names the dependency to add), a column chunk stored in a separate file (the legacy split-file layout), a column chunk or a row group's page-index region over 2 GB, or a file over 2 GB opened with the mmap-backed range cache</td>
 </tr>
 </tbody>
 </table>
@@ -2100,7 +2100,7 @@ it. <strong>Trying again may help for <code>IOException</code>, and will not for
 </tr>
 <tr>
 <td><code>IllegalStateException</code></td>
-<td>Calling <code>ColumnReader</code> accessors before <code>nextBatch()</code>, calling <code>nextBatch()</code> on a reader obtained from <code>ColumnReaders</code>, or calling nested-column methods on a flat column</td>
+<td>Calling <code>ColumnReader</code> accessors before <code>nextBatch()</code>, calling <code>nextBatch()</code> on a reader obtained from <code>ColumnReaders</code>, or calling nested-column methods on a flat column; building a row or column reader from a closed <code>ParquetFileReader</code>, or while another thread closes it</td>
 </tr>
 </tbody>
 </table>
@@ -2171,8 +2171,8 @@ an <code>InputFile</code> raises for itself is unprefixed.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4ab0defc6bb3158efe2680fed0260d6b862a1d1f" target="_blank" rel="noopener">
-      4ab0defc
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a5c7fb3bcb2e48d66572539e5969957a5f6b0ecb" target="_blank" rel="noopener">
+      a5c7fb3b
     </a>
   
 </div>

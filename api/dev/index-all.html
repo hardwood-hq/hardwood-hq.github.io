@@ -548,7 +548,12 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 throws <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Waits for the child builds under way, which fail and close what they built, then
+closes every child reader still open, which stops its workers and waits for the
+prefetches its read started, then this reader's metadata, an owned context and
+owned input files.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/RowReader.html#close()" class="member-name-link">close()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader">RowReader</a></dt>
 <dd>
 <div class="block">Releases the resources held by this reader.</div>

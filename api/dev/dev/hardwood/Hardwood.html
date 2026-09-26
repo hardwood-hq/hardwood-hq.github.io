@@ -195,7 +195,8 @@ opened via <a href="reader/ParquetFileReader.html#open(dev.hardwood.InputFile,de
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">open</span><wbr><span class="parameters">(<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</span>
                        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Open a single Parquet file. The file is opened immediately and
-closed when the returned reader is closed.</div>
+closed when the returned reader is closed, or before the exception
+propagates when opening fails.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
@@ -211,7 +212,8 @@ closed when the returned reader is closed.</div>
                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Open multiple Parquet files for reading with cross-file prefetching.
 The schema is read from the first file. Files are opened on demand
-by the iterator and closed when the returned reader is closed.</div>
+by the iterator. All files are closed when the returned reader is closed,
+or before the exception propagates when opening fails.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>inputFiles</code> - the input files to read (must not be empty)</dd>

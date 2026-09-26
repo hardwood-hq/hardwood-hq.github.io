@@ -1949,11 +1949,11 @@ any order. Every projected column, and every column a filter predicate tests, mu
 matching physical type, logical type, repetition type, and fixed byte length, and its enclosing
 groups must match in nullability and repeatedness, otherwise a <code>SchemaIncompatibleException</code> is
 thrown. A file is planned as the read arrives at it, so a mismatch in a later file surfaces from
-the reading loop rather than from the call that built the reader, and always before any row of
-that file is returned. Columns that are neither projected nor filtered on are not checked, so
-files may carry additional columns or omit unused ones. With no explicit projection, all columns
-of the first file are projected and therefore required in every subsequent file reached by the
-data-reader plan.</p>
+the reading loop rather than from the call that built the reader, after every row of the files
+before it and before any row of that file is returned. Columns that are neither projected nor
+filtered on are not checked, so files may carry additional columns or omit unused ones. With no
+explicit projection, all columns of the first file are projected and therefore required in every
+subsequent file reached by the data-reader plan.</p>
 <p>By default, <code>Hardwood.create()</code> sizes the thread pool to the number of available processors. To control the decode parallelism, create a <code>HardwoodContext</code> of the desired size and pass it to <code>Hardwood.create(HardwoodContext)</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.HardwoodContext</span><span class="p">;</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
@@ -2014,8 +2014,8 @@ data-reader plan.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4ab0defc6bb3158efe2680fed0260d6b862a1d1f" target="_blank" rel="noopener">
-      4ab0defc
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a5c7fb3bcb2e48d66572539e5969957a5f6b0ecb" target="_blank" rel="noopener">
+      a5c7fb3b
     </a>
   
 </div>

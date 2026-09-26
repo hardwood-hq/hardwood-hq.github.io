@@ -126,7 +126,15 @@ try (Hardwood hardwood = Hardwood.create();
 disk. <a href="#getFileMetaData(int)"><code>getFileMetaData(int)</code></a> may have to load a footer, so it throws
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a> once the reader is closed. <a href="#getFileCount()"><code>getFileCount()</code></a>,
 <a href="#getFileMetaData()"><code>getFileMetaData()</code></a> and <a href="#getFileSchema()"><code>getFileSchema()</code></a> are served from state already in
-memory and stay usable.</p>
+memory and stay usable. Building a row or column reader throws
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a> once the reader is closed, and so does a build that
+is under way on another thread when <a href="#close()"><code>close()</code></a> is called; <a href="#close()"><code>close()</code></a> waits for
+such a build and closes the reader it made.</p>
+<p><strong>Ownership:</strong> <code>open</code> and <code>openAll</code> take ownership of every input file. The
+files are closed when the reader is closed, or before the exception
+propagates when opening fails, including files the reader has not opened
+yet. A context the call creates is closed with them; a context passed in
+stays the caller's.</p>
 <p><strong>Limitation:</strong> When using the default memory-mapped <a href="../InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a>, the file
 itself may be arbitrarily large, but each individual column chunk must be at
 most 2 GB (<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html#MAX_VALUE" title="class or interface in java.lang" class="external-link"><code>Integer.MAX_VALUE</code></a> bytes) of compressed data. The in-memory and
@@ -200,7 +208,12 @@ and head/tail limit.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Waits for the child builds under way, which fail and close what they built, then
+closes every child reader still open, which stops its workers and waits for the
+prefetches its read started, then this reader's metadata, an owned context and
+owned input files.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#columnReader(int)" class="member-name-link">columnReader</a><wbr>(int&nbsp;columnIndex)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -310,8 +323,8 @@ column with no filter.</div>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">open</span><wbr><span class="parameters">(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</span>
                               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block"><p>Open a single Parquet file with a dedicated context.</p>
-<p>Calls <a href="../InputFile.html#open()"><code>InputFile.open()</code></a> and takes ownership of the file; it is
-closed when this reader is closed.</p>
+<p>Calls <a href="../InputFile.html#open()"><code>InputFile.open()</code></a> and takes ownership of the file (see
+<strong>Ownership</strong> above).</p>
 </div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -328,9 +341,8 @@ closed when this reader is closed.</p>
  <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</span>
                               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block"><p>Open a single Parquet file with a shared context.</p>
-<p>Calls <a href="../InputFile.html#open()"><code>InputFile.open()</code></a> and takes ownership of the file; it is
-closed when this reader is closed. The caller retains ownership of
-the context.</p>
+<p>Calls <a href="../InputFile.html#open()"><code>InputFile.open()</code></a> and takes ownership of the file (see
+<strong>Ownership</strong> above). The caller retains ownership of the context.</p>
 </div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -350,7 +362,8 @@ the context.</p>
 <div class="block">Open a single Parquet file with a shared context and an explicit
 <a href="ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>. The context (shared runtime resources) and the config
 (per-read behaviour) are independent, so one context can back reads with
-different configs.</div>
+different configs. Takes ownership of the file (see <strong>Ownership</strong> above);
+the caller retains ownership of the context.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
@@ -372,6 +385,7 @@ opened eagerly so any I/O or metadata error surfaces immediately.</p>
 disagreement with the reference schema are raised from the reading loop rather
 than from the call that built the reader — always before any row of that file is
 returned.</p>
+<p>Takes ownership of all files (see <strong>Ownership</strong> above).</p>
 </div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -387,7 +401,9 @@ returned.</p>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></span>&nbsp;<span class="element-name">openAll</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles,
  <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</span>
                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block">Open multiple Parquet files with a shared context.</div>
+<div class="block">Open multiple Parquet files with a shared context. Takes ownership of
+all files (see <strong>Ownership</strong> above); the caller retains ownership of the
+context.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
@@ -404,7 +420,8 @@ returned.</p>
  <a href="ReaderConfig.html" title="class in dev.hardwood.reader">ReaderConfig</a>&nbsp;readerConfig)</span>
                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Open multiple Parquet files with a shared context and an explicit
-<a href="ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>.</div>
+<a href="ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>. Takes ownership of all files (see <strong>Ownership</strong> above);
+the caller retains ownership of the context.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
@@ -587,6 +604,11 @@ access to a column projection. Works for single- and multi-file.</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()
            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Waits for the child builds under way, which fail and close what they built, then
+closes every child reader still open, which stops its workers and waits for the
+prefetches its read started, then this reader's metadata, an owned context and
+owned input files. A failure to close a child does not stop the rest from being
+closed; the first failure is thrown, later ones suppressed beneath it.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>

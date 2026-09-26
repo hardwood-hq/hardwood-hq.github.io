@@ -2133,12 +2133,16 @@ endpoints and multi-file reads, see <a href="../../how-to/s3/">Reading from S3</
 <p>When the retry budget is exhausted, the last failure is re-thrown as an <code>IOException</code>. For HTTP
 errors the message has the form <code>GET s3://&lt;bucket&gt;/&lt;key&gt; failed: HTTP &lt;status&gt;</code>; for network errors
 the original <code>IOException</code> message is preserved.</p>
+<p>A range read must be answered with HTTP 206. An endpoint that ignores the <code>Range</code> header and
+answers HTTP 200 with the whole object makes the read fail with an <code>IOException</code> whose message
+has the form <code>Failed to read range [&lt;start&gt;, &lt;end&gt;) from s3://&lt;bucket&gt;/&lt;key&gt;: HTTP 200, expected 206; the endpoint ignored the Range header</code>.</p>
 <h2 id="footer-pre-fetch">Footer pre-fetch<a class="headerlink" href="#footer-pre-fetch" title="Permanent link">&para;</a></h2>
 <p><code>open()</code> issues one GET for the last 64 KB of the object, or the whole object if it is
 smaller. That single round-trip discovers the object size, so there is never a
 separate HEAD request. Those bytes are kept for as long as the file is open, and any
 read falling entirely inside that trailing window is answered without a further
-request.</p>
+request. An HTTP 200 answer to this GET is accepted: the whole object then forms the
+window, and no read goes to the network again.</p>
 <p>For most files the window also carries the Parquet footer, which is why opening a
 file usually costs one GET. It is a cost heuristic rather than a guarantee: footer
 size grows with row groups × columns and with the size of the per-column statistics,
@@ -2249,8 +2253,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4ab0defc6bb3158efe2680fed0260d6b862a1d1f" target="_blank" rel="noopener">
-      4ab0defc
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a5c7fb3bcb2e48d66572539e5969957a5f6b0ecb" target="_blank" rel="noopener">
+      a5c7fb3b
     </a>
   
 </div>
