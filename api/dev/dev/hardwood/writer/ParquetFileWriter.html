@@ -428,8 +428,9 @@ produce record by record</dd>
 <div class="block"><p>Finishes the file: writes the row group still buffered and the footer, and publishes the
 file at the destination.</p>
 <p>If a write has thrown, the output is discarded instead, leaving nothing at the
-destination. A failure while finishing discards the output as well. Does nothing if the
-writer is already closed or aborted.</p>
+destination. A failure while finishing or publishing the file discards the output as
+well, and a failure to discard it is attached to the thrown exception as suppressed.
+Does nothing if the writer is already closed or aborted.</p>
 </div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -437,8 +438,8 @@ writer is already closed or aborted.</p>
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></code></dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the file cannot be finished, or a discarded output cannot be
-released</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the file cannot be finished or published, or a discarded output
+cannot be released</dd>
 </dl>
 </div>
 </section>

@@ -62,6 +62,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#create()" tabindex="0">create()</a></li>
 <li><a href="#write(java.nio.ByteBuffer)" tabindex="0">write(ByteBuffer)</a></li>
 <li><a href="#position()" tabindex="0">position()</a></li>
+<li><a href="#close()" tabindex="0">close()</a></li>
 <li><a href="#discard()" tabindex="0">discard()</a></li>
 <li><a href="#of(java.nio.file.Path)" tabindex="0">of(Path)</a></li>
 </ol>
@@ -91,7 +92,7 @@ emitted last. An <code>OutputFile</code> is therefore a purely sequential sink.<
 <p>An <code>OutputFile</code> starts in an uncreated state. <a href="#create()"><code>create()</code></a> must be called
 before <a href="#write(java.nio.ByteBuffer)"><code>write(ByteBuffer)</code></a> or <a href="#position()"><code>position()</code></a>; the writer framework
 (<a href="writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>) calls it automatically.</p>
-<p>A file is valid only after <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link"><code>Closeable.close()</code></a> returns successfully. A writer
+<p>A file is valid only after <a href="#close()"><code>close()</code></a> returns successfully. A writer
 abandoned before <code>close()</code> produces no footer and therefore no readable file.</p>
 </div>
 </div>
@@ -110,38 +111,40 @@ abandoned before <code>close()</code> produces no footer and therefore no readab
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Performs resource acquisition (e.g. opening a file channel).</div>
+<div class="block">Finalizes the file and publishes it at the destination.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#discard()" class="member-name-link">discard</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Performs resource acquisition (e.g. opening a file channel).</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#discard()" class="member-name-link">discard</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Discards everything written and releases resources without publishing a
 file at the destination.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="OutputFile.html" title="interface in dev.hardwood">OutputFile</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#of(java.nio.file.Path)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;path)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="OutputFile.html" title="interface in dev.hardwood">OutputFile</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#of(java.nio.file.Path)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;path)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
 <div class="block">Creates an uncreated <a href="OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> for a local file path.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#position()" class="member-name-link">position</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#position()" class="member-name-link">position</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the number of bytes written so far, which is the offset at which
 the next <a href="#write(java.nio.ByteBuffer)"><code>write(ByteBuffer)</code></a> will begin.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#write(java.nio.ByteBuffer)" class="member-name-link">write</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a>&nbsp;data)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#write(java.nio.ByteBuffer)" class="member-name-link">write</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a>&nbsp;data)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Appends the remaining bytes of <code>data</code> to the file.</div>
 </div>
 </div>
 </div>
 </div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.io.Closeable">Methods inherited from interface&nbsp;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#method-summary" title="class or interface in java.io" class="external-link">Closeable</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link">close</a></code></div>
 </section>
 </li>
 </ul>
@@ -204,14 +207,36 @@ the next <a href="#write(java.nio.ByteBuffer)"><code>write(ByteBuffer)</code></a
 </section>
 </li>
 <li>
+<section class="detail" id="close()">
+<h3>close</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()
+    throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><p>Finalizes the file and publishes it at the destination.</p>
+<p>When publishing fails, <code>close()</code> releases the resources and discards what was
+written before it throws, leaving the destination as if nothing was written. A
+failure to discard is attached to the thrown exception as suppressed.</p>
+</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the file cannot be published</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="discard()">
 <h3>discard</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">discard</span>()
       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Discards everything written and releases resources without publishing a
-file at the destination. This is the failure counterpart to <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link"><code>Closeable.close()</code></a>:
-<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html#close()" title="class or interface in java.io" class="external-link"><code>Closeable.close()</code></a> finalizes (commits) the file, <code>discard()</code> throws it away. The
+file at the destination. This is the failure counterpart to <a href="#close()"><code>close()</code></a>:
+<a href="#close()"><code>close()</code></a> finalizes (commits) the file, <code>discard()</code> throws it away. The
 writer calls <code>discard()</code> when it cannot finish a valid file, so a partially
 written file is never presented as valid. After <code>discard()</code> the destination
 is left as if nothing was written; calling <code>close()</code> afterwards is a no-op.</div>

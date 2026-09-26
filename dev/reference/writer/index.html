@@ -2968,7 +2968,7 @@
 </tbody>
 </table>
 <p>The writer fails when <code>ColumnWriter.writeBatch</code> or <code>RowWriter.writeRow</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#what-the-writer-rejects">What the Writer Rejects</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
-<p>A failure while <code>close()</code> finishes the file discards the output as well. When the output cannot be discarded, <code>close()</code> and <code>abort()</code> throw the <code>IOException</code>.</p>
+<p>A failure while <code>close()</code> finishes or publishes the file discards the output as well, and <code>close()</code> throws it. When the output cannot be discarded, <code>abort()</code> and <code>close()</code> on a failed writer throw the <code>IOException</code>; a failure while finishing or publishing carries it as a suppressed exception.</p>
 <h2 id="what-the-writer-rejects">What the Writer Rejects<a class="headerlink" href="#what-the-writer-rejects" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3063,8 +3063,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/dd3dc328307a903fa655ccd99679a2295d382e1c" target="_blank" rel="noopener">
-      dd3dc328
+    <a href="https://github.com/hardwood-hq/hardwood/tree/667c0bc7c3842ee815fb5257840cdbf14425728e" target="_blank" rel="noopener">
+      667c0bc7
     </a>
   
 </div>
