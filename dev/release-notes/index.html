@@ -2172,6 +2172,9 @@
 <p>When <code>ParquetFileReader.open(...)</code> or <code>openAll(...)</code> fails, every input file is closed, as is a context the call created, and closing a reader attempts every input file even when one fails with an unchecked exception (<a href="https://github.com/hardwood-hq/hardwood/issues/1322">#1322</a>).</p>
 </li>
 <li>
+<p><code>readRange</code> on an in-memory <code>InputFile</code> raises <code>IndexOutOfBoundsException</code> naming the file for a range outside it, as the other backends do, instead of an <code>ArithmeticException</code> or an exception without the file name, and a zero-length <code>readRange</code> on an S3 file returns an empty buffer without a request instead of failing (<a href="https://github.com/hardwood-hq/hardwood/issues/1348">#1348</a>).</p>
+</li>
+<li>
 <p>A page whose header declares more values than its body holds raises a <code>ParquetReadException</code> instead of returning values left over from an earlier page (<a href="https://github.com/hardwood-hq/hardwood/issues/1308">#1308</a>).</p>
 </li>
 <li>
@@ -2452,8 +2455,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/f6e7c6b3928f2b603eee8484bdad5feaaf0623c4" target="_blank" rel="noopener">
-      f6e7c6b3
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6e8c6ad5ecd6f7c7f16617a5c32b18b0246cadf3" target="_blank" rel="noopener">
+      6e8c6ad5
     </a>
   
 </div>
