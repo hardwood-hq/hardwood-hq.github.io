@@ -2324,7 +2324,7 @@ examples below cover the common cases.</p>
 </div>
 <p>Column projection, row group filtering, and all other reader features work transparently with S3 files.</p>
 <h3 id="io-behavior">I/O Behavior<a class="headerlink" href="#io-behavior" title="Permanent link">&para;</a></h3>
-<p>When reading from S3, Hardwood coalesces column chunk reads within each row group into as few HTTP requests as possible. A row group whose column chunks have a page index costs one more request for the index, and a filtered read may add one request per dictionary or bloom filter it checks. Column projection, page-level predicate pushdown, and <code>head(n)</code> on an unfiltered read all narrow the byte ranges before coalescing, reducing the amount of data transferred.</p>
+<p>When reading from S3, Hardwood coalesces column chunk reads within each row group into as few HTTP requests as possible. The page index of the columns a read uses is fetched for several row groups at a time, one request for the offset indexes and, on a filtered read, one for the column indexes; a filtered read may add one request per dictionary or bloom filter it checks. Column projection, page-level predicate pushdown, and <code>head(n)</code> on an unfiltered read all narrow the byte ranges before coalescing, reducing the amount of data transferred.</p>
 <p>Without a row limit, the reader fetches all projected (and filtered) column data for an entire row group when any column enters it. For large row groups (128 MB–1 GB is typical), this can transfer significant data even if the consumer stops reading early. To minimize data transfer for partial reads, set <code>head(n)</code> on the <code>buildRowReader()</code> builder; this truncates each column's fetch to only the pages covering the needed rows. With a filter, <code>head(n)</code> counts matching rows, which are not known before the pages are decoded, so it does not narrow the fetch.</p>
 <h3 id="measuring-fetch-cost">Measuring Fetch Cost<a class="headerlink" href="#measuring-fetch-cost" title="Permanent link">&para;</a></h3>
 <p>Each <code>S3InputFile</code> tracks the network I/O it has performed, which is useful for confirming that column projection, predicate pushdown, and <code>head(n)</code> reduced transfer — and for estimating S3 cost (GET requests plus bytes transferred):</p>
@@ -2393,8 +2393,8 @@ examples below cover the common cases.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d902ba2e0d6cedbd755469628ad877e27e48dc1b" target="_blank" rel="noopener">
-      d902ba2e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ed199a7c38642f978ad93319298af166f9483681" target="_blank" rel="noopener">
+      ed199a7c
     </a>
   
 </div>

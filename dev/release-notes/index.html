@@ -2151,6 +2151,9 @@
 <p>A <code>RowReader</code> filters on a column outside its projection instead of throwing partway through iteration when statistics do not settle the predicate (<a href="https://github.com/hardwood-hq/hardwood/issues/1242">#1242</a>).</p>
 </li>
 <li>
+<p>A read fetches the page index of the columns it reads only, for several row groups per request, and a row group whose page index spans more than 2 GB is read instead of raising <code>UnsupportedOperationException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/708">#708</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1113">#1113</a>).</p>
+</li>
+<li>
 <p>A filter column outside the projection is not read in row groups whose statistics prove every row matches, and a <code>RowReader</code> no longer resolves it by name (<a href="https://github.com/hardwood-hq/hardwood/issues/1274">#1274</a>).</p>
 </li>
 <li>
@@ -2455,8 +2458,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d902ba2e0d6cedbd755469628ad877e27e48dc1b" target="_blank" rel="noopener">
-      d902ba2e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ed199a7c38642f978ad93319298af166f9483681" target="_blank" rel="noopener">
+      ed199a7c
     </a>
   
 </div>
