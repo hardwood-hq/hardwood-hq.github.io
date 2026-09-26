@@ -2131,8 +2131,9 @@
 <h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Behaviour change:</strong> by-index accessors on <code>ColumnReaders</code>, <code>RowReader</code> and <code>PqStruct</code>, and the field order of an Avro record, follow the order <code>ColumnProjection.columns(...)</code> names the columns in instead of file schema order. <code>ColumnReaders</code> exposes a column once for every name that selects it. A nested field is selected by its full path only, no longer by its own name alone, and <code>ColumnProjection.getProjectedColumnNames()</code> returns a <code>List</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1066">#1066</a>).</li>
+<li><strong>Behaviour change:</strong> a <code>ColumnReader</code> obtained from <code>ColumnReaders</code> advances only through <code>ColumnReaders.nextBatch()</code>; its own <code>nextBatch()</code> throws <code>IllegalStateException</code>, and its <code>close()</code> has no effect (<a href="https://github.com/hardwood-hq/hardwood/issues/1336">#1336</a>).</li>
 <li>
-<p><strong>Behaviour change:</strong> a <code>ColumnReader</code> obtained from <code>ColumnReaders</code> advances only through <code>ColumnReaders.nextBatch()</code>; its own <code>nextBatch()</code> throws <code>IllegalStateException</code>, and its <code>close()</code> has no effect (<a href="https://github.com/hardwood-hq/hardwood/issues/1336">#1336</a>).</p>
+<p><strong>Behaviour change:</strong> <code>InputFile.of(ByteBuffer)</code> and <code>InputFile.ofBuffers(...)</code> read a buffer's remaining content, from its position to its limit, instead of the buffer from index 0 to its capacity, so a buffer wrapping part of an array reads correctly and a buffer filled with <code>put(...)</code> must be flipped first (<a href="https://github.com/hardwood-hq/hardwood/issues/1343">#1343</a>).</p>
 </li>
 <li>
 <p>Filter predicates take every literal type a column's accessors return, adding <code>byte[]</code>, <code>LocalDateTime</code>, <code>PqInterval</code> and <code>Instant</code> on legacy <code>INT96</code> columns, and <code>in</code> for every literal type but <code>boolean</code>; <code>inStrings</code> is deprecated in favour of <code>in(String, String...)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/868">#868</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>).</p>
@@ -2451,8 +2452,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a5c7fb3bcb2e48d66572539e5969957a5f6b0ecb" target="_blank" rel="noopener">
-      a5c7fb3b
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f6e7c6b3928f2b603eee8484bdad5feaaf0623c4" target="_blank" rel="noopener">
+      f6e7c6b3
     </a>
   
 </div>

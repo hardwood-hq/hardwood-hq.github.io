@@ -273,12 +273,15 @@ Must be called before <a href="#readRange(long,int)"><code>readRange(long, int)<
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="InputFile.html" title="interface in dev.hardwood">InputFile</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a>&nbsp;buffer)</span></div>
 <div class="block"><p>Creates an <a href="InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> backed by an in-memory <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a>.</p>
-<p>Since the data is already in memory, no resource acquisition is needed
+<p>The file is the buffer's remaining content, from its position to its limit,
+taken when this method is called. The content is not copied, and the buffer's
+position and limit are not changed; later changes to them do not affect the file.
+Since the data is already in memory, no resource acquisition is needed
 and <a href="#open()"><code>open()</code></a> is a no-op.</p>
 </div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>buffer</code> - the buffer containing Parquet file data</dd>
+<dd><code>buffer</code> - the buffer containing Parquet file data between its position and limit</dd>
 <dt>Returns:</dt>
 <dd>a new InputFile backed by the buffer</dd>
 </dl>
@@ -337,7 +340,8 @@ and <a href="#open()"><code>open()</code></a> is a no-op.</p>
 <h3>ofBuffers</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;</span>&nbsp;<span class="element-name">ofBuffers</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a>&gt;&nbsp;buffers)</span></div>
-<div class="block"><p>Creates <a href="InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> instances for a list of in-memory <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a>s.</p>
+<div class="block"><p>Creates <a href="InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> instances for a list of in-memory <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a>s.
+Each file is its buffer's remaining content, as described in <a href="#of(java.nio.ByteBuffer)"><code>of(ByteBuffer)</code></a>.</p>
 <p>Since the data is already in memory, no resource acquisition is needed
 and <a href="#open()"><code>open()</code></a> is a no-op for each instance.</p>
 </div>
@@ -356,7 +360,8 @@ and <a href="#open()"><code>open()</code></a> is a no-op for each instance.</p>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;</span>&nbsp;<span class="element-name">ofBuffers</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a>&nbsp;first,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a>...&nbsp;more)</span></div>
-<div class="block"><p>Creates <a href="InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> instances for the given in-memory <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a>s.</p>
+<div class="block"><p>Creates <a href="InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> instances for the given in-memory <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a>s.
+Each file is its buffer's remaining content, as described in <a href="#of(java.nio.ByteBuffer)"><code>of(ByteBuffer)</code></a>.</p>
 <p>Since the data is already in memory, no resource acquisition is needed
 and <a href="#open()"><code>open()</code></a> is a no-op for each instance.</p>
 </div>
