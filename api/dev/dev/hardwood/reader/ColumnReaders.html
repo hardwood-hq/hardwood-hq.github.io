@@ -93,10 +93,10 @@ pipeline for batch-oriented projection reads. Works for both
 single- and multi-file <a href="ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a> inputs; the pipeline
 transparently handles cross-file prefetching when more than one file is
 involved.</p>
-<p>Use <a href="#nextBatch()"><code>nextBatch()</code></a> to advance every underlying reader in lockstep — this is
-the structurally-safe path for multi-column consumption: a single call drives
+<p><a href="#nextBatch()"><code>nextBatch()</code></a> advances every underlying reader in lockstep: a single call drives
 every reader, returns false when the readers are exhausted, and validates that the
-readers report matching record counts.</p>
+readers report matching record counts. The readers show the group's current batch;
+they do not advance or close on their own.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">try (ParquetFileReader parquet = ParquetFileReader.openAll(files);
      ColumnReaders columns = parquet.buildColumnReaders(
              ColumnProjection.columns(&quot;passenger_count&quot;, &quot;trip_distance&quot;, &quot;fare_amount&quot;))
@@ -130,7 +130,8 @@ readers report matching record counts.</p>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Releases the resources held by every reader of this group.</div>
+<div class="block">Releases the resources held by every reader of this group, after which <a href="#nextBatch()"><code>nextBatch()</code></a>
+throws <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnCount()" class="member-name-link">getColumnCount</a>()</code></div>
@@ -151,8 +152,7 @@ projection that selects it.</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRecordCount()" class="member-name-link">getRecordCount</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Number of records in the group's current batch, whether <a href="#nextBatch()"><code>nextBatch()</code></a> or
-<a href="ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on one of its readers advanced the group to it.</div>
+<div class="block">Number of records in the group's current batch.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#nextBatch()" class="member-name-link">nextBatch</a>()</code></div>
@@ -215,8 +215,7 @@ column a name selects. A name that selects several columns, such as a group or
 <a href="../schema/ColumnProjection.html#all()"><code>ColumnProjection.all()</code></a>, contributes them in schema order, so a column listed after a
 group in <code>columns(...)</code> sits after all of that group's leaf columns and moves when the
 group gains or loses a field. A column that several names select appears at each of
-their positions, with a reader of its own at each; <a href="#getColumnReader(java.lang.String)"><code>getColumnReader(String)</code></a> returns
-the first.</p>
+their positions, with the same reader at each.</p>
 </div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -233,7 +232,9 @@ the first.</p>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">nextBatch</span>()
                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block"><p>Advance every underlying <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> to its next batch in lockstep.</p>
+<div class="block"><p>Advance every underlying <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> to its next batch in lockstep. This is the only
+way to advance the group: <a href="ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on one of its readers throws
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>.</p>
 <p>All readers share one pipeline, so they always publish batches at the same row
 boundaries. This method advances that pipeline once and returns:</p>
 <ul>
@@ -248,9 +249,6 @@ all are.</li>
 throws <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>. Under correct internal behavior this can't
 happen — the guard exists to detect future regressions in the per-column drain
 workers, not to be triggered in production.</p>
-<p>Calling <a href="ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on each reader in turn instead moves the group
-once as well: the first reader called advances it, and the others take up the same
-batch.</p>
 </div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -274,10 +272,9 @@ group was closed</dd>
 <h3>getRecordCount</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRecordCount</span>()</div>
-<div class="block"><p>Number of records in the group's current batch, whether <a href="#nextBatch()"><code>nextBatch()</code></a> or
-<a href="ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on one of its readers advanced the group to it.</p>
-<p>Equal to every underlying reader's <a href="ColumnReader.html#getRecordCount()"><code>ColumnReader.getRecordCount()</code></a> once that reader
-has taken up the batch — alignment is validated when the group advances.</p>
+<div class="block"><p>Number of records in the group's current batch.</p>
+<p>Equal to every underlying reader's <a href="ColumnReader.html#getRecordCount()"><code>ColumnReader.getRecordCount()</code></a> — alignment is
+validated when the group advances.</p>
 </div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -293,7 +290,8 @@ has taken up the batch — alignment is validated when the group advances.</p>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()
            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block">Releases the resources held by every reader of this group. Idempotent.</div>
+<div class="block">Releases the resources held by every reader of this group, after which <a href="#nextBatch()"><code>nextBatch()</code></a>
+throws <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>. Idempotent.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>

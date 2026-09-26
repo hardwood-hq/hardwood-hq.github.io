@@ -544,7 +544,8 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReaders.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></dt>
 <dd>
-<div class="block">Releases the resources held by every reader of this group.</div>
+<div class="block">Releases the resources held by every reader of this group, after which <a href="dev/hardwood/reader/ColumnReaders.html#nextBatch()"><code>ColumnReaders.nextBatch()</code></a>
+throws <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>&nbsp;</dd>
@@ -2390,8 +2391,7 @@ logical-type decoding.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReaders.html#getRecordCount()" class="member-name-link">getRecordCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader">ColumnReaders</a></dt>
 <dd>
-<div class="block">Number of records in the group's current batch, whether <a href="dev/hardwood/reader/ColumnReaders.html#nextBatch()"><code>ColumnReaders.nextBatch()</code></a> or
-<a href="dev/hardwood/reader/ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on one of its readers advanced the group to it.</div>
+<div class="block">Number of records in the group's current batch.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/FileSchema.html#getRootNode()" class="member-name-link">getRootNode()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></dt>
 <dd>

@@ -2576,7 +2576,7 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
 <h3 id="index-order">Index order<a class="headerlink" href="#index-order" title="Permanent link">&para;</a></h3>
 <p>By-index accessors follow the order <code>columns(...)</code> names the columns in. The columns one name selects, such as a group's children or every column under <code>all()</code>, follow schema order among themselves. The two reader types count positions differently:</p>
 <ul>
-<li><code>ColumnReaders.getColumnReader(int)</code> counts leaf columns name by name: index <code>i</code> is the <code>i</code>-th leaf column the names select. A column that several names select appears at each of their positions, with a reader of its own at each; <code>getColumnReader(String)</code> returns the first. <code>getColumnCount()</code> counts every position.</li>
+<li><code>ColumnReaders.getColumnReader(int)</code> counts leaf columns name by name: index <code>i</code> is the <code>i</code>-th leaf column the names select. A column that several names select appears at each of their positions, with the same reader at each. <code>getColumnCount()</code> counts every position.</li>
 <li><code>RowReader</code> and <code>PqStruct</code> accessors count the nodes of the row: a <code>RowReader</code> its top-level fields, a <code>PqStruct</code> its projected children. Each node has one position, at the first name that selects anything under it, so repeated and overlapping names add no position.</li>
 </ul>
 <p>Over a schema <code>id, address STRUCT&lt;street, city, zip&gt;</code>:</p>
@@ -2691,8 +2691,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/1d8b9dca5d75aa17db43722538afc5c53d83055a" target="_blank" rel="noopener">
-      1d8b9dca
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4ab0defc6bb3158efe2680fed0260d6b862a1d1f" target="_blank" rel="noopener">
+      4ab0defc
     </a>
   
 </div>

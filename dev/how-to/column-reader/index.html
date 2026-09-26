@@ -2374,7 +2374,7 @@
 </code></pre></div>
 <p>The batch size caps the number of <strong>records</strong> per batch, never the number of leaf values. A batch boundary always falls between records: a record, including all the leaf values a repeated column holds for it, is never split across two batches. A consequence for repeated columns is that <code>getValueCount()</code> can exceed the configured batch size, since one record may carry many leaf values; size any per-value buffers off <code>getValueCount()</code>, not the batch size.</p>
 <p><code>ColumnReaders.nextBatch()</code> advances every underlying reader once and returns <code>false</code> when the readers are exhausted. Partial advancement isn't possible because all readers consume from one shared decode pipeline. The aligned record count is exposed via <code>ColumnReaders.getRecordCount()</code>. As a defensive guard, mismatched per-column record counts throw <code>IllegalStateException</code>.</p>
-<p><code>ColumnReaders.nextBatch()</code> advances the whole group in one call. Calling <code>ColumnReader.nextBatch()</code> on each reader from <code>getColumnReader(...)</code> in turn also moves the group once per turn: the first reader called advances the group, and each other reader takes up that same batch. A reader called twice before its siblings advances the group twice; a sibling then called would skip the batch in between, so its <code>nextBatch()</code> throws <code>IllegalStateException</code>. A reader that is never called does not hold the group back. Closing any reader of the group closes the whole group, after which <code>nextBatch()</code> on any of its readers throws <code>IllegalStateException</code>.</p>
+<p>The readers from <code>getColumnReader(...)</code> show the group's current batch. <code>ColumnReaders.nextBatch()</code> is the only way to advance them: <code>ColumnReader.nextBatch()</code> on one of them throws <code>IllegalStateException</code>. Close the group with <code>ColumnReaders.close()</code>; closing one of its readers has no effect.</p>
 <h3 id="retaining-and-handing-off-batch-arrays">Retaining and Handing Off Batch Arrays<a class="headerlink" href="#retaining-and-handing-off-batch-arrays" title="Permanent link">&para;</a></h3>
 <p>The arrays and <code>Validity</code> objects returned by the accessors belong to the current batch and are freshly allocated on each <code>nextBatch()</code>, except <code>Validity.NO_NULLS</code>, which is a shared immutable instance. A later <code>nextBatch()</code> never reuses or overwrites an array returned for an earlier batch, so you can keep a returned array and process it after advancing, including by handing it to another thread:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">columns</span><span class="p">.</span><span class="na">nextBatch</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
@@ -2680,8 +2680,8 @@ the offset/validity encoding, and the per-layer count recursion), see
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/1d8b9dca5d75aa17db43722538afc5c53d83055a" target="_blank" rel="noopener">
-      1d8b9dca
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4ab0defc6bb3158efe2680fed0260d6b862a1d1f" target="_blank" rel="noopener">
+      4ab0defc
     </a>
   
 </div>
