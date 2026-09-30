@@ -2527,7 +2527,7 @@ Decimals are always plain strings: <code>0.0000001</code>, never <code>1E-7</cod
 <p>Nested values are native JSON: a struct is an object, a list or repeated field
 an array, and a map an object keyed by each map key's text. Values inside them
 follow the same rules as top-level fields. CSV has no nested structure, so a
-list, map, or Variant in a CSV cell is the same JSON as text.</p>
+list, repeated field, map, or Variant in a CSV cell is the same JSON as text.</p>
 <p>Finite floating-point values are JSON numbers. <code>NaN</code>, <code>Infinity</code>, and
 <code>-Infinity</code> are JSON strings, because JSON has no non-finite number values.
 This holds for floating-point values inside Variant columns too.</p>
@@ -2616,6 +2616,11 @@ message in Protobuf; a list inside a list, a list inside a map value, a map insi
 a list, and a map inside a map value become wrapper messages in Protobuf. A map whose
 <code>key_value</code> group carries no value renders with bare <code>null</code> values in
 Avro and an empty value message in Protobuf.</p>
+<p>A repeated field outside a list or map, such as <code>repeated int32 ids</code> or a
+repeated group, is a list of its own elements: a non-nullable Avro <code>array</code>
+of the element type, and a <code>repeated</code> field in Protobuf. A repeated group
+that holds a map renders as an array of maps in Avro and as a repeated
+wrapper message in Protobuf.</p>
 <p>Fixed-width columns keep their physical size: <code>fixed_len_byte_array(n)</code>
 and <code>int96</code> become named Avro <code>fixed</code> types of <code>n</code> and 12 bytes, and the
 <code>interval</code> and <code>float16</code> logical types map to shared 12- and 2-byte
@@ -3056,8 +3061,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3e965895acc49de8bb9771b7471696b245846d09" target="_blank" rel="noopener">
-      3e965895
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fc0f8c16b7fa3e015f3d932ece0ad21b420be1b0" target="_blank" rel="noopener">
+      fc0f8c16
     </a>
   
 </div>

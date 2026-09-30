@@ -2522,7 +2522,16 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
 <li><strong>Unannotated repeated field.</strong> A <code>REPEATED</code> field carrying no <code>LIST</code>/<code>MAP</code> annotation is a required
   list of required elements whose element type is the field itself. A repeated primitive reads as a
   list of scalars (<code>getList("foo").ints()</code>); a repeated group reads as a list of structs
-  (<code>getList("foo").structs()</code>).</li>
+  (<code>getList("foo").structs()</code>). A repeated group whose only child is a repeated <code>MAP_KEY_VALUE</code>
+  group reads as a list of maps (<code>getList("attrs").maps()</code>), and <code>getFileSchema()</code> reports the group
+  as a map. A repeated group outside a <code>LIST</code> or <code>MAP</code> group that carries an annotation of its own,
+  such as <code>MAP_KEY_VALUE</code>, <code>LIST</code> or <code>MAP</code>, reads as the same group without that annotation:
+  Hardwood drops the annotation, logging a warning, and <code>getFileSchema()</code> reports the group as it
+  would the unannotated one. Such a group annotated <code>VARIANT</code> keeps its annotation in
+  <code>getFileSchema()</code>; building a reader whose projection includes one of its columns raises an
+  <code>UnsupportedOperationException</code> naming the group, and reads of the other columns succeed. A
+  filter on the group or its columns is rejected as on any repeated column (see
+  <a href="../query-controls/">Query Controls</a>).</li>
 <li><strong>Two-level <code>LIST</code> group.</strong> A <code>LIST</code>-annotated group whose repeated child is the element directly,
   with no intermediate <code>list</code> wrapper. Hardwood applies the parquet-format
   <a href="https://parquet.apache.org/docs/file-format/types/logicaltypes/#backward-compatibility-rules">backward-compatibility rules</a>
@@ -2579,8 +2588,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3e965895acc49de8bb9771b7471696b245846d09" target="_blank" rel="noopener">
-      3e965895
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fc0f8c16b7fa3e015f3d932ece0ad21b420be1b0" target="_blank" rel="noopener">
+      fc0f8c16
     </a>
   
 </div>
