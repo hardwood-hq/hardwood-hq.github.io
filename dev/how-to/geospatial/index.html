@@ -2101,7 +2101,7 @@
 <a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="spatial-filter-pushdown">Spatial Filter Pushdown<a class="headerlink" href="#spatial-filter-pushdown" title="Permanent link">&para;</a></h3>
-<p><code>FilterPredicate.intersects(column, xmin, ymin, xmax, ymax)</code> produces a predicate that drops row groups and pages whose stored bounding box does not overlap the query box. The argument order follows the GeoJSON / WKT convention (bottom-left corner, then top-right corner). Antimeridian wrapping is handled automatically, both for a stored box and for a query box with <code>xmin &gt; xmax</code>, which covers <code>x &gt;= xmin</code> or <code>x &lt;= xmax</code> on a <code>GEOMETRY</code> column as on a <code>GEOGRAPHY</code> one. A <code>NaN</code> bound throws <code>IllegalArgumentException</code> when the predicate is built.</p>
+<p><code>FilterPredicate.intersects(column, xmin, ymin, xmax, ymax)</code> produces a predicate that drops row groups whose stored bounding box does not overlap the query box. The argument order follows the GeoJSON / WKT convention (bottom-left corner, then top-right corner). Antimeridian wrapping is handled automatically, both for a stored box and for a query box with <code>xmin &gt; xmax</code>, which covers <code>x &gt;= xmin</code> or <code>x &lt;= xmax</code> on a <code>GEOMETRY</code> column as on a <code>GEOGRAPHY</code> one. A <code>NaN</code> bound throws <code>IllegalArgumentException</code> when the predicate is built.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.FilterPredicate</span><span class="p">;</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.RowReader</span><span class="p">;</span>
@@ -2179,8 +2179,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/fdb5cd3a3ab0ad54a10f24e365bcdacbd7e117bf" target="_blank" rel="noopener">
-      fdb5cd3a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e2c08bd201f8352e932dd13a6d75ad4354fc7b77" target="_blank" rel="noopener">
+      e2c08bd2
     </a>
   
 </div>
