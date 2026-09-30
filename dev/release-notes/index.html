@@ -2132,6 +2132,7 @@
 <ul>
 <li><strong>Behaviour change:</strong> by-index accessors on <code>ColumnReaders</code>, <code>RowReader</code> and <code>PqStruct</code>, and the field order of an Avro record, follow the order <code>ColumnProjection.columns(...)</code> names the columns in instead of file schema order. <code>ColumnReaders</code> exposes a column once for every name that selects it. A nested field is selected by its full path only, no longer by its own name alone, and <code>ColumnProjection.getProjectedColumnNames()</code> returns a <code>List</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1066">#1066</a>).</li>
 <li><strong>Behaviour change:</strong> a <code>ColumnReader</code> obtained from <code>ColumnReaders</code> advances only through <code>ColumnReaders.nextBatch()</code>; its own <code>nextBatch()</code> throws <code>IllegalStateException</code>, and its <code>close()</code> has no effect (<a href="https://github.com/hardwood-hq/hardwood/issues/1336">#1336</a>).</li>
+<li><strong>Behaviour change:</strong> a shredded Variant <code>typed_value</code> column of a type the Variant shredding specification does not list, <code>INT96</code> included, raises <code>ParquetReadException</code> when the reader is built (<a href="https://github.com/hardwood-hq/hardwood/issues/1371">#1371</a>).</li>
 <li><strong>Behaviour change:</strong> <code>InputFile.of(ByteBuffer)</code> and <code>InputFile.ofBuffers(...)</code> read a buffer's remaining content, from its position to its limit, instead of the buffer from index 0 to its capacity, so a buffer wrapping part of an array reads correctly and a buffer filled with <code>put(...)</code> must be flipped first (<a href="https://github.com/hardwood-hq/hardwood/issues/1343">#1343</a>).</li>
 <li>
 <p><strong>Behaviour change:</strong> building an <code>AvroRowReader</code> over a schema the Avro binding rejects throws <code>SchemaIncompatibleException</code> for a malformed schema and <code>UnsupportedOperationException</code> for a valid one it cannot map, instead of <code>IllegalArgumentException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1370">#1370</a>).</p>
@@ -2459,8 +2460,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0f7269e4b62a751b2d6c77cb83b34aaf2ba7daa9" target="_blank" rel="noopener">
-      0f7269e4
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fdb5cd3a3ab0ad54a10f24e365bcdacbd7e117bf" target="_blank" rel="noopener">
+      fdb5cd3a
     </a>
   
 </div>

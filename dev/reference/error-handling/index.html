@@ -2061,7 +2061,7 @@ it. <strong>Trying again may help for <code>IOException</code>, and will not for
 </tr>
 <tr>
 <td><code>ParquetReadException</code></td>
-<td>They arrived and are not valid Parquet: a bad magic number, a corrupt footer, a malformed page index, a dictionary page the metadata places outside its column chunk, a page whose checksum fails, a page that will not decompress, values that do not decode. Unchecked</td>
+<td>They arrived and are not valid Parquet: a bad magic number, a corrupt footer, a malformed page index, a dictionary page the metadata places outside its column chunk, a page whose checksum fails, a page that will not decompress, values that do not decode, a shredded Variant <code>typed_value</code> column of a type the Variant shredding specification does not list (raised when the reader is built; see <a href="../../how-to/variant/">Variant</a>). Unchecked</td>
 </tr>
 <tr>
 <td><code>SchemaIncompatibleException</code></td>
@@ -2177,8 +2177,8 @@ the schema path of the offending group or column, not the file.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/0f7269e4b62a751b2d6c77cb83b34aaf2ba7daa9" target="_blank" rel="noopener">
-      0f7269e4
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fdb5cd3a3ab0ad54a10f24e365bcdacbd7e117bf" target="_blank" rel="noopener">
+      fdb5cd3a
     </a>
   
 </div>
