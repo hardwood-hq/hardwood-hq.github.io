@@ -2111,6 +2111,8 @@
 </ul>
 <p>A Parquet column annotated with the <code>NULL</code> logical type (e.g. PyArrow's <code>pa.null()</code> columns) maps to a bare Avro <code>null</code> field. The usual <code>union [null, T]</code> nullable wrap is illegal when <code>T</code> is itself <code>null</code>. The same collapse applies inside lists and maps: a <code>list&lt;null&gt;</code> element or <code>map&lt;string, null&gt;</code> value position becomes a bare <code>null</code> in the corresponding Avro <code>array</code> / <code>map</code> schema.</p>
 <p>A key-only Parquet MAP, whose repeated <code>key_value</code> group has no value column, also maps to an Avro <code>map</code> with bare <code>null</code> values. Each decoded key is present in the Java map with a <code>null</code> value.</p>
+<p>A <code>repeated</code> field outside a <code>LIST</code> or <code>MAP</code> group is a required list of required elements, and maps to a non-nullable Avro <code>array</code> of the field's own type: <code>repeated int32 foo</code> becomes <code>array&lt;int&gt;</code>, a repeated group becomes an <code>array</code> of its record, and a repeated group whose only child is a repeated <code>MAP_KEY_VALUE</code> group becomes an <code>array</code> of Avro <code>map</code>s. Its values are <code>java.util.List</code> instances. Such a group converts as the row reader reads it, ignoring any <code>LIST</code>, <code>MAP</code> or <code>MAP_KEY_VALUE</code> annotation of its own (see <a href="../../reference/accessors/#legacy-list-encodings">Legacy list encodings</a>). Building an <code>AvroRowReader</code> whose projection includes a column of such a group annotated <code>VARIANT</code> throws <code>UnsupportedOperationException</code>; a projection without its columns reads the rest of the file.</p>
+<p>A group carrying an annotation other than <code>LIST</code>, <code>MAP</code> or <code>VARIANT</code>, such as a <code>LIST</code> element group annotated <code>MAP_KEY_VALUE</code>, maps to an Avro record of its fields.</p>
 <p>Building an <code>AvroRowReader</code> fails with an <code>IllegalArgumentException</code> naming the group's path when a projected <code>LIST</code> group has no element field, or a projected <code>MAP</code> group has no key field.</p>
 <h2 id="lifecycle">Lifecycle<a class="headerlink" href="#lifecycle" title="Permanent link">&para;</a></h2>
 <p><code>AvroRowReader</code> does <strong>not</strong> take ownership of the <code>ParquetFileReader</code> it wraps. Closing the <code>AvroRowReader</code> releases the inner readers and column workers, but the underlying <code>ParquetFileReader</code> must be closed separately by the caller. The two-<code>try</code>-with-resources pattern in the examples above reflects this.</p>
@@ -2165,8 +2167,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/fc0f8c16b7fa3e015f3d932ece0ad21b420be1b0" target="_blank" rel="noopener">
-      fc0f8c16
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a20f73fc1c73ea688d1dca0b19d09b23afbe9b56" target="_blank" rel="noopener">
+      a20f73fc
     </a>
   
 </div>
