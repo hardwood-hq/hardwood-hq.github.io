@@ -91,10 +91,10 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">RowGroupFilterEvent</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.jfr/jdk/jfr/Event.html" title="class or interface in jdk.jfr" class="external-link">Event</a></span></div>
-<div class="block"><p>JFR event emitted once per file when its row groups are filtered by statistics and bloom
-filters, before any of them is read.</p>
-<p>A row group its dictionaries drop once the read reaches it is counted as kept here and
-reported by <a href="RowGroupDictionaryFilterEvent.html" title="class in dev.hardwood.jfr"><code>RowGroupDictionaryFilterEvent</code></a>.</p>
+<div class="block"><p>JFR event emitted once per file when its row groups are filtered by statistics, before any of
+them is read.</p>
+<p>A row group its bloom filters or dictionaries drop once the read reaches it is counted as kept
+here and reported by <a href="RowGroupBloomFilterEvent.html" title="class in dev.hardwood.jfr"><code>RowGroupBloomFilterEvent</code></a> or <a href="RowGroupDictionaryFilterEvent.html" title="class in dev.hardwood.jfr"><code>RowGroupDictionaryFilterEvent</code></a>.</p>
 </div>
 </div>
 </section>

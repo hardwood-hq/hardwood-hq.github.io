@@ -1667,6 +1667,8 @@ Variants, or absent.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RecordFilterEvent.html#file" class="member-name-link">file</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RecordFilterEvent.html" title="class in dev.hardwood.jfr">RecordFilterEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/jfr/RowGroupBloomFilterEvent.html#file" class="member-name-link">file</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupBloomFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupBloomFilterEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupByteRangeFilterEvent.html#file" class="member-name-link">file</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupByteRangeFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupByteRangeFilterEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupDictionaryFilterEvent.html#file" class="member-name-link">file</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupDictionaryFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupDictionaryFilterEvent</a></dt>
@@ -4618,6 +4620,13 @@ records no repetition-level histogram for this chunk.</div>
 <dd>
 <div class="block">Creates an instance of a <code>RowGroup</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/jfr/RowGroupBloomFilterEvent.html" class="type-name-link" title="class in dev.hardwood.jfr">RowGroupBloomFilterEvent</a> - Class in <a href="dev/hardwood/jfr/package-summary.html">dev.hardwood.jfr</a></dt>
+<dd>
+<div class="block">JFR event emitted when a row group's bloom filters prove that none of its rows matches the
+filter, once the read reaches the row group.</div>
+</dd>
+<dt><a href="dev/hardwood/jfr/RowGroupBloomFilterEvent.html#%3Cinit%3E()" class="member-name-link">RowGroupBloomFilterEvent()</a> - Constructor for class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupBloomFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupBloomFilterEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#rowGroupBufferTargetBytes()" class="member-name-link">rowGroupBufferTargetBytes()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
 <div class="block">Byte threshold at which a row group is cut, counted as the bytes the writer holds for it.</div>
@@ -4644,12 +4653,14 @@ filter, once the read reaches the row group.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupFilterEvent.html" class="type-name-link" title="class in dev.hardwood.jfr">RowGroupFilterEvent</a> - Class in <a href="dev/hardwood/jfr/package-summary.html">dev.hardwood.jfr</a></dt>
 <dd>
-<div class="block">JFR event emitted once per file when its row groups are filtered by statistics and bloom
-filters, before any of them is read.</div>
+<div class="block">JFR event emitted once per file when its row groups are filtered by statistics, before any of
+them is read.</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/RowGroupFilterEvent.html#%3Cinit%3E()" class="member-name-link">RowGroupFilterEvent()</a> - Constructor for class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupFilterEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/PageFilterEvent.html#rowGroupIndex" class="member-name-link">rowGroupIndex</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PageFilterEvent.html" title="class in dev.hardwood.jfr">PageFilterEvent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/jfr/RowGroupBloomFilterEvent.html#rowGroupIndex" class="member-name-link">rowGroupIndex</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupBloomFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupBloomFilterEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupDictionaryFilterEvent.html#rowGroupIndex" class="member-name-link">rowGroupIndex</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupDictionaryFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupDictionaryFilterEvent</a></dt>
 <dd>&nbsp;</dd>

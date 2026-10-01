@@ -2134,6 +2134,7 @@
 <li><strong>Behaviour change:</strong> a <code>ColumnReader</code> obtained from <code>ColumnReaders</code> advances only through <code>ColumnReaders.nextBatch()</code>; its own <code>nextBatch()</code> throws <code>IllegalStateException</code>, and its <code>close()</code> has no effect (<a href="https://github.com/hardwood-hq/hardwood/issues/1336">#1336</a>).</li>
 <li><strong>Behaviour change:</strong> a shredded Variant <code>typed_value</code> column of a type the Variant shredding specification does not list, <code>INT96</code> included, raises <code>ParquetReadException</code> when the reader is built (<a href="https://github.com/hardwood-hq/hardwood/issues/1371">#1371</a>).</li>
 <li><strong>Behaviour change:</strong> <code>InputFile.of(ByteBuffer)</code> and <code>InputFile.ofBuffers(...)</code> read a buffer's remaining content, from its position to its limit, instead of the buffer from index 0 to its capacity, so a buffer wrapping part of an array reads correctly and a buffer filled with <code>put(...)</code> must be flipped first (<a href="https://github.com/hardwood-hq/hardwood/issues/1343">#1343</a>).</li>
+<li><strong>Behaviour change:</strong> the <code>dev.hardwood.RowGroupFilter</code> JFR event counts row groups dropped by statistics only; a row group dropped by its bloom filters or dictionaries is reported by the new <code>dev.hardwood.RowGroupBloomFilter</code> and <code>dev.hardwood.RowGroupDictionaryFilter</code> events (<a href="https://github.com/hardwood-hq/hardwood/issues/735">#735</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1259">#1259</a>).</li>
 <li>
 <p><strong>Behaviour change:</strong> building an <code>AvroRowReader</code> over a schema the Avro binding rejects throws <code>SchemaIncompatibleException</code> for a malformed schema and <code>UnsupportedOperationException</code> for a valid one it cannot map, instead of <code>IllegalArgumentException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1370">#1370</a>).</p>
 </li>
@@ -2142,6 +2143,9 @@
 </li>
 <li>
 <p><code>TIMESTAMP</code> columns over <code>FIXED_LEN_BYTE_ARRAY(12)</code>, which span the years 0001 to 9999 at nanosecond precision, are read, filtered and written (<a href="https://github.com/hardwood-hq/hardwood/issues/921">#921</a>).</p>
+</li>
+<li>
+<p>Bloom filters are fetched when the read reaches a row group, together with those of the neighbouring row groups, instead of one request per row group before the first row (<a href="https://github.com/hardwood-hq/hardwood/issues/735">#735</a>).</p>
 </li>
 <li>
 <p><code>isNull</code> and <code>isNotNull</code> test whether a struct, <code>LIST</code> or <code>MAP</code> group is present (<a href="https://github.com/hardwood-hq/hardwood/issues/977">#977</a>).</p>
@@ -2460,8 +2464,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d76b5c1a1d51845e1826f65c2a541ff43e342626" target="_blank" rel="noopener">
-      d76b5c1a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f04b6aa6e73a971195ca16877b228bc13d53b165" target="_blank" rel="noopener">
+      f04b6aa6
     </a>
   
 </div>
