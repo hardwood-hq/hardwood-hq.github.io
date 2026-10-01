@@ -2409,6 +2409,7 @@
 -->
 <h1 id="cli">CLI<a class="headerlink" href="#cli" title="Permanent link">&para;</a></h1>
 <p>The <code>hardwood</code> CLI inspects and converts Parquet files from the command line. Its commands run non-interactively, for use in scripts and by <a href="#use-with-ai-coding-agents">AI coding agents</a>, and <a href="#interactive-exploration-dive"><code>hardwood dive</code></a> opens an interactive terminal UI for exploring a file by hand. It reads local files and S3 URIs, and ships as a GraalVM native binary with instant startup.</p>
+<p>A command writes its result to standard output and any warning or error to standard error, so its output can be piped or redirected to a file as is.</p>
 <p>Pre-built native binaries for Linux, macOS, and Windows are available from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">release page</a>. You can also
 run the CLI via Docker without installing it locally; see the <a href="#docker">Docker section below</a>.</p>
 <div class="admonition note">
@@ -2712,6 +2713,7 @@ the terminal instead. <code>convert</code> carries the whole value.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>hardwood<span class="w"> </span>dive<span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
 <p><code>dive</code> requires an interactive terminal. When stdin or stdout is not a TTY (e.g., a <code>docker run</code> without <code>-it</code>, or output piped to a file), it exits with an error instead of launching the UI.</p>
+<p><code>dive</code> writes no warnings to the terminal while it runs. <code>--log-file &lt;path&gt;</code> writes them to <code>&lt;path&gt;</code> instead, together with a trace of the session's reads, replacing the file's contents; <code>dive</code> exits with an error when it cannot create the file.</p>
 <script src="https://asciinema.org/a/992284.js" id="asciicast-992284" async="true"></script>
 
 <h3 id="what-you-can-do-with-it">What you can do with it<a class="headerlink" href="#what-you-can-do-with-it" title="Permanent link">&para;</a></h3>
@@ -3061,8 +3063,8 @@ filter applied but exits edit mode). The table re-filters live as you type.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a70c10d7c69b91082c4852e96eb1b216579e0c14" target="_blank" rel="noopener">
-      a70c10d7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d76b5c1a1d51845e1826f65c2a541ff43e342626" target="_blank" rel="noopener">
+      d76b5c1a
     </a>
   
 </div>
