@@ -2361,7 +2361,7 @@
 </tr>
 <tr>
 <td><code>addColumn(name, type, repetition, logicalType)</code></td>
-<td>a primitive column carrying an annotation</td>
+<td>a primitive column carrying an annotation; a <code>FIXED_LEN_BYTE_ARRAY</code> column takes the length the annotation implies</td>
 </tr>
 <tr>
 <td><code>addColumn(name, type, repetition, typeLength)</code></td>
@@ -2390,13 +2390,42 @@
 </tbody>
 </table>
 <p>The writer requires at least one column: <code>build()</code> rejects a schema with no fields, and <code>ParquetFileWriter.create</code> rejects one built another way, such as the childless root a file that declares no columns is read as.</p>
-<p><code>repetition</code> is <code>REQUIRED</code> or <code>OPTIONAL</code>; <code>REPEATED</code> is rejected, repetition being what <code>list</code> and <code>map</code> express. <code>typeLength</code> is required and positive for <code>FIXED_LEN_BYTE_ARRAY</code> and rejected for every other type, so a <code>UUID</code>, <code>INTERVAL</code>, <code>FLOAT16</code> or fixed-width <code>DECIMAL</code> column is declared through a <code>typeLength</code> overload:</p>
+<p><code>repetition</code> is <code>REQUIRED</code> or <code>OPTIONAL</code>; <code>REPEATED</code> is rejected, repetition being what <code>list</code> and <code>map</code> express. <code>typeLength</code> is rejected for every type but <code>FIXED_LEN_BYTE_ARRAY</code>, and a <code>FIXED_LEN_BYTE_ARRAY</code> column has a positive one. Declared without one, it takes the length its annotation implies:</p>
+<table>
+<thead>
+<tr>
+<th>Annotation</th>
+<th>Implied <code>typeLength</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UUID</code></td>
+<td>16</td>
+</tr>
+<tr>
+<td><code>INTERVAL</code></td>
+<td>12</td>
+</tr>
+<tr>
+<td><code>FLOAT16</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>DECIMAL(precision, scale)</code></td>
+<td>the fewest bytes whose two's complement holds <code>precision</code> digits: 1 for precision 1–2, 4 for 9, 8 for 18, 16 for 38</td>
+</tr>
+</tbody>
+</table>
+<p>Any other annotation, or none, implies no length, and the column is declared through a <code>typeLength</code> overload. A <code>typeLength</code> given explicitly is kept as given; a <code>DECIMAL</code> may take more bytes than its precision needs, while a <code>UUID</code>, <code>INTERVAL</code> or <code>FLOAT16</code> of any other length is rejected.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"event"</span><span class="p">)</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">uuid</span><span class="p">())</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">uuid</span><span class="p">())</span><span class="w">                                                 </span><span class="c1">// 16 bytes</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">                                         </span><span class="c1">// 8 bytes</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"legacy_amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p>Inside a <code>struct</code> filler the same methods appear on <code>FileSchema.StructBuilder</code>; a list element and a map value are declared on <code>FileSchema.ElementBuilder</code>, whose <code>primitive(type, repetition[, typeLength][, logicalType])</code>, <code>struct</code>, <code>list</code> and <code>map</code> carry no name, the surrounding layout supplying it.</p>
 <h3 id="logical-type-factories">Logical Type Factories<a class="headerlink" href="#logical-type-factories" title="Permanent link">&para;</a></h3>
@@ -3108,8 +3137,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/00bf172ea38d256cbd5891b46b4dc62d4803b78d" target="_blank" rel="noopener">
-      00bf172e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/303b5c84b28f71c5e122850c85d281eee69908f7" target="_blank" rel="noopener">
+      303b5c84
     </a>
   
 </div>

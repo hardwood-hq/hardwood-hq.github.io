@@ -262,7 +262,11 @@ not match the type</dd>
  <a href="../metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a>&nbsp;type,
  <a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetition,
  <a href="../metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType)</span></div>
-<div class="block">Append a primitive column carrying a logical type annotation.</div>
+<div class="block"><p>Append a primitive column carrying a logical type annotation.</p>
+<p>A <code>FIXED_LEN_BYTE_ARRAY</code> column takes the length its annotation implies: 16 bytes for
+<code>UUID</code>, 12 for <code>INTERVAL</code>, 2 for <code>FLOAT16</code>, and for <code>DECIMAL</code> the fewest bytes that
+hold its precision. Any other annotation needs the type-length overload.</p>
+</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>columnName</code> - the column name</dd>
@@ -270,8 +274,9 @@ not match the type</dd>
 <dd><code>repetition</code> - <code>REQUIRED</code> or <code>OPTIONAL</code></dd>
 <dd><code>logicalType</code> - the annotation, which must be legal for <code>type</code></dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>repetition</code> is <code>REPEATED</code> or the annotation does
-not apply to the physical type</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>repetition</code> is <code>REPEATED</code>, the annotation does
+not apply to the physical type, or <code>type</code> is <code>FIXED_LEN_BYTE_ARRAY</code> and the
+annotation implies no length</dd>
 </dl>
 </div>
 </section>
@@ -372,7 +377,8 @@ primitive of <code>keyType</code> per the canonical layout.</div>
  <a href="../metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;keyLogicalType,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a>&gt;&nbsp;value)</span></div>
 <div class="block">Append a <code>MAP</code> group whose key carries a logical type annotation — a <code>STRING</code> key
-being the common case.</div>
+being the common case. A <code>FIXED_LEN_BYTE_ARRAY</code> key takes the length its annotation
+implies, as <a href="#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)"><code>addColumn(String, PhysicalType, RepetitionType, LogicalType)</code></a> describes.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>mapName</code> - the map group name</dd>
@@ -382,7 +388,8 @@ being the common case.</div>
 <dd><code>value</code> - declares the map's value, like a list element</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>repetition</code> is <code>REPEATED</code>, no value is declared,
-or the annotation does not apply to the key's physical type</dd>
+the annotation does not apply to the key's physical type, or <code>keyType</code> is
+<code>FIXED_LEN_BYTE_ARRAY</code> and the annotation implies no length</dd>
 </dl>
 </div>
 </section>
