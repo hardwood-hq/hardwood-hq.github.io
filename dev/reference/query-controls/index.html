@@ -2545,6 +2545,10 @@ value satisfies — <code>notEq</code>, <code>gt</code> or <code>gtEq</code> aga
 <code>NaN</code> — prunes a <code>FLOAT</code>, <code>DOUBLE</code> or <code>FLOAT16</code> row group or page from its bounds only where the
 unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> and <code>ltEq</code> against a number, and <code>gt</code> against
 <code>NaN</code>, prune from the bounds alone.</p>
+<p>A row group proves every row matches a floating-point predicate from its bounds where it records
+no nulls and either records a <code>nan_count</code> of zero or the predicate is one a <code>NaN</code> value satisfies.
+A row group or page whose <code>nan_count</code> and null count together equal its row count holds only <code>NaN</code>
+and null values; every predicate a <code>NaN</code> value fails skips it, with or without bounds.</p>
 <h2 id="column-projection-forms">Column projection forms<a class="headerlink" href="#column-projection-forms" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2691,8 +2695,8 @@ unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9a15bf85890e13fa079121a0e4821c3e1e23a52a" target="_blank" rel="noopener">
-      9a15bf85
+    <a href="https://github.com/hardwood-hq/hardwood/tree/00bf172ea38d256cbd5891b46b4dc62d4803b78d" target="_blank" rel="noopener">
+      00bf172e
     </a>
   
 </div>

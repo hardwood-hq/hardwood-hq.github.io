@@ -2163,6 +2163,9 @@
 <p>A filter column outside the projection is not read in row groups whose statistics prove every row matches, and a <code>RowReader</code> no longer resolves it by name (<a href="https://github.com/hardwood-hq/hardwood/issues/1274">#1274</a>).</p>
 </li>
 <li>
+<p>Row groups and pages whose values are all <code>NaN</code> are skipped by floating-point filters a <code>NaN</code> fails, and a floating-point filter is no longer evaluated row by row in row groups whose statistics prove every row matches (<a href="https://github.com/hardwood-hq/hardwood/issues/898">#898</a>).</p>
+</li>
+<li>
 <p>A filtered <code>ColumnReader</code> evaluates a predicate on a field of a required struct instead of throwing (<a href="https://github.com/hardwood-hq/hardwood/issues/1279">#1279</a>).</p>
 </li>
 <li>
@@ -2464,8 +2467,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9a15bf85890e13fa079121a0e4821c3e1e23a52a" target="_blank" rel="noopener">
-      9a15bf85
+    <a href="https://github.com/hardwood-hq/hardwood/tree/00bf172ea38d256cbd5891b46b4dc62d4803b78d" target="_blank" rel="noopener">
+      00bf172e
     </a>
   
 </div>
