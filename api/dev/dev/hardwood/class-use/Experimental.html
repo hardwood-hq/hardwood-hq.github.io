@@ -146,8 +146,14 @@ a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/mat
 exposes through <a href="../writer/ColumnWriter.html#writeBatch(java.util.function.Consumer)"><code>ColumnWriter.writeBatch(Consumer)</code></a>.</div>
 </div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../writer/StructBuilder.html" class="type-name-link" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color"><code><a href="../writer/RowWriteResult.html" class="type-name-link" title="interface in dev.hardwood.writer">RowWriteResult</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">The outcome of <a href="../writer/RowWriter.html#tryWriteRow(java.util.function.Consumer)"><code>RowWriter.tryWriteRow(Consumer)</code></a>: the record is in the batch, or it was rejected
+without failing the writer.</div>
+</div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../writer/StructBuilder.html" class="type-name-link" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Sets the fields of one struct — a record being written, or a struct nested inside one.</div>
 </div>
 </div>

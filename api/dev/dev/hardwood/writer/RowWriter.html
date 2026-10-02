@@ -60,6 +60,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#writeRow(java.util.function.Consumer)" tabindex="0">writeRow(Consumer)</a></li>
+<li><a href="#tryWriteRow(java.util.function.Consumer)" tabindex="0">tryWriteRow(Consumer)</a></li>
 </ol>
 </li>
 </ol>
@@ -121,9 +122,14 @@ closing it writes the records still staged here along with the footer.</p>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeRow(java.util.function.Consumer)" class="member-name-link">writeRow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowWriteResult.html" title="interface in dev.hardwood.writer">RowWriteResult</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tryWriteRow(java.util.function.Consumer)" class="member-name-link">tryWriteRow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a>&gt;&nbsp;filler)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Stages one record, or returns the rejection without failing the writer.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeRow(java.util.function.Consumer)" class="member-name-link">writeRow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Writes one record.</div>
 </div>
 </div>
@@ -155,7 +161,8 @@ populated, then stages the record. A field the filler leaves unset is written as
 if it is <code>OPTIONAL</code>, and fails the record if it is <code>REQUIRED</code>.</p>
 <p>Any exception fails the writer, whether the record is rejected, its <code>filler</code> throws, or a
 batch of staged records cannot be written: the writer accepts no more records, and
-<a href="ParquetFileWriter.html#close()"><code>ParquetFileWriter.close()</code></a> discards the output.</p>
+<a href="ParquetFileWriter.html#close()"><code>ParquetFileWriter.close()</code></a> discards the output. To skip a rejected record without
+failing the writer, use <a href="#tryWriteRow(java.util.function.Consumer)"><code>tryWriteRow(Consumer)</code></a>.</p>
 </div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -166,6 +173,39 @@ batch of staged records cannot be written: the writer accepts no more records, a
 sets one twice, uses a setter that does not fit a field's declared type, or
 leaves a <code>REQUIRED</code> field unset; or if a record of the batch this call completes
 has more values for a column than a column chunk can hold</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if the filler addresses a field by an index the
+struct it is setting does not have</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed, or a previous write has failed</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="tryWriteRow(java.util.function.Consumer)">
+<h3>tryWriteRow</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="RowWriteResult.html" title="interface in dev.hardwood.writer">RowWriteResult</a></span>&nbsp;<span class="element-name">tryWriteRow</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a>&gt;&nbsp;filler)</span>
+                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><p>Stages one record, or returns the rejection without failing the writer.</p>
+<p>A rejection of the record itself — a value the column cannot hold, or a <code>REQUIRED</code>
+field left unset or set null — is returned as <a href="RowWriteResult.Rejected.html" title="class in dev.hardwood.writer"><code>RowWriteResult.Rejected</code></a> and the staged
+batch is left as it was. <a href="RowWriteResult.Staged.html" title="enum class in dev.hardwood.writer"><code>RowWriteResult.Staged</code></a> means the record is in the batch, not
+that it has been flushed: a later batch write can still fail the writer.</p>
+<p>An exception from <code>filler</code>, a builder used incorrectly, or a failure while a staged
+batch is written still fails the writer.</p>
+</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>filler</code> - populates the record</dd>
+<dt>Returns:</dt>
+<dd><a href="RowWriteResult.Staged.html" title="enum class in dev.hardwood.writer"><code>RowWriteResult.Staged</code></a> if the record was staged; <a href="RowWriteResult.Rejected.html" title="class in dev.hardwood.writer"><code>RowWriteResult.Rejected</code></a>
+if it was not</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if writing a completed batch fails</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the filler names a field the schema does not have,
+sets one twice, or uses a setter that does not fit a field's declared type
+(any value setter on an <code>UNKNOWN</code> column included); or if a record of the batch
+this call completes has more values for a column than a column chunk can hold</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IndexOutOfBoundsException.html" title="class or interface in java.lang" class="external-link">IndexOutOfBoundsException</a></code> - if the filler addresses a field by an index the
 struct it is setting does not have</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed, or a previous write has failed</dd>

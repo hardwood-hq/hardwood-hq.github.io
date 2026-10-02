@@ -2032,7 +2032,7 @@
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
 </code></pre></div>
-<p>A writer whose write call has thrown cannot be written to again, so skipping a rejected record and carrying on with the next is not possible: the file has to be written again from the start.</p>
+<p>A writer whose write call has thrown cannot be written to again. To skip a rejected record and carry on with the next, write it with <code>RowWriter.tryWriteRow</code>; see <a href="../write-row-by-row/#skipping-a-rejected-record">Skipping a Rejected Record</a>. <code>ColumnWriter.writeBatch</code> has no skip: a rejected batch fails the writer, and <code>close()</code> discards the whole file.</p>
 <h2 id="the-data-source-throws">The Data Source Throws<a class="headerlink" href="#the-data-source-throws" title="Permanent link">&para;</a></h2>
 <p>The writer does not see an exception raised by the code producing the data outside a filler, so <code>close()</code> would publish the rows written so far. Call <code>abort()</code> before the exception leaves the block:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
@@ -2107,8 +2107,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/649ca328de26af0c99609be38edabfaf224653c4" target="_blank" rel="noopener">
-      649ca328
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ed0b0429a38d02cd4cf85b37230ed1c3c3a1c37a" target="_blank" rel="noopener">
+      ed0b0429
     </a>
   
 </div>

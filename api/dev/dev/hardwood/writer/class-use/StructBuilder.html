@@ -322,9 +322,14 @@ annotation declares, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(
 <div class="col-last odd-row-color">
 <div class="block">Sets a nested struct field, populating it through <code>filler</code>.</div>
 </div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RowWriter.</span><code><a href="../RowWriter.html#writeRow(java.util.function.Consumer)" class="member-name-link">writeRow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-first even-row-color"><code><a href="../RowWriteResult.html" title="interface in dev.hardwood.writer">RowWriteResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RowWriter.</span><code><a href="../RowWriter.html#tryWriteRow(java.util.function.Consumer)" class="member-name-link">tryWriteRow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a>&gt;&nbsp;filler)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Stages one record, or returns the rejection without failing the writer.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RowWriter.</span><code><a href="../RowWriter.html#writeRow(java.util.function.Consumer)" class="member-name-link">writeRow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a>&gt;&nbsp;filler)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Writes one record.</div>
 </div>
 </div>

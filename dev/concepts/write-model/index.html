@@ -2098,7 +2098,7 @@
 <p>Three things follow for a caller:</p>
 <ul>
 <li><strong>A file is valid only after <code>close()</code> returns.</strong> Before that, the destination holds pages without a footer, and no reader can open it. A writer abandoned mid-way leaves nothing readable.</li>
-<li><strong>A failure leaves nothing behind.</strong> When the writer cannot finish, it discards what it has written. A write call that throws fails the writer, and <code>close()</code> then discards the output instead of publishing the rows written before the failure. A failure the writer does not see, such as one in the code producing the data, is handled by <code>abort()</code>; see <a href="../../how-to/write-failures/">Handle Write Failures</a>. The local backend writes to a temporary sibling path and renames atomically on close, so a reader never observes a half-written file at the target path.</li>
+<li><strong>A failure leaves nothing behind.</strong> When the writer cannot finish, it discards what it has written. A write call that throws fails the writer, and <code>close()</code> then discards the output instead of publishing the rows written before the failure. A write that returns without throwing does not fail the writer: <code>RowWriter.tryWriteRow</code> returns <code>RowWriteResult.Rejected</code> for a skippable record and <code>close()</code> still publishes the records that staged. A failure the writer does not see, such as one in the code producing the data, is handled by <code>abort()</code>; see <a href="../../how-to/write-failures/">Handle Write Failures</a>. The local backend writes to a temporary sibling path and renames atomically on close, so a reader never observes a half-written file at the target path.</li>
 <li><strong>The destination is a sequential sink.</strong> <code>OutputFile</code> is <code>create</code> / <code>write</code> / <code>position</code> / <code>close</code> / <code>discard</code>, with no seeking and no size known ahead of time, so the same interface serves a file channel or a multipart object upload. <code>close()</code> publishes the file and <code>discard()</code> throws it away; the writer calls exactly one of them.</li>
 </ul>
 <h2 id="what-bounds-memory">What bounds memory<a class="headerlink" href="#what-bounds-memory" title="Permanent link">&para;</a></h2>
@@ -2212,8 +2212,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/649ca328de26af0c99609be38edabfaf224653c4" target="_blank" rel="noopener">
-      649ca328
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ed0b0429a38d02cd4cf85b37230ed1c3c3a1c37a" target="_blank" rel="noopener">
+      ed0b0429
     </a>
   
 </div>

@@ -1672,6 +1672,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rowwriteresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RowWriteResult
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#what-the-writer-rejects" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2251,6 +2262,17 @@
     <span class="md-ellipsis">
       
         Finishing and Abandoning a File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rowwriteresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RowWriteResult
       
     </span>
   </a>
@@ -2967,8 +2989,30 @@
 </tr>
 </tbody>
 </table>
-<p>The writer fails when <code>ColumnWriter.writeBatch</code> or <code>RowWriter.writeRow</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#what-the-writer-rejects">What the Writer Rejects</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
+<p>The writer fails when <code>ColumnWriter.writeBatch</code> or <code>RowWriter.writeRow</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#what-the-writer-rejects">What the Writer Rejects</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. <code>RowWriter.tryWriteRow</code> fails the writer only on the exceptions listed under <a href="#rowwriteresult"><code>RowWriteResult</code></a>. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
 <p>A failure while <code>close()</code> finishes or publishes the file discards the output as well, and <code>close()</code> throws it. When the output cannot be discarded, <code>abort()</code> and <code>close()</code> on a failed writer throw the <code>IOException</code>; a failure while finishing or publishing carries it as a suppressed exception.</p>
+<h2 id="rowwriteresult"><code>RowWriteResult</code><a class="headerlink" href="#rowwriteresult" title="Permanent link">&para;</a></h2>
+<p><code>RowWriter.tryWriteRow</code> returns one of two members:</p>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Staged</code></td>
+<td>The record is in the batch. A later flush can still fail the writer.</td>
+</tr>
+<tr>
+<td><code>Rejected(fieldPath, message)</code></td>
+<td>The record was not staged, and the staged batch is unchanged. <code>fieldPath</code> is the schema path the message names; <code>message</code> is the full text <code>writeRow</code> throws for the same rejection.</td>
+</tr>
+</tbody>
+</table>
+<p>A rejection that depends on the value handed over becomes <code>Rejected</code>: a value outside the range its annotation declares, a value whose magnitude or precision the column cannot hold under the configured <code>PrecisionLossPolicy</code>, a <code>FIXED_LEN_BYTE_ARRAY</code> value of the wrong length, or a <code>REQUIRED</code> field left unset or set null.</p>
+<p>Every other failure throws and fails the writer, as it does under <code>writeRow</code>: an unknown field name or index, a field set twice, a setter that does not fit the field (including any value setter on a column annotated <code>UNKNOWN</code>), an exception thrown by the filler, and a failure while a completed batch is written.</p>
 <h2 id="what-the-writer-rejects">What the Writer Rejects<a class="headerlink" href="#what-the-writer-rejects" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3064,8 +3108,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/649ca328de26af0c99609be38edabfaf224653c4" target="_blank" rel="noopener">
-      649ca328
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ed0b0429a38d02cd4cf85b37230ed1c3c3a1c37a" target="_blank" rel="noopener">
+      ed0b0429
     </a>
   
 </div>
