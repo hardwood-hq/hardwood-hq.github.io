@@ -2166,7 +2166,7 @@
 <p>A filtered <code>ColumnReader</code> evaluates a predicate on a field of a required struct instead of throwing (<a href="https://github.com/hardwood-hq/hardwood/issues/1279">#1279</a>).</p>
 </li>
 <li>
-<p>A logical type annotation a column's physical type cannot carry, or one this release does not recognize, is ignored, and the column is read as its physical type (<a href="https://github.com/hardwood-hq/hardwood/issues/1139">#1139</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1406">#1406</a>).</p>
+<p>A logical type annotation a column's physical type cannot carry, or one this release does not recognize, including a <code>TIME</code> or <code>TIMESTAMP</code> in an unrecognized unit, is ignored, and the column is read as its physical type (<a href="https://github.com/hardwood-hq/hardwood/issues/1139">#1139</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1406">#1406</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1239">#1239</a>).</p>
 </li>
 <li>
 <p><code>INTERVAL</code> columns written by parquet-java, which carry <code>converted_type = INTERVAL</code> beside <code>logicalType = UNKNOWN</code>, are read and filtered as <code>INTERVAL</code> instead of as <code>NULL</code> columns (<a href="https://github.com/hardwood-hq/hardwood/issues/1217">#1217</a>).</p>
@@ -2464,8 +2464,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/080ecbb69f4610bbe09afa8be72b1971cd811a68" target="_blank" rel="noopener">
-      080ecbb6
+    <a href="https://github.com/hardwood-hq/hardwood/tree/2d6e9ce6aba74bdc49f22f9cd977afee4e695d87" target="_blank" rel="noopener">
+      2d6e9ce6
     </a>
   
 </div>
