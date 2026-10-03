@@ -408,6 +408,10 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Creates an instance of a <code>BsonType</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/InMemoryOutputFile.html#buffer()" class="member-name-link">buffer()</a> - Method in class dev.hardwood.<a href="dev/hardwood/InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></dt>
+<dd>
+<div class="block">The file that was written.</div>
+</dd>
 <dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></dt>
@@ -537,6 +541,8 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dt><a href="dev/hardwood/Hardwood.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.<a href="dev/hardwood/Hardwood.html" title="class in dev.hardwood">Hardwood</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/HardwoodContext.html#close()" class="member-name-link">close()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/InMemoryOutputFile.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.<a href="dev/hardwood/InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/OutputFile.html#close()" class="member-name-link">close()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
 <dd>
@@ -890,6 +896,8 @@ hold columns rather than records.</div>
 <dd>
 <div class="block">Create a new context with a thread pool sized to available processors.</div>
 </dd>
+<dt><a href="dev/hardwood/InMemoryOutputFile.html#create()" class="member-name-link">create()</a> - Method in class dev.hardwood.<a href="dev/hardwood/InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/OutputFile.html#create()" class="member-name-link">create()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
 <dd>
 <div class="block">Performs resource acquisition (e.g. opening a file channel).</div>
@@ -1174,6 +1182,8 @@ per-value 4-byte length prefix wherever the lengths are similar.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-dictionaryPageOffset"><code>dictionaryPageOffset</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/InMemoryOutputFile.html#discard()" class="member-name-link">discard()</a> - Method in class dev.hardwood.<a href="dev/hardwood/InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/OutputFile.html#discard()" class="member-name-link">discard()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
 <dd>
 <div class="block">Discards everything written and releases resources without publishing a
@@ -3042,6 +3052,14 @@ any of <code>values</code>.</div>
 <dd>
 <div class="block">A page holding an index into the column chunk.</div>
 </dd>
+<dt><a href="dev/hardwood/OutputFile.html#inMemory()" class="member-name-link">inMemory()</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
+<dd>
+<div class="block">Creates an uncreated <a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that keeps the file in memory.</div>
+</dd>
+<dt><a href="dev/hardwood/InMemoryOutputFile.html" class="type-name-link" title="class in dev.hardwood">InMemoryOutputFile</a> - Class in <a href="dev/hardwood/package-summary.html">dev.hardwood</a></dt>
+<dd>
+<div class="block">An <a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that keeps the file in memory and hands it back.</div>
+</dd>
 <dt><a href="dev/hardwood/s3/S3Source.html#inputFile(java.lang.String)" class="member-name-link">inputFile(String)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>
 <div class="block">Creates an <a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
@@ -4381,6 +4399,8 @@ prefix.</div>
 <dd>
 <div class="block">Dictionary encoding using a plain-encoded dictionary page (deprecated in favor of <a href="dev/hardwood/metadata/Encoding.html#RLE_DICTIONARY"><code>Encoding.RLE_DICTIONARY</code></a>).</div>
 </dd>
+<dt><a href="dev/hardwood/InMemoryOutputFile.html#position()" class="member-name-link">position()</a> - Method in class dev.hardwood.<a href="dev/hardwood/InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/OutputFile.html#position()" class="member-name-link">position()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
 <dd>
 <div class="block">Returns the number of bytes written so far, which is the offset at which
@@ -6010,6 +6030,8 @@ does not match what the accessor expects — for example, calling
 <dd>
 <div class="block">The word array (set-bit = present polarity).</div>
 </dd>
+<dt><a href="dev/hardwood/InMemoryOutputFile.html#write(java.nio.ByteBuffer)" class="member-name-link">write(ByteBuffer)</a> - Method in class dev.hardwood.<a href="dev/hardwood/InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/OutputFile.html#write(java.nio.ByteBuffer)" class="member-name-link">write(ByteBuffer)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
 <dd>
 <div class="block">Appends the remaining bytes of <code>data</code> to the file.</div>

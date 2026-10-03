@@ -65,6 +65,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#close()" tabindex="0">close()</a></li>
 <li><a href="#discard()" tabindex="0">discard()</a></li>
 <li><a href="#of(java.nio.file.Path)" tabindex="0">of(Path)</a></li>
+<li><a href="#inMemory()" tabindex="0">inMemory()</a></li>
 </ol>
 </li>
 </ol>
@@ -78,6 +79,10 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></code></dd>
+</dl>
+<dl class="notes">
+<dt>All Known Implementing Classes:</dt>
+<dd><code><a href="InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></code></dd>
 </dl>
 <hr>
 <object type="image/svg+xml" data="OutputFile.svg"  style="max-width:60%;float:right;"></object>
@@ -126,20 +131,25 @@ abandoned before <code>close()</code> produces no footer and therefore no readab
 <div class="block">Discards everything written and releases resources without publishing a
 file at the destination.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="OutputFile.html" title="interface in dev.hardwood">OutputFile</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#of(java.nio.file.Path)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;path)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#inMemory()" class="member-name-link">inMemory</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">Creates an uncreated <a href="OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that keeps the file in memory.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="OutputFile.html" title="interface in dev.hardwood">OutputFile</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#of(java.nio.file.Path)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;path)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
 <div class="block">Creates an uncreated <a href="OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> for a local file path.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#position()" class="member-name-link">position</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#position()" class="member-name-link">position</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the number of bytes written so far, which is the offset at which
 the next <a href="#write(java.nio.ByteBuffer)"><code>write(ByteBuffer)</code></a> will begin.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#write(java.nio.ByteBuffer)" class="member-name-link">write</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a>&nbsp;data)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#write(java.nio.ByteBuffer)" class="member-name-link">write</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a>&nbsp;data)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Appends the remaining bytes of <code>data</code> to the file.</div>
 </div>
 </div>
@@ -258,6 +268,25 @@ is left as if nothing was written; calling <code>close()</code> afterwards is a 
 <dd><code>path</code> - the file to write</dd>
 <dt>Returns:</dt>
 <dd>a new uncreated OutputFile</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="inMemory()">
+<h3>inMemory</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></span>&nbsp;<span class="element-name">inMemory</span>()</div>
+<div class="block"><p>Creates an uncreated <a href="OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that keeps the file in memory. The finished file is
+retrieved from <a href="InMemoryOutputFile.html#buffer()"><code>InMemoryOutputFile.buffer()</code></a> after the writer is closed.</p>
+<p>The buffer grows with the file, so no size has to be given up front; the length of a
+Parquet file is only known once it has been written.</p>
+<p><strong>This API is <a href="Experimental.html" title="annotation interface in dev.hardwood"><code>Experimental</code></a>:</strong> the shape may change in future releases.</p>
+</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a new uncreated in-memory OutputFile</dd>
 </dl>
 </div>
 </section>

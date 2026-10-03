@@ -2147,8 +2147,8 @@ Alternatively, <a href="reference/cli/">install the Hardwood CLI</a> for working
 <p>The <a href="https://github.com/hardwood-hq/hardwood-examples">hardwood-examples</a> repository collects small, self-contained examples, one per concept, that you can clone and run with a single command.</p>
 <h2 id="status-and-limitations">Status and Limitations<a class="headerlink" href="#status-and-limitations" title="Permanent link">&para;</a></h2>
 <p>The read path is stable and suitable for production use; <code>ColumnReader</code>, with its <code>Validity</code> and <code>LayerKind</code> types, is annotated <code>@Experimental</code>, so its shape may still change.
-The write path ships both APIs described under <a href="how-to/#choosing-a-writer">Choosing a Writer</a>; the row-oriented <code>RowWriter</code> and its builders, and the <code>ColumnBatch</code> setters for nested and nullable columns, are annotated <code>@Experimental</code>, so their shape may still change.</p>
-<p>Writing targets local files through <code>OutputFile.of(Path)</code>.
+The write path ships both APIs described under <a href="how-to/#choosing-a-writer">Choosing a Writer</a>; the row-oriented <code>RowWriter</code> and its builders, the <code>ColumnBatch</code> setters for nested and nullable columns, and the in-memory destination <code>InMemoryOutputFile</code> are annotated <code>@Experimental</code>, so their shape may still change.</p>
+<p>Writing targets local files through <code>OutputFile.of(Path)</code> and the heap through <code>OutputFile.inMemory()</code>.
 Reads have no file-size ceiling, but individual column chunks are capped at 2 GB, and some backends carry their own limits; see <a href="concepts/parquet-layout/#column-chunk">2 GB column-chunk limit</a>.</p>
 <h2 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">&para;</a></h2>
 <p>Forward-looking items tracked for post-1.0. None are committed to a specific release.</p>
@@ -2222,8 +2222,8 @@ Reads have no file-size ceiling, but individual column chunks are capped at 2 GB
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/303b5c84b28f71c5e122850c85d281eee69908f7" target="_blank" rel="noopener">
-      303b5c84
+    <a href="https://github.com/hardwood-hq/hardwood/tree/1188799983fef3bfb5947b7819221e13eeb9154a" target="_blank" rel="noopener">
+      11887999
     </a>
   
 </div>
