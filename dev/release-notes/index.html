@@ -2144,6 +2144,7 @@
 <p><code>ColumnReader.getDictionaryIds()</code> and <code>getBinaryDictionary()</code> expose the dictionary entry of each value of a dictionary-encoded <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column (<a href="https://github.com/hardwood-hq/hardwood/issues/513">#513</a>).</p>
 </li>
 <li>A <code>RowReader</code> returns one shared <code>String</code> per dictionary entry in every row group, also where the row-group size is not a multiple of the batch size (<a href="https://github.com/hardwood-hq/hardwood/issues/1199">#1199</a>).</li>
+<li>A <code>ColumnReader</code> over a dictionary-encoded <code>BYTE_ARRAY</code> column builds the per-value byte views of <code>getBinaryStarts()</code> and <code>getBinaryEnds()</code> only once they are read, so a reader of <code>getDictionaryIds()</code> or <code>getStrings()</code> does not pay for them (<a href="https://github.com/hardwood-hq/hardwood/issues/1439">#1439</a>).</li>
 <li>
 <p><code>ColumnReader.getStrings()</code> and <code>getBinaries()</code> no longer spend most of a read in garbage collection under the G1 collector at heaps up to a few GB (<a href="https://github.com/hardwood-hq/hardwood/issues/1437">#1437</a>).</p>
 </li>
@@ -2479,8 +2480,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5520bd5ea1c828ce05e9b4225abef7c5584ad517" target="_blank" rel="noopener">
-      5520bd5e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/1d1c9540746b5186b0a378faee7e1262b3ca0041" target="_blank" rel="noopener">
+      1d1c9540
     </a>
   
 </div>
