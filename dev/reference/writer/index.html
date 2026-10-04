@@ -2589,7 +2589,12 @@
 <tr>
 <td><code>pageTargetBytes(int)</code></td>
 <td><code>1 MiB</code></td>
-<td>Encoded bytes before a data page is cut, counting the values as the chunk's chosen encoding writes them, so a dictionary column is measured in indices. A ceiling: the page is cut before the value that would cross it, and only a single value larger than the whole target can breach it. A named delta encoding lands below the target, since its width depends on the values. Must be at least 4 bytes.</td>
+<td>Encoded bytes before a data page is cut, counting the values as the chunk's chosen encoding writes them, so a dictionary column is measured in indices. A ceiling: the page is cut before the record that would cross it, and only a single record larger than the whole target can breach it, a page holding whole records. A named delta encoding lands below the target, since its width depends on the values. Must be at least 4 bytes.</td>
+</tr>
+<tr>
+<td><code>pageTargetRows(int)</code></td>
+<td><code>20,000</code></td>
+<td>Records before a data page is cut. A page holds whole records, so on a repeated column it counts records, not values. Sets how finely the page index lets a reader skip within a column chunk; it binds on columns whose values encode small, such as dictionary-encoded ones. Must be positive.</td>
 </tr>
 <tr>
 <td><code>rowGroupTargetRows(long)</code></td>
@@ -2628,8 +2633,8 @@
 </tr>
 </tbody>
 </table>
-<p>A row group is cut at whichever of the two row-group targets is reached first.</p>
-<p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>codec()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, and, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
+<p>A page is cut at whichever of the two page targets is reached first, and a row group at whichever of the two row-group targets is reached first.</p>
+<p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>pageTargetRows()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>codec()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, and, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
 <p>The footer's key-value metadata and its <code>created_by</code> identifier are set on the <code>ParquetFileWriter</code> itself; see <a href="#file-metadata">File Metadata</a>.</p>
 <h2 id="encodings">Encodings<a class="headerlink" href="#encodings" title="Permanent link">&para;</a></h2>
 <p><code>ColumnEncoding</code> sets how a column's values are encoded, file-wide or per leaf column. <code>AUTO</code> leaves the choice to the writer; every other member names an encoding outright, and a column that names one builds no dictionary.</p>
@@ -3001,12 +3006,17 @@
 <p>Every column chunk carries <code>null_count</code>. <code>min</code> / <code>max</code> are computed under the column's <code>ColumnOrder</code> during encoding and written to the preferred <code>min_value</code> / <code>max_value</code> fields; the deprecated <code>min</code> / <code>max</code> fields are not written.</p>
 <ul>
 <li><strong>Bounds are omitted where their order is undefined.</strong> A column annotated <code>INTERVAL</code>, <code>UNKNOWN</code>, <code>VARIANT</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>LIST</code> or <code>MAP</code> writes its null count alone, parquet-format leaving those orderings unspecified; a bound in an order the reader cannot know would prune away live rows. An all-null chunk has no bounds to write either.</li>
-<li><strong>Truncation.</strong> <code>BYTE_ARRAY</code> bounds longer than <code>statisticsTruncationLength</code> are truncated and flagged inexact (<code>is_min_value_exact</code> / <code>is_max_value_exact</code> = <code>false</code>). Fixed-width types write those flags as <code>true</code>.</li>
+<li><strong>Truncation.</strong> <code>BYTE_ARRAY</code> bounds longer than <code>statisticsTruncationLength</code> are truncated and flagged inexact (<code>is_min_value_exact</code> / <code>is_max_value_exact</code> = <code>false</code>). A column annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code> is truncated at a character boundary, so its bounds are valid UTF-8. Fixed-width types write those flags as <code>true</code>.</li>
 <li><strong><code>nan_count</code></strong> is written for every <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> chunk, including when it is zero, since a recorded zero lets a reader prove a chunk holds no NaN. No other type writes the field.</li>
 <li><strong><code>distinct_count</code></strong> is written where the chunk still knows its cardinality exactly: any chunk under <code>AUTO</code> that interned its values to the end, whichever encoding the flush-time comparison then chose, and any <code>BOOLEAN</code> chunk, which knows its cardinality without a dictionary. It is absent for any other chunk written under a named encoding, and for one that stopped interning part-way, which happens when repeated size probes find the dictionary losing to <code>PLAIN</code>.</li>
 </ul>
 <p>Every column chunk also carries <code>encoding_stats</code>: its page count per page type and encoding. A dictionary-encoded chunk lists one <code>PLAIN</code> dictionary page and all of its data pages as <code>RLE_DICTIONARY</code>, so a reader can prune its row group on the dictionary for an <code>eq</code> or <code>in</code> predicate (see <a href="../../how-to/query-controls/">Query Controls</a>). Any other chunk lists its data pages under the one value encoding it was written in.</p>
-<p>Page-level index structures (OffsetIndex, ColumnIndex), Bloom filters, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
+<p>Every file carries a page index, written between the last row group and the footer:</p>
+<ul>
+<li><strong><code>OffsetIndex</code></strong>, for every column chunk: the location of each data page and the first record it holds. Every page starts at a record boundary.</li>
+<li><strong><code>ColumnIndex</code></strong>, for every column chunk whose bounds can be stated: each page's <code>min</code> / <code>max</code> under the same rules as the chunk statistics, its null count, whether it holds only nulls, its <code>NaN</code> count for <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code>, and whether the pages' bounds ascend or descend. A column without an order writes none, nor does a floating-point column chunk with a page whose values are all <code>NaN</code>. Where no truncated <code>max</code> exists, a page's <code>max</code> is written whole.</li>
+</ul>
+<p>Bloom filters, the level histograms of <code>SizeStatistics</code> and the <code>ColumnIndex</code>, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
 <h2 id="file-metadata">File Metadata<a class="headerlink" href="#file-metadata" title="Permanent link">&para;</a></h2>
 <p>Two footer fields are set on the <code>ParquetFileWriter</code> itself, at any point until <code>close()</code> writes the footer: the file's key-value metadata and its <code>created_by</code> identifier.</p>
 <table>
@@ -3193,8 +3203,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a18484fad138afdd0094fc531cba56d96dbce19c" target="_blank" rel="noopener">
-      a18484fa
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8269f06eee4e3cf2380b9351276903a890cb8e77" target="_blank" rel="noopener">
+      8269f06e
     </a>
   
 </div>

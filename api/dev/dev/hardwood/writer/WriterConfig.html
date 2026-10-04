@@ -62,6 +62,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#field-detail" tabindex="0">Field Details</a>
 <ol class="toc-list">
 <li><a href="#DEFAULT_PAGE_TARGET_BYTES" tabindex="0">DEFAULT_PAGE_TARGET_BYTES</a></li>
+<li><a href="#DEFAULT_PAGE_TARGET_ROWS" tabindex="0">DEFAULT_PAGE_TARGET_ROWS</a></li>
 <li><a href="#DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES" tabindex="0">DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES</a></li>
 <li><a href="#DEFAULT_ROW_GROUP_TARGET_ROWS" tabindex="0">DEFAULT_ROW_GROUP_TARGET_ROWS</a></li>
 <li><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" tabindex="0">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></li>
@@ -75,6 +76,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#defaults()" tabindex="0">defaults()</a></li>
 <li><a href="#builder()" tabindex="0">builder()</a></li>
 <li><a href="#pageTargetBytes()" tabindex="0">pageTargetBytes()</a></li>
+<li><a href="#pageTargetRows()" tabindex="0">pageTargetRows()</a></li>
 <li><a href="#rowGroupBufferTargetBytes()" tabindex="0">rowGroupBufferTargetBytes()</a></li>
 <li><a href="#rowGroupTargetRows()" tabindex="0">rowGroupTargetRows()</a></li>
 <li><a href="#defaultEncoding()" tabindex="0">defaultEncoding()</a></li>
@@ -101,12 +103,14 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">WriterConfig</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block"><p>Tuning knobs for <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>.</p>
-<p>Three size targets govern the writer's output granularity:</p>
+<p>Four targets govern the writer's output granularity:</p>
 <ul>
-<li><strong>Page target</strong> — the writer cuts a data page once the entries it holds would encode to
-this many bytes. The page is cut <em>before</em> the entry that would cross it, so this is a
-ceiling rather than something a page overshoots; only a single value larger than the whole
-target can breach it, a value not being divisible across pages.</li>
+<li><strong>Page byte target</strong> — the writer cuts a data page once the records it holds would encode
+to this many bytes. The page is cut <em>before</em> the record that would cross it, so this is a
+ceiling rather than something a page overshoots; only a single record larger than the whole
+target can breach it, a page holding whole records.</li>
+<li><strong>Page row target</strong> — the writer also cuts a data page once it holds this many records,
+which sets how finely the page index lets a reader skip within a column chunk.</li>
 <li><strong>Row-group row target</strong> — the writer cuts a row group once it holds this many records.
 This is the control over how a file is banded, and it is exactly what it says: a row count
 needs no estimate and does not vary with the data. It binds for narrow records.</li>
@@ -175,25 +179,30 @@ the size comparison the writer makes once the row group is buffered.</div>
 <div class="col-last even-row-color">
 <div class="block">Default page target: 1 MiB of encoded values per data page.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a></code></div>
+<div class="col-first odd-row-color"><code>static final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_PAGE_TARGET_ROWS" class="member-name-link">DEFAULT_PAGE_TARGET_ROWS</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">Default page row target: 20,000 records per data page.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default precision-loss policy: reject a value the column cannot hold exactly, rather
 than silently dropping the digits that do not fit.</div>
 </div>
-<div class="col-first even-row-color"><code>static final long</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final long</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default row-group buffer target: 128 MiB of buffered values per row group.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final long</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_ROWS" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_ROWS</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final long</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_ROWS" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_ROWS</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default row-group row target: 1,048,576 records.</div>
 </div>
-<div class="col-first even-row-color"><code>static final int</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default statistics truncation length: <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> bounds longer than
 64 bytes are truncated and flagged inexact.</div>
 </div>
@@ -241,24 +250,29 @@ than silently dropping the digits that do not fit.</div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Encoded-byte threshold at which a data page is cut.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy()" class="member-name-link">precisionLossPolicy</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetRows()" class="member-name-link">pageTargetRows</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Record count at which a data page is cut.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy()" class="member-name-link">precisionLossPolicy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">What <a href="RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column can hold.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupBufferTargetBytes()" class="member-name-link">rowGroupBufferTargetBytes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupBufferTargetBytes()" class="member-name-link">rowGroupBufferTargetBytes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Byte threshold at which a row group is cut, counted as the bytes the writer holds for it.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetRows()" class="member-name-link">rowGroupTargetRows</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetRows()" class="member-name-link">rowGroupTargetRows</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Record count at which a row group is cut.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The maximum length of a <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound before it is
 truncated (and flagged inexact).</div>
 </div>
@@ -290,6 +304,23 @@ truncated (and flagged inexact).</div>
 <dd>
 <ul class="tag-list">
 <li><a href="../../../constant-values.html#dev.hardwood.writer.WriterConfig.DEFAULT_PAGE_TARGET_BYTES">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="DEFAULT_PAGE_TARGET_ROWS">
+<h3>DEFAULT_PAGE_TARGET_ROWS</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">DEFAULT_PAGE_TARGET_ROWS</span></div>
+<div class="block">Default page row target: 20,000 records per data page.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../constant-values.html#dev.hardwood.writer.WriterConfig.DEFAULT_PAGE_TARGET_ROWS">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -418,6 +449,15 @@ the size comparison the writer makes once the row group is buffered.</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">pageTargetBytes</span>()</div>
 <div class="block">Encoded-byte threshold at which a data page is cut.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="pageTargetRows()">
+<h3>pageTargetRows</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">pageTargetRows</span>()</div>
+<div class="block">Record count at which a data page is cut.</div>
 </div>
 </section>
 </li>

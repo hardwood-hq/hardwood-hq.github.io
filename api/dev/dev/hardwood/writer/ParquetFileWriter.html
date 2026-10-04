@@ -108,7 +108,8 @@ of lists, lists of structs, and maps of any in-scope value). Data is supplied as
 levelled column's pages carrying an RLE definition-level stream ahead of the values — and
 flushes a row group once the bytes it holds for that group reach the configured target. Each
 row group is buffered, written and forgotten, so what the writer holds follows the target
-rather than the size of the file — and the target counts what is held, so it is that number
+rather than the size of the file, apart from the page index it keeps for the end of the file
+(a location and two bounds per data page) — and the target counts what is held, so it is that number
 and not a multiple of it, give or take the slack the value stores carry from growing
 geometrically. Each column chunk is encoded one way throughout:
 by default the writer weighs a dictionary against <code>PLAIN</code> once the row group is buffered and

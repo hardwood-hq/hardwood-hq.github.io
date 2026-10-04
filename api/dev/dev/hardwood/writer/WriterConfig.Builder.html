@@ -61,6 +61,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#pageTargetBytes(int)" tabindex="0">pageTargetBytes(int)</a></li>
+<li><a href="#pageTargetRows(int)" tabindex="0">pageTargetRows(int)</a></li>
 <li><a href="#rowGroupBufferTargetBytes(long)" tabindex="0">rowGroupBufferTargetBytes(long)</a></li>
 <li><a href="#rowGroupTargetRows(long)" tabindex="0">rowGroupTargetRows(long)</a></li>
 <li><a href="#encoding(dev.hardwood.writer.ColumnEncoding)" tabindex="0">encoding(ColumnEncoding)</a></li>
@@ -136,25 +137,30 @@ arguments must be non-null.</div>
 <div class="block">Sets the page target; must be at least one <code>INT32</code> (4 bytes).</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy(dev.hardwood.writer.PrecisionLossPolicy)" class="member-name-link">precisionLossPolicy</a><wbr>(<a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a>&nbsp;precisionLossPolicy)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetRows(int)" class="member-name-link">pageTargetRows</a><wbr>(int&nbsp;pageTargetRows)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the record count at which a data page is cut; must be positive.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy(dev.hardwood.writer.PrecisionLossPolicy)" class="member-name-link">precisionLossPolicy</a><wbr>(<a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a>&nbsp;precisionLossPolicy)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets what <a href="RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column
 can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> with microseconds written to a
 <code>TIMESTAMP(MILLIS)</code> column, say; must be non-null.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupBufferTargetBytes(long)" class="member-name-link">rowGroupBufferTargetBytes</a><wbr>(long&nbsp;rowGroupBufferTargetBytes)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupBufferTargetBytes(long)" class="member-name-link">rowGroupBufferTargetBytes</a><wbr>(long&nbsp;rowGroupBufferTargetBytes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the byte threshold at which a row group is cut; must be positive.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetRows(long)" class="member-name-link">rowGroupTargetRows</a><wbr>(long&nbsp;rowGroupTargetRows)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetRows(long)" class="member-name-link">rowGroupTargetRows</a><wbr>(long&nbsp;rowGroupTargetRows)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the record count at which a row group is cut; must be positive.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the maximum <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound length; must be
 positive.</div>
 </div>
@@ -181,6 +187,22 @@ positive.</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">pageTargetBytes</span><wbr><span class="parameters">(int&nbsp;pageTargetBytes)</span></div>
 <div class="block">Sets the page target; must be at least one <code>INT32</code> (4 bytes).</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="pageTargetRows(int)">
+<h3>pageTargetRows</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">pageTargetRows</span><wbr><span class="parameters">(int&nbsp;pageTargetRows)</span></div>
+<div class="block"><p>Sets the record count at which a data page is cut; must be positive.</p>
+<p>A page is cut at this count or at <code>pageTargetBytes</code>, whichever is reached first.
+Each page's bounds are recorded in the file's page index, so the count sets how finely
+a reader can skip within a column chunk. It binds on columns whose values encode small,
+such as dictionary-encoded ones, which would otherwise hold a whole row group in a few
+pages. A page holds whole records, so on a repeated column it counts records rather
+than values.</p>
+</div>
 </div>
 </section>
 </li>
