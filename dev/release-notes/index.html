@@ -2136,12 +2136,16 @@
 <li><strong>Behaviour change:</strong> <code>InputFile.of(ByteBuffer)</code> and <code>InputFile.ofBuffers(...)</code> read a buffer's remaining content, from its position to its limit, instead of the buffer from index 0 to its capacity, so a buffer wrapping part of an array reads correctly and a buffer filled with <code>put(...)</code> must be flipped first (<a href="https://github.com/hardwood-hq/hardwood/issues/1343">#1343</a>).</li>
 <li><strong>Behaviour change:</strong> the <code>dev.hardwood.RowGroupFilter</code> JFR event counts row groups dropped by statistics only; a row group dropped by its bloom filters or dictionaries is reported by the new <code>dev.hardwood.RowGroupBloomFilter</code> and <code>dev.hardwood.RowGroupDictionaryFilter</code> events (<a href="https://github.com/hardwood-hq/hardwood/issues/735">#735</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1259">#1259</a>).</li>
 <li><strong>Behaviour change:</strong> building an <code>AvroRowReader</code> over a schema the Avro binding rejects throws <code>SchemaIncompatibleException</code> for a malformed schema and <code>UnsupportedOperationException</code> for a valid one it cannot map, instead of <code>IllegalArgumentException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1370">#1370</a>).</li>
-<li><strong>Behaviour change:</strong> a <code>ColumnReader</code> batch ends at every row-group boundary (<a href="https://github.com/hardwood-hq/hardwood/issues/513">#513</a>).</li>
+<li><strong>Behaviour change:</strong> a <code>ColumnReader</code> batch ends at every row-group boundary when the read includes a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column (<a href="https://github.com/hardwood-hq/hardwood/issues/513">#513</a>).</li>
 <li>
 <p><strong>Behaviour change:</strong> <code>ColumnReader.getBinaryOffsets()</code> is replaced by <code>getBinaryStarts()</code> and <code>getBinaryEnds()</code>, whose ranges into <code>getBinaryValues()</code> need not be contiguous or in value order, and a null <code>FIXED_LEN_BYTE_ARRAY</code> value's range is empty (<a href="https://github.com/hardwood-hq/hardwood/issues/1416">#1416</a>).</p>
 </li>
 <li>
 <p><code>ColumnReader.getDictionaryIds()</code> and <code>getBinaryDictionary()</code> expose the dictionary entry of each value of a dictionary-encoded <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column (<a href="https://github.com/hardwood-hq/hardwood/issues/513">#513</a>).</p>
+</li>
+<li>A <code>RowReader</code> returns one shared <code>String</code> per dictionary entry in every row group, also where the row-group size is not a multiple of the batch size (<a href="https://github.com/hardwood-hq/hardwood/issues/1199">#1199</a>).</li>
+<li>
+<p><code>ColumnReader.getStrings()</code> and <code>getBinaries()</code> no longer spend most of a read in garbage collection under the G1 collector at heaps up to a few GB (<a href="https://github.com/hardwood-hq/hardwood/issues/1437">#1437</a>).</p>
 </li>
 <li>
 <p>Filter predicates take every literal type a column's accessors return, adding <code>byte[]</code>, <code>LocalDateTime</code>, <code>PqInterval</code> and <code>Instant</code> on legacy <code>INT96</code> columns, and <code>in</code> for every literal type but <code>boolean</code>; <code>inStrings</code> is deprecated in favour of <code>in(String, String...)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/868">#868</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>).</p>
@@ -2475,8 +2479,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/685f1fa5529cce0edd98edc72e7e4568f612e746" target="_blank" rel="noopener">
-      685f1fa5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5520bd5ea1c828ce05e9b4225abef7c5584ad517" target="_blank" rel="noopener">
+      5520bd5e
     </a>
   
 </div>

@@ -2409,7 +2409,7 @@
 <a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="p">}</span>
 </code></pre></div>
-<p>By default the batch size is chosen adaptively from the projected columns' physical widths, so the per-batch arrays stay within the CPU cache regardless of how wide or how many columns you project. It is capped at the rows the read can produce, so a read shorter than one batch does not allocate arrays for rows that cannot arrive. The <code>RowReader</code> path uses the same byte-budgeted sizing. To pin a specific record count instead, use <code>.batchSize(int)</code> on the builder:</p>
+<p>By default the batch size is chosen adaptively from the projected columns' physical widths, so the per-batch arrays stay within a fixed memory budget regardless of how wide or how many columns you project. The batch size is also capped at the rows the read can produce, so a read shorter than one batch does not allocate arrays for rows that cannot arrive. The <code>RowReader</code> path uses the same byte-budgeted sizing. To pin a specific record count instead, use <code>.batchSize(int)</code> on the builder:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ColumnReaders</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parquet</span><span class="p">.</span><span class="na">buildColumnReaders</span><span class="p">(</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">             </span><span class="n">ColumnProjection</span><span class="p">.</span><span class="na">columns</span><span class="p">(</span><span class="s">"passenger_count"</span><span class="p">,</span><span class="w"> </span><span class="s">"trip_distance"</span><span class="p">,</span><span class="w"> </span><span class="s">"fare_amount"</span><span class="p">))</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="p">.</span><span class="na">batchSize</span><span class="p">(</span><span class="mi">2048</span><span class="p">)</span>
@@ -2417,7 +2417,7 @@
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="c1">// ...</span>
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">}</span>
 </code></pre></div>
-<p>A batch ends at every row-group boundary, so the last batch of a row group can hold fewer records than the batch size.</p>
+<p>When the read includes a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column, filter columns included, every batch ends at a row-group boundary, so the last batch of a row group can hold fewer records than the batch size.</p>
 <p>The batch size caps the number of <strong>records</strong> per batch, never the number of leaf values. A batch boundary always falls between records: a record, including all the leaf values a repeated column holds for it, is never split across two batches. A consequence for repeated columns is that <code>getValueCount()</code> can exceed the configured batch size, since one record may carry many leaf values; size any per-value buffers off <code>getValueCount()</code>, not the batch size.</p>
 <p><code>ColumnReaders.nextBatch()</code> advances every underlying reader once and returns <code>false</code> when the readers are exhausted. Partial advancement isn't possible because all readers consume from one shared decode pipeline. The aligned record count is exposed via <code>ColumnReaders.getRecordCount()</code>. As a defensive guard, mismatched per-column record counts throw <code>IllegalStateException</code>.</p>
 <p>The readers from <code>getColumnReader(...)</code> show the group's current batch. <code>ColumnReaders.nextBatch()</code> is the only way to advance them: <code>ColumnReader.nextBatch()</code> on one of them throws <code>IllegalStateException</code>. Close the group with <code>ColumnReaders.close()</code>; closing one of its readers has no effect.</p>
@@ -2492,7 +2492,7 @@
 </code></pre></div>
 <ul>
 <li>Both accessors return <code>null</code> for a batch holding any non-null value without an entry: every batch of a column with no dictionary, and, where a writer switched to plain encoding after its dictionary filled up, the batch holding the switch and the rest of that row group. Such a batch is read like a plain one, through <code>getStrings()</code> or the binary accessors; the next row group's batches have ids again.</li>
-<li>A batch draws on one dictionary, because batches end at row-group boundaries. Each row group has its own dictionary, so the same value can have different ids in different row groups.</li>
+<li>A batch draws on one dictionary, because a read that includes a binary column ends its batches at row-group boundaries. Each row group has its own dictionary, so the same value can have different ids in different row groups.</li>
 <li>Every batch drawn from the same dictionary returns the same <code>BinaryDictionary</code>, which is how the example detects the next row group's dictionary (<code>!=</code>).</li>
 <li>The id at a null value is <code>-1</code>.</li>
 <li><code>getString(e)</code> reads a column that holds text, as <code>getStrings()</code> does, and caches each entry's <code>String</code>; <code>getBinary(e)</code> returns a copy of the entry's bytes.</li>
@@ -2795,8 +2795,8 @@ the offset/validity encoding, and the per-layer count recursion), see
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/685f1fa5529cce0edd98edc72e7e4568f612e746" target="_blank" rel="noopener">
-      685f1fa5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5520bd5ea1c828ce05e9b4225abef7c5584ad517" target="_blank" rel="noopener">
+      5520bd5e
     </a>
   
 </div>
