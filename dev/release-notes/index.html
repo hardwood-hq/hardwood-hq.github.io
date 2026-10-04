@@ -2209,13 +2209,10 @@
 <p>Closing a <code>ParquetFileReader</code> closes the row and column readers it created that are still open, and waits for the prefetches they started, before it closes the input files; building a reader from a closed <code>ParquetFileReader</code>, or while another thread closes it, throws <code>IllegalStateException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1338">#1338</a>).</p>
 </li>
 <li>
-<p>A multi-file read opens each file as it reaches it, rather than opening every file when the reader is built, so the time to the first row no longer grows with the number of files (<a href="https://github.com/hardwood-hq/hardwood/issues/1107">#1107</a>).</p>
-<ul>
-<li>A later file's I/O errors, and any <code>SchemaIncompatibleException</code> its schema raises, now surface from the reading loop rather than from <code>ParquetFileReader.openAll(...)</code> or <code>build()</code> — always before any row of that file is returned. Code that catches those around reader construction alone should catch them around iteration too.</li>
-</ul>
+<p>A multi-file read opens each file as it reaches it rather than when the reader is built, so a later file's I/O errors and <code>SchemaIncompatibleException</code> surface from the reading loop instead of from <code>ParquetFileReader.openAll(...)</code> or <code>build()</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1107">#1107</a>).</p>
 </li>
 <li>
-<p>Every <code>LogicalType</code> member has a static factory, and those are the documented way to construct one — <code>LogicalType.string()</code>, <code>LogicalType.decimal(18, 2)</code>, <code>LogicalType.timestamp(true, TimeUnit.MICROS)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>). The parameterless ones return a shared instance, which the reader now hands back instead of allocating a record per column while it decodes a footer. The record constructors still work.</p>
+<p>Every <code>LogicalType</code> member has a static factory, such as <code>LogicalType.string()</code>, <code>LogicalType.decimal(18, 2)</code> and <code>LogicalType.timestamp(true, TimeUnit.MICROS)</code>, and the factories are the documented way to construct one; the record constructors still work (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>).</p>
 </li>
 <li>
 <p><code>print</code>, <code>convert</code>, <code>inspect</code> and <code>dive</code> spell a value of a given logical type the same way: decimals as plain strings (<code>0.0000001</code>, never <code>1E-7</code>), <code>INTERVAL</code> as <code>1mo 15d 3600000ms</code>, and <code>INT96</code> values and statistics as timestamps (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
@@ -2251,29 +2248,56 @@
 <p><code>FilterPredicate.SignedBinaryColumnPredicate</code> is removed (<a href="https://github.com/hardwood-hq/hardwood/issues/1190">#1190</a>).</p>
 </li>
 <li>
-<p>The reader's exception model separates what the transport got wrong from what the file did, so a failure says whether trying again can help (<a href="https://github.com/hardwood-hq/hardwood/issues/1104">#1104</a>).</p>
-<ul>
-<li><code>IOException</code> now means the transport — a read that failed, a connection reset — and is declared where the reader reaches the file: <code>RowReader.hasNext</code>/<code>next</code>/<code>close</code> and <code>ColumnReader.nextBatch</code>/<code>close</code>, as <code>ParquetFileWriter</code> has always declared it. <strong>The canonical idiom is unaffected</strong>, because <code>ParquetFileReader.open(...)</code> already declared <code>IOException</code> and so the enclosing method already handles it:</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rows</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">        </span><span class="n">rows</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
-</code></pre></div>
-<p>What does need a change is a method that receives an already-open reader and reads from it without otherwise touching <code>IOException</code> — a helper like <code>void print(RowReader rows)</code> — and any read inside a lambda whose functional interface forbids a checked exception, such as <code>forEach</code> or <code>Stream.map</code>.
-- A corrupt file now raises the new unchecked <code>ParquetReadException</code> rather than <code>IOException</code>: bad magic, a corrupt footer, a malformed page index, a misplaced dictionary page, a failed checksum, values that will not decode. <code>SchemaIncompatibleException</code> extends it. <strong>This one is silent</strong> — a <code>catch (IOException)</code> written for corruption keeps compiling and stops catching. It is released alongside the <code>throws</code> clauses deliberately, so the compile error brings you to the error handling the silent change would otherwise slip past.
-- A row group whose page-index region exceeds 2 GB now raises <code>UnsupportedOperationException</code> where it used to raise <code>IOException</code>. <strong>Silent, like the one above</strong> — a <code>catch (IOException)</code> written for it keeps compiling and stops catching.
-- <code>RowReader</code> and <code>ColumnReader</code> implement <code>Closeable</code>, as <code>ParquetFileWriter</code> and <code>InputFile</code> already did.
-- A page that will not decompress and a dictionary that will not decode now raise <code>ParquetReadException</code> too. Decompressing and parsing work on bytes already in memory, so they cannot fail at I/O and no longer say they can. <strong>Silent, like the two above.</strong>
-- A codec library that is absent, or a native one that will not load, now reaches you as the <code>UnsupportedOperationException</code> it always was on other paths. On the dictionary path it was being caught and reported as a failed read, which buried the message naming the dependency to add.
-- A column chunk stored in a separate file (the legacy split-file layout) and a file over 2 GB opened with the mmap-backed range cache now raise <code>UnsupportedOperationException</code> rather than <code>IOException</code>. Both files are correct; it is Hardwood that will not read them. <strong>Silent.</strong>
-- The writer raises the new unchecked <code>ParquetWriteException</code> when a compression codec rejects a page body, where it used to raise <code>IOException</code>. Nothing you passed was wrong and the destination is not involved, so retrying cannot help. <strong>Silent.</strong>
-- A corrupt value inside the metadata — a malformed bloom filter header, a geospatial bounding box missing a required field, a decimal scale or precision that cannot be, an unknown physical type, repetition type, codec or time unit — now raises <code>ParquetReadException</code> rather than <code>IllegalArgumentException</code> or <code>IllegalStateException</code>. These all signal a corrupt file. <strong>Silent.</strong> Both types keep their meaning for calls that really are mistakes, such as asking for a column outside the projection.</p>
+<p><code>IOException</code> signals a transport failure only and is declared by <code>RowReader.hasNext</code>/<code>next</code>/<code>close</code> and <code>ColumnReader.nextBatch</code>/<code>close</code>, which implement <code>Closeable</code>; the conditions below raise a different type, and a <code>catch (IOException)</code> written for them compiles but does not catch them (<a href="https://github.com/hardwood-hq/hardwood/issues/1104">#1104</a>; see <a href="../reference/error-handling/">Error Handling</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>Old type</th>
+<th>New type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Corrupt file: bad magic, corrupt footer, malformed page index, misplaced dictionary page, failed checksum, values that do not decode</td>
+<td><code>IOException</code></td>
+<td><code>ParquetReadException</code> (unchecked; <code>SchemaIncompatibleException</code> extends it)</td>
+</tr>
+<tr>
+<td>A page that will not decompress, a dictionary that will not decode</td>
+<td><code>IOException</code></td>
+<td><code>ParquetReadException</code></td>
+</tr>
+<tr>
+<td>Corrupt metadata value: malformed bloom filter header, geospatial bounding box missing a required field, impossible decimal scale or precision, unknown physical type, repetition type, codec or time unit</td>
+<td><code>IllegalArgumentException</code>, <code>IllegalStateException</code></td>
+<td><code>ParquetReadException</code></td>
+</tr>
+<tr>
+<td>Row group whose page-index region exceeds 2 GB</td>
+<td><code>IOException</code></td>
+<td><code>UnsupportedOperationException</code></td>
+</tr>
+<tr>
+<td>Column chunk stored in a separate file; file over 2 GB opened with the mmap-backed range cache</td>
+<td><code>IOException</code></td>
+<td><code>UnsupportedOperationException</code></td>
+</tr>
+<tr>
+<td>Codec library absent or native library that will not load, on the dictionary path</td>
+<td><code>IOException</code></td>
+<td><code>UnsupportedOperationException</code></td>
+</tr>
+<tr>
+<td>Writer: a compression codec rejects a page body</td>
+<td><code>IOException</code></td>
+<td><code>ParquetWriteException</code> (unchecked)</td>
+</tr>
+</tbody>
+</table>
 </li>
 <li>
-<p><code>LogicalType.DecimalType</code> takes its precision before its scale, where it used to take scale first (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>). Every other decimal API takes them in that order — SQL's <code>DECIMAL(p, s)</code>, Arrow, Avro, Iceberg, parquet-cpp — and it is the order the annotation renders in. Only <code>parquet.thrift</code>'s field declaration and the APIs that mirror it read the other way. <strong>This one is silent</strong>, because a swapped call still compiles: <code>LogicalType.decimal(...)</code> rejects a scale above the precision, which catches a transposed pair at the call site, but a column whose scale equals its precision passes either way.</p>
+<p><code>LogicalType.DecimalType</code> takes its precision before its scale, as <code>DECIMAL(p, s)</code> reads, where it used to take scale first (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>). A call in the old order still compiles: <code>LogicalType.decimal(...)</code> rejects a scale above the precision, so a transposed pair fails at the call site unless its scale equals its precision.</p>
 </li>
 <li>
 <p><code>convert --format json</code> writes nested structs, lists, maps and repeated fields as native JSON objects and arrays instead of strings holding their display text (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
@@ -2480,8 +2504,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

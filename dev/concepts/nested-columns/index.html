@@ -1342,17 +1342,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#counts-at-each-layer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Counts at each layer
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2040,17 +2029,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#counts-at-each-layer" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Counts at each layer
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2103,10 +2081,8 @@ same shapes through the Row API.</p>
 </div>
 <blockquote>
 <p><strong>A note on lineage.</strong> The layer model (flat value arrays, offset buffers, and set-bit-present
-validity bitmaps) takes inspiration from <a href="https://arrow.apache.org/">Apache Arrow</a>'s columnar
-representation, so the shapes feel familiar if you come from an Arrow-based engine. The
-resemblance is conceptual only: Hardwood implements no part of the Arrow specification, and the
-buffers are plain Java arrays rather than an Arrow-bit-compatible layout.</p>
+validity bitmaps) follows <a href="https://arrow.apache.org/">Apache Arrow</a>'s columnar representation
+in concept only: the buffers are plain Java arrays, not an Arrow-bit-compatible layout.</p>
 </blockquote>
 <h2 id="layers">Layers<a class="headerlink" href="#layers" title="Permanent link">&para;</a></h2>
 <p><code>ColumnReader</code> exposes a column's schema chain as a sequence of <strong>layers</strong>. Each non-leaf node
@@ -2142,10 +2118,6 @@ along the chain contributes zero or one layer:</p>
 </tr>
 </tbody>
 </table>
-<p>Layers follow a column's <em>logical</em> structure rather than its physical schema nodes, so node count
-and layer count diverge wherever a <code>LIST</code> or <code>MAP</code> appears: its stack of group nodes contributes a
-single <code>REPEATED</code> layer. <a href="#how-schema-nodes-map-to-layers">How schema nodes map to layers</a> works this
-through on a concrete schema.</p>
 <p>Layers are numbered <code>0..getLayerCount() - 1</code> outermost-to-innermost, and the leaf is queried
 separately. A flat column reports <code>getLayerCount() == 0</code>.</p>
 <p>For each layer, two buffers describe the items at that layer:</p>
@@ -2195,7 +2167,8 @@ separately. A flat column reports <code>getLayerCount() == 0</code>.</p>
 <p>Empty-vs-null is the offsets diff; the validity bit picks out null. No empty-marker bitmap is
 needed.</p>
 <h2 id="struct-keeps-cardinality-repeated-expands-it">STRUCT keeps cardinality, REPEATED expands it<a class="headerlink" href="#struct-keeps-cardinality-repeated-expands-it" title="Permanent link">&para;</a></h2>
-<p>Two rules govern how item counts flow down the chain:</p>
+<p>Write <code>count(k)</code> for the number of items at layer <code>k</code>; <code>count(0)</code> equals <code>getRecordCount()</code>. Two
+rules govern how item counts flow down the chain:</p>
 <ol>
 <li><strong>STRUCT keeps cardinality.</strong> Items at layer <code>k+1</code> equal items at layer <code>k</code>. STRUCT layers
    carry validity, no offsets.</li>
@@ -2203,9 +2176,8 @@ needed.</p>
    REPEATED layers carry both validity and offsets.</li>
 </ol>
 <p>The leaf array and <code>getLayerOffsets</code> carry <strong>real items only</strong>: phantom slots from null/empty
-parents at any <code>REPEATED</code> layer are excluded. <code>getValueCount()</code> returns the real leaf count.
-<code>STRUCT</code> layers do not expand or contract the item stream; only <code>REPEATED</code> layers add cardinality,
-via their offsets.</p>
+parents at any <code>REPEATED</code> layer are excluded. <code>getValueCount()</code> returns the real leaf count,
+which the same rules give one step past the innermost layer.</p>
 <p>Those two rules generate the layer shape of any chain:</p>
 <table>
 <thead>
@@ -2298,18 +2270,6 @@ depth is the number of <code>repeated</code> nodes on the path (equivalently, th
 level), not the number of <code>LIST</code> annotations. To walk to the leaf logically, recurse
 <code>getListElement()</code> while the result <code>isList()</code>, which works the same for both encodings. To inspect the raw
 physical tree instead, walk <code>children()</code>.</p>
-<h2 id="counts-at-each-layer">Counts at each layer<a class="headerlink" href="#counts-at-each-layer" title="Permanent link">&para;</a></h2>
-<p>Every per-layer buffer is sized to <code>count(k)</code>, defined recursively:</p>
-<ul>
-<li><code>count(0) == getRecordCount()</code></li>
-<li>For <code>k &gt; 0</code>: <code>count(k)</code> equals <code>count(k-1)</code> if layer <code>k-1</code> is <code>STRUCT</code>, or
-  <code>getLayerOffsets(k-1)[count(k-1)]</code> (the trailing sentinel) if layer <code>k-1</code> is <code>REPEATED</code>.</li>
-</ul>
-<p>The leaf array itself follows the same rule one step past the innermost layer, so
-<code>getValueCount()</code> matches <code>count(layerCount)</code>. Deeper nestings extend the same chain: at depth N you
-walk <code>getLayerOffsets(0)</code> through <code>getLayerOffsets(N - 1)</code>, checking <code>getLayerValidity(k)</code> (and, for
-<code>REPEATED</code> layers, the zero-length offsets diff that flags an empty container) at each step before
-descending.</p>
 
 
 
@@ -2359,8 +2319,8 @@ descending.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

@@ -628,6 +628,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#command-line-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command-Line Tool
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Command-Line Tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shell-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shell Completion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-with-ai-coding-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use with AI Coding Agents
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#read-a-file" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2084,6 +2134,56 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#command-line-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Command-Line Tool
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Command-Line Tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shell-completion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shell Completion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Docker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-with-ai-coding-agents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use with AI Coding Agents
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#read-a-file" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2132,7 +2232,7 @@
 -->
 <h1 id="getting-started">Getting Started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h1>
 <p>Hardwood runs on Java 21 or newer; Java 25 is recommended for best performance.</p>
-<p>If you only want to inspect or convert Parquet files from the command line, grab a pre-built native binary for Linux, macOS, or Windows from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">release page</a>; see the <a href="../reference/cli/">CLI</a> page for details.</p>
+<p>To inspect or convert Parquet files from the command line without writing code, install the <a href="#command-line-tool">command-line tool</a>.</p>
 <h2 id="dependency-management">Dependency Management<a class="headerlink" href="#dependency-management" title="Permanent link">&para;</a></h2>
 <h3 id="using-the-bom-bill-of-materials">Using the BOM (Bill of Materials)<a class="headerlink" href="#using-the-bom-bill-of-materials" title="Permanent link">&para;</a></h3>
 <p>The <code>hardwood-bom</code> manages versions for all Hardwood modules and their optional runtime dependencies.
@@ -2164,7 +2264,6 @@ Import it in your dependency management so you can declare Hardwood dependencies
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="nt">&lt;/dependencies&gt;</span>
 </code></pre></div>
 <h3 id="specifying-the-version-directly">Specifying the Version Directly<a class="headerlink" href="#specifying-the-version-directly" title="Permanent link">&para;</a></h3>
-<p>If you prefer not to use the BOM, you can specify the version directly:</p>
 <p><strong>Maven:</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">&lt;dependency&gt;</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>dev.hardwood<span class="nt">&lt;/groupId&gt;</span>
@@ -2180,7 +2279,7 @@ Import it in your dependency management so you can declare Hardwood dependencies
 <p>Hardwood uses the Java Platform Logging API (<code>System.Logger</code>).
 Bindings are available for all popular logger implementations, for instance for <a href="https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-jpl">log4j 2</a>.</p>
 <h3 id="compression-libraries">Compression Libraries<a class="headerlink" href="#compression-libraries" title="Permanent link">&para;</a></h3>
-<p>Hardwood reads Parquet files compressed with GZIP (built into Java), Snappy, ZSTD, LZ4 in both of its framings, and Brotli. It writes all of those except the Hadoop-framed <code>LZ4</code>; the <a href="../reference/writer/#compression-codecs">Writer Reference</a> lists what each codec needs. The compression libraries are optional dependencies; add only the ones you need. Snappy and ZSTD are the codecs most commonly seen in the wild; LZ4 and Brotli are rarer.</p>
+<p>The compression libraries are optional dependencies; add only the ones you need. The <a href="../reference/writer/#compression-codecs">Writer Reference</a> lists what each codec needs. Snappy and ZSTD are the codecs most commonly seen in the wild; LZ4 and Brotli are rarer.</p>
 <p>Writing compresses with ZSTD where <code>zstd-jni</code> is on the classpath, and writes uncompressed pages where it is not, so add that dependency to get compressed output under the default configuration.</p>
 <table>
 <thead>
@@ -2223,39 +2322,65 @@ Bindings are available for all popular logger implementations, for instance for 
 <p><strong>Gradle:</strong></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">implementation</span><span class="w"> </span><span class="s1">'org.xerial.snappy:snappy-java'</span>
 </code></pre></div>
-<details class="note">
-<summary>Without the BOM (explicit versions)</summary>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">&lt;dependency&gt;</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.xerial.snappy<span class="nt">&lt;/groupId&gt;</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>snappy-java<span class="nt">&lt;/artifactId&gt;</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">&lt;version&gt;</span>1.1.10.8<span class="nt">&lt;/version&gt;</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="nt">&lt;/dependency&gt;</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nt">&lt;dependency&gt;</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.github.luben<span class="nt">&lt;/groupId&gt;</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>zstd-jni<span class="nt">&lt;/artifactId&gt;</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="nt">&lt;version&gt;</span>1.5.7-6<span class="nt">&lt;/version&gt;</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="nt">&lt;/dependency&gt;</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="nt">&lt;dependency&gt;</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>at.yawk.lz4<span class="nt">&lt;/groupId&gt;</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>lz4-java<span class="nt">&lt;/artifactId&gt;</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">    </span><span class="nt">&lt;version&gt;</span>1.8.1<span class="nt">&lt;/version&gt;</span>
-<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="nt">&lt;/dependency&gt;</span>
-<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="nt">&lt;dependency&gt;</span>
-<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>com.aayushatharva.brotli4j<span class="nt">&lt;/groupId&gt;</span>
-<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>brotli4j<span class="nt">&lt;/artifactId&gt;</span>
-<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">    </span><span class="nt">&lt;version&gt;</span>1.20.0<span class="nt">&lt;/version&gt;</span>
-<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="nt">&lt;/dependency&gt;</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">implementation</span><span class="w"> </span><span class="s1">'org.xerial.snappy:snappy-java:1.1.10.8'</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">implementation</span><span class="w"> </span><span class="s1">'com.github.luben:zstd-jni:1.5.7-6'</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">implementation</span><span class="w"> </span><span class="s1">'at.yawk.lz4:lz4-java:1.8.1'</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">implementation</span><span class="w"> </span><span class="s1">'com.aayushatharva.brotli4j:brotli4j:1.20.0'</span>
-</code></pre></div>
-</details>
 <p>If you attempt to read a file using a compression codec whose library is not on the classpath, Hardwood will throw an exception with a message indicating which dependency to add.</p>
+<h2 id="command-line-tool">Command-Line Tool<a class="headerlink" href="#command-line-tool" title="Permanent link">&para;</a></h2>
+<p>The <code>hardwood</code> command-line tool ships as a GraalVM native binary for Linux, macOS, and Windows, available from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">release page</a>. The <a href="../reference/cli/">CLI reference</a> documents its commands.</p>
+<div class="admonition note">
+<p class="admonition-title">macOS</p>
+<p>The binary is not notarized. On first run, macOS Gatekeeper will block it. Remove the quarantine flag after extracting:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>xattr<span class="w"> </span>-r<span class="w"> </span>-d<span class="w"> </span>com.apple.quarantine<span class="w"> </span>hardwood-cli-*/
+</code></pre></div>
+</div>
+<h3 id="shell-completion">Shell Completion<a class="headerlink" href="#shell-completion" title="Permanent link">&para;</a></h3>
+<p>The distribution includes completion scripts for Bash, Zsh, and Fish under <code>bin/</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Shell</th>
+<th>Script</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bash</td>
+<td><code>bin/hardwood_completion</code></td>
+</tr>
+<tr>
+<td>Zsh</td>
+<td><code>bin/hardwood_completion.zsh</code></td>
+</tr>
+<tr>
+<td>Fish</td>
+<td><code>bin/hardwood_completion.fish</code></td>
+</tr>
+</tbody>
+</table>
+<p>Source the one for your shell to enable tab completion for commands, options, and arguments, and add that line to your shell's startup file (e.g. <code>~/.bashrc</code>, <code>~/.zshrc</code>) to make it permanent:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
+</code></pre></div>
+<h3 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h3>
+<p>A minimal Fedora-based image is published to the GitHub Container Registry for Linux amd64 and arm64. Pass the command after the image name, and mount a local directory to reach files on the host:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span>schema<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+</code></pre></div>
+<p>The <code>dive</code> TUI needs an interactive terminal, so pass <code>-it</code>. With <code>-it</code> and no command, the image starts an interactive shell with tab completion loaded:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span>dive<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+</code></pre></div>
+<h3 id="use-with-ai-coding-agents">Use with AI Coding Agents<a class="headerlink" href="#use-with-ai-coding-agents" title="Permanent link">&para;</a></h3>
+<p>The repository ships an <a href="https://agentskills.io">Agent Skill</a> at <code>skills/hardwood-cli/</code> that teaches an AI coding agent when and how to reach for the CLI while debugging Parquet read/write code (checking schema and physical/logical types, diagnosing why predicate pushdown or page skipping isn't happening, reading dictionary entries, and so on).</p>
+<p>For <a href="https://claude.com/claude-code">Claude Code</a>, it is packaged as the <code>hardwood</code> plugin, distributed from the <a href="https://github.com/hardwood-hq/hardwood-skills"><code>hardwood-skills</code></a> marketplace. Install it once by running, inside Claude Code:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>/plugin marketplace add hardwood-hq/hardwood-skills
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>/plugin install hardwood@hardwood-skills
+</code></pre></div>
+<p>After installing, the skill loads automatically in future sessions whenever a task involves a Parquet file. It drives the <code>hardwood</code> binary, so <code>hardwood</code> must be on your <code>PATH</code>.</p>
+<p>For other agent harnesses, or a Claude Code setup without the plugin, copy <code>skills/hardwood-cli/SKILL.md</code> into that tool's skills directory (for Claude Code that is <code>~/.claude/skills/hardwood-cli/</code>).</p>
 <h2 id="read-a-file">Read a File<a class="headerlink" href="#read-a-file" title="Permanent link">&para;</a></h2>
-<p>With the core dependency in place, you're ready to read. The <a href="../tutorial/first-read/">Read Your First Parquet File</a> tutorial walks through it end-to-end against a real dataset: printing the schema, reading rows with typed accessors, narrowing the read with a projection and a filter, and summing a column the columnar way.</p>
-<p>For the full API, including column projection, predicate pushdown and column-oriented reading, see the <a href="../how-to/">How-to Guides</a>. For example projects you can clone and run, see the <a href="https://github.com/hardwood-hq/hardwood-examples">hardwood-examples</a> repository.</p>
+<p>The <a href="../tutorial/first-read/">Read Your First Parquet File</a> tutorial reads a real dataset end to end; the <a href="../how-to/">How-to Guides</a> and the <a href="https://github.com/hardwood-hq/hardwood-examples">hardwood-examples</a> repository cover the rest of the API.</p>
 
 
 
@@ -2305,8 +2430,8 @@ Bindings are available for all popular logger implementations, for instance for 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

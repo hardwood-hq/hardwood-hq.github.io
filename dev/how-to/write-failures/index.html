@@ -2022,9 +2022,9 @@
 
 -->
 <h1 id="handle-write-failures">Handle Write Failures<a class="headerlink" href="#handle-write-failures" title="Permanent link">&para;</a></h1>
-<p>A <code>ParquetFileWriter</code> publishes its file on <code>close()</code>. When writing fails part way, the file should not be published, and how that happens depends on where the failure is raised.</p>
+<p>A <code>ParquetFileWriter</code> publishes its file on <code>close()</code>. When writing fails part way, the file should not be published.</p>
 <h2 id="a-write-throws">A Write Throws<a class="headerlink" href="#a-write-throws" title="Permanent link">&para;</a></h2>
-<p>No extra code is needed. When <code>ColumnWriter.writeBatch</code> or <code>RowWriter.writeRow</code> throws, the writer rejects further writes, and <code>close()</code> discards the output. This holds for every exception out of a write call: a rejected batch or record, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure.</p>
+<p>No extra code is needed. When <code>ColumnWriter.writeBatch</code> or <code>RowWriter.writeRow</code> throws, the writer rejects further writes, and <code>close()</code> discards the output. This holds for every exception a write call throws, including one thrown by the filler.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">ColumnWriter</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">();</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="o">[]</span><span class="w"> </span><span class="n">chunk</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">chunks</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -2107,8 +2107,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

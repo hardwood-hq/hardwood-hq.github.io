@@ -1260,17 +1260,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#one-file-two-shapes-of-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        One file, two shapes of access
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#the-trade-off-ergonomics-vs-throughput" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1282,10 +1271,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-layer-model" class="md-nav__link">
+  <a href="#nesting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The layer model
+        Nesting
       
     </span>
   </a>
@@ -1986,17 +1975,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#one-file-two-shapes-of-access" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        One file, two shapes of access
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#the-trade-off-ergonomics-vs-throughput" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2008,10 +1986,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#the-layer-model" class="md-nav__link">
+  <a href="#nesting" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The layer model
+        Nesting
       
     </span>
   </a>
@@ -2090,50 +2068,30 @@
 <h1 id="rowreader-vs-columnreader">RowReader vs. ColumnReader<a class="headerlink" href="#rowreader-vs-columnreader" title="Permanent link">&para;</a></h1>
 <p>Hardwood offers two reader APIs over the same files: <code>RowReader</code> and <code>ColumnReader</code>. For a
 decision table on which to pick, see the <a href="../../how-to/#choosing-a-reader">How-to overview</a>.</p>
-<h2 id="one-file-two-shapes-of-access">One file, two shapes of access<a class="headerlink" href="#one-file-two-shapes-of-access" title="Permanent link">&para;</a></h2>
-<p>Parquet stores data by column (see <a href="../parquet-layout/">How a Parquet File Is Laid Out</a>). That
-single physical layout can be presented to a consumer in two different shapes, and which shape
-fits depends on whether your code thinks in <em>records</em> or in <em>columns</em>.</p>
-<ul>
-<li><strong><code>RowReader</code></strong> reassembles each row into typed field accesses: <code>getLong("id")</code>,
-  <code>getString("name")</code>, <code>getStruct("address")</code>. You move one row at a time and pull the fields you
-  want by name or index.</li>
-<li><strong><code>ColumnReader</code></strong> hands you a column at a time, a batch at a time, as a typed primitive array
-  (<code>double[]</code>, <code>int[]</code>, …) plus a <a href="/api/dev/dev/hardwood/Validity.html"><code>Validity</code></a>
-  bitmap for nulls. You loop over the array directly.</li>
-</ul>
 <p>Both read the same bytes through the same pipeline and differ in what they hand to your loop.</p>
 <h2 id="the-trade-off-ergonomics-vs-throughput">The trade-off: ergonomics vs. throughput<a class="headerlink" href="#the-trade-off-ergonomics-vs-throughput" title="Permanent link">&para;</a></h2>
-<p>The two APIs sit at opposite ends of an ergonomics-versus-throughput spectrum, because columnar
-storage and row-shaped access are a fundamental impedance mismatch.</p>
+<p>The two APIs sit at opposite ends of an ergonomics-versus-throughput spectrum, because Parquet
+stores data by column (see <a href="../parquet-layout/">How a Parquet File Is Laid Out</a>) and a row must be
+assembled from it.</p>
 <p><strong><code>RowReader</code> optimizes for ergonomics.</strong> Records are how most application code is written: you
 want "this trip's distance and fare," not "the distance column and the fare column." To present
 a row, the reader must gather the current value from each projected column and, for nested data,
 reassemble structs, lists, and maps into the <a href="../../how-to/row-reader/"><code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code></a>
-flyweights. That reassembly, and the per-field accessor calls, cost CPU and sometimes boxing. For
-general-purpose reading that cost is invisible and the convenience is decisive.</p>
+flyweights. That reassembly, and the per-field accessor calls, cost CPU and sometimes boxing.</p>
 <p><strong><code>ColumnReader</code> optimizes for throughput.</strong> Analytical work, such as summing a column, computing a
 distribution or scanning for matches, touches one or a few columns across many rows and never
 needs a whole record assembled. <code>ColumnReader</code> skips the row-assembly step entirely and gives you
-the decoded values as a primitive array you iterate with no per-element method call and no
-boxing. On that kind of workload it is markedly faster; the cost is that <em>you</em> handle the layout
-(nulls via the bitmap, nested structure via offsets; see below), which is more to get right.</p>
-<h2 id="the-layer-model">The layer model<a class="headerlink" href="#the-layer-model" title="Permanent link">&para;</a></h2>
-<p>The two APIs also differ in how they expose nesting, and this is where the throughput trade-off
-becomes concrete.</p>
+the decoded values as a primitive array (<code>double[]</code>, <code>int[]</code>, …) plus a
+<a href="/api/dev/dev/hardwood/Validity.html"><code>Validity</code></a> bitmap for nulls, which you iterate with no
+per-element method call and no boxing. On that kind of workload it is markedly faster; the cost
+is that <em>you</em> handle the layout (nulls via the bitmap, nested structure via offsets; see below),
+which is more to get right.</p>
+<h2 id="nesting">Nesting<a class="headerlink" href="#nesting" title="Permanent link">&para;</a></h2>
 <p><code>RowReader</code> materializes nesting into objects: a list becomes a <code>PqList</code> you iterate, a struct a
-<code>PqStruct</code> you index by field. Natural to consume, but it allocates flyweights as you descend.</p>
-<p><code>ColumnReader</code> exposes nesting structurally, as a sequence of <strong>layers</strong>, and never materializes
-a container object. Each <code>OPTIONAL</code> group along a column's schema chain contributes a <code>STRUCT</code>
-layer (carrying a validity bitmap); each <code>LIST</code>/<code>MAP</code> group contributes a <code>REPEATED</code> layer
-(carrying validity <em>and</em> an offsets array that says which leaf values belong to which parent).
-The leaf values arrive as one flat primitive array holding real values only; phantom slots from
-null or empty parents are excluded. You walk the offsets and check the bitmaps to reconstruct
-whatever structure you need, with zero allocation in the hot loop.</p>
-<p>This is more work to consume than a <code>PqList</code>. The layer model is the price <code>ColumnReader</code> pays
-for not allocating, and the reason it wins on analytical scans. The full mechanics, including
-layer counts per schema shape, the empty-vs-null distinction and the hot-loop null-check shapes,
-are documented in <a href="../../how-to/column-reader/">Read Column by Column</a>.</p>
+<code>PqStruct</code> you index by field, and it allocates these flyweights as you descend. <code>ColumnReader</code>
+never materializes a container object: it describes nesting as validity bitmaps and offset arrays
+over one flat leaf array, which you walk with zero allocation in the hot loop. See
+<a href="../nested-columns/">The Layer Model</a>.</p>
 <h2 id="several-columns-means-one-columnreaders-not-several-columnreaders">Several columns means one <code>ColumnReaders</code>, not several <code>ColumnReader</code>s<a class="headerlink" href="#several-columns-means-one-columnreaders-not-several-columnreaders" title="Permanent link">&para;</a></h2>
 <p>A <code>ColumnReader</code> is a cursor over one column, and each one built separately is sized for itself.
 Batch capacity is a byte budget divided by the widths of the columns that reader projects, so a
@@ -2144,8 +2102,8 @@ therefore reach different rows on their <em>n</em>th batch.</p>
 same rows: the loop stops when whichever reader has the larger batches runs out, and the values it
 took from each on any given turn came from different rows. Neither reader reports a problem,
 because neither has one: each is a complete, correct read of its own column.</p>
-<p><code>ColumnReaders</code> is the multi-column read. Its readers share one row-group iterator and one batch
-size, and <code>ColumnReaders.nextBatch()</code> advances all of them together and checks that they agree.
+<p><code>ColumnReaders</code> is the multi-column read: <code>ColumnReaders.nextBatch()</code> advances all its readers
+together (see <a href="../../how-to/column-reader/#reading-multiple-columns">Reading Multiple Columns</a>).
 Reach for a bare <code>ColumnReader</code> when you want one column, and for <code>ColumnReaders</code> the moment you
 want two.</p>
 <h2 id="they-are-not-exclusive">They are not exclusive<a class="headerlink" href="#they-are-not-exclusive" title="Permanent link">&para;</a></h2>
@@ -2155,8 +2113,8 @@ against the same file, sharing one <a href="../concurrency-model/">context and w
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../how-to/row-reader/">Read Row by Row</a> — the <code>RowReader</code> API in full.</li>
-<li><a href="../../how-to/column-reader/">Read Column by Column</a> — the <code>ColumnReader</code> API and the layer model
-  in detail.</li>
+<li><a href="../../how-to/column-reader/">Read Column by Column</a> — the <code>ColumnReader</code> API in full.</li>
+<li><a href="../nested-columns/">The Layer Model</a> — how <code>ColumnReader</code> represents nested columns.</li>
 <li><a href="../parquet-layout/">How a Parquet File Is Laid Out</a> — why the storage is columnar to begin with.</li>
 </ul>
 
@@ -2208,8 +2166,8 @@ against the same file, sharing one <a href="../concurrency-model/">context and w
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

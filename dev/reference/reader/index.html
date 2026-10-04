@@ -1499,6 +1499,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1941,6 +1952,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#limits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limits
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1978,9 +2000,8 @@
 
 -->
 <h1 id="reader-reference">Reader Reference<a class="headerlink" href="#reader-reference" title="Permanent link">&para;</a></h1>
-<p>The <code>ReaderConfig</code> options, their defaults, and how an unrecognised key is handled. The accessor-to-type correspondence is in <a href="../accessors/">Typed Accessors</a>, predicates and projection in <a href="../query-controls/">Query Controls</a>, and the exceptions a read can throw in <a href="../error-handling/">Error Handling</a>. Runtime acceleration and JFR events are in <a href="../configuration/">Configuration</a>.</p>
 <h2 id="reader-options">Reader Options<a class="headerlink" href="#reader-options" title="Permanent link">&para;</a></h2>
-<p>Read-time behaviour is configured with an immutable <code>ReaderConfig</code>, passed to <code>ParquetFileReader.open(...)</code>. It is separate from <code>HardwoodContext</code>, which holds the shared runtime resources (the decode thread pool and native decompression pools): a single context can back reads with different <code>ReaderConfig</code>s, so a behaviour knob never forces a fresh thread pool.</p>
+<p>Read-time behaviour is configured with an immutable <code>ReaderConfig</code>, passed to <code>ParquetFileReader.open(...)</code>. It is separate from <code>HardwoodContext</code>, which holds the shared runtime resources (the decode thread pool and native decompression pools): a single context can back reads with different <code>ReaderConfig</code>s.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.HardwoodContext</span><span class="p">;</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ReaderConfig</span><span class="p">;</span>
@@ -2008,7 +2029,7 @@
 <tr>
 <td><code>hardwood.fixed-list-fast-path</code></td>
 <td><code>false</code></td>
-<td>Set to <code>"true"</code> to decode fixed-size <code>LIST</code> columns (e.g. embedding vectors, where every row holds the same number of non-null elements) without reconstructing per-row definition and repetition levels. Off by default, so every column takes the general nested-decode path unless the option is enabled.</td>
+<td>Set to <code>"true"</code> to decode fixed-size <code>LIST</code> columns (e.g. embedding vectors, where every row holds the same number of non-null elements) without reconstructing per-row definition and repetition levels.</td>
 </tr>
 <tr>
 <td><code>hardwood.metadata-filtering</code></td>
@@ -2017,6 +2038,8 @@
 </tr>
 </tbody>
 </table>
+<h2 id="limits">Limits<a class="headerlink" href="#limits" title="Permanent link">&para;</a></h2>
+<p>A column chunk read without an OffsetIndex must be at most 2 GB of <em>compressed</em> data; a chunk with an OffsetIndex is read in page groups and has no such limit. Files larger than 2 GB are read both locally and from S3, except by the in-memory (<code>ByteBuffer</code>) backend and by an S3 file opened with <a href="../s3/#range-backing"><code>RangeBacking.SPARSE_TEMPFILE</code></a>, which the <code>dive</code> TUI uses for every file; both are limited to 2 GB per file. For datasets that don't fit a single supported file, split the data into multiple files at write time and read them as one; see <a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
 
 
 
@@ -2066,8 +2089,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

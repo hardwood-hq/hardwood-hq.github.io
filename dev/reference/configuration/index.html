@@ -2067,8 +2067,7 @@
 -->
 <h1 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h1>
 <h2 id="faster-gzip-with-libdeflate-java-22">Faster GZIP with libdeflate (Java 22+)<a class="headerlink" href="#faster-gzip-with-libdeflate-java-22" title="Permanent link">&para;</a></h2>
-<p>Hardwood can use <a href="https://github.com/ebiggers/libdeflate">libdeflate</a> for GZIP decompression, which is significantly faster than the built-in Java implementation. This feature requires <strong>Java 22 or newer</strong> (it uses the Foreign Function &amp; Memory API which became stable in Java 22).</p>
-<p>Enabling libdeflate is two steps: a JVM flag to allow native access, plus the native library installed on the system.</p>
+<p>Hardwood can use <a href="https://github.com/ebiggers/libdeflate">libdeflate</a> for GZIP decompression instead of the built-in Java implementation. This feature requires <strong>Java 22 or newer</strong> (it uses the Foreign Function &amp; Memory API).</p>
 <p><strong>1. JVM flag</strong> (allow Hardwood to bind native functions):</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>--enable-native-access<span class="o">=</span>ALL-UNNAMED
 </code></pre></div>
@@ -2104,7 +2103,7 @@
 <p>With the module added, Hardwood uses SIMD when the CPU's preferred vector width holds at least four 32-bit values (128 bits). It uses the preferred width of the CPU: 128-bit for SSE/NEON, 256-bit for AVX2, 512-bit for AVX-512. On Java 21, without the module, or on a CPU with narrower vectors, Hardwood uses scalar implementations that produce the same results.</p>
 <p>To run the scalar implementations (for debugging or comparison), omit the <code>--add-modules jdk.incubator.vector</code> argument.</p>
 <h2 id="jfr-java-flight-recorder-events">JFR (Java Flight Recorder) Events<a class="headerlink" href="#jfr-java-flight-recorder-events" title="Permanent link">&para;</a></h2>
-<p>Hardwood emits JFR events during file reading, enabling detailed performance profiling with zero overhead when recording is off. Start a JFR recording to capture them:</p>
+<p>Hardwood emits JFR events during file reading. Start a JFR recording to capture them:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>java<span class="w"> </span>-XX:StartFlightRecording<span class="o">=</span><span class="nv">filename</span><span class="o">=</span>recording.jfr,settings<span class="o">=</span>profile<span class="w"> </span>...
 </code></pre></div>
 <p>Or attach dynamically via <code>jcmd &lt;pid&gt; JFR.start</code>.</p>
@@ -2161,7 +2160,7 @@
 <tr>
 <td><code>dev.hardwood.PageFilter</code></td>
 <td>Filter</td>
-<td>Pages filtered by Column Index predicate pushdown, one event per column chunk considered. Fields: file, rowGroupIndex, column, totalPages, pagesKept, pagesSkipped</td>
+<td>Pages filtered by Column Index predicate pushdown within a kept row group, one event per column chunk the Column Index narrowed; a chunk without a Column Index has its pages dropped from page-header statistics, which no event reports. Fields: file, rowGroupIndex, column, totalPages, pagesKept, pagesSkipped</td>
 </tr>
 <tr>
 <td><code>dev.hardwood.RecordFilter</code></td>
@@ -2178,7 +2177,7 @@
 <p>Events appear under the <strong>Hardwood</strong> category in JDK Mission Control (JMC) or any JFR analysis tool. Use them to identify:</p>
 <ul>
 <li><strong>I/O bottlenecks</strong> — large <code>FileMapping</code> durations</li>
-<li><strong>Filter effectiveness</strong> — <code>RowGroupFilter</code> shows how many row groups were dropped by statistics pushdown, <code>RowGroupBloomFilter</code> and <code>RowGroupDictionaryFilter</code> which were dropped by their bloom filters and dictionaries, and <code>RowGroupByteRangeFilter</code> how many were excluded by split selection; <code>PageFilter</code> shows how many of a column chunk's pages survived the Column Index within a row group that was kept, with no event for a column chunk the Column Index did not narrow — including a chunk that has no Column Index, whose pages are instead dropped from page-header statistics and are not reported; <code>RecordFilter</code> shows how many individual records the predicate decided on per file once that pruning is done</li>
+<li><strong>Filter effectiveness</strong>: <code>RowGroupFilter</code>, <code>RowGroupBloomFilter</code>, <code>RowGroupDictionaryFilter</code>, <code>RowGroupByteRangeFilter</code>, <code>PageFilter</code> and <code>RecordFilter</code> counts</li>
 <li><strong>Decode hotspots</strong> — <code>PageDecoded</code> events with large uncompressed sizes or high frequency</li>
 <li><strong>Pipeline stalls</strong> — <code>BatchWait</code> events indicate the reader is waiting for decoded data</li>
 </ul>
@@ -2250,8 +2249,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

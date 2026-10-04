@@ -2105,8 +2105,7 @@ It is built to be:</p>
 <li><strong>Agent-friendly</strong>: Hardwood's CLI comes with a skill which lets your agents inspect and analyse Parquet files</li>
 <li><strong>Compatible</strong>: A <a href="how-to/compat/">drop-in shim module</a> facilitates migration from <code>parquet-java</code>, with documented divergences where Hardwood applies stricter semantics (e.g. SQL three-valued <code>notEq</code>)</li>
 </ul>
-<p>Besides the core library, Hardwood provides a ready-to-use CLI for inspecting and analysing Parquet files,
-including an interactive TUI for exploring a file's schema, row groups, pages, and data.</p>
+<p>The <a href="reference/cli/">CLI</a> inspects and analyses Parquet files and includes an interactive TUI for exploring a file's schema, row groups, pages, and data.</p>
 <h2 id="quick-example">Quick Example<a class="headerlink" href="#quick-example" title="Permanent link">&para;</a></h2>
 <p>Reading a file with the <a href="how-to/row-reader/">row-based API</a>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.InputFile</span><span class="p">;</span>
@@ -2143,27 +2142,22 @@ including an interactive TUI for exploring a file's schema, row groups, pages, a
 <a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="p">}</span>
 </code></pre></div>
 <p><a href="getting-started/">Set up Hardwood in your project</a>, then read <a href="tutorial/first-read/">your first file end-to-end</a>.
-Alternatively, <a href="reference/cli/">install the Hardwood CLI</a> for working with Parquet files on the command line.</p>
-<p>The <a href="https://github.com/hardwood-hq/hardwood-examples">hardwood-examples</a> repository collects small, self-contained examples, one per concept, that you can clone and run with a single command.</p>
+Alternatively, <a href="getting-started/#command-line-tool">install the Hardwood CLI</a> for working with Parquet files on the command line.</p>
 <h2 id="status-and-limitations">Status and Limitations<a class="headerlink" href="#status-and-limitations" title="Permanent link">&para;</a></h2>
 <p>The read path is stable and suitable for production use; <code>ColumnReader</code>, with its <code>Validity</code> and <code>LayerKind</code> types, is annotated <code>@Experimental</code>, so its shape may still change.
 The write path ships both APIs described under <a href="how-to/#choosing-a-writer">Choosing a Writer</a>; the row-oriented <code>RowWriter</code> and its builders, the <code>ColumnBatch</code> setters for nested and nullable columns, and the in-memory destination <code>InMemoryOutputFile</code> are annotated <code>@Experimental</code>, so their shape may still change.</p>
 <p>Writing targets local files through <code>OutputFile.of(Path)</code> and the heap through <code>OutputFile.inMemory()</code>.
-Reads have no file-size ceiling, but individual column chunks are capped at 2 GB, and some backends carry their own limits; see <a href="concepts/parquet-layout/#column-chunk">2 GB column-chunk limit</a>.</p>
+Reads have no file-size ceiling, but a column chunk read without an OffsetIndex is capped at 2 GB, and some backends carry their own limits; see <a href="reference/reader/#limits">Limits</a>.</p>
 <h2 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">&para;</a></h2>
-<p>Forward-looking items tracked for post-1.0. None are committed to a specific release.</p>
+<p>Forward-looking items, none committed to a specific release.</p>
 <ul>
 <li><strong>Finalize <code>ColumnReader</code> API</strong> — stabilize the API for columnar access and move it out of "Experimental" state. (<a href="https://github.com/hardwood-hq/hardwood/issues/522">#522</a>)</li>
 <li><strong>Writer extensions</strong> — object-store output, page-index and Bloom-filter writing, and parallel column encoding, on top of the write path described in <a href="concepts/write-model/">The Write Model</a>. (<a href="https://github.com/hardwood-hq/hardwood/issues/9">#9</a>)</li>
-<li><strong>Bloom filter predicate pushdown</strong> — use per-chunk bloom filters for equality-predicate skipping on high-cardinality columns, where min/max statistics can't help. (<a href="https://github.com/hardwood-hq/hardwood/issues/105">#105</a>)</li>
 <li><strong>Parquet Modular Encryption</strong> — read files encrypted under the Parquet <a href="https://github.com/apache/parquet-format/blob/master/Encryption.md">Modular Encryption spec</a>: encrypted footer, per-column keys, AES-GCM and AES-GCM-CTR. (<a href="https://github.com/hardwood-hq/hardwood/issues/128">#128</a>)</li>
 <li><strong>Apache Arrow interop</strong> — <code>ColumnReader</code> output as Arrow <code>FieldVector</code> / <code>VectorSchemaRoot</code> for zero-copy handoff to DuckDB, DataFusion, Pandas-via-JNI, and other Arrow-native consumers. (<a href="https://github.com/hardwood-hq/hardwood/issues/153">#153</a>)</li>
 </ul>
 <h2 id="getting-help">Getting help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Questions, ideas, design discussion</strong> — <a href="https://github.com/hardwood-hq/hardwood/discussions">GitHub Discussions</a>. The best first stop for "how do I…", "is X possible…", or "what's the right way to…".</li>
-<li><strong>Bug reports and feature requests</strong> — the <a href="https://github.com/hardwood-hq/hardwood/issues">GitHub issue tracker</a>. Please check whether a similar issue already exists.</li>
-</ul>
+<p>Ask questions on <a href="https://github.com/hardwood-hq/hardwood/discussions">GitHub Discussions</a> and file bugs on the <a href="https://github.com/hardwood-hq/hardwood/issues">issue tracker</a>; see <a href="contributing/">Contributing</a>.</p>
 <h2 id="articles-talks-podcasts">Articles, talks &amp; podcasts<a class="headerlink" href="#articles-talks-podcasts" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://www.morling.dev/blog/hardwood-new-parser-for-apache-parquet/">Hardwood: A New Parser for Apache Parquet</a> (original project announcement)</li>
@@ -2222,8 +2216,8 @@ Reads have no file-size ceiling, but individual column chunks are capped at 2 GB
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

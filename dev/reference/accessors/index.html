@@ -1567,6 +1567,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#generic-accessors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generic accessors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typed-accessors-on-pqlist-and-pqmapentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typed accessors on PqList and PqMap.Entry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#text-columns" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1604,17 +1626,6 @@
     <span class="md-ellipsis">
       
         FLOAT16 columns
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#enum-columns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ENUM columns
       
     </span>
   </a>
@@ -2063,6 +2074,28 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#generic-accessors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Generic accessors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typed-accessors-on-pqlist-and-pqmapentry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typed accessors on PqList and PqMap.Entry
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#text-columns" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2100,17 +2133,6 @@
     <span class="md-ellipsis">
       
         FLOAT16 columns
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#enum-columns" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        ENUM columns
       
     </span>
   </a>
@@ -2198,9 +2220,8 @@
 
 -->
 <h1 id="typed-accessors">Typed Accessors<a class="headerlink" href="#typed-accessors" title="Permanent link">&para;</a></h1>
-<p><code>RowReader</code> — and the nested <code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code> flyweights — decode each column to its
-logical-type Java representation through typed accessor methods, listed below with the
-Parquet and Java type of each and the null- and type-mismatch contracts every accessor obeys. For the task-oriented walkthrough, see
+<p><code>RowReader</code> and the nested <code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code> flyweights decode each column to its
+logical-type Java representation through typed accessor methods. For the task-oriented walkthrough, see
 <a href="../../how-to/row-reader/">Read Row by Row</a>.</p>
 <div class="admonition example">
 <p class="admonition-title">Try it yourself</p>
@@ -2335,7 +2356,9 @@ Parquet and Java type of each and the null- and type-mismatch contracts every ac
 </tr>
 </tbody>
 </table>
-<p>All methods are available as both <code>method(name)</code> and <code>method(index)</code>.</p>
+<p><code>PqInterval</code> is a record with three <code>long</code> components, <code>months()</code>, <code>days()</code> and <code>milliseconds()</code>,
+each an unsigned 32-bit value in the range <code>[0, 4_294_967_295]</code>. The components are independent and
+not normalized.</p>
 <h2 id="physical-accessors">Physical accessors<a class="headerlink" href="#physical-accessors" title="Permanent link">&para;</a></h2>
 <p><code>getInt</code>, <code>getLong</code> and <code>getBinary</code> read the stored value of any column their physical type
 holds, whatever it is annotated with. <code>getInt</code> reads a <code>DATE</code>, a <code>TIME(MILLIS)</code> and an <code>INT32</code>
@@ -2350,6 +2373,37 @@ store a value outside the range its annotation states: <code>getValue</code> kee
 such a value, so a stored <code>1000</code> reads as the <code>Byte</code> <code>-24</code>, while <code>getInt</code> returns it as stored.
 On an unsigned <code>INT(8)</code> or <code>INT(16)</code> column <code>getValue</code> returns the stored <code>Integer</code>. Filter
 predicates compare the value <code>getInt</code> returns.</p>
+<h2 id="generic-accessors">Generic accessors<a class="headerlink" href="#generic-accessors" title="Permanent link">&para;</a></h2>
+<p>When the column type is not known ahead of time, the generic accessors return values decoded to
+their logical-type representation:</p>
+<ul>
+<li><code>RowReader.getValue(name)</code> / <code>getValue(index)</code>: <code>Integer</code> / <code>Long</code> / <code>String</code> / <code>LocalDate</code> /
+  <code>LocalTime</code> / <code>Instant</code> / <code>BigDecimal</code> / <code>UUID</code> / <code>PqInterval</code> / <code>PqVariant</code> / nested <code>PqStruct</code> /
+  <code>PqList</code> / <code>PqMap</code>, with <code>byte[]</code> for un-annotated <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> columns.</li>
+<li><code>PqStruct.getValue(name)</code>: same decoded mapping for nested struct fields.</li>
+<li><code>PqMap.Entry.getKey()</code> / <code>getValue()</code>: same decoded mapping for map keys and values.</li>
+<li><code>PqList.get(index)</code> / <code>PqList.values()</code>: same decoded mapping for list elements.</li>
+</ul>
+<p>The generic accessors, <code>PqList.iterator</code> included, return an un-annotated <code>BYTE_ARRAY</code> as
+<code>byte[]</code>, since it may hold arbitrary binary payloads (Protobuf, WKB, custom encodings); call
+<code>getString</code> when the column is known to hold UTF-8 text from an older writer that omitted the
+<code>STRING</code> annotation.</p>
+<p>A parallel <code>getRawValue</code> family (<code>RowReader.getRawValue</code>, <code>PqStruct.getRawValue</code>,
+<code>PqMap.Entry.getRawKey</code> / <code>getRawValue</code>, <code>PqList.getRaw</code> / <code>rawValues</code>) returns the boxed physical
+value. Nested groups (struct / list / map / variant) have no distinct raw form and are returned
+through their typed flyweight (<code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code> / <code>PqVariant</code>) in both modes.</p>
+<h2 id="typed-accessors-on-pqlist-and-pqmapentry">Typed accessors on PqList and PqMap.Entry<a class="headerlink" href="#typed-accessors-on-pqlist-and-pqmapentry" title="Permanent link">&para;</a></h2>
+<p><code>PqList</code> has <code>strings()</code> / <code>dates()</code> / <code>times()</code> / <code>timestamps()</code> / <code>decimals()</code> / <code>uuids()</code> /
+<code>intervals()</code> / <code>floats()</code> / <code>booleans()</code>, each returning <code>List&lt;T&gt;</code>, and <code>PqMap.Entry</code> the matching
+<code>getStringValue()</code> / <code>getDateValue()</code> / <code>getIntervalValue()</code> / etc., which avoid the boxed <code>Object</code>
+return of <code>getValue()</code>.</p>
+<p><code>PqMap.Entry</code>'s typed key accessors are <code>getStringKey()</code> / <code>getIntKey()</code> / <code>getLongKey()</code> /
+<code>getBinaryKey()</code>. Other key types (DATE / TIME / TIMESTAMP / DECIMAL / UUID) are read through
+<code>getKey()</code> (decoded) and <code>getRawKey()</code> (raw).</p>
+<p><code>PqList.ints()</code> / <code>longs()</code> / <code>doubles()</code> return <code>PqIntList</code> / <code>PqLongList</code> / <code>PqDoubleList</code>, which
+expose <code>PrimitiveIterator.OfInt</code> / <code>OfLong</code> / <code>OfDouble</code>, <code>int get(int)</code>, and <code>int[] toArray()</code>
+without boxing. For nested <code>list&lt;list&lt;int&gt;&gt;</code> (or <code>&lt;long&gt;</code> / <code>&lt;double&gt;</code>), iterate the outer list via
+<code>lists()</code> and call <code>ints()</code> / <code>longs()</code> / <code>doubles()</code> on each inner <code>PqList</code>.</p>
 <h2 id="text-columns">Text columns<a class="headerlink" href="#text-columns" title="Permanent link">&para;</a></h2>
 <p><code>getString</code> reads a column whose stored bytes are the UTF-8 encoding of a string: a
 <code>BYTE_ARRAY</code> annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code>, or one carrying no annotation, which older
@@ -2372,6 +2426,9 @@ one that does not hold text whatever its values are.</p>
 <code>NullPointerException</code> if the field is null — always check <code>isNull()</code> first. Object accessors
 (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getLocalTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>,
 <code>getInterval</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
+<p>A column annotated with the <code>NULL</code> logical type (e.g. PyArrow's <code>pa.null()</code>) holds a null value at
+every row: <code>column.logicalType()</code> returns <code>LogicalType.NullType</code>, <code>isNull(name)</code> is always <code>true</code>,
+and the object accessors return <code>null</code>.</p>
 <h2 id="type-mismatches">Type mismatches<a class="headerlink" href="#type-mismatches" title="Permanent link">&para;</a></h2>
 <p>Requesting the wrong type for a column (e.g. <code>getInt</code> on a <code>LONG</code> column, <code>getDate</code> on a <code>STRING</code>
 column) is a programming error; the call fails at runtime with an unchecked exception. The
@@ -2385,8 +2442,8 @@ accessors listed under <a href="#text-columns">Text columns</a> throw <code>Ille
 a two-byte payload, so a <code>FLOAT16</code> column that declares three bytes is invalid. So are a
 <code>TIME(MILLIS)</code> or an <code>INT(8)</code> on an <code>INT64</code>, and a <code>DECIMAL(12, 2)</code> on an <code>INT32</code>, which holds at
 most nine digits. The format tells readers to ignore such an annotation rather than reject the
-file, so Hardwood drops it — and drops one it does not recognize at all — logging a warning in each
-case. The column is then reported and read as its physical type.</p>
+file, so Hardwood drops it, and drops one it does not recognize at all. The column is then
+reported and read as its physical type.</p>
 <p><code>getFileSchema()</code> reports no logical type for it, <code>getValue</code> returns the physical value, and the
 physical accessors work. A logical accessor fails as it would on any unannotated column of that
 type. Its <code>min</code> / <code>max</code> statistics prune nothing (see
@@ -2409,13 +2466,7 @@ your application.</p>
 type) and decodes the 2-byte IEEE 754 half-precision payload to a single-precision <code>float</code>. The
 widening is lossless — half-precision NaN, ±Infinity, and signed zero round-trip cleanly, and the
 original NaN bit pattern is preserved (the Parquet spec does not canonicalize NaNs on write). Use
-<code>Float.isNaN(value)</code> for NaN checks rather than equality. As with all primitive accessors,
-<code>isNull()</code> must be checked before <code>getFloat()</code> since FLOAT16 columns can be optional.</p>
-<h2 id="enum-columns">ENUM columns<a class="headerlink" href="#enum-columns" title="Permanent link">&para;</a></h2>
-<p><code>getString</code> accepts ENUM columns (<code>BYTE_ARRAY</code> annotated with the <code>ENUM</code> logical type) and decodes
-the UTF-8 payload to the symbol name, exactly as for a STRING column. The generic <code>getValue</code>
-accessor and the <code>PqList</code> / <code>PqStruct</code> / <code>PqMap</code> flyweights return the same <code>String</code>, at the top
-level and in every nested position. <code>getBinary</code> still yields the undecoded bytes.</p>
+<code>Float.isNaN(value)</code> for NaN checks rather than equality.</p>
 <h2 id="timestamps-over-fixed_len_byte_array12">Timestamps over FIXED_LEN_BYTE_ARRAY(12)<a class="headerlink" href="#timestamps-over-fixed_len_byte_array12" title="Permanent link">&para;</a></h2>
 <p>A <code>TIMESTAMP</code> column is stored in an <code>INT64</code> or in a <code>FIXED_LEN_BYTE_ARRAY(12)</code>. The 12 bytes hold a
 signed two's complement little-endian 96-bit count of the annotation's time unit since the Unix
@@ -2427,8 +2478,8 @@ read both carriers alike and return the same <code>Instant</code> or <code>Local
 side of the epoch, throws <code>DateTimeException</code> naming the stored bytes; <code>getBinary</code> reads it.</p>
 <h2 id="legacy-int96-timestamps">Legacy INT96 timestamps<a class="headerlink" href="#legacy-int96-timestamps" title="Permanent link">&para;</a></h2>
 <p>Parquet files written by older versions of Apache Spark and Hive store timestamps in the deprecated
-INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> detects INT96
-automatically and decodes it to an <code>Instant</code>; no caller-side handling is required. The generic
+INT96 physical type without a TIMESTAMP logical type annotation. <code>getTimestamp</code> decodes INT96
+to an <code>Instant</code>. The generic
 <code>getValue</code> accessor and the <code>PqList</code> / <code>PqStruct</code> / <code>PqMap</code> flyweights return the same <code>Instant</code>, at
 the top level and in every nested position.</p>
 <h2 id="legacy-converted-type-annotations">Legacy converted-type annotations<a class="headerlink" href="#legacy-converted-type-annotations" title="Permanent link">&para;</a></h2>
@@ -2588,8 +2639,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

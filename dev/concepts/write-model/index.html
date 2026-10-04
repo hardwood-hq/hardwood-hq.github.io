@@ -1248,17 +1248,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#index-addressing-on-the-two-sides" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Index addressing on the two sides
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#further-reading" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2030,17 +2019,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#index-addressing-on-the-two-sides" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Index addressing on the two sides
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#further-reading" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2089,29 +2067,27 @@
 -->
 <h1 id="the-write-model">The Write Model<a class="headerlink" href="#the-write-model" title="Permanent link">&para;</a></h1>
 <p>Reading a Parquet file is random access over bytes that already exist: the footer says where everything is, and the reader jumps to the parts it wants. Writing inverts that. The output size is unknown until the file is finished, the container is laid out for forward-only production, and every offset a reader will need is only known once the bytes it describes have been written.</p>
-<p>That inversion explains most of what the write API does, and all of what it does not let you do.</p>
 <h2 id="forward-only-footer-last">Forward-only, footer-last<a class="headerlink" href="#forward-only-footer-last" title="Permanent link">&para;</a></h2>
 <p>A Parquet file is written front to back and never seeked backward:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>PAR1 | &lt;row group 0 pages&gt; | &lt;row group 1 pages&gt; | … | &lt;page index&gt; | FileMetaData | &lt;footer length&gt; | PAR1
 </code></pre></div>
 <p>The <code>FileMetaData</code> footer carries the schema and every page and column-chunk offset, and it can only be serialized once those offsets are known, so it goes last. The writer maintains a running byte position, records offsets as it streams pages out, and emits the accumulated metadata at the end. Each page's bounds and location go into the page index, which is written for the whole file just before the footer.</p>
-<p>Three things follow for a caller:</p>
 <ul>
 <li><strong>A file is valid only after <code>close()</code> returns.</strong> Before that, the destination holds pages without a footer, and no reader can open it. A writer abandoned mid-way leaves nothing readable.</li>
-<li><strong>A failure leaves nothing behind.</strong> When the writer cannot finish, it discards what it has written. A write call that throws fails the writer, and <code>close()</code> then discards the output instead of publishing the rows written before the failure. A write that returns without throwing does not fail the writer: <code>RowWriter.tryWriteRow</code> returns <code>RowWriteResult.Rejected</code> for a skippable record and <code>close()</code> still publishes the records that staged. A failure the writer does not see, such as one in the code producing the data, is handled by <code>abort()</code>; see <a href="../../how-to/write-failures/">Handle Write Failures</a>. The local backend writes to a temporary sibling path and renames atomically on close, so a reader never observes a half-written file at the target path.</li>
-<li><strong>The destination is a sequential sink.</strong> <code>OutputFile</code> is <code>create</code> / <code>write</code> / <code>position</code> / <code>close</code> / <code>discard</code>, with no seeking and no size known ahead of time, so the same interface serves a file channel or a multipart object upload. <code>close()</code> publishes the file and <code>discard()</code> throws it away; the writer calls exactly one of them.</li>
+<li><strong>A failure leaves nothing behind.</strong> When the writer cannot finish, it discards what it has written; see <a href="../../how-to/write-failures/">Handle Write Failures</a>. <code>RowWriter.tryWriteRow</code> rejects a record without failing the writer. The local backend writes to a temporary sibling path and renames atomically on close, so a reader never observes a half-written file at the target path.</li>
+<li><strong>The destination is a sequential sink.</strong> <code>OutputFile</code> is <code>create</code> / <code>write</code> / <code>position</code> / <code>close</code> / <code>discard</code>, with no seeking and no size known ahead of time. <code>close()</code> publishes the file and <code>discard()</code> throws it away; the writer calls exactly one of them.</li>
 </ul>
 <h2 id="what-bounds-memory">What bounds memory<a class="headerlink" href="#what-bounds-memory" title="Permanent link">&para;</a></h2>
 <p>A column chunk's metadata (its compressed and uncompressed sizes, its page offsets, its statistics) is only known once the chunk's bytes have been encoded. The writer therefore encodes and buffers a whole row group's columns in memory, then writes them out in schema order and records where each landed.</p>
 <p>A file of any size is a sequence of row groups, each buffered, flushed and forgotten, so peak memory follows whichever target cuts a row group, whatever the size of the file, apart from the page index described below. <code>rowGroupTargetRows</code> is usually the one that cuts, since it binds for any record narrower than about 128 bytes; <code>rowGroupBufferTargetBytes</code> takes over above that and is what keeps records wider than expected from making a row group unboundedly large.</p>
-<p><code>rowGroupBufferTargetBytes</code> is measured on the bytes the writer retains: the level streams a byte per entry, the dictionary indices, each column's value store, and the dictionaries themselves. A row group passes it by at most one record, since a record cannot be split across row groups. So peak heap for one writer follows the target.</p>
+<p>A row group passes <code>rowGroupBufferTargetBytes</code> by at most one record, since a record cannot be split across row groups.</p>
 <p>Two overheads sit on top of the target, and neither scales with how much you write:</p>
 <ul>
 <li><strong>Growth headroom.</strong> The buffers hold more than they are charged for while they grow: the value stores grow by half again, and the level streams, a <code>BYTE_ARRAY</code> column's packed content and every dictionary's value array and hash table double.</li>
 <li><strong>A per-column floor.</strong> A column's buffers have a floor under them, so a schema with enough columns that each one's share of the target falls below that floor opens at a multiple of it. Measured, 200 columns against a 1 MiB target hold about 2.4 MB before a record arrives, while a thousand columns against the default 128 MiB target stay inside it, their shares being far above the floor.</li>
 </ul>
 <p>The page index is held until <code>close()</code> writes it, so it grows with the file: per data page, a location and two bounds. A bound is the type's width, or for a <code>BYTE_ARRAY</code> column usually at most <code>statisticsTruncationLength</code> bytes; a page holds at most <code>pageTargetRows</code> records and fewer where its bytes reach <code>pageTargetBytes</code> first.</p>
-<p>Where the <strong>row target</strong> cuts first, which it does at the defaults for any record retaining less than about 128 bytes, peak heap is instead the row count times what a record retains, which follows from what each column keeps:</p>
+<p>Where the <strong>row target</strong> cuts first, peak heap is instead the row count times what a record retains, which follows from what each column keeps:</p>
 <table>
 <thead>
 <tr>
@@ -2140,23 +2116,15 @@
 <p>Batches and records are <em>arrival</em> units. Pages, column chunks and row groups are <em>layout</em> units. The writer maps one to the other, and the caller does not see the seam: a batch's values are distributed into per-column buffers, the row group is flushed once what those hold reaches the row-group target, and its pages are cut as it is written out. A batch larger than the row group is split at the boundary.</p>
 <p>This is why there is no explicit "end row group" call, and why submitting one large batch and streaming a thousand small ones produce the same file. Layout is set by the targets alone, and each governs something different:</p>
 <ul>
-<li><strong>Page size</strong> governs read granularity: a page is the unit a reader decompresses to reach any value in it, so smaller pages prune finer and cost more metadata. It is measured in <em>encoded</em> bytes (the values at the width the chunk's encoding gives them, so a dictionary column is measured in indices), and the page is cut before the record that would cross the target. A page also holds at most <code>pageTargetRows</code> records, 20,000 by default, so a column whose values encode small still has pages for the page index to prune by. A page holds whole records: a record larger than the byte target is a page of its own. Under a delta encoding, whose width depends on the values, the cut charges the width the type would have taken <code>PLAIN</code>, so those pages land below the target.</li>
+<li><strong>Page size</strong> governs read granularity: a page is the unit a reader decompresses to reach any value in it, so smaller pages prune finer and cost more metadata. A page also holds at most <code>pageTargetRows</code> records, so a column whose values encode small still has pages for the page index to prune by. Under a delta encoding, whose width depends on the values, the cut charges the width the type would have taken <code>PLAIN</code>, so those pages land below the target.</li>
 <li><strong>Row-group rows</strong> governs split sizing and row-group-level pruning, and defaults to 1,048,576. A row group is self-contained, so it is the boundary a file partitions on across separate readers, and it is the granularity at which a reader skips on column-chunk statistics. It does not govern how much of the read runs in parallel: Hardwood decodes <em>pages</em> concurrently within a row group, so parallelism is bounded by pages and columns rather than by banding. Unlike a byte target it needs no estimate and does not vary with the data.</li>
-<li><strong>Row-group buffer bytes</strong> is the memory bound above: the bytes the writer holds for the open row group. It also cuts a row group, so records wider than expected cannot make one unboundedly large.</li>
+<li><strong>Row-group buffer bytes</strong> is the memory bound above: the bytes the writer holds for the open row group.</li>
 </ul>
-<p>A row group is cut at whichever of the two row-group targets is reached first, and holds at most <code>Integer.MAX_VALUE - 9</code> records whatever they say. It is cut earlier where a repeated column's chunk would reach its structural ceiling of <code>Integer.MAX_VALUE - 8</code> values and nulls, or where any column chunk would pass <code>Integer.MAX_VALUE - 8</code> bytes of <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> values. These ceilings only cut under a <code>rowGroupBufferTargetBytes</code> above 2 GiB, where they yield more row groups rather than a failed write; a single record that passes one on its own is rejected. Neither is the size the row group takes on disk: that is smaller by whatever the encoding and the codec win, which is a property of the data. A dictionary-encoded column reaches the file as indices, and the codec then compresses those. Measure one file and scale the setting if a particular on-disk size is what you need.</p>
+<p>A row group holds at most <code>Integer.MAX_VALUE - 9</code> records whatever the targets say. It is cut earlier where a repeated column's chunk would reach its structural ceiling of <code>Integer.MAX_VALUE - 8</code> values and nulls, or where any column chunk would pass <code>Integer.MAX_VALUE - 8</code> bytes of <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> values. These ceilings only cut under a <code>rowGroupBufferTargetBytes</code> above 2 GiB, where they yield more row groups rather than a failed write; a single record that passes one on its own is rejected. Neither is the size the row group takes on disk: that is smaller by whatever the encoding and the codec win, which is a property of the data. A dictionary-encoded column reaches the file as indices, and the codec then compresses those. Measure one file and scale the setting if a particular on-disk size is what you need.</p>
 <h2 id="how-the-writer-picks-an-encoding">How the writer picks an encoding<a class="headerlink" href="#how-the-writer-picks-an-encoding" title="Permanent link">&para;</a></h2>
 <p>Under the default <code>AUTO</code> policy, the writer buffers the row group and then, knowing what the chunk holds, compares the size of a dictionary page plus an index stream against the same values written <code>PLAIN</code>, and takes the smaller. The choice is per column chunk, so the same column may be dictionary-encoded in one row group and <code>PLAIN</code> in the next as its cardinality changes.</p>
 <p>A chunk is encoded one way throughout: no chunk mixes a dictionary with <code>PLAIN</code> overflow pages, and no dictionary page is written for a chunk that ends up <code>PLAIN</code>. And naming an encoding explicitly opts out of the comparison entirely: that column builds no dictionary in any row group of the file.</p>
 <p>The deciding gives up early where it can. A chunk stops interning once repeated size probes find the dictionary losing to <code>PLAIN</code>, which keeps a high-cardinality column from hashing a whole row group's values into a table that is then thrown away. A chunk also gives its dictionary up once it reaches 805,306,368 entries, the most its hash table can index. Either chunk is written <code>PLAIN</code>, and these are the only ones under <code>AUTO</code> that cannot state their <code>distinct_count</code>. A dictionary is otherwise limited only by what the chunk holds, which is counted against <code>rowGroupBufferTargetBytes</code> like everything else the writer retains; a dictionary whose page body would pass <code>Integer.MAX_VALUE - 8</code> bytes is not chosen.</p>
-<h2 id="index-addressing-on-the-two-sides">Index addressing on the two sides<a class="headerlink" href="#index-addressing-on-the-two-sides" title="Permanent link">&para;</a></h2>
-<p>Both the reader and the writer let a field be addressed by position as well as by name, and the positions do not always mean the same thing:</p>
-<ul>
-<li>On the <strong>reader</strong>, a field index is a position among an accessor's <strong>projected</strong> children, which is what the read materializes, in the order the projection requests them.</li>
-<li>On the <strong>writer</strong>, a field index is a position in the struct as <strong>declared</strong> in the schema being written.</li>
-</ul>
-<p>Where a whole file is read into its own schema, the two orders coincide, and copying a record field by field (<code>getFieldName(i)</code> on one side, <code>setString(i, …)</code> on the other) is well defined. As soon as a projection drops or reorders fields, the reader's index <code>i</code> and the writer's index <code>i</code> name different fields, silently, because both are valid positions.</p>
-<p>The rule that holds in every case: an index is valid only within the schema it came from. When the read and write schemas are not identical, resolve the name and address by name, or map the names once and reuse the mapping.</p>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../how-to/write-row-by-row/">Write Row by Row</a> and <a href="../../how-to/write-column-by-column/">Write Column by Column</a> — the two write APIs.</li>
@@ -2213,8 +2181,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

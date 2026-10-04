@@ -1366,17 +1366,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#times-informational-flag" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TIME's informational flag
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#two-physical-carriers" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1997,17 +1986,6 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#times-informational-flag" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TIME's informational flag
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#two-physical-carriers" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2085,18 +2063,15 @@ returning one Java type would force that lossy coercion on half of all timestamp
 API keeps them distinct.</p>
 <h2 id="the-split-accessor-pair">The split accessor pair<a class="headerlink" href="#the-split-accessor-pair" title="Permanent link">&para;</a></h2>
 <p>Because the column's flag already records which kind it is, each accessor enforces the matching
-flag: <code>getTimestamp</code> is the <code>Instant</code> accessor and <code>getLocalTimestamp</code> the <code>LocalDateTime</code> one, and
-calling the wrong one for a column is a programming error that throws. The exact runtime contract,
-including how to read a column whose kind isn't known statically, lives in
+flag, and calling the wrong one for a column is a programming error that throws. The exact
+runtime contract, including how to read a column whose kind isn't known statically, lives in
 <a href="../../reference/accessors/">Typed Accessors</a>.</p>
 <p>Filter predicates follow the same split. A <code>FilterPredicate</code> literal on a UTC-adjusted column is an
 <code>Instant</code> and on a local one a <code>LocalDateTime</code>, so a predicate compares the same kind of value the
 column's accessor returns; the other kind is rejected when the reader is built, for the same reason
 the other accessor throws (see <a href="../../reference/query-controls/#predicate-literals-by-column-type">Predicate literals by column type</a>).</p>
-<h2 id="times-informational-flag">TIME's informational flag<a class="headerlink" href="#times-informational-flag" title="Permanent link">&para;</a></h2>
-<p>The TIME logical type carries the same <code>isAdjustedToUTC</code> flag, but the situation is different:
-<code>LocalTime</code> has no zone of its own, so there is no second Java type to split toward. <code>getTime</code>
-returns <code>LocalTime</code> either way and the flag is purely informational.</p>
+<p>The TIME logical type carries the same flag, but <code>LocalTime</code> has no zone of its own, so there is no
+second Java type to split toward (see <a href="../../reference/accessors/#type-mismatches">Type mismatches</a>).</p>
 <h2 id="two-physical-carriers">Two physical carriers<a class="headerlink" href="#two-physical-carriers" title="Permanent link">&para;</a></h2>
 <p>The TIMESTAMP annotation is stored in two physical types, which differ in the range they span.
 Both count the same three units, milliseconds, microseconds and nanoseconds,
@@ -2106,17 +2081,12 @@ since the epoch. An <code>INT64</code> spans about 292 million years either side
 <p>So the 12-byte carrier matters for a column that needs nanosecond precision beyond 1677 to 2262,
 such as a SQL <code>TIMESTAMP(9)</code> covering the years 0001 to 9999. A millisecond or microsecond column
 reaches those years on an <code>INT64</code> already.</p>
-<p>The annotation means the same on both, so the accessors, the setters and the filter literals are
-the same too: a column of either carrier is an <code>Instant</code> or a <code>LocalDateTime</code> according to its
-<code>isAdjustedToUTC</code> flag, and an application reads and writes it without knowing which carrier it
-uses unless it reaches for the stored bytes.</p>
+<p>The annotation means the same on both, so an application reads and writes either carrier alike
+(see <a href="../../reference/accessors/#timestamps-over-fixed_len_byte_array12">Timestamps over FIXED_LEN_BYTE_ARRAY(12)</a>).</p>
 <h2 id="legacy-int96">Legacy INT96<a class="headerlink" href="#legacy-int96" title="Permanent link">&para;</a></h2>
 <p>Timestamps written by older Spark and Hive in the deprecated INT96 physical type carry no
 <code>isAdjustedToUTC</code> field at all. By the Spark / Hive convention they denote instants, so Hardwood
-reads them as <code>Instant</code> through <code>getTimestamp</code>.</p>
-<p>An INT96 is 12 bytes wide, like the <code>FIXED_LEN_BYTE_ARRAY(12)</code> carrier, but packs a Julian day
-beside a count of nanoseconds of the day rather than one count from the epoch, and carries no
-annotation.</p>
+reads them as <code>Instant</code> (see <a href="../../reference/accessors/#legacy-int96-timestamps">Legacy INT96 timestamps</a>).</p>
 
 
 
@@ -2166,8 +2136,8 @@ annotation.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

@@ -2117,7 +2117,7 @@
 <p>Use <a href="../../how-to/write-row-by-row/#writing-a-file"><code>FileSchema.builder(String)</code></a> to build a schema for writing. The builder checks the complete schema and calculates child counts. Use <code>SchemaElement</code> when you work with footer metadata.</p>
 </div>
 <h2 id="factories">Factories<a class="headerlink" href="#factories" title="Permanent link">&para;</a></h2>
-<p>The static factories build the common element kinds. Each factory sets the fields for its kind.</p>
+<p>The static factories build the common element kinds.</p>
 <table>
 <thead>
 <tr>
@@ -2170,11 +2170,10 @@
 </code></pre></div>
 <h2 id="repetition">Repetition<a class="headerlink" href="#repetition" title="Permanent link">&para;</a></h2>
 <p>The Parquet format leaves <code>repetition_type</code> unset on the root element and requires it on every other element.</p>
-<p><code>root</code> builds the root element with no repetition. The group and primitive factories require a non-null repetition value and reject a null one.</p>
+<p><code>root</code> builds the root element with no repetition; the other factories require one.</p>
 <p><code>fromSchemaElements</code> accepts an element with no repetition value, as a footer may carry one. It uses <code>REQUIRED</code> for the root and <code>OPTIONAL</code> for other elements. <code>FileSchema.toSchemaElements()</code> writes <code>REQUIRED</code> for the root of a schema built with <code>FileSchema.builder(String)</code>.</p>
 <h2 id="name">Name<a class="headerlink" href="#name" title="Permanent link">&para;</a></h2>
-<p>A valid Parquet footer has a name for each schema element. The Thrift field is required.</p>
-<p>A malformed or truncated footer can omit the name. The reader then creates an element with <code>name == null</code>. The factories pass a null name through without a check.</p>
+<p>The Thrift name field is required, but a malformed or truncated footer can omit it; the reader then creates an element with <code>name == null</code>. The factories pass a null name through without a check.</p>
 <h2 id="type-length">Type length<a class="headerlink" href="#type-length" title="Permanent link">&para;</a></h2>
 <p><code>typeLength</code> has a different meaning for each physical type:</p>
 <table>
@@ -2195,7 +2194,7 @@
 </tr>
 </tbody>
 </table>
-<p><code>fixedLengthPrimitive</code> sets the physical type to <code>FIXED_LEN_BYTE_ARRAY</code> and takes the byte length as its second argument. <code>primitive</code> rejects <code>FIXED_LEN_BYTE_ARRAY</code>.</p>
+<p><code>fixedLengthPrimitive</code> sets the physical type to <code>FIXED_LEN_BYTE_ARRAY</code> and takes the byte length as its second argument.</p>
 <p>The maximum bit length has no factory. Use the canonical constructor for it:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// An INT32 column with a maximum bit length of 3 - all values of this column can be stored with 3 bits.</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">SchemaElement</span><span class="w"> </span><span class="n">tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SchemaElement</span><span class="p">(</span><span class="s">"tag"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">INT32</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span>
@@ -2234,15 +2233,14 @@
 </tr>
 </tbody>
 </table>
-<p>A factory checks one element. Rules for the complete list stay in <code>fromSchemaElements</code>. The method consumes the list in depth-first order and builds the schema tree.</p>
+<p>A factory checks one element; <code>fromSchemaElements</code> checks the complete list.</p>
 <h2 id="canonical-constructor">Canonical constructor<a class="headerlink" href="#canonical-constructor" title="Permanent link">&para;</a></h2>
 <p>The record constructor takes the components in Hardwood record-component order:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">new</span><span class="w"> </span><span class="n">SchemaElement</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">typeLength</span><span class="p">,</span><span class="w"> </span><span class="n">repetitionType</span><span class="p">,</span><span class="w"> </span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">                  </span><span class="n">numChildren</span><span class="p">,</span><span class="w"> </span><span class="n">convertedType</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="p">,</span><span class="w"> </span><span class="n">precision</span><span class="p">,</span><span class="w"> </span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">                  </span><span class="n">fieldId</span><span class="p">,</span><span class="w"> </span><span class="n">logicalType</span><span class="p">);</span>
 </code></pre></div>
-<p>Use the constructor when the factories do not cover the metadata. The factories do not set <code>convertedType</code>, <code>scale</code>, <code>precision</code>, or <code>fieldId</code>.</p>
-<p>Use the constructor for:</p>
+<p>Use the constructor for metadata the factories do not set:</p>
 <ul>
 <li>a legacy <code>ConvertedType</code> annotation, such as <code>ConvertedType.LIST</code> or <code>ConvertedType.MAP</code>;</li>
 <li>legacy decimal metadata with <code>scale</code> and <code>precision</code>;</li>
@@ -2270,7 +2268,6 @@
 </tr>
 </tbody>
 </table>
-<p>A null physical type marks a group. <code>primitive</code> rejects a null type because it would create a group.</p>
 
 
 
@@ -2320,8 +2317,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

@@ -1086,43 +1086,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#batch-size" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Batch Size
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#configuring-the-writer" class="md-nav__link">
     <span class="md-ellipsis">
       
         Configuring the Writer
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#stamping-metadata-on-the-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stamping Metadata on the File
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#one-api-per-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        One API per File
       
     </span>
   </a>
@@ -2074,43 +2041,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#batch-size" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Batch Size
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#configuring-the-writer" class="md-nav__link">
     <span class="md-ellipsis">
       
         Configuring the Writer
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#stamping-metadata-on-the-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stamping Metadata on the File
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#one-api-per-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        One API per File
       
     </span>
   </a>
@@ -2182,8 +2116,8 @@
 <a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">            </span><span class="p">.</span><span class="na">doubles</span><span class="p">(</span><span class="s">"temperature"</span><span class="p">,</span><span class="w"> </span><span class="n">temperatures</span><span class="p">));</span>
 <a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="p">}</span>
 </code></pre></div>
-<p>The writer creates the batch — bound to the schema — hands it to the filler, then submits it, so there is no separate build or submit step. <code>columnWriter()</code> returns the same view on every call, so it can be obtained once and kept; call <code>writeBatch</code> as often as there is data and the writer bands the values into pages and row groups itself.</p>
-<p>The file is produced front to back and the footer is written last, so <strong>it becomes a valid Parquet file only when <code>close()</code> returns</strong>. A writer abandoned before that leaves nothing readable at the destination. After a failure, see <a href="../write-failures/">Handle Write Failures</a>.</p>
+<p>The writer creates the batch — bound to the schema — hands it to the filler, then submits it, so there is no separate build or submit step. <code>columnWriter()</code> returns the same view on every call, so it can be obtained once and kept; call <code>writeBatch</code> as often as there is data and the writer bands the values into pages and row groups itself. Batch boundaries leave no trace in the file, and what the writer holds follows <code>rowGroupBufferTargetBytes</code> rather than the batch size; see <a href="../../concepts/write-model/#why-the-writer-chooses-the-boundaries">The Write Model</a>. A file is written through one API: calling both <code>columnWriter()</code> and <a href="../write-row-by-row/"><code>rowWriter()</code></a> on the same <code>ParquetFileWriter</code> is rejected, on the call that obtains the second view.</p>
+<p>The footer is written last, so <strong>the file is valid only once <code>close()</code> returns</strong>. After a failure, see <a href="../write-failures/">Handle Write Failures</a>.</p>
 <h2 id="batch-rules">Batch Rules<a class="headerlink" href="#batch-rules" title="Permanent link">&para;</a></h2>
 <p>A batch is an atomic, aligned slice, and every rule below is checked as the values arrive:</p>
 <ul>
@@ -2209,7 +2143,6 @@
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">ids</span><span class="p">)</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="s">"score"</span><span class="p">,</span><span class="w"> </span><span class="n">scores</span><span class="p">,</span><span class="w"> </span><span class="n">nulls</span><span class="p">));</span>
 </code></pre></div>
-<p>The values array stays full length — one slot per row — and the entry at a null row is never read, so there is no need to compact the values.</p>
 <p><code>Validity</code> is the same type the reader returns from <code>getLeafValidity()</code>, so a mask read from one file can be handed straight to the writer of another. Build one with <code>Validity.ofNulls(boolean[])</code> (<code>nulls[i] == true</code> marks row <code>i</code> null) or <code>Validity.of(long[])</code> for a packed bitmap with set-bit-means-present polarity; <code>Validity.NO_NULLS</code> is the all-present singleton.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">columns</span><span class="p">.</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">        </span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">ids</span><span class="p">)</span>
@@ -2221,13 +2154,13 @@
 <p>The null-mask overloads, taking a <code>Validity</code> or a <code>boolean[]</code>, and the <code>struct</code> / <code>list</code> / <code>map</code> layer setters are annotated <code>@Experimental</code>: their shape may change in a future release.</p>
 </div>
 <h2 id="binary-and-fixed-width-values">Binary and Fixed-Width Values<a class="headerlink" href="#binary-and-fixed-width-values" title="Permanent link">&para;</a></h2>
-<p><code>bytes(...)</code> writes a <code>BYTE_ARRAY</code> column and <code>fixed(...)</code> a <code>FIXED_LEN_BYTE_ARRAY</code> column, both taking <code>byte[][]</code>. A <code>STRING</code> column is a <code>BYTE_ARRAY</code> column annotated <code>STRING</code>, so its values are written as UTF-8 bytes — the columnar API has no <code>String</code> overload, and the encoding is the caller's to perform:</p>
+<p><code>bytes(...)</code> writes a <code>BYTE_ARRAY</code> column and <code>fixed(...)</code> a <code>FIXED_LEN_BYTE_ARRAY</code> column, both taking <code>byte[][]</code>. A <code>STRING</code> column takes its values as UTF-8 bytes the caller encodes:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">byte</span><span class="o">[][]</span><span class="w"> </span><span class="n">names</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[</span><span class="n">people</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="o">][]</span><span class="p">;</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">names</span><span class="p">.</span><span class="na">length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">names</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">people</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="na">name</span><span class="p">().</span><span class="na">getBytes</span><span class="p">(</span><span class="n">StandardCharsets</span><span class="p">.</span><span class="na">UTF_8</span><span class="p">);</span>
 <a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">}</span>
 </code></pre></div>
-<p>Every present value of a <code>FIXED_LEN_BYTE_ARRAY</code> column must be exactly the length the column declares. The bytes themselves are written as given: the writer does not check that a <code>STRING</code> column's values are valid UTF-8, or that a <code>JSON</code>, <code>BSON</code>, <code>VARIANT</code>, <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column's payloads are well formed.</p>
+<p>Every present value of a <code>FIXED_LEN_BYTE_ARRAY</code> column must be exactly the length the column declares. The writer does not validate binary content; see <a href="../../reference/writer/#value-ranges">Value Ranges</a>.</p>
 <h2 id="nested-columns">Nested Columns<a class="headerlink" href="#nested-columns" title="Permanent link">&para;</a></h2>
 <p>Nesting is described the way <code>ColumnReader</code> reports it: leaf values in one flat array, plus a per-layer description of how they group. Leaf columns are addressed by their dotted path through the schema, including the synthetic <code>list.element</code> and <code>key_value</code> segments Parquet's nested layout introduces.</p>
 <p><strong>Structs</strong> need a <code>struct(...)</code> call only when the group is <code>OPTIONAL</code>, to say which instances are absent. Leaves beneath an absent instance are ignored:</p>
@@ -2258,27 +2191,9 @@
 </code></pre></div>
 <p>Layers compose to any depth: <code>list("m.list.element", innerOffsets)</code> describes the inner list of a list of lists, whose values sit at <code>m.list.element.list.element</code>.</p>
 <p>Offsets are validated: they must start at <code>0</code>, be non-decreasing, and end at exactly the number of entries the element column holds.</p>
-<p>The <code>list</code> and <code>map</code> verbs address the entry offsets of a <code>LIST</code> or <code>MAP</code> group, and a repeated field the annotation does not account for has no offsets to address — so <code>create</code> rejects one, listed under <a href="../../reference/writer/#schema-shapes">Schema Shapes</a>. A schema read back from an existing file may carry a legacy two-level list, <code>LIST { repeated element }</code> or <code>LIST { repeated group element { … } }</code>; both are writable here, addressed through the annotated group's path exactly as the three-level layout is.</p>
-<h2 id="batch-size">Batch Size<a class="headerlink" href="#batch-size" title="Permanent link">&para;</a></h2>
-<p>Batch boundaries leave no trace in the file. The writer distributes each batch's values into per-column buffers, flushes a row group once those reach the row-group target, and cuts the pages as the row group is written out; a batch larger than the row-group target is split at that boundary.</p>
-<p>Submit whole columns as one large batch, or stream many small ones and discard each after handing it over; the file is the same either way. What the writer holds follows <code>rowGroupBufferTargetBytes</code> rather than the batch size — see <a href="../../concepts/write-model/">The Write Model</a>.</p>
+<p><code>create</code> rejects a repeated field that no <code>LIST</code> or <code>MAP</code> annotation accounts for; see <a href="../../reference/writer/#schema-shapes">Schema Shapes</a>. The legacy two-level lists a schema read from an existing file may carry are writable here, addressed through the annotated group's path exactly as the three-level layout is.</p>
 <h2 id="configuring-the-writer">Configuring the Writer<a class="headerlink" href="#configuring-the-writer" title="Permanent link">&para;</a></h2>
-<p><code>WriterConfig</code> carries the page and row-group targets, the compression codec and the per-column encoding policy. Pass one to <code>create</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.CompressionCodec</span><span class="p">;</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.ColumnEncoding</span><span class="p">;</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.WriterConfig</span><span class="p">;</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">        </span><span class="p">.</span><span class="na">codec</span><span class="p">(</span><span class="n">CompressionCodec</span><span class="p">.</span><span class="na">ZSTD</span><span class="p">)</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="p">.</span><span class="na">rowGroupBufferTargetBytes</span><span class="p">(</span><span class="mi">64L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">        </span><span class="p">.</span><span class="na">encoding</span><span class="p">(</span><span class="s">"temperature"</span><span class="p">,</span><span class="w"> </span><span class="n">ColumnEncoding</span><span class="p">.</span><span class="na">BYTE_STREAM_SPLIT</span><span class="p">)</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-</code></pre></div>
-<p>Every option, its default and what it rejects: <a href="../../reference/writer/">Writer Reference</a>.</p>
-<h2 id="stamping-metadata-on-the-file">Stamping Metadata on the File<a class="headerlink" href="#stamping-metadata-on-the-file" title="Permanent link">&para;</a></h2>
-<p>The footer's key-value metadata and its <code>created_by</code> identifier are set on the <code>ParquetFileWriter</code>, at any point until <code>close()</code>. See <a href="../../reference/writer/#file-metadata">File Metadata</a>.</p>
-<h2 id="one-api-per-file">One API per File<a class="headerlink" href="#one-api-per-file" title="Permanent link">&para;</a></h2>
-<p>A file is written through one API or the other: calling both <code>columnWriter()</code> and <a href="../write-row-by-row/"><code>rowWriter()</code></a> on the same <code>ParquetFileWriter</code> is rejected, on the call that obtains the second view. The row-oriented layer stages records into batches and submits them through this same core, so it produces the same layout — see <a href="../#choosing-a-writer">Choosing a Writer</a>.</p>
+<p>Pass a <code>WriterConfig</code> to <code>ParquetFileWriter.create(out, schema, config)</code> to set the codec, the page and row-group targets and the per-column encoding policy; every option, its default and what it rejects is under <a href="../../reference/writer/#writer-options">Writer Options</a>. The footer's key-value metadata and <code>created_by</code> identifier are set on the <code>ParquetFileWriter</code> until <code>close()</code>; see <a href="../../reference/writer/#file-metadata">File Metadata</a>.</p>
 
 
 
@@ -2328,8 +2243,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

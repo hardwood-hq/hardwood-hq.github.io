@@ -1079,28 +1079,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#stamping-metadata-on-the-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stamping Metadata on the File
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#one-api-per-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        One API per File
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2095,28 +2073,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#stamping-metadata-on-the-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stamping Metadata on the File
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#one-api-per-file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        One API per File
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2191,10 +2147,10 @@
 <a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">            </span><span class="p">.</span><span class="na">setDate</span><span class="p">(</span><span class="s">"hired"</span><span class="p">,</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">2021</span><span class="p">,</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w"> </span><span class="mi">15</span><span class="p">)));</span>
 <a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="p">}</span>
 </code></pre></div>
-<p>The writer creates the <code>StructBuilder</code>, hands it to the filler, and stages the record when the filler returns — there is no separate build or submit step. <code>RowWriter</code> is not closeable: the <code>ParquetFileWriter</code> owns the file, and closing it writes the records still staged along with the footer.</p>
-<p>The file is produced front to back and the footer is written last, so <strong>it becomes a valid Parquet file only when <code>close()</code> returns</strong>. A writer abandoned before that leaves nothing readable at the destination. After a failure, see <a href="../write-failures/">Handle Write Failures</a>.</p>
+<p>The writer creates the <code>StructBuilder</code>, hands it to the filler, and stages the record when the filler returns — there is no separate build or submit step. <code>RowWriter</code> is not closeable: the <code>ParquetFileWriter</code> owns the file, and closing it writes the staged records along with the footer. A file is written through one API: calling both <code>rowWriter()</code> and <a href="../write-column-by-column/"><code>columnWriter()</code></a> on the same <code>ParquetFileWriter</code> is rejected.</p>
+<p>The footer is written last, so <strong>the file is valid only once <code>close()</code> returns</strong>. After a failure, see <a href="../write-failures/">Handle Write Failures</a>.</p>
 <h2 id="typed-setters">Typed Setters<a class="headerlink" href="#typed-setters" title="Permanent link">&para;</a></h2>
-<p>Each setter names the type of the field it writes, and a field's declared type decides which setter fits. <code>setBoolean</code>, <code>setInt</code>, <code>setLong</code>, <code>setFloat</code>, <code>setDouble</code> and <code>setBinary</code> write physical values; <code>setString</code>, <code>setDate</code>, <code>setTime</code>, <code>setTimestamp</code>, <code>setLocalTimestamp</code>, <code>setDecimal</code>, <code>setUuid</code> and <code>setInterval</code> write logical-type values, which the writer converts to the column's physical representation.</p>
+<p>Each setter names the type of the field it writes, and a field's declared type decides which setter fits. Logical-type setters such as <code>setDate</code> and <code>setDecimal</code> convert the value to the column's physical representation. The full setter map is under <a href="../../reference/writer/#logical-types-and-row-setters">Logical Types and Row Setters</a>.</p>
 <p>Given a schema that also declares a <code>DECIMAL</code> <code>salary</code>, a <code>TIMESTAMP</code> <code>created_at</code> and a <code>UUID</code> <code>external_id</code>:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">rows</span><span class="p">.</span><span class="na">writeRow</span><span class="p">(</span><span class="n">row</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">row</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">        </span><span class="p">.</span><span class="na">setLong</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">)</span>
@@ -2203,7 +2159,7 @@
 <a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="p">.</span><span class="na">setTimestamp</span><span class="p">(</span><span class="s">"created_at"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">now</span><span class="p">())</span>
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="p">.</span><span class="na">setUuid</span><span class="p">(</span><span class="s">"external_id"</span><span class="p">,</span><span class="w"> </span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">()));</span>
 </code></pre></div>
-<p>A setter that does not fit the field's declared type is rejected, as is a value outside the range the field's annotation declares — an <code>INT(8)</code> column takes <code>[-128, 128)</code>, a <code>DECIMAL(9, 2)</code> column an unscaled value of at most nine digits. See <a href="../../reference/writer/">Writer Reference</a> for the full setter map and the ranges.</p>
+<p>A setter that does not fit the field's declared type is rejected, as is a value outside the range the field's annotation declares; see <a href="../../reference/writer/#value-ranges">Value Ranges</a>.</p>
 <p>A value carrying more precision than its column can hold — an <code>Instant</code> with microseconds written to a <code>TIMESTAMP(MILLIS)</code> column — is rejected by default. Configure <code>precisionLossPolicy(PrecisionLossPolicy.TRUNCATE)</code> to drop the digits that do not fit instead.</p>
 <h2 id="nulls-and-unset-fields">Nulls and Unset Fields<a class="headerlink" href="#nulls-and-unset-fields" title="Permanent link">&para;</a></h2>
 <p>An <code>OPTIONAL</code> field is null in three equivalent spellings: passing <code>null</code> to an object-typed setter, calling <code>setNull</code>, and leaving the field unset.</p>
@@ -2217,7 +2173,7 @@
 <a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="p">.</span><span class="na">setLong</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span>
 <a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="p">.</span><span class="na">setString</span><span class="p">(</span><span class="s">"name"</span><span class="p">,</span><span class="w"> </span><span class="s">"Katherine"</span><span class="p">));</span>
 </code></pre></div>
-<p>A <code>REQUIRED</code> field left unset fails the record. <code>writeRow</code> then fails the writer: it accepts no more records, and <code>close()</code> discards the output rather than publishing the records written before it. See <a href="../write-failures/">Handle Write Failures</a>.</p>
+<p>A <code>REQUIRED</code> field left unset fails the record, and a failed record fails the writer; see <a href="../write-failures/">Handle Write Failures</a>.</p>
 <h2 id="skipping-a-rejected-record">Skipping a Rejected Record<a class="headerlink" href="#skipping-a-rejected-record" title="Permanent link">&para;</a></h2>
 <p><code>tryWriteRow</code> stages the record or returns a <code>RowWriteResult.Rejected</code> without failing the writer. Later records can still be written, and <code>close()</code> publishes the ones that staged.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.RowWriteResult</span><span class="p">;</span>
@@ -2294,7 +2250,7 @@
 <a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">                </span><span class="p">.</span><span class="na">addList</span><span class="p">(</span><span class="n">inner</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">inner</span><span class="p">.</span><span class="na">addInt</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="na">addInt</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
 <a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">                </span><span class="p">.</span><span class="na">addList</span><span class="p">(</span><span class="n">inner</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">inner</span><span class="p">.</span><span class="na">addInt</span><span class="p">(</span><span class="mi">3</span><span class="p">))));</span>
 </code></pre></div>
-<p>Two shapes the columnar API writes are out of reach here: the legacy two-level lists, <code>LIST { repeated element }</code> and <code>LIST { repeated group element { … } }</code>. The builders reach a list's values through an element node below the entry, and in both of those the entry is the element. <code>rowWriter()</code> rejects them, naming the group; <a href="../write-column-by-column/">Column by Column</a> writes them.</p>
+<p><code>rowWriter()</code> rejects the legacy two-level lists, naming the group; <a href="../write-column-by-column/">Column by Column</a> writes them. See <a href="../../reference/writer/#schema-shapes">Schema Shapes</a>.</p>
 <p>A builder is valid only inside the filler it was handed to. Retaining one and using it after its scope has ended is rejected rather than writing into a later record.</p>
 <h2 id="addressing-fields-by-index">Addressing Fields by Index<a class="headerlink" href="#addressing-fields-by-index" title="Permanent link">&para;</a></h2>
 <p>Every by-name setter has a by-index twin, addressing a field by its position in the struct being filled. <code>getFieldCount()</code> and <code>getFieldName(int)</code> report the positions, which lets code that walks a record's fields uniformly write them back without knowing their names.</p>
@@ -2309,32 +2265,25 @@
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">});</span>
 </code></pre></div>
-<p>Every rule of the by-name form holds unchanged — same type check, same range check, same rejection of a field set twice, same scope lifetime. Only the way the field is named differs, so an index outside <code>[0, getFieldCount())</code> takes the place of an unknown name.</p>
+<p>Every rule of the by-name form applies unchanged, and an index outside <code>[0, getFieldCount())</code> takes the place of an unknown name.</p>
 <div class="admonition warning">
 <p class="admonition-title">The reader's index and the writer's index are not always the same position</p>
-<p>On the reader, a field index is a position among an accessor's <strong>projected</strong> children. On the writer, it is a position in the struct as <strong>declared</strong> in the schema being written. The two agree when a whole file is read into its own schema — copying a record field by field then works — and diverge as soon as a projection drops or reorders fields. Resolve the name with <code>getFieldName(int)</code> on both sides when the two schemas are not identical. See <a href="../../concepts/write-model/#index-addressing-on-the-two-sides">The Write Model</a>.</p>
+<p>On the reader, a field index is a position among an accessor's <strong>projected</strong> children. On the writer, it is a position in the struct as <strong>declared</strong> in the schema being written. The two agree when a whole file is read into its own schema — copying a record field by field then works — and diverge as soon as a projection drops or reorders fields. Resolve the name with <code>getFieldName(int)</code> on both sides when the two schemas are not identical.</p>
 </div>
 <h2 id="configuring-the-writer">Configuring the Writer<a class="headerlink" href="#configuring-the-writer" title="Permanent link">&para;</a></h2>
-<p><code>WriterConfig</code> carries the page and row-group targets, the compression codec, the encoding policy and the precision-loss policy. Pass one to <code>create</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.CompressionCodec</span><span class="p">;</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.PrecisionLossPolicy</span><span class="p">;</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.WriterConfig</span><span class="p">;</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">        </span><span class="p">.</span><span class="na">codec</span><span class="p">(</span><span class="n">CompressionCodec</span><span class="p">.</span><span class="na">ZSTD</span><span class="p">)</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">        </span><span class="p">.</span><span class="na">rowGroupBufferTargetBytes</span><span class="p">(</span><span class="mi">64L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">        </span><span class="p">.</span><span class="na">precisionLossPolicy</span><span class="p">(</span><span class="n">PrecisionLossPolicy</span><span class="p">.</span><span class="na">TRUNCATE</span><span class="p">)</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="c1">// ...</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="p">}</span>
+<p>Pass a <code>WriterConfig</code> to <code>create</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.PrecisionLossPolicy</span><span class="p">;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.WriterConfig</span><span class="p">;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">        </span><span class="p">.</span><span class="na">precisionLossPolicy</span><span class="p">(</span><span class="n">PrecisionLossPolicy</span><span class="p">.</span><span class="na">TRUNCATE</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="c1">// ...</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="p">}</span>
 </code></pre></div>
-<p>Every option, its default and what it rejects: <a href="../../reference/writer/">Writer Reference</a>.</p>
-<h2 id="stamping-metadata-on-the-file">Stamping Metadata on the File<a class="headerlink" href="#stamping-metadata-on-the-file" title="Permanent link">&para;</a></h2>
-<p>The footer's key-value metadata and its <code>created_by</code> identifier are set on the <code>ParquetFileWriter</code>, at any point until <code>close()</code>. See <a href="../../reference/writer/#file-metadata">File Metadata</a>.</p>
-<h2 id="one-api-per-file">One API per File<a class="headerlink" href="#one-api-per-file" title="Permanent link">&para;</a></h2>
-<p><code>RowWriter</code> stages records into batches and submits them through the columnar core, so the file it produces is laid out exactly like one written through <a href="../write-column-by-column/"><code>ColumnWriter</code></a> — same paging, same row-group cadence, same encoding decisions and statistics. A file is written through one API or the other, though: calling both on the same <code>ParquetFileWriter</code> is rejected.</p>
+<p>Every option, its default and what it rejects is under <a href="../../reference/writer/#writer-options">Writer Options</a>. The footer's key-value metadata and <code>created_by</code> identifier are set on the <code>ParquetFileWriter</code> until <code>close()</code>; see <a href="../../reference/writer/#file-metadata">File Metadata</a>.</p>
 
 
 
@@ -2384,8 +2333,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

@@ -1623,6 +1623,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#io-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I/O behavior
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#range-backing" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1997,6 +2008,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#io-behavior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I/O behavior
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#range-backing" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2066,8 +2088,7 @@
 
 -->
 <h1 id="s3-reference">S3 Reference<a class="headerlink" href="#s3-reference" title="Permanent link">&para;</a></h1>
-<p>Options and behavior of the <code>hardwood-s3</code> module. For worked examples of credentials, S3-compatible
-endpoints and multi-file reads, see <a href="../../how-to/s3/">Reading from S3</a>.</p>
+<p>Options and behavior of the <code>hardwood-s3</code> module; <a href="../../how-to/s3/">Reading from S3</a> shows how to use it.</p>
 <h2 id="s3source-builder-options"><code>S3Source</code> builder options<a class="headerlink" href="#s3source-builder-options" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2150,6 +2171,18 @@ size grows with row groups × columns and with the size of the per-column statis
 so a wide schema, a heavily split file, or long string min/max values can push the
 footer past 64 KB. Reading it then costs one extra GET.</p>
 <p>This applies to every <code>S3InputFile</code>, independent of the range backing below.</p>
+<h2 id="io-behavior">I/O behavior<a class="headerlink" href="#io-behavior" title="Permanent link">&para;</a></h2>
+<p>Hardwood coalesces the column chunk reads within each row group into as few HTTP requests as
+possible. The page index of the columns a read uses is fetched for several row groups at a time,
+one request for the offset indexes and, on a filtered read, one for the column indexes and one
+for the bloom filters it checks; a filtered read may add one request per dictionary it checks.
+Column projection, page-level predicate pushdown,
+and <code>head(n)</code> on an unfiltered read narrow the byte ranges before coalescing.</p>
+<p>Without a row limit, the reader fetches all projected (and filtered) column data for an entire
+row group when any column enters it, even if the consumer stops reading early. <code>head(n)</code> on the
+<code>buildRowReader()</code> builder truncates each column's fetch to the pages covering the needed rows.
+With a filter, <code>head(n)</code> counts matching rows, which are not known before the pages are decoded,
+so it does not narrow the fetch.</p>
 <h2 id="range-backing">Range backing<a class="headerlink" href="#range-backing" title="Permanent link">&para;</a></h2>
 <p><code>RangeBacking</code> sets whether an <code>S3InputFile</code> also keeps the bytes it fetches outside
 that window:</p>
@@ -2254,8 +2287,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

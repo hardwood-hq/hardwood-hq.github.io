@@ -2044,7 +2044,7 @@
 
 -->
 <h1 id="geospatial-support">Geospatial Support<a class="headerlink" href="#geospatial-support" title="Permanent link">&para;</a></h1>
-<p>Hardwood reads the <a href="https://parquet.apache.org/docs/file-format/types/geospatial/">Parquet geospatial metadata layer</a> (GEOMETRY / GEOGRAPHY logical types and per-chunk <code>GeospatialStatistics</code>) and offers a bounding-box filter predicate that pushes spatial selectivity down to the row group level. Hardwood does not decode WKB payloads itself. Geometry decoding is left to the caller, so the reader has no runtime geometry-library dependency. The de-facto standard Java library for this is the <a href="https://locationtech.github.io/jts/">JTS Topology Suite</a>; the snippets below assume JTS, but any WKB decoder works.</p>
+<p>Hardwood reads the <a href="https://parquet.apache.org/docs/file-format/types/geospatial/">Parquet geospatial metadata layer</a> (GEOMETRY / GEOGRAPHY logical types and per-chunk <code>GeospatialStatistics</code>) and offers a bounding-box filter predicate that pushes spatial selectivity down to the row group level. Hardwood does not decode WKB payloads itself. The snippets below decode WKB with the <a href="https://locationtech.github.io/jts/">JTS Topology Suite</a>; any WKB decoder works.</p>
 <div class="admonition example">
 <p class="admonition-title">Try it yourself</p>
 <p>Want to run it or explore the capabilities yourself? The <a href="https://github.com/hardwood-hq/hardwood-examples/tree/main/geospatial"><strong>Geospatial</strong></a> example reads a GEOMETRY column, pushes a bounding-box filter down to the row-group level, and decodes WKB points with JTS.</p>
@@ -2101,7 +2101,7 @@
 <a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="spatial-filter-pushdown">Spatial Filter Pushdown<a class="headerlink" href="#spatial-filter-pushdown" title="Permanent link">&para;</a></h3>
-<p><code>FilterPredicate.intersects(column, xmin, ymin, xmax, ymax)</code> produces a predicate that drops row groups whose stored bounding box does not overlap the query box. The argument order follows the GeoJSON / WKT convention (bottom-left corner, then top-right corner). Antimeridian wrapping is handled automatically, both for a stored box and for a query box with <code>xmin &gt; xmax</code>, which covers <code>x &gt;= xmin</code> or <code>x &lt;= xmax</code> on a <code>GEOMETRY</code> column as on a <code>GEOGRAPHY</code> one. A <code>NaN</code> bound throws <code>IllegalArgumentException</code> when the predicate is built.</p>
+<p><code>FilterPredicate.intersects(column, xmin, ymin, xmax, ymax)</code> produces a predicate that drops row groups whose stored bounding box does not overlap the query box. The argument order follows the GeoJSON / WKT convention (bottom-left corner, then top-right corner). Antimeridian wrapping is handled both for a stored box and for a query box with <code>xmin &gt; xmax</code>, which covers <code>x &gt;= xmin</code> or <code>x &lt;= xmax</code> on a <code>GEOMETRY</code> column as on a <code>GEOGRAPHY</code> one. A <code>NaN</code> bound throws <code>IllegalArgumentException</code> when the predicate is built.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.FilterPredicate</span><span class="p">;</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.RowReader</span><span class="p">;</span>
@@ -2115,11 +2115,10 @@
 <a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
 <a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">        </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="n">wkb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getBinary</span><span class="p">(</span><span class="s">"location"</span><span class="p">);</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">        </span><span class="c1">// Decode the WKB payload with a geometry library of your choice (e.g. JTS).</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">        </span><span class="n">Geometry</span><span class="w"> </span><span class="n">geom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wkbReader</span><span class="p">.</span><span class="na">read</span><span class="p">(</span><span class="n">wkb</span><span class="p">);</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">        </span><span class="c1">// Apply any exact-geometry tests here.</span>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="p">}</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">        </span><span class="n">Geometry</span><span class="w"> </span><span class="n">geom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">wkbReader</span><span class="p">.</span><span class="na">read</span><span class="p">(</span><span class="n">wkb</span><span class="p">);</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">        </span><span class="c1">// Apply any exact-geometry tests here.</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="p">}</span>
 </code></pre></div>
 <p>The predicate composes with the standard <code>and</code> / <code>or</code> combinators, e.g.:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">and</span><span class="p">(</span>
@@ -2127,9 +2126,9 @@
 <a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"population"</span><span class="p">,</span><span class="w"> </span><span class="mi">100_000</span><span class="p">));</span>
 </code></pre></div>
 <h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
-<p><code>intersects</code> is <strong>coarse-grained</strong>: Hardwood drops row groups whose bounding box is disjoint from the query box, but every row in a surviving row group is returned. Rows whose individual geometry falls outside the query box are emitted along with intersecting ones. Apply your own per-row check on the WKB payload (e.g. via JTS) when you need exact geometric filtering; the bounding-box pushdown still saves the I/O for non-overlapping chunks.</p>
-<p>Negation of <code>intersects</code> is <strong>not supported</strong>: <code>FilterPredicate.not(FilterPredicate.intersects(...))</code>, or <code>not</code> over any predicate holding one, throws <code>IllegalArgumentException</code> at reader creation, naming the column. The chunk-level criterion for "no row intersects" requires bbox containment rather than overlap, and the per-row dual would require decoding every WKB payload inside the reader, which would pull a geometry library into the runtime. If you need "geometries outside this box", read without a spatial filter and apply the negation yourself against <code>getBinary("location")</code>.</p>
-<p>Both limitations are tracked by <a href="https://github.com/hardwood-hq/hardwood/issues/414">hardwood#414</a>, which proposes opt-in row-level evaluation via an optional WKB-decoder dependency.</p>
+<p><code>intersects</code> is <strong>coarse-grained</strong>: Hardwood drops row groups whose bounding box is disjoint from the query box, but every row in a surviving row group is returned. Apply your own per-row check on the WKB payload (e.g. via JTS) when you need exact geometric filtering.</p>
+<p>Negation of <code>intersects</code> is <strong>not supported</strong>: <code>FilterPredicate.not(FilterPredicate.intersects(...))</code>, or <code>not</code> over any predicate holding one, throws <code>IllegalArgumentException</code> at reader creation, naming the column. If you need "geometries outside this box", read without a spatial filter and apply the negation yourself against <code>getBinary("location")</code>.</p>
+<p>Both limitations are tracked by <a href="https://github.com/hardwood-hq/hardwood/issues/414">hardwood#414</a>.</p>
 
 
 
@@ -2179,8 +2178,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

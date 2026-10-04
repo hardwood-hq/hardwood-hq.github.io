@@ -1188,17 +1188,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        File
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#row-group" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2026,17 +2015,6 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#file" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        File
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#row-group" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2146,7 +2124,6 @@
 <h1 id="how-a-parquet-file-is-laid-out">How a Parquet File Is Laid Out<a class="headerlink" href="#how-a-parquet-file-is-laid-out" title="Permanent link">&para;</a></h1>
 <p>Most of Hardwood's behavior, such as column projection, predicate pushdown, parallel decode and
 split reading, follows directly from how the Parquet format arranges bytes on disk.</p>
-<p>To read this hierarchy programmatically at runtime, see <a href="../../how-to/metadata/">Inspect File Metadata</a>.</p>
 <h2 id="the-hierarchy">The hierarchy<a class="headerlink" href="#the-hierarchy" title="Permanent link">&para;</a></h2>
 <p>A Parquet file is a nested structure of row groups holding column chunks holding pages, and the
 metadata that records where each piece lives sits at the <em>end</em> of the file. Laid
@@ -2179,48 +2156,20 @@ group and column chunk (their byte offsets, sizes, compression codecs, and stati
 schema and optional page index), followed by the footer length and a closing <code>PAR1</code>. A reader
 starts at that trailing magic, steps back four bytes to read the footer length, then reads the
 footer to learn where every row group, column chunk, and page lives before touching any values.</p>
-<h3 id="file">File<a class="headerlink" href="#file" title="Permanent link">&para;</a></h3>
-<p>The unit you open. Its defining feature is that the schema and the byte offsets of everything in
-the file are in the footer at the <em>end</em>. A reader seeks to the tail, reads the
-footer, and from then on knows the exact byte range of every piece of data without scanning. A
-read of three columns out of fifty touches only those three columns' bytes.</p>
 <h3 id="row-group">Row group<a class="headerlink" href="#row-group" title="Permanent link">&para;</a></h3>
-<p>A row group holds a contiguous range of rows, but stores them column by column. A 10-million-row
-file might be split into ten row groups of a million rows each. Row groups are the unit of:</p>
-<ul>
-<li><strong>Parallelism and splitting.</strong> Independent row groups can be decoded concurrently, and a file
-  can be partitioned across parallel readers at row-group boundaries, which is what
-  <a href="../../how-to/query-controls/#split-aware-reading">split-aware reading</a> assigns by byte range.</li>
-<li><strong>Coarse skipping.</strong> Each column chunk carries min/max statistics; if a row group's statistics
-  prove no row can match a predicate, the entire row group is skipped before any data is read.</li>
-</ul>
+<p>A row group holds a contiguous range of rows, stored column by column.</p>
 <h3 id="column-chunk">Column chunk<a class="headerlink" href="#column-chunk" title="Permanent link">&para;</a></h3>
-<p>The data for one column within one row group, stored contiguously. Because a column's values sit
-together (rather than interleaved with other columns as in a row-oriented format), they
-compress well (similar values adjacent) and can be read in isolation (projection). The footer
-records each chunk's compressed and uncompressed size, codec, and statistics.</p>
-<div class="admonition info">
-<p class="admonition-title">2 GB column-chunk limit</p>
-<p>A column chunk read without an OffsetIndex must be at most 2 GB of <em>compressed</em> data; a
-chunk with an OffsetIndex is read in page groups and has no such limit. Files larger than
-2 GB are read both locally and from S3, except by the in-memory (<code>ByteBuffer</code>) backend and by
-an S3 file with <code>RangeBacking.SPARSE_TEMPFILE</code> (the <code>dive</code> TUI's S3 mode), which are limited
-to 2 GB per file. For datasets that don't fit a single supported file, split the data into
-multiple files at write time and read them as one; see
-<a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
-</div>
+<p>The data for one column within one row group, stored contiguously. Without an OffsetIndex,
+Hardwood reads a column chunk as a single in-memory region, which bounds its size; see
+<a href="../../reference/reader/#limits">Limits</a>.</p>
 <h3 id="page">Page<a class="headerlink" href="#page" title="Permanent link">&para;</a></h3>
 <p>A column chunk is divided into pages, and the page is where compression and encoding
-happen. A chunk typically begins with one <strong>dictionary page</strong>, holding the column's distinct values,
-followed by <strong>data pages</strong> whose entries are indices into that dictionary. Each page is
-compressed independently, so the page is the smallest unit Hardwood decompresses and decodes,
-and therefore the smallest unit it can decode in parallel or skip.</p>
-<p>When a file carries a <strong>Column Index</strong> and <strong>Offset Index</strong> (per-page min/max statistics and
-byte offsets, stored near the footer), Hardwood can skip individual <em>pages</em> within a surviving
-row group. This is the second tier of <a href="../../how-to/query-controls/#predicate-pushdown-filter">predicate pushdown</a>.
-On a remote backend like S3, a skipped page is never even fetched.</p>
+happen. Each page is compressed independently, so the page is the smallest unit Hardwood
+decompresses and decodes, and therefore the smallest unit it can decode in parallel or skip.</p>
+<p>A file may carry a <strong>Column Index</strong> and <strong>Offset Index</strong>: per-page min/max statistics and byte
+offsets, stored near the footer. On a remote backend like S3, a page these let Hardwood skip is
+never fetched.</p>
 <h2 id="why-the-layout-matters">Why the layout matters<a class="headerlink" href="#why-the-layout-matters" title="Permanent link">&para;</a></h2>
-<p>Each capability elsewhere in the docs is the layout showing through:</p>
 <table>
 <thead>
 <tr>
@@ -2234,15 +2183,15 @@ On a remote backend like S3, a skipped page is never even fetched.</p>
 <td>Columns are stored in separate chunks; the footer gives each chunk's byte range, so unprojected columns are never read.</td>
 </tr>
 <tr>
-<td><strong>Predicate pushdown</strong></td>
-<td>Statistics at the row-group level, and the Column Index at the page level, let whole row groups and individual pages be skipped before decoding.</td>
+<td><strong><a href="../../how-to/query-controls/#predicate-pushdown-filter">Predicate pushdown</a></strong></td>
+<td>Min/max statistics at the row-group level, and the Column Index at the page level, let whole row groups and individual pages be skipped before decoding.</td>
 </tr>
 <tr>
 <td><strong>Parallel decode</strong></td>
 <td>Pages are independently compressed, so they can be decompressed and decoded concurrently across a thread pool.</td>
 </tr>
 <tr>
-<td><strong>Split reading</strong></td>
+<td><strong><a href="../../how-to/query-controls/#split-aware-reading">Split reading</a></strong></td>
 <td>Row groups are self-contained, so a file partitions cleanly across parallel readers at row-group boundaries.</td>
 </tr>
 <tr>
@@ -2315,8 +2264,8 @@ How Hardwood surfaces that nesting differs between the two reader APIs; see
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

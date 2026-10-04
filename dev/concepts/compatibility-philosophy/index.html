@@ -2103,9 +2103,6 @@
 <p>Hardwood aims to read every file that Apache parquet-java reads, while in a few specific places
 applying <em>stricter</em> semantics than parquet-java does. Each of those divergences follows from the
 principle described below.</p>
-<p>For the drop-in API, see <a href="../../how-to/compat/">parquet-java Compatibility</a>, and for its filters,
-<a href="../../reference/parquet-java-compat/">parquet-java Compat Filters</a>; for the filter semantics, see
-<a href="../../how-to/query-controls/#null-handling">Filter, Project, Limit, and Split</a>.</p>
 <h2 id="the-principle-liberal-on-input-strict-on-semantics">The principle: liberal on input, strict on semantics<a class="headerlink" href="#the-principle-liberal-on-input-strict-on-semantics" title="Permanent link">&para;</a></h2>
 <p>Two goals are in tension, and Hardwood resolves them on different axes:</p>
 <ul>
@@ -2116,52 +2113,36 @@ principle described below.</p>
   predate the modern logical-type union, <code>NULL</code>-typed columns, FLOAT16. The tolerance also
   extends <em>forward</em>: a logical-type annotation newer than Hardwood recognizes is ignored rather
   than rejected, and the column's physical type is exposed, so a file written by a tool that
-  has adopted a future logical type still reads. On the <em>input</em> side, Hardwood is liberal: if
-  parquet-java can read it, Hardwood aims to.</li>
+  has adopted a future logical type still reads.</li>
 <li><strong>Don't silently produce wrong results.</strong> On the <em>semantic</em> side, where a behavior is a matter
   of correctness rather than file compatibility, Hardwood chooses the well-defined answer even
-  when that diverges from parquet-java's historical behavior. This follows the project's
-  fail-early, no-silent-wrong-results stance: a surprising-but-correct result beats a
-  familiar-but-wrong one.</li>
+  when that diverges from parquet-java's historical behavior.</li>
 </ul>
-<p>Liberal on what bytes it accepts; strict on what those bytes are defined to mean.</p>
 <h2 id="where-strictness-surfaces">Where strictness surfaces<a class="headerlink" href="#where-strictness-surfaces" title="Permanent link">&para;</a></h2>
 <h3 id="sql-three-valued-logic-for-comparison-predicates">SQL three-valued logic for comparison predicates<a class="headerlink" href="#sql-three-valued-logic-for-comparison-predicates" title="Permanent link">&para;</a></h3>
-<p>The clearest case is <code>notEq</code> and its siblings. Hardwood applies uniform SQL three-valued logic
-to every comparison predicate: any comparison against a null column value yields UNKNOWN, and
-UNKNOWN rows are not returned. So <code>notEq("x", v)</code> does <strong>not</strong> return rows where <code>x</code> is null,
-just as <code>eq</code>, <code>lt</code>, and the rest don't.</p>
-<p>parquet-java treats <code>null &lt;&gt; v</code> as true and so includes null rows in <code>notEq</code>, which breaks the
+<p>Hardwood applies SQL three-valued logic to every comparison predicate, so <code>notEq("x", v)</code> returns
+no rows where <code>x</code> is null (see <a href="../../how-to/query-controls/#null-handling">Null Handling</a>).
+parquet-java treats <code>null &lt;&gt; v</code> as true and so includes null rows in <code>notEq</code>, which breaks the
 SQL identity <code>not(gt(x, v)) ≡ ltEq(x, v)</code> on null rows. Hardwood preserves that identity across
 all operators, including under <code>not(...)</code>. The cost is that a user porting a <code>notEq</code> filter from
 parquet-java may see fewer rows; the benefit is that filter algebra behaves predictably and
 matches what a SQL engine would do.</p>
-<p>The looser behavior is one explicit composition away when you want it:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// parquet-java's notEq semantics: "not equal to v, OR null"</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">or</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">notEq</span><span class="p">(</span><span class="s">"x"</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">),</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="s">"x"</span><span class="p">));</span>
-</code></pre></div>
-<p>Written this way, the null-inclusion is explicit, and the code shows which rows the filter admits.</p>
 <h3 id="schema-validation-across-multiple-files">Schema validation across multiple files<a class="headerlink" href="#schema-validation-across-multiple-files" title="Permanent link">&para;</a></h3>
-<p>When a data reader spans multiple files, the first file's schema is the reference. Every column a
-read touches in a later file must match it, or a <code>SchemaIncompatibleException</code> is thrown instead of
-the mismatch surfacing as garbage values. The check runs when the read reaches the file, before
-any of its rows is returned. <a href="../../how-to/multi-file/">Reading Multiple Files</a> lists what must
-match and when a mismatch surfaces.</p>
-<p>The match is by field path, never by position. A Parquet footer lists column chunks in the order
-of the schema's flattened leaves, so a column's ordinal belongs to the file that was written, not
-to the column; two files that declare the same columns in a different order describe the same
-data. Untouched columns aren't checked at all, so files may carry extra columns or drop unused
-ones: again liberal on the parts that don't affect correctness, strict on the parts that do. See
-<a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
+<p>A reader spanning multiple files checks every column a read touches against the first file's
+schema, and throws <code>SchemaIncompatibleException</code> on a mismatch (see
+<a href="../../how-to/multi-file/">Reading Multiple Files</a>). The match is by field path, never by
+position. A Parquet footer lists column chunks in the order of the schema's flattened leaves, so a
+column's ordinal belongs to the file that was written, not to the column; two files that declare
+the same columns in a different order describe the same data.</p>
 <h2 id="the-drop-in-compat-module">The drop-in compat module<a class="headerlink" href="#the-drop-in-compat-module" title="Permanent link">&para;</a></h2>
-<p>For callers who want parquet-java's <em>API</em> without rewriting code, the
-<code>hardwood-parquet-java-compat</code> module implements the <code>org.apache.parquet.*</code> interfaces backed by
-Hardwood. It is an API-compatibility shim, not a behavioral clone: filters routed through it
-still evaluate under Hardwood's semantics. The module is mutually exclusive with parquet-java on
-the classpath; see <a href="../../how-to/compat/">parquet-java Compatibility</a>.</p>
+<p>The <code>hardwood-parquet-java-compat</code> module is an API-compatibility shim, not a behavioral clone:
+filters routed through it evaluate under Hardwood's semantics. See
+<a href="../../how-to/compat/">parquet-java Compatibility</a>.</p>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../../how-to/compat/">parquet-java Compatibility</a> — the drop-in API surface and its constraints.</li>
+<li><a href="../../reference/parquet-java-compat/">parquet-java Compat Filters</a> — the filter predicates the
+  compat module accepts.</li>
 <li><a href="../../how-to/query-controls/#null-handling">Filter, Project, Limit, and Split</a> — the full null
   semantics and the supported predicate surface.</li>
 </ul>
@@ -2214,8 +2195,8 @@ the classpath; see <a href="../../how-to/compat/">parquet-java Compatibility</a>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>

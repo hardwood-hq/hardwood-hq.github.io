@@ -851,17 +851,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limitations
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -875,23 +864,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Column Projection">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#combining-projection-and-filters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Combining Projection and Filters
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -915,21 +887,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Split-Aware Reading">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#empty-ranges" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Empty ranges
-      
-    </span>
-  </a>
-  
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#reading-the-tail-of-a-file" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -939,8 +899,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#skipping-rows-skip" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -948,11 +908,6 @@
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2114,17 +2069,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#limitations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Limitations
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -2138,23 +2082,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Column Projection">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#combining-projection-and-filters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Combining Projection and Filters
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2178,21 +2105,9 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Split-Aware Reading">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#empty-ranges" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Empty ranges
-      
-    </span>
-  </a>
-  
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#reading-the-tail-of-a-file" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2202,8 +2117,8 @@
   </a>
   
 </li>
-        
-          <li class="md-nav__item">
+      
+        <li class="md-nav__item">
   <a href="#skipping-rows-skip" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2211,11 +2126,6 @@
       
     </span>
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -2263,8 +2173,8 @@
 <h2 id="predicate-pushdown-filter">Predicate Pushdown (Filter)<a class="headerlink" href="#predicate-pushdown-filter" title="Permanent link">&para;</a></h2>
 <p>Filter predicates apply at three levels, in this order:</p>
 <ol>
-<li><strong>Row group</strong> — entire row groups whose statistics prove no rows can match are skipped. For <code>eq</code> and <code>in</code> predicates, two further sources skip a row group whose value range covers the target but which never stored it, a case min/max statistics cannot catch. A column's <a href="https://parquet.apache.org/docs/file-format/bloomfilter/">Bloom filter</a> does so when present. So does the column chunk's dictionary page, when the chunk's <code>encoding_stats</code> show every data page is dictionary-encoded: the dictionary then lists every value the chunk holds, so a target missing from it cannot occur in any row. Both apply automatically; dictionary pages are read only for a row group that statistics and the Bloom filter did not already drop.</li>
-<li><strong>Page</strong> — within surviving row groups, the Column Index (per-page min/max statistics) is used to skip individual pages, avoiding unnecessary decompression and decoding. On remote backends like S3, only the matching pages are fetched, so the same skip also reduces network I/O.</li>
+<li><strong>Row group</strong> — entire row groups whose statistics prove no rows can match are skipped. For <code>eq</code> and <code>in</code> predicates, a column's <a href="https://parquet.apache.org/docs/file-format/bloomfilter/">Bloom filter</a> and, when the chunk's <code>encoding_stats</code> show every data page is dictionary-encoded, the column chunk's dictionary page also skip a row group that never stored the target. Dictionary pages are read only for a row group that statistics and the Bloom filter did not already drop.</li>
+<li><strong>Page</strong> — within surviving row groups, the Column Index (per-page min/max statistics) is used to skip individual pages, avoiding unnecessary decompression and decoding. On remote backends like S3, only the matching pages are fetched.</li>
 <li><strong>Record</strong> — <code>buildRowReader().filter(filter).build()</code> evaluates the predicate against each decoded row and returns only rows that match.</li>
 </ol>
 <p>In a row group whose statistics prove that every row matches, the predicate is not evaluated, and a filter column outside the projection is neither fetched nor decoded.</p>
@@ -2298,267 +2208,172 @@
 <a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="s">"address"</span><span class="p">);</span><span class="w">     </span><span class="c1">// a struct</span>
 <a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNotNull</span><span class="p">(</span><span class="s">"tags"</span><span class="p">);</span><span class="w">     </span><span class="c1">// a LIST</span>
 <a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="s">"attributes"</span><span class="p">);</span><span class="w">  </span><span class="c1">// a MAP</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
-<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="err">`</span><span class="n">isNull</span><span class="err">`</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="err">`</span><span class="n">isNotNull</span><span class="err">`</span><span class="w"> </span><span class="n">accept</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="err">—</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">struct</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="err">`</span><span class="n">LIST</span><span class="err">`</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="err">`</span><span class="n">MAP</span><span class="err">`</span><span class="w"> </span><span class="err">—</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">well</span><span class="w"> </span><span class="n">as</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">leaf</span><span class="w"> </span><span class="n">column</span><span class="p">.</span><span class="w"> </span><span class="err">`</span><span class="n">isNull</span><span class="p">(</span><span class="s">"address"</span><span class="p">)</span><span class="err">`</span><span class="w"> </span><span class="n">matches</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="err">`</span><span class="n">address</span><span class="err">`</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">absent</span><span class="p">,</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="err">`</span><span class="n">isNotNull</span><span class="p">(</span><span class="s">"address"</span><span class="p">)</span><span class="err">`</span><span class="w"> </span><span class="n">matches</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="n">where</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">present</span><span class="p">.</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>
-<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="n">Present</span><span class="w"> </span><span class="n">means</span><span class="w"> </span><span class="n">present</span><span class="p">,</span><span class="w"> </span><span class="n">however</span><span class="w"> </span><span class="n">empty</span><span class="p">.</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="n">struct</span><span class="w"> </span><span class="n">whose</span><span class="w"> </span><span class="n">every</span><span class="w"> </span><span class="n">field</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">present</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="err">`</span><span class="n">isNotNull</span><span class="p">(</span><span class="s">"address"</span><span class="p">)</span><span class="err">`</span><span class="w"> </span><span class="n">matches</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="err">—</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">different</span><span class="w"> </span><span class="n">question</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="err">`</span><span class="n">isNotNull</span><span class="p">(</span><span class="s">"address.city"</span><span class="p">)</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">asks</span><span class="w"> </span><span class="n">about</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">field</span><span class="p">.</span><span class="w"> </span><span class="n">An</span><span class="w"> </span><span class="n">empty</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">empty</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="n">are</span><span class="w"> </span><span class="n">likewise</span><span class="w"> </span><span class="n">present</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">only</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">list</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="n">that</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">itself</span><span class="w"> </span><span class="n">absent</span><span class="w"> </span><span class="n">matches</span><span class="w"> </span><span class="err">`</span><span class="n">isNull</span><span class="err">`</span><span class="p">.</span>
-<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
-<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="n">Comparison</span><span class="w"> </span><span class="nf">predicates</span><span class="w"> </span><span class="p">(</span><span class="err">`</span><span class="n">eq</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="err">`</span><span class="n">gt</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="err">`</span><span class="n">lt</span><span class="err">`</span><span class="p">,</span><span class="w"> </span><span class="err">…</span><span class="p">)</span><span class="w"> </span><span class="n">apply</span><span class="w"> </span><span class="kd">to</span><span class="w"> </span><span class="n">leaf</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="n">alone</span><span class="p">:</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">no</span><span class="w"> </span><span class="n">ordering</span><span class="w"> </span><span class="n">or</span><span class="w"> </span><span class="n">equality</span><span class="w"> </span><span class="n">defined</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">group</span><span class="p">,</span><span class="w"> </span><span class="n">so</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">rejected</span><span class="w"> </span><span class="kd">with</span><span class="w"> </span><span class="err">`</span><span class="n">IllegalArgumentException</span><span class="err">`</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="n">creation</span><span class="p">.</span>
-<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
-<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="nf">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">filter</span><span class="p">).</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
-<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a><span class="w">        </span><span class="c1">// Only rows matching the filter are returned</span>
-<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a><span class="p">}</span>
 </code></pre></div>
-<p>For the full matrix of supported operators, comparable physical and logical types, and combinators, see <a href="../../reference/query-controls/#supported-filter-predicates">Query Controls</a>. All predicates, including those wrapped in <code>not</code>, are pushed down to the statistics level for row-group and page skipping.</p>
+<p>On a group, <code>isNull("address")</code> matches rows where the <code>address</code> group is absent, and <code>isNotNull("address")</code> rows where it is present, however empty. A struct whose every field is null is present, so <code>isNotNull("address")</code> matches it — a different question from <code>isNotNull("address.city")</code>, which asks about the field. An empty list and an empty map are likewise present, so only a list or map that is itself absent matches <code>isNull</code>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">filter</span><span class="p">).</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="c1">// Only rows matching the filter are returned</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>For the supported operators, column forms and combinators, see <a href="../../reference/query-controls/#supported-filter-predicates">Query Controls</a>.</p>
 <h3 id="null-handling">Null Handling<a class="headerlink" href="#null-handling" title="Permanent link">&para;</a></h3>
-<p>Comparison predicates (<code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code>, <code>in</code>) follow SQL three-valued logic: any comparison against a null column value yields UNKNOWN, and rows whose predicate is UNKNOWN are not returned. Put differently, <strong>rows where the tested column is null are never returned by a comparison predicate</strong>, <code>notEq</code> included.</p>
-<p><code>not(p)</code> preserves this behavior: rows where <code>p</code> is UNKNOWN stay UNKNOWN under negation and are dropped. The SQL identity <code>not(gt(x, v)) ≡ ltEq(x, v)</code> holds on all rows, including null ones.</p>
+<p>Comparison predicates (<code>eq</code>, <code>notEq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code>, <code>in</code>) follow SQL three-valued logic: any comparison against a null column value yields UNKNOWN, and rows whose predicate is UNKNOWN are not returned. Put differently, <strong>rows where the tested column is null are never returned by a comparison predicate</strong>, <code>notEq</code> included, and neither by <code>not</code> over one.</p>
 <p>To include null rows explicitly, combine with <code>isNull</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// rows with age &gt; 30, plus rows where age is null</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">or</span><span class="p">(</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"age"</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">),</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="s">"age"</span><span class="p">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">);</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// rows with age &gt; 30, plus rows where age is null</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">or</span><span class="p">(</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"age"</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">),</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">isNull</span><span class="p">(</span><span class="s">"age"</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">);</span>
 </code></pre></div>
-<div class="admonition note">
-<p class="admonition-title">Divergence from parquet-java</p>
-<p>parquet-java's <code>notEq</code> treats <code>null &lt;&gt; v</code> as true and therefore includes null rows, which breaks the SQL identity above. Hardwood applies uniform SQL three-valued-logic semantics across all comparison operators. To reproduce parquet-java's behavior, make the null-inclusion explicit: <code>or(notEq("x", v), isNull("x"))</code>.</p>
-</div>
+<p>parquet-java's <code>notEq</code> includes null rows. To reproduce it, write <code>or(notEq("x", v), isNull("x"))</code>. The reasoning is in <a href="../../concepts/compatibility-philosophy/#sql-three-valued-logic-for-comparison-predicates">Compatibility Philosophy</a>.</p>
 <h3 id="float-and-double-comparisons">Float and Double Comparisons<a class="headerlink" href="#float-and-double-comparisons" title="Permanent link">&para;</a></h3>
-<p>Predicates on <code>float</code> and <code>double</code> columns use the <code>Float.compare</code> / <code>Double.compare</code> total order, not IEEE 754 equality. Two consequences matter in practice:</p>
-<ul>
-<li><code>-0.0</code> is strictly less than <code>+0.0</code>. <code>eq(0.0)</code> matches only <code>+0.0</code> values; to match either zero, use <code>in("c", 0.0, -0.0)</code>.</li>
-<li><code>NaN</code> sorts above every other value, and every <code>NaN</code> equals every other. <code>eq(Float.NaN)</code> matches only <code>NaN</code> (whereas IEEE <code>NaN == anything</code> is always false). <code>lt</code> against any value, and <code>ltEq</code> against a number, never match <code>NaN</code> rows; <code>gt</code> and <code>gtEq</code> against a number, and <code>ltEq</code> and <code>gtEq</code> against <code>NaN</code>, include them.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Match any NaN row</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">anyNaN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"score"</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="p">.</span><span class="na">NaN</span><span class="p">);</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1">// Match both signed zeros</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">anyZero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">or</span><span class="p">(</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ratio"</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ratio"</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.0</span><span class="p">)</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">);</span>
+<p>Predicates on <code>float</code> and <code>double</code> columns use the <code>Float.compare</code> / <code>Double.compare</code> total order (see <a href="../../reference/query-controls/#predicate-literals-by-column-type">Predicate literals by column type</a>). <code>eq(0.0)</code> matches only <code>+0.0</code> values, and <code>eq(Double.NaN)</code> matches every <code>NaN</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// Match any NaN row</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">anyNaN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"score"</span><span class="p">,</span><span class="w"> </span><span class="n">Double</span><span class="p">.</span><span class="na">NaN</span><span class="p">);</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1">// Match both signed zeros</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">anyZero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">or</span><span class="p">(</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ratio"</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">),</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ratio"</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">0.0</span><span class="p">)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">);</span>
 </code></pre></div>
 <p>Row-group and page pruning never drops a <code>NaN</code> row that a predicate matches. Which floating-point predicates prune from statistics is listed under <a href="../../reference/query-controls/#when-statistics-are-ignored">When statistics are ignored</a>.</p>
 <h3 id="logical-type-support">Logical Type Support<a class="headerlink" href="#logical-type-support" title="Permanent link">&para;</a></h3>
 <p>Factory methods are provided for common Parquet logical types, handling the physical
 encoding automatically:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.math.BigDecimal</span><span class="p">;</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.time.Instant</span><span class="p">;</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.time.LocalDate</span><span class="p">;</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.time.LocalDateTime</span><span class="p">;</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.time.LocalTime</span><span class="p">;</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.UUID</span><span class="p">;</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.row.PqInterval</span><span class="p">;</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1">// DATE columns</span>
-<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"birth_date"</span><span class="p">,</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
-<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
-<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="c1">// TIMESTAMP columns — time unit is resolved from the column schema</span>
-<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gtEq</span><span class="p">(</span><span class="s">"created_at"</span><span class="p">,</span>
-<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="w">    </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2025-01-01T00:00:00Z"</span><span class="p">));</span>
-<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
-<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="c1">// TIMESTAMP columns with isAdjustedToUTC = false hold a wall clock, and take a LocalDateTime</span>
-<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">lt</span><span class="p">(</span><span class="s">"pickup_time"</span><span class="p">,</span>
-<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="w">    </span><span class="n">LocalDateTime</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">));</span>
-<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>
-<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="c1">// Legacy INT96 timestamp columns, as written by older Spark, Hive and Impala, take an Instant too</span>
-<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">lt</span><span class="p">(</span><span class="s">"event_time"</span><span class="p">,</span>
-<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="w">    </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2015-06-01T00:00:00Z"</span><span class="p">));</span>
-<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
-<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="c1">// TIME columns</span>
-<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">lt</span><span class="p">(</span><span class="s">"start_time"</span><span class="p">,</span><span class="w"> </span><span class="n">LocalTime</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
-<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
-<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="c1">// DECIMAL columns — scale and physical type are resolved from the column schema</span>
-<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gtEq</span><span class="p">(</span><span class="s">"amount"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BigDecimal</span><span class="p">(</span><span class="s">"99.99"</span><span class="p">));</span>
-<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>
-<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a><span class="c1">// UUID columns — column must carry the UUID logical type</span>
-<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"request_id"</span><span class="p">,</span>
-<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a><span class="w">    </span><span class="n">UUID</span><span class="p">.</span><span class="na">fromString</span><span class="p">(</span><span class="s">"550e8400-e29b-41d4-a716-446655440000"</span><span class="p">));</span>
-<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>
-<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a><span class="c1">// Binary columns — the literal is the stored bytes</span>
-<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"sort_key"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x01</span><span class="p">,</span><span class="w"> </span><span class="mh">0x2C</span><span class="w"> </span><span class="p">});</span>
-<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>
-<a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="c1">// INTERVAL columns — column must carry the INTERVAL logical type</span>
-<a id="__codelineno-3-39" name="__codelineno-3-39" href="#__codelineno-3-39"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"uptime"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PqInterval</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3_600_000</span><span class="p">));</span>
-</code></pre></div>
-<p>A <code>String</code> literal filters a text column: a <code>STRING</code>, an <code>ENUM</code>, a <code>JSON</code> or an unannotated
-<code>BYTE_ARRAY</code>, where its UTF-8 encoding is the stored bytes. On any other binary column (a
-<code>DECIMAL</code>, a <code>FLOAT16</code>, a <code>UUID</code>, an <code>INTERVAL</code>, a <code>BSON</code>, a <code>GEOMETRY</code>, a <code>GEOGRAPHY</code>, a <code>NULL</code>
-or an unannotated <code>FIXED_LEN_BYTE_ARRAY</code>), pass the annotation's literal type or a <code>byte[]</code>. A
-<code>byte[]</code> matches the stored bytes; on a <code>DECIMAL</code>, <code>FLOAT16</code> or <code>INT96</code> column it takes <code>eq</code>,
-<code>notEq</code> and <code>in</code>, and <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> take the <code>BigDecimal</code>, <code>float</code> or <code>Instant</code>
-literal.</p>
-<p>A column takes the literal type its annotation names (a <code>DECIMAL</code> column a <code>BigDecimal</code>, a <code>UUID</code> column a <code>UUID</code>, a <code>TIMESTAMP</code> column an <code>Instant</code> or, where <code>isAdjustedToUTC = false</code>, a <code>LocalDateTime</code>, an <code>INT96</code> column an <code>Instant</code>) and rejects a literal belonging to a different annotation with <code>IllegalArgumentException</code> at reader creation. It also takes the literal for its own physical type, for filtering on the stored value directly. For what each column takes and the order it compares in, see <a href="../../reference/query-controls/#predicate-literals-by-column-type">Predicate literals by column type</a>.</p>
-<p><code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> need a column whose type defines an order. An <code>INTERVAL</code>, a <code>GEOMETRY</code>, a <code>GEOGRAPHY</code> and a <code>NULL</code> column define none, and take <code>eq</code>, <code>notEq</code> and the set form only. A <code>BOOLEAN</code> column orders <code>false</code> before <code>true</code> and takes every operator but the set form, which <code>eq</code>, <code>notEq</code> and <code>isNotNull</code> already express.</p>
-<p>A literal the column cannot store (an <code>Instant</code> finer than its time unit, a <code>BigDecimal</code> past its scale, a value outside the range of the <code>INT32</code> or <code>INT64</code> behind it) is rejected for <code>eq</code>, <code>notEq</code> and the set forms, and answered exactly for <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code>. See <a href="../../reference/query-controls/#literals-the-column-cannot-hold">Literals the column cannot hold</a>.</p>
-<p>Filters work with all reader types: <code>RowReader</code>, <code>ColumnReader</code>, <code>AvroRowReader</code>, and across multi-file readers.</p>
-<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Predicates do not apply below a repeated path.</strong> A column or group nested inside a <code>LIST</code> or a
-  <code>MAP</code> occurs many times per row, so no predicate on it has a single answer per row. Such a name
-  is rejected with <code>IllegalArgumentException</code> at reader creation.</li>
-<li><strong>A Bloom filter and a dictionary answer membership, not order.</strong> They sharpen <code>eq</code> and <code>in</code> on
-  integer, floating-point and binary columns; <code>lt</code>, <code>gt</code> and <code>notEq</code> are left to statistics alone.</li>
-<li><strong>An unsatisfiable range prunes but does not push down further.</strong> A comparison whose literal
-  lies past the range the column's carrier holds matches every non-null row or none, and is
-  decided from the null count alone.</li>
-<li><strong>Some equality probes skip the Bloom filter or the dictionary.</strong> <code>eq(NaN)</code>, an <code>in</code> list
-  holding one, and a <code>float</code> on a <code>FLOAT16</code> column are not Bloom-pruned; the dictionary still
-  decides them. A <code>BigDecimal</code> on a <code>DECIMAL</code> stored as <code>BYTE_ARRAY</code> is pruned by neither.</li>
-<li><strong>An <code>INT96</code> comparison with an <code>Instant</code> does not prune.</strong> It reads every row group and page and
-  filters the rows one by one: neither the column's <code>min</code> / <code>max</code> statistics, nor its dictionary,
-  nor a Bloom filter decide it. An <code>eq</code> or <code>in</code> with the stored 12 bytes uses the Bloom filter and
-  the dictionary.</li>
-</ul>
-<h2 id="column-projection">Column Projection<a class="headerlink" href="#column-projection" title="Permanent link">&para;</a></h2>
-<p>Column projection allows reading only a subset of columns from a Parquet file, improving performance by skipping I/O, decoding, and memory allocation for unneeded columns.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.InputFile</span><span class="p">;</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.schema.ColumnProjection</span><span class="p">;</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.RowReader</span><span class="p">;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.math.BigDecimal</span><span class="p">;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.time.Instant</span><span class="p">;</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.time.LocalDate</span><span class="p">;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.time.LocalDateTime</span><span class="p">;</span>
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">             </span><span class="p">.</span><span class="na">projection</span><span class="p">(</span><span class="n">ColumnProjection</span><span class="p">.</span><span class="na">columns</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="s">"name"</span><span class="p">,</span><span class="w"> </span><span class="s">"created_at"</span><span class="p">))</span>
-<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
-<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
-<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">        </span><span class="c1">// Access projected columns normally</span>
-<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getLong</span><span class="p">(</span><span class="s">"id"</span><span class="p">);</span>
-<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">"name"</span><span class="p">);</span>
-<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">        </span><span class="n">Instant</span><span class="w"> </span><span class="n">createdAt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getTimestamp</span><span class="p">(</span><span class="s">"created_at"</span><span class="p">);</span>
-<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
-<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">        </span><span class="c1">// Accessing non-projected columns throws IllegalArgumentException</span>
-<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="w">        </span><span class="c1">// rowReader.getInt("age");  // throws "Column not in projection: age"</span>
-<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="p">}</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c1">// DATE columns</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"birth_date"</span><span class="p">,</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="c1">// TIMESTAMP columns — time unit is resolved from the column schema</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gtEq</span><span class="p">(</span><span class="s">"created_at"</span><span class="p">,</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">    </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2025-01-01T00:00:00Z"</span><span class="p">));</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="c1">// TIMESTAMP columns with isAdjustedToUTC = false hold a wall clock, and take a LocalDateTime</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">lt</span><span class="p">(</span><span class="s">"pickup_time"</span><span class="p">,</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">    </span><span class="n">LocalDateTime</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">2025</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">));</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="c1">// DECIMAL columns — scale and physical type are resolved from the column schema</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gtEq</span><span class="p">(</span><span class="s">"amount"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BigDecimal</span><span class="p">(</span><span class="s">"99.99"</span><span class="p">));</span>
+</code></pre></div>
+<p>The literal types each column takes, and the order it compares in, are listed under <a href="../../reference/query-controls/#predicate-literals-by-column-type">Predicate literals by column type</a>; a literal of another type throws <code>IllegalArgumentException</code> at reader creation. A literal the column cannot store follows <a href="../../reference/query-controls/#literals-the-column-cannot-hold">Literals the column cannot hold</a>. Which predicates the Bloom filter and dictionary sharpen is listed under <a href="../../reference/query-controls/#bloom-filter-and-dictionary-pruning">Bloom filter and dictionary pruning</a>.</p>
+<p>A predicate on a column or group nested inside a <code>LIST</code> or a <code>MAP</code> has no single answer per row, and is rejected with <code>IllegalArgumentException</code> at reader creation.</p>
+<h2 id="column-projection">Column Projection<a class="headerlink" href="#column-projection" title="Permanent link">&para;</a></h2>
+<p>Column projection reads only a subset of columns from a Parquet file; unneeded columns are not fetched, decoded or allocated.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.InputFile</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.schema.ColumnProjection</span><span class="p">;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.ParquetFileReader</span><span class="p">;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.RowReader</span><span class="p">;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">             </span><span class="p">.</span><span class="na">projection</span><span class="p">(</span><span class="n">ColumnProjection</span><span class="p">.</span><span class="na">columns</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="s">"name"</span><span class="p">,</span><span class="w"> </span><span class="s">"created_at"</span><span class="p">))</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">        </span><span class="c1">// Access projected columns normally</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getLong</span><span class="p">(</span><span class="s">"id"</span><span class="p">);</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">"name"</span><span class="p">);</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">        </span><span class="n">Instant</span><span class="w"> </span><span class="n">createdAt</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getTimestamp</span><span class="p">(</span><span class="s">"created_at"</span><span class="p">);</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">        </span><span class="c1">// Accessing non-projected columns throws IllegalArgumentException</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">        </span><span class="c1">// rowReader.getInt("age");  // throws "Column not in projection: age"</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="p">}</span>
 </code></pre></div>
 <p><code>ColumnProjection.all()</code> reads every column (the default); <code>ColumnProjection.columns(...)</code> selects by name, including a whole struct and its children or a dot-notation nested field. See <a href="../../reference/query-controls/#column-projection-forms">Query Controls</a> for the full list of forms.</p>
-<h3 id="combining-projection-and-filters">Combining Projection and Filters<a class="headerlink" href="#combining-projection-and-filters" title="Permanent link">&para;</a></h3>
-<p>Column projection and predicate pushdown can be used together:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">             </span><span class="p">.</span><span class="na">projection</span><span class="p">(</span><span class="n">ColumnProjection</span><span class="p">.</span><span class="na">columns</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="s">"name"</span><span class="p">,</span><span class="w"> </span><span class="s">"salary"</span><span class="p">))</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">             </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gtEq</span><span class="p">(</span><span class="s">"salary"</span><span class="p">,</span><span class="w"> </span><span class="mi">50000L</span><span class="p">))</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getLong</span><span class="p">(</span><span class="s">"id"</span><span class="p">);</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">"name"</span><span class="p">);</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">        </span><span class="kt">long</span><span class="w"> </span><span class="n">salary</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getLong</span><span class="p">(</span><span class="s">"salary"</span><span class="p">);</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">}</span>
-</code></pre></div>
-<p>The filter column does not need to be in the projection. The projection is what the row exposes: a filter column outside it is not a field of the row at any depth, and is not addressable (see <a href="../../reference/query-controls/#column-projection-forms">Query Controls</a> for the exceptions an accessor raises). Project a column you intend to read.</p>
+<p>A filter column does not need to be in the projection. A filter column outside the projection is not a field of the row at any depth (see <a href="../../reference/query-controls/#column-projection-forms">Query Controls</a> for the exceptions an accessor raises); project a column you intend to read.</p>
 <h2 id="row-limit">Row Limit<a class="headerlink" href="#row-limit" title="Permanent link">&para;</a></h2>
-<p>A row limit instructs the reader to stop after the specified number of rows, avoiding unnecessary I/O and decoding. On remote backends like S3, only the row groups and pages needed to satisfy the limit are fetched.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// Read at most 100 rows</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">head</span><span class="p">(</span><span class="mi">100</span><span class="p">).</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">        </span><span class="c1">// At most 100 rows will be returned</span>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">}</span>
-</code></pre></div>
-<p>The row limit can be combined with column projection and filters:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">             </span><span class="p">.</span><span class="na">projection</span><span class="p">(</span><span class="n">ColumnProjection</span><span class="p">.</span><span class="na">columns</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="s">"name"</span><span class="p">))</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">             </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"age"</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">))</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">             </span><span class="p">.</span><span class="na">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">        </span><span class="c1">// At most 100 matching rows with only id and name columns</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="p">}</span>
+<p>A row limit instructs the reader to stop after the specified number of rows. On remote backends like S3, only the row groups and pages needed to satisfy the limit are fetched. It combines with column projection and filters:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">             </span><span class="p">.</span><span class="na">projection</span><span class="p">(</span><span class="n">ColumnProjection</span><span class="p">.</span><span class="na">columns</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="s">"name"</span><span class="p">))</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">             </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"age"</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">))</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">             </span><span class="p">.</span><span class="na">head</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">        </span><span class="c1">// At most 100 matching rows with only id and name columns</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="p">}</span>
 </code></pre></div>
 <p>When combined with a filter, the limit applies to the number of <strong>matching</strong> rows, not the total number of scanned rows.</p>
 <h2 id="split-aware-reading">Split-Aware Reading<a class="headerlink" href="#split-aware-reading" title="Permanent link">&para;</a></h2>
 <p>When you partition a file across parallel readers (Flink <code>BulkFormat</code>, Spark file source, MapReduce-style splits), each reader is assigned a byte range and is responsible for only the row groups owned by it. Express this with <code>RowGroupPredicate.byteRange(start, end)</code>, passed to any builder's <code>filter(...)</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.RowGroupPredicate</span><span class="p">;</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1">// One reader subtask, owning the file's first quarter.</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">     </span><span class="n">ColumnReader</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildColumnReader</span><span class="p">(</span><span class="s">"price"</span><span class="p">)</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">             </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">RowGroupPredicate</span><span class="p">.</span><span class="na">byteRange</span><span class="p">(</span><span class="n">splitStart</span><span class="p">,</span><span class="w"> </span><span class="n">splitEnd</span><span class="p">))</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">col</span><span class="p">.</span><span class="na">nextBatch</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="c1">// Only batches from row groups owned by this split.</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.reader.RowGroupPredicate</span><span class="p">;</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1">// One reader subtask, owning the file's first quarter.</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">     </span><span class="n">ColumnReader</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildColumnReader</span><span class="p">(</span><span class="s">"price"</span><span class="p">)</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">             </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">RowGroupPredicate</span><span class="p">.</span><span class="na">byteRange</span><span class="p">(</span><span class="n">splitStart</span><span class="p">,</span><span class="w"> </span><span class="n">splitEnd</span><span class="p">))</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">col</span><span class="p">.</span><span class="na">nextBatch</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="c1">// Only batches from row groups owned by this split.</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="p">}</span>
 </code></pre></div>
-<p>A row group is included if and only if its <strong>midpoint</strong>, the start of its first column chunk plus half of its on-disk compressed size, falls in <code>[start, end)</code>. This is the standard Hadoop-input-format split convention: across a partitioning of the file into disjoint byte ranges, every row group lands in exactly one range, regardless of where the split boundary falls inside the row group itself.</p>
-<p><strong>Granularity is row-group, not row.</strong> A row group whose midpoint is in <code>[0, 1000)</code> is read in full, including any rows whose data extends beyond byte 1000. If you need true row-level windowing, combine <code>RowGroupPredicate</code> with <a href="#skipping-rows-skip"><code>RowReaderBuilder.skip(...)</code></a> and <a href="#row-limit"><code>head(...)</code></a>.</p>
-<p><code>RowGroupPredicate</code> composes with <a href="#predicate-pushdown-filter"><code>FilterPredicate</code></a> via intersection: both apply, and a row group is read if and only if it passes both:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">ColumnReader</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildColumnReader</span><span class="p">(</span><span class="s">"price"</span><span class="p">)</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"price"</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">))</span><span class="w">                  </span><span class="c1">// column-stats</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">RowGroupPredicate</span><span class="p">.</span><span class="na">byteRange</span><span class="p">(</span><span class="n">splitStart</span><span class="p">,</span><span class="w"> </span><span class="n">splitEnd</span><span class="p">))</span><span class="w"> </span><span class="c1">// layout</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<p>A row group is included if and only if its <strong>midpoint</strong>, the start of its first column chunk plus half of its on-disk compressed size, falls in <code>[start, end)</code>, the Hadoop-input-format split convention. Across a partitioning of the file into disjoint byte ranges, every row group lands in exactly one range. <a href="../../concepts/row-selection/#physical-splitting-is-separate">Row Selection</a> describes how this relates to the other controls.</p>
+<p><strong>Granularity is row-group, not row.</strong> A row group whose midpoint is in <code>[0, 1000)</code> is read in full, including any rows whose data extends beyond byte 1000. For row-level windowing, combine <code>RowGroupPredicate</code> with <a href="#skipping-rows-skip"><code>skip(...)</code></a> and <a href="#row-limit"><code>head(...)</code></a>.</p>
+<p><code>RowGroupPredicate</code> composes with <a href="#predicate-pushdown-filter"><code>FilterPredicate</code></a> via intersection: a row group is read if and only if it passes both. <code>RowGroupPredicate.and(...)</code> intersects several row-group conditions.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">ColumnReader</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildColumnReader</span><span class="p">(</span><span class="s">"price"</span><span class="p">)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"price"</span><span class="p">,</span><span class="w"> </span><span class="mi">100</span><span class="p">))</span><span class="w">                  </span><span class="c1">// column-stats</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">RowGroupPredicate</span><span class="p">.</span><span class="na">byteRange</span><span class="p">(</span><span class="n">splitStart</span><span class="p">,</span><span class="w"> </span><span class="n">splitEnd</span><span class="p">))</span><span class="w"> </span><span class="c1">// layout</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-<p><code>RowGroupPredicate.and(...)</code> lets you intersect multiple row-group conditions:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">RowGroupPredicate</span><span class="p">.</span><span class="na">and</span><span class="p">(</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">        </span><span class="n">RowGroupPredicate</span><span class="p">.</span><span class="na">byteRange</span><span class="p">(</span><span class="n">splitStart</span><span class="p">,</span><span class="w"> </span><span class="n">splitEnd</span><span class="p">),</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">        </span><span class="n">RowGroupPredicate</span><span class="p">.</span><span class="na">byteRange</span><span class="p">(</span><span class="n">otherStart</span><span class="p">,</span><span class="w"> </span><span class="n">otherEnd</span><span class="p">)))</span>
-</code></pre></div>
-<p>The same <code>filter(RowGroupPredicate)</code> overload is available on <code>RowReaderBuilder</code> and <code>ColumnReadersBuilder</code>. On <code>RowReaderBuilder</code>, <code>skip(N)</code> and <code>head(N)</code> index over the <em>row-group-filtered</em> sequence: <code>skip(N)</code> skips <code>N</code> rows of the kept set, <code>head(N)</code> caps reading at <code>N</code> rows of the kept set. Combining <code>RowGroupPredicate</code> with <code>tail(N)</code> is rejected: tail mode requires a known total row count, which row-group filtering invalidates.</p>
+<p>The same <code>filter(RowGroupPredicate)</code> overload is available on <code>RowReaderBuilder</code> and <code>ColumnReadersBuilder</code>. On <code>RowReaderBuilder</code>, <code>skip(N)</code> and <code>head(N)</code> index over the <em>row-group-filtered</em> sequence. Combining <code>RowGroupPredicate</code> with <code>tail(N)</code> is rejected, since tail mode requires a known total row count.</p>
 <p>A byte range names positions in one file, so <code>RowGroupPredicate</code> applies to a reader opened on a single file. On a reader opened with <code>openAll</code> over several files, <code>build()</code> throws <code>UnsupportedOperationException</code>; open one reader per split's file instead.</p>
-<h3 id="empty-ranges">Empty ranges<a class="headerlink" href="#empty-ranges" title="Permanent link">&para;</a></h3>
-<p><code>byteRange(start, end)</code> where <code>end &lt; start</code> is a documented empty range, for which the reader yields zero rows. This matches callers that pass <code>splitStart + splitLength</code> and tolerate long overflow on tail splits (a tail split with <code>length = Long.MAX_VALUE</code> overflows to a negative end, which your reader will then treat as empty if no preceding split has already covered the rest of the file).</p>
-<h3 id="reading-the-tail-of-a-file">Reading the Tail of a File<a class="headerlink" href="#reading-the-tail-of-a-file" title="Permanent link">&para;</a></h3>
+<p><code>byteRange(start, end)</code> where <code>end &lt; start</code> is an empty range, for which the reader yields zero rows. A tail split whose <code>splitStart + splitLength</code> overflows <code>long</code> therefore reads nothing.</p>
+<h2 id="reading-the-tail-of-a-file">Reading the Tail of a File<a class="headerlink" href="#reading-the-tail-of-a-file" title="Permanent link">&para;</a></h2>
 <p>The <code>tail(N)</code> builder method reads the trailing rows of the file instead of the leading ones. Row groups that do not overlap the tail are skipped entirely, so pages for earlier row groups are never fetched or decoded.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">// Read the last 10 rows; earlier row groups are skipped.</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">        </span><span class="c1">// ...</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">// Read the last 10 rows; earlier row groups are skipped.</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">tail</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">        </span><span class="c1">// ...</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="p">}</span>
 </code></pre></div>
-<p>Tail mode reads a single file: on a reader opened with <code>openAll</code> over several files, <code>build()</code> throws <code>UnsupportedOperationException</code>. It cannot be combined with <code>head(long)</code>, <code>skip(long)</code>, a filter predicate or a <code>RowGroupPredicate</code>; <code>build()</code> throws <code>IllegalArgumentException</code> for any of these.</p>
-<h3 id="skipping-rows-skip">Skipping Rows (<code>skip</code>)<a class="headerlink" href="#skipping-rows-skip" title="Permanent link">&para;</a></h3>
+<p>Tail mode reads a single file: on a reader opened with <code>openAll</code> over several files, <code>build()</code> throws <code>UnsupportedOperationException</code>. It cannot be combined with <code>head(long)</code>, <code>skip(long)</code>, a filter predicate (see <a href="../../concepts/row-selection/#supported-combinations">Supported combinations</a>) or a <code>RowGroupPredicate</code>; <code>build()</code> throws <code>IllegalArgumentException</code> for any of these. For the last rows that match a filter, read the tail of the unfiltered file and test each row yourself, or read with the filter and keep the trailing matches.</p>
+<h2 id="skipping-rows-skip">Skipping Rows (<code>skip</code>)<a class="headerlink" href="#skipping-rows-skip" title="Permanent link">&para;</a></h2>
 <p>The <code>skip(long)</code> builder method is SQL <code>OFFSET</code>: it discards leading rows before reading. What "leading rows" means depends on whether a filter is present; see <a href="../../concepts/row-selection/">Row Selection</a> for the model.</p>
-<p><strong>Without a filter,</strong> <code>skip(n)</code> is a physical absolute row index. Earlier row groups are not opened, and their pages are not fetched or decoded, making this an O(1 row group) seek on remote backends, in contrast to walking <code>next()</code> from row 0.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1">// Read rows starting at row 1,000,000 — earlier row groups are not opened.</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">skip</span><span class="p">(</span><span class="mi">1_000_000</span><span class="p">).</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">        </span><span class="c1">// ...</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="p">}</span>
+<p><strong>Without a filter,</strong> <code>skip(n)</code> is a physical absolute row index. Earlier row groups are not opened, and their pages are not fetched or decoded.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1">// Read rows starting at row 1,000,000 — earlier row groups are not opened.</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">().</span><span class="na">skip</span><span class="p">(</span><span class="mi">1_000_000</span><span class="p">).</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">        </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">        </span><span class="c1">// ...</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="p">}</span>
 </code></pre></div>
-<p><code>skip == 0</code> is the no-op default. <code>skip &gt;= totalRows</code> produces an empty reader (a SQL <code>OFFSET</code> past the end of the file, or of the concatenated relation for multi-file readers). The seek lands at row-group granularity: rows before the offset within the target row group are still read.</p>
+<p><code>skip == 0</code> is the no-op default. <code>skip &gt;= totalRows</code> produces an empty reader. The seek lands at row-group granularity: rows before the offset within the target row group are read and discarded.</p>
 <p>For multi-file readers, physical <code>skip(N)</code> is a global offset across the input files in order. Hardwood reads the footers of skipped files to count their rows, but skipped files' data pages are not fetched or decoded.</p>
-<p><strong>With a filter,</strong> <code>skip(n)</code> is a <em>logical</em> offset over the matched rows: it discards the first <code>n</code> rows that match the predicate and returns the rest, exactly like SQL <code>OFFSET</code> after a <code>WHERE</code>. The O(1 row-group) seek does <strong>not</strong> apply: row-group statistics bound min/max values, not match <em>counts</em>, so the reader decodes earlier groups to count matches (groups whose statistics prove no match are still pruned). A <code>skip</code> past the number of matching rows yields an empty reader rather than throwing.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1">// Skip the first 150 rows matching the predicate, then read the next 20.</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1">// OFFSET 150 LIMIT 20 over the filtered relation.</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">             </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"age"</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">))</span>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">             </span><span class="p">.</span><span class="na">skip</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">             </span><span class="p">.</span><span class="na">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">    </span><span class="c1">// ...</span>
-<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="p">}</span>
+<p><strong>With a filter,</strong> <code>skip(n)</code> discards the first <code>n</code> rows that match the predicate. The reader decodes earlier row groups to count matches, pruning only those whose statistics prove no match. A <code>skip</code> past the number of matching rows yields an empty reader rather than throwing.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">// Skip the first 150 rows matching the predicate, then read the next 20.</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="c1">// OFFSET 150 LIMIT 20 over the filtered relation.</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">fileReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">path</span><span class="p">));</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rowReader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fileReader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">             </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">gt</span><span class="p">(</span><span class="s">"age"</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">))</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">             </span><span class="p">.</span><span class="na">skip</span><span class="p">(</span><span class="mi">150</span><span class="p">)</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">             </span><span class="p">.</span><span class="na">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">             </span><span class="p">.</span><span class="na">build</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="c1">// ...</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="p">}</span>
 </code></pre></div>
-<p>Compose <code>skip</code> with <code>head</code> for a bounded window: <code>skip(n).head(k)</code> returns at most <code>k</code> rows starting after the first <code>n</code> (physical rows without a filter, matched rows with one). <code>skip(N)</code> also composes with <code>filter(RowGroupPredicate)</code> (e.g. <code>byteRange</code>), indexing into the kept row-group sequence. <code>skip</code> is mutually exclusive with <code>tail</code>.</p>
 
 
 
@@ -2608,8 +2423,8 @@ literal.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3000d47794109ca8d039a51b2e5182d5abff9374" target="_blank" rel="noopener">
-      3000d477
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b732e5a44991f51895af5109ac7b7572379da576" target="_blank" rel="noopener">
+      b732e5a4
     </a>
   
 </div>
