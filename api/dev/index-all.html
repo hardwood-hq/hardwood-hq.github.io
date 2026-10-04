@@ -318,6 +318,11 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Creates an instance of a <code>BinaryColumnPredicate</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/BinaryDictionary.html" class="type-name-link" title="class in dev.hardwood.reader">BinaryDictionary</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">The dictionary of a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column chunk, from
+<a href="dev/hardwood/reader/ColumnReader.html#getBinaryDictionary()"><code>ColumnReader.getBinaryDictionary()</code></a>.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.BinaryInPredicate.html#%3Cinit%3E(java.lang.String,byte%5B%5D%5B%5D)" class="member-name-link">BinaryInPredicate(String, byte[][])</a> - Constructor for record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.BinaryInPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BinaryInPredicate</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>BinaryInPredicate</code> record class.</div>
@@ -735,6 +740,11 @@ representation, and <a href="dev/hardwood/metadata/ColumnChunk.html#requireSameF
 </dd>
 <dt><a href="dev/hardwood/jfr/FileOpenedEvent.html#columnCount" class="member-name-link">columnCount</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/FileOpenedEvent.html" title="class in dev.hardwood.jfr">FileOpenedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/ColumnDictionary.html" class="type-name-link" title="interface in dev.hardwood.reader">ColumnDictionary</a> - Interface in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">The dictionary of one column chunk: the distinct values a dictionary-encoded column
+stores once, which <a href="dev/hardwood/reader/ColumnReader.html#getDictionaryIds()"><code>ColumnReader.getDictionaryIds()</code></a> refers to by entry.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/ColumnEncoding.html" class="type-name-link" title="enum class in dev.hardwood.writer">ColumnEncoding</a> - Enum Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
 <dd>
 <div class="block">How a column's values are encoded, set file-wide or per leaf column through
@@ -2066,6 +2076,10 @@ fixed-length byte array.</div>
 <div class="block">Materialises one <code>byte[]</code> per leaf value, copying out of the binary
 buffer.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/BinaryDictionary.html#getBinary(int)" class="member-name-link">getBinary(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryDictionary.html" title="class in dev.hardwood.reader">BinaryDictionary</a></dt>
+<dd>
+<div class="block">A copy of entry <code>entry</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getBinary(int)" class="member-name-link">getBinary(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
 <div class="block">Get a BINARY field value by field index.</div>
@@ -2073,6 +2087,11 @@ buffer.</div>
 <dt><a href="dev/hardwood/row/FieldAccessor.html#getBinary(java.lang.String)" class="member-name-link">getBinary(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/FieldAccessor.html" title="interface in dev.hardwood.row">FieldAccessor</a></dt>
 <dd>
 <div class="block">Get a BINARY field value by name.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getBinaryDictionary()" class="member-name-link">getBinaryDictionary()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dd>
+<div class="block">The dictionary <a href="dev/hardwood/reader/ColumnReader.html#getDictionaryIds()"><code>ColumnReader.getDictionaryIds()</code></a> refers to, or <code>null</code> when the ids are
+<code>null</code>.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#getBinaryEnds()" class="member-name-link">getBinaryEnds()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>
@@ -2166,6 +2185,11 @@ projection that selects it.</div>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getDecimalValue()" class="member-name-link">getDecimalValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
 <div class="block">Get the value as a DECIMAL.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/ColumnReader.html#getDictionaryIds()" class="member-name-link">getDictionaryIds()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
+<dd>
+<div class="block">Each value's entry in the batch's dictionary: value <code>i</code> is entry
+<code>getDictionaryIds()[i]</code> of <a href="dev/hardwood/reader/ColumnReader.html#getBinaryDictionary()"><code>ColumnReader.getBinaryDictionary()</code></a>, and <code>-1</code> at a null value.</div>
 </dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getDouble(int)" class="member-name-link">getDouble(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
@@ -2434,6 +2458,10 @@ logical-type decoding.</div>
 <dt><a href="dev/hardwood/avro/AvroRowReader.html#getSchema()" class="member-name-link">getSchema()</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></dt>
 <dd>
 <div class="block">Returns the Avro schema used for materialization.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/BinaryDictionary.html#getString(int)" class="member-name-link">getString(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryDictionary.html" title="class in dev.hardwood.reader">BinaryDictionary</a></dt>
+<dd>
+<div class="block">Entry <code>entry</code> decoded as UTF-8.</div>
 </dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getString(int)" class="member-name-link">getString(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
@@ -5020,6 +5048,12 @@ annotation declares, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(
 </dd>
 <dt><a href="dev/hardwood/jfr/FileMappingEvent.html#size" class="member-name-link">size</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/FileMappingEvent.html" title="class in dev.hardwood.jfr">FileMappingEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/BinaryDictionary.html#size()" class="member-name-link">size()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryDictionary.html" title="class in dev.hardwood.reader">BinaryDictionary</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/ColumnDictionary.html#size()" class="member-name-link">size()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnDictionary.html" title="interface in dev.hardwood.reader">ColumnDictionary</a></dt>
+<dd>
+<div class="block">The number of entries; entry ids run from <code>0</code> to <code>size() - 1</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/row/PqDoubleList.html#size()" class="member-name-link">size()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqDoubleList.html" title="interface in dev.hardwood.row">PqDoubleList</a></dt>
 <dd>
 <div class="block">Get the number of elements in this list.</div>

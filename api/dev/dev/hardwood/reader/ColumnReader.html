@@ -75,6 +75,8 @@ loadScripts(document, 'script');</script>
 <li><a href="#getBinaryValues()" tabindex="0">getBinaryValues()</a></li>
 <li><a href="#getBinaryStarts()" tabindex="0">getBinaryStarts()</a></li>
 <li><a href="#getBinaryEnds()" tabindex="0">getBinaryEnds()</a></li>
+<li><a href="#getDictionaryIds()" tabindex="0">getDictionaryIds()</a></li>
+<li><a href="#getBinaryDictionary()" tabindex="0">getBinaryDictionary()</a></li>
 <li><a href="#getBinaries()" tabindex="0">getBinaries()</a></li>
 <li><a href="#getStrings()" tabindex="0">getStrings()</a></li>
 <li><a href="#getColumnSchema()" tabindex="0">getColumnSchema()</a></li>
@@ -131,12 +133,18 @@ accessor (<a href="#getInts()"><code>getInts()</code></a>, <a href="#getLongs()"
 <a href="#getLeafValidity()"><code>getLeafValidity()</code></a>, and the rest) belongs to the current batch and is
 freshly allocated by the call that produced it — <a href="#nextBatch()"><code>nextBatch()</code></a>, or
 <a href="ColumnReaders.html#nextBatch()"><code>ColumnReaders.nextBatch()</code></a> for a reader of a group — except
-<a href="../Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a>, a shared immutable singleton. A later advance never
-reuses or overwrites an array returned for an earlier batch — so a
+<a href="../Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a>, a shared immutable singleton. <a href="#getBinaryDictionary()"><code>getBinaryDictionary()</code></a>
+returns an object whose entries never change, the same for every batch drawn
+from one dictionary. A later advance never reuses or overwrites an array
+returned for an earlier batch — so a
 returned array may be kept and read after the reader has advanced,
 including handed off to another thread for processing. The reader itself
-is still a single-threaded cursor: only one consumer thread may advance it. (The note on <a href="#getBinaryValues()"><code>getBinaryValues()</code></a> that the
-array is not sized to the values is about its <em>length</em>, not reuse; that buffer is fresh per batch too.)</p>
+is still a single-threaded cursor: only one consumer thread may advance it.
+(The note on <a href="#getBinaryValues()"><code>getBinaryValues()</code></a> that the array is not sized to the values is
+about its <em>length</em>, not reuse; that buffer is fresh per batch too.) Treat returned
+arrays as read-only: the accessors of one batch share arrays (the dictionary ids,
+for instance, back <a href="#getStrings()"><code>getStrings()</code></a>'s reuse of <code>String</code>s), so changing one can
+change what another accessor of the batch returns.</p>
 <p><strong>This API is <a href="../Experimental.html" title="annotation interface in dev.hardwood"><code>Experimental</code></a>:</strong> the shape of the batch accessors and
 layer representation may change in future releases without prior
 deprecation.</p>
@@ -167,27 +175,39 @@ deprecation.</p>
 <div class="block">Materialises one <code>byte[]</code> per leaf value, copying out of the binary
 buffer.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBinaryEnds()" class="member-name-link">getBinaryEnds</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="BinaryDictionary.html" title="class in dev.hardwood.reader">BinaryDictionary</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBinaryDictionary()" class="member-name-link">getBinaryDictionary</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">End of each value in <a href="#getBinaryValues()"><code>getBinaryValues()</code></a>, exclusive.</div>
+<div class="block">The dictionary <a href="#getDictionaryIds()"><code>getDictionaryIds()</code></a> refers to, or <code>null</code> when the ids are
+<code>null</code>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBinaryStarts()" class="member-name-link">getBinaryStarts</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBinaryEnds()" class="member-name-link">getBinaryEnds</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">End of each value in <a href="#getBinaryValues()"><code>getBinaryValues()</code></a>, exclusive.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBinaryStarts()" class="member-name-link">getBinaryStarts</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Start of each value in <a href="#getBinaryValues()"><code>getBinaryValues()</code></a>, inclusive.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBinaryValues()" class="member-name-link">getBinaryValues</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBinaryValues()" class="member-name-link">getBinaryValues</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The bytes a varlength leaf's values are read from.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBooleans()" class="member-name-link">getBooleans</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../schema/ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnSchema()" class="member-name-link">getColumnSchema</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBooleans()" class="member-name-link">getBooleans</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../schema/ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnSchema()" class="member-name-link">getColumnSchema</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDictionaryIds()" class="member-name-link">getDictionaryIds</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Each value's entry in the batch's dictionary: value <code>i</code> is entry
+<code>getDictionaryIds()[i]</code> of <a href="#getBinaryDictionary()"><code>getBinaryDictionary()</code></a>, and <code>-1</code> at a null value.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDoubles()" class="member-name-link">getDoubles</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -466,6 +486,40 @@ every value's range are unspecified.</p>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int[]</span>&nbsp;<span class="element-name">getBinaryEnds</span>()</div>
 <div class="block">End of each value in <a href="#getBinaryValues()"><code>getBinaryValues()</code></a>, exclusive. Length ==
 <code>getValueCount()</code>; the byte length of value <code>i</code> is <code>ends[i] - starts[i]</code>.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - for non-byte-array leaves</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getDictionaryIds()">
+<h3>getDictionaryIds</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int[]</span>&nbsp;<span class="element-name">getDictionaryIds</span>()</div>
+<div class="block"><p>Each value's entry in the batch's dictionary: value <code>i</code> is entry
+<code>getDictionaryIds()[i]</code> of <a href="#getBinaryDictionary()"><code>getBinaryDictionary()</code></a>, and <code>-1</code> at a null value.
+Length == <code>getValueCount()</code>.</p>
+<p>Returns <code>null</code> unless every non-null value of the batch was decoded from the
+column chunk's dictionary: for every batch of a column without a dictionary, and,
+where a writer switched to plain encoding after its dictionary filled up, for the
+batch holding the switch and the rest of that row group. Read such a batch through
+the value accessors. A batch never draws on two dictionaries: batches end at
+row-group boundaries. Dictionary ids are exposed for <code>BYTE_ARRAY</code>,
+<code>FIXED_LEN_BYTE_ARRAY</code> and <code>INT96</code> columns; for any other column this returns <code>null</code>.</p>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getBinaryDictionary()">
+<h3>getBinaryDictionary</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="BinaryDictionary.html" title="class in dev.hardwood.reader">BinaryDictionary</a></span>&nbsp;<span class="element-name">getBinaryDictionary</span>()</div>
+<div class="block">The dictionary <a href="#getDictionaryIds()"><code>getDictionaryIds()</code></a> refers to, or <code>null</code> when the ids are
+<code>null</code>. Every batch drawn from the same dictionary returns the same instance, so
+comparing it with the previous batch's (<code>!=</code>) tells when the dictionary changed.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - for non-byte-array leaves</dd>
