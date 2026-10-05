@@ -1237,6 +1237,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#bloom-filters-skipping-on-equality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloom filters: skipping on equality
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#logical-structure-the-schema" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2064,6 +2075,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#bloom-filters-skipping-on-equality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloom filters: skipping on equality
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#logical-structure-the-schema" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2200,6 +2222,36 @@ never fetched.</p>
 </tr>
 </tbody>
 </table>
+<h2 id="bloom-filters-skipping-on-equality">Bloom filters: skipping on equality<a class="headerlink" href="#bloom-filters-skipping-on-equality" title="Permanent link">&para;</a></h2>
+<p>Min/max statistics bound the values of a row group. For an <code>eq</code> or <code>in</code> predicate on a column
+whose values spread over the whole domain in every row group, such as an ID, a UUID or a trace
+key, every row group's bounds cover the literal and statistics skip nothing. Skipping such a row
+group takes a structure that records which values the column chunk holds, and a chunk can carry
+two:</p>
+<ul>
+<li><strong>The dictionary.</strong> When every data page of the chunk is dictionary-encoded, the dictionary page
+  lists every value the chunk holds. A high-cardinality column often has no such dictionary:
+  Hardwood's writer drops it when <code>PLAIN</code> encoding comes out smaller (see
+  <a href="../write-model/#how-the-writer-picks-an-encoding">How the writer picks an encoding</a>), and other
+  writers fall back to <code>PLAIN</code> pages once the dictionary passes a size limit.</li>
+<li><strong>A Bloom filter.</strong> A bit set that answers "absent" with certainty and "present" with a
+  configurable false-positive probability. It does not depend on the chunk's encoding, and its
+  size follows the chunk's distinct values.</li>
+</ul>
+<p>A Bloom filter therefore pays off on a column with all of these properties:</p>
+<ul>
+<li>Queries filter it with equality predicates the filter can answer; which ones those are is listed
+  under <a href="../../reference/query-controls/#bloom-filter-and-dictionary-pruning">Bloom filter and dictionary pruning</a>.</li>
+<li>It has high cardinality: many distinct values per row group, so its chunks have no dictionary.</li>
+<li>Its values are not sorted or clustered. On a sorted column each row group's bounds cover a
+  narrow slice of the domain, and statistics already skip the row groups.</li>
+<li>A queried value occurs in few row groups. A value present in every row group leaves nothing to
+  skip.</li>
+</ul>
+<p>Each filter adds its size to the file for every row group, and the writer holds it in memory
+until the file is closed; see <a href="../write-model/#what-bounds-memory">What bounds memory</a>. Configuring
+a column to carry one is described under <a href="../../reference/writer/#bloom-filters">Bloom filters</a> in
+the Writer Reference.</p>
 <h2 id="logical-structure-the-schema">Logical structure: the schema<a class="headerlink" href="#logical-structure-the-schema" title="Permanent link">&para;</a></h2>
 <p>Orthogonal to the physical hierarchy is the <strong>schema</strong>, also stored in the footer. Parquet's
 schema is a tree: leaf columns carry the actual values, and group nodes express nesting:
@@ -2264,8 +2316,8 @@ How Hardwood surfaces that nesting differs between the two reader APIs; see
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a0cf04ae51ecd3fc857cf79d4694ef1e8542ada6" target="_blank" rel="noopener">
-      a0cf04ae
+    <a href="https://github.com/hardwood-hq/hardwood/tree/292654e56cd60040f08a0e1813d36fc18a4436ad" target="_blank" rel="noopener">
+      292654e5
     </a>
   
 </div>

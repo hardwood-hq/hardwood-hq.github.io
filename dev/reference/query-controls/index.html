@@ -2642,6 +2642,7 @@ rows one by one.</p>
 </tbody>
 </table>
 <p>A name is a top-level field or the full path to a nested field. A nested field is not selected by its own name alone: over <code>id, address STRUCT&lt;city&gt;</code>, <code>columns("city")</code> fails with <code>Column not found: city</code>. Names may repeat or overlap.</p>
+<p>A field name may contain dots: <code>columns("sepal.length")</code> selects a top-level column named <code>sepal.length</code>, and <code>columns("acme.info.x.y")</code> selects the field <code>x.y</code> of a struct named <code>acme.info</code>. Predicates and <code>FileSchema.getColumn(String)</code> resolve names the same way. A name that is the path of two fields, such as a top-level <code>a.b</code> beside a struct <code>a</code> with a field <code>b</code>, fails with an error; <code>buildColumnReader(int)</code> and the positions of <code>ColumnReaders</code> reach each of those columns by index.</p>
 <h3 id="index-order">Index order<a class="headerlink" href="#index-order" title="Permanent link">&para;</a></h3>
 <p>By-index accessors follow the order <code>columns(...)</code> names the columns in. The columns one name selects, such as a group's children or every column under <code>all()</code>, follow schema order among themselves. The two reader types count positions differently:</p>
 <ul>
@@ -2760,8 +2761,8 @@ rows one by one.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a0cf04ae51ecd3fc857cf79d4694ef1e8542ada6" target="_blank" rel="noopener">
-      a0cf04ae
+    <a href="https://github.com/hardwood-hq/hardwood/tree/292654e56cd60040f08a0e1813d36fc18a4436ad" target="_blank" rel="noopener">
+      292654e5
     </a>
   
 </div>

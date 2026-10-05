@@ -3082,7 +3082,7 @@
 </ul>
 <p>The level histograms of <code>SizeStatistics</code> and the <code>ColumnIndex</code>, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
 <h3 id="bloom-filters">Bloom filters<a class="headerlink" href="#bloom-filters" title="Permanent link">&para;</a></h3>
-<p>A column named through <code>bloomFilter(...)</code> carries a split-block Bloom filter in every row group, which a reader probes for the literal of an <code>eq</code> or <code>in</code> predicate (see <a href="../../how-to/query-controls/">Query Controls</a>). No other column carries one.</p>
+<p>To let <code>eq</code> and <code>in</code> predicates on a high-cardinality column skip row groups, add a Bloom filter for the column with <code>bloomFilter(...)</code> (see <a href="#writer-options">Writer Options</a>). The column then carries a split-block Bloom filter in every row group. <a href="../../concepts/parquet-layout/#bloom-filters-skipping-on-equality">Bloom filters: skipping on equality</a> describes which columns benefit and what a filter costs.</p>
 <ul>
 <li><strong>Contents.</strong> Every non-null value of the column chunk, hashed with XXH64 over its bytes as stored: <code>INT32</code> and <code>FLOAT</code> as 4 little-endian bytes, <code>INT64</code> and <code>DOUBLE</code> as 8, <code>BYTE_ARRAY</code> without its length prefix, <code>FIXED_LEN_BYTE_ARRAY</code> as is. <code>FLOAT</code> and <code>DOUBLE</code> values are hashed over their raw bits, so <code>-0.0</code> and <code>0.0</code> are distinct values, as are <code>NaN</code>s with different bits.</li>
 <li><strong>Size.</strong> About 1.2 bytes per distinct value of the chunk at the default probability of <code>0.01</code>, rounded up to a power of two between 32 bytes and 128 MiB. Every chunk gets a filter whatever its encoding, an all-null chunk included.</li>
@@ -3277,8 +3277,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a0cf04ae51ecd3fc857cf79d4694ef1e8542ada6" target="_blank" rel="noopener">
-      a0cf04ae
+    <a href="https://github.com/hardwood-hq/hardwood/tree/292654e56cd60040f08a0e1813d36fc18a4436ad" target="_blank" rel="noopener">
+      292654e5
     </a>
   
 </div>

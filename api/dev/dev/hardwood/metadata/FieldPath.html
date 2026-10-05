@@ -251,7 +251,8 @@ For nested schemas, it contains each intermediate group name
 <div class="block"><p>Returns true if this path matches the given dotted name.</p>
 <p>A dotted name like <code>&quot;address.zip&quot;</code> matches the path <code>[&quot;address&quot;, &quot;zip&quot;]</code>.
 A prefix match is allowed: <code>&quot;address&quot;</code> matches <code>[&quot;address&quot;, &quot;zip&quot;]</code>, so a group name
-selects every leaf below it.</p>
+selects every leaf below it. An element containing a dot is matched whole, so
+<code>&quot;sepal.length&quot;</code> matches the path <code>[&quot;sepal.length&quot;]</code>.</p>
 </div>
 <dl class="notes">
 <dt>Parameters:</dt>

@@ -268,12 +268,16 @@ followed by each node in pre-order, groups carrying their child count.</div>
 <p>For flat schemas, the name is the column name (e.g. <code>&quot;passenger_count&quot;</code>).
 For nested schemas, use the dot-separated field path (e.g. <code>&quot;address.zip&quot;</code>)
 to avoid ambiguity when multiple nested columns share a leaf name.</p>
+<p>A field name may contain dots itself (e.g. <code>&quot;sepal.length&quot;</code>). When the paths of
+two fields join to the same dot-separated name, the name is ambiguous; use
+<a href="#getColumn(dev.hardwood.metadata.FieldPath)"><code>getColumn(FieldPath)</code></a> or <a href="#getColumn(int)"><code>getColumn(int)</code></a> for such a column.</p>
 </div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>name</code> - column name or dot-separated field path</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column with the given name exists</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column with the given name exists, or the name
+is the path of more than one column</dd>
 </dl>
 </div>
 </section>

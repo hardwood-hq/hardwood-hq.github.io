@@ -2091,7 +2091,7 @@
 </tr>
 </tbody>
 </table>
-<p>Projection paths use <code>.</code> as the nesting separator. A Parquet group or field name containing <code>.</code> cannot be addressed by <code>ColumnProjection.columns(...)</code>; read the file without projection or use a schema with addressable names.</p>
+<p>A Parquet name containing <code>.</code> is passed unchanged; <a href="../../reference/query-controls/#column-projection-forms">Column projection forms</a> lists how such names resolve.</p>
 <p>Two schema shapes have no valid Avro naming, and building a reader over either fails whatever projection is applied:</p>
 <ul>
 <li>A group whose two children carry the same Parquet name. Avro records cannot hold two fields of one name.</li>
@@ -2155,8 +2155,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a0cf04ae51ecd3fc857cf79d4694ef1e8542ada6" target="_blank" rel="noopener">
-      a0cf04ae
+    <a href="https://github.com/hardwood-hq/hardwood/tree/292654e56cd60040f08a0e1813d36fc18a4436ad" target="_blank" rel="noopener">
+      292654e5
     </a>
   
 </div>
