@@ -1096,6 +1096,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ending-a-row-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ending a Row Group
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2051,6 +2062,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#ending-a-row-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ending a Row Group
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2116,7 +2138,7 @@
 <a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">            </span><span class="p">.</span><span class="na">doubles</span><span class="p">(</span><span class="s">"temperature"</span><span class="p">,</span><span class="w"> </span><span class="n">temperatures</span><span class="p">));</span>
 <a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="p">}</span>
 </code></pre></div>
-<p>The writer creates the batch — bound to the schema — hands it to the filler, then submits it, so there is no separate build or submit step. <code>columnWriter()</code> returns the same view on every call, so it can be obtained once and kept; call <code>writeBatch</code> as often as there is data and the writer bands the values into pages and row groups itself. Batch boundaries leave no trace in the file, and what the writer holds follows <code>rowGroupBufferTargetBytes</code> rather than the batch size; see <a href="../../concepts/write-model/#why-the-writer-chooses-the-boundaries">The Write Model</a>. A file is written through one API: calling both <code>columnWriter()</code> and <a href="../write-row-by-row/"><code>rowWriter()</code></a> on the same <code>ParquetFileWriter</code> is rejected, on the call that obtains the second view.</p>
+<p>The writer creates the batch — bound to the schema — hands it to the filler, then submits it, so there is no separate build or submit step. <code>columnWriter()</code> returns the same view on every call, so it can be obtained once and kept; call <code>writeBatch</code> as often as there is data and the writer bands the values into pages and row groups itself. Batch boundaries leave no trace in the file, and what the writer holds follows <code>rowGroupBufferTargetBytes</code> rather than the batch size; see <a href="../../concepts/write-model/#where-the-boundaries-fall">The Write Model</a>. A file is written through one API: calling both <code>columnWriter()</code> and <a href="../write-row-by-row/"><code>rowWriter()</code></a> on the same <code>ParquetFileWriter</code> is rejected, on the call that obtains the second view.</p>
 <p>The footer is written last, so <strong>the file is valid only once <code>close()</code> returns</strong>. After a failure, see <a href="../write-failures/">Handle Write Failures</a>.</p>
 <h2 id="batch-rules">Batch Rules<a class="headerlink" href="#batch-rules" title="Permanent link">&para;</a></h2>
 <p>A batch is an atomic, aligned slice, and every rule below is checked as the values arrive:</p>
@@ -2194,6 +2216,20 @@
 <p><code>create</code> rejects a repeated field that no <code>LIST</code> or <code>MAP</code> annotation accounts for; see <a href="../../reference/writer/#schema-shapes">Schema Shapes</a>. The legacy two-level lists a schema read from an existing file may carry are writable here, addressed through the annotated group's path exactly as the three-level layout is.</p>
 <h2 id="configuring-the-writer">Configuring the Writer<a class="headerlink" href="#configuring-the-writer" title="Permanent link">&para;</a></h2>
 <p>Pass a <code>WriterConfig</code> to <code>ParquetFileWriter.create(out, schema, config)</code> to set the codec, the page and row-group targets and the per-column encoding policy; every option, its default and what it rejects is under <a href="../../reference/writer/#writer-options">Writer Options</a>. The footer's key-value metadata and <code>created_by</code> identifier are set on the <code>ParquetFileWriter</code> until <code>close()</code>; see <a href="../../reference/writer/#file-metadata">File Metadata</a>.</p>
+<h2 id="ending-a-row-group">Ending a Row Group<a class="headerlink" href="#ending-a-row-group" title="Permanent link">&para;</a></h2>
+<p>To start a new row group where your data changes (a new partition value, a new sort key, the end of a source batch), call <code>endRowGroup()</code> on the <code>ParquetFileWriter</code> at that point; <a href="../../concepts/write-model/#boundaries-the-caller-places">Boundaries the Caller Places</a> covers what each kind of boundary gains a reader. The records written next start a new row group:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="n">ColumnWriter</span><span class="w"> </span><span class="n">columns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">();</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Partition</span><span class="w"> </span><span class="n">partition</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">partitions</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">        </span><span class="n">columns</span><span class="p">.</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">                </span><span class="p">.</span><span class="na">longs</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">.</span><span class="na">ids</span><span class="p">())</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">                </span><span class="p">.</span><span class="na">doubles</span><span class="p">(</span><span class="s">"price"</span><span class="p">,</span><span class="w"> </span><span class="n">partition</span><span class="p">.</span><span class="na">prices</span><span class="p">()));</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="n">writer</span><span class="p">.</span><span class="na">endRowGroup</span><span class="p">();</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">}</span>
+</code></pre></div>
+<p>The row-group targets still close row groups on their own, so a partition larger than a row-group target spans several row groups. A call with nothing written since the last row group closed does nothing, so it can be made at every boundary unconditionally. Call it between writes: from inside a batch or record filler it fails with an error.</p>
+<p>Each row group adds a column chunk per column to the footer, and a reader opens each chunk separately. Ending row groups far below the targets produces a larger footer and a slower read for the same records.</p>
 
 
 
@@ -2243,8 +2279,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9020a99216b22d3f5c5ee4250c83ebe5f214beb5" target="_blank" rel="noopener">
-      9020a992
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e4be4824ad08080e91c2ff3f544b2b925ef2fd5c" target="_blank" rel="noopener">
+      e4be4824
     </a>
   
 </div>

@@ -2152,8 +2152,9 @@
 <p>Filter predicates take every literal type a column's accessors return, adding <code>byte[]</code>, <code>LocalDateTime</code>, <code>PqInterval</code> and <code>Instant</code> on legacy <code>INT96</code> columns, and <code>in</code> for every literal type but <code>boolean</code>; <code>inStrings</code> is deprecated in favour of <code>in(String, String...)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/868">#868</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>).</p>
 </li>
 <li>
-<p><code>WriterConfig.Builder.bloomFilter(String)</code> and <code>bloomFilter(String, double)</code> write a split-block Bloom filter for a column in every row group (<a href="https://github.com/hardwood-hq/hardwood/issues/1449">#1449</a>).</p>
+<p><code>ParquetFileWriter.endRowGroup()</code> closes the open row group at a boundary the caller chooses (<a href="https://github.com/hardwood-hq/hardwood/issues/985">#985</a>).</p>
 </li>
+<li><code>WriterConfig.Builder.bloomFilter(String)</code> and <code>bloomFilter(String, double)</code> write a split-block Bloom filter for a column in every row group (<a href="https://github.com/hardwood-hq/hardwood/issues/1449">#1449</a>).</li>
 <li>
 <p>Written files carry a page index (<code>ColumnIndex</code> and <code>OffsetIndex</code>), so readers can skip individual pages; pages hold whole records and at most <code>WriterConfig.pageTargetRows</code> of them, 20,000 by default (<a href="https://github.com/hardwood-hq/hardwood/issues/1426">#1426</a>).</p>
 </li>
@@ -2507,8 +2508,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9020a99216b22d3f5c5ee4250c83ebe5f214beb5" target="_blank" rel="noopener">
-      9020a992
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e4be4824ad08080e91c2ff3f544b2b925ef2fd5c" target="_blank" rel="noopener">
+      e4be4824
     </a>
   
 </div>

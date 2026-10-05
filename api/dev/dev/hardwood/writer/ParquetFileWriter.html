@@ -72,6 +72,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#createdBy(java.lang.String)" tabindex="0">createdBy(String)</a></li>
 <li><a href="#columnWriter()" tabindex="0">columnWriter()</a></li>
 <li><a href="#rowWriter()" tabindex="0">rowWriter()</a></li>
+<li><a href="#endRowGroup()" tabindex="0">endRowGroup()</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
 <li><a href="#abort()" tabindex="0">abort()</a></li>
 </ol>
@@ -106,7 +107,8 @@ inside <code>REQUIRED</code> / <code>OPTIONAL</code> <code>struct</code> groups,
 of lists, lists of structs, and maps of any in-scope value). Data is supplied as
 <a href="ColumnBatch.html" title="class in dev.hardwood.writer"><code>ColumnBatch</code></a> slices; the writer packs each column into size-bounded data pages — a
 levelled column's pages carrying an RLE definition-level stream ahead of the values — and
-flushes a row group once the bytes it holds for that group reach the configured target. Each
+flushes a row group once it reaches one of the configured targets, or where the caller ends
+it through <a href="#endRowGroup()"><code>endRowGroup()</code></a>. Each
 row group is buffered, written and forgotten, so what the writer holds follows the target
 rather than the size of the file, apart from the page index it keeps for the end of the file
 (a location and two bounds per data page) and the Bloom filters of the columns
@@ -193,21 +195,27 @@ hold columns rather than records.</div>
 <div class="block">Replaces the footer's <code>created_by</code> identifier, which defaults to <a href="#DEFAULT_CREATED_BY"><code>DEFAULT_CREATED_BY</code></a>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyValueMetadata(java.lang.String,java.lang.String)" class="member-name-link">keyValueMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
- <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#endRowGroup()" class="member-name-link">endRowGroup</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Closes the open row group and starts a new one, so the records written next go into a row
+group of their own.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyValueMetadata(java.lang.String,java.lang.String)" class="member-name-link">keyValueMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Stamps one application-defined key-value pair onto the file footer, replacing any value
 already held for that key.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyValueMetadata(java.util.Map)" class="member-name-link">keyValueMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;metadata)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#keyValueMetadata(java.util.Map)" class="member-name-link">keyValueMetadata</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;metadata)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Stamps every entry of <code>metadata</code> onto the file footer, replacing any value already held
 for a key it names and leaving the rest in place.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowWriter()" class="member-name-link">rowWriter</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="RowWriter.html" title="class in dev.hardwood.writer">RowWriter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowWriter()" class="member-name-link">rowWriter</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the row-oriented view over this file: a record-shaped API for callers that
 hold records rather than columns.</div>
 </div>
@@ -427,6 +435,37 @@ produce record by record</dd>
 </section>
 </li>
 <li>
+<section class="detail" id="endRowGroup()">
+<h3>endRowGroup</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">endRowGroup</span>()
+                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><p>Closes the open row group and starts a new one, so the records written next go into a row
+group of their own.</p>
+<p>The row-group targets in <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a> still cut row groups on their own; this is an
+additional cut, for a boundary only the caller can see — a change of sort key or partition
+value, or the end of an upstream batch. A row group closed this way is written exactly as
+one a target closes after the same records.</p>
+<p>With nothing written since the last row group was closed, the call does nothing, so it can
+be made at every boundary without tracking whether a record fell between two of them. Every
+row group adds a column chunk per column to the footer, so a file of row groups much smaller
+than the targets carries a larger footer, and a reader opens more column chunks for the same
+records.</p>
+<p>Records staged by <a href="#rowWriter()"><code>rowWriter()</code></a> are submitted first, so they belong to the row group this
+call closes. The call is rejected from inside a batch or record filler, where the batch or
+record being filled is not yet written. Any exception fails the writer, as it does from a
+write.</p>
+</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if writing the row group fails</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the writer is closed, a previous write has failed, or a
+batch or record filler is running</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="close()">
 <h3>close</h3>
 <div class="horizontal-scroll">
@@ -447,6 +486,7 @@ Does nothing if the writer is already closed or aborted.</p>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the file cannot be finished or published, or a discarded output
 cannot be released</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if called from inside a batch or record filler</dd>
 </dl>
 </div>
 </section>

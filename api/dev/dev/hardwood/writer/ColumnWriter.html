@@ -91,7 +91,8 @@ alongside them, and the writer shreds, pages, encodes and compresses them into t
 }
 </code></pre>
 <p>A <code>ColumnWriter</code> is not closeable: the <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a> it came from owns the file, and
-closing it flushes the row group still buffered here along with the footer.</p>
+closing it flushes the row group still buffered here along with the footer.
+<a href="ParquetFileWriter.html#endRowGroup()"><code>ParquetFileWriter.endRowGroup()</code></a> ends a row group where the caller places the boundary.</p>
 </div>
 </div>
 </section>

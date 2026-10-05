@@ -2283,7 +2283,7 @@
 <a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="c1">// ...</span>
 <a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="p">}</span>
 </code></pre></div>
-<p>Every option, its default and what it rejects is under <a href="../../reference/writer/#writer-options">Writer Options</a>. The footer's key-value metadata and <code>created_by</code> identifier are set on the <code>ParquetFileWriter</code> until <code>close()</code>; see <a href="../../reference/writer/#file-metadata">File Metadata</a>.</p>
+<p>Every option, its default and what it rejects is under <a href="../../reference/writer/#writer-options">Writer Options</a>. <code>ParquetFileWriter.endRowGroup()</code> closes the open row group after the records written so far; see <a href="../write-column-by-column/#ending-a-row-group">Ending a Row Group</a>. The footer's key-value metadata and <code>created_by</code> identifier are set on the <code>ParquetFileWriter</code> until <code>close()</code>; see <a href="../../reference/writer/#file-metadata">File Metadata</a>.</p>
 
 
 
@@ -2333,8 +2333,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9020a99216b22d3f5c5ee4250c83ebe5f214beb5" target="_blank" rel="noopener">
-      9020a992
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e4be4824ad08080e91c2ff3f544b2b925ef2fd5c" target="_blank" rel="noopener">
+      e4be4824
     </a>
   
 </div>

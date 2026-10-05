@@ -1689,6 +1689,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ending-a-row-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ending a Row Group
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#finishing-and-abandoning-a-file" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2310,6 +2321,17 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ending-a-row-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ending a Row Group
+      
+    </span>
+  </a>
   
 </li>
       
@@ -3105,6 +3127,10 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>hardwood version &lt;version&gt; (build &lt;commit&gt;)
 </code></pre></div>
 <p><code>ParquetFileWriter.DEFAULT_CREATED_BY</code> holds it. <code>createdBy(String)</code> replaces it; readers that key compatibility workarounds off this field expect the <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> shape, and a bare application name is rejected by some of them.</p>
+<h2 id="ending-a-row-group">Ending a Row Group<a class="headerlink" href="#ending-a-row-group" title="Permanent link">&para;</a></h2>
+<p><code>ParquetFileWriter.endRowGroup()</code> writes the open row group, so the next record starts a new one. Records staged by <code>rowWriter()</code> are written into the row group being closed. When no record was written since the last row group closed, it writes nothing.</p>
+<p>The row-group targets close row groups as well; a row group ends at a target or at a call, whichever comes first. A row group closed by a call is written exactly as one a target closes after the same records.</p>
+<p><code>endRowGroup()</code> and <code>close()</code> throw <code>IllegalStateException</code> when called from inside a <code>writeBatch</code> or <code>writeRow</code> filler. Any exception from <code>endRowGroup()</code> fails the writer.</p>
 <h2 id="finishing-and-abandoning-a-file">Finishing and Abandoning a File<a class="headerlink" href="#finishing-and-abandoning-a-file" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3132,7 +3158,7 @@
 </tr>
 </tbody>
 </table>
-<p>The writer fails when <code>ColumnWriter.writeBatch</code> or <code>RowWriter.writeRow</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#what-the-writer-rejects">What the Writer Rejects</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. <code>RowWriter.tryWriteRow</code> fails the writer only on the exceptions listed under <a href="#rowwriteresult"><code>RowWriteResult</code></a>. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
+<p>The writer fails when <code>ColumnWriter.writeBatch</code>, <code>RowWriter.writeRow</code> or <code>endRowGroup</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#what-the-writer-rejects">What the Writer Rejects</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. <code>RowWriter.tryWriteRow</code> fails the writer only on the exceptions listed under <a href="#rowwriteresult"><code>RowWriteResult</code></a>. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
 <p>A failure while <code>close()</code> finishes or publishes the file discards the output as well, and <code>close()</code> throws it. When the output cannot be discarded, <code>abort()</code> and <code>close()</code> on a failed writer throw the <code>IOException</code>; a failure while finishing or publishing carries it as a suppressed exception.</p>
 <h2 id="rowwriteresult"><code>RowWriteResult</code><a class="headerlink" href="#rowwriteresult" title="Permanent link">&para;</a></h2>
 <p><code>RowWriter.tryWriteRow</code> returns one of two members:</p>
@@ -3179,7 +3205,7 @@
 </tr>
 <tr>
 <td><code>IllegalStateException</code></td>
-<td>Writing, or setting key-value metadata or <code>created_by</code>, after <code>close()</code>; writing after the writer has failed; using both write APIs on one file; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned; taking <code>InMemoryOutputFile.buffer()</code> before the writer has closed, or from a destination that was discarded</td>
+<td>Writing, ending a row group, or setting key-value metadata or <code>created_by</code>, after <code>close()</code>; writing after the writer has failed; using both write APIs on one file; ending a row group or closing the writer from inside a batch or record filler; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned; taking <code>InMemoryOutputFile.buffer()</code> before the writer has closed, or from a destination that was discarded</td>
 </tr>
 <tr>
 <td><code>IOException</code></td>
@@ -3251,8 +3277,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9020a99216b22d3f5c5ee4250c83ebe5f214beb5" target="_blank" rel="noopener">
-      9020a992
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e4be4824ad08080e91c2ff3f544b2b925ef2fd5c" target="_blank" rel="noopener">
+      e4be4824
     </a>
   
 </div>

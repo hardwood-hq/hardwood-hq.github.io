@@ -104,7 +104,9 @@ written through <a href="ColumnWriter.html#writeBatch(java.util.function.Consume
 records, or once its variable-width payload reaches the configured row-group size, so
 staging never exceeds one row group regardless of how large the values are.</p>
 <p>A <code>RowWriter</code> is not closeable: the <a href="ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a> it came from owns the file, and
-closing it writes the records still staged here along with the footer.</p>
+closing it writes the records still staged here along with the footer.
+<a href="ParquetFileWriter.html#endRowGroup()"><code>ParquetFileWriter.endRowGroup()</code></a> ends a row group after the records written so far, staged
+ones included.</p>
 <p><strong>This API is <a href="../Experimental.html" title="annotation interface in dev.hardwood"><code>Experimental</code></a>:</strong> the shape may change in future releases.</p>
 </div>
 </div>

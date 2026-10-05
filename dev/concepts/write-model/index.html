@@ -1226,13 +1226,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-the-writer-chooses-the-boundaries" class="md-nav__link">
+  <a href="#where-the-boundaries-fall" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why the writer chooses the boundaries
+        Where the boundaries fall
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Where the boundaries fall">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#boundaries-the-caller-places" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boundaries the caller places
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1997,13 +2014,30 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#why-the-writer-chooses-the-boundaries" class="md-nav__link">
+  <a href="#where-the-boundaries-fall" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Why the writer chooses the boundaries
+        Where the boundaries fall
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Where the boundaries fall">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#boundaries-the-caller-places" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boundaries the caller places
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2112,15 +2146,23 @@
 </table>
 <p>A <code>list&lt;int32&gt;</code> column whose lists are empty therefore retains two bytes a record: a definition level and a repetition level, and no value at all. A flat <code>INT32</code> column of repeating values retains about four; the same column with every value distinct retains that index plus a dictionary entry and the table slots that find it, several times more, until the size probes give the dictionary up.</p>
 <p>Multiply by your row target, and by the number of writers running in the same JVM.</p>
-<h2 id="why-the-writer-chooses-the-boundaries">Why the writer chooses the boundaries<a class="headerlink" href="#why-the-writer-chooses-the-boundaries" title="Permanent link">&para;</a></h2>
+<h2 id="where-the-boundaries-fall">Where the boundaries fall<a class="headerlink" href="#where-the-boundaries-fall" title="Permanent link">&para;</a></h2>
 <p>Batches and records are <em>arrival</em> units. Pages, column chunks and row groups are <em>layout</em> units. The writer maps one to the other, and the caller does not see the seam: a batch's values are distributed into per-column buffers, the row group is flushed once what those hold reaches the row-group target, and its pages are cut as it is written out. A batch larger than the row group is split at the boundary.</p>
-<p>This is why there is no explicit "end row group" call, and why submitting one large batch and streaming a thousand small ones produce the same file. Layout is set by the targets alone, and each governs something different:</p>
+<p>Submitting one large batch and streaming a thousand small ones therefore produce the same file. Layout is set by the targets, and each governs something different:</p>
 <ul>
 <li><strong>Page size</strong> governs read granularity: a page is the unit a reader decompresses to reach any value in it, so smaller pages prune finer and cost more metadata. A page also holds at most <code>pageTargetRows</code> records, so a column whose values encode small still has pages for the page index to prune by. Under a delta encoding, whose width depends on the values, the cut charges the width the type would have taken <code>PLAIN</code>, so those pages land below the target.</li>
 <li><strong>Row-group rows</strong> governs split sizing and row-group-level pruning, and defaults to 1,048,576. A row group is self-contained, so it is the boundary a file partitions on across separate readers, and it is the granularity at which a reader skips on column-chunk statistics. It does not govern how much of the read runs in parallel: Hardwood decodes <em>pages</em> concurrently within a row group, so parallelism is bounded by pages and columns rather than by banding. Unlike a byte target it needs no estimate and does not vary with the data.</li>
 <li><strong>Row-group buffer bytes</strong> is the memory bound above: the bytes the writer holds for the open row group.</li>
 </ul>
 <p>A row group holds at most <code>Integer.MAX_VALUE - 9</code> records whatever the targets say. It is cut earlier where a repeated column's chunk would reach its structural ceiling of <code>Integer.MAX_VALUE - 8</code> values and nulls, or where any column chunk would pass <code>Integer.MAX_VALUE - 8</code> bytes of <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> values. These ceilings only cut under a <code>rowGroupBufferTargetBytes</code> above 2 GiB, where they yield more row groups rather than a failed write; a single record that passes one on its own is rejected. Neither is the size the row group takes on disk: that is smaller by whatever the encoding and the codec win, which is a property of the data. A dictionary-encoded column reaches the file as indices, and the codec then compresses those. Measure one file and scale the setting if a particular on-disk size is what you need.</p>
+<h3 id="boundaries-the-caller-places">Boundaries the caller places<a class="headerlink" href="#boundaries-the-caller-places" title="Permanent link">&para;</a></h3>
+<p>The targets cut on counts, so a row group's edges fall wherever the counts run out, regardless of what the records hold. <code>endRowGroup()</code> lets the caller cut where the data itself changes, which is what row-group pruning and splitting key on:</p>
+<ul>
+<li><strong>At a key change in sorted data.</strong> A target cut mid-key leaves that key in two row groups. Cutting where the key changes gives each row group its own key values, so an equality on the key reads exactly the row groups holding that key.</li>
+<li><strong>At a partition value change.</strong> Each row group then holds one value of the partition column: a filter on it skips every other row group by its statistics, and a reader that splits the file by row group processes one partition per split.</li>
+<li><strong>At an upstream unit.</strong> Ending a row group at the end of a source file, a message batch or a checkpoint keeps each unit in its own row groups, so a consumer splitting by row group never sees two units mixed in one split.</li>
+</ul>
+<p>The targets keep cutting as well, and a row group ends at whichever comes first.</p>
 <h2 id="how-the-writer-picks-an-encoding">How the writer picks an encoding<a class="headerlink" href="#how-the-writer-picks-an-encoding" title="Permanent link">&para;</a></h2>
 <p>Under the default <code>AUTO</code> policy, the writer buffers the row group and then, knowing what the chunk holds, compares the size of a dictionary page plus an index stream against the same values written <code>PLAIN</code>, and takes the smaller. The choice is per column chunk, so the same column may be dictionary-encoded in one row group and <code>PLAIN</code> in the next as its cardinality changes.</p>
 <p>A chunk is encoded one way throughout: no chunk mixes a dictionary with <code>PLAIN</code> overflow pages, and no dictionary page is written for a chunk that ends up <code>PLAIN</code>. And naming an encoding explicitly opts out of the comparison entirely: that column builds no dictionary in any row group of the file.</p>
@@ -2181,8 +2223,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9020a99216b22d3f5c5ee4250c83ebe5f214beb5" target="_blank" rel="noopener">
-      9020a992
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e4be4824ad08080e91c2ff3f544b2b925ef2fd5c" target="_blank" rel="noopener">
+      e4be4824
     </a>
   
 </div>
