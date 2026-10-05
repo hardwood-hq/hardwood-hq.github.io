@@ -1735,6 +1735,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#row-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Row selection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#convert-output" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2124,6 +2135,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#row-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Row selection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#convert-output" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2390,30 +2412,69 @@
 <a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="c1"># Show last 5 rows</span>
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span>-5<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1"># Convert to CSV</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1"># Start at row 5000 (rows are counted from 0)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>hardwood<span class="w"> </span>print<span class="w"> </span>--skip<span class="w"> </span><span class="m">5000</span><span class="w"> </span>-n<span class="w"> </span><span class="m">20</span><span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># Rank columns by size: share of the file, compression, encoding, unencoded size</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># Show the rows of row group 3 (row groups are counted from 0)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>hardwood<span class="w"> </span>print<span class="w"> </span>--row-group<span class="w"> </span><span class="m">3</span><span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1"># Per-row-group detail and named level histograms for one column</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--column<span class="w"> </span>order.tags.list.element
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="c1"># Convert to CSV</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="c1"># Restrict that detail to a single row group</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--column<span class="w"> </span>order.tags.list.element<span class="w"> </span>--row-group<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="c1"># Rank columns by size: share of the file, compression, encoding, unencoded size</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet
 <a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
-<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="c1"># Show dictionary entries for a column (first 50 entries per row group by default)</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="c1"># Per-row-group detail and named level histograms for one column</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--column<span class="w"> </span>order.tags.list.element
 <a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>
-<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="c1"># Show all dictionary entries for a column (--limit 0 means unlimited)</span>
-<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category<span class="w"> </span>--limit<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="c1"># Restrict that detail to a single row group</span>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>columns<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>--column<span class="w"> </span>order.tags.list.element<span class="w"> </span>--row-group<span class="w"> </span><span class="m">0</span>
 <a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>
-<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="c1"># Convert first 100 rows to JSON</span>
-<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a><span class="c1"># Show dictionary entries for a column (first 50 entries per row group by default)</span>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category
 <a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a>
-<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="c1"># Convert to CSV, writing \N for null values</span>
-<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>--null-string<span class="w"> </span><span class="s1">'\N'</span><span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="c1"># Show all dictionary entries for a column (--limit 0 means unlimited)</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>hardwood<span class="w"> </span>inspect<span class="w"> </span>dictionary<span class="w"> </span>-f<span class="w"> </span>data.parquet<span class="w"> </span>-c<span class="w"> </span>category<span class="w"> </span>--limit<span class="w"> </span><span class="m">0</span>
+<a id="__codelineno-0-39" name="__codelineno-0-39" href="#__codelineno-0-39"></a>
+<a id="__codelineno-0-40" name="__codelineno-0-40" href="#__codelineno-0-40"></a><span class="c1"># Convert first 100 rows to JSON</span>
+<a id="__codelineno-0-41" name="__codelineno-0-41" href="#__codelineno-0-41"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>-n<span class="w"> </span><span class="m">100</span><span class="w"> </span>--format<span class="w"> </span>json<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-0-42" name="__codelineno-0-42" href="#__codelineno-0-42"></a>
+<a id="__codelineno-0-43" name="__codelineno-0-43" href="#__codelineno-0-43"></a><span class="c1"># Convert one row group to CSV</span>
+<a id="__codelineno-0-44" name="__codelineno-0-44" href="#__codelineno-0-44"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--row-group<span class="w"> </span><span class="m">3</span><span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>-f<span class="w"> </span>data.parquet
+<a id="__codelineno-0-45" name="__codelineno-0-45" href="#__codelineno-0-45"></a>
+<a id="__codelineno-0-46" name="__codelineno-0-46" href="#__codelineno-0-46"></a><span class="c1"># Convert to CSV, writing \N for null values</span>
+<a id="__codelineno-0-47" name="__codelineno-0-47" href="#__codelineno-0-47"></a>hardwood<span class="w"> </span>convert<span class="w"> </span>--format<span class="w"> </span>csv<span class="w"> </span>--null-string<span class="w"> </span><span class="s1">'\N'</span><span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
+<h2 id="row-selection">Row selection<a class="headerlink" href="#row-selection" title="Permanent link">&para;</a></h2>
+<p><code>print</code> and <code>convert</code> accept the same row-selection options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Rows selected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-n N</code>, <code>--rows N</code></td>
+<td>The first <code>N</code> rows for a positive number, the last <code>N</code> rows for a negative number, or every row for <code>ALL</code> (the default). <code>0</code> is rejected.</td>
+</tr>
+<tr>
+<td><code>--skip N</code></td>
+<td>Start at row <code>N</code>, counted from zero. A positive <code>-n</code> limits the number of rows read from that position.</td>
+</tr>
+<tr>
+<td><code>--row-group I</code></td>
+<td>Read only row group <code>I</code>, counted from zero. A positive <code>-n</code> limits the read to at most that many rows within the group.</td>
+</tr>
+</tbody>
+</table>
+<p><code>--skip</code> and <code>--row-group</code> cannot be combined with each other or with a negative <code>-n</code>.
+Negative or out-of-range row and row-group numbers are rejected. <code>--skip</code> must identify
+an existing row, and <code>--row-group</code> rejects an empty row group.</p>
+<p><code>print --row-index</code> shows each row's zero-based position in the original file,
+including when using <code>--skip</code>, <code>--row-group</code>, or a negative <code>-n</code>. For a file with
+100 rows, <code>-n -2 --row-index</code> prints indexes <code>98</code> and <code>99</code>.</p>
 <h2 id="convert-output">Convert output<a class="headerlink" href="#convert-output" title="Permanent link">&para;</a></h2>
 <p><code>hardwood convert --format json</code> writes JSON numbers and booleans for
 <code>BOOLEAN</code>, <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, and <code>DOUBLE</code> values that carry no
@@ -2645,6 +2706,14 @@ the terminal instead. <code>convert</code> carries the whole value.</p>
 <td>Expand / collapse all (Schema tree; Data preview row modal)</td>
 </tr>
 <tr>
+<td><code>:</code></td>
+<td>Jump to a row or row group by number (Data preview, Row groups)</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>Open the Data preview at the row group under the cursor (Row groups, Row group detail)</td>
+</tr>
+<tr>
 <td><code>o</code></td>
 <td>Jump back to Overview</td>
 </tr>
@@ -2668,8 +2737,8 @@ and <strong>Dictionary</strong>. <strong>Schema</strong>, <strong>Footer &amp; i
 <li><strong>Overview</strong> — file summary and key/value metadata, with Spark JSON schemas pretty-printed and
   Arrow IPC schemas decoded to a hex dump</li>
 <li><strong>Schema</strong> — expandable tree of groups and leaves, navigated with <code>→</code> / <code>←</code></li>
-<li><strong>Row groups</strong></li>
-<li><strong>Row group detail</strong></li>
+<li><strong>Row groups</strong> — <code>:</code> jumps to a row group by number, <code>d</code> opens the Data preview at the selected group's first row</li>
+<li><strong>Row group detail</strong> — <code>d</code> opens the Data preview at this row group's first row</li>
 <li><strong>Column chunks</strong> — the chunks of one row group, ranked by compressed size, with codec and
   dictionary flag</li>
 <li><strong>Column chunk detail</strong> — facts pane grouped into Identity, Storage, Content and Layout, whose
@@ -2685,8 +2754,8 @@ and <strong>Dictionary</strong>. <strong>Schema</strong>, <strong>Footer &amp; i
 <li><strong>Column-across-row-groups</strong> — <code>Enter</code> on a Schema leaf: one row per row group with that
   column's sizes (including unencoded size), encodings and stats; drills into the chunk detail</li>
 <li><strong>Dictionary</strong> — <code>Enter</code> shows the full value of an entry; <code>/</code> inline search</li>
-<li><strong>Data preview</strong> — row values via <code>RowReader</code>; <code>←/→</code> scrolls the visible column window,
-  <code>PgDn/PgUp</code> flips pages; <code>Enter</code> opens a per-row modal, where the cursor stops on every line and
+<li><strong>Data preview</strong> — row values via <code>RowReader</code>, with a <code>#</code> column giving each row's position in the file, counted from 0; <code>←/→</code> scrolls the visible column window,
+  <code>PgDn/PgUp</code> flips pages; <code>:</code> jumps to a row by number; <code>Enter</code> opens a per-row modal, where the cursor stops on every line and
   <code>Enter</code> expands the field under it when its full value is not on screen</li>
 </ul>
 <p>Screenshots (click any shot to open it full size):</p>
@@ -2835,8 +2904,8 @@ filter applied but exits edit mode).</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/292654e56cd60040f08a0e1813d36fc18a4436ad" target="_blank" rel="noopener">
-      292654e5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/25aec22e1da8a0d9c4c6b2e1b7067263291369ee" target="_blank" rel="noopener">
+      25aec22e
     </a>
   
 </div>
