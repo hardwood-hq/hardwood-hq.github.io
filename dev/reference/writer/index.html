@@ -1630,6 +1630,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Statistics Written">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bloom-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloom filters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2238,6 +2255,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Statistics Written">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bloom-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloom filters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2621,6 +2655,16 @@
 <td>Encoding policy for one leaf column, overriding the file-wide default.</td>
 </tr>
 <tr>
+<td><code>bloomFilter(String)</code></td>
+<td>—</td>
+<td>Writes a Bloom filter for one leaf column at a false-positive probability of <code>0.01</code>. A path naming no leaf column, or a <code>BOOLEAN</code> column, fails when the writer is created. See <a href="#bloom-filters">Bloom filters</a>.</td>
+</tr>
+<tr>
+<td><code>bloomFilter(String, double)</code></td>
+<td>—</td>
+<td>Writes a Bloom filter for one leaf column at the given false-positive probability. Must be strictly between 0 and 1.</td>
+</tr>
+<tr>
 <td><code>statisticsTruncationLength(int)</code></td>
 <td><code>64</code></td>
 <td>Longest <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound. A longer bound is truncated and flagged inexact. Must be positive.</td>
@@ -2633,7 +2677,7 @@
 </tbody>
 </table>
 <p>A page is cut at whichever of the two page targets is reached first, and a row group at whichever of the two row-group targets is reached first.</p>
-<p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>pageTargetRows()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>codec()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, and, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
+<p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>pageTargetRows()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>codec()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>, and for the Bloom filter setters, <code>bloomFilters()</code>, a map from column path to probability. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
 <h2 id="encodings">Encodings<a class="headerlink" href="#encodings" title="Permanent link">&para;</a></h2>
 <p><code>ColumnEncoding</code> sets how a column's values are encoded, file-wide or per leaf column. <code>AUTO</code> leaves the choice to the writer; every other member names an encoding outright, and a column that names one builds no dictionary.</p>
 <table>
@@ -3014,7 +3058,14 @@
 <li><strong><code>OffsetIndex</code></strong>, for every column chunk: the location of each data page and the first record it holds. Every page starts at a record boundary.</li>
 <li><strong><code>ColumnIndex</code></strong>, for every column chunk whose bounds can be stated: each page's <code>min</code> / <code>max</code> under the same rules as the chunk statistics, its null count, whether it holds only nulls, its <code>NaN</code> count for <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code>, and whether the pages' bounds ascend or descend. A column without an order writes none, nor does a floating-point column chunk with a page whose values are all <code>NaN</code>. Where no truncated <code>max</code> exists, a page's <code>max</code> is written whole.</li>
 </ul>
-<p>Bloom filters, the level histograms of <code>SizeStatistics</code> and the <code>ColumnIndex</code>, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
+<p>The level histograms of <code>SizeStatistics</code> and the <code>ColumnIndex</code>, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
+<h3 id="bloom-filters">Bloom filters<a class="headerlink" href="#bloom-filters" title="Permanent link">&para;</a></h3>
+<p>A column named through <code>bloomFilter(...)</code> carries a split-block Bloom filter in every row group, which a reader probes for the literal of an <code>eq</code> or <code>in</code> predicate (see <a href="../../how-to/query-controls/">Query Controls</a>). No other column carries one.</p>
+<ul>
+<li><strong>Contents.</strong> Every non-null value of the column chunk, hashed with XXH64 over its bytes as stored: <code>INT32</code> and <code>FLOAT</code> as 4 little-endian bytes, <code>INT64</code> and <code>DOUBLE</code> as 8, <code>BYTE_ARRAY</code> without its length prefix, <code>FIXED_LEN_BYTE_ARRAY</code> as is. <code>FLOAT</code> and <code>DOUBLE</code> values are hashed over their raw bits, so <code>-0.0</code> and <code>0.0</code> are distinct values, as are <code>NaN</code>s with different bits.</li>
+<li><strong>Size.</strong> About 1.2 bytes per distinct value of the chunk at the default probability of <code>0.01</code>, rounded up to a power of two between 32 bytes and 128 MiB. Every chunk gets a filter whatever its encoding, an all-null chunk included.</li>
+<li><strong>Placement.</strong> All filters of the file are written together after the last row group, before the page index, with <code>bloom_filter_offset</code> and <code>bloom_filter_length</code> set on each column chunk.</li>
+</ul>
 <h2 id="file-metadata">File Metadata<a class="headerlink" href="#file-metadata" title="Permanent link">&para;</a></h2>
 <p>Two footer fields are set on the <code>ParquetFileWriter</code> itself, at any point until <code>close()</code> writes the footer: the file's key-value metadata and its <code>created_by</code> identifier.</p>
 <table>
@@ -3120,7 +3171,7 @@
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
-<td>A schema with no columns; a <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>REQUIRED</code> field left unset by a record; a record whose values for one column pass what a column chunk can hold</td>
+<td>A schema with no columns; a <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>REQUIRED</code> field left unset by a record; a record whose values for one column pass what a column chunk can hold; a Bloom filter configured for a <code>BOOLEAN</code> column, or with a false-positive probability outside (0, 1)</td>
 </tr>
 <tr>
 <td><code>IndexOutOfBoundsException</code></td>
@@ -3200,8 +3251,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c440616b28691c3989e50582b8e4535ed7b49989" target="_blank" rel="noopener">
-      c440616b
+    <a href="https://github.com/hardwood-hq/hardwood/tree/452505c26558f6fb2106d336c9cf91b10ed4cfec" target="_blank" rel="noopener">
+      452505c2
     </a>
   
 </div>

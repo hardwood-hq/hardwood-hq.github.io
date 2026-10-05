@@ -2152,6 +2152,9 @@
 <p>Filter predicates take every literal type a column's accessors return, adding <code>byte[]</code>, <code>LocalDateTime</code>, <code>PqInterval</code> and <code>Instant</code> on legacy <code>INT96</code> columns, and <code>in</code> for every literal type but <code>boolean</code>; <code>inStrings</code> is deprecated in favour of <code>in(String, String...)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/868">#868</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>).</p>
 </li>
 <li>
+<p><code>WriterConfig.Builder.bloomFilter(String)</code> and <code>bloomFilter(String, double)</code> write a split-block Bloom filter for a column in every row group (<a href="https://github.com/hardwood-hq/hardwood/issues/1449">#1449</a>).</p>
+</li>
+<li>
 <p>Written files carry a page index (<code>ColumnIndex</code> and <code>OffsetIndex</code>), so readers can skip individual pages; pages hold whole records and at most <code>WriterConfig.pageTargetRows</code> of them, 20,000 by default (<a href="https://github.com/hardwood-hq/hardwood/issues/1426">#1426</a>).</p>
 </li>
 <li>
@@ -2504,8 +2507,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c440616b28691c3989e50582b8e4535ed7b49989" target="_blank" rel="noopener">
-      c440616b
+    <a href="https://github.com/hardwood-hq/hardwood/tree/452505c26558f6fb2106d336c9cf91b10ed4cfec" target="_blank" rel="noopener">
+      452505c2
     </a>
   
 </div>

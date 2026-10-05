@@ -335,6 +335,16 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/LogicalType.IntType.html#param-bitWidth"><code>bitWidth</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#bloomFilter(java.lang.String)" class="member-name-link">bloomFilter(String)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Writes a Bloom filter for one leaf column, at <a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_BLOOM_FILTER_FPP"><code>WriterConfig.DEFAULT_BLOOM_FILTER_FPP</code></a>; must be
+non-null.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#bloomFilter(java.lang.String,double)" class="member-name-link">bloomFilter(String, double)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Writes a Bloom filter for one leaf column, with the given false-positive probability;
+the path must be non-null and the probability strictly between 0 and 1.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#bloomFilterLength()" class="member-name-link">bloomFilterLength()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-bloomFilterLength"><code>bloomFilterLength</code></a> record component.</div>
@@ -342,6 +352,11 @@ to be assembled by the assembly thread.</div>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#bloomFilterOffset()" class="member-name-link">bloomFilterOffset()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-bloomFilterOffset"><code>bloomFilterOffset</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#bloomFilters()" class="member-name-link">bloomFilters()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">The columns that carry a Bloom filter, keyed by dotted leaf path, each with its filter's
+false-positive probability.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/PhysicalType.html#BOOLEAN" class="member-name-link">BOOLEAN</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PhysicalType.html" title="enum class in dev.hardwood.metadata">PhysicalType</a></dt>
 <dd>
@@ -1042,6 +1057,10 @@ the page.</div>
 <dt><a href="dev/hardwood/metadata/LogicalType.DecimalType.html#%3Cinit%3E(int,int)" class="member-name-link">DecimalType(int, int)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.DecimalType.html" title="class in dev.hardwood.metadata">LogicalType.DecimalType</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>DecimalType</code> record class.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_BLOOM_FILTER_FPP" class="member-name-link">DEFAULT_BLOOM_FILTER_FPP</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Default false-positive probability of a column's Bloom filter: 1%.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_CODEC" class="member-name-link">DEFAULT_CODEC</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>

@@ -2069,9 +2069,9 @@
 <p>Reading a Parquet file is random access over bytes that already exist: the footer says where everything is, and the reader jumps to the parts it wants. Writing inverts that. The output size is unknown until the file is finished, the container is laid out for forward-only production, and every offset a reader will need is only known once the bytes it describes have been written.</p>
 <h2 id="forward-only-footer-last">Forward-only, footer-last<a class="headerlink" href="#forward-only-footer-last" title="Permanent link">&para;</a></h2>
 <p>A Parquet file is written front to back and never seeked backward:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>PAR1 | &lt;row group 0 pages&gt; | &lt;row group 1 pages&gt; | … | &lt;page index&gt; | FileMetaData | &lt;footer length&gt; | PAR1
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>PAR1 | &lt;row group 0 pages&gt; | &lt;row group 1 pages&gt; | … | &lt;Bloom filters&gt; | &lt;page index&gt; | FileMetaData | &lt;footer length&gt; | PAR1
 </code></pre></div>
-<p>The <code>FileMetaData</code> footer carries the schema and every page and column-chunk offset, and it can only be serialized once those offsets are known, so it goes last. The writer maintains a running byte position, records offsets as it streams pages out, and emits the accumulated metadata at the end. Each page's bounds and location go into the page index, which is written for the whole file just before the footer.</p>
+<p>The <code>FileMetaData</code> footer carries the schema and every page and column-chunk offset, and it can only be serialized once those offsets are known, so it goes last. The writer maintains a running byte position, records offsets as it streams pages out, and emits the accumulated metadata at the end. Each page's bounds and location go into the page index, which is written for the whole file just before the footer, after the Bloom filters of the columns configured to carry one.</p>
 <ul>
 <li><strong>A file is valid only after <code>close()</code> returns.</strong> Before that, the destination holds pages without a footer, and no reader can open it. A writer abandoned mid-way leaves nothing readable.</li>
 <li><strong>A failure leaves nothing behind.</strong> When the writer cannot finish, it discards what it has written; see <a href="../../how-to/write-failures/">Handle Write Failures</a>. <code>RowWriter.tryWriteRow</code> rejects a record without failing the writer. The local backend writes to a temporary sibling path and renames atomically on close, so a reader never observes a half-written file at the target path.</li>
@@ -2079,14 +2079,14 @@
 </ul>
 <h2 id="what-bounds-memory">What bounds memory<a class="headerlink" href="#what-bounds-memory" title="Permanent link">&para;</a></h2>
 <p>A column chunk's metadata (its compressed and uncompressed sizes, its page offsets, its statistics) is only known once the chunk's bytes have been encoded. The writer therefore encodes and buffers a whole row group's columns in memory, then writes them out in schema order and records where each landed.</p>
-<p>A file of any size is a sequence of row groups, each buffered, flushed and forgotten, so peak memory follows whichever target cuts a row group, whatever the size of the file, apart from the page index described below. <code>rowGroupTargetRows</code> is usually the one that cuts, since it binds for any record narrower than about 128 bytes; <code>rowGroupBufferTargetBytes</code> takes over above that and is what keeps records wider than expected from making a row group unboundedly large.</p>
+<p>A file of any size is a sequence of row groups, each buffered, flushed and forgotten, so peak memory follows whichever target cuts a row group, whatever the size of the file, apart from the page index and Bloom filters described below. <code>rowGroupTargetRows</code> is usually the one that cuts, since it binds for any record narrower than about 128 bytes; <code>rowGroupBufferTargetBytes</code> takes over above that and is what keeps records wider than expected from making a row group unboundedly large.</p>
 <p>A row group passes <code>rowGroupBufferTargetBytes</code> by at most one record, since a record cannot be split across row groups.</p>
 <p>Two overheads sit on top of the target, and neither scales with how much you write:</p>
 <ul>
 <li><strong>Growth headroom.</strong> The buffers hold more than they are charged for while they grow: the value stores grow by half again, and the level streams, a <code>BYTE_ARRAY</code> column's packed content and every dictionary's value array and hash table double.</li>
 <li><strong>A per-column floor.</strong> A column's buffers have a floor under them, so a schema with enough columns that each one's share of the target falls below that floor opens at a multiple of it. Measured, 200 columns against a 1 MiB target hold about 2.4 MB before a record arrives, while a thousand columns against the default 128 MiB target stay inside it, their shares being far above the floor.</li>
 </ul>
-<p>The page index is held until <code>close()</code> writes it, so it grows with the file: per data page, a location and two bounds. A bound is the type's width, or for a <code>BYTE_ARRAY</code> column usually at most <code>statisticsTruncationLength</code> bytes; a page holds at most <code>pageTargetRows</code> records and fewer where its bytes reach <code>pageTargetBytes</code> first.</p>
+<p>The page index is held until <code>close()</code> writes it, so it grows with the file: per data page, a location and two bounds. A bound is the type's width, or for a <code>BYTE_ARRAY</code> column usually at most <code>statisticsTruncationLength</code> bytes; a page holds at most <code>pageTargetRows</code> records and fewer where its bytes reach <code>pageTargetBytes</code> first. Bloom filters are held until <code>close()</code> too: per row group, each configured column's filter, about 1.2 bytes per distinct value of the chunk at the default false-positive probability, rounded up to a power of two. While a filter is built, a chunk that wrote no dictionary briefly holds up to about 2.4 bytes per non-null value for it.</p>
 <p>Where the <strong>row target</strong> cuts first, peak heap is instead the row count times what a record retains, which follows from what each column keeps:</p>
 <table>
 <thead>
@@ -2181,8 +2181,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c440616b28691c3989e50582b8e4535ed7b49989" target="_blank" rel="noopener">
-      c440616b
+    <a href="https://github.com/hardwood-hq/hardwood/tree/452505c26558f6fb2106d336c9cf91b10ed4cfec" target="_blank" rel="noopener">
+      452505c2
     </a>
   
 </div>

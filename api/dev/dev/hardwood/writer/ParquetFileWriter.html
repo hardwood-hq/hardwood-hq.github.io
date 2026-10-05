@@ -109,7 +109,8 @@ levelled column's pages carrying an RLE definition-level stream ahead of the val
 flushes a row group once the bytes it holds for that group reach the configured target. Each
 row group is buffered, written and forgotten, so what the writer holds follows the target
 rather than the size of the file, apart from the page index it keeps for the end of the file
-(a location and two bounds per data page) — and the target counts what is held, so it is that number
+(a location and two bounds per data page) and the Bloom filters of the columns
+<a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a> names — and the target counts what is held, so it is that number
 and not a multiple of it, give or take the slack the value stores carry from growing
 geometrically. Each column chunk is encoded one way throughout:
 by default the writer weighs a dictionary against <code>PLAIN</code> once the row group is buffered and
@@ -300,7 +301,8 @@ be written</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the schema declares no columns, or a column the writer
 cannot write: a <code>FIXED_LEN_BYTE_ARRAY</code> without a positive length, or an annotation
 its physical type cannot carry or no value can be written for; or an encoding
-policy names a column the schema does not have, or one its physical type cannot carry</dd>
+policy names a column the schema does not have, or one its physical type cannot carry;
+or a Bloom filter names a column the schema does not have, or a <code>BOOLEAN</code> column</dd>
 </dl>
 </div>
 </section>
