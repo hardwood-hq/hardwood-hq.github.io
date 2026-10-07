@@ -64,9 +64,17 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Core entry points for reading Parquet files.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#dev.hardwood.reader">dev.hardwood.reader</a></div>
+<div class="col-first odd-row-color"><a href="#dev.hardwood.metadata">dev.hardwood.metadata</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Low-level Parquet file metadata types that mirror the Thrift definitions.</div>
+</div>
+<div class="col-first even-row-color"><a href="#dev.hardwood.reader">dev.hardwood.reader</a></div>
+<div class="col-last even-row-color">
 <div class="block">Parquet file readers with row-oriented and column-oriented APIs.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#dev.hardwood.s3">dev.hardwood.s3</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Amazon S3 backend for reading Parquet files from object storage.</div>
 </div>
 <div class="col-first even-row-color"><a href="#dev.hardwood.writer">dev.hardwood.writer</a></div>
 <div class="col-last even-row-color">
@@ -81,12 +89,22 @@ loadScripts(document, 'script');</script>
 <div class="caption"><span>Classes in <a href="../package-summary.html">dev.hardwood</a> with annotations of type <a href="../Experimental.html" title="annotation interface in dev.hardwood">Experimental</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Class</div>
+<div class="table-header col-second">Interface</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../InMemoryOutputFile.html" class="type-name-link" title="class in dev.hardwood">InMemoryOutputFile</a></code></div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../HardwoodContext.Builder.html" class="type-name-link" title="interface in dev.hardwood">HardwoodContext.Builder</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Builder for a <a href="../HardwoodContext.html" title="interface in dev.hardwood"><code>HardwoodContext</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><code>final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../InMemoryOutputFile.html" class="type-name-link" title="class in dev.hardwood">InMemoryOutputFile</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">An <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that keeps the file in memory and hands it back.</div>
+</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../MetadataSource.html" class="type-name-link" title="interface in dev.hardwood">MetadataSource</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Supplies the parsed footer of a file a reader opens, in place of the reader reading it.</div>
 </div>
 <div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../Validity.html" class="type-name-link" title="interface in dev.hardwood">Validity</a></code></div>
@@ -101,10 +119,37 @@ writer accepts it as a column's null mask.</div>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../HardwoodContext.Builder.html" title="interface in dev.hardwood">HardwoodContext.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">HardwoodContext.</span><code><a href="../HardwoodContext.html#builder()" class="member-name-link">builder</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Starts building a context.</div>
+</div>
+<div class="col-first odd-row-color"><code>default <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InputFile.</span><code><a href="../InputFile.html#identity()" class="member-name-link">identity</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">An identifier of the file's content, which differs for different content, if the
+backend can supply one without a request of its own; empty when it cannot.</div>
+</div>
 <div class="col-first even-row-color"><code>static <a href="../InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">OutputFile.</span><code><a href="../OutputFile.html#inMemory()" class="member-name-link">inMemory</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an uncreated <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that keeps the file in memory.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dev.hardwood.metadata">
+<h2>Uses of <a href="../Experimental.html" title="annotation interface in dev.hardwood">Experimental</a> in <a href="../metadata/package-summary.html">dev.hardwood.metadata</a></h2>
+<div class="caption"><span>Classes in <a href="../metadata/package-summary.html">dev.hardwood.metadata</a> with annotations of type <a href="../Experimental.html" title="annotation interface in dev.hardwood">Experimental</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../metadata/ParsedFooter.html" class="type-name-link" title="interface in dev.hardwood.metadata">ParsedFooter</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The parsed footer of one file, as a <a href="../MetadataSource.html" title="interface in dev.hardwood"><code>MetadataSource</code></a> hands it to a reader.</div>
 </div>
 </div>
 </section>
@@ -138,6 +183,28 @@ stores once, which <a href="../reader/ColumnReader.html#getDictionaryIds()"><cod
 <div class="col-second odd-row-color"><code><a href="../reader/LayerKind.html" class="type-name-link" title="enum class in dev.hardwood.reader">LayerKind</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Classifies a <a href="../reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> layer between root and leaf.</div>
+</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../reader/StaleMetadataException.html" class="type-name-link" title="class in dev.hardwood.reader">StaleMetadataException</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Raised when the footer a <a href="../MetadataSource.html" title="interface in dev.hardwood"><code>MetadataSource</code></a> supplied does not describe the file being read.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dev.hardwood.s3">
+<h2>Uses of <a href="../Experimental.html" title="annotation interface in dev.hardwood">Experimental</a> in <a href="../s3/package-summary.html">dev.hardwood.s3</a></h2>
+<div class="caption"><span>Methods in <a href="../s3/package-summary.html">dev.hardwood.s3</a> with annotations of type <a href="../Experimental.html" title="annotation interface in dev.hardwood">Experimental</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">S3InputFile.</span><code><a href="../s3/S3InputFile.html#identity()" class="member-name-link">identity</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">The object's <code>ETag</code>, taken from the response to the request <a href="../s3/S3InputFile.html#open()"><code>S3InputFile.open()</code></a> issues; empty when
+the endpoint sent none.</div>
 </div>
 </div>
 </section>

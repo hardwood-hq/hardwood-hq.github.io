@@ -946,6 +946,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#reusing-footers-across-opens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reusing Footers Across Opens
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#measuring-fetch-cost" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2041,6 +2052,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#reusing-footers-across-opens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reusing Footers Across Opens
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#measuring-fetch-cost" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2197,6 +2219,8 @@
 <p>To control connection pooling, proxy settings or other transport configuration, pass a pre-configured <code>HttpClient</code> with <code>.httpClient(client)</code>. The caller closes that client, and <code>connectTimeout</code> does not apply to it.</p>
 <h2 id="limiting-fetched-data">Limiting Fetched Data<a class="headerlink" href="#limiting-fetched-data" title="Permanent link">&para;</a></h2>
 <p>To fetch only the pages covering the rows a partial read needs, set <code>head(n)</code> on the <code>buildRowReader()</code> builder. <a href="../../reference/s3/#io-behavior">I/O behavior</a> describes what each read fetches.</p>
+<h2 id="reusing-footers-across-opens">Reusing Footers Across Opens<a class="headerlink" href="#reusing-footers-across-opens" title="Permanent link">&para;</a></h2>
+<p>A process that opens the same objects repeatedly can take each object's footer from its own cache, through a <code>MetadataSource</code> on the <code>HardwoodContext</code> (see <a href="../metadata/#reuse-a-parsed-footer-across-readers">Reuse a parsed footer across readers</a> for the recipe). An S3 object's <code>InputFile.identity()</code> is its <code>ETag</code>, read from the response to the GET every open makes, so a cache keyed on the object's URI and <code>ETag</code> misses when the object is replaced, at no extra request. On a hit, opening an object costs that one GET whatever the footer's size (<a href="../../reference/s3/#footer-pre-fetch">Footer pre-fetch</a>).</p>
 <h2 id="measuring-fetch-cost">Measuring Fetch Cost<a class="headerlink" href="#measuring-fetch-cost" title="Permanent link">&para;</a></h2>
 <p>Each <code>S3InputFile</code> counts the GET requests it issued and the bytes it fetched:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.s3.S3InputFile</span><span class="p">;</span>
@@ -2263,8 +2287,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/25aec22e1da8a0d9c4c6b2e1b7067263291369ee" target="_blank" rel="noopener">
-      25aec22e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ecc3dfdb15f9157b42fcec02bba31a5241bd6253" target="_blank" rel="noopener">
+      ecc3dfdb
     </a>
   
 </div>

@@ -63,16 +63,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Core entry points for reading Parquet files.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#dev.hardwood.reader">dev.hardwood.reader</a></div>
+<div class="col-first odd-row-color"><a href="#dev.hardwood.metadata">dev.hardwood.metadata</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Low-level Parquet file metadata types that mirror the Thrift definitions.</div>
+</div>
+<div class="col-first even-row-color"><a href="#dev.hardwood.reader">dev.hardwood.reader</a></div>
+<div class="col-last even-row-color">
 <div class="block">Parquet file readers with row-oriented and column-oriented APIs.</div>
 </div>
-<div class="col-first even-row-color"><a href="#dev.hardwood.s3">dev.hardwood.s3</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#dev.hardwood.s3">dev.hardwood.s3</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Amazon S3 backend for reading Parquet files from object storage.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#dev.hardwood.writer">dev.hardwood.writer</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#dev.hardwood.writer">dev.hardwood.writer</a></div>
+<div class="col-last even-row-color">
 <div class="block">Parquet file writer, with a columnar and a row-oriented API over one core.</div>
 </div>
 </div>
@@ -96,13 +100,21 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Context object that manages shared resources for Parquet file reading.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/InMemoryOutputFile.html#dev.hardwood">InMemoryOutputFile</a></div>
+<div class="col-first odd-row-color"><a href="class-use/HardwoodContext.Builder.html#dev.hardwood">HardwoodContext.Builder</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Builder for a <a href="HardwoodContext.html" title="interface in dev.hardwood"><code>HardwoodContext</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/InMemoryOutputFile.html#dev.hardwood">InMemoryOutputFile</a></div>
+<div class="col-last even-row-color">
 <div class="block">An <a href="OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that keeps the file in memory and hands it back.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/InputFile.html#dev.hardwood">InputFile</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/InputFile.html#dev.hardwood">InputFile</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Abstraction for reading Parquet file data.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/MetadataSource.html#dev.hardwood">MetadataSource</a></div>
+<div class="col-last even-row-color">
+<div class="block">Supplies the parsed footer of a file a reader opens, in place of the reader reading it.</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/OutputFile.html#dev.hardwood">OutputFile</a></div>
 <div class="col-last odd-row-color">
@@ -113,6 +125,23 @@ loadScripts(document, 'script');</script>
 <div class="block">Per-item nullability over a run of items, shared by the reader and the writer: the
 reader returns it (a column-reader leaf or <code>STRUCT</code> / <code>REPEATED</code> layer scope), and the
 writer accepts it as a column's null mask.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dev.hardwood.metadata">
+<div class="caption"><span>Classes in <a href="package-summary.html">dev.hardwood</a> used by <a href="metadata/package-summary.html">dev.hardwood.metadata</a></span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="class-use/Experimental.html#dev.hardwood.metadata">Experimental</a></div>
+<div class="col-last even-row-color">
+<div class="block">Marks a public API as experimental.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/InputFile.html#dev.hardwood.metadata">InputFile</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Abstraction for reading Parquet file data.</div>
 </div>
 </div>
 </section>
@@ -150,8 +179,12 @@ writer accepts it as a column's null mask.</div>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="class-use/InputFile.html#dev.hardwood.s3">InputFile</a></div>
+<div class="col-first even-row-color"><a href="class-use/Experimental.html#dev.hardwood.s3">Experimental</a></div>
 <div class="col-last even-row-color">
+<div class="block">Marks a public API as experimental.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/InputFile.html#dev.hardwood.s3">InputFile</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Abstraction for reading Parquet file data.</div>
 </div>
 </div>

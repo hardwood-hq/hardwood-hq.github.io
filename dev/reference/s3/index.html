@@ -2169,7 +2169,11 @@ window, and no read goes to the network again.</p>
 file usually costs one GET. It is a cost heuristic rather than a guarantee: footer
 size grows with row groups × columns and with the size of the per-column statistics,
 so a wide schema, a heavily split file, or long string min/max values can push the
-footer past 64 KB. Reading it then costs one extra GET.</p>
+footer past 64 KB. Reading it then costs one extra GET. When the context's <code>MetadataSource</code>
+supplies the footer, the open reads only the 8-byte trailer, which lies in the window, so that
+extra GET is not made.</p>
+<p>The <code>ETag</code> header of this response is the object's <code>InputFile.identity()</code>, quotes included. It is
+empty when the endpoint sends no <code>ETag</code>.</p>
 <p>This applies to every <code>S3InputFile</code>, independent of the range backing below.</p>
 <h2 id="io-behavior">I/O behavior<a class="headerlink" href="#io-behavior" title="Permanent link">&para;</a></h2>
 <p>Hardwood coalesces the column chunk reads within each row group into as few HTTP requests as
@@ -2287,8 +2291,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/25aec22e1da8a0d9c4c6b2e1b7067263291369ee" target="_blank" rel="noopener">
-      25aec22e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ecc3dfdb15f9157b42fcec02bba31a5241bd6253" target="_blank" rel="noopener">
+      ecc3dfdb
     </a>
   
 </div>

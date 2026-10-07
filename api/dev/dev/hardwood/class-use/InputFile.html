@@ -64,12 +64,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Core entry points for reading Parquet files.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#dev.hardwood.reader">dev.hardwood.reader</a></div>
+<div class="col-first odd-row-color"><a href="#dev.hardwood.metadata">dev.hardwood.metadata</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Low-level Parquet file metadata types that mirror the Thrift definitions.</div>
+</div>
+<div class="col-first even-row-color"><a href="#dev.hardwood.reader">dev.hardwood.reader</a></div>
+<div class="col-last even-row-color">
 <div class="block">Parquet file readers with row-oriented and column-oriented APIs.</div>
 </div>
-<div class="col-first even-row-color"><a href="#dev.hardwood.s3">dev.hardwood.s3</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#dev.hardwood.s3">dev.hardwood.s3</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Amazon S3 backend for reading Parquet files from object storage.</div>
 </div>
 </div>
@@ -127,9 +131,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Hardwood.</span><code><a href="../Hardwood.html#open(dev.hardwood.InputFile)" class="member-name-link">open</a><wbr>(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</code></div>
+<div class="col-first even-row-color"><code><a href="../metadata/ParsedFooter.html" title="interface in dev.hardwood.metadata">ParsedFooter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">MetadataSource.</span><code><a href="../MetadataSource.html#footerOf(dev.hardwood.InputFile)" class="member-name-link">footerOf</a><wbr>(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;file)</code></div>
 <div class="col-last even-row-color">
+<div class="block">The parsed footer of <code>file</code>.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Hardwood.</span><code><a href="../Hardwood.html#open(dev.hardwood.InputFile)" class="member-name-link">open</a><wbr>(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;inputFile)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Open a single Parquet file.</div>
 </div>
 </div>
@@ -142,6 +151,22 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">Hardwood.</span><code><a href="../Hardwood.html#openAll(java.util.List)" class="member-name-link">openAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&gt;&nbsp;inputFiles)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Open multiple Parquet files for reading with cross-file prefetching.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dev.hardwood.metadata">
+<h2>Uses of <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a> in <a href="../metadata/package-summary.html">dev.hardwood.metadata</a></h2>
+<div class="caption"><span>Methods in <a href="../metadata/package-summary.html">dev.hardwood.metadata</a> with parameters of type <a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../metadata/ParsedFooter.html" title="interface in dev.hardwood.metadata">ParsedFooter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ParsedFooter.</span><code><a href="../metadata/ParsedFooter.html#readFrom(dev.hardwood.InputFile)" class="member-name-link">readFrom</a><wbr>(<a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a>&nbsp;openFile)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Reads and parses the footer of an opened file.</div>
 </div>
 </div>
 </section>

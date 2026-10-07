@@ -434,6 +434,10 @@ false-positive probability.</div>
 </dd>
 <dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/HardwoodContext.Builder.html#build()" class="member-name-link">build()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/HardwoodContext.Builder.html" title="interface in dev.hardwood">HardwoodContext.Builder</a></dt>
+<dd>
+<div class="block">Builds the context.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReaderBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.ColumnReadersBuilder.html" title="class in dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></dt>
@@ -468,6 +472,10 @@ false-positive probability.</div>
 <dd>
 <div class="block">Begin configuring a <a href="dev/hardwood/reader/ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented
 access to a column projection.</div>
+</dd>
+<dt><a href="dev/hardwood/HardwoodContext.html#builder()" class="member-name-link">builder()</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a></dt>
+<dd>
+<div class="block">Starts building a context.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ReaderConfig.html#builder()" class="member-name-link">builder()</a> - Static method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ReaderConfig.html" title="class in dev.hardwood.reader">ReaderConfig</a></dt>
 <dd>
@@ -544,6 +552,10 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 </dl>
 <h2 class="title" id="I:C">C</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/reader/StaleMetadataException.html#check()" class="member-name-link">check()</a> - Method in exception class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.html" title="class in dev.hardwood.reader">StaleMetadataException</a></dt>
+<dd>
+<div class="block">The check the supplied footer failed.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/RowGroupPredicate.And.html#children()" class="member-name-link">children()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.And.html" title="class in dev.hardwood.reader">RowGroupPredicate.And</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>children</code> record component.</div>
@@ -1733,6 +1745,10 @@ Variants, or absent.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupScannedEvent.html#file" class="member-name-link">file</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupScannedEvent.html" title="class in dev.hardwood.jfr">RowGroupScannedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/StaleMetadataException.html#fileIdentity()" class="member-name-link">fileIdentity()</a> - Method in exception class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.html" title="class in dev.hardwood.reader">StaleMetadataException</a></dt>
+<dd>
+<div class="block">The identity of the file being read; empty when it has none.</div>
+</dd>
 <dt><a href="dev/hardwood/jfr/FileMappingEvent.html" class="type-name-link" title="class in dev.hardwood.jfr">FileMappingEvent</a> - Class in <a href="dev/hardwood/jfr/package-summary.html">dev.hardwood.jfr</a></dt>
 <dd>
 <div class="block">JFR event emitted when Hardwood memory-maps a region of a Parquet file.</div>
@@ -1746,6 +1762,10 @@ Variants, or absent.</div>
 <dt><a href="dev/hardwood/metadata/FileMetaData.html#%3Cinit%3E(int,java.util.List,long,java.util.List,java.util.Map,java.lang.String,java.util.List)" class="member-name-link">FileMetaData(int, List, long, List, Map, String, List)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FileMetaData.html" title="class in dev.hardwood.metadata">FileMetaData</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>FileMetaData</code> record class.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/StaleMetadataException.html#fileName()" class="member-name-link">fileName()</a> - Method in exception class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.html" title="class in dev.hardwood.reader">StaleMetadataException</a></dt>
+<dd>
+<div class="block">The <a href="dev/hardwood/InputFile.html#name()"><code>InputFile.name()</code></a> of the file being read.</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/FileOpenedEvent.html" class="type-name-link" title="class in dev.hardwood.jfr">FileOpenedEvent</a> - Class in <a href="dev/hardwood/jfr/package-summary.html">dev.hardwood.jfr</a></dt>
 <dd>
@@ -2020,6 +2040,15 @@ fixed-length byte array.</div>
 <dt><a href="dev/hardwood/writer/ColumnBatch.html#floats(java.lang.String,float%5B%5D,dev.hardwood.Validity)" class="member-name-link">floats(String, float[], Validity)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
 <dd>
 <div class="block">Adds the values for an <code>OPTIONAL FLOAT</code> column, addressed by name.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ParsedFooter.html#footerLength()" class="member-name-link">footerLength()</a> - Method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/ParsedFooter.html" title="interface in dev.hardwood.metadata">ParsedFooter</a></dt>
+<dd>
+<div class="block">The length in bytes of the serialized footer, excluding the trailing length field and
+magic number.</div>
+</dd>
+<dt><a href="dev/hardwood/MetadataSource.html#footerOf(dev.hardwood.InputFile)" class="member-name-link">footerOf(InputFile)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/MetadataSource.html" title="interface in dev.hardwood">MetadataSource</a></dt>
+<dd>
+<div class="block">The parsed footer of <code>file</code>.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqDoubleList.html#forEach(java.util.function.DoubleConsumer)" class="member-name-link">forEach(DoubleConsumer)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqDoubleList.html" title="interface in dev.hardwood.row">PqDoubleList</a></dt>
 <dd>
@@ -2724,6 +2753,10 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Context object that manages shared resources for Parquet file reading.</div>
 </dd>
+<dt><a href="dev/hardwood/HardwoodContext.Builder.html" class="type-name-link" title="interface in dev.hardwood">HardwoodContext.Builder</a> - Interface in <a href="dev/hardwood/package-summary.html">dev.hardwood</a></dt>
+<dd>
+<div class="block">Builder for a <a href="dev/hardwood/HardwoodContext.html" title="interface in dev.hardwood"><code>HardwoodContext</code></a>.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/BoundingBox.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/BoundingBox.html" title="class in dev.hardwood.metadata">BoundingBox</a></dt>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
@@ -3045,6 +3078,21 @@ and transport settings.</div>
 </dl>
 <h2 class="title" id="I:I">I</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/InputFile.html#identity()" class="member-name-link">identity()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
+<dd>
+<div class="block">An identifier of the file's content, which differs for different content, if the
+backend can supply one without a request of its own; empty when it cannot.</div>
+</dd>
+<dt><a href="dev/hardwood/s3/S3InputFile.html#identity()" class="member-name-link">identity()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3">S3InputFile</a></dt>
+<dd>
+<div class="block">The object's <code>ETag</code>, taken from the response to the request <a href="dev/hardwood/s3/S3InputFile.html#open()"><code>S3InputFile.open()</code></a> issues; empty when
+the endpoint sent none.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/StaleMetadataException.Check.html#IDENTITY" class="member-name-link">IDENTITY</a> - Enum constant in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.Check.html" title="enum class in dev.hardwood.reader">StaleMetadataException.Check</a></dt>
+<dd>
+<div class="block">The footer's <a href="dev/hardwood/metadata/ParsedFooter.html#sourceIdentity()"><code>ParsedFooter.sourceIdentity()</code></a> differs from the file's
+<a href="dev/hardwood/InputFile.html#identity()"><code>InputFile.identity()</code></a>.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnOrder.html#IEEE754_TOTAL_ORDER" class="member-name-link">IEEE754_TOTAL_ORDER</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnOrder.html" title="enum class in dev.hardwood.metadata">ColumnOrder</a></dt>
 <dd>
 <div class="block">The IEEE 754 total order (the <code>IEEE_754_TOTAL_ORDER</code> union member).</div>
@@ -3921,6 +3969,19 @@ being the common case.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnChunk.html#param-metaData"><code>metaData</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/ParsedFooter.html#metaData()" class="member-name-link">metaData()</a> - Method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/ParsedFooter.html" title="interface in dev.hardwood.metadata">ParsedFooter</a></dt>
+<dd>
+<div class="block">The file's metadata as stated in its footer.</div>
+</dd>
+<dt><a href="dev/hardwood/HardwoodContext.Builder.html#metadataSource(dev.hardwood.MetadataSource)" class="member-name-link">metadataSource(MetadataSource)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/HardwoodContext.Builder.html" title="interface in dev.hardwood">HardwoodContext.Builder</a></dt>
+<dd>
+<div class="block">Installs a <a href="dev/hardwood/MetadataSource.html" title="interface in dev.hardwood"><code>MetadataSource</code></a> that supplies the footer of every file a reader opened
+against the context reads.</div>
+</dd>
+<dt><a href="dev/hardwood/MetadataSource.html" class="type-name-link" title="interface in dev.hardwood">MetadataSource</a> - Interface in <a href="dev/hardwood/package-summary.html">dev.hardwood</a></dt>
+<dd>
+<div class="block">Supplies the parsed footer of a file a reader opens, in place of the reader reading it.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.TimeUnit.html#MICROS" class="member-name-link">MICROS</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.TimeUnit.html" title="enum class in dev.hardwood.metadata">LogicalType.TimeUnit</a></dt>
 <dd>
 <div class="block">Microsecond resolution.</div>
@@ -4441,6 +4502,10 @@ the caller's misuse nor the destination failing.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/writer/ParquetWriteException.html#%3Cinit%3E(java.lang.String,java.lang.Throwable)" class="member-name-link">ParquetWriteException(String, Throwable)</a> - Constructor for exception class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetWriteException.html" title="class in dev.hardwood.writer">ParquetWriteException</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/metadata/ParsedFooter.html" class="type-name-link" title="interface in dev.hardwood.metadata">ParsedFooter</a> - Interface in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
+<dd>
+<div class="block">The parsed footer of one file, as a <a href="dev/hardwood/MetadataSource.html" title="interface in dev.hardwood"><code>MetadataSource</code></a> hands it to a reader.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#pathInSchema()" class="member-name-link">pathInSchema()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-pathInSchema"><code>pathInSchema</code></a> record component.</div>
@@ -4623,6 +4688,10 @@ source.</div>
 <dt><a href="dev/hardwood/reader/ReaderConfig.Builder.html" class="type-name-link" title="class in dev.hardwood.reader">ReaderConfig.Builder</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
 <div class="block">Builder for <a href="dev/hardwood/reader/ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/ParsedFooter.html#readFrom(dev.hardwood.InputFile)" class="member-name-link">readFrom(InputFile)</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/ParsedFooter.html" title="interface in dev.hardwood.metadata">ParsedFooter</a></dt>
+<dd>
+<div class="block">Reads and parses the footer of an opened file.</div>
 </dd>
 <dt><a href="dev/hardwood/InputFile.html#readRange(long,int)" class="member-name-link">readRange(long, int)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood">InputFile</a></dt>
 <dd>
@@ -5135,6 +5204,15 @@ and its repetition- and definition-level histograms.</div>
 <dd>
 <div class="block">Snappy compression (fast, moderate ratio).</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/ParsedFooter.html#sourceIdentity()" class="member-name-link">sourceIdentity()</a> - Method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/ParsedFooter.html" title="interface in dev.hardwood.metadata">ParsedFooter</a></dt>
+<dd>
+<div class="block">The <a href="dev/hardwood/InputFile.html#identity()"><code>InputFile.identity()</code></a> of the file the footer was read from; empty when that file
+had none.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/StaleMetadataException.html#sourceIdentity()" class="member-name-link">sourceIdentity()</a> - Method in exception class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.html" title="class in dev.hardwood.reader">StaleMetadataException</a></dt>
+<dd>
+<div class="block">The identity of the file the supplied footer was read from; empty when it had none.</div>
+</dd>
 <dt><a href="dev/hardwood/s3/RangeBacking.html#SPARSE_TEMPFILE" class="member-name-link">SPARSE_TEMPFILE</a> - Enum constant in enum class dev.hardwood.s3.<a href="dev/hardwood/s3/RangeBacking.html" title="enum class in dev.hardwood.s3">RangeBacking</a></dt>
 <dd>
 <div class="block">Whole-file cache backed by a sparse temp file mmapped into the
@@ -5146,6 +5224,16 @@ process.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html#SPHERICAL" class="member-name-link">SPHERICAL</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html" title="enum class in dev.hardwood.metadata">LogicalType.EdgeInterpolationAlgorithm</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/StaleMetadataException.html" class="type-name-link" title="class in dev.hardwood.reader">StaleMetadataException</a> - Exception Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">Raised when the footer a <a href="dev/hardwood/MetadataSource.html" title="interface in dev.hardwood"><code>MetadataSource</code></a> supplied does not describe the file being read.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/StaleMetadataException.html#%3Cinit%3E(java.lang.String,dev.hardwood.reader.StaleMetadataException.Check,java.util.Optional,java.util.Optional,java.lang.String)" class="member-name-link">StaleMetadataException(String, StaleMetadataException.Check, Optional, Optional, String)</a> - Constructor for exception class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.html" title="class in dev.hardwood.reader">StaleMetadataException</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/StaleMetadataException.Check.html" class="type-name-link" title="enum class in dev.hardwood.reader">StaleMetadataException.Check</a> - Enum Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">The check the supplied footer failed.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html#startInclusive()" class="member-name-link">startInclusive()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>startInclusive</code> record component.</div>
@@ -5256,6 +5344,10 @@ for the sparse-file backing.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html#THOMAS" class="member-name-link">THOMAS</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.EdgeInterpolationAlgorithm.html" title="enum class in dev.hardwood.metadata">LogicalType.EdgeInterpolationAlgorithm</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/HardwoodContext.Builder.html#threads(int)" class="member-name-link">threads(int)</a> - Method in interface dev.hardwood.<a href="dev/hardwood/HardwoodContext.Builder.html" title="interface in dev.hardwood">HardwoodContext.Builder</a></dt>
+<dd>
+<div class="block">Sets the number of platform threads the context uses to decompress and decode pages.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.html#time(boolean,dev.hardwood.metadata.LogicalType.TimeUnit)" class="member-name-link">time(boolean, LogicalType.TimeUnit)</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
 <dd>
 <div class="block">The <code>TIME</code> annotation, for a time of day of a given resolution.</div>
@@ -5660,6 +5752,11 @@ followed by each node in pre-order, groups carrying their child count.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-totalUncompressedSize"><code>totalUncompressedSize</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/StaleMetadataException.Check.html#TRAILER" class="member-name-link">TRAILER</a> - Enum constant in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.Check.html" title="enum class in dev.hardwood.reader">StaleMetadataException.Check</a></dt>
+<dd>
+<div class="block">The file's length, or the footer length its trailer records, differs from those the
+footer was read with.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/PrecisionLossPolicy.html#TRUNCATE" class="member-name-link">TRUNCATE</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></dt>
 <dd>
 <div class="block">Drop the digits the column cannot hold, and write the value.</div>
@@ -5905,6 +6002,10 @@ writer accepts it as a column's null mask.</div>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/StaleMetadataException.Check.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.Check.html" title="enum class in dev.hardwood.reader">StaleMetadataException.Check</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="dev/hardwood/row/VariantType.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.row.<a href="dev/hardwood/row/VariantType.html" title="enum class in dev.hardwood.row">VariantType</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
@@ -6033,6 +6134,11 @@ the order they are declared.</div>
 <div class="block">Returns the value of the <code>values</code> record component.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/LayerKind.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/LayerKind.html" title="enum class in dev.hardwood.reader">LayerKind</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/StaleMetadataException.Check.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.Check.html" title="enum class in dev.hardwood.reader">StaleMetadataException.Check</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>

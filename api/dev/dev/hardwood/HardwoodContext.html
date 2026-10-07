@@ -56,6 +56,7 @@ loadScripts(document, 'script');</script>
 <div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
@@ -63,6 +64,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#close()" tabindex="0">close()</a></li>
 <li><a href="#create()" tabindex="0">create()</a></li>
 <li><a href="#create(int)" tabindex="0">create(int)</a></li>
+<li><a href="#builder()" tabindex="0">builder()</a></li>
 </ol>
 </li>
 </ol>
@@ -84,7 +86,8 @@ loadScripts(document, 'script');</script>
 extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></span></div>
 <div class="block"><p>Context object that manages shared resources for Parquet file reading.</p>
 <p>Holds the thread pool for parallel page decoding, the libdeflate
-decompressor pool for native GZIP decompression, and the decompressor factory.</p>
+decompressor pool for native GZIP decompression, the decompressor factory,
+and the <a href="MetadataSource.html" title="interface in dev.hardwood"><code>MetadataSource</code></a> installed through <a href="#builder()"><code>builder()</code></a>, if any.</p>
 <p>The context lifecycle is tied to either:</p>
 <ul>
 <li><a href="Hardwood.html" title="class in dev.hardwood"><code>Hardwood</code></a> instance (for multi-file usage)</li>
@@ -95,6 +98,23 @@ decompressor pool for native GZIP decompression, and the decompressor factory.</
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="HardwoodContext.Builder.html" class="type-name-link" title="interface in dev.hardwood">HardwoodContext.Builder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Builder for a <a href="HardwoodContext.html" title="interface in dev.hardwood"><code>HardwoodContext</code></a>.</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
@@ -106,22 +126,27 @@ decompressor pool for native GZIP decompression, and the decompressor factory.</
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="HardwoodContext.Builder.html" title="interface in dev.hardwood">HardwoodContext.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#builder()" class="member-name-link">builder</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">Starts building a context.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
 <div class="block">Create a new context with a thread pool sized to available processors.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#create(int)" class="member-name-link">create</a><wbr>(int&nbsp;threads)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#create(int)" class="member-name-link">create</a><wbr>(int&nbsp;threads)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
 <div class="block">Create a new context with a thread pool of the specified size.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html" title="class or interface in java.util.concurrent" class="external-link">ExecutorService</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#executor()" class="member-name-link">executor</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html" title="class or interface in java.util.concurrent" class="external-link">ExecutorService</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#executor()" class="member-name-link">executor</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get the executor service for parallel operations.</div>
 </div>
 </div>
@@ -174,6 +199,24 @@ decompressor pool for native GZIP decompression, and the decompressor factory.</
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(int&nbsp;threads)</span></div>
 <div class="block">Create a new context with a thread pool of the specified size.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="builder()">
+<h3>builder</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="HardwoodContext.Builder.html" title="interface in dev.hardwood">HardwoodContext.Builder</a></span>&nbsp;<span class="element-name">builder</span>()</div>
+<div class="block"><p>Starts building a context.</p>
+<pre style="white-space:pre-wrap;"><code class="language-java">try (HardwoodContext context = HardwoodContext.builder()
+        .threads(16)
+        .metadataSource(source)
+        .build()) {
+    // every reader opened against context takes its footers from source
+}
+</code></pre>
+</div>
 </div>
 </section>
 </li>

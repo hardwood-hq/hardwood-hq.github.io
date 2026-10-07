@@ -1854,10 +1854,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#110-snapshot" class="md-nav__link">
+  <a href="#110beta2-2026-10-06" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1.1.0-SNAPSHOT
+        1.1.0.Beta2 (2026-10-06)
       
     </span>
   </a>
@@ -2003,10 +2003,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#110-snapshot" class="md-nav__link">
+  <a href="#110beta2-2026-10-06" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1.1.0-SNAPSHOT
+        1.1.0.Beta2 (2026-10-06)
       
     </span>
   </a>
@@ -2128,191 +2128,83 @@
 -->
 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
 <p>See <a href="https://github.com/hardwood-hq/hardwood/releases">GitHub Releases</a> for downloads and more information.</p>
-<h2 id="110-snapshot">1.1.0-SNAPSHOT<a class="headerlink" href="#110-snapshot" title="Permanent link">&para;</a></h2>
+<h2 id="110beta2-2026-10-06">1.1.0.Beta2 (2026-10-06)<a class="headerlink" href="#110beta2-2026-10-06" title="Permanent link">&para;</a></h2>
+<p><a href="/api-changes/1.1.0.Beta2/">API changes</a></p>
+<p>Highlights of this release:</p>
 <ul>
-<li><strong>Behaviour change:</strong> by-index accessors on <code>ColumnReaders</code>, <code>RowReader</code> and <code>PqStruct</code>, and the field order of an Avro record, follow the order <code>ColumnProjection.columns(...)</code> names the columns in instead of file schema order. <code>ColumnReaders</code> exposes a column once for every name that selects it. A nested field is selected by its full path only, no longer by its own name alone, and <code>ColumnProjection.getProjectedColumnNames()</code> returns a <code>List</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1066">#1066</a>).</li>
-<li><strong>Behaviour change:</strong> a <code>ColumnReader</code> obtained from <code>ColumnReaders</code> advances only through <code>ColumnReaders.nextBatch()</code>; its own <code>nextBatch()</code> throws <code>IllegalStateException</code>, and its <code>close()</code> has no effect (<a href="https://github.com/hardwood-hq/hardwood/issues/1336">#1336</a>).</li>
-<li><strong>Behaviour change:</strong> a shredded Variant <code>typed_value</code> column of a type the Variant shredding specification does not list, <code>INT96</code> included, raises <code>ParquetReadException</code> when the reader is built (<a href="https://github.com/hardwood-hq/hardwood/issues/1371">#1371</a>).</li>
-<li><strong>Behaviour change:</strong> <code>InputFile.of(ByteBuffer)</code> and <code>InputFile.ofBuffers(...)</code> read a buffer's remaining content, from its position to its limit, instead of the buffer from index 0 to its capacity, so a buffer wrapping part of an array reads correctly and a buffer filled with <code>put(...)</code> must be flipped first (<a href="https://github.com/hardwood-hq/hardwood/issues/1343">#1343</a>).</li>
-<li><strong>Behaviour change:</strong> the <code>dev.hardwood.RowGroupFilter</code> JFR event counts row groups dropped by statistics only; a row group dropped by its bloom filters or dictionaries is reported by the new <code>dev.hardwood.RowGroupBloomFilter</code> and <code>dev.hardwood.RowGroupDictionaryFilter</code> events (<a href="https://github.com/hardwood-hq/hardwood/issues/735">#735</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1259">#1259</a>).</li>
-<li><strong>Behaviour change:</strong> building an <code>AvroRowReader</code> over a schema the Avro binding rejects throws <code>SchemaIncompatibleException</code> for a malformed schema and <code>UnsupportedOperationException</code> for a valid one it cannot map, instead of <code>IllegalArgumentException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1370">#1370</a>).</li>
-<li><strong>Behaviour change:</strong> a <code>ColumnReader</code> batch ends at every row-group boundary when the read includes a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column (<a href="https://github.com/hardwood-hq/hardwood/issues/513">#513</a>).</li>
-<li>
-<p><strong>Behaviour change:</strong> <code>ColumnReader.getBinaryOffsets()</code> is replaced by <code>getBinaryStarts()</code> and <code>getBinaryEnds()</code>, whose ranges into <code>getBinaryValues()</code> need not be contiguous or in value order, and a null <code>FIXED_LEN_BYTE_ARRAY</code> value's range is empty (<a href="https://github.com/hardwood-hq/hardwood/issues/1416">#1416</a>).</p>
+<li>Written files support row-group and page skipping<ul>
+<li>A page index (<code>ColumnIndex</code> and <code>OffsetIndex</code>) per column chunk, with pages of at most <code>WriterConfig.pageTargetRows</code> records</li>
+<li>Split-block Bloom filters for the columns named in <code>WriterConfig.Builder.bloomFilter(...)</code></li>
+<li><code>encoding_stats</code>, so a reader can prune row groups by their dictionary</li>
+</ul>
 </li>
-<li>
-<p><code>ColumnReader.getDictionaryIds()</code> and <code>getBinaryDictionary()</code> expose the dictionary entry of each value of a dictionary-encoded <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column (<a href="https://github.com/hardwood-hq/hardwood/issues/513">#513</a>).</p>
+<li>Further writer additions<ul>
+<li><code>ParquetFileWriter.endRowGroup()</code> closes a row group at a boundary the caller chooses</li>
+<li><code>ParquetFileWriter.abort()</code> abandons a write, and <code>close()</code> after a failed write discards the output instead of publishing a partial file</li>
+<li><code>RowWriter.tryWriteRow(...)</code> reports a rejected record without failing the writer</li>
+<li><code>OutputFile.inMemory()</code> writes a file to memory</li>
+</ul>
 </li>
-<li>A <code>RowReader</code> returns one shared <code>String</code> per dictionary entry in every row group, also where the row-group size is not a multiple of the batch size (<a href="https://github.com/hardwood-hq/hardwood/issues/1199">#1199</a>).</li>
-<li>A <code>ColumnReader</code> over a dictionary-encoded <code>BYTE_ARRAY</code> column builds the per-value byte views of <code>getBinaryStarts()</code> and <code>getBinaryEnds()</code> only once they are read, so a reader of <code>getDictionaryIds()</code> or <code>getStrings()</code> does not pay for them (<a href="https://github.com/hardwood-hq/hardwood/issues/1439">#1439</a>).</li>
-<li>
-<p><code>ColumnReader.getStrings()</code> and <code>getBinaries()</code> no longer spend most of a read in garbage collection under the G1 collector at heaps up to a few GB (<a href="https://github.com/hardwood-hq/hardwood/issues/1437">#1437</a>).</p>
+<li>Fewer requests on remote reads<ul>
+<li>The page index is fetched for the projected columns only, for several row groups per request</li>
+<li>Bloom filters are fetched as the read reaches a row group, together with those of the neighbouring row groups</li>
+<li>Opening a file takes no separate request for the leading magic, and the next row group's first chunk is prefetched</li>
+<li>A multi-file read opens each file as it reaches it, so time to first row no longer grows with the number of files</li>
+</ul>
 </li>
-<li>
-<p>Filter predicates take every literal type a column's accessors return, adding <code>byte[]</code>, <code>LocalDateTime</code>, <code>PqInterval</code> and <code>Instant</code> on legacy <code>INT96</code> columns, and <code>in</code> for every literal type but <code>boolean</code>; <code>inStrings</code> is deprecated in favour of <code>in(String, String...)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/868">#868</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>).</p>
+<li>Parsed footers can be reused across readers<ul>
+<li>A <code>MetadataSource</code> installed through <code>HardwoodContext.builder()</code> supplies the parsed footer of every file a reader opens, so a cached footer spares the footer read and parse</li>
+<li><code>InputFile.identity()</code> (the S3 ETag, or size, modification time and file key locally) detects a changed file, which raises <code>StaleMetadataException</code></li>
+</ul>
 </li>
-<li>
-<p><code>ParquetFileWriter.endRowGroup()</code> closes the open row group at a boundary the caller chooses (<a href="https://github.com/hardwood-hq/hardwood/issues/985">#985</a>).</p>
+<li>Dictionary-encoded batches on <code>ColumnReader</code><ul>
+<li><code>getDictionaryIds()</code> and <code>getBinaryDictionary()</code> expose each value's dictionary entry for <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> and <code>INT96</code> columns</li>
+<li>Binary values are read through per-value views into the batch buffer, built only when read; <code>getStrings()</code> no longer spends most of a read in garbage collection under G1</li>
+</ul>
 </li>
-<li><code>WriterConfig.Builder.bloomFilter(String)</code> and <code>bloomFilter(String, double)</code> write a split-block Bloom filter for a column in every row group (<a href="https://github.com/hardwood-hq/hardwood/issues/1449">#1449</a>).</li>
-<li>
-<p>Written files carry a page index (<code>ColumnIndex</code> and <code>OffsetIndex</code>), so readers can skip individual pages; pages hold whole records and at most <code>WriterConfig.pageTargetRows</code> of them, 20,000 by default (<a href="https://github.com/hardwood-hq/hardwood/issues/1426">#1426</a>).</p>
+<li>Filter predicates<ul>
+<li>One literal rule for every predicate: a literal must be a value the column's accessors return, adding <code>byte[]</code>, <code>LocalDateTime</code>, <code>PqInterval</code> and <code>Instant</code> on <code>INT96</code> columns, and <code>in</code> for every literal type but <code>boolean</code></li>
+<li><code>isNull</code> and <code>isNotNull</code> on struct, <code>LIST</code> and <code>MAP</code> groups</li>
+<li>A binary predicate is evaluated once per dictionary entry instead of once per row</li>
+<li>A filter-only column is not read in row groups whose statistics prove every row matches, and row groups and pages that hold only <code>NaN</code> are skipped</li>
+<li><code>in</code> and <code>notIn</code> in the parquet-java compatibility <code>FilterApi</code></li>
+</ul>
 </li>
-<li>
-<p><code>TIMESTAMP</code> columns over <code>FIXED_LEN_BYTE_ARRAY(12)</code>, which span the years 0001 to 9999 at nanosecond precision, are read, filtered and written (<a href="https://github.com/hardwood-hq/hardwood/issues/921">#921</a>).</p>
+<li>A reworked exception model: <code>IOException</code> signals a transport failure only, a corrupt file raises the unchecked <code>ParquetReadException</code>, and read failures name the row group and column they occurred in</li>
+<li><code>TIMESTAMP</code> columns over <code>FIXED_LEN_BYTE_ARRAY(12)</code>, spanning the years 0001 to 9999 at nanosecond precision, are read, filtered and written</li>
+<li>Correctness fixes<ul>
+<li>Filters, including parquet-java filters through the compatibility layer, no longer return wrong rows for <code>NaN</code> values, unsigned integers, inverted min/max bounds, statistics in an unknown sort order, and byte literals on <code>DECIMAL</code> and <code>FLOAT16</code> columns</li>
+<li><code>INTERVAL</code> columns written by parquet-java are read as <code>INTERVAL</code> instead of as <code>NULL</code> columns</li>
+<li>A column whose name contains a dot can be projected</li>
+<li><code>byteRange</code> on a multi-file reader applies to every file, not the first one only</li>
+<li>A statistics value larger than 1 KB no longer fails the read</li>
+<li>S3 requests to an endpoint that names its default port no longer fail with <code>SignatureDoesNotMatch</code></li>
+<li>Metadata lacking a required field raises <code>ParquetReadException</code> instead of being read with default values</li>
+</ul>
 </li>
-<li>
-<p>Bloom filters are fetched when the read reaches a row group, together with those of the neighbouring row groups, instead of one request per row group before the first row (<a href="https://github.com/hardwood-hq/hardwood/issues/735">#735</a>).</p>
-</li>
-<li>
-<p><code>isNull</code> and <code>isNotNull</code> test whether a struct, <code>LIST</code> or <code>MAP</code> group is present (<a href="https://github.com/hardwood-hq/hardwood/issues/977">#977</a>).</p>
-</li>
-<li>
-<p>Filters, including parquet-java filters through the compatibility layer, no longer return wrong rows for <code>NaN</code> values, unsigned integers, statistics in an unknown sort order and several other edge cases (<a href="https://github.com/hardwood-hq/hardwood/issues/1016">#1016</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1142">#1142</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1144">#1144</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1179">#1179</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1193">#1193</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1197">#1197</a>).</p>
-</li>
-<li>
-<p>A <code>RowReader</code> filters on a column outside its projection instead of throwing partway through iteration when statistics do not settle the predicate (<a href="https://github.com/hardwood-hq/hardwood/issues/1242">#1242</a>).</p>
-</li>
-<li>
-<p>A read fetches the page index of the columns it reads only, for several row groups per request, and a row group whose page index spans more than 2 GB is read instead of raising <code>UnsupportedOperationException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/708">#708</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1113">#1113</a>).</p>
-</li>
-<li>
-<p>A filter column outside the projection is not read in row groups whose statistics prove every row matches, and a <code>RowReader</code> no longer resolves it by name (<a href="https://github.com/hardwood-hq/hardwood/issues/1274">#1274</a>).</p>
-</li>
-<li>
-<p>Row groups and pages whose values are all <code>NaN</code> are skipped by floating-point filters a <code>NaN</code> fails, and a floating-point filter is no longer evaluated row by row in row groups whose statistics prove every row matches (<a href="https://github.com/hardwood-hq/hardwood/issues/898">#898</a>).</p>
-</li>
-<li>
-<p>A filtered <code>ColumnReader</code> evaluates a predicate on a field of a required struct instead of throwing (<a href="https://github.com/hardwood-hq/hardwood/issues/1279">#1279</a>).</p>
-</li>
-<li>
-<p>A logical type annotation a column's physical type cannot carry, or one this release does not recognize, including a <code>TIME</code> or <code>TIMESTAMP</code> in an unrecognized unit, is ignored, and the column is read as its physical type (<a href="https://github.com/hardwood-hq/hardwood/issues/1139">#1139</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1406">#1406</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1239">#1239</a>).</p>
-</li>
-<li>
-<p><code>INTERVAL</code> columns written by parquet-java, which carry <code>converted_type = INTERVAL</code> beside <code>logicalType = UNKNOWN</code>, are read and filtered as <code>INTERVAL</code> instead of as <code>NULL</code> columns (<a href="https://github.com/hardwood-hq/hardwood/issues/1217">#1217</a>).</p>
-</li>
-<li>
-<p>A read shorter than one batch sizes its batches to the rows it can produce, instead of allocating column arrays for as many rows as the memory budget allows (<a href="https://github.com/hardwood-hq/hardwood/issues/1243">#1243</a>).</p>
-</li>
-<li>
-<p>A <code>ParquetFileReader</code> no longer retains a read's <code>RowGroupIterator</code> after the reader consuming it is closed (<a href="https://github.com/hardwood-hq/hardwood/issues/1170">#1170</a>).</p>
-</li>
-<li>
-<p>When <code>ParquetFileReader.open(...)</code> or <code>openAll(...)</code> fails, every input file is closed, as is a context the call created, and closing a reader attempts every input file even when one fails with an unchecked exception (<a href="https://github.com/hardwood-hq/hardwood/issues/1322">#1322</a>).</p>
-</li>
-<li>
-<p><code>readRange</code> on an in-memory <code>InputFile</code> raises <code>IndexOutOfBoundsException</code> naming the file for a range outside it, as the other backends do, instead of an <code>ArithmeticException</code> or an exception without the file name, and a zero-length <code>readRange</code> on an S3 file returns an empty buffer without a request instead of failing (<a href="https://github.com/hardwood-hq/hardwood/issues/1348">#1348</a>).</p>
-</li>
-<li>
-<p>A page whose header declares more values than its body holds raises a <code>ParquetReadException</code> instead of returning values left over from an earlier page (<a href="https://github.com/hardwood-hq/hardwood/issues/1308">#1308</a>).</p>
-</li>
-<li>
-<p>Metadata that lacks a field the format requires (in the footer, the schema, a logical type annotation, a page header or the page index) or carries one with the wrong Thrift type raises a <code>ParquetReadException</code> instead of being read with default values, and a negative footer length raises one instead of an out-of-bounds read error. Key-value metadata holding an entry without a key is read as absent (<a href="https://github.com/hardwood-hq/hardwood/issues/1320">#1320</a>).</p>
-</li>
-<li>
-<p>Closing a <code>ParquetFileReader</code> closes the row and column readers it created that are still open, and waits for the prefetches they started, before it closes the input files; building a reader from a closed <code>ParquetFileReader</code>, or while another thread closes it, throws <code>IllegalStateException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1338">#1338</a>).</p>
-</li>
-<li>
-<p>A multi-file read opens each file as it reaches it rather than when the reader is built, so a later file's I/O errors and <code>SchemaIncompatibleException</code> surface from the reading loop instead of from <code>ParquetFileReader.openAll(...)</code> or <code>build()</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1107">#1107</a>).</p>
-</li>
-<li>
-<p>Every <code>LogicalType</code> member has a static factory, such as <code>LogicalType.string()</code>, <code>LogicalType.decimal(18, 2)</code> and <code>LogicalType.timestamp(true, TimeUnit.MICROS)</code>, and the factories are the documented way to construct one; the record constructors still work (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>).</p>
-</li>
-<li>
-<p><code>print</code>, <code>convert</code>, <code>inspect</code> and <code>dive</code> spell a value of a given logical type the same way: decimals as plain strings (<code>0.0000001</code>, never <code>1E-7</code>), <code>INTERVAL</code> as <code>1mo 15d 3600000ms</code>, and <code>INT96</code> values and statistics as timestamps (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
-</li>
-<li>
-<p>Control characters in values shown by <code>print</code>, <code>dive</code>, <code>inspect</code> and <code>info</code> render as <code>·</code>, so they no longer break table rows or reach the terminal (<a href="https://github.com/hardwood-hq/hardwood/issues/865">#865</a>).</p>
-</li>
-<li>
-<p>A min/max statistic or dictionary entry that does not decode as its type renders in its stored form, <code>0x</code> hex or the stored integer, instead of failing <code>inspect</code> or blanking a <code>dive</code> screen (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
-</li>
-<li>
-<p><code>dive</code> renders unsigned integers inside structs, lists and maps as unsigned, and its physical toggle shows list elements' stored values (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
-</li>
-<li>
-<p><code>convert --format csv</code> quotes a field holding a carriage return (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
-</li>
-<li>
-<p><code>convert --format json</code> writes a non-finite Variant float as a JSON string and a Variant timestamp without a time zone without a trailing <code>Z</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
+<li>CLI<ul>
+<li><code>dive</code> jumps to a given row or row group, and <code>print</code> and <code>convert</code> select the same rows with <code>--skip</code> and <code>--row-group</code></li>
+<li><code>print</code>, <code>convert</code>, <code>inspect</code> and <code>dive</code> render values of a logical type identically; <code>convert --format json</code> writes nested values as JSON objects and arrays</li>
+<li><code>schema -F AVRO</code> and <code>-F PROTO</code> emit schemas that Avro and <code>protoc</code> accept</li>
+<li>The native binary reads <code>ZSTD</code>-compressed files</li>
+</ul>
 </li>
 </ul>
 <p><strong>Breaking Changes:</strong></p>
 <ul>
-<li>
-<p>A filter predicate's literal must be a value the column's accessors return: a <code>String</code> filters only text columns, an <code>Instant</code> only UTC timestamps and a <code>LocalDate</code> only <code>DATE</code> columns. Other literals, ordered operators on types without an order, and equality literals the column cannot hold throw <code>IllegalArgumentException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>).</p>
-</li>
-<li>
-<p><code>intersects</code> with a <code>NaN</code> bound, and <code>and</code> / <code>or</code> with no children, throw <code>IllegalArgumentException</code> when the predicate is built (<a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>).</p>
-</li>
-<li>
-<p><code>getString</code> throws <code>IllegalArgumentException</code> on a column that does not hold text (<a href="https://github.com/hardwood-hq/hardwood/issues/1196">#1196</a>).</p>
-</li>
-<li>
-<p><code>FilterPredicate.SignedBinaryColumnPredicate</code> is removed (<a href="https://github.com/hardwood-hq/hardwood/issues/1190">#1190</a>).</p>
-</li>
-<li>
-<p><code>IOException</code> signals a transport failure only and is declared by <code>RowReader.hasNext</code>/<code>next</code>/<code>close</code> and <code>ColumnReader.nextBatch</code>/<code>close</code>, which implement <code>Closeable</code>; the conditions below raise a different type, and a <code>catch (IOException)</code> written for them compiles but does not catch them (<a href="https://github.com/hardwood-hq/hardwood/issues/1104">#1104</a>; see <a href="../reference/error-handling/">Error Handling</a>).</p>
-<table>
-<thead>
-<tr>
-<th>Condition</th>
-<th>Old type</th>
-<th>New type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Corrupt file: bad magic, corrupt footer, malformed page index, misplaced dictionary page, failed checksum, values that do not decode</td>
-<td><code>IOException</code></td>
-<td><code>ParquetReadException</code> (unchecked; <code>SchemaIncompatibleException</code> extends it)</td>
-</tr>
-<tr>
-<td>A page that will not decompress, a dictionary that will not decode</td>
-<td><code>IOException</code></td>
-<td><code>ParquetReadException</code></td>
-</tr>
-<tr>
-<td>Corrupt metadata value: malformed bloom filter header, geospatial bounding box missing a required field, impossible decimal scale or precision, unknown physical type, repetition type, codec or time unit</td>
-<td><code>IllegalArgumentException</code>, <code>IllegalStateException</code></td>
-<td><code>ParquetReadException</code></td>
-</tr>
-<tr>
-<td>Row group whose page-index region exceeds 2 GB</td>
-<td><code>IOException</code></td>
-<td><code>UnsupportedOperationException</code></td>
-</tr>
-<tr>
-<td>Column chunk stored in a separate file; file over 2 GB opened with the mmap-backed range cache</td>
-<td><code>IOException</code></td>
-<td><code>UnsupportedOperationException</code></td>
-</tr>
-<tr>
-<td>Codec library absent or native library that will not load, on the dictionary path</td>
-<td><code>IOException</code></td>
-<td><code>UnsupportedOperationException</code></td>
-</tr>
-<tr>
-<td>Writer: a compression codec rejects a page body</td>
-<td><code>IOException</code></td>
-<td><code>ParquetWriteException</code> (unchecked)</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p><code>LogicalType.DecimalType</code> takes its precision before its scale, as <code>DECIMAL(p, s)</code> reads, where it used to take scale first (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>). A call in the old order still compiles: <code>LogicalType.decimal(...)</code> rejects a scale above the precision, so a transposed pair fails at the call site unless its scale equals its precision.</p>
-</li>
-<li>
-<p><code>convert --format json</code> writes nested structs, lists, maps and repeated fields as native JSON objects and arrays instead of strings holding their display text (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
-</li>
-<li>
-<p><code>convert --format csv</code> writes a list or map cell as JSON text, as it does a Variant cell (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
-</li>
-<li>
-<p>An unannotated byte array whose text starts with <code>0x</code> renders as <code>0x</code>-prefixed hex on every surface, so a <code>0x…</code> value always means bytes (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>).</p>
-</li>
+<li>Index-based accessors on <code>ColumnReaders</code>, <code>RowReader</code> and <code>PqStruct</code> follow the order <code>ColumnProjection.columns(...)</code> names the columns in, a nested field is selected by its full path only, and <code>getProjectedColumnNames()</code> returns a <code>List</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1066">#1066</a>)</li>
+<li>A corrupt file raises <code>ParquetReadException</code> (unchecked; <code>SchemaIncompatibleException</code> extends it) instead of <code>IOException</code>, and the reader's build, iteration and close methods declare <code>IOException</code> for transport failures; see <a href="../reference/error-handling/">Error Handling</a> for every condition and its type (<a href="https://github.com/hardwood-hq/hardwood/issues/1104">#1104</a>)</li>
+<li>A filter literal must be a value the column's accessors return, such as a <code>String</code> for text columns only and an <code>Instant</code> for UTC timestamps only; other literals throw <code>IllegalArgumentException</code> when the predicate is resolved. <code>FilterPredicate.SignedBinaryColumnPredicate</code> is removed, and <code>inStrings</code> is deprecated in favour of <code>in(String, String...)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1198">#1198</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1190">#1190</a>)</li>
+<li><code>getString</code> throws <code>IllegalArgumentException</code> on a column that does not hold text (<a href="https://github.com/hardwood-hq/hardwood/issues/1196">#1196</a>)</li>
+<li><code>LogicalType.DecimalType</code> takes its precision before its scale; the static factories such as <code>LogicalType.decimal(18, 2)</code> are the documented way to construct a logical type (<a href="https://github.com/hardwood-hq/hardwood/issues/1074">#1074</a>)</li>
+<li><code>ColumnReader.getBinaryOffsets()</code> is replaced by <code>getBinaryStarts()</code> and <code>getBinaryEnds()</code>, and a batch ends at every row-group boundary when the read includes a binary column (<a href="https://github.com/hardwood-hq/hardwood/issues/1416">#1416</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/513">#513</a>)</li>
+<li>A <code>ColumnReader</code> obtained from <code>ColumnReaders</code> advances only through <code>ColumnReaders.nextBatch()</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1336">#1336</a>)</li>
+<li><code>InputFile.of(ByteBuffer)</code> and <code>ofBuffers(...)</code> read a buffer from its position to its limit, so a buffer filled with <code>put(...)</code> must be flipped first (<a href="https://github.com/hardwood-hq/hardwood/issues/1343">#1343</a>)</li>
+<li><code>convert --format json</code> writes nested values as JSON objects and arrays instead of strings, and <code>convert --format csv</code> writes a list or map cell as JSON text (<a href="https://github.com/hardwood-hq/hardwood/issues/1021">#1021</a>)</li>
+<li>The <code>dev.hardwood.RowGroupFilter</code> JFR event counts row groups dropped by statistics only; Bloom filter and dictionary drops have their own events (<a href="https://github.com/hardwood-hq/hardwood/issues/735">#735</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1259">#1259</a>)</li>
 </ul>
+<p>See the <a href="https://github.com/hardwood-hq/hardwood/milestone/9?closed=1">1.1.0.Beta2 milestone</a> on GitHub for the full list of resolved issues.</p>
+<p>Thank you to all contributors to this release: <a href="https://github.com/nitrogen404">Chandan Dhamande</a>, <a href="https://github.com/dhoard">Doug Hoard</a>, <a href="https://github.com/iifawzi">Fawzi Essam</a>, <a href="https://github.com/Fhatu12">Fhatuwani Sikhwari</a>, <a href="https://github.com/gunnarmorling">Gunnar Morling</a>, <a href="https://github.com/kogupta">Kohinoor Gupta</a>, <a href="https://github.com/ZhaoMJ">Mingjie Zhao</a>, <a href="https://github.com/mohamedibrahim54">Mohamed Ibrahim Elsawy</a>, <a href="https://github.com/MovinduJay">Movindu Jayathilake</a>, <a href="https://github.com/shril">Shril Kumar</a>.</p>
 <h2 id="110beta1-2026-08-31">1.1.0.Beta1 (2026-08-31)<a class="headerlink" href="#110beta1-2026-08-31" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.morling.dev/blog/parquet-file-write-support-bloom-filters-improved-performance-hardwood-1-1-0-beta1/">Announcement blog post</a> ·
 <a href="/api-changes/1.1.0.Beta1/">API changes</a></p>
@@ -2508,8 +2400,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/25aec22e1da8a0d9c4c6b2e1b7067263291369ee" target="_blank" rel="noopener">
-      25aec22e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ecc3dfdb15f9157b42fcec02bba31a5241bd6253" target="_blank" rel="noopener">
+      ecc3dfdb
     </a>
   
 </div>

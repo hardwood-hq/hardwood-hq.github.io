@@ -63,6 +63,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#readRange(long,int)" tabindex="0">readRange(long, int)</a></li>
 <li><a href="#length()" tabindex="0">length()</a></li>
 <li><a href="#name()" tabindex="0">name()</a></li>
+<li><a href="#identity()" tabindex="0">identity()</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
 <li><a href="#networkRequestCount()" tabindex="0">networkRequestCount()</a></li>
 <li><a href="#networkBytesFetched()" tabindex="0">networkBytesFetched()</a></li>
@@ -126,35 +127,41 @@ only network traffic in either mode.</p>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#length()" class="member-name-link">length</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#identity()" class="member-name-link">identity</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the total size of the file in bytes.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#name()" class="member-name-link">name</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns an identifier for this file, used in log messages and JFR events.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#networkBytesFetched()" class="member-name-link">networkBytesFetched</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Number of bytes fetched from the network since <a href="#open()"><code>open()</code></a>.</div>
+<div class="block">The object's <code>ETag</code>, taken from the response to the request <a href="#open()"><code>open()</code></a> issues; empty when
+the endpoint sent none.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#networkRequestCount()" class="member-name-link">networkRequestCount</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#length()" class="member-name-link">length</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the total size of the file in bytes.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#name()" class="member-name-link">name</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns an identifier for this file, used in log messages and JFR events.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#networkBytesFetched()" class="member-name-link">networkBytesFetched</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Number of bytes fetched from the network since <a href="#open()"><code>open()</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#networkRequestCount()" class="member-name-link">networkRequestCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Number of HTTP requests issued against the object since <a href="#open()"><code>open()</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open()" class="member-name-link">open</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open()" class="member-name-link">open</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Performs expensive resource acquisition (e.g. memory-mapping, network connect).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readRange(long,int)" class="member-name-link">readRange</a><wbr>(long&nbsp;offset,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readRange(long,int)" class="member-name-link">readRange</a><wbr>(long&nbsp;offset,
  int&nbsp;length)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Read a range of bytes from the file.</div>
 </div>
 </div>
@@ -246,6 +253,23 @@ Must be called before <a href="../InputFile.html#readRange(long,int)"><code>Inpu
 <dd><code><a href="../InputFile.html#name()">name</a></code>&nbsp;in interface&nbsp;<code><a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></code></dd>
 <dt>Returns:</dt>
 <dd>a human-readable name or path</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="identity()">
+<h3>identity</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a>&lt;<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">identity</span>()</div>
+<div class="block">The object's <code>ETag</code>, taken from the response to the request <a href="#open()"><code>open()</code></a> issues; empty when
+the endpoint sent none.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../InputFile.html#identity()">identity</a></code>&nbsp;in interface&nbsp;<code><a href="../InputFile.html" title="interface in dev.hardwood">InputFile</a></code></dd>
+<dt>Returns:</dt>
+<dd>the identity, or empty when the backend has none</dd>
 </dl>
 </div>
 </section>
