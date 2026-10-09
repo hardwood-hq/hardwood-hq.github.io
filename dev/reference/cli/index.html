@@ -2654,7 +2654,45 @@ the terminal instead. <code>convert</code> carries the whole value.</p>
 </code></pre></div>
 <p><code>dive</code> requires an interactive terminal. When stdin or stdout is not a TTY (e.g., a <code>docker run</code> without <code>-it</code>, or output piped to a file), it exits with an error instead of launching the UI.</p>
 <p><code>dive</code> writes no warnings to the terminal while it runs. <code>--log-file &lt;path&gt;</code> writes them to <code>&lt;path&gt;</code> instead, together with a trace of the session's reads, replacing the file's contents; <code>dive</code> exits with an error when it cannot create the file.</p>
-<script src="https://asciinema.org/a/992284.js" id="asciicast-992284" async="true"></script>
+<p><link rel="stylesheet" href="../../stylesheets/asciinema-player.css"></p>
+<div id="dive-player"></div>
+<div id="dive-caption" class="dive-caption"></div>
+<script src="../../javascripts/asciinema-player.min.js"></script>
+<script>
+  (function() {
+    var cast = '../../assets/cli/dive-demo.cast';
+    var caption = document.getElementById('dive-caption');
+    var player = AsciinemaPlayer.create(cast, document.getElementById('dive-player'), {
+      cols: 120,
+      rows: 35,
+      theme: 'solarized-dark'
+    });
+    // The cast's marker events carry the captions; seeking fires no marker
+    // event, so the bar follows the playback position instead.
+    fetch(cast).then(function(response) { return response.text(); }).then(function(text) {
+      var markers = text.split('\n').slice(1).filter(function(line) {
+        return line.indexOf('"m"') !== -1;
+      }).map(function(line) {
+        return JSON.parse(line);
+      }).filter(function(event) {
+        return event[1] === 'm';
+      });
+      function show(time) {
+        var current = markers[0];
+        markers.forEach(function(marker) {
+          if (marker[0] <= time) {
+            current = marker;
+          }
+        });
+        caption.textContent = current[2];
+      }
+      show(0);
+      setInterval(function() {
+        Promise.resolve(player.getCurrentTime()).then(show);
+      }, 200);
+    });
+  })();
+</script>
 
 <h3 id="keys">Keys<a class="headerlink" href="#keys" title="Permanent link">&para;</a></h3>
 <table>
@@ -2730,6 +2768,9 @@ the terminal instead. <code>convert</code> carries the whole value.</p>
 <p>The keybar at the bottom of every screen lists the keys that
 apply in the current context; the menus above list every key.</p>
 <h3 id="screens">Screens<a class="headerlink" href="#screens" title="Permanent link">&para;</a></h3>
+<p>Every screen shares a four-region layout: a top bar with file identity, a
+breadcrumb showing the navigation stack, the active screen body, and a keybar:</p>
+<figure><a href="../../assets/cli/01-landing-overview.svg"><img alt="Overview screen" src="../../assets/cli/01-landing-overview.svg" width="720" /></a><figcaption>Overview</figcaption></figure>
 <p><strong>Overview</strong> drills into <strong>Row groups</strong> → <strong>Row group detail</strong> → <strong>Column chunks</strong> →
 <strong>Column chunk detail</strong>, whose drill menu opens <strong>Pages</strong>, <strong>Column index</strong>, <strong>Offset index</strong>
 and <strong>Dictionary</strong>. <strong>Schema</strong>, <strong>Footer &amp; indexes</strong> and <strong>Data preview</strong> open from Overview too.</p>
@@ -2739,7 +2780,7 @@ and <strong>Dictionary</strong>. <strong>Schema</strong>, <strong>Footer &amp; i
 <li><strong>Schema</strong> — expandable tree of groups and leaves, navigated with <code>→</code> / <code>←</code></li>
 <li><strong>Row groups</strong> — <code>:</code> jumps to a row group by number, <code>d</code> opens the Data preview at the selected group's first row</li>
 <li><strong>Row group detail</strong> — <code>d</code> opens the Data preview at this row group's first row</li>
-<li><strong>Column chunks</strong> — the chunks of one row group, ranked by compressed size, with codec and
+<li><strong>Column chunks</strong> — the chunks of one row group in column order, with type, codec, compressed size and
   dictionary flag</li>
 <li><strong>Column chunk detail</strong> — facts pane grouped into Identity, Storage, Content and Layout, whose
   cursor passes over the group headings, plus drill menu; <code>l</code> adds the repetition and definition level histograms, each level named after
@@ -2758,20 +2799,8 @@ and <strong>Dictionary</strong>. <strong>Schema</strong>, <strong>Footer &amp; i
   <code>PgDn/PgUp</code> flips pages; <code>:</code> jumps to a row by number; <code>Enter</code> opens a per-row modal, where the cursor stops on every line and
   <code>Enter</code> expands the field under it when its full value is not on screen</li>
 </ul>
-<p>Screenshots (click any shot to open it full size):</p>
-<figure><a href="../../assets/cli/01-landing-overview.svg"><img alt="Overview screen" src="../../assets/cli/01-landing-overview.svg" width="720" /></a><figcaption>Overview</figcaption></figure>
-<figure><a href="../../assets/cli/02-schema-tree.svg"><img alt="Schema screen" src="../../assets/cli/02-schema-tree.svg" width="720" /></a><figcaption>Schema</figcaption></figure>
-<figure><a href="../../assets/cli/03-1-rg.svg"><img alt="Row groups screen" src="../../assets/cli/03-1-rg.svg" width="720" /></a><figcaption>Row groups</figcaption></figure>
-<figure><a href="../../assets/cli/03-2-rg-detail.svg"><img alt="Row group detail screen" src="../../assets/cli/03-2-rg-detail.svg" width="720" /></a><figcaption>Row group detail</figcaption></figure>
-<figure><a href="../../assets/cli/03-3-rg-column-chunks.svg"><img alt="Column chunks screen" src="../../assets/cli/03-3-rg-column-chunks.svg" width="720" /></a><figcaption>Column chunks</figcaption></figure>
-<figure><a href="../../assets/cli/03-4-rg-column-chunk-detail.svg"><img alt="Column chunk detail screen" src="../../assets/cli/03-4-rg-column-chunk-detail.svg" width="720" /></a><figcaption>Column chunk detail</figcaption></figure>
-<figure><a href="../../assets/cli/03-5-rg-column-chunk-levels.svg"><img alt="Column chunk level histograms" src="../../assets/cli/03-5-rg-column-chunk-levels.svg" width="720" /></a><figcaption>Column chunk detail with <code>l</code></figcaption></figure>
-<figure><a href="../../assets/cli/04-pages-header-modal.svg"><img alt="Pages screen with page-header modal" src="../../assets/cli/04-pages-header-modal.svg" width="720" /></a><figcaption>Pages with the page-header modal</figcaption></figure>
 <figure><a href="../../assets/cli/05-dict-search.svg"><img alt="Dictionary screen with inline search" src="../../assets/cli/05-dict-search.svg" width="720" /></a><figcaption>Dictionary with <code>/</code> inline search</figcaption></figure>
-<figure><a href="../../assets/cli/06-data-scrolled-right.svg"><img alt="Data preview screen scrolled right" src="../../assets/cli/06-data-scrolled-right.svg" width="720" /></a><figcaption>Data preview scrolled right</figcaption></figure>
-<p>Every screen shares a four-region layout: a top bar with file identity, a
-breadcrumb showing the navigation stack, the active screen body, and a keybar
-(all four visible in the Overview screenshot above).</p>
+<figure><a href="../../assets/cli/06-data-scrolled-right.svg"><img alt="Data preview screen scrolled right" src="../../assets/cli/06-data-scrolled-right.svg" width="720" /></a><figcaption>Data preview scrolled right with <code>→</code></figcaption></figure>
 <h3 id="when-a-file-will-not-read">When a file will not read<a class="headerlink" href="#when-a-file-will-not-read" title="Permanent link">&para;</a></h3>
 <p>Any screen that reads from the file shows a <strong>Read failed</strong> overlay in place of
 itself when the read does not come back. The session stays up: <code>Esc</code> leaves the
@@ -2904,8 +2933,8 @@ filter applied but exits edit mode).</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ecc3dfdb15f9157b42fcec02bba31a5241bd6253" target="_blank" rel="noopener">
-      ecc3dfdb
+    <a href="https://github.com/hardwood-hq/hardwood/tree/73788e3a36aa2ae39e5019c71d6c732cbcd89d53" target="_blank" rel="noopener">
+      73788e3a
     </a>
   
 </div>
