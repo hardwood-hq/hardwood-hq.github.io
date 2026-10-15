@@ -2117,7 +2117,12 @@
 <tr>
 <td><code>credentials(...)</code></td>
 <td>—</td>
-<td>Static <code>S3Credentials</code>, an <code>S3CredentialsProvider</code>, or the AWS chain via <code>hardwood-aws-auth</code>. Required.</td>
+<td>Static <code>S3Credentials</code>, an <code>S3CredentialsProvider</code>, or the AWS chain via <code>hardwood-aws-auth</code>. Required unless <code>anonymous()</code> is set.</td>
+</tr>
+<tr>
+<td><code>anonymous()</code></td>
+<td>off</td>
+<td>Sends requests unsigned, for buckets that allow public access. Mutually exclusive with <code>credentials(...)</code>.</td>
 </tr>
 <tr>
 <td><code>connectTimeout(Duration)</code></td>
@@ -2154,7 +2159,8 @@
 <p>When the retry budget is exhausted, the read fails with an <code>IOException</code>. For an HTTP error
 status the message has the form <code>Failed to open s3://&lt;bucket&gt;/&lt;key&gt;: HTTP &lt;status&gt; &lt;body&gt;</code> when
 opening the file and <code>Failed to read range [&lt;start&gt;, &lt;end&gt;) from s3://&lt;bucket&gt;/&lt;key&gt;: HTTP &lt;status&gt; &lt;body&gt;</code>
-for a range read; for network errors the original <code>IOException</code> message is preserved.</p>
+for a range read; for network errors the original <code>IOException</code> message is preserved. When an
+anonymous source receives HTTP 401 or 403, the message ends with <code>(the request was sent unsigned, without credentials)</code>.</p>
 <p>A range read must be answered with HTTP 206. An endpoint that ignores the <code>Range</code> header and
 answers HTTP 200 with the whole object makes the read fail with an <code>IOException</code> whose message
 has the form <code>Failed to read range [&lt;start&gt;, &lt;end&gt;) from s3://&lt;bucket&gt;/&lt;key&gt;: HTTP 200, expected 206; the endpoint ignored the Range header</code>.</p>
@@ -2237,8 +2243,6 @@ properties:</p>
 <p>Read the counters before the try-with-resources block exits, while the <code>S3InputFile</code> is still open.</p>
 <h2 id="not-supported">Not supported<a class="headerlink" href="#not-supported" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Anonymous (unsigned) requests</strong> — <code>S3Credentials</code> requires an access key + secret key pair;
-  there is no built-in mode for public buckets without credentials.</li>
 <li><strong>Requester-pays buckets</strong> — Hardwood does not send the <code>x-amz-request-payer</code> header. Reads
   against requester-pays buckets will fail with <code>403 AccessDenied</code> even with valid credentials.</li>
 </ul>
@@ -2291,8 +2295,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5af9f3b0f9172252bd9311a7f45507ccbea3554a" target="_blank" rel="noopener">
-      5af9f3b0
+    <a href="https://github.com/hardwood-hq/hardwood/tree/59995718e996d349856524204e709e1b55a638f6" target="_blank" rel="noopener">
+      59995718
     </a>
   
 </div>

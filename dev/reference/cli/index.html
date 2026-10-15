@@ -2838,6 +2838,9 @@ filter applied but exits edit mode).</p>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
 <p>The CLI resolves credentials through the AWS SDK's default credential chain (<code>AWS_ACCESS_KEY_ID</code> / <code>AWS_SECRET_ACCESS_KEY</code> / <code>AWS_SESSION_TOKEN</code> environment variables, profile files, container and instance metadata), which decides the order in which those sources are tried. SSO and web-identity profiles are not supported. See <a href="../../how-to/s3/#credentials">Read from S3</a> for the credential options available to the library.</p>
+<p>When no credential source is configured, the CLI sends unsigned requests, which read buckets that allow public access. A source counts as configured when any of these is set: <code>AWS_ACCESS_KEY_ID</code>, <code>AWS_SECRET_ACCESS_KEY</code>, <code>AWS_SESSION_TOKEN</code>, <code>AWS_WEB_IDENTITY_TOKEN_FILE</code>, <code>AWS_CONTAINER_CREDENTIALS_RELATIVE_URI</code>, <code>AWS_CONTAINER_CREDENTIALS_FULL_URI</code>, <code>AWS_PROFILE</code>, or credentials in the <code>default</code> profile of <code>~/.aws/credentials</code> or <code>~/.aws/config</code>. Credentials from instance metadata are used when present; outside EC2, <code>AWS_EC2_METADATA_DISABLED=true</code> skips the instance metadata lookup. A configured source that yields no credentials makes the command fail with an error.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nv">AWS_REGION</span><span class="o">=</span>us-west-2<span class="w"> </span>hardwood<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>s3://public-bucket/data.parquet
+</code></pre></div>
 <p>The CLI additionally reads these environment variables:</p>
 <table>
 <thead>
@@ -2933,8 +2936,8 @@ filter applied but exits edit mode).</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5af9f3b0f9172252bd9311a7f45507ccbea3554a" target="_blank" rel="noopener">
-      5af9f3b0
+    <a href="https://github.com/hardwood-hq/hardwood/tree/59995718e996d349856524204e709e1b55a638f6" target="_blank" rel="noopener">
+      59995718
     </a>
   
 </div>

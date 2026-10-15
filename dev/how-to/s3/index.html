@@ -902,6 +902,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#public-buckets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Buckets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#multiple-files" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2008,6 +2019,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#public-buckets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Public Buckets
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#multiple-files" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2162,59 +2184,72 @@
 <a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p><code>defaultChain()</code> delegates to the AWS SDK's <code>DefaultCredentialsProvider</code>, which decides the order in which the sources are tried. <code>SdkCredentialsProviders.fromProfile("my-profile")</code> binds one named profile from <code>~/.aws/credentials</code> instead. SSO and web-identity profiles need the AWS SDK's <code>sso</code>, <code>ssooidc</code> and <code>sts</code> modules on the classpath; <code>hardwood-aws-auth</code> does not bring them.</p>
+<h2 id="public-buckets">Public Buckets<a class="headerlink" href="#public-buckets" title="Permanent link">&para;</a></h2>
+<p>Read a bucket that allows public access by sending unsigned requests:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">        </span><span class="p">.</span><span class="na">region</span><span class="p">(</span><span class="s">"us-west-2"</span><span class="p">)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">        </span><span class="p">.</span><span class="na">anonymous</span><span class="p">()</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">        </span><span class="n">source</span><span class="p">.</span><span class="na">inputFile</span><span class="p">(</span><span class="s">"s3://public-bucket/data/trips.parquet"</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="c1">// read as usual</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>anonymous()</code> replaces <code>credentials(...)</code>; the <a href="../../reference/s3/#s3source-builder-options">S3 Reference</a> lists the rules for combining them.</p>
 <h2 id="multiple-files">Multiple Files<a class="headerlink" href="#multiple-files" title="Permanent link">&para;</a></h2>
 <p>Read multiple files in the same bucket:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.Hardwood</span><span class="p">;</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Hardwood</span><span class="w"> </span><span class="n">hardwood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Hardwood</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">     </span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">parquet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hardwood</span><span class="p">.</span><span class="na">openAll</span><span class="p">(</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">             </span><span class="n">source</span><span class="p">.</span><span class="na">inputFilesInBucket</span><span class="p">(</span><span class="s">"my-bucket"</span><span class="p">,</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">                     </span><span class="s">"data/part-001.parquet"</span><span class="p">,</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">                     </span><span class="s">"data/part-002.parquet"</span><span class="p">,</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">                     </span><span class="s">"data/part-003.parquet"</span><span class="p">));</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parquet</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">reader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">        </span><span class="n">reader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span><span class="c1">// ...</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.Hardwood</span><span class="p">;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Hardwood</span><span class="w"> </span><span class="n">hardwood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Hardwood</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">     </span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">parquet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hardwood</span><span class="p">.</span><span class="na">openAll</span><span class="p">(</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">             </span><span class="n">source</span><span class="p">.</span><span class="na">inputFilesInBucket</span><span class="p">(</span><span class="s">"my-bucket"</span><span class="p">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">                     </span><span class="s">"data/part-001.parquet"</span><span class="p">,</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">                     </span><span class="s">"data/part-002.parquet"</span><span class="p">,</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">                     </span><span class="s">"data/part-003.parquet"</span><span class="p">));</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parquet</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">reader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">        </span><span class="n">reader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">        </span><span class="c1">// ...</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="p">}</span>
 </code></pre></div>
 <p>Read multiple files across buckets:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">hardwood</span><span class="p">.</span><span class="na">openAll</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="na">inputFiles</span><span class="p">(</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">        </span><span class="s">"s3://bucket-a/events.parquet"</span><span class="p">,</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">        </span><span class="s">"s3://bucket-b/events.parquet"</span><span class="p">));</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">hardwood</span><span class="p">.</span><span class="na">openAll</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="na">inputFiles</span><span class="p">(</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">        </span><span class="s">"s3://bucket-a/events.parquet"</span><span class="p">,</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">        </span><span class="s">"s3://bucket-b/events.parquet"</span><span class="p">));</span>
 </code></pre></div>
 <h2 id="s3-compatible-services">S3-Compatible Services<a class="headerlink" href="#s3-compatible-services" title="Permanent link">&para;</a></h2>
 <p>Set a custom endpoint for S3-compatible services:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1">// Cloudflare R2</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">        </span><span class="p">.</span><span class="na">endpoint</span><span class="p">(</span><span class="s">"https://&lt;account-id&gt;.r2.cloudflarestorage.com"</span><span class="p">)</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(</span><span class="n">S3Credentials</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">accessKeyId</span><span class="p">,</span><span class="w"> </span><span class="n">secretKey</span><span class="p">))</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1">// GCP Cloud Storage (HMAC keys)</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="p">.</span><span class="na">endpoint</span><span class="p">(</span><span class="s">"https://storage.googleapis.com"</span><span class="p">)</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(</span><span class="n">S3Credentials</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">hmacAccessId</span><span class="p">,</span><span class="w"> </span><span class="n">hmacSecret</span><span class="p">))</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1">// MinIO (path-style)</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">        </span><span class="p">.</span><span class="na">endpoint</span><span class="p">(</span><span class="s">"http://localhost:9000"</span><span class="p">)</span>
-<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">        </span><span class="p">.</span><span class="na">pathStyle</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(</span><span class="n">S3Credentials</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">accessKeyId</span><span class="p">,</span><span class="w"> </span><span class="n">secretKey</span><span class="p">))</span>
-<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// Cloudflare R2</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">        </span><span class="p">.</span><span class="na">endpoint</span><span class="p">(</span><span class="s">"https://&lt;account-id&gt;.r2.cloudflarestorage.com"</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(</span><span class="n">S3Credentials</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">accessKeyId</span><span class="p">,</span><span class="w"> </span><span class="n">secretKey</span><span class="p">))</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1">// GCP Cloud Storage (HMAC keys)</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="p">.</span><span class="na">endpoint</span><span class="p">(</span><span class="s">"https://storage.googleapis.com"</span><span class="p">)</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(</span><span class="n">S3Credentials</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">hmacAccessId</span><span class="p">,</span><span class="w"> </span><span class="n">hmacSecret</span><span class="p">))</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="c1">// MinIO (path-style)</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">        </span><span class="p">.</span><span class="na">endpoint</span><span class="p">(</span><span class="s">"http://localhost:9000"</span><span class="p">)</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">        </span><span class="p">.</span><span class="na">pathStyle</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(</span><span class="n">S3Credentials</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">accessKeyId</span><span class="p">,</span><span class="w"> </span><span class="n">secretKey</span><span class="p">))</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p>When a custom endpoint is set, region can be omitted. Use <code>.pathStyle(true)</code> for services that require path-style access (e.g. MinIO, SeaweedFS).</p>
 <h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h2>
 <p>The builder sets timeouts, retries and the HTTP client. The <a href="../../reference/s3/#s3source-builder-options">S3 Reference</a> lists every option with its default.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">        </span><span class="p">.</span><span class="na">region</span><span class="p">(</span><span class="s">"us-east-1"</span><span class="p">)</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(</span><span class="n">S3Credentials</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"AKIA..."</span><span class="p">,</span><span class="w"> </span><span class="s">"secret"</span><span class="p">))</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">        </span><span class="p">.</span><span class="na">connectTimeout</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">        </span><span class="p">.</span><span class="na">requestTimeout</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">        </span><span class="p">.</span><span class="na">maxRetries</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w">            </span><span class="c1">// 0 disables retries</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">        </span><span class="p">.</span><span class="na">region</span><span class="p">(</span><span class="s">"us-east-1"</span><span class="p">)</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">        </span><span class="p">.</span><span class="na">credentials</span><span class="p">(</span><span class="n">S3Credentials</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="s">"AKIA..."</span><span class="p">,</span><span class="w"> </span><span class="s">"secret"</span><span class="p">))</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">        </span><span class="p">.</span><span class="na">connectTimeout</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">        </span><span class="p">.</span><span class="na">requestTimeout</span><span class="p">(</span><span class="n">Duration</span><span class="p">.</span><span class="na">ofSeconds</span><span class="p">(</span><span class="mi">60</span><span class="p">))</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">        </span><span class="p">.</span><span class="na">maxRetries</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="w">            </span><span class="c1">// 0 disables retries</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p>To control connection pooling, proxy settings or other transport configuration, pass a pre-configured <code>HttpClient</code> with <code>.httpClient(client)</code>. The caller closes that client, and <code>connectTimeout</code> does not apply to it.</p>
 <h2 id="limiting-fetched-data">Limiting Fetched Data<a class="headerlink" href="#limiting-fetched-data" title="Permanent link">&para;</a></h2>
@@ -2223,21 +2258,21 @@
 <p>A process that opens the same objects repeatedly can take each object's footer from its own cache, through a <code>MetadataSource</code> on the <code>HardwoodContext</code> (see <a href="../metadata/#reuse-a-parsed-footer-across-readers">Reuse a parsed footer across readers</a> for the recipe). An S3 object's <code>InputFile.identity()</code> is its <code>ETag</code>, read from the response to the GET every open makes, so a cache keyed on the object's URI and <code>ETag</code> misses when the object is replaced, at no extra request. On a hit, opening an object costs that one GET whatever the footer's size (<a href="../../reference/s3/#footer-pre-fetch">Footer pre-fetch</a>).</p>
 <h2 id="measuring-fetch-cost">Measuring Fetch Cost<a class="headerlink" href="#measuring-fetch-cost" title="Permanent link">&para;</a></h2>
 <p>Each <code>S3InputFile</code> counts the GET requests it issued and the bytes it fetched:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.s3.S3InputFile</span><span class="p">;</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">S3InputFile</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="na">inputFile</span><span class="p">(</span><span class="s">"s3://my-bucket/data/trips.parquet"</span><span class="p">);</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">     </span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rows</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">        </span><span class="n">rows</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">        </span><span class="c1">// ...</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"fetched %d bytes over %d requests%n"</span><span class="p">,</span>
-<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">            </span><span class="n">in</span><span class="p">.</span><span class="na">networkBytesFetched</span><span class="p">(),</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">networkRequestCount</span><span class="p">());</span>
-<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.s3.S3InputFile</span><span class="p">;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">S3InputFile</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">source</span><span class="p">.</span><span class="na">inputFile</span><span class="p">(</span><span class="s">"s3://my-bucket/data/trips.parquet"</span><span class="p">);</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">     </span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">in</span><span class="p">);</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">     </span><span class="n">RowReader</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">reader</span><span class="p">.</span><span class="na">rowReader</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rows</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">        </span><span class="n">rows</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">        </span><span class="c1">// ...</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">printf</span><span class="p">(</span><span class="s">"fetched %d bytes over %d requests%n"</span><span class="p">,</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">            </span><span class="n">in</span><span class="p">.</span><span class="na">networkBytesFetched</span><span class="p">(),</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="na">networkRequestCount</span><span class="p">());</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="p">}</span>
 </code></pre></div>
 <p>The <a href="../../reference/s3/#fetch-cost-counters">S3 Reference</a> defines what each counter includes and when to read it.</p>
-<p>Anonymous (unsigned) requests and requester-pays buckets are <a href="../../reference/s3/#not-supported">not supported</a>.</p>
+<p>Requester-pays buckets are <a href="../../reference/s3/#not-supported">not supported</a>.</p>
 
 
 
@@ -2287,8 +2322,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5af9f3b0f9172252bd9311a7f45507ccbea3554a" target="_blank" rel="noopener">
-      5af9f3b0
+    <a href="https://github.com/hardwood-hq/hardwood/tree/59995718e996d349856524204e709e1b55a638f6" target="_blank" rel="noopener">
+      59995718
     </a>
   
 </div>
