@@ -70,6 +70,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#DELTA_BYTE_ARRAY" tabindex="0">DELTA_BYTE_ARRAY</a></li>
 <li><a href="#RLE_DICTIONARY" tabindex="0">RLE_DICTIONARY</a></li>
 <li><a href="#BYTE_STREAM_SPLIT" tabindex="0">BYTE_STREAM_SPLIT</a></li>
+<li><a href="#ALP" tabindex="0">ALP</a></li>
 <li><a href="#UNKNOWN" tabindex="0">UNKNOWN</a></li>
 </ol>
 </li>
@@ -132,44 +133,50 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Enum Constant</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="#BIT_PACKED" class="member-name-link">BIT_PACKED</a></code></div>
+<div class="col-first even-row-color"><code><a href="#ALP" class="member-name-link">ALP</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Adaptive lossless floating-point encoding for <code>FLOAT</code> and <code>DOUBLE</code> data: values scaled to
+integers by a power of ten, frame-of-reference encoded and bit-packed, with the values
+that do not scale exactly stored as they are.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#BIT_PACKED" class="member-name-link">BIT_PACKED</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Bit-packed encoding (deprecated in favor of <a href="#RLE"><code>RLE</code></a>).</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#BYTE_STREAM_SPLIT" class="member-name-link">BYTE_STREAM_SPLIT</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="#BYTE_STREAM_SPLIT" class="member-name-link">BYTE_STREAM_SPLIT</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Byte-stream split encoding for floating-point data.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#DELTA_BINARY_PACKED" class="member-name-link">DELTA_BINARY_PACKED</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="#DELTA_BINARY_PACKED" class="member-name-link">DELTA_BINARY_PACKED</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Delta encoding for integers.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#DELTA_BYTE_ARRAY" class="member-name-link">DELTA_BYTE_ARRAY</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="#DELTA_BYTE_ARRAY" class="member-name-link">DELTA_BYTE_ARRAY</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Incremental (delta) encoding for byte arrays.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#DELTA_LENGTH_BYTE_ARRAY" class="member-name-link">DELTA_LENGTH_BYTE_ARRAY</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="#DELTA_LENGTH_BYTE_ARRAY" class="member-name-link">DELTA_LENGTH_BYTE_ARRAY</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Delta encoding for byte array lengths.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#PLAIN" class="member-name-link">PLAIN</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="#PLAIN" class="member-name-link">PLAIN</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Plain encoding: values are stored back-to-back.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#PLAIN_DICTIONARY" class="member-name-link">PLAIN_DICTIONARY</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="#PLAIN_DICTIONARY" class="member-name-link">PLAIN_DICTIONARY</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Dictionary encoding using a plain-encoded dictionary page (deprecated in favor of <a href="#RLE_DICTIONARY"><code>RLE_DICTIONARY</code></a>).</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#RLE" class="member-name-link">RLE</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="#RLE" class="member-name-link">RLE</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Run-length / bit-packed hybrid encoding.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#RLE_DICTIONARY" class="member-name-link">RLE_DICTIONARY</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="#RLE_DICTIONARY" class="member-name-link">RLE_DICTIONARY</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Dictionary encoding with an RLE-encoded index page.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#UNKNOWN" class="member-name-link">UNKNOWN</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="#UNKNOWN" class="member-name-link">UNKNOWN</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Placeholder for unknown/unsupported encodings found in metadata.</div>
 </div>
 </div>
@@ -295,6 +302,25 @@ the order they are declared.</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a></span>&nbsp;<span class="element-name">BYTE_STREAM_SPLIT</span></div>
 <div class="block">Byte-stream split encoding for floating-point data.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ALP">
+<h3>ALP</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a></span>&nbsp;<span class="element-name">ALP</span></div>
+<div class="block">Adaptive lossless floating-point encoding for <code>FLOAT</code> and <code>DOUBLE</code> data: values scaled to
+integers by a power of ten, frame-of-reference encoded and bit-packed, with the values
+that do not scale exactly stored as they are. In Preview in the format specification.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="https://github.com/apache/parquet-format/blob/master/AlpEncoding.md">ALP Encoding</a></li>
+</ul>
+</dd>
+</dl>
 </div>
 </section>
 </li>

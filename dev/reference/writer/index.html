@@ -2734,6 +2734,10 @@
 <td><code>BYTE_STREAM_SPLIT</code></td>
 <td>A value's bytes scattered across one stream per byte position. Changes no page's size on its own; it changes how well the codec afterwards compresses floating-point data.</td>
 </tr>
+<tr>
+<td><code>ALP</code></td>
+<td>Floating-point values scaled to integers by a power of ten and bit-packed per block of 1024 values. Suits values with few decimal digits, such as prices and measurements; a value with more significant digits than its block keeps is stored as it is, at its width plus 2 bytes.</td>
+</tr>
 </tbody>
 </table>
 <p>An encoding is legal only for some physical types:</p>
@@ -2765,9 +2769,14 @@
 <td><code>BYTE_STREAM_SPLIT</code></td>
 <td><code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
 </tr>
+<tr>
+<td><code>ALP</code></td>
+<td><code>FLOAT</code>, <code>DOUBLE</code></td>
+</tr>
 </tbody>
 </table>
 <p>A policy naming a column whose type cannot carry it fails when the writer is created, including a file-wide <code>BYTE_STREAM_SPLIT</code> over a schema holding a <code>BYTE_ARRAY</code> column. A per-column override names the column by its <strong>dotted leaf path</strong> as the schema spells it, synthetic segments included: <code>readings.list.element</code>, not <code>readings</code>. A path matching no leaf column is rejected the same way.</p>
+<p><code>AUTO</code> never chooses <code>ALP</code>. The format specification marks <code>ALP</code> as Preview, and a column written with it can be read only by readers that implement it. The page cut charges each <code>ALP</code> value its width plus 2 bytes, the most a value can take, so an <code>ALP</code> page holds fewer values than a <code>PLAIN</code> page and stays within <code>pageTargetBytes</code>.</p>
 <p>No policy demands a dictionary; it is an outcome <code>AUTO</code> may arrive at. A <code>BOOLEAN</code> column is never dictionary-encoded, so <code>AUTO</code> resolves it to <code>PLAIN</code> whatever its values are.</p>
 <h2 id="compression-codecs">Compression Codecs<a class="headerlink" href="#compression-codecs" title="Permanent link">&para;</a></h2>
 <table>
@@ -3277,8 +3286,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/46ec0bfbec41524426a5b292f5e1e1c1ba3415c3" target="_blank" rel="noopener">
-      46ec0bfb
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d703e64e354b9f6fecdc13c05fc992a8431b25e8" target="_blank" rel="noopener">
+      d703e64e
     </a>
   
 </div>

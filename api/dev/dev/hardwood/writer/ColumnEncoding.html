@@ -67,6 +67,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#DELTA_LENGTH_BYTE_ARRAY" tabindex="0">DELTA_LENGTH_BYTE_ARRAY</a></li>
 <li><a href="#DELTA_BYTE_ARRAY" tabindex="0">DELTA_BYTE_ARRAY</a></li>
 <li><a href="#BYTE_STREAM_SPLIT" tabindex="0">BYTE_STREAM_SPLIT</a></li>
+<li><a href="#ALP" tabindex="0">ALP</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -136,6 +137,10 @@ cannot carry it fails when the writer is created rather than being quietly repla
 <td><code>BYTE_STREAM_SPLIT</code></td>
 <td><code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
 </tr>
+<tr>
+<td><code>ALP</code></td>
+<td><code>FLOAT</code>, <code>DOUBLE</code></td>
+</tr>
 </tbody>
 </table>
 <p>No policy demands a dictionary: dictionary encoding is an outcome <a href="#AUTO"><code>AUTO</code></a> may arrive at,
@@ -162,30 +167,35 @@ not something to ask for.</p>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Enum Constant</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="#AUTO" class="member-name-link">AUTO</a></code></div>
+<div class="col-first even-row-color"><code><a href="#ALP" class="member-name-link">ALP</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Values scaled to integers by a power of ten, stored as their distance above each block's
+smallest and bit-packed.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#AUTO" class="member-name-link">AUTO</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Let the writer choose, per column chunk, between a dictionary and <code>PLAIN</code>.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#BYTE_STREAM_SPLIT" class="member-name-link">BYTE_STREAM_SPLIT</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="#BYTE_STREAM_SPLIT" class="member-name-link">BYTE_STREAM_SPLIT</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">A value's bytes scattered across one stream per byte position.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#DELTA_BINARY_PACKED" class="member-name-link">DELTA_BINARY_PACKED</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="#DELTA_BINARY_PACKED" class="member-name-link">DELTA_BINARY_PACKED</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Differences between neighbouring values, bit-packed against the smallest difference in
 each block.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#DELTA_BYTE_ARRAY" class="member-name-link">DELTA_BYTE_ARRAY</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="#DELTA_BYTE_ARRAY" class="member-name-link">DELTA_BYTE_ARRAY</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Each value carrying only what it does not share with the value before it.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#DELTA_LENGTH_BYTE_ARRAY" class="member-name-link">DELTA_LENGTH_BYTE_ARRAY</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="#DELTA_LENGTH_BYTE_ARRAY" class="member-name-link">DELTA_LENGTH_BYTE_ARRAY</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The lengths delta-encoded ahead of the values, which is cheaper than <code>PLAIN</code>'s
 per-value 4-byte length prefix wherever the lengths are similar.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#PLAIN" class="member-name-link">PLAIN</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="#PLAIN" class="member-name-link">PLAIN</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Values as they are: fixed-width types little-endian, <code>BYTE_ARRAY</code> behind a 4-byte length
 prefix.</div>
 </div>
@@ -297,6 +307,20 @@ values with common starts — paths, URLs, keys — which are what a dictionary 
 <div class="block">A value's bytes scattered across one stream per byte position. This changes no page's
 size on its own; what it changes is how well the codec afterwards compresses floating
 point data, so it is worth choosing only alongside compression.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="ALP">
+<h3>ALP</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></span>&nbsp;<span class="element-name">ALP</span></div>
+<div class="block">Values scaled to integers by a power of ten, stored as their distance above each block's
+smallest and bit-packed. Suits values with few decimal digits, such as prices,
+measurements and coordinates; a value with more significant digits than its block keeps
+is stored as it is, at more than its <code>PLAIN</code> width. <code>AUTO</code> never chooses it: it is in
+Preview in the format specification, and only readers that implement it can read the
+column.</div>
 </div>
 </section>
 </li>
