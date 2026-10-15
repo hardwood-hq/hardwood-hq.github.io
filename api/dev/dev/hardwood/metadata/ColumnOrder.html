@@ -63,6 +63,7 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list">
 <li><a href="#TYPE_DEFINED_ORDER" tabindex="0">TYPE_DEFINED_ORDER</a></li>
 <li><a href="#IEEE754_TOTAL_ORDER" tabindex="0">IEEE754_TOTAL_ORDER</a></li>
+<li><a href="#INT96_TIMESTAMP_ORDER" tabindex="0">INT96_TIMESTAMP_ORDER</a></li>
 <li><a href="#UNKNOWN" tabindex="0">UNKNOWN</a></li>
 </ol>
 </li>
@@ -132,12 +133,19 @@ column and <code>FileMetaData.columnOrders</code> is empty.</p>
 <div class="col-last even-row-color">
 <div class="block">The IEEE 754 total order (the <code>IEEE_754_TOTAL_ORDER</code> union member).</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#TYPE_DEFINED_ORDER" class="member-name-link">TYPE_DEFINED_ORDER</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#INT96_TIMESTAMP_ORDER" class="member-name-link">INT96_TIMESTAMP_ORDER</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">The order of a legacy <code>INT96</code> timestamp's stored fields (the <code>INT96_TIMESTAMP_ORDER</code> union
+member): the Julian day in the last four bytes compared as a signed 32-bit integer, then the
+nanoseconds of the day in the first eight compared as a signed 64-bit integer, both
+little-endian.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#TYPE_DEFINED_ORDER" class="member-name-link">TYPE_DEFINED_ORDER</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Ordering defined by the column's physical or logical type (the <code>TYPE_ORDER</code> union member).</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#UNKNOWN" class="member-name-link">UNKNOWN</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="#UNKNOWN" class="member-name-link">UNKNOWN</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">A <code>ColumnOrder</code> union member that this version of Hardwood does not recognize, e.g. an
 ordering added to the Parquet format after this release.</div>
 </div>
@@ -203,6 +211,18 @@ documented NaN and ±0 compatibility rules applied when reading statistics.</div
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="ColumnOrder.html" title="enum class in dev.hardwood.metadata">ColumnOrder</a></span>&nbsp;<span class="element-name">IEEE754_TOTAL_ORDER</span></div>
 <div class="block">The IEEE 754 total order (the <code>IEEE_754_TOTAL_ORDER</code> union member).</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="INT96_TIMESTAMP_ORDER">
+<h3>INT96_TIMESTAMP_ORDER</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="ColumnOrder.html" title="enum class in dev.hardwood.metadata">ColumnOrder</a></span>&nbsp;<span class="element-name">INT96_TIMESTAMP_ORDER</span></div>
+<div class="block">The order of a legacy <code>INT96</code> timestamp's stored fields (the <code>INT96_TIMESTAMP_ORDER</code> union
+member): the Julian day in the last four bytes compared as a signed 32-bit integer, then the
+nanoseconds of the day in the first eight compared as a signed 64-bit integer, both
+little-endian. It is chronological only for values whose nanoseconds lie within one day.</div>
 </div>
 </section>
 </li>

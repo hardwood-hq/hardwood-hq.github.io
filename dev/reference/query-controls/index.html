@@ -2546,8 +2546,12 @@ one by one. Results are the same either way; only the I/O saved is lost. Bounds 
 <td>An <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>LIST</code> or <code>MAP</code> column, for which the Parquet spec defines no sort order, or a <code>NULL</code> column</td>
 </tr>
 <tr>
-<td>The column is <code>INT96</code></td>
-<td>The order the Parquet spec gives <code>INT96</code> bounds compares the day before the nanoseconds of the day, which does not follow the instant when the nanoseconds run past one day</td>
+<td>The column is <code>INT96</code> under <code>TYPE_ORDER</code></td>
+<td>The Parquet spec defines no order for <code>INT96</code> bounds under <code>TYPE_ORDER</code>; <code>INT96</code> bounds are read under <code>INT96_TIMESTAMP_ORDER</code> only</td>
+</tr>
+<tr>
+<td>An <code>INT96</code> bound holds nanoseconds of the day outside one day</td>
+<td>Under <code>INT96_TIMESTAMP_ORDER</code>, which orders the day before the nanoseconds of the day, such a bound does not sort by the instant it encodes</td>
 </tr>
 <tr>
 <td>The column's annotation is dropped</td>
@@ -2612,8 +2616,8 @@ and <code>notEq</code> are left to statistics alone. Some equality probes skip o
 </tr>
 </tbody>
 </table>
-<p>An <code>INT96</code> comparison with an <code>Instant</code> therefore reads every row group and page and filters the
-rows one by one.</p>
+<p>An <code>INT96</code> comparison with an <code>Instant</code> therefore skips a row group or page only on its
+<code>min</code> / <code>max</code> bounds (see <a href="#when-statistics-are-ignored">When statistics are ignored</a>).</p>
 <h2 id="column-projection-forms">Column projection forms<a class="headerlink" href="#column-projection-forms" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2761,8 +2765,8 @@ rows one by one.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/727d168a63768b65d01d477b70a3d05e92a02fc1" target="_blank" rel="noopener">
-      727d168a
+    <a href="https://github.com/hardwood-hq/hardwood/tree/46ec0bfbec41524426a5b292f5e1e1c1ba3415c3" target="_blank" rel="noopener">
+      46ec0bfb
     </a>
   
 </div>
