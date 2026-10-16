@@ -940,6 +940,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/file-references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read and Write File References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/write-row-by-row/" class="md-nav__link">
         
   
@@ -2487,6 +2515,10 @@
 <td>a <code>struct</code> group whose fields <code>filler</code> declares</td>
 </tr>
 <tr>
+<td><code>file(name, repetition)</code></td>
+<td>a <code>FILE</code> group with all six children, each <code>OPTIONAL</code>, in the order <code>uri</code>, <code>offset</code>, <code>size</code>, <code>content_type</code>, <code>checksum</code>, <code>inline</code> (see <a href="../accessors/#file-groups">FILE groups</a>)</td>
+</tr>
+<tr>
 <td><code>list(name, repetition, element)</code></td>
 <td>a <code>LIST</code> group whose element <code>element</code> declares</td>
 </tr>
@@ -2538,7 +2570,7 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-<p>Inside a <code>struct</code> filler the same methods appear on <code>FileSchema.StructBuilder</code>; a list element and a map value are declared on <code>FileSchema.ElementBuilder</code>, whose <code>primitive(type, repetition[, typeLength][, logicalType])</code>, <code>struct</code>, <code>list</code> and <code>map</code> carry no name, the surrounding layout supplying it.</p>
+<p>Inside a <code>struct</code> filler the same methods appear on <code>FileSchema.StructBuilder</code>; a list element and a map value are declared on <code>FileSchema.ElementBuilder</code>, whose <code>primitive(type, repetition[, typeLength][, logicalType])</code>, <code>struct</code>, <code>file</code>, <code>list</code> and <code>map</code> carry no name, the surrounding layout supplying it.</p>
 <h3 id="logical-type-factories">Logical Type Factories<a class="headerlink" href="#logical-type-factories" title="Permanent link">&para;</a></h3>
 <p>An annotation is built with the <code>LogicalType</code> static factory of the same name. The parameterless factories return a shared instance.</p>
 <table>
@@ -2620,6 +2652,10 @@
 <tr>
 <td><code>LogicalType.geography(crs, edgeInterpolation)</code></td>
 <td><code>GEOGRAPHY</code> — <code>edgeInterpolation</code> is an <code>EdgeInterpolationAlgorithm</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.file()</code></td>
+<td><code>FILE</code> — annotates a group; declared with <code>file(name, repetition)</code>, and rejected on a column</td>
 </tr>
 </tbody>
 </table>
@@ -2988,9 +3024,16 @@
 <td><code>setStruct</code> / <code>setList</code> / <code>setMap</code></td>
 <td>a filler over <code>StructBuilder</code> / <code>ListBuilder</code> / <code>MapBuilder</code></td>
 </tr>
+<tr>
+<td><code>FILE</code></td>
+<td>group</td>
+<td><code>setFile</code></td>
+<td><code>PqFile</code></td>
+</tr>
 </tbody>
 </table>
-<p><code>ListBuilder</code> has the same set as <code>addInt</code>, <code>addString</code>, <code>addStruct</code>, <code>addNull</code>, … and <code>MapBuilder</code> has <code>addEntry</code>, whose entry struct declares the two fields <code>key</code> and <code>value</code>.</p>
+<p><code>ListBuilder</code> has the same set as <code>addInt</code>, <code>addString</code>, <code>addStruct</code>, <code>addFile</code>, <code>addNull</code>, … and <code>MapBuilder</code> has <code>addEntry</code>, whose entry struct declares the two fields <code>key</code> and <code>value</code>.</p>
+<p>A <code>FILE</code> group is set only through <code>setFile</code> / <code>addFile</code>; <code>setStruct</code> / <code>addStruct</code> on one throws. A group read from an existing file may declare fewer children, and a value setting a field the group has no child for is rejected. The columnar API writes a <code>FILE</code> group's children as ordinary columns, addressed as <code>photo.uri</code>, <code>photo.offset</code> and so on, and rejects a batch holding a present value that is not valid under the rules in <a href="../accessors/#file-groups">FILE groups</a>.</p>
 <p>Timestamp columns split by <code>isAdjustedToUTC</code>, mirroring the reader's split between <code>getTimestamp</code> and <code>getLocalTimestamp</code>: using the wrong setter throws. Both APIs also accept every setter by field index; see <a href="../../how-to/write-row-by-row/#addressing-fields-by-index">Addressing fields by index</a>.</p>
 <p>A timestamp column's physical type sets the range of values it holds; its unit sets the precision on either:</p>
 <table>
@@ -3190,7 +3233,7 @@
 </tr>
 </tbody>
 </table>
-<p>A rejection that depends on the value handed over becomes <code>Rejected</code>: a value outside the range its annotation declares, a value whose magnitude or precision the column cannot hold under the configured <code>PrecisionLossPolicy</code>, a <code>FIXED_LEN_BYTE_ARRAY</code> value of the wrong length, or a <code>REQUIRED</code> field left unset or set null.</p>
+<p>A rejection that depends on the value handed over becomes <code>Rejected</code>: a value outside the range its annotation declares, a value whose magnitude or precision the column cannot hold under the configured <code>PrecisionLossPolicy</code>, a <code>FIXED_LEN_BYTE_ARRAY</code> value of the wrong length, a <code>PqFile</code> that is not a valid reference, sets a field its <code>FILE</code> group has no child for, or holds a malformed <code>checksum</code>, or a <code>REQUIRED</code> field left unset or set null.</p>
 <p>Every other failure throws and fails the writer, as it does under <code>writeRow</code>: an unknown field name or index, a field set twice, a setter that does not fit the field (including any value setter on a column annotated <code>UNKNOWN</code>), an exception thrown by the filler, and a failure while a completed batch is written.</p>
 <h2 id="what-the-writer-rejects">What the Writer Rejects<a class="headerlink" href="#what-the-writer-rejects" title="Permanent link">&para;</a></h2>
 <table>
@@ -3207,7 +3250,7 @@
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
-<td>A schema with no columns; a <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>REQUIRED</code> field left unset by a record; a record whose values for one column pass what a column chunk can hold; a Bloom filter configured for a <code>BOOLEAN</code> column, or with a false-positive probability outside (0, 1)</td>
+<td>A schema with no columns; a <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>FILE</code> value that is not valid, or that sets a field its group has no child for; a <code>REQUIRED</code> field left unset by a record; a record whose values for one column pass what a column chunk can hold; a Bloom filter configured for a <code>BOOLEAN</code> column, or with a false-positive probability outside (0, 1)</td>
 </tr>
 <tr>
 <td><code>IndexOutOfBoundsException</code></td>
@@ -3236,6 +3279,7 @@
 <li>a <code>LIST</code> or <code>MAP</code> group holding anything other than its single <code>REPEATED</code> entry;</li>
 <li>a <code>MAP</code> whose entry is a leaf rather than a group.</li>
 </ul>
+<p>A <code>FILE</code> group with no children is rejected with <code>UnsupportedOperationException</code> when the writer is created.</p>
 <p>The row API reaches a list's values through an element node below the entry, which the legacy two-level lists do not have, so <code>rowWriter()</code> refuses those two shapes and <code>columnWriter()</code> writes them. <code>rowWriter()</code> also requires sibling field names to be unique, which the <code>ColumnBatch</code> indices and dotted paths do not.</p>
 <p>A column's maximum definition level and maximum repetition level must each be at most 255. A schema nested deeper is rejected with <code>UnsupportedOperationException</code> when the writer is created.</p>
 
@@ -3287,8 +3331,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a4794ac5cc3c44e149edd65c6a273c046cfff25a" target="_blank" rel="noopener">
-      a4794ac5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ad2eef066ae668a72c0693a827576b4cc675ea36" target="_blank" rel="noopener">
+      ad2eef06
     </a>
   
 </div>

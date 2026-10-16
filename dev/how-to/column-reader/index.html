@@ -1161,6 +1161,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../file-references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read and Write File References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../write-row-by-row/" class="md-nav__link">
         
   
@@ -2481,7 +2509,7 @@
 <h4 id="navigating-nested-groups-in-the-schema">Navigating nested groups in the schema<a class="headerlink" href="#navigating-nested-groups-in-the-schema" title="Permanent link">&para;</a></h4>
 <p>Before opening a reader for a nested column, you usually need to walk the file's schema tree to find the leaf you want. <code>SchemaNode.GroupNode</code> exposes the structural primitives:</p>
 <ul>
-<li><code>isList()</code> / <code>isMap()</code> / <code>isStruct()</code> — disambiguate which kind of group a node is.</li>
+<li><code>isList()</code> / <code>isMap()</code> / <code>isVariant()</code> / <code>isStruct()</code> — disambiguate which kind of group a node is. A group annotated <code>FILE</code> answers both <code>isStruct()</code> and <code>isFile()</code>: its children are ordinary fields.</li>
 <li><code>getListElement()</code> — for LIST groups, returns the element node, applying Parquet's backward-compatibility rules for legacy 2-level encodings. Walk to the leaf uniformly by recursing while the result <code>isList()</code>; <a href="../../concepts/nested-columns/#logical-element-versus-physical-encoding">Logical element versus physical encoding</a> describes the returned node under each encoding.</li>
 <li><code>getMapKey()</code> / <code>getMapValue()</code> — for MAP groups, returns the key and value nodes from the standard <code>map.key_value.key</code> / <code>map.key_value.value</code> encoding.</li>
 <li><code>children()</code> — for plain struct groups, iterate to get each field.</li>
@@ -2753,8 +2781,8 @@ and maps, <code>getLayerOffsets(k)</code>; the leaf has <code>getLeafValidity()<
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a4794ac5cc3c44e149edd65c6a273c046cfff25a" target="_blank" rel="noopener">
-      a4794ac5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ad2eef066ae668a72c0693a827576b4cc675ea36" target="_blank" rel="noopener">
+      ad2eef06
     </a>
   
 </div>

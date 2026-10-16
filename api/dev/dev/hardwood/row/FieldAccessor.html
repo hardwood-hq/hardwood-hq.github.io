@@ -508,7 +508,7 @@ can be surfaced through this method.</div>
 <code>String</code> for STRING / ENUM / JSON, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDate.html" title="class or interface in java.time" class="external-link"><code>LocalDate</code></a> for DATE, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalTime.html" title="class or interface in java.time" class="external-link"><code>LocalTime</code></a> for TIME,
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> for UTC-adjusted TIMESTAMP, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/LocalDateTime.html" title="class or interface in java.time" class="external-link"><code>LocalDateTime</code></a> for local-wall-clock
 TIMESTAMP, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html" title="class or interface in java.math" class="external-link"><code>BigDecimal</code></a> for DECIMAL, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link"><code>UUID</code></a> for UUID, <a href="PqInterval.html" title="class in dev.hardwood.row"><code>PqInterval</code></a> for
-INTERVAL, <a href="PqVariant.html" title="interface in dev.hardwood.row"><code>PqVariant</code></a> for VARIANT, and <code>byte[]</code> for BYTE_ARRAY /
+INTERVAL, <a href="PqVariant.html" title="interface in dev.hardwood.row"><code>PqVariant</code></a> for VARIANT, <a href="PqFile.html" title="interface in dev.hardwood.row"><code>PqFile</code></a> for FILE, and <code>byte[]</code> for BYTE_ARRAY /
 FIXED_LEN_BYTE_ARRAY with no logical-type annotation. Nested groups
 surface as <a href="PqStruct.html" title="interface in dev.hardwood.row"><code>PqStruct</code></a> / <a href="PqList.html" title="interface in dev.hardwood.row"><code>PqList</code></a> / <a href="PqMap.html" title="interface in dev.hardwood.row"><code>PqMap</code></a>.</p>
 <p>Use <a href="#getRawValue(java.lang.String)"><code>getRawValue(String)</code></a> to obtain the underlying physical value instead.</p>
@@ -533,7 +533,8 @@ logical-type decoding. Primitive leaves surface as the underlying
 TIMESTAMP returns the underlying <code>Long</code> rather than an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a>, and a
 DECIMAL returns the underlying <code>byte[]</code> / <code>Integer</code> / <code>Long</code>. Nested
 groups (struct / list / map / variant) are still returned as their
-typed flyweights since they have no useful &quot;raw&quot; form.</div>
+typed flyweights since they have no useful &quot;raw&quot; form; a FILE group is
+returned as the <a href="PqStruct.html" title="interface in dev.hardwood.row"><code>PqStruct</code></a> of its children, whatever values they hold.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>name</code> - the field name</dd>

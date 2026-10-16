@@ -940,6 +940,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/file-references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read and Write File References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/write-row-by-row/" class="md-nav__link">
         
   
@@ -1589,6 +1617,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#file-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FILE groups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#text-columns" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2096,6 +2135,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#file-groups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FILE groups
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#text-columns" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2327,7 +2377,7 @@ logical-type Java representation through typed accessor methods. For the task-or
 <tr>
 <td><code>getStruct</code></td>
 <td>group</td>
-<td>none</td>
+<td>none, or <code>FILE</code></td>
 <td><code>PqStruct</code></td>
 </tr>
 <tr>
@@ -2347,6 +2397,12 @@ logical-type Java representation through typed accessor methods. For the task-or
 <td>group of two <code>BYTE_ARRAY</code></td>
 <td><code>VARIANT</code></td>
 <td><code>PqVariant</code></td>
+</tr>
+<tr>
+<td><code>getFile</code></td>
+<td>group of up to six children (see <a href="#file-groups">FILE groups</a>)</td>
+<td><code>FILE</code></td>
+<td><code>PqFile</code></td>
 </tr>
 <tr>
 <td><code>isNull</code></td>
@@ -2378,8 +2434,9 @@ predicates compare the value <code>getInt</code> returns.</p>
 their logical-type representation:</p>
 <ul>
 <li><code>RowReader.getValue(name)</code> / <code>getValue(index)</code>: <code>Integer</code> / <code>Long</code> / <code>String</code> / <code>LocalDate</code> /
-  <code>LocalTime</code> / <code>Instant</code> / <code>BigDecimal</code> / <code>UUID</code> / <code>PqInterval</code> / <code>PqVariant</code> / nested <code>PqStruct</code> /
-  <code>PqList</code> / <code>PqMap</code>, with <code>byte[]</code> for un-annotated <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> columns.</li>
+  <code>LocalTime</code> / <code>Instant</code> / <code>BigDecimal</code> / <code>UUID</code> / <code>PqInterval</code> / <code>PqVariant</code> / <code>PqFile</code> / nested
+  <code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code>, with <code>byte[]</code> for un-annotated <code>BYTE_ARRAY</code> /
+  <code>FIXED_LEN_BYTE_ARRAY</code> columns.</li>
 <li><code>PqStruct.getValue(name)</code>: same decoded mapping for nested struct fields.</li>
 <li><code>PqMap.Entry.getKey()</code> / <code>getValue()</code>: same decoded mapping for map keys and values.</li>
 <li><code>PqList.get(index)</code> / <code>PqList.values()</code>: same decoded mapping for list elements.</li>
@@ -2391,12 +2448,14 @@ their logical-type representation:</p>
 <p>A parallel <code>getRawValue</code> family (<code>RowReader.getRawValue</code>, <code>PqStruct.getRawValue</code>,
 <code>PqMap.Entry.getRawKey</code> / <code>getRawValue</code>, <code>PqList.getRaw</code> / <code>rawValues</code>) returns the boxed physical
 value. Nested groups (struct / list / map / variant) have no distinct raw form and are returned
-through their typed flyweight (<code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code> / <code>PqVariant</code>) in both modes.</p>
+through their typed flyweight (<code>PqStruct</code> / <code>PqList</code> / <code>PqMap</code> / <code>PqVariant</code>) in both modes. The
+raw form of a <code>FILE</code> group is the <code>PqStruct</code> of its children, which <code>getStruct</code> also returns and
+which reads whatever values they hold.</p>
 <h2 id="typed-accessors-on-pqlist-and-pqmapentry">Typed accessors on PqList and PqMap.Entry<a class="headerlink" href="#typed-accessors-on-pqlist-and-pqmapentry" title="Permanent link">&para;</a></h2>
 <p><code>PqList</code> has <code>strings()</code> / <code>dates()</code> / <code>times()</code> / <code>timestamps()</code> / <code>decimals()</code> / <code>uuids()</code> /
-<code>intervals()</code> / <code>floats()</code> / <code>booleans()</code>, each returning <code>List&lt;T&gt;</code>, and <code>PqMap.Entry</code> the matching
-<code>getStringValue()</code> / <code>getDateValue()</code> / <code>getIntervalValue()</code> / etc., which avoid the boxed <code>Object</code>
-return of <code>getValue()</code>.</p>
+<code>intervals()</code> / <code>floats()</code> / <code>booleans()</code> / <code>files()</code>, each returning <code>List&lt;T&gt;</code>, and <code>PqMap.Entry</code>
+the matching <code>getStringValue()</code> / <code>getDateValue()</code> / <code>getIntervalValue()</code> / <code>getFileValue()</code> /
+etc., which avoid the boxed <code>Object</code> return of <code>getValue()</code>.</p>
 <p><code>PqMap.Entry</code>'s typed key accessors are <code>getStringKey()</code> / <code>getIntKey()</code> / <code>getLongKey()</code> /
 <code>getBinaryKey()</code>. Other key types (DATE / TIME / TIMESTAMP / DECIMAL / UUID) are read through
 <code>getKey()</code> (decoded) and <code>getRawKey()</code> (raw).</p>
@@ -2404,6 +2463,107 @@ return of <code>getValue()</code>.</p>
 expose <code>PrimitiveIterator.OfInt</code> / <code>OfLong</code> / <code>OfDouble</code>, <code>int get(int)</code>, and <code>int[] toArray()</code>
 without boxing. For nested <code>list&lt;list&lt;int&gt;&gt;</code> (or <code>&lt;long&gt;</code> / <code>&lt;double&gt;</code>), iterate the outer list via
 <code>lists()</code> and call <code>ints()</code> / <code>longs()</code> / <code>doubles()</code> on each inner <code>PqList</code>.</p>
+<h2 id="file-groups">FILE groups<a class="headerlink" href="#file-groups" title="Permanent link">&para;</a></h2>
+<p>A group annotated <code>FILE</code> holds a reference to a range of bytes. Its children are matched by name;
+a group may define any of them, in any order, or none, and each is <code>OPTIONAL</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Child</th>
+<th>Physical type</th>
+<th>Annotation</th>
+<th><code>PqFile</code> accessor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>uri</code></td>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>STRING</code></td>
+<td><code>uri()</code></td>
+</tr>
+<tr>
+<td><code>offset</code></td>
+<td><code>INT64</code></td>
+<td>none, or <code>INT(64, signed)</code></td>
+<td><code>hasOffset()</code>, <code>offset()</code></td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td><code>INT64</code></td>
+<td>none, or <code>INT(64, signed)</code></td>
+<td><code>hasSize()</code>, <code>size()</code></td>
+</tr>
+<tr>
+<td><code>content_type</code></td>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>STRING</code></td>
+<td><code>contentType()</code></td>
+</tr>
+<tr>
+<td><code>checksum</code></td>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>STRING</code></td>
+<td><code>checksum()</code></td>
+</tr>
+<tr>
+<td><code>inline</code></td>
+<td><code>BYTE_ARRAY</code></td>
+<td>none</td>
+<td><code>inline()</code></td>
+</tr>
+</tbody>
+</table>
+<p>A field is set when its child is present and non-null; a string child holding the empty string is
+not set. <code>offset()</code> returns <code>0</code> when no offset is set; <code>size()</code> throws <code>IllegalStateException</code> when
+no size is set. A <code>PqFile</code> the reader returns can be held after the reader moves on; while it is
+reachable, the inline bytes of every value in the batch it was read from stay in memory.</p>
+<p>A value is valid when:</p>
+<ul>
+<li><code>inline</code> or <code>uri</code> is set;</li>
+<li><code>offset</code> is set only together with <code>uri</code> and <code>size</code>;</li>
+<li><code>size</code> is set only together with <code>uri</code>;</li>
+<li><code>offset</code> and <code>size</code> are not negative.</li>
+</ul>
+<p>The bytes a valid value refers to:</p>
+<table>
+<thead>
+<tr>
+<th>Set fields</th>
+<th>Bytes</th>
+<th>Built by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inline</code>, with or without a locator</td>
+<td>the inline bytes; any locator fields record where they came from</td>
+<td><code>PqFile.inline(bytes)</code>, or <code>withInline</code> on a locator</td>
+</tr>
+<tr>
+<td><code>uri</code></td>
+<td>the whole object at <code>uri</code></td>
+<td><code>PqFile.external(uri)</code></td>
+</tr>
+<tr>
+<td><code>uri</code>, <code>size</code></td>
+<td>bytes <code>[0, size)</code> of the object at <code>uri</code></td>
+<td><code>PqFile.external(uri, size)</code></td>
+</tr>
+<tr>
+<td><code>uri</code>, <code>offset</code>, <code>size</code></td>
+<td>bytes <code>[offset, offset + size)</code> of the object at <code>uri</code></td>
+<td><code>PqFile.external(uri, offset, size)</code></td>
+</tr>
+</tbody>
+</table>
+<p>Every value of a group with no children is invalid. <code>getFile</code>, <code>files()</code>, <code>getFileValue()</code> and the
+generic accessors throw <code>ParquetReadException</code> for an invalid value. A group whose children do not
+match the table fails when the file is opened.</p>
+<p><code>checksum</code> holds a token <code>&lt;algorithm&gt;:&lt;digest&gt;</code>. For <code>MD5</code>, <code>CRC32</code>, <code>CRC32C</code> and <code>SHA-256</code> the
+digest is lowercase hex of 32, 8, 8 and 64 characters; an <code>ETAG</code> digest, and the digest of any other
+algorithm, is taken as given. The reader returns the stored token whatever it holds; the writer
+refuses one that does not follow these rules.</p>
 <h2 id="text-columns">Text columns<a class="headerlink" href="#text-columns" title="Permanent link">&para;</a></h2>
 <p><code>getString</code> reads a column whose stored bytes are the UTF-8 encoding of a string: a
 <code>BYTE_ARRAY</code> annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code>, or one carrying no annotation, which older
@@ -2639,8 +2799,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a4794ac5cc3c44e149edd65c6a273c046cfff25a" target="_blank" rel="noopener">
-      a4794ac5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ad2eef066ae668a72c0693a827576b4cc675ea36" target="_blank" rel="noopener">
+      ad2eef06
     </a>
   
 </div>

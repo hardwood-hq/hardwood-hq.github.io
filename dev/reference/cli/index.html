@@ -940,6 +940,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/file-references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read and Write File References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/write-row-by-row/" class="md-nav__link">
         
   
@@ -2484,7 +2512,10 @@ Decimals are always plain strings: <code>0.0000001</code>, never <code>1E-7</cod
 <p>Nested values are native JSON: a struct is an object, a list or repeated field
 an array, and a map an object keyed by each map key's text. Values inside them
 follow the same rules as top-level fields. CSV has no nested structure, so a
-list, repeated field, map, or Variant in a CSV cell is the same JSON as text.</p>
+list, repeated field, map, or Variant in a CSV cell is the same JSON as text.
+A <code>FILE</code> group converts as a struct of its stored children (<code>uri</code>, <code>offset</code>,
+<code>size</code>, <code>content_type</code>, <code>checksum</code>, <code>inline</code>): a JSON object, or one CSV column
+per child such as <code>photo.uri</code>.</p>
 <p>Finite floating-point values are JSON numbers. <code>NaN</code>, <code>Infinity</code>, and
 <code>-Infinity</code> are JSON strings, because JSON has no non-finite number values.
 This holds for floating-point values inside Variant columns too.</p>
@@ -2538,7 +2569,9 @@ column carries, not an absent one.</p>
 <p><code>INT96</code> min/max statistics render as timestamps too.</p>
 <p><code>print</code> and <code>dive</code> render nested and Variant values in one unquoted display
 grammar: structs and maps as <code>{ a : 1 }</code>, lists as <code>[1, 2]</code>, Variant objects
-and arrays in the same shape. <code>convert</code> follows <a href="#convert-output">Convert output</a>.</p>
+and arrays in the same shape. A <code>FILE</code> group renders as the struct of its stored
+children, including a value that is not a valid reference. <code>convert</code> follows
+<a href="#convert-output">Convert output</a>.</p>
 <p>In <code>print</code>, <code>dive</code>, <code>inspect</code> and <code>info</code>, a control character in a string
 value or a key-value metadata key renders as <code>·</code>, and a value or key made
 entirely of control characters as <code>0x</code>-prefixed hex of its UTF-8 bytes.</p>
@@ -2936,8 +2969,8 @@ filter applied but exits edit mode).</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/a4794ac5cc3c44e149edd65c6a273c046cfff25a" target="_blank" rel="noopener">
-      a4794ac5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ad2eef066ae668a72c0693a827576b4cc675ea36" target="_blank" rel="noopener">
+      ad2eef06
     </a>
   
 </div>

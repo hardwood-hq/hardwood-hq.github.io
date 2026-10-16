@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Hardwood API report — HEAD (a4794ac5) vs 1.1.0.Beta2</title>
+<title>Hardwood API report — HEAD (ad2eef06) vs 1.1.0.Beta2</title>
 <style>
 body {
     font-family: Verdana;
@@ -173,7 +173,7 @@ ul {
 </head>
 <body>
 <h1>Hardwood API report</h1>
-<p><a href="https://github.com/hardwood-hq/hardwood/commit/a4794ac5cc3c44e149edd65c6a273c046cfff25a" target="_blank" rel="noopener">HEAD (a4794ac5)</a> vs <a href="https://github.com/hardwood-hq/hardwood/commit/29c1af9c1a061d52e8f2b18c22d4ec8cba0e84ef" target="_blank" rel="noopener">1.1.0.Beta2</a> &mdash; generated 2026-10-16T12:07:35Z</p>
+<p><a href="https://github.com/hardwood-hq/hardwood/commit/ad2eef066ae668a72c0693a827576b4cc675ea36" target="_blank" rel="noopener">HEAD (ad2eef06)</a> vs <a href="https://github.com/hardwood-hq/hardwood/commit/29c1af9c1a061d52e8f2b18c22d4ec8cba0e84ef" target="_blank" rel="noopener">1.1.0.Beta2</a> &mdash; generated 2026-10-16T14:32:08Z</p>
 <ul>
   <li><a href="#hardwood-core">hardwood-core</a></li>
   <li><a href="#hardwood-avro">hardwood-avro</a></li>
@@ -201,7 +201,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-10-16T12:07:35.156+0000
+				2026-10-16T14:32:08.297+0000
 			</td>
 		</tr>
 		<tr>
@@ -243,7 +243,7 @@ ul {
 		<tr>
 			<td id="semver-label">Semantic Versioning:</td>
 			<td id="semver-version">
-				0.0.1
+				0.1.0
 			</td>
 		</tr>
 	</table>
@@ -289,8 +289,128 @@ ul {
 		<span class="modified">MODIFIED</span>
 	</td>
 	<td>
+		<a href="#dev.hardwood.metadata.LogicalType">
+			dev.hardwood.metadata.LogicalType
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="new">NEW</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.metadata.LogicalType$FileType">
+			dev.hardwood.metadata.LogicalType$FileType
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="new">NEW</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.row.PqFile">
+			dev.hardwood.row.PqFile
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.row.PqList">
+			dev.hardwood.row.PqList
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.row.PqMap$Entry">
+			dev.hardwood.row.PqMap$Entry
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.row.StructAccessor">
+			dev.hardwood.row.StructAccessor
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.schema.FileSchema$Builder">
+			dev.hardwood.schema.FileSchema$Builder
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.schema.FileSchema$ElementBuilder">
+			dev.hardwood.schema.FileSchema$ElementBuilder
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.schema.FileSchema$StructBuilder">
+			dev.hardwood.schema.FileSchema$StructBuilder
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.schema.SchemaNode$GroupNode">
+			dev.hardwood.schema.SchemaNode$GroupNode
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED</span>
+	</td>
+	<td>
 		<a href="#dev.hardwood.writer.ColumnEncoding">
 			dev.hardwood.writer.ColumnEncoding
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.writer.ListBuilder">
+			dev.hardwood.writer.ListBuilder
+		</a>
+	</td>
+</tr>
+<tr>
+	<td>
+		<span class="modified">MODIFIED&#160;(*)</span>
+	</td>
+	<td>
+		<a href="#dev.hardwood.writer.StructBuilder">
+			dev.hardwood.writer.StructBuilder
 		</a>
 	</td>
 </tr>
@@ -516,6 +636,1665 @@ ul {
 	</div>
 </div>
 <div>
+	<div class="class" id="dev.hardwood.metadata.LogicalType">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.metadata.LogicalType"></a>
+				<span class="modified">MODIFIED</span>
+				
+				<span class="modifier unchanged">public</span>
+<span class="modifier unchanged">abstract</span>
+
+				<span class="unchanged">interface</span>
+&#160;dev.hardwood.metadata.LogicalType
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">static</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.metadata.LogicalType$FileType</span></td>
+<td>file()</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_NEW_STATIC_ADDED_TO_INTERFACE</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			126
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.metadata.LogicalType$FileType">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.metadata.LogicalType$FileType"></a>
+				<span class="new">NEW</span>
+				
+				<span class="modifier new">final</span>
+<span class="modifier new">static</span>
+<span class="modifier new">public</span>
+
+				<span class="new">class</span>
+&#160;dev.hardwood.metadata.LogicalType$FileType
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		<div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>INTERFACE_ADDED</td></tr>
+
+		</tbody>
+	</table>
+</div>
+
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			<span class="label_class_member">Superclass:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Superclass</td>
+		<td>Compatibility Changes</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>java.lang.Record</td>
+<td>n.a.</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		<div class="class_interfaces">
+			<span class="label_class_member">Interfaces:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Interface</td>
+		<td>Compatibility Changes</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td>dev.hardwood.metadata.LogicalType</td>
+<td>n.a.</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			<span class="label_class_member">Constructors:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Constructor</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td>LogicalType$FileType()</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			362
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">final</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">boolean</span></td>
+<td>equals(<span class="method_parameter unchanged">java.lang.Object</span>)</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			362
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">final</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">int</span></td>
+<td>hashCode()</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			362
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">java.lang.String</span></td>
+<td>toString()</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			367
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.row.PqFile">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.row.PqFile"></a>
+				<span class="new">NEW</span>
+				
+				<span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+
+				<span class="new">interface</span>
+&#160;dev.hardwood.row.PqFile
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">java.lang.String</span></td>
+<td>checksum()</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">java.lang.String</span></td>
+<td>contentType()</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">static</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.row.PqFile</span></td>
+<td>external(<span class="method_parameter unchanged">java.lang.String</span>)</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			57
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">static</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.row.PqFile</span></td>
+<td>external(<span class="method_parameter unchanged">java.lang.String</span>, <span class="method_parameter unchanged">long</span>)</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			67
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">static</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.row.PqFile</span></td>
+<td>external(<span class="method_parameter unchanged">java.lang.String</span>, <span class="method_parameter unchanged">long</span>, <span class="method_parameter unchanged">long</span>)</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			78
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">boolean</span></td>
+<td>hasOffset()</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">boolean</span></td>
+<td>hasSize()</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">static</span>
+<span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.row.PqFile</span></td>
+<td>inline(<span class="method_parameter unchanged">byte[]</span>)</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			48
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">byte[]</span></td>
+<td>inline()</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">long</span></td>
+<td>offset()</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">long</span></td>
+<td>size()</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">java.lang.String</span></td>
+<td>uri()</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.row.PqFile</span></td>
+<td>withChecksum(<span class="method_parameter unchanged">java.lang.String</span>)</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			111
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.row.PqFile</span></td>
+<td>withContentType(<span class="method_parameter unchanged">java.lang.String</span>)</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			98
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.row.PqFile</span></td>
+<td>withInline(<span class="method_parameter unchanged">byte[]</span>)</td>
+<td></td>
+<td>n.a.</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			88
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.row.PqList">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.row.PqList"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">public</span>
+<span class="modifier unchanged">abstract</span>
+
+				<span class="unchanged">interface</span>
+&#160;dev.hardwood.row.PqList
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW&#160;(*)</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">java.util.List<div class="tooltip"><span class="unchanged method_parameter">&#60;..&#62;</span><div class="tooltiptext"><table><tr><td class="table_head_td">New:</td><td>dev.hardwood.row.PqFile</td></tr></table></div></div></span></td>
+<td>files()</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_INTERFACE</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.row.PqMap$Entry">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.row.PqMap$Entry"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">static</span>
+<span class="modifier unchanged">public</span>
+<span class="modifier unchanged">abstract</span>
+
+				<span class="unchanged">interface</span>
+&#160;dev.hardwood.row.PqMap$Entry
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW&#160;(*)</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.row.PqFile</span></td>
+<td>getFileValue()</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_INTERFACE</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.row.StructAccessor">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.row.StructAccessor"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">public</span>
+<span class="modifier unchanged">abstract</span>
+
+				<span class="unchanged">interface</span>
+&#160;dev.hardwood.row.StructAccessor
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW&#160;(*)</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.row.PqFile</span></td>
+<td>getFile(<span class="method_parameter unchanged">java.lang.String</span>)</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_INTERFACE</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW&#160;(*)</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.row.PqFile</span></td>
+<td>getFile(<span class="method_parameter unchanged">int</span>)</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_INTERFACE</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.schema.FileSchema$Builder">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.schema.FileSchema$Builder"></a>
+				<span class="modified">MODIFIED</span>
+				
+				<span class="modifier unchanged">final</span>
+<span class="modifier unchanged">static</span>
+<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.schema.FileSchema$Builder
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.schema.FileSchema$Builder</span></td>
+<td>file(<span class="method_parameter unchanged">java.lang.String</span>, <span class="method_parameter unchanged">dev.hardwood.metadata.RepetitionType</span>)</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			635
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.schema.FileSchema$ElementBuilder">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.schema.FileSchema$ElementBuilder"></a>
+				<span class="modified">MODIFIED</span>
+				
+				<span class="modifier unchanged">final</span>
+<span class="modifier unchanged">static</span>
+<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.schema.FileSchema$ElementBuilder
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">void</span></td>
+<td>file(<span class="method_parameter unchanged">dev.hardwood.metadata.RepetitionType</span>)</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			930
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.schema.FileSchema$StructBuilder">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.schema.FileSchema$StructBuilder"></a>
+				<span class="modified">MODIFIED</span>
+				
+				<span class="modifier unchanged">final</span>
+<span class="modifier unchanged">static</span>
+<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.schema.FileSchema$StructBuilder
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.schema.FileSchema$StructBuilder</span></td>
+<td>file(<span class="method_parameter unchanged">java.lang.String</span>, <span class="method_parameter unchanged">dev.hardwood.metadata.RepetitionType</span>)</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			798
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.schema.SchemaNode$GroupNode">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.schema.SchemaNode$GroupNode"></a>
+				<span class="modified">MODIFIED</span>
+				
+				<span class="modifier unchanged">final</span>
+<span class="modifier unchanged">static</span>
+<span class="modifier unchanged">public</span>
+
+				<span class="unchanged">class</span>
+&#160;dev.hardwood.schema.SchemaNode$GroupNode
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			<span class="label_class_member">Superclass:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Superclass</td>
+		<td>Compatibility Changes</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="unchanged">UNCHANGED</span></td>
+<td>java.lang.Record</td>
+<td>n.a.</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW</span></td>
+<td><span class="modifier new">public</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">boolean</span></td>
+<td>isFile()</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_PUBLIC_CLASS</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			98
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
 	<div class="class" id="dev.hardwood.writer.ColumnEncoding">
 		<div class="class_header">
 			<span class="label">
@@ -622,6 +2401,252 @@ ul {
 		
 	</div>
 </div>
+<div>
+	<div class="class" id="dev.hardwood.writer.ListBuilder">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.writer.ListBuilder"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">public</span>
+<span class="modifier unchanged">abstract</span>
+
+				<span class="unchanged">interface</span>
+&#160;dev.hardwood.writer.ListBuilder
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW&#160;(*)</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.writer.ListBuilder</span></td>
+<td>addFile(<span class="method_parameter unchanged">dev.hardwood.row.PqFile</span>)</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_INTERFACE</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
+<div>
+	<div class="class" id="dev.hardwood.writer.StructBuilder">
+		<div class="class_header">
+			<span class="label">
+				<a name="dev.hardwood.writer.StructBuilder"></a>
+				<span class="modified">MODIFIED&#160;(*)</span>
+				
+				<span class="modifier unchanged">public</span>
+<span class="modifier unchanged">abstract</span>
+
+				<span class="unchanged">interface</span>
+&#160;dev.hardwood.writer.StructBuilder
+			</span>
+			<a href="#toc" class="toc_link">top</a>
+		</div>
+		
+		
+		<div class="class_generictemplates">
+			
+		</div>
+		<div class="class_superclass">
+			
+		</div>
+		<div class="class_interfaces">
+			
+		</div>
+		
+		<div class="class_fields">
+			
+		</div>
+		<div class="class_constructors">
+			
+		</div>
+		<div class="class_methods">
+			<span class="label_class_member">Methods:</span>
+<table>
+	<thead>
+	<tr>
+		<td>Status</td>
+		<td>Modifier</td>
+		<td>Generic Templates</td>
+		<td>Type</td>
+		<td>Method</td>
+		<td>Exceptions</td>
+		<td>Compatibility Changes:</td>
+		<td>Line Number</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+<td><span class="new">NEW&#160;(*)</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.writer.StructBuilder</span></td>
+<td>setFile(<span class="method_parameter unchanged">java.lang.String</span>, <span class="method_parameter unchanged">dev.hardwood.row.PqFile</span>)</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_INTERFACE</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+<tr>
+<td><span class="new">NEW&#160;(*)</span></td>
+<td><span class="modifier new">public</span>
+<span class="modifier new">abstract</span>
+</td>
+<td>n.a.</td>
+<td><span class="method_return_type new">dev.hardwood.writer.StructBuilder</span></td>
+<td>setFile(<span class="method_parameter unchanged">int</span>, <span class="method_parameter unchanged">dev.hardwood.row.PqFile</span>)</td>
+<td></td>
+<td><div class="class_compatibilityChanges">
+	<span class="label_class_member">Compatibility Changes:</span>
+	<table>
+		<thead>
+		<tr>
+			<td>Change</td>
+		</tr>
+		</thead>
+		<tbody>
+		<tr><td>METHOD_ADDED_TO_INTERFACE</td></tr>
+
+		</tbody>
+	</table>
+</div>
+</td>
+<td><table>
+	<thead>
+	<tr>
+		<td>Old file</td>
+		<td>New file</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>
+			n.a.
+		</td>
+		<td>
+			n.a.
+		</td>
+	</tr>
+	</tbody>
+</table>
+</td>
+</tr>
+
+	</tbody>
+</table>
+
+		</div>
+		
+	</div>
+</div>
 <hr>
 <h1 id="hardwood-avro">hardwood-avro</h1>
 <span class="title">Comparing source compatibility of /home/runner/.m2/repository/dev/hardwood/hardwood-avro/1.1.0-SNAPSHOT/hardwood-avro-1.1.0-SNAPSHOT.jar against /home/runner/.m2/repository/dev/hardwood/hardwood-avro/1.1.0.Beta2/hardwood-avro-1.1.0.Beta2.jar</span>
@@ -643,7 +2668,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-10-16T12:07:35.302+0000
+				2026-10-16T14:32:08.414+0000
 			</td>
 		</tr>
 		<tr>
@@ -715,7 +2740,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-10-16T12:07:35.243+0000
+				2026-10-16T14:32:08.439+0000
 			</td>
 		</tr>
 		<tr>
@@ -917,7 +2942,7 @@ ul {
 		<tr>
 			<td>Created:</td>
 			<td>
-				2026-10-16T12:07:35.320+0000
+				2026-10-16T14:32:08.531+0000
 			</td>
 		</tr>
 		<tr>

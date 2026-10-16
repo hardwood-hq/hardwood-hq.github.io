@@ -123,6 +123,10 @@ length of a <code>FIXED_LEN_BYTE_ARRAY</code> column.</div>
 <dd>
 <div class="block">Appends one entry, populating its <code>key</code> and <code>value</code> fields through <code>filler</code>.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/ListBuilder.html#addFile(dev.hardwood.row.PqFile)" class="member-name-link">addFile(PqFile)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
+<dd>
+<div class="block">Appends a <code>FILE</code> element, the reference <code>value</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/ListBuilder.html#addFloat(float)" class="member-name-link">addFloat(float)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
 <dd>
 <div class="block">Appends a <code>FLOAT</code> entry.</div>
@@ -571,6 +575,11 @@ the on-disk compressed size — falls in <code>[startInclusive, endExclusive)</c
 <dd>
 <div class="block">The check the supplied footer failed.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqFile.html#checksum()" class="member-name-link">checksum()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">The integrity token for the referenced bytes, as stored, or <code>null</code> if the reference has
+none.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/RowGroupPredicate.And.html#children()" class="member-name-link">children()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.And.html" title="class in dev.hardwood.reader">RowGroupPredicate.And</a></dt>
 <dd>
 <div class="block">Returns the value of the <code>children</code> record component.</div>
@@ -923,6 +932,10 @@ hold columns rather than records.</div>
 <dt><a href="dev/hardwood/row/PqMap.html#containsKey(java.lang.String)" class="member-name-link">containsKey(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.html" title="interface in dev.hardwood.row">PqMap</a></dt>
 <dd>
 <div class="block">True if this map contains an entry with the given STRING key.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqFile.html#contentType()" class="member-name-link">contentType()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">The media type of the referenced bytes, or <code>null</code> if the reference has none.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/SchemaElement.html#convertedType()" class="member-name-link">convertedType()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></dt>
 <dd>
@@ -1456,6 +1469,10 @@ with <code>isAdjustedToUTC = false</code>).</div>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.FileType.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.FileType.html" title="class in dev.hardwood.metadata">LogicalType.FileType</a></dt>
+<dd>
+<div class="block">Indicates whether some other object is "equal to" this one.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.Float16Type.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a></dt>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
@@ -1712,6 +1729,18 @@ with <code>isAdjustedToUTC = false</code>).</div>
 <dd>
 <div class="block">Marks a public API as experimental.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqFile.html#external(java.lang.String)" class="member-name-link">external(String)</a> - Static method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">A reference to the whole object at <code>uri</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqFile.html#external(java.lang.String,long)" class="member-name-link">external(String, long)</a> - Static method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">A reference to the first <code>size</code> bytes of the object at <code>uri</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqFile.html#external(java.lang.String,long,long)" class="member-name-link">external(String, long, long)</a> - Static method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">A reference to <code>size</code> bytes of the object at <code>uri</code>, starting at <code>offset</code>.</div>
+</dd>
 </dl>
 <h2 class="title" id="I:F">F</h2>
 <dl class="index">
@@ -1760,6 +1789,24 @@ Variants, or absent.</div>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupScannedEvent.html#file" class="member-name-link">file</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupScannedEvent.html" title="class in dev.hardwood.jfr">RowGroupScannedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#file()" class="member-name-link">file()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>FILE</code> annotation, for a group holding a reference to a range of bytes, stored
+inline in the value or in an external file.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#file(dev.hardwood.metadata.RepetitionType)" class="member-name-link">file(RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
+<dd>
+<div class="block">Declare a <code>FILE</code> element, as <a href="dev/hardwood/schema/FileSchema.Builder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType)"><code>FileSchema.Builder.file(String, RepetitionType)</code></a> describes.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType)" class="member-name-link">file(String, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
+<dd>
+<div class="block">Append a <code>FILE</code> group, a reference to a range of bytes stored inline or in an external
+file.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType)" class="member-name-link">file(String, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
+<dd>
+<div class="block">Append a nested <code>FILE</code> field, as <a href="dev/hardwood/schema/FileSchema.Builder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType)"><code>FileSchema.Builder.file(String, RepetitionType)</code></a> describes.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/StaleMetadataException.html#fileIdentity()" class="member-name-link">fileIdentity()</a> - Method in exception class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.html" title="class in dev.hardwood.reader">StaleMetadataException</a></dt>
 <dd>
 <div class="block">The identity of the file being read; empty when it has none.</div>
@@ -1792,6 +1839,11 @@ Variants, or absent.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnChunk.html#param-filePath"><code>filePath</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqList.html#files()" class="member-name-link">files()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqList.html" title="interface in dev.hardwood.row">PqList</a></dt>
+<dd>
+<div class="block">View the elements as a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of <a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row"><code>PqFile</code></a> references, for a list whose element is a
+group annotated <code>FILE</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
 <dd>
 <div class="block">Root schema container representing the complete Parquet schema.</div>
@@ -1811,6 +1863,10 @@ Variants, or absent.</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/FileOpenedEvent.html#fileSize" class="member-name-link">fileSize</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/FileOpenedEvent.html" title="class in dev.hardwood.jfr">FileOpenedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.FileType.html#%3Cinit%3E()" class="member-name-link">FileType()</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.FileType.html" title="class in dev.hardwood.metadata">LogicalType.FileType</a></dt>
+<dd>
+<div class="block">Creates an instance of a <code>FileType</code> record class.</div>
+</dd>
 <dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#filter(dev.hardwood.reader.FilterPredicate)" class="member-name-link">filter(FilterPredicate)</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
 <dd>
 <div class="block">Apply a row-group / record-level filter predicate.</div>
@@ -2304,6 +2360,14 @@ builder <a href="dev/hardwood/writer/RowWriter.html#writeRow(java.util.function.
 <div class="block">The name of the field at <code>fieldIndex</code>, the inverse of the resolution the by-name
 setters perform.</div>
 </dd>
+<dt><a href="dev/hardwood/row/StructAccessor.html#getFile(int)" class="member-name-link">getFile(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
+<dd>
+<div class="block">Get a <code>FILE</code> field value by field index.</div>
+</dd>
+<dt><a href="dev/hardwood/row/StructAccessor.html#getFile(java.lang.String)" class="member-name-link">getFile(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
+<dd>
+<div class="block">Get a <code>FILE</code> field value by name: the reference its group's children store.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#getFileCount()" class="member-name-link">getFileCount()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>
 <div class="block">Number of physical input files represented by this reader.</div>
@@ -2318,6 +2382,10 @@ setters perform.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#getFileSchema()" class="member-name-link">getFileSchema()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/row/PqMap.Entry.html#getFileValue()" class="member-name-link">getFileValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
+<dd>
+<div class="block">Get the value as a <code>FILE</code> reference.</div>
+</dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getFloat(int)" class="member-name-link">getFloat(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
 <div class="block">Get a FLOAT field value by field index.</div>
@@ -2816,6 +2884,10 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.FileType.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.FileType.html" title="class in dev.hardwood.metadata">LogicalType.FileType</a></dt>
+<dd>
+<div class="block">Returns a hash code value for this object.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.Float16Type.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.Float16Type.html" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a></dt>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
@@ -3077,6 +3149,14 @@ only (phantom slots from null/empty parents are excluded).</div>
 <div class="block"><code>false</code> for <a href="dev/hardwood/Validity.html#NO_NULLS"><code>Validity.NO_NULLS</code></a>; <code>true</code> for a backed validity, regardless of
 its bits.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqFile.html#hasOffset()" class="member-name-link">hasOffset()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">Whether the reference stores an offset into the object at <a href="dev/hardwood/row/PqFile.html#uri()"><code>PqFile.uri()</code></a>.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqFile.html#hasSize()" class="member-name-link">hasSize()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">Whether the reference stores the number of bytes referenced.</div>
+</dd>
 <dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#head(long)" class="member-name-link">head(long)</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
 <dd>
 <div class="block">Limit to the first <code>maxRows</code> rows.</div>
@@ -3174,6 +3254,14 @@ any of <code>values</code>.</div>
 <dt><a href="dev/hardwood/metadata/PageType.html#INDEX_PAGE" class="member-name-link">INDEX_PAGE</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageType.html" title="enum class in dev.hardwood.metadata">PageType</a></dt>
 <dd>
 <div class="block">A page holding an index into the column chunk.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqFile.html#inline()" class="member-name-link">inline()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">A copy of the bytes stored inline, or <code>null</code> if the reference stores none.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqFile.html#inline(byte%5B%5D)" class="member-name-link">inline(byte[])</a> - Static method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">A reference to bytes stored in the value itself.</div>
 </dd>
 <dt><a href="dev/hardwood/OutputFile.html#inMemory()" class="member-name-link">inMemory()</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood">OutputFile</a></dt>
 <dd>
@@ -3384,6 +3472,10 @@ plain mask.</div>
 <dd>
 <div class="block">Check if this map is empty.</div>
 </dd>
+<dt><a href="dev/hardwood/schema/SchemaNode.GroupNode.html#isFile()" class="member-name-link">isFile()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.GroupNode.html" title="class in dev.hardwood.schema">SchemaNode.GroupNode</a></dt>
+<dd>
+<div class="block">Returns true if this group carries the <a href="dev/hardwood/metadata/LogicalType.FileType.html" title="class in dev.hardwood.metadata"><code>LogicalType.FileType</code></a> annotation.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.html#isFlatSchema()" class="member-name-link">isFlatSchema()</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></dt>
 <dd>
 <div class="block">Returns true if this schema supports direct columnar access.</div>
@@ -3478,7 +3570,8 @@ plain mask.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/SchemaNode.GroupNode.html#isStruct()" class="member-name-link">isStruct()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.GroupNode.html" title="class in dev.hardwood.schema">SchemaNode.GroupNode</a></dt>
 <dd>
-<div class="block">Returns true if this is a plain struct (no converted type and no modern logical-type annotation).</div>
+<div class="block">Returns true if this group is read and written field by field as a struct: it carries no
+annotation, or the <a href="dev/hardwood/metadata/LogicalType.FileType.html" title="class in dev.hardwood.metadata"><code>LogicalType.FileType</code></a> annotation, whose children are ordinary fields.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#isValueNull()" class="member-name-link">isValueNull()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
@@ -3650,6 +3743,10 @@ timestamp) values.</div>
 <dt><a href="dev/hardwood/metadata/LogicalType.EnumType.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.EnumType</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
 <div class="block">Enum stored as a UTF-8 string.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.FileType.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.FileType</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
+<dd>
+<div class="block">File reference logical type.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.Float16Type.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.Float16Type</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
@@ -4265,6 +4362,11 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/PageLocation.html#param-offset"><code>offset</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/row/PqFile.html#offset()" class="member-name-link">offset()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">The position of the first referenced byte in the object at <a href="dev/hardwood/row/PqFile.html#uri()"><code>PqFile.uri()</code></a>; <code>0</code> when the
+reference stores no offset.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/OffsetIndex.html" class="type-name-link" title="class in dev.hardwood.metadata">OffsetIndex</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
 <div class="block">Offset index for a column chunk, providing page locations for direct lookup.</div>
@@ -4564,6 +4666,11 @@ the next <a href="dev/hardwood/OutputFile.html#write(java.nio.ByteBuffer)"><code
 <dt><a href="dev/hardwood/row/PqDoubleList.html" class="type-name-link" title="interface in dev.hardwood.row">PqDoubleList</a> - Interface in <a href="dev/hardwood/row/package-summary.html">dev.hardwood.row</a></dt>
 <dd>
 <div class="block">Specialized list interface for DOUBLE values.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqFile.html" class="type-name-link" title="interface in dev.hardwood.row">PqFile</a> - Interface in <a href="dev/hardwood/row/package-summary.html">dev.hardwood.row</a></dt>
+<dd>
+<div class="block">Value of a Parquet column annotated with the <code>FILE</code> logical type: a reference to a range of
+bytes, stored inline in the value or in an external object named by a URI.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqInterval.html" class="type-name-link" title="class in dev.hardwood.row">PqInterval</a> - Record Class in <a href="dev/hardwood/row/package-summary.html">dev.hardwood.row</a></dt>
 <dd>
@@ -5066,6 +5173,14 @@ referenced rather than copied and must not be mutated until the record is writte
 <dd>
 <div class="block">Sets a <code>DOUBLE</code> field.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setFile(int,dev.hardwood.row.PqFile)" class="member-name-link">setFile(int, PqFile)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>FILE</code> field to the reference <code>value</code>, by position.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setFile(java.lang.String,dev.hardwood.row.PqFile)" class="member-name-link">setFile(String, PqFile)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a <code>FILE</code> field to the reference <code>value</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setFloat(int,float)" class="member-name-link">setFloat(int, float)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
 <div class="block">Sets a <code>FLOAT</code> field by index.</div>
@@ -5184,6 +5299,10 @@ annotation declares, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(
 <dt><a href="dev/hardwood/row/PqDoubleList.html#size()" class="member-name-link">size()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqDoubleList.html" title="interface in dev.hardwood.row">PqDoubleList</a></dt>
 <dd>
 <div class="block">Get the number of elements in this list.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqFile.html#size()" class="member-name-link">size()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">The number of bytes referenced in the object at <a href="dev/hardwood/row/PqFile.html#uri()"><code>PqFile.uri()</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqIntList.html#size()" class="member-name-link">size()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqIntList.html" title="interface in dev.hardwood.row">PqIntList</a></dt>
 <dd>
@@ -5501,6 +5620,10 @@ followed by each node in pre-order, groups carrying their child count.</div>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.EnumType.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.EnumType.html" title="class in dev.hardwood.metadata">LogicalType.EnumType</a></dt>
+<dd>
+<div class="block">Returns a string representation of this record class.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.FileType.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.FileType.html" title="class in dev.hardwood.metadata">LogicalType.FileType</a></dt>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
@@ -5879,6 +6002,10 @@ ordering added to the Parquet format after this release.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html#UNORDERED" class="member-name-link">UNORDERED</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/row/PqFile.html#uri()" class="member-name-link">uri()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">The URI of the referenced object, or <code>null</code> if the reference has none.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#UTF8" class="member-name-link">UTF8</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">UTF-8 encoded character string.</div>
@@ -6228,6 +6355,19 @@ does not match what the accessor expects — for example, calling
 </dl>
 <h2 class="title" id="I:W">W</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/row/PqFile.html#withChecksum(java.lang.String)" class="member-name-link">withChecksum(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">Returns a copy of this reference with an integrity token for the referenced bytes, of
+the form <code>&lt;algorithm&gt;:&lt;digest&gt;</code>, such as <code>SHA-256:…</code> or an object store's <code>ETAG:…</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqFile.html#withContentType(java.lang.String)" class="member-name-link">withContentType(String)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">Returns a copy of this reference with the media type of the referenced bytes.</div>
+</dd>
+<dt><a href="dev/hardwood/row/PqFile.html#withInline(byte%5B%5D)" class="member-name-link">withInline(byte[])</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
+<dd>
+<div class="block">Returns a copy of this reference that also stores <code>bytes</code> inline.</div>
+</dd>
 <dt><a href="dev/hardwood/Validity.html#words()" class="member-name-link">words()</a> - Method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
 <div class="block">The word array (set-bit = present polarity).</div>

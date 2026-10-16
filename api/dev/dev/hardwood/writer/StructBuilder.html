@@ -75,6 +75,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#setInterval(java.lang.String,dev.hardwood.row.PqInterval)" tabindex="0">setInterval(String, PqInterval)</a></li>
 <li><a href="#setNull(java.lang.String)" tabindex="0">setNull(String)</a></li>
 <li><a href="#setStruct(java.lang.String,java.util.function.Consumer)" tabindex="0">setStruct(String, Consumer)</a></li>
+<li><a href="#setFile(java.lang.String,dev.hardwood.row.PqFile)" tabindex="0">setFile(String, PqFile)</a></li>
 <li><a href="#setList(java.lang.String,java.util.function.Consumer)" tabindex="0">setList(String, Consumer)</a></li>
 <li><a href="#setMap(java.lang.String,java.util.function.Consumer)" tabindex="0">setMap(String, Consumer)</a></li>
 <li><a href="#getFieldCount()" tabindex="0">getFieldCount()</a></li>
@@ -95,6 +96,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#setInterval(int,dev.hardwood.row.PqInterval)" tabindex="0">setInterval(int, PqInterval)</a></li>
 <li><a href="#setNull(int)" tabindex="0">setNull(int)</a></li>
 <li><a href="#setStruct(int,java.util.function.Consumer)" tabindex="0">setStruct(int, Consumer)</a></li>
+<li><a href="#setFile(int,dev.hardwood.row.PqFile)" tabindex="0">setFile(int, PqFile)</a></li>
 <li><a href="#setList(int,java.util.function.Consumer)" tabindex="0">setList(int, Consumer)</a></li>
 <li><a href="#setMap(int,java.util.function.Consumer)" tabindex="0">setMap(int, Consumer)</a></li>
 </ol>
@@ -233,6 +235,18 @@ referenced rather than copied and must not be mutated until the record is writte
  double&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets a <code>DOUBLE</code> field.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setFile(int,dev.hardwood.row.PqFile)" class="member-name-link">setFile</a><wbr>(int&nbsp;fieldIndex,
+ <a href="../row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>FILE</code> field to the reference <code>value</code>, by position.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setFile(java.lang.String,dev.hardwood.row.PqFile)" class="member-name-link">setFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets a <code>FILE</code> field to the reference <code>value</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setFloat(int,float)" class="member-name-link">setFloat</a><wbr>(int&nbsp;fieldIndex,
@@ -732,7 +746,31 @@ struct whose own fields are null.</div>
 <dd>this builder, for chaining</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the schema has no such field, the field is not a
-struct group, or the field is already set in this scope</dd>
+struct group (a <code>FILE</code> group is set through <a href="#setFile(java.lang.String,dev.hardwood.row.PqFile)"><code>setFile(String, PqFile)</code></a>), or the
+field is already set in this scope</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setFile(java.lang.String,dev.hardwood.row.PqFile)">
+<h3>setFile</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a>&nbsp;value)</span></div>
+<div class="block">Sets a <code>FILE</code> field to the reference <code>value</code>. A <code>null</code> value sets the field null.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - the field name</dd>
+<dd><code>value</code> - the reference</dd>
+<dt>Returns:</dt>
+<dd>this builder, for chaining</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the schema has no such field, the field is not a
+group annotated <code>FILE</code>, the group has no child for a field <code>value</code> sets, <code>value</code>
+is not a valid reference or its <code>checksum</code> is not a well-formed token (see
+<a href="../row/PqFile.html#withChecksum(java.lang.String)"><code>PqFile.withChecksum(String)</code></a>), or the field is already set in this scope</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
 </dl>
 </div>
@@ -1115,6 +1153,24 @@ set in this scope</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field is not a struct group, or the field is
 already set in this scope</dd>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if this builder's scope has ended</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setFile(int,dev.hardwood.row.PqFile)">
+<h3>setFile</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setFile</span><wbr><span class="parameters">(int&nbsp;fieldIndex,
+ <a href="../row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a>&nbsp;value)</span></div>
+<div class="block">Sets a <code>FILE</code> field to the reference <code>value</code>, by position.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#setFile(java.lang.String,dev.hardwood.row.PqFile)"><code>setFile(String, PqFile)</code></a></li>
+</ul>
+</dd>
 </dl>
 </div>
 </section>

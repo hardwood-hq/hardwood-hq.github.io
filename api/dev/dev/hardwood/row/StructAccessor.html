@@ -62,6 +62,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#getStruct(java.lang.String)" tabindex="0">getStruct(String)</a></li>
 <li><a href="#getList(java.lang.String)" tabindex="0">getList(String)</a></li>
 <li><a href="#getMap(java.lang.String)" tabindex="0">getMap(String)</a></li>
+<li><a href="#getFile(java.lang.String)" tabindex="0">getFile(String)</a></li>
 <li><a href="#getInt(int)" tabindex="0">getInt(int)</a></li>
 <li><a href="#getLong(int)" tabindex="0">getLong(int)</a></li>
 <li><a href="#getFloat(int)" tabindex="0">getFloat(int)</a></li>
@@ -78,6 +79,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#getInterval(int)" tabindex="0">getInterval(int)</a></li>
 <li><a href="#getVariant(int)" tabindex="0">getVariant(int)</a></li>
 <li><a href="#getStruct(int)" tabindex="0">getStruct(int)</a></li>
+<li><a href="#getFile(int)" tabindex="0">getFile(int)</a></li>
 <li><a href="#getList(int)" tabindex="0">getList(int)</a></li>
 <li><a href="#getMap(int)" tabindex="0">getMap(int)</a></li>
 <li><a href="#getValue(int)" tabindex="0">getValue(int)</a></li>
@@ -169,6 +171,16 @@ over a nested struct position).</p>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDouble(int)" class="member-name-link">getDouble</a><wbr>(int&nbsp;fieldIndex)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get a DOUBLE field value by field index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqFile.html" title="interface in dev.hardwood.row">PqFile</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFile(int)" class="member-name-link">getFile</a><wbr>(int&nbsp;fieldIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a <code>FILE</code> field value by field index.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="PqFile.html" title="interface in dev.hardwood.row">PqFile</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFile(java.lang.String)" class="member-name-link">getFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Get a <code>FILE</code> field value by name: the reference its group's children store.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>float</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFloat(int)" class="member-name-link">getFloat</a><wbr>(int&nbsp;fieldIndex)</code></div>
@@ -328,6 +340,26 @@ over a nested struct position).</p>
 </section>
 </li>
 <li>
+<section class="detail" id="getFile(java.lang.String)">
+<h3>getFile</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="PqFile.html" title="interface in dev.hardwood.row">PqFile</a></span>&nbsp;<span class="element-name">getFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="block">Get a <code>FILE</code> field value by name: the reference its group's children store.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - the field name</dd>
+<dt>Returns:</dt>
+<dd>the reference, or null if the field is null</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the field is not a group annotated <code>FILE</code></dd>
+<dd><code><a href="../reader/ParquetReadException.html" title="class in dev.hardwood.reader">ParquetReadException</a></code> - if the stored value is not a valid
+reference: neither <code>inline</code> nor <code>uri</code> is set, <code>offset</code> or <code>size</code> is set without
+<code>uri</code>, <code>offset</code> without <code>size</code>, or either is negative</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getInt(int)">
 <h3>getInt</h3>
 <div class="horizontal-scroll">
@@ -469,6 +501,15 @@ over a nested struct position).</p>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="PqStruct.html" title="interface in dev.hardwood.row">PqStruct</a></span>&nbsp;<span class="element-name">getStruct</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
 <div class="block">Get a nested struct field value by field index. See <a href="#getStruct(java.lang.String)"><code>getStruct(String)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFile(int)">
+<h3>getFile</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="PqFile.html" title="interface in dev.hardwood.row">PqFile</a></span>&nbsp;<span class="element-name">getFile</span><wbr><span class="parameters">(int&nbsp;fieldIndex)</span></div>
+<div class="block">Get a <code>FILE</code> field value by field index. See <a href="#getFile(java.lang.String)"><code>getFile(String)</code></a>.</div>
 </div>
 </section>
 </li>
