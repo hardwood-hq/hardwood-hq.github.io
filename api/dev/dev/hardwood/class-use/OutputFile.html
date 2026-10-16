@@ -64,8 +64,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Core entry points for reading Parquet files.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#dev.hardwood.writer">dev.hardwood.writer</a></div>
+<div class="col-first odd-row-color"><a href="#dev.hardwood.s3">dev.hardwood.s3</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Amazon S3 backend for reading and writing Parquet files in object storage.</div>
+</div>
+<div class="col-first even-row-color"><a href="#dev.hardwood.writer">dev.hardwood.writer</a></div>
+<div class="col-last even-row-color">
 <div class="block">Parquet file writer, with a columnar and a row-oriented API over one core.</div>
 </div>
 </div>
@@ -94,6 +98,29 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">OutputFile.</span><code><a href="../OutputFile.html#of(java.nio.file.Path)" class="member-name-link">of</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a>&nbsp;path)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an uncreated <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> for a local file path.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dev.hardwood.s3">
+<h2>Uses of <a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a> in <a href="../s3/package-summary.html">dev.hardwood.s3</a></h2>
+<div class="caption"><span>Methods in <a href="../s3/package-summary.html">dev.hardwood.s3</a> that return <a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">S3Source.</span><code><a href="../s3/S3Source.html#outputFile(java.lang.String)" class="member-name-link">outputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uri)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">S3Source.</span><code><a href="../s3/S3Source.html#outputFile(java.lang.String,java.lang.String)" class="member-name-link">outputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bucket,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates an <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that writes the object at the given bucket and key, for
+<a href="../writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>.</div>
 </div>
 </div>
 </section>

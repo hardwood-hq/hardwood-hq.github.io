@@ -62,6 +62,8 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list">
 <li><a href="#inputFile(java.lang.String,java.lang.String)" tabindex="0">inputFile(String, String)</a></li>
 <li><a href="#inputFile(java.lang.String)" tabindex="0">inputFile(String)</a></li>
+<li><a href="#outputFile(java.lang.String,java.lang.String)" tabindex="0">outputFile(String, String)</a></li>
+<li><a href="#outputFile(java.lang.String)" tabindex="0">outputFile(String)</a></li>
 <li><a href="#inputFilesInBucket(java.lang.String,java.lang.String...)" tabindex="0">inputFilesInBucket(String, String...)</a></li>
 <li><a href="#inputFiles(java.lang.String...)" tabindex="0">inputFiles(String...)</a></li>
 <li><a href="#close()" tabindex="0">close()</a></li>
@@ -91,7 +93,7 @@ loadScripts(document, 'script');</script>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
 <div class="block"><p>A configured connection to an S3-compatible object store.</p>
 <p>Holds the region, endpoint, credentials (or anonymous access), and HTTP client needed
-to create <a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> instances. Reuse a single <code>S3Source</code> across
+to create <a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> and <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> instances. Reuse a single <code>S3Source</code> across
 multiple files for connection pooling and credential reuse.</p>
 <p><strong>URL styles:</strong></p>
 <ul>
@@ -161,6 +163,18 @@ multiple files for connection pooling and credential reuse.</p>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates <a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> instances for multiple keys in the same bucket.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#outputFile(java.lang.String)" class="member-name-link">outputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uri)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates an <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#outputFile(java.lang.String,java.lang.String)" class="member-name-link">outputFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bucket,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates an <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that writes the object at the given bucket and key, for
+<a href="../writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>.</div>
+</div>
 </div>
 </div>
 </div>
@@ -199,6 +213,40 @@ implementation detail and does not change the returned type.</div>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3InputFile.html" title="class in dev.hardwood.s3">S3InputFile</a></span>&nbsp;<span class="element-name">inputFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uri)</span></div>
 <div class="block">Creates an <a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> from an <code>s3://bucket/key</code> URI. See
 <a href="#inputFile(java.lang.String,java.lang.String)"><code>inputFile(String, String)</code></a> for the <a href="RangeBacking.html" title="enum class in dev.hardwood.s3"><code>RangeBacking</code></a> policy.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="outputFile(java.lang.String,java.lang.String)">
+<h3>outputFile</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a></span>&nbsp;<span class="element-name">outputFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bucket,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="block"><p>Creates an <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that writes the object at the given bucket and key, for
+<a href="../writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>.</p>
+<p>The output collects the file in parts of <a href="S3Source.Builder.html#uploadPartSize(int)"><code>S3Source.Builder.uploadPartSize(int)</code></a> bytes. An object
+smaller than one part is sent in a single <code>PUT</code> on close; a larger one is sent as a
+multipart upload, with up to four parts uploading in the background while the writer fills
+the next, and completed on close. An output holds up to five parts in memory. Nothing is visible
+at the key before close, and a successful close replaces any object already there.
+Discarding the output aborts the multipart upload. The bucket must exist.</p>
+<p>When close fails after its final request reached S3 but its response was lost, the
+object may have been published although close throws.</p>
+</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the source sends requests unsigned (<a href="S3Source.Builder.html#anonymous()"><code>S3Source.Builder.anonymous()</code></a>)</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="outputFile(java.lang.String)">
+<h3>outputFile</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../OutputFile.html" title="interface in dev.hardwood">OutputFile</a></span>&nbsp;<span class="element-name">outputFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uri)</span></div>
+<div class="block">Creates an <a href="../OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> from an <code>s3://bucket/key</code> URI. See
+<a href="#outputFile(java.lang.String,java.lang.String)"><code>outputFile(String, String)</code></a>.</div>
 </div>
 </section>
 </li>

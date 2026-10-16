@@ -63,7 +63,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="#dev.hardwood.s3">dev.hardwood.s3</a></div>
 <div class="col-last even-row-color">
-<div class="block">Amazon S3 backend for reading Parquet files from object storage.</div>
+<div class="block">Amazon S3 backend for reading and writing Parquet files in object storage.</div>
 </div>
 </div>
 <section class="class-uses">
@@ -115,7 +115,7 @@ and transport settings.</div>
 <div class="col-first odd-row-color"><code><a href="../S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">S3Source.Builder.</span><code><a href="../S3Source.Builder.html#maxRetries(int)" class="member-name-link">maxRetries</a><wbr>(int&nbsp;maxRetries)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Sets the maximum number of retries for GET requests on transient failures
+<div class="block">Sets the maximum number of retries per request on transient failures
 (HTTP 500/503 and network errors).</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></code></div>
@@ -145,6 +145,12 @@ source.</div>
 <div class="col-last even-row-color">
 <div class="block">Sets the temp directory used by <a href="../RangeBacking.html#SPARSE_TEMPFILE"><code>RangeBacking.SPARSE_TEMPFILE</code></a>
 for the sparse-file backing.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">S3Source.Builder.</span><code><a href="../S3Source.Builder.html#uploadPartSize(int)" class="member-name-link">uploadPartSize</a><wbr>(int&nbsp;bytes)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sets the part size of uploads through <a href="../S3Source.html#outputFile(java.lang.String,java.lang.String)"><code>S3Source.outputFile(String, String)</code></a> (default
+8 MiB, at least 5 MiB).</div>
 </div>
 </div>
 </section>

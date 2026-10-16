@@ -856,6 +856,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/write-to-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write to S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/compat/" class="md-nav__link">
         
   
@@ -2468,6 +2496,10 @@
 <td><code>OutputFile.inMemory()</code></td>
 <td>The heap, up to <code>Integer.MAX_VALUE - 8</code> bytes. Returns an <code>InMemoryOutputFile</code>, whose <code>buffer()</code> returns the finished file</td>
 </tr>
+<tr>
+<td><code>S3Source.outputFile(...)</code></td>
+<td>An S3 object, uploaded as the file is written and published when the writer closes (<code>hardwood-s3</code>; see <a href="../s3/#writing">S3 Reference</a>)</td>
+</tr>
 </tbody>
 </table>
 <p>An in-memory file can be written and read back without a filesystem: <code>buffer()</code> returns the whole file as a <code>ByteBuffer</code> positioned at its first byte, which is what <code>InputFile.of(ByteBuffer)</code> expects.</p>
@@ -2483,7 +2515,7 @@
 </code></pre></div>
 <p>The buffer grows with the file, so no size has to be given up front; the length of a Parquet file is only known once it has been written. The whole file is held on the heap, which costs the size of the finished file in addition to the memory the writer uses for the open row group. Each call to <code>buffer()</code> returns a buffer with its own position and limit, so reading the file back leaves it intact. The buffer's contents must not be modified; whether a change shows in the buffers other calls return is unspecified.</p>
 <p>The file is complete only after the writer is closed, and <code>buffer()</code> throws <code>IllegalStateException</code> before that, or if the destination was discarded.</p>
-<p>To write anywhere else (an object store, a network connection), implement <code>OutputFile</code>.</p>
+<p>To write anywhere else, implement <code>OutputFile</code>.</p>
 <h2 id="schema">Schema<a class="headerlink" href="#schema" title="Permanent link">&para;</a></h2>
 <p>A file's schema is declared with <code>FileSchema.builder(String)</code> and built once; the same <code>FileSchema</code> is passed to <code>ParquetFileWriter.create</code>. Every method appends one field in declaration order, which is also the order the leaf-column indices follow.</p>
 <table>
@@ -3331,8 +3363,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ad2eef066ae668a72c0693a827576b4cc675ea36" target="_blank" rel="noopener">
-      ad2eef06
+    <a href="https://github.com/hardwood-hq/hardwood/tree/7668aee8342201fd0483e1dc46c553160627ce14" target="_blank" rel="noopener">
+      7668aee8
     </a>
   
 </div>

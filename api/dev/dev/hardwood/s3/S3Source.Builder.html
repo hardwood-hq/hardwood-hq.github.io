@@ -60,6 +60,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
+<li><a href="#uploadPartSize(int)" tabindex="0">uploadPartSize(int)</a></li>
 <li><a href="#region(java.lang.String)" tabindex="0">region(String)</a></li>
 <li><a href="#endpoint(java.lang.String)" tabindex="0">endpoint(String)</a></li>
 <li><a href="#pathStyle(boolean)" tabindex="0">pathStyle(boolean)</a></li>
@@ -150,7 +151,7 @@ and transport settings.</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxRetries(int)" class="member-name-link">maxRetries</a><wbr>(int&nbsp;maxRetries)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the maximum number of retries for GET requests on transient failures
+<div class="block">Sets the maximum number of retries per request on transient failures
 (HTTP 500/503 and network errors).</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></code></div>
@@ -181,6 +182,12 @@ source.</div>
 <div class="block">Sets the temp directory used by <a href="RangeBacking.html#SPARSE_TEMPFILE"><code>RangeBacking.SPARSE_TEMPFILE</code></a>
 for the sparse-file backing.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#uploadPartSize(int)" class="member-name-link">uploadPartSize</a><wbr>(int&nbsp;bytes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the part size of uploads through <a href="S3Source.html#outputFile(java.lang.String,java.lang.String)"><code>S3Source.outputFile(String, String)</code></a> (default
+8 MiB, at least 5 MiB).</div>
+</div>
 </div>
 </div>
 </div>
@@ -198,6 +205,17 @@ for the sparse-file backing.</div>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="uploadPartSize(int)">
+<h3>uploadPartSize</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></span>&nbsp;<span class="element-name">uploadPartSize</span><wbr><span class="parameters">(int&nbsp;bytes)</span></div>
+<div class="block">Sets the part size of uploads through <a href="S3Source.html#outputFile(java.lang.String,java.lang.String)"><code>S3Source.outputFile(String, String)</code></a> (default
+8 MiB, at least 5 MiB). Each open output holds up to five buffers of this size. A multipart
+upload has at most 10,000 parts, which caps an object at 10,000 times the part size.</div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="region(java.lang.String)">
 <h3>region</h3>
@@ -277,7 +295,7 @@ Mutually exclusive with <a href="#credentials(dev.hardwood.s3.S3CredentialsProvi
 <h3>maxRetries</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></span>&nbsp;<span class="element-name">maxRetries</span><wbr><span class="parameters">(int&nbsp;maxRetries)</span></div>
-<div class="block">Sets the maximum number of retries for GET requests on transient failures
+<div class="block">Sets the maximum number of retries per request on transient failures
 (HTTP 500/503 and network errors). Default is 3.</div>
 </div>
 </section>

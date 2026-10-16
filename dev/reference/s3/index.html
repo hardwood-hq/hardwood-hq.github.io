@@ -856,6 +856,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../how-to/write-to-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write to S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../how-to/compat/" class="md-nav__link">
         
   
@@ -1694,6 +1722,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#writing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2079,6 +2118,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#writing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writing
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2116,7 +2166,7 @@
 
 -->
 <h1 id="s3-reference">S3 Reference<a class="headerlink" href="#s3-reference" title="Permanent link">&para;</a></h1>
-<p>Options and behavior of the <code>hardwood-s3</code> module; <a href="../../how-to/s3/">Reading from S3</a> shows how to use it.</p>
+<p>Options and behavior of the <code>hardwood-s3</code> module; <a href="../../how-to/s3/">Reading from S3</a> and <a href="../../how-to/write-to-s3/">Write to S3</a> show how to use it.</p>
 <h2 id="s3source-builder-options"><code>S3Source</code> builder options<a class="headerlink" href="#s3source-builder-options" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2160,12 +2210,12 @@
 <tr>
 <td><code>requestTimeout(Duration)</code></td>
 <td>30s</td>
-<td>Maximum time for an individual HTTP request to complete.</td>
+<td>Maximum time for an individual HTTP request to complete, including the upload of one part.</td>
 </tr>
 <tr>
 <td><code>maxRetries(int)</code></td>
 <td>3</td>
-<td>GET retries on transient failures (HTTP 500, 503, network errors) with exponential backoff and jitter. <code>0</code> disables retries.</td>
+<td>Retries per request on transient failures (HTTP 500, 503, network errors) with exponential backoff and jitter. <code>0</code> disables retries.</td>
 </tr>
 <tr>
 <td><code>httpClient(HttpClient)</code></td>
@@ -2181,6 +2231,11 @@
 <td><code>tempDir(Path)</code></td>
 <td><code>java.io.tmpdir</code></td>
 <td>Directory holding the sparse backing file under <code>RangeBacking.SPARSE_TEMPFILE</code>. Ignored under <code>RangeBacking.NONE</code>.</td>
+</tr>
+<tr>
+<td><code>uploadPartSize(int)</code></td>
+<td>8 MiB</td>
+<td>Part size of uploads through <code>outputFile(...)</code>, at least 5 MiB. See <a href="#writing">Writing</a>.</td>
 </tr>
 </tbody>
 </table>
@@ -2274,6 +2329,53 @@ properties:</p>
 <li><strong>Requester-pays buckets</strong> — Hardwood does not send the <code>x-amz-request-payer</code> header. Reads
   against requester-pays buckets will fail with <code>403 AccessDenied</code> even with valid credentials.</li>
 </ul>
+<h2 id="writing">Writing<a class="headerlink" href="#writing" title="Permanent link">&para;</a></h2>
+<p><code>S3Source.outputFile(String bucket, String key)</code> and <code>outputFile(String uri)</code> (an <code>s3://bucket/key</code> URI) return an <code>OutputFile</code> for <code>ParquetFileWriter</code>. A source built with <code>anonymous()</code> cannot create one; the call throws <code>IllegalStateException</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Buffering</td>
+<td>Each open output holds up to five buffers of <code>uploadPartSize</code> bytes: one filling, four uploading</td>
+</tr>
+<tr>
+<td>Requests</td>
+<td>An object smaller than one part is sent in one <code>PUT</code> when the writer closes. A larger one is sent as a multipart upload: one <code>UploadPart</code> each time a buffer fills, with up to four uploading in the background while the writer continues, and <code>CompleteMultipartUpload</code> when the writer closes. With four uploads in flight, the writer waits for the oldest</td>
+</tr>
+<tr>
+<td>Size limit</td>
+<td>10,000 parts, so 10,000 × <code>uploadPartSize</code> bytes (about 78 GiB at the default). A write beyond it fails with an <code>IOException</code></td>
+</tr>
+<tr>
+<td>Visibility</td>
+<td>Nothing appears at the key before the writer closes. A successful close replaces an object already at the key</td>
+</tr>
+<tr>
+<td>Failure</td>
+<td>A failed write, <code>ParquetFileWriter.abort()</code>, or a failed close aborts the multipart upload, releasing its parts. A failure to abort is attached to the thrown exception as suppressed</td>
+</tr>
+<tr>
+<td>Retries</td>
+<td>Every request, including the completion, is retried as <code>maxRetries</code> sets. A completion answered with <code>200</code> and an <code>InternalError</code>, <code>SlowDown</code> or <code>ServiceUnavailable</code> error is retried too</td>
+</tr>
+<tr>
+<td>Timeout</td>
+<td>Each part upload must complete within <code>requestTimeout</code>. Up to four parts upload at once, sharing the connection's bandwidth: at 30 s and 8 MiB parts, an upload bandwidth below about 1.1 MB/s times out</td>
+</tr>
+<tr>
+<td>Bucket</td>
+<td>Must exist</td>
+</tr>
+</tbody>
+</table>
+<p>When close fails after the completing request reached S3 and its response was lost, the object may have been published although close throws.</p>
+<p>The credentials need <code>s3:PutObject</code> and <code>s3:AbortMultipartUpload</code> on the key. An upload that cannot be aborted, for instance because the process ended, keeps its parts until a bucket lifecycle rule for incomplete multipart uploads removes them.</p>
+<p>Errors have the form <code>&lt;request&gt; s3://&lt;bucket&gt;/&lt;key&gt; failed: HTTP &lt;status&gt; &lt;code&gt;: &lt;message&gt;</code>, for example <code>PUT s3://my-bucket/events.parquet failed: HTTP 404 NoSuchBucket: The specified bucket does not exist</code>.</p>
 
 
 
@@ -2323,8 +2425,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ad2eef066ae668a72c0693a827576b4cc675ea36" target="_blank" rel="noopener">
-      ad2eef06
+    <a href="https://github.com/hardwood-hq/hardwood/tree/7668aee8342201fd0483e1dc46c553160627ce14" target="_blank" rel="noopener">
+      7668aee8
     </a>
   
 </div>

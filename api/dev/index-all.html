@@ -1237,7 +1237,7 @@ per-value 4-byte length prefix wherever the lengths are similar.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/package-summary.html">dev.hardwood.s3</a> - package dev.hardwood.s3</dt>
 <dd>
-<div class="block">Amazon S3 backend for reading Parquet files from object storage.</div>
+<div class="block">Amazon S3 backend for reading and writing Parquet files in object storage.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a> - package dev.hardwood.schema</dt>
 <dd>
@@ -4065,7 +4065,7 @@ being the common case.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3Source.Builder.html#maxRetries(int)" class="member-name-link">maxRetries(int)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></dt>
 <dd>
-<div class="block">Sets the maximum number of retries for GET requests on transient failures
+<div class="block">Sets the maximum number of retries per request on transient failures
 (HTTP 500/503 and network errors).</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/Statistics.html#maxValue()" class="member-name-link">maxValue()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
@@ -4513,6 +4513,15 @@ reference stores no offset.</div>
 <dt><a href="dev/hardwood/reader/FilterPredicate.Or.html#%3Cinit%3E(java.util.List)" class="member-name-link">Or(List)</a> - Constructor for record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.Or.html" title="class in dev.hardwood.reader">FilterPredicate.Or</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>Or</code> record class.</div>
+</dd>
+<dt><a href="dev/hardwood/s3/S3Source.html#outputFile(java.lang.String)" class="member-name-link">outputFile(String)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
+<dd>
+<div class="block">Creates an <a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
+</dd>
+<dt><a href="dev/hardwood/s3/S3Source.html#outputFile(java.lang.String,java.lang.String)" class="member-name-link">outputFile(String, String)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
+<dd>
+<div class="block">Creates an <a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that writes the object at the given bucket and key, for
+<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/OutputFile.html" class="type-name-link" title="interface in dev.hardwood">OutputFile</a> - Interface in <a href="dev/hardwood/package-summary.html">dev.hardwood</a></dt>
 <dd>
@@ -6002,6 +6011,11 @@ ordering added to the Parquet format after this release.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html#UNORDERED" class="member-name-link">UNORDERED</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/s3/S3Source.Builder.html#uploadPartSize(int)" class="member-name-link">uploadPartSize(int)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></dt>
+<dd>
+<div class="block">Sets the part size of uploads through <a href="dev/hardwood/s3/S3Source.html#outputFile(java.lang.String,java.lang.String)"><code>S3Source.outputFile(String, String)</code></a> (default
+8 MiB, at least 5 MiB).</div>
+</dd>
 <dt><a href="dev/hardwood/row/PqFile.html#uri()" class="member-name-link">uri()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
 <dd>
 <div class="block">The URI of the referenced object, or <code>null</code> if the reference has none.</div>
