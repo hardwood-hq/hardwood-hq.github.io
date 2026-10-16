@@ -3084,12 +3084,13 @@
 <li><strong><code>distinct_count</code></strong> is written where the chunk still knows its cardinality exactly: any chunk under <code>AUTO</code> that interned its values to the end, whichever encoding the flush-time comparison then chose, and any <code>BOOLEAN</code> chunk, which knows its cardinality without a dictionary. It is absent for any other chunk written under a named encoding, and for one that stopped interning part-way (see <a href="../../concepts/write-model/#how-the-writer-picks-an-encoding">How the Writer Picks an Encoding</a>).</li>
 </ul>
 <p>Every column chunk also carries <code>encoding_stats</code>: its page count per page type and encoding. A dictionary-encoded chunk lists one <code>PLAIN</code> dictionary page and all of its data pages as <code>RLE_DICTIONARY</code>, so a reader can prune its row group on the dictionary for an <code>eq</code> or <code>in</code> predicate (see <a href="../../how-to/query-controls/">Query Controls</a>). Any other chunk lists its data pages under the one value encoding it was written in.</p>
+<p>A column chunk carries <code>SizeStatistics</code> where it has something to count: its repetition level histogram where the column is repeated, its definition level histogram where the column's maximum definition level is 2 or more, and for a <code>BYTE_ARRAY</code> column the bytes of its values without their length prefixes.</p>
 <p>Every file carries a page index, written between the last row group and the footer:</p>
 <ul>
-<li><strong><code>OffsetIndex</code></strong>, for every column chunk: the location of each data page and the first record it holds. Every page starts at a record boundary.</li>
-<li><strong><code>ColumnIndex</code></strong>, for every column chunk whose bounds can be stated: each page's <code>min</code> / <code>max</code> under the same rules as the chunk statistics, its null count, whether it holds only nulls, its <code>NaN</code> count for <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code>, and whether the pages' bounds ascend or descend. A column without an order writes none, nor does a floating-point column chunk with a page whose values are all <code>NaN</code>. Where no truncated <code>max</code> exists, a page's <code>max</code> is written whole.</li>
+<li><strong><code>OffsetIndex</code></strong>, for every column chunk: the location of each data page and the first record it holds, and for a <code>BYTE_ARRAY</code> column the bytes of the page's values without their length prefixes. Every page starts at a record boundary.</li>
+<li><strong><code>ColumnIndex</code></strong>, for every column chunk whose bounds can be stated: each page's <code>min</code> / <code>max</code> under the same rules as the chunk statistics, its null count, whether it holds only nulls, its <code>NaN</code> count for <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code>, its level histograms where the chunk's <code>SizeStatistics</code> carries them, and whether the pages' bounds ascend or descend. A column without an order writes none, nor does a floating-point column chunk with a page whose values are all <code>NaN</code>. Where no truncated <code>max</code> exists, a page's <code>max</code> is written whole.</li>
 </ul>
-<p>The level histograms of <code>SizeStatistics</code> and the <code>ColumnIndex</code>, and the <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
+<p>The <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
 <h3 id="bloom-filters">Bloom filters<a class="headerlink" href="#bloom-filters" title="Permanent link">&para;</a></h3>
 <p>To let <code>eq</code> and <code>in</code> predicates on a high-cardinality column skip row groups, add a Bloom filter for the column with <code>bloomFilter(...)</code> (see <a href="#writer-options">Writer Options</a>). The column then carries a split-block Bloom filter in every row group. <a href="../../concepts/parquet-layout/#bloom-filters-skipping-on-equality">Bloom filters: skipping on equality</a> describes which columns benefit and what a filter costs.</p>
 <ul>
@@ -3286,8 +3287,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4d1df8c94704e87b2af8eb6b49df35c041962dce" target="_blank" rel="noopener">
-      4d1df8c9
+    <a href="https://github.com/hardwood-hq/hardwood/tree/27bec8aa35fe9ad948c082074696bd1613fa06de" target="_blank" rel="noopener">
+      27bec8aa
     </a>
   
 </div>
