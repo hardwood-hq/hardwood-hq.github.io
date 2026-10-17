@@ -120,10 +120,11 @@ by default the writer weighs a dictionary against <code>PLAIN</code> once the ro
 takes the smaller, or a <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer"><code>ColumnEncoding</code></a> set per column names the encoding outright. Each page
 body is compressed with the configured codec (<code>ZSTD</code> by default). All of these are
 configurable through <a href="WriterConfig.html" title="class in dev.hardwood.writer"><code>WriterConfig</code></a>. The row groups and footer are finalized on <a href="#close()"><code>close()</code></a>.</p>
-<p>At each flush the row group's column chunks are encoded and compressed in parallel, on the
-thread pool of a <a href="../HardwoodContext.html" title="interface in dev.hardwood"><code>HardwoodContext</code></a> and on the calling thread, and written in schema order; the
-file is the same as from one thread. A writer opened without a context creates one on its first
-flush of more than one column, and closes it with the writer.</p>
+<p>A batch's values are copied into the row group's column chunks in parallel, and at each flush
+the chunks are encoded and compressed in parallel, on the thread pool of a <a href="../HardwoodContext.html" title="interface in dev.hardwood"><code>HardwoodContext</code></a>
+and on the calling thread, and written in schema order; the file is the same as from one
+thread. A writer opened without a context creates one when it first needs pool threads, and
+closes it with the writer.</p>
 <p>The file is produced front to back and is valid only after <code>close()</code> returns. A writer whose
 write has thrown accepts no more data, and <code>close()</code> discards its output rather than
 publishing the rows written before the failure. <a href="#abort()"><code>abort()</code></a> discards the output on a failure
@@ -200,8 +201,8 @@ hold columns rather than records.</div>
  <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a>&nbsp;config,
  <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Opens a writer that encodes column chunks on the thread pool of <code>context</code>, writing the
-leading magic bytes.</div>
+<div class="block">Opens a writer that appends and encodes column chunks on the thread pool of <code>context</code>,
+writing the leading magic bytes.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createdBy(java.lang.String)" class="member-name-link">createdBy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;createdBy)</code></div>
@@ -338,8 +339,8 @@ or a Bloom filter names a column the schema does not have, or a <code>BOOLEAN</c
  <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a>&nbsp;config,
  <a href="../HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a>&nbsp;context)</span>
                                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block"><p>Opens a writer that encodes column chunks on the thread pool of <code>context</code>, writing the
-leading magic bytes.</p>
+<div class="block"><p>Opens a writer that appends and encodes column chunks on the thread pool of <code>context</code>,
+writing the leading magic bytes.</p>
 <p>The caller keeps ownership of <code>context</code> and closes it after the writer. Several writers,
 and readers, may share one context.</p>
 </div>
@@ -348,7 +349,7 @@ and readers, may share one context.</p>
 <dd><code>out</code> - the destination</dd>
 <dd><code>schema</code> - the schema to write</dd>
 <dd><code>config</code> - the writer configuration</dd>
-<dd><code>context</code> - the context whose threads encode column chunks</dd>
+<dd><code>context</code> - the context whose threads append and encode column chunks</dd>
 <dt>Returns:</dt>
 <dd>an open writer</dd>
 <dt>Throws:</dt>
