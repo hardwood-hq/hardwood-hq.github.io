@@ -1756,6 +1756,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#encoding-threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encoding Threads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#finishing-and-abandoning-a-file" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1778,15 +1789,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-the-writer-rejects" class="md-nav__link">
+  <a href="#rejected-input" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What the Writer Rejects
+        Rejected Input
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="What the Writer Rejects">
+    <nav class="md-nav" aria-label="Rejected Input">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2392,6 +2403,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#encoding-threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encoding Threads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#finishing-and-abandoning-a-file" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2414,15 +2436,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#what-the-writer-rejects" class="md-nav__link">
+  <a href="#rejected-input" class="md-nav__link">
     <span class="md-ellipsis">
       
-        What the Writer Rejects
+        Rejected Input
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="What the Writer Rejects">
+    <nav class="md-nav" aria-label="Rejected Input">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2727,7 +2749,7 @@
 <tr>
 <td><code>rowGroupBufferTargetBytes(long)</code></td>
 <td><code>128 MiB</code></td>
-<td>Bytes the writer holds for the open row group before cutting it: level streams, dictionary indices, value stores and dictionaries. A row group passes it by at most one record. A row group is also cut before a repeated column's chunk would reach <code>Integer.MAX_VALUE - 8</code> values and nulls, or before any column chunk would pass <code>Integer.MAX_VALUE - 8</code> bytes of <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> values, so a target above 2 GiB can yield smaller row groups. See <a href="../../concepts/write-model/#what-bounds-memory">The Write Model</a>. Must be positive.</td>
+<td>Bytes the writer holds for the open row group before cutting it: level streams, dictionary indices, value stores and dictionaries. A row group passes it by at most one record. A row group is also cut before a repeated column's chunk would reach <code>Integer.MAX_VALUE - 8</code> values and nulls, or before any column chunk would pass <code>Integer.MAX_VALUE - 8</code> bytes of <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> values, so a target above 2 GiB can yield smaller row groups. See <a href="../../concepts/write-model/#memory-bounds">The Write Model</a>. Must be positive.</td>
 </tr>
 <tr>
 <td><code>codec(CompressionCodec)</code></td>
@@ -3216,6 +3238,27 @@
 <p><code>ParquetFileWriter.endRowGroup()</code> writes the open row group, so the next record starts a new one. Records staged by <code>rowWriter()</code> are written into the row group being closed. When no record was written since the last row group closed, it writes nothing.</p>
 <p>The row-group targets close row groups as well; a row group ends at a target or at a call, whichever comes first. A row group closed by a call is written exactly as one a target closes after the same records.</p>
 <p><code>endRowGroup()</code> and <code>close()</code> throw <code>IllegalStateException</code> when called from inside a <code>writeBatch</code> or <code>writeRow</code> filler. Any exception from <code>endRowGroup()</code> fails the writer.</p>
+<h2 id="encoding-threads">Encoding Threads<a class="headerlink" href="#encoding-threads" title="Permanent link">&para;</a></h2>
+<p>At each row-group flush, the column chunks are encoded and compressed in parallel on the threads of a <code>HardwoodContext</code> and on the thread that called the write, then written in schema order. The file is byte-identical to one written on a single thread. Values are copied into the row group on the calling thread.</p>
+<table>
+<thead>
+<tr>
+<th>Factory</th>
+<th>Threads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>create(out, schema)</code>, <code>create(out, schema, config)</code></td>
+<td>The writer creates a context with one thread per available processor on its first flush of more than one column, and closes it on <code>close()</code> or <code>abort()</code></td>
+</tr>
+<tr>
+<td><code>create(out, schema, config, context)</code></td>
+<td>The threads of <code>context</code>. The caller closes <code>context</code> after the writer; one context can serve several writers and readers</td>
+</tr>
+</tbody>
+</table>
+<p>A schema of one column is encoded on the calling thread alone. A <code>ParquetFileWriter</code> is still driven from one thread at a time.</p>
 <h2 id="finishing-and-abandoning-a-file">Finishing and Abandoning a File<a class="headerlink" href="#finishing-and-abandoning-a-file" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3243,7 +3286,7 @@
 </tr>
 </tbody>
 </table>
-<p>The writer fails when <code>ColumnWriter.writeBatch</code>, <code>RowWriter.writeRow</code> or <code>endRowGroup</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#what-the-writer-rejects">What the Writer Rejects</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. <code>RowWriter.tryWriteRow</code> fails the writer only on the exceptions listed under <a href="#rowwriteresult"><code>RowWriteResult</code></a>. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
+<p>The writer fails when <code>ColumnWriter.writeBatch</code>, <code>RowWriter.writeRow</code> or <code>endRowGroup</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#rejected-input">Rejected Input</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. <code>RowWriter.tryWriteRow</code> fails the writer only on the exceptions listed under <a href="#rowwriteresult"><code>RowWriteResult</code></a>. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
 <p>A failure while <code>close()</code> finishes or publishes the file discards the output as well, and <code>close()</code> throws it. When the output cannot be discarded, <code>abort()</code> and <code>close()</code> on a failed writer throw the <code>IOException</code>; a failure while finishing or publishing carries it as a suppressed exception.</p>
 <h2 id="rowwriteresult"><code>RowWriteResult</code><a class="headerlink" href="#rowwriteresult" title="Permanent link">&para;</a></h2>
 <p><code>RowWriter.tryWriteRow</code> returns one of two members:</p>
@@ -3267,7 +3310,7 @@
 </table>
 <p>A rejection that depends on the value handed over becomes <code>Rejected</code>: a value outside the range its annotation declares, a value whose magnitude or precision the column cannot hold under the configured <code>PrecisionLossPolicy</code>, a <code>FIXED_LEN_BYTE_ARRAY</code> value of the wrong length, a <code>PqFile</code> that is not a valid reference, sets a field its <code>FILE</code> group has no child for, or holds a malformed <code>checksum</code>, or a <code>REQUIRED</code> field left unset or set null.</p>
 <p>Every other failure throws and fails the writer, as it does under <code>writeRow</code>: an unknown field name or index, a field set twice, a setter that does not fit the field (including any value setter on a column annotated <code>UNKNOWN</code>), an exception thrown by the filler, and a failure while a completed batch is written.</p>
-<h2 id="what-the-writer-rejects">What the Writer Rejects<a class="headerlink" href="#what-the-writer-rejects" title="Permanent link">&para;</a></h2>
+<h2 id="rejected-input">Rejected Input<a class="headerlink" href="#rejected-input" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -3290,7 +3333,7 @@
 </tr>
 <tr>
 <td><code>IllegalStateException</code></td>
-<td>Writing, ending a row group, or setting key-value metadata or <code>created_by</code>, after <code>close()</code>; writing after the writer has failed; using both write APIs on one file; ending a row group or closing the writer from inside a batch or record filler; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned; taking <code>InMemoryOutputFile.buffer()</code> before the writer has closed, or from a destination that was discarded</td>
+<td>Writing, ending a row group, or setting key-value metadata or <code>created_by</code>, after <code>close()</code>; writing after the writer has failed; using both write APIs on one file; ending a row group or closing the writer from inside a batch or record filler; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned; taking <code>InMemoryOutputFile.buffer()</code> before the writer has closed, or from a destination that was discarded; flushing a row group after the <code>HardwoodContext</code> passed to <code>create</code> has been closed</td>
 </tr>
 <tr>
 <td><code>IOException</code></td>
@@ -3363,8 +3406,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/7fed42de03a0d094bbc575042d82ee5634343b73" target="_blank" rel="noopener">
-      7fed42de
+    <a href="https://github.com/hardwood-hq/hardwood/tree/62e99ab3815822aac1cbb246cc8ac2f3691f1a43" target="_blank" rel="noopener">
+      62e99ab3
     </a>
   
 </div>

@@ -112,7 +112,8 @@ against the context reads.</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="HardwoodContext.Builder.html" title="interface in dev.hardwood">HardwoodContext.Builder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#threads(int)" class="member-name-link">threads</a><wbr>(int&nbsp;threads)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Sets the number of platform threads the context uses to decompress and decode pages.</div>
+<div class="block">Sets the number of platform threads the context uses to decompress and decode pages, and
+to encode and compress the column chunks of a writer's row groups.</div>
 </div>
 </div>
 </div>
@@ -133,7 +134,8 @@ against the context reads.</div>
 <h3>threads</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="HardwoodContext.Builder.html" title="interface in dev.hardwood">HardwoodContext.Builder</a></span>&nbsp;<span class="element-name">threads</span><wbr><span class="parameters">(int&nbsp;threads)</span></div>
-<div class="block">Sets the number of platform threads the context uses to decompress and decode pages.
+<div class="block">Sets the number of platform threads the context uses to decompress and decode pages, and
+to encode and compress the column chunks of a writer's row groups.
 Defaults to <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runtime.html#availableProcessors()" title="class or interface in java.lang" class="external-link"><code>Runtime.availableProcessors()</code></a>.</div>
 <dl class="notes">
 <dt>Throws:</dt>

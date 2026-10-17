@@ -2203,13 +2203,12 @@ Alternatively, <a href="getting-started/#command-line-tool">install the Hardwood
 <h2 id="status-and-limitations">Status and Limitations<a class="headerlink" href="#status-and-limitations" title="Permanent link">&para;</a></h2>
 <p>The read path is stable and suitable for production use; <code>ColumnReader</code>, with its <code>Validity</code> and <code>LayerKind</code> types, is annotated <code>@Experimental</code>, so its shape may still change.
 The write path ships both APIs described under <a href="how-to/#choosing-a-writer">Choosing a Writer</a>; the row-oriented <code>RowWriter</code> and its builders, the <code>ColumnBatch</code> setters for nested and nullable columns, and the in-memory destination <code>InMemoryOutputFile</code> are annotated <code>@Experimental</code>, so their shape may still change.</p>
-<p>Writing targets local files through <code>OutputFile.of(Path)</code> and the heap through <code>OutputFile.inMemory()</code>.
+<p>Writing targets local files through <code>OutputFile.of(Path)</code>, the heap through <code>OutputFile.inMemory()</code>, and S3 through <code>S3Source.outputFile(...)</code> (<a href="reference/s3/#writing">S3 writing</a>).
 Reads have no file-size ceiling, but a column chunk read without an OffsetIndex is capped at 2 GB, and some backends carry their own limits; see <a href="reference/reader/#limits">Limits</a>.</p>
 <h2 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">&para;</a></h2>
 <p>Forward-looking items, none committed to a specific release.</p>
 <ul>
 <li><strong>Finalize <code>ColumnReader</code> API</strong> — stabilize the API for columnar access and move it out of "Experimental" state. (<a href="https://github.com/hardwood-hq/hardwood/issues/522">#522</a>)</li>
-<li><strong>Writer extensions</strong> — object-store output and parallel column encoding, on top of the write path described in <a href="concepts/write-model/">The Write Model</a>. (<a href="https://github.com/hardwood-hq/hardwood/issues/9">#9</a>)</li>
 <li><strong>Parquet Modular Encryption</strong> — read files encrypted under the Parquet <a href="https://github.com/apache/parquet-format/blob/master/Encryption.md">Modular Encryption spec</a>: encrypted footer, per-column keys, AES-GCM and AES-GCM-CTR. (<a href="https://github.com/hardwood-hq/hardwood/issues/128">#128</a>)</li>
 <li><strong>Apache Arrow interop</strong> — <code>ColumnReader</code> output as Arrow <code>FieldVector</code> / <code>VectorSchemaRoot</code> for zero-copy handoff to DuckDB, DataFusion, Pandas-via-JNI, and other Arrow-native consumers. (<a href="https://github.com/hardwood-hq/hardwood/issues/153">#153</a>)</li>
 </ul>
@@ -2273,8 +2272,8 @@ Reads have no file-size ceiling, but a column chunk read without an OffsetIndex 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/7fed42de03a0d094bbc575042d82ee5634343b73" target="_blank" rel="noopener">
-      7fed42de
+    <a href="https://github.com/hardwood-hq/hardwood/tree/62e99ab3815822aac1cbb246cc8ac2f3691f1a43" target="_blank" rel="noopener">
+      62e99ab3
     </a>
   
 </div>

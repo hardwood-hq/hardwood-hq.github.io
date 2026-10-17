@@ -84,15 +84,18 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">HardwoodContext</span><span class="extends-implements">
 extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></span></div>
-<div class="block"><p>Context object that manages shared resources for Parquet file reading.</p>
-<p>Holds the thread pool for parallel page decoding, the libdeflate
+<div class="block"><p>Context object that manages shared resources for reading and writing Parquet files.</p>
+<p>Holds the thread pool for parallel page decoding and column chunk encoding, the libdeflate
 decompressor pool for native GZIP decompression, the decompressor factory,
 and the <a href="MetadataSource.html" title="interface in dev.hardwood"><code>MetadataSource</code></a> installed through <a href="#builder()"><code>builder()</code></a>, if any.</p>
 <p>The context lifecycle is tied to either:</p>
 <ul>
 <li><a href="Hardwood.html" title="class in dev.hardwood"><code>Hardwood</code></a> instance (for multi-file usage)</li>
 <li><a href="reader/ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a> instance (for standalone single-file usage)</li>
+<li><a href="writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a> instance (for a writer created without a context)</li>
 </ul>
+<p>A context created by the caller is closed by the caller, after every reader and writer
+using it.</p>
 </div>
 </div>
 </section>
