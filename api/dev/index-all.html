@@ -626,6 +626,10 @@ owned input files.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3InputFile.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3">S3InputFile</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/s3/S3OutputFile.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3OutputFile.html" title="class in dev.hardwood.s3">S3OutputFile</a></dt>
+<dd>
+<div class="block">Publishes the object.</div>
+</dd>
 <dt><a href="dev/hardwood/s3/S3Source.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/writer/ParquetFileWriter.html#close()" class="member-name-link">close()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
@@ -967,6 +971,8 @@ hold columns rather than records.</div>
 <dd>
 <div class="block">Performs resource acquisition (e.g. opening a file channel).</div>
 </dd>
+<dt><a href="dev/hardwood/s3/S3OutputFile.html#create()" class="member-name-link">create()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3OutputFile.html" title="class in dev.hardwood.s3">S3OutputFile</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/HardwoodContext.html#create(int)" class="member-name-link">create(int)</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a></dt>
 <dd>
 <div class="block">Create a new context with a thread pool of the specified size.</div>
@@ -1266,6 +1272,11 @@ per-value 4-byte length prefix wherever the lengths are similar.</div>
 <dd>
 <div class="block">Discards everything written and releases resources without publishing a
 file at the destination.</div>
+</dd>
+<dt><a href="dev/hardwood/s3/S3OutputFile.html#discard()" class="member-name-link">discard()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3OutputFile.html" title="class in dev.hardwood.s3">S3OutputFile</a></dt>
+<dd>
+<div class="block">Waits for the part uploads in flight to end and aborts the multipart upload, if one was
+started.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/Statistics.html#distinctCount()" class="member-name-link">distinctCount()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
 <dd>
@@ -4521,11 +4532,11 @@ reference stores no offset.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3Source.html#outputFile(java.lang.String)" class="member-name-link">outputFile(String)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>
-<div class="block">Creates an <a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
+<div class="block">Creates an <a href="dev/hardwood/s3/S3OutputFile.html" title="class in dev.hardwood.s3"><code>S3OutputFile</code></a> from an <code>s3://bucket/key</code> URI.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3Source.html#outputFile(java.lang.String,java.lang.String)" class="member-name-link">outputFile(String, String)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.html" title="class in dev.hardwood.s3">S3Source</a></dt>
 <dd>
-<div class="block">Creates an <a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that writes the object at the given bucket and key, for
+<div class="block">Creates an <a href="dev/hardwood/s3/S3OutputFile.html" title="class in dev.hardwood.s3"><code>S3OutputFile</code></a> that writes the object at the given bucket and key, for
 <a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/OutputFile.html" class="type-name-link" title="interface in dev.hardwood">OutputFile</a> - Interface in <a href="dev/hardwood/package-summary.html">dev.hardwood</a></dt>
@@ -4677,6 +4688,8 @@ prefix.</div>
 <div class="block">Returns the number of bytes written so far, which is the offset at which
 the next <a href="dev/hardwood/OutputFile.html#write(java.nio.ByteBuffer)"><code>OutputFile.write(ByteBuffer)</code></a> will begin.</div>
 </dd>
+<dt><a href="dev/hardwood/s3/S3OutputFile.html#position()" class="member-name-link">position()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3OutputFile.html" title="class in dev.hardwood.s3">S3OutputFile</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/row/PqDoubleList.html" class="type-name-link" title="interface in dev.hardwood.row">PqDoubleList</a> - Interface in <a href="dev/hardwood/row/package-summary.html">dev.hardwood.row</a></dt>
 <dd>
 <div class="block">Specialized list interface for DOUBLE values.</div>
@@ -5082,6 +5095,10 @@ without failing the writer.</div>
 <dt><a href="dev/hardwood/s3/S3InputFile.html" class="type-name-link" title="class in dev.hardwood.s3">S3InputFile</a> - Class in <a href="dev/hardwood/s3/package-summary.html">dev.hardwood.s3</a></dt>
 <dd>
 <div class="block"><a href="dev/hardwood/InputFile.html" title="interface in dev.hardwood"><code>InputFile</code></a> backed by an object in Amazon S3 (or an S3-compatible service).</div>
+</dd>
+<dt><a href="dev/hardwood/s3/S3OutputFile.html" class="type-name-link" title="class in dev.hardwood.s3">S3OutputFile</a> - Class in <a href="dev/hardwood/s3/package-summary.html">dev.hardwood.s3</a></dt>
+<dd>
+<div class="block">An <a href="dev/hardwood/OutputFile.html" title="interface in dev.hardwood"><code>OutputFile</code></a> that writes one S3 object, created by <a href="dev/hardwood/s3/S3Source.html#outputFile(java.lang.String,java.lang.String)"><code>S3Source.outputFile(String, String)</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3Source.html" class="type-name-link" title="class in dev.hardwood.s3">S3Source</a> - Class in <a href="dev/hardwood/s3/package-summary.html">dev.hardwood.s3</a></dt>
 <dd>
@@ -6398,6 +6415,8 @@ the form <code>&lt;algorithm&gt;:&lt;digest&gt;</code>, such as <code>SHA-256:â€
 <dd>
 <div class="block">Appends the remaining bytes of <code>data</code> to the file.</div>
 </dd>
+<dt><a href="dev/hardwood/s3/S3OutputFile.html#write(java.nio.ByteBuffer)" class="member-name-link">write(ByteBuffer)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3OutputFile.html" title="class in dev.hardwood.s3">S3OutputFile</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/writer/ColumnWriter.html#writeBatch(java.util.function.Consumer)" class="member-name-link">writeBatch(Consumer)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnWriter.html" title="class in dev.hardwood.writer">ColumnWriter</a></dt>
 <dd>
 <div class="block">Writes one aligned batch of column values, flushing row groups as the buffered

@@ -2330,7 +2330,7 @@ properties:</p>
   against requester-pays buckets will fail with <code>403 AccessDenied</code> even with valid credentials.</li>
 </ul>
 <h2 id="writing">Writing<a class="headerlink" href="#writing" title="Permanent link">&para;</a></h2>
-<p><code>S3Source.outputFile(String bucket, String key)</code> and <code>outputFile(String uri)</code> (an <code>s3://bucket/key</code> URI) return an <code>OutputFile</code> for <code>ParquetFileWriter</code>. A source built with <code>anonymous()</code> cannot create one; the call throws <code>IllegalStateException</code>.</p>
+<p><code>S3Source.outputFile(String bucket, String key)</code> and <code>outputFile(String uri)</code> (an <code>s3://bucket/key</code> URI) return an <code>S3OutputFile</code>, the <code>OutputFile</code> for an S3 object, for <code>ParquetFileWriter</code>. A source built with <code>anonymous()</code> cannot create one; the call throws <code>IllegalStateException</code>.</p>
 <table>
 <thead>
 <tr>
@@ -2425,8 +2425,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/74c76ca4de08d633547aef171207ff63a4301ad0" target="_blank" rel="noopener">
-      74c76ca4
+    <a href="https://github.com/hardwood-hq/hardwood/tree/047fe5d0e768592aa92ac1ca3afe1379ee2f4584" target="_blank" rel="noopener">
+      047fe5d0
     </a>
   
 </div>
