@@ -90,9 +90,10 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PageDecodedEvent</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/jdk.jfr/jdk/jfr/Event.html" title="class or interface in jdk.jfr" class="external-link">Event</a></span></div>
 <div class="block"><p>JFR event emitted when a single Parquet data page is decoded.</p>
-<p>This event covers the full page decode cycle: header parsing, decompression,
-and value decoding. The compressed and uncompressed sizes can be used to
-gauge compression ratios and decode cost per page.</p>
+<p>This event covers the page's read: decompression, the decode of its levels and
+dictionary ids, and the checks of its values. The values are written into batches
+after it. The compressed and uncompressed sizes can be used to gauge compression
+ratios and decode cost per page.</p>
 </div>
 </div>
 </section>

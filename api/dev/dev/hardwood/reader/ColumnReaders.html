@@ -248,8 +248,8 @@ all are.</li>
 </ul>
 <p>As a defensive guard, a mismatch between the columns' decoded record counts
 throws <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>. Under correct internal behavior this can't
-happen — the guard exists to detect future regressions in the per-column drain
-workers, not to be triggered in production.</p>
+happen — the guard exists to detect future regressions in the decode pipeline,
+not to be triggered in production.</p>
 </div>
 <dl class="notes">
 <dt>Returns:</dt>

@@ -2159,7 +2159,7 @@
 <p>A group carrying an annotation other than <code>LIST</code>, <code>MAP</code> or <code>VARIANT</code>, such as a <code>LIST</code> element group annotated <code>MAP_KEY_VALUE</code>, maps to an Avro record of its fields.</p>
 <p>Building an <code>AvroRowReader</code> fails with an error when a projected <code>LIST</code> group has no element field, a projected <code>MAP</code> group has no key field, or a projected <code>FIXED_LEN_BYTE_ARRAY</code> column declares no positive type length.</p>
 <h2 id="lifecycle">Lifecycle<a class="headerlink" href="#lifecycle" title="Permanent link">&para;</a></h2>
-<p><code>AvroRowReader</code> does <strong>not</strong> take ownership of the <code>ParquetFileReader</code> it wraps. Closing the <code>AvroRowReader</code> releases the inner readers and column workers, but the underlying <code>ParquetFileReader</code> must be closed separately by the caller.</p>
+<p><code>AvroRowReader</code> does <strong>not</strong> take ownership of the <code>ParquetFileReader</code> it wraps. Closing the <code>AvroRowReader</code> releases the inner readers, but the underlying <code>ParquetFileReader</code> must be closed separately by the caller.</p>
 <h2 id="schema-overrides">Schema overrides<a class="headerlink" href="#schema-overrides" title="Permanent link">&para;</a></h2>
 <p><code>AvroReaders</code> derives the Avro schema from the Parquet schema, and <code>getSchema()</code> returns the converted form of the projected schema. An explicit Avro reader schema, as set with parquet-java's <code>AvroReadSupport.setRequestedProjection(...)</code> or <code>setAvroReadSchema(...)</code> for schema-evolution promotions, renames or alias resolution, is not supported; <code>ColumnProjection.columns(...)</code> is the only way to narrow what is read.</p>
 
@@ -2211,8 +2211,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/fc9dc501c4a29328f448705b24a1a1cf29f4f58b" target="_blank" rel="noopener">
-      fc9dc501
+    <a href="https://github.com/hardwood-hq/hardwood/tree/14a2afceb9ad3c063c3f63b690ed330fa9ddfbd3" target="_blank" rel="noopener">
+      14a2afce
     </a>
   
 </div>

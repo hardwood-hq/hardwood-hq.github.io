@@ -2159,7 +2159,7 @@
 </tr>
 <tr>
 <td><code>IllegalStateException</code></td>
-<td>Calling <code>PqFile.size()</code> on a reference that stores no size; calling <code>ColumnReader</code> accessors before <code>nextBatch()</code>, calling <code>nextBatch()</code> on a reader obtained from <code>ColumnReaders</code>, or calling nested-column methods on a flat column; a <code>MetadataSource</code> that returns <code>null</code>; building a row or column reader from a closed <code>ParquetFileReader</code>, or while another thread closes it</td>
+<td>Calling <code>PqFile.size()</code> on a reference that stores no size; calling <code>ColumnReader</code> accessors before <code>nextBatch()</code>, calling <code>nextBatch()</code> on a reader obtained from <code>ColumnReaders</code>, or calling nested-column methods on a flat column; a <code>MetadataSource</code> that returns <code>null</code>; building a row or column reader from a closed <code>ParquetFileReader</code>, or while another thread closes it; closing the <code>HardwoodContext</code> while a reader using it is reading, raised by a later call on that reader</td>
 </tr>
 <tr>
 <td><code>VariantTypeException</code></td>
@@ -2239,8 +2239,8 @@ the schema path of the offending group or column, not the file.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/fc9dc501c4a29328f448705b24a1a1cf29f4f58b" target="_blank" rel="noopener">
-      fc9dc501
+    <a href="https://github.com/hardwood-hq/hardwood/tree/14a2afceb9ad3c063c3f63b690ed330fa9ddfbd3" target="_blank" rel="noopener">
+      14a2afce
     </a>
   
 </div>

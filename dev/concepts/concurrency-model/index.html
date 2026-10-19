@@ -2179,14 +2179,15 @@ an ordinary single-threaded read loop, and the parallelism happens underneath it
 <p>Worker threads live in a pool owned by a context, not by individual readers.
 <code>ParquetFileReader.open(InputFile)</code> creates and owns a context sized to the available processors,
 and closing the reader shuts it down. An explicitly created <code>HardwoodContext</code> outlives any one
-reader and is shared across all readers opened against it; the caller closes it. See
+reader and is shared across all readers opened against it; the caller closes it. Closing a
+context lets the tasks already submitted to its pool finish, waiting up to five seconds for them. See
 <a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a> for creating and passing one.</p>
 <p>Share one context across many reads. The pool is the expensive, reusable resource; readers are
 cheap and short-lived. This matters most when reading many files, as described below.</p>
 <h2 id="the-assembly-pipeline">The assembly pipeline<a class="headerlink" href="#the-assembly-pipeline" title="Permanent link">&para;</a></h2>
 <p>For a single read, the reader runs an <strong>assembly pipeline</strong> ahead of the consumer. While
-your loop is processing the current batch (or row), pool threads are already decompressing and
-decoding the pages that feed the next batches, queuing the results. The consumer thread
+your loop is processing the current batch (or row), pool threads are already decompressing the
+pages that feed the next batches and decoding their values straight into those batches. The consumer thread
 generally pulls ready-to-use decoded data instead of blocking on decode.</p>
 <p>Frequent or long <strong><code>BatchWait</code></strong> <a href="../../reference/configuration/#jfr-java-flight-recorder-events">JFR events</a>
 mean decode (or I/O) isn't keeping up with consumption.</p>
@@ -2218,9 +2219,8 @@ shared pool matters, since all the files draw on the same workers. See
 <li><strong>Size the pool to the workload.</strong> <code>HardwoodContext.create(n)</code> sets the number of
   threads that decompress and decode pages, and that encode and compress column chunks on write, which is the bulk of the CPU, so <code>n</code> is the main throughput
   and CPU dial. The default (available processors) suits a process whose main job is reading
-  Parquet; lower it when Hardwood shares the machine with other heavy work. Two lighter stages,
-  fetching page bytes on demand and assembling decoded values into batches, run on the JVM's
-  virtual-thread carriers rather than this pool. Speculative fetches (the next file's footer, the
+  Parquet; lower it when Hardwood shares the machine with other heavy work. Fetching page bytes on
+  demand, a lighter stage, runs on the JVM's virtual-thread carriers rather than this pool. Speculative fetches (the next file's footer, the
   next row group's fetch plans and first chunk, the chunk after the one being read) run on the
   common <code>ForkJoinPool</code>. <code>n</code> bounds neither. For strict CPU isolation on a shared machine, also cap
   the carriers with <code>-Djdk.virtualThreadScheduler.parallelism</code> and the common pool with
@@ -2287,8 +2287,8 @@ shared pool matters, since all the files draw on the same workers. See
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/fc9dc501c4a29328f448705b24a1a1cf29f4f58b" target="_blank" rel="noopener">
-      fc9dc501
+    <a href="https://github.com/hardwood-hq/hardwood/tree/14a2afceb9ad3c063c3f63b690ed330fa9ddfbd3" target="_blank" rel="noopener">
+      14a2afce
     </a>
   
 </div>
