@@ -173,7 +173,11 @@ using it.</p>
 <h3>executor</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html" title="class or interface in java.util.concurrent" class="external-link">ExecutorService</a></span>&nbsp;<span class="element-name">executor</span>()</div>
-<div class="block">Get the executor service for parallel operations.</div>
+<div class="block"><p>Get the executor service for parallel operations.</p>
+<p>A read waits for work only this executor's threads run, so a reader built with this
+context cannot be built in a task running on it: building one there fails with an
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>.</p>
+</div>
 </div>
 </section>
 </li>
