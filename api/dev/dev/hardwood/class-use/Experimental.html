@@ -168,25 +168,31 @@ backend can supply one without a request of its own; empty when it cannot.</div>
 <div class="block">The dictionary of a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column chunk, from
 <a href="../reader/ColumnReader.html#getBinaryDictionary()"><code>ColumnReader.getBinaryDictionary()</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../reader/ColumnDictionary.html" class="type-name-link" title="interface in dev.hardwood.reader">ColumnDictionary</a></code></div>
+<div class="col-first odd-row-color"><code>final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../reader/BinaryValues.html" class="type-name-link" title="class in dev.hardwood.reader">BinaryValues</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">The values of a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> leaf in a <a href="../reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a>'s
+batch, from <a href="../reader/ColumnReader.html#getBinaryValues()"><code>ColumnReader.getBinaryValues()</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../reader/ColumnDictionary.html" class="type-name-link" title="interface in dev.hardwood.reader">ColumnDictionary</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The dictionary of one column chunk: the distinct values a dictionary-encoded column
 stores once, which <a href="../reader/ColumnReader.html#getDictionaryIds()"><code>ColumnReader.getDictionaryIds()</code></a> refers to by entry.</div>
 </div>
-<div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../reader/ColumnReader.html" class="type-name-link" title="class in dev.hardwood.reader">ColumnReader</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../reader/ColumnReader.html" class="type-name-link" title="class in dev.hardwood.reader">ColumnReader</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Batch-oriented column reader for reading a single column across all row groups.</div>
 </div>
-<div class="col-first odd-row-color"><code>enum&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../reader/LayerKind.html" class="type-name-link" title="enum class in dev.hardwood.reader">LayerKind</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../reader/LayerKind.html" class="type-name-link" title="enum class in dev.hardwood.reader">LayerKind</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Classifies a <a href="../reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> layer between root and leaf.</div>
 </div>
-<div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../reader/StaleMetadataException.html" class="type-name-link" title="class in dev.hardwood.reader">StaleMetadataException</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../reader/StaleMetadataException.html" class="type-name-link" title="class in dev.hardwood.reader">StaleMetadataException</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Raised when the footer a <a href="../MetadataSource.html" title="interface in dev.hardwood"><code>MetadataSource</code></a> supplied does not describe the file being read.</div>
 </div>
 </div>

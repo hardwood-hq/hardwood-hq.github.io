@@ -115,71 +115,76 @@ loadScripts(document, 'script');</script>
 <div class="block">The dictionary of a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column chunk, from
 <a href="ColumnReader.html#getBinaryDictionary()"><code>ColumnReader.getBinaryDictionary()</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ColumnDictionary.html#dev.hardwood.reader">ColumnDictionary</a></div>
+<div class="col-first odd-row-color"><a href="class-use/BinaryValues.html#dev.hardwood.reader">BinaryValues</a></div>
 <div class="col-last odd-row-color">
+<div class="block">The values of a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> leaf in a <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a>'s
+batch, from <a href="ColumnReader.html#getBinaryValues()"><code>ColumnReader.getBinaryValues()</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/ColumnDictionary.html#dev.hardwood.reader">ColumnDictionary</a></div>
+<div class="col-last even-row-color">
 <div class="block">The dictionary of one column chunk: the distinct values a dictionary-encoded column
 stores once, which <a href="ColumnReader.html#getDictionaryIds()"><code>ColumnReader.getDictionaryIds()</code></a> refers to by entry.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ColumnReader.html#dev.hardwood.reader">ColumnReader</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/ColumnReader.html#dev.hardwood.reader">ColumnReader</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Batch-oriented column reader for reading a single column across all row groups.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ColumnReaders.html#dev.hardwood.reader">ColumnReaders</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ColumnReaders.html#dev.hardwood.reader">ColumnReaders</a></div>
+<div class="col-last even-row-color">
 <div class="block">Holds multiple <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> instances backed by one shared decode
 pipeline for batch-oriented projection reads.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/FilterPredicate.html#dev.hardwood.reader">FilterPredicate</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/FilterPredicate.html#dev.hardwood.reader">FilterPredicate</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A predicate filtering the rows a reader returns.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/FilterPredicate.Operator.html#dev.hardwood.reader">FilterPredicate.Operator</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/LayerKind.html#dev.hardwood.reader">LayerKind</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/FilterPredicate.Operator.html#dev.hardwood.reader">FilterPredicate.Operator</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/LayerKind.html#dev.hardwood.reader">LayerKind</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Classifies a <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> layer between root and leaf.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ParquetFileReader.html#dev.hardwood.reader">ParquetFileReader</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ParquetFileReader.html#dev.hardwood.reader">ParquetFileReader</a></div>
+<div class="col-last even-row-color">
 <div class="block">Reader for one or more Parquet files.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ParquetFileReader.ColumnReaderBuilder.html#dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/ParquetFileReader.ColumnReaderBuilder.html#dev.hardwood.reader">ParquetFileReader.ColumnReaderBuilder</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Builds a single-column <a href="ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a> with an optional filter.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ParquetFileReader.ColumnReadersBuilder.html#dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ParquetFileReader.ColumnReadersBuilder.html#dev.hardwood.reader">ParquetFileReader.ColumnReadersBuilder</a></div>
+<div class="col-last even-row-color">
 <div class="block">Builds a <a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented access to a
 projection of columns.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ParquetFileReader.RowReaderBuilder.html#dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/ParquetFileReader.RowReaderBuilder.html#dev.hardwood.reader">ParquetFileReader.RowReaderBuilder</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Builds a <a href="RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> with optional projection, filter, and head/tail
 row limit.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ParquetReadException.html#dev.hardwood.reader">ParquetReadException</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ParquetReadException.html#dev.hardwood.reader">ParquetReadException</a></div>
+<div class="col-last even-row-color">
 <div class="block">Thrown when a file's own bytes are wrong: the read succeeded and what it
 returned does not say something a Parquet file can say.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ReaderConfig.html#dev.hardwood.reader">ReaderConfig</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/ReaderConfig.html#dev.hardwood.reader">ReaderConfig</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Read-time behaviour knobs for <a href="ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ReaderConfig.Builder.html#dev.hardwood.reader">ReaderConfig.Builder</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ReaderConfig.Builder.html#dev.hardwood.reader">ReaderConfig.Builder</a></div>
+<div class="col-last even-row-color">
 <div class="block">Builder for <a href="ReaderConfig.html" title="class in dev.hardwood.reader"><code>ReaderConfig</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/RowGroupPredicate.html#dev.hardwood.reader">RowGroupPredicate</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/RowGroupPredicate.html#dev.hardwood.reader">RowGroupPredicate</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A predicate over row groups, used to select which row groups a reader scans.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/RowReader.html#dev.hardwood.reader">RowReader</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/RowReader.html#dev.hardwood.reader">RowReader</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides row-oriented iteration over a Parquet file.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/StaleMetadataException.Check.html#dev.hardwood.reader">StaleMetadataException.Check</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/StaleMetadataException.Check.html#dev.hardwood.reader">StaleMetadataException.Check</a></div>
+<div class="col-last odd-row-color">
 <div class="block">The check the supplied footer failed.</div>
 </div>
 </div>

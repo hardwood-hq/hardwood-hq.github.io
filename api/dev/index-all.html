@@ -346,6 +346,11 @@ to be assembled by the assembly thread.</div>
 <dd>
 <div class="block">Creates an instance of a <code>BinaryInPredicate</code> record class.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/BinaryValues.html" class="type-name-link" title="class in dev.hardwood.reader">BinaryValues</a> - Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
+<dd>
+<div class="block">The values of a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> leaf in a <a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader"><code>ColumnReader</code></a>'s
+batch, from <a href="dev/hardwood/reader/ColumnReader.html#getBinaryValues()"><code>ColumnReader.getBinaryValues()</code></a>.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/Encoding.html#BIT_PACKED" class="member-name-link">BIT_PACKED</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Encoding.html" title="enum class in dev.hardwood.metadata">Encoding</a></dt>
 <dd>
 <div class="block">Bit-packed encoding (deprecated in favor of <a href="dev/hardwood/metadata/Encoding.html#RLE"><code>Encoding.RLE</code></a>).</div>
@@ -450,6 +455,10 @@ false-positive probability.</div>
 <dt><a href="dev/hardwood/InMemoryOutputFile.html#buffer()" class="member-name-link">buffer()</a> - Method in class dev.hardwood.<a href="dev/hardwood/InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a></dt>
 <dd>
 <div class="block">The file that was written.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/BinaryValues.html#buffer(int)" class="member-name-link">buffer(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryValues.html" title="class in dev.hardwood.reader">BinaryValues</a></dt>
+<dd>
+<div class="block">The array value <code>i</code> is read from.</div>
 </dd>
 <dt><a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html#build()" class="member-name-link">build()</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroReaders.RowReaderBuilder.html" title="class in dev.hardwood.avro">AvroReaders.RowReaderBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -939,6 +948,10 @@ hold columns rather than records.</div>
 <dd>
 <div class="block">True if this map contains an entry with the given STRING key.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/BinaryValues.html#contentEquals(int,byte%5B%5D,int,int)" class="member-name-link">contentEquals(int, byte[], int, int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryValues.html" title="class in dev.hardwood.reader">BinaryValues</a></dt>
+<dd>
+<div class="block">Whether value <code>i</code> equals the bytes <code>[offset, offset + length)</code> of <code>other</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/row/PqFile.html#contentType()" class="member-name-link">contentType()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqFile.html" title="interface in dev.hardwood.row">PqFile</a></dt>
 <dd>
 <div class="block">The media type of the referenced bytes, or <code>null</code> if the reference has none.</div>
@@ -954,6 +967,10 @@ hold columns rather than records.</div>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html" class="type-name-link" title="enum class in dev.hardwood.metadata">ConvertedType</a> - Enum Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
 <div class="block">Legacy converted types in Parquet schema (used by PyArrow for LIST/MAP annotation).</div>
+</dd>
+<dt><a href="dev/hardwood/reader/BinaryValues.html#copyTo(int,byte%5B%5D,int)" class="member-name-link">copyTo(int, byte[], int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryValues.html" title="class in dev.hardwood.reader">BinaryValues</a></dt>
+<dd>
+<div class="block">Copies value <code>i</code> into <code>dst</code>, from <code>dstOffset</code> on.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/PageEncodingStats.html#count()" class="member-name-link">count()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/PageEncodingStats.html" title="class in dev.hardwood.metadata">PageEncodingStats</a></dt>
 <dd>
@@ -1364,6 +1381,10 @@ arguments must be non-null.</div>
 <dt><a href="dev/hardwood/metadata/ColumnMetaData.html#encodingStats()" class="member-name-link">encodingStats()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnMetaData.html" title="class in dev.hardwood.metadata">ColumnMetaData</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-encodingStats"><code>encodingStats</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/BinaryValues.html#end(int)" class="member-name-link">end(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryValues.html" title="class in dev.hardwood.reader">BinaryValues</a></dt>
+<dd>
+<div class="block">Where value <code>i</code> ends in <a href="dev/hardwood/reader/BinaryValues.html#buffer(int)"><code>BinaryValues.buffer(int)</code></a>, exclusive.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html#endExclusive()" class="member-name-link">endExclusive()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a></dt>
 <dd>
@@ -2226,6 +2247,10 @@ buffer.</div>
 <dd>
 <div class="block">A copy of entry <code>entry</code>.</div>
 </dd>
+<dt><a href="dev/hardwood/reader/BinaryValues.html#getBinary(int)" class="member-name-link">getBinary(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryValues.html" title="class in dev.hardwood.reader">BinaryValues</a></dt>
+<dd>
+<div class="block">A copy of value <code>i</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getBinary(int)" class="member-name-link">getBinary(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
 <div class="block">Get a BINARY field value by field index.</div>
@@ -2239,17 +2264,9 @@ buffer.</div>
 <div class="block">The dictionary <a href="dev/hardwood/reader/ColumnReader.html#getDictionaryIds()"><code>ColumnReader.getDictionaryIds()</code></a> refers to, or <code>null</code> when the ids are
 <code>null</code>.</div>
 </dd>
-<dt><a href="dev/hardwood/reader/ColumnReader.html#getBinaryEnds()" class="member-name-link">getBinaryEnds()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
-<dd>
-<div class="block">End of each value in <a href="dev/hardwood/reader/ColumnReader.html#getBinaryValues()"><code>ColumnReader.getBinaryValues()</code></a>, exclusive.</div>
-</dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getBinaryKey()" class="member-name-link">getBinaryKey()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
 <div class="block">Get the key as a BINARY.</div>
-</dd>
-<dt><a href="dev/hardwood/reader/ColumnReader.html#getBinaryStarts()" class="member-name-link">getBinaryStarts()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
-<dd>
-<div class="block">Start of each value in <a href="dev/hardwood/reader/ColumnReader.html#getBinaryValues()"><code>ColumnReader.getBinaryValues()</code></a>, inclusive.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getBinaryValue()" class="member-name-link">getBinaryValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
@@ -2257,7 +2274,7 @@ buffer.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#getBinaryValues()" class="member-name-link">getBinaryValues()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>
-<div class="block">The bytes a varlength leaf's values are read from.</div>
+<div class="block">The values of a varlength leaf, read by value index.</div>
 </dd>
 <dt><a href="dev/hardwood/row/StructAccessor.html#getBoolean(int)" class="member-name-link">getBoolean(int)</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a></dt>
 <dd>
@@ -2636,7 +2653,7 @@ logical-type decoding.</div>
 <dt><a href="dev/hardwood/reader/ColumnReader.html#getStrings()" class="member-name-link">getStrings()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnReader.html" title="class in dev.hardwood.reader">ColumnReader</a></dt>
 <dd>
 <div class="block">Convenience: materialises one <code>String</code> per leaf value by UTF-8 decoding
-the slice of <a href="dev/hardwood/reader/ColumnReader.html#getBinaryValues()"><code>ColumnReader.getBinaryValues()</code></a> for each entry.</div>
+each value of <a href="dev/hardwood/reader/ColumnReader.html#getBinaryValues()"><code>ColumnReader.getBinaryValues()</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/row/PqMap.Entry.html#getStringValue()" class="member-name-link">getStringValue()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqMap.Entry.html" title="interface in dev.hardwood.row">PqMap.Entry</a></dt>
 <dd>
@@ -3668,6 +3685,10 @@ for a key it names and leaving the rest in place.</div>
 </dd>
 <dt><a href="dev/hardwood/s3/S3InputFile.html#length()" class="member-name-link">length()</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3InputFile.html" title="class in dev.hardwood.s3">S3InputFile</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/BinaryValues.html#length(int)" class="member-name-link">length(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryValues.html" title="class in dev.hardwood.reader">BinaryValues</a></dt>
+<dd>
+<div class="block">The length of value <code>i</code> in bytes.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.html#list()" class="member-name-link">list()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
 <dd>
 <div class="block">The <code>LIST</code> annotation, for a group holding a repeated element.</div>
@@ -5325,6 +5346,10 @@ annotation declares, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/BinaryDictionary.html#size()" class="member-name-link">size()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryDictionary.html" title="class in dev.hardwood.reader">BinaryDictionary</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/reader/BinaryValues.html#size()" class="member-name-link">size()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryValues.html" title="class in dev.hardwood.reader">BinaryValues</a></dt>
+<dd>
+<div class="block">The number of values, <a href="dev/hardwood/reader/ColumnReader.html#getValueCount()"><code>ColumnReader.getValueCount()</code></a>.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ColumnDictionary.html#size()" class="member-name-link">size()</a> - Method in interface dev.hardwood.reader.<a href="dev/hardwood/reader/ColumnDictionary.html" title="interface in dev.hardwood.reader">ColumnDictionary</a></dt>
 <dd>
 <div class="block">The number of entries; entry ids run from <code>0</code> to <code>size() - 1</code>.</div>
@@ -5407,6 +5432,10 @@ process.</div>
 <dt><a href="dev/hardwood/reader/StaleMetadataException.Check.html" class="type-name-link" title="enum class in dev.hardwood.reader">StaleMetadataException.Check</a> - Enum Class in <a href="dev/hardwood/reader/package-summary.html">dev.hardwood.reader</a></dt>
 <dd>
 <div class="block">The check the supplied footer failed.</div>
+</dd>
+<dt><a href="dev/hardwood/reader/BinaryValues.html#start(int)" class="member-name-link">start(int)</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryValues.html" title="class in dev.hardwood.reader">BinaryValues</a></dt>
+<dd>
+<div class="block">Where value <code>i</code> starts in <a href="dev/hardwood/reader/BinaryValues.html#buffer(int)"><code>BinaryValues.buffer(int)</code></a>, inclusive.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html#startInclusive()" class="member-name-link">startInclusive()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/RowGroupPredicate.ByteRange.html" title="class in dev.hardwood.reader">RowGroupPredicate.ByteRange</a></dt>
 <dd>
