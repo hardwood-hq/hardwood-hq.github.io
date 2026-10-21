@@ -1948,6 +1948,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Reading Files from S3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tls-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS certificates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2347,6 +2364,23 @@
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Reading Files from S3">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tls-certificates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TLS certificates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2925,6 +2959,13 @@ filter applied but exits edit mode).</p>
 </tr>
 </tbody>
 </table>
+<h3 id="tls-certificates">TLS certificates<a class="headerlink" href="#tls-certificates" title="Permanent link">&para;</a></h3>
+<p>The native binary verifies HTTPS connections against the root certificates of the JDK it was built with. It does not read the operating system's certificate store. It rejects any certificate chain that contains a certificate listed in <a href="https://github.com/hardwood-hq/hardwood/blob/main/cli/src/main/trust/blocked.certs"><code>blocked.certs</code></a>, whichever trust store is in use.</p>
+<p>To verify against a different set of root certificates, for example one that contains a company CA, pass a trust store file and its password before the command name:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>hardwood<span class="w"> </span>-Djavax.net.ssl.trustStore<span class="o">=</span>/path/to/cacerts<span class="w"> </span>-Djavax.net.ssl.trustStorePassword<span class="o">=</span>changeit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span>info<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+</code></pre></div>
+<p>The file replaces the built-in root certificates entirely; the certificates in <code>blocked.certs</code> stay rejected. It can be a PKCS12 or JKS keystore, such as a JDK's <code>lib/security/cacerts</code> or, on Fedora and RHEL, <code>/etc/pki/ca-trust/extracted/java/cacerts</code>. A path that does not exist makes every HTTPS connection fail with an error. With the <a href="../../getting-started/#docker">Docker image</a>, mount the file into the container and pass its path inside the container.</p>
 <h2 id="compression-libraries">Compression libraries<a class="headerlink" href="#compression-libraries" title="Permanent link">&para;</a></h2>
 <p>The native binary contains the native libraries for the Snappy, ZSTD, LZ4 and Brotli codecs. On startup it writes them to the first usable one of these directories and loads them from there:</p>
 <table>
@@ -2997,8 +3038,8 @@ filter applied but exits edit mode).</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/487ec2bd2933d10295e287925b4c028386c70bba" target="_blank" rel="noopener">
-      487ec2bd
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a84a5f22fb918434bf579bef626cae568b456710" target="_blank" rel="noopener">
+      a84a5f22
     </a>
   
 </div>
