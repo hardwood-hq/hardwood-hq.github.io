@@ -1,0 +1,104 @@
+/**
+ *  SPDX-License-Identifier: CC-BY-SA-4.0
+ *
+ *  Copyright The original authors
+ *
+ *  Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License;
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at https://creativecommons.org/licenses/by-sa/4.0/
+ */
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #1e3a5f;
+  --md-primary-fg-color--light: #2c5282;
+  --md-primary-fg-color--dark: #142b46;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #1e3a5f;
+  --md-primary-fg-color--light: #2c5282;
+  --md-primary-fg-color--dark: #142b46;
+}
+
+/*
+ * Hide the redundant site-name text in the header (the logo already includes the
+ * wordmark), but only the text span: the mike version selector is injected by JS
+ * as a sibling inside this same .md-header__topic, so hiding the whole topic would
+ * hide the version picker too.
+ */
+.md-header__topic:not([data-md-component="header-topic"]) > .md-ellipsis {
+  display: none;
+}
+
+.md-header__button.md-logo img {
+  width: auto;
+  height: 1.6rem;
+}
+
+@media screen and (max-width: 76.1875em) {
+  .md-header__button.md-logo {
+    display: inline-flex;
+  }
+}
+
+/*
+ * Links: keep them clearly distinguishable from body text. The brand primary
+ * is a dark navy that, used as the link color, reads almost like body text, so
+ * give links their own brighter colour per scheme and underline them (don't
+ * rely on colour alone). Heading permalinks and image links are excluded.
+ */
+[data-md-color-scheme="default"] {
+  --md-typeset-a-color: #2c5282;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-typeset-a-color: #7eb6e8;
+}
+
+.md-typeset a:not(.headerlink):not(:has(img)) {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+}
+
+.md-typeset a:not(.headerlink):not(:has(img)):hover {
+  text-decoration-thickness: 2px;
+}
+
+/*
+ * "news" admonition: home for release announcements on the landing page. Styled
+ * off the link colour so it follows the brand palette in both schemes, rather
+ * than borrowing one of Material's semantic colours, whose meanings (success,
+ * info) are not what a release announcement means.
+ */
+:root {
+  --md-admonition-icon--news: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5v14H4V5zm0-2H4c-1.11 0-2 .89-2 2v14c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2m-2 12H6v2h12zm-8-8H6v6h4zm2 2h6V7h-6zm6 2h-6v2h6z"/></svg>');
+}
+
+.md-typeset .admonition.news,
+.md-typeset details.news {
+  border-color: var(--md-typeset-a-color);
+}
+
+.md-typeset .news > .admonition-title,
+.md-typeset .news > summary {
+  background-color: color-mix(in srgb, var(--md-typeset-a-color) 12%, transparent);
+}
+
+.md-typeset .news > .admonition-title::before,
+.md-typeset .news > summary::before {
+  background-color: var(--md-typeset-a-color);
+  -webkit-mask-image: var(--md-admonition-icon--news);
+          mask-image: var(--md-admonition-icon--news);
+}
+
+/* Caption bar below the dive demo player on the CLI reference page. */
+.dive-caption {
+  margin-top: 0.4em;
+  min-height: 2.6em;
+  padding: 0.4em 0.8em;
+  border-left: 0.2rem solid var(--md-accent-fg-color);
+  background-color: var(--md-code-bg-color);
+  color: var(--md-default-fg-color);
+  font-size: 0.75rem;
+}

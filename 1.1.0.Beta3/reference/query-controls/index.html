@@ -1,0 +1,2805 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A lightweight Java Parquet reader and writer — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
+      
+      
+      
+        <link rel="canonical" href="https://hardwood.dev/1.1.0.Beta3/reference/query-controls/">
+      
+      
+        <link rel="prev" href="../accessors/">
+      
+      
+        <link rel="next" href="../s3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/hardwood.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Query Controls - Hardwood</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#query-controls" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Hardwood" class="md-header__button md-logo" aria-label="Hardwood" data-md-component="logo">
+      <!--
+
+     SPDX-License-Identifier: Apache-2.0
+
+     Copyright The original authors
+
+     Licensed under the Apache Software License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+
+--><img src="../../assets/hardwood-with-text.svg" alt="Hardwood">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Hardwood
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Query Controls
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hardwood-hq/hardwood" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hardwood-hq/hardwood
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting-started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorial/first-read/" class="md-tabs__link">
+          
+  
+  
+  Tutorial
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../how-to/" class="md-tabs__link">
+          
+  
+  
+  How-to Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../concepts/parquet-layout/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../configuration/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../release-notes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Release Notes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="/experiments/dive-web/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  dive on the Web
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Hardwood" class="md-nav__button md-logo" aria-label="Hardwood" data-md-component="logo">
+      <!--
+
+     SPDX-License-Identifier: Apache-2.0
+
+     Copyright The original authors
+
+     Licensed under the Apache Software License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+
+--><img src="../../assets/hardwood-with-text.svg" alt="Hardwood">
+    </a>
+    Hardwood
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hardwood-hq/hardwood" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hardwood-hq/hardwood
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorial
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/first-read/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Your First Parquet File
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-to Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/row-reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Row by Row
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/column-reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Column by Column
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/query-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filter, Project, Limit, and Split
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/multi-file/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Multiple Files as One Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/avro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read into Avro GenericRecords
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read from S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/compat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read with the parquet-java API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/variant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Variant Columns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/geospatial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Geospatial Columns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/write-row-by-row/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write Row by Row
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/write-column-by-column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write Column by Column
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/write-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handle Write Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inspect File Metadata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/parquet-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How a Parquet File Is Laid Out
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/write-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Write Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/concurrency-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Concurrency Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/reader-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RowReader vs. ColumnReader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/nested-columns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Layer Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/row-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Row Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/timestamps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timestamp Semantics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/compatibility-philosophy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compatibility Philosophy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../writer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Typed Accessors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Query Controls
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Query Controls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#supported-filter-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported filter predicates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predicate-literals-by-column-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predicate literals by column type
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Predicate literals by column type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literals-the-column-cannot-hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Literals the column cannot hold
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-statistics-are-ignored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When statistics are ignored
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When statistics are ignored">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bloom-filter-and-dictionary-pruning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloom filter and dictionary pruning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#column-projection-forms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Column projection forms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Column projection forms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#index-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index order
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parquet-java-compat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    parquet-java Compat Filters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../error-handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Handling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schema-element/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SchemaElement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../packages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Package Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/api/1.1.0.Beta3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API (JavaDoc)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/api-changes/1.1.0.Beta3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/experiments/dive-web/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    dive on the Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#supported-filter-predicates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported filter predicates
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#predicate-literals-by-column-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Predicate literals by column type
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Predicate literals by column type">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#literals-the-column-cannot-hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Literals the column cannot hold
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#when-statistics-are-ignored" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When statistics are ignored
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="When statistics are ignored">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bloom-filter-and-dictionary-pruning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloom filter and dictionary pruning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#column-projection-forms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Column projection forms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Column projection forms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#index-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index order
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/hardwood-hq/hardwood/edit/main/docs/content/reference/query-controls.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<!--
+
+     SPDX-License-Identifier: CC-BY-SA-4.0
+
+     Copyright The original authors
+
+     Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License;
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at https://creativecommons.org/licenses/by-sa/4.0/
+
+-->
+<h1 id="query-controls">Query Controls<a class="headerlink" href="#query-controls" title="Permanent link">&para;</a></h1>
+<p>The predicate and projection controls. For worked examples and the I/O behavior of each control,
+see <a href="../../how-to/query-controls/">Predicate Pushdown, Projection, Limits, and Splits</a>.</p>
+<h2 id="supported-filter-predicates">Supported filter predicates<a class="headerlink" href="#supported-filter-predicates" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comparison operators</td>
+<td><code>eq</code>, <code>notEq</code> on every column; <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code> on a column whose type defines an order</td>
+</tr>
+<tr>
+<td>Set operators</td>
+<td><code>in</code>, over every literal type but <code>boolean</code></td>
+</tr>
+<tr>
+<td>Null operators</td>
+<td><code>isNull</code>, <code>isNotNull</code> (any type)</td>
+</tr>
+<tr>
+<td>Spatial operators</td>
+<td><code>intersects</code>, on a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column, by row-group bounding-box overlap (see <a href="../../how-to/geospatial/#spatial-filter-pushdown">Geospatial</a>)</td>
+</tr>
+<tr>
+<td>Combinators</td>
+<td><code>and</code>, <code>or</code>, <code>not</code> (<code>and</code> / <code>or</code> accept varargs for three or more conditions, and throw <code>IllegalArgumentException</code> when given none)</td>
+</tr>
+<tr>
+<td>Column form</td>
+<td>By name or dot-separated path (<code>address.city</code>). Comparison predicates take leaf columns only; <code>isNull</code> / <code>isNotNull</code> also take the name of a group — a struct, a <code>LIST</code> or a <code>MAP</code>. Any name below a repeated path is rejected</td>
+</tr>
+</tbody>
+</table>
+<p>All predicates, including those wrapped in <code>not</code>, are pushed down for row-group and page
+skipping. Filters work with all reader types — <code>RowReader</code>, <code>ColumnReader</code>,
+<code>AvroRowReader</code>, and across multi-file readers.</p>
+<h2 id="predicate-literals-by-column-type">Predicate literals by column type<a class="headerlink" href="#predicate-literals-by-column-type" title="Permanent link">&para;</a></h2>
+<p>A column takes the literal types listed for its physical type, and — where it carries an
+annotation — those listed for that annotation as well. A <code>String</code> is the one literal that does
+not compose this way: it filters a <code>STRING</code>, an <code>ENUM</code>, a <code>JSON</code> and an unannotated <code>BYTE_ARRAY</code>,
+and no other binary column. Where both rows apply, the annotation names the order: a <code>UINT_32</code>
+column matches the <code>INT32</code> row and the <code>INT(32, isSigned = false)</code> row, and compares by unsigned
+magnitude. Set membership follows the same mapping: <code>in</code> takes each literal type below but
+<code>boolean</code>, and each of its values is an equality literal. An empty set throws
+<code>IllegalArgumentException</code> when the predicate is built. A literal a column does not take throws
+<code>IllegalArgumentException</code> at reader creation.</p>
+<p>For columns <code>d DATE</code>, <code>ts TIMESTAMP(MICROS, isAdjustedToUTC = true)</code>, <code>dec DECIMAL(9, 2)</code> over
+<code>BYTE_ARRAY</code>, whose row A stores <code>1.25</code> as <code>7D</code> and row B as <code>00 7D</code>, and <code>u INT(32, isSigned = false)</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">eq</span><span class="p">(</span><span class="s">"d"</span><span class="p">,</span><span class="w"> </span><span class="n">LocalDate</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="mi">2026</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span><span class="w">   </span><span class="c1">// ✓ the value getDate returns</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">eq</span><span class="p">(</span><span class="s">"d"</span><span class="p">,</span><span class="w"> </span><span class="mi">20454</span><span class="p">)</span><span class="w">                      </span><span class="c1">// ✓ the value getInt returns, the epoch day</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">eq</span><span class="p">(</span><span class="s">"d"</span><span class="p">,</span><span class="w"> </span><span class="mi">20454L</span><span class="p">)</span><span class="w">                     </span><span class="c1">// ✗ throws: no accessor returns a long for this column</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">eq</span><span class="p">(</span><span class="s">"dec"</span><span class="p">,</span><span class="w"> </span><span class="s">"1.25"</span><span class="p">)</span><span class="w">                   </span><span class="c1">// ✗ throws: getString does not read a DECIMAL</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">eq</span><span class="p">(</span><span class="s">"dec"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BigDecimal</span><span class="p">(</span><span class="s">"1.25"</span><span class="p">))</span><span class="w">   </span><span class="c1">// rows A and B, which both hold 1.25</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">eq</span><span class="p">(</span><span class="s">"dec"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x7D</span><span class="w"> </span><span class="p">})</span><span class="w">      </span><span class="c1">// row A only, the row storing exactly these bytes</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">lt</span><span class="p">(</span><span class="s">"dec"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">BigDecimal</span><span class="p">(</span><span class="s">"2.00"</span><span class="p">))</span><span class="w">   </span><span class="c1">// ✓ compares the numbers</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">lt</span><span class="p">(</span><span class="s">"dec"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x7D</span><span class="w"> </span><span class="p">})</span><span class="w">      </span><span class="c1">// ✗ throws: a DECIMAL does not order as its bytes</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">lt</span><span class="p">(</span><span class="s">"u"</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w">                         </span><span class="c1">// ✓ -1 is 0xFFFFFFFF, compared unsigned</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">lt</span><span class="p">(</span><span class="s">"ts"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2026-01-01T00:00:00.000000500Z"</span><span class="p">))</span><span class="w">   </span><span class="c1">// ✓ rows up to 00:00:00.000000</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">eq</span><span class="p">(</span><span class="s">"ts"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2026-01-01T00:00:00.000000500Z"</span><span class="p">))</span><span class="w">   </span><span class="c1">// ✗ throws: finer than the column's MICROS</span>
+</code></pre></div>
+<p>The ordered operators <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> throw <code>IllegalArgumentException</code> at reader
+creation on an <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code> or <code>NULL</code> column, and with a <code>byte[]</code> literal
+where <a href="#binary-columns">Binary columns</a> says so. <code>BOOLEAN</code> has no set form, since <code>eq</code>, <code>notEq</code> and
+<code>isNotNull</code> express every set of two values.</p>
+<table>
+<thead>
+<tr>
+<th>Logical type</th>
+<th>Physical type</th>
+<th>Literal</th>
+<th>Compared as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none</td>
+<td><code>BOOLEAN</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code> before <code>true</code></td>
+</tr>
+<tr>
+<td>none</td>
+<td><code>INT32</code></td>
+<td><code>int</code></td>
+<td>signed</td>
+</tr>
+<tr>
+<td>none</td>
+<td><code>INT64</code></td>
+<td><code>long</code></td>
+<td>signed</td>
+</tr>
+<tr>
+<td>none</td>
+<td><code>FLOAT</code></td>
+<td><code>float</code></td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>none</td>
+<td><code>DOUBLE</code></td>
+<td><code>double</code></td>
+<td>numeric</td>
+</tr>
+<tr>
+<td>none</td>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>byte[]</code>, <code>String</code></td>
+<td>unsigned lexicographic</td>
+</tr>
+<tr>
+<td>none</td>
+<td><code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
+<td><code>byte[]</code> of <code>n</code> bytes</td>
+<td>unsigned lexicographic</td>
+</tr>
+<tr>
+<td>none</td>
+<td><code>INT96</code></td>
+<td><code>Instant</code>, <code>byte[]</code> of 12 bytes</td>
+<td>the instant the value encodes; a <code>byte[]</code> as the stored bytes</td>
+</tr>
+<tr>
+<td><code>INT(8/16/32/64, isSigned = true)</code></td>
+<td><code>INT32</code> 8/16/32-bit<br><code>INT64</code> 64-bit</td>
+<td><code>int</code><br><code>long</code></td>
+<td>signed</td>
+</tr>
+<tr>
+<td><code>INT(8/16/32/64, isSigned = false)</code></td>
+<td><code>INT32</code> 8/16/32-bit<br><code>INT64</code> 64-bit</td>
+<td><code>int</code><br><code>long</code></td>
+<td>unsigned magnitude</td>
+</tr>
+<tr>
+<td><code>DATE</code></td>
+<td><code>INT32</code></td>
+<td><code>LocalDate</code></td>
+<td>days since the Unix epoch</td>
+</tr>
+<tr>
+<td><code>TIME</code></td>
+<td><code>INT32</code> millis<br><code>INT64</code> micros / nanos</td>
+<td><code>LocalTime</code></td>
+<td>the column's time unit</td>
+</tr>
+<tr>
+<td><code>TIMESTAMP(isAdjustedToUTC = true)</code>, and the legacy <code>TIMESTAMP_MILLIS</code> / <code>TIMESTAMP_MICROS</code> on <code>INT64</code></td>
+<td><code>INT64</code><br><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>Instant</code>; <code>byte[]</code> of 12 bytes on <code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td>the column's time unit; a <code>byte[]</code> as the stored bytes</td>
+</tr>
+<tr>
+<td><code>TIMESTAMP(isAdjustedToUTC = false)</code></td>
+<td><code>INT64</code><br><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>LocalDateTime</code>; <code>byte[]</code> of 12 bytes on <code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td>the wall clock, in the column's time unit; a <code>byte[]</code> as the stored bytes</td>
+</tr>
+<tr>
+<td><code>DECIMAL</code></td>
+<td><code>INT32</code> up to 9 digits<br><code>INT64</code> up to 18<br><code>FIXED_LEN_BYTE_ARRAY(n)</code> up to what <code>n</code> bytes hold<br><code>BYTE_ARRAY</code> any</td>
+<td><code>BigDecimal</code>; <code>int</code> / <code>long</code> unscaled on the integer carriers; <code>byte[]</code> on the binary carriers, of <code>n</code> bytes on <code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
+<td>the represented value; a <code>byte[]</code> as the stored bytes</td>
+</tr>
+<tr>
+<td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code></td>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>String</code>, <code>byte[]</code></td>
+<td>unsigned lexicographic</td>
+</tr>
+<tr>
+<td><code>BSON</code></td>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>byte[]</code></td>
+<td>unsigned lexicographic</td>
+</tr>
+<tr>
+<td><code>GEOMETRY</code>, <code>GEOGRAPHY</code></td>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>byte[]</code>; four <code>double</code> bounds for <code>intersects</code></td>
+<td>the WKB bytes, unsigned; <code>intersects</code> by bounding-box overlap</td>
+</tr>
+<tr>
+<td><code>UUID</code></td>
+<td><code>FIXED_LEN_BYTE_ARRAY(16)</code></td>
+<td><code>UUID</code>, <code>byte[]</code> of 16 bytes</td>
+<td>the 16 bytes, unsigned</td>
+</tr>
+<tr>
+<td><code>FLOAT16</code></td>
+<td><code>FIXED_LEN_BYTE_ARRAY(2)</code></td>
+<td><code>float</code>, <code>byte[]</code> of 2 bytes</td>
+<td>numeric, widened to <code>float</code>; a <code>byte[]</code> as the stored bytes</td>
+</tr>
+<tr>
+<td><code>INTERVAL</code></td>
+<td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>PqInterval</code>, <code>byte[]</code> of 12 bytes</td>
+<td>the 12 bytes</td>
+</tr>
+<tr>
+<td><code>NULL</code></td>
+<td>any</td>
+<td>the literal for the physical type</td>
+<td>the stored value; a column that keeps to its annotation holds only nulls, so no comparison matches</td>
+</tr>
+<tr>
+<td><code>VARIANT</code></td>
+<td>group of two <code>BYTE_ARRAY</code></td>
+<td><code>isNull</code>, <code>isNotNull</code></td>
+<td>whether the group is present</td>
+</tr>
+</tbody>
+</table>
+<p>A predicate on a <code>VARIANT</code> column reaches the group's presence, not the values inside it. The
+<code>metadata</code> and <code>value</code> leaves below the group, and a shredded variant's <code>typed_value</code> leaves, hold
+the encoded variant, which <a href="../accessors/"><code>getVariant</code></a> reads off the group; they take <code>isNull</code> and
+<code>isNotNull</code> only, and any other predicate on one throws <code>IllegalArgumentException</code> at reader
+creation. Filtering on a shredded variant's sub-paths is in progress, tracked by
+<a href="https://github.com/hardwood-hq/hardwood/issues/309">#309</a>.</p>
+<p>A <code>FLOAT</code> column compares by the <code>Float.compare</code> total order and a <code>DOUBLE</code> column by
+<code>Double.compare</code>, so all <code>NaN</code> values equal each other and sort above every other value, and
+<code>-0.0</code> sorts below <code>+0.0</code>. This holds
+whatever <code>ColumnOrder</code> the file declares, <code>IEEE_754_TOTAL_ORDER</code> included.</p>
+<p>A <code>BigDecimal</code> literal is rescaled to the column's scale before it is compared. A column with
+more scale than the literal pads it, so <code>99.99</code> against a <code>DECIMAL(scale = 4)</code> column compares
+as <code>99.9900</code>, and trailing zeros drop the same way. A literal carrying a digit the column's
+scale cannot hold follows the rule under
+<a href="#literals-the-column-cannot-hold">Literals the column cannot hold</a>.</p>
+<p>An <code>INT96</code> column is a legacy timestamp, which <a href="../accessors/"><code>getTimestamp</code></a> reads as an
+<code>Instant</code>. An <code>Instant</code> literal compares as the instant the value encodes. The format lets one
+instant be stored under more than one encoding, since the nanoseconds of the day are not bounded by
+one day, and every encoding of an instant matches an <code>Instant</code> literal of it. The column also takes
+the 12 stored bytes that <code>getBinary</code> returns (see <a href="#binary-columns">Binary columns</a>).</p>
+<p>An unsigned column's literal is the stored two's-complement bit pattern, the same form
+<a href="../accessors/">the accessors</a> hand back for it: <code>4_000_000_000</code> in a <code>UINT_32</code> column is the <code>int</code>
+<code>-294_967_296</code>, so a value read from a row can be passed straight back as a predicate literal.
+Write one with <code>Integer.parseUnsignedInt</code> / <code>Long.parseUnsignedLong</code>. Comparisons order by the
+unsigned magnitude regardless, so that literal is above every positive <code>int</code> rather than below
+zero.</p>
+<p>An annotated column's physical-type literal compares the value as it is stored: an <code>int</code> against a
+<code>DATE</code> column tests the epoch day directly.</p>
+<h3 id="binary-columns">Binary columns<a class="headerlink" href="#binary-columns" title="Permanent link">&para;</a></h3>
+<p>The literal of a <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code> column is a <code>byte[]</code>, the stored bytes
+that <a href="../accessors/"><code>getBinary</code></a> returns. The factories copy the array, so a caller reusing it
+does not change a predicate already built.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC8</span><span class="w"> </span><span class="p">});</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">FilterPredicate</span><span class="w"> </span><span class="n">members</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">in</span><span class="p">(</span><span class="s">"code"</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC8</span><span class="w"> </span><span class="p">},</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="kt">byte</span><span class="o">[]</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mh">0x00</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">byte</span><span class="p">)</span><span class="w"> </span><span class="mh">0xC9</span><span class="w"> </span><span class="p">});</span>
+</code></pre></div>
+<p>A <code>byte[]</code> literal matches the rows storing exactly its bytes, on every binary column. On most
+columns the values order as their bytes, unsigned, and a <code>byte[]</code> takes every operator. A
+<code>DECIMAL</code>, a <code>FLOAT16</code>, an <code>INT96</code> and a <code>TIMESTAMP</code> over <code>FIXED_LEN_BYTE_ARRAY(12)</code> order by the
+value their bytes encode, and there a <code>byte[]</code> takes <code>eq</code>, <code>notEq</code> and <code>in</code> only; <code>lt</code>, <code>ltEq</code>, <code>gt</code>
+and <code>gtEq</code> with a <code>byte[]</code> throw <code>IllegalArgumentException</code> at reader creation, naming the
+<code>BigDecimal</code>, <code>float</code>, <code>Instant</code> or <code>LocalDateTime</code> literal that takes them.</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th><code>byte[]</code> literal</th>
+<th>Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DECIMAL</code> over <code>BYTE_ARRAY</code></td>
+<td>any length</td>
+<td>the rows storing these bytes; a padded encoding of the same number is a different literal</td>
+</tr>
+<tr>
+<td><code>DECIMAL</code> over <code>FIXED_LEN_BYTE_ARRAY(n)</code></td>
+<td><code>n</code> bytes</td>
+<td>the rows storing these bytes, which is the one encoding of the number</td>
+</tr>
+<tr>
+<td><code>FLOAT16</code></td>
+<td>2 bytes</td>
+<td>the rows storing these bytes; each <code>NaN</code> encoding is a different literal</td>
+</tr>
+<tr>
+<td><code>INT96</code></td>
+<td>12 bytes</td>
+<td>the rows storing these bytes; another encoding of the same instant is a different literal</td>
+</tr>
+<tr>
+<td><code>TIMESTAMP</code> over <code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td>12 bytes</td>
+<td>the rows storing these bytes, which is the one encoding of the value</td>
+</tr>
+</tbody>
+</table>
+<p>A <code>byte[]</code> literal of another length than the table gives throws <code>IllegalArgumentException</code> at
+reader creation.</p>
+<p>On a text column, the columns <a href="../accessors/#text-columns"><code>getString</code></a> reads, a <code>String</code>
+literal's UTF-8 encoding is exactly the stored bytes. On any other binary column a <code>String</code>
+literal throws <code>IllegalArgumentException</code> at reader creation, naming the literals the column
+does take. A <code>String</code> that is not well-formed UTF-16, such as one holding an unpaired surrogate, has
+no UTF-8 encoding and throws <code>IllegalArgumentException</code> when the predicate is built. A row whose
+stored bytes are not well-formed UTF-8 matches no <code>String</code> literal: <code>getString</code> replaces each
+malformed sequence with U+FFFD, so the string it returns for such a row does not match it. Filter
+such a row with its <code>byte[]</code>.</p>
+<p>An <code>INTERVAL</code> column's other literal is the <code>PqInterval</code> that <a href="../accessors/"><code>getInterval</code></a>
+returns, for example <code>new PqInterval(0, 1, 3_600_000)</code>. Each of its three components is stored
+as an unsigned 32-bit value.</p>
+<p>Every factory rejects a null column name or literal, and <code>and</code>, <code>or</code> and <code>not</code> a null child, with a
+<code>NullPointerException</code> naming the argument.</p>
+<h2 id="literals-the-column-cannot-hold">Literals the column cannot hold<a class="headerlink" href="#literals-the-column-cannot-hold" title="Permanent link">&para;</a></h2>
+<p>A literal can be a value of the column's literal type that the column itself cannot store: finer
+than the time unit of a <code>TIMESTAMP</code> or <code>TIME</code>, carrying more decimal places than a <code>DECIMAL</code>'s
+scale, past the range of the <code>INT32</code> or <code>INT64</code> that holds the column's values, of a width a
+fixed-width column does not have, a <code>float</code> no IEEE half represents, a <code>PqInterval</code> with a
+component outside <code>[0, 4294967295]</code>, or an <code>Instant</code> later or earlier than every instant an
+<code>INT96</code> column encodes.</p>
+<p>Equality (<code>eq</code>, <code>notEq</code>, a set form and its negation) asks whether a stored value <em>is</em> the
+literal. Against a value the column cannot store, <code>eq</code> could never match and <code>notEq</code> always
+would, so it throws <code>IllegalArgumentException</code> when the reader is built, naming the column, what
+bounds it and the literal:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// Column 'ts' holds a whole number of microseconds within the INT64 range;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="c1">// the equality literal 2024-05-01T12:00:00.000000500Z is not a value it can hold</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">reader</span><span class="p">.</span><span class="na">buildRowReader</span><span class="p">()</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="p">.</span><span class="na">filter</span><span class="p">(</span><span class="n">FilterPredicate</span><span class="p">.</span><span class="na">eq</span><span class="p">(</span><span class="s">"ts"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2024-05-01T12:00:00.000000500Z"</span><span class="p">)))</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p>An ordered predicate (<code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code>) asks instead where the literal sits in the
+column's order, which every value of the literal type has an answer for, and is answered exactly.
+<code>lt("ts", Instant.parse("2024-05-01T12:00:00.000000500Z"))</code> on a microsecond column returns every
+row up to and including <code>12:00:00.000000</code>. Where the literal lies past the range the column's
+carrier holds, the predicate matches every non-null row or none: <code>lt("d", LocalDate.MAX)</code> on a
+<code>DATE</code> column returns every non-null row, and <code>gt("d", LocalDate.MAX)</code> returns none. A comparison
+never matches a null row, and <code>not</code> over one of these does not either.</p>
+<p>On a fixed-width column whose bytes compare as a byte string, a byte literal of another width
+compares as given for an ordered predicate, since the comparison is exact on it either way. On a
+fixed-width <code>DECIMAL</code>, an ordered predicate against a <code>BigDecimal</code> past the column's width matches
+every non-null row or none: against a literal above the largest number the width holds, <code>lt</code> and
+<code>ltEq</code> return every non-null row and <code>gt</code> and <code>gtEq</code> none, and against one below the smallest, the
+other way round.</p>
+<p>An annotation's value range does not bound a literal. That covers the bit width of an <code>INT(8)</code>,
+the precision of a <code>DECIMAL</code> and the single day of a <code>TIME</code>: <a href="../accessors/#physical-accessors">the physical
+accessors</a> <code>getInt</code> and <code>getLong</code> return what a file stores, so
+<code>eq("i8", 1000)</code> on an <code>INT(8)</code> column is compared as given and matches no row of a file that keeps
+to its annotation.</p>
+<h2 id="when-statistics-are-ignored">When statistics are ignored<a class="headerlink" href="#when-statistics-are-ignored" title="Permanent link">&para;</a></h2>
+<p>Pruning compares a unit's <code>min</code> / <code>max</code> bounds. A pair a reader cannot compare against is
+ignored rather than trusted, so the row group or page is kept and its rows are read and filtered
+one by one. Results are the same either way; only the I/O saved is lost. Bounds are ignored when:</p>
+<table>
+<thead>
+<tr>
+<th>Reason</th>
+<th>Bounds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The minimum sorts above the maximum</td>
+<td><code>min</code> and <code>max</code> are the wrong way round in the column's order, so the pair brackets nothing</td>
+</tr>
+<tr>
+<td>One of them is <code>NaN</code></td>
+<td>A <code>FLOAT</code>, <code>DOUBLE</code> or <code>FLOAT16</code> bound. <code>TYPE_ORDER</code> forbids it; under <code>IEEE_754_TOTAL_ORDER</code> it marks a unit whose every non-null value is <code>NaN</code></td>
+</tr>
+<tr>
+<td>They come from the deprecated <code>min</code> / <code>max</code> fields</td>
+<td>Superseded by <code>min_value</code> / <code>max_value</code>; the deprecated pair is ordered by signed comparison whatever the column's type is, so its order is wrong for every unsigned integer and byte string</td>
+</tr>
+<tr>
+<td>The column's annotation defines no order</td>
+<td>An <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>LIST</code> or <code>MAP</code> column, for which the Parquet spec defines no sort order, or a <code>NULL</code> column</td>
+</tr>
+<tr>
+<td>The column is <code>INT96</code></td>
+<td>The order the Parquet spec gives <code>INT96</code> bounds compares the day before the nanoseconds of the day, which does not follow the instant when the nanoseconds run past one day</td>
+</tr>
+<tr>
+<td>The column's annotation is dropped</td>
+<td>An annotation the column's physical type cannot carry, or one this release does not recognize, so the column is read as its physical type while its bounds were recorded in the annotation's order</td>
+</tr>
+<tr>
+<td>The file declares a <code>ColumnOrder</code> this release does not recognize</td>
+<td>The Parquet spec directs a reader to ignore <code>min</code> / <code>max</code> under a column order it does not support; this applies to every column type</td>
+</tr>
+</tbody>
+</table>
+<p>The bounds themselves are still reported as the file carries them, by <code>Statistics</code> on the metadata
+API and by <code>hardwood inspect</code> and <code>hardwood dive</code>.</p>
+<p>Usable floating-point bounds cover a unit's non-<code>NaN</code> values only. A predicate that a <code>NaN</code>
+value satisfies — <code>notEq</code>, <code>gt</code> or <code>gtEq</code> against a number, or <code>eq</code>, <code>ltEq</code> or <code>gtEq</code> against
+<code>NaN</code> — prunes a <code>FLOAT</code>, <code>DOUBLE</code> or <code>FLOAT16</code> row group or page from its bounds only where the
+unit records a <code>nan_count</code> of zero. <code>eq</code>, <code>lt</code> and <code>ltEq</code> against a number, and <code>gt</code> against
+<code>NaN</code>, prune from the bounds alone.</p>
+<p>A row group proves every row matches a floating-point predicate from its bounds where it records
+no nulls and either records a <code>nan_count</code> of zero or the predicate is one a <code>NaN</code> value satisfies.
+A row group or page whose <code>nan_count</code> and null count together equal its row count holds only <code>NaN</code>
+and null values; every predicate a <code>NaN</code> value fails skips it, with or without bounds.</p>
+<p>A comparison whose literal lies past the range the column's carrier holds is decided from the
+unit's null count alone.</p>
+<h3 id="bloom-filter-and-dictionary-pruning">Bloom filter and dictionary pruning<a class="headerlink" href="#bloom-filter-and-dictionary-pruning" title="Permanent link">&para;</a></h3>
+<p>A Bloom filter and a fully dictionary-encoded column chunk's dictionary answer membership, and
+sharpen <code>eq</code> and <code>in</code> on integer, floating-point and binary columns. <code>lt</code>, <code>ltEq</code>, <code>gt</code>, <code>gtEq</code>
+and <code>notEq</code> are left to statistics alone. Some equality probes skip one or both:</p>
+<table>
+<thead>
+<tr>
+<th>Predicate</th>
+<th>Bloom filter</th>
+<th>Dictionary</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>eq(NaN)</code>, or an <code>in</code> list holding <code>NaN</code></td>
+<td>not used</td>
+<td>used</td>
+</tr>
+<tr>
+<td>a <code>float</code> literal on a <code>FLOAT16</code> column</td>
+<td>not used</td>
+<td>used</td>
+</tr>
+<tr>
+<td>a <code>BigDecimal</code> on a <code>DECIMAL</code> over <code>BYTE_ARRAY</code></td>
+<td>not used</td>
+<td>not used</td>
+</tr>
+<tr>
+<td>any comparison with an <code>Instant</code> on an <code>INT96</code> column</td>
+<td>not used</td>
+<td>not used</td>
+</tr>
+<tr>
+<td><code>eq</code> or <code>in</code> with the stored 12 bytes on an <code>INT96</code> column</td>
+<td>used</td>
+<td>used</td>
+</tr>
+</tbody>
+</table>
+<p>An <code>INT96</code> comparison with an <code>Instant</code> therefore reads every row group and page and filters the
+rows one by one.</p>
+<h2 id="column-projection-forms">Column projection forms<a class="headerlink" href="#column-projection-forms" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Form</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ColumnProjection.all()</code></td>
+<td>Read all columns (default)</td>
+</tr>
+<tr>
+<td><code>ColumnProjection.columns("id", "name")</code></td>
+<td>Read specific columns by name</td>
+</tr>
+<tr>
+<td><code>ColumnProjection.columns("address")</code></td>
+<td>Select an entire struct and all its children</td>
+</tr>
+<tr>
+<td><code>ColumnProjection.columns("address.city")</code></td>
+<td>Select a specific nested field (dot notation)</td>
+</tr>
+</tbody>
+</table>
+<p>A name is a top-level field or the full path to a nested field. A nested field is not selected by its own name alone: over <code>id, address STRUCT&lt;city&gt;</code>, <code>columns("city")</code> fails with <code>Column not found: city</code>. Names may repeat or overlap.</p>
+<p>A field name may contain dots: <code>columns("sepal.length")</code> selects a top-level column named <code>sepal.length</code>, and <code>columns("acme.info.x.y")</code> selects the field <code>x.y</code> of a struct named <code>acme.info</code>. Predicates and <code>FileSchema.getColumn(String)</code> resolve names the same way. A name that is the path of two fields, such as a top-level <code>a.b</code> beside a struct <code>a</code> with a field <code>b</code>, fails with an error; <code>buildColumnReader(int)</code> and the positions of <code>ColumnReaders</code> reach each of those columns by index.</p>
+<h3 id="index-order">Index order<a class="headerlink" href="#index-order" title="Permanent link">&para;</a></h3>
+<p>By-index accessors follow the order <code>columns(...)</code> names the columns in. The columns one name selects, such as a group's children or every column under <code>all()</code>, follow schema order among themselves. The two reader types count positions differently:</p>
+<ul>
+<li><code>ColumnReaders.getColumnReader(int)</code> counts leaf columns name by name: index <code>i</code> is the <code>i</code>-th leaf column the names select. A column that several names select appears at each of their positions, with the same reader at each. <code>getColumnCount()</code> counts every position.</li>
+<li><code>RowReader</code> and <code>PqStruct</code> accessors count the nodes of the row: a <code>RowReader</code> its top-level fields, a <code>PqStruct</code> its projected children. Each node has one position, at the first name that selects anything under it, so repeated and overlapping names add no position.</li>
+</ul>
+<p>Over a schema <code>id, address STRUCT&lt;street, city, zip&gt;</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Projection</th>
+<th><code>ColumnReaders</code> indices</th>
+<th><code>RowReader</code> fields</th>
+<th><code>address</code> children</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>all()</code></td>
+<td><code>id</code>, <code>address.street</code>, <code>address.city</code>, <code>address.zip</code></td>
+<td><code>id</code>, <code>address</code></td>
+<td><code>street</code>, <code>city</code>, <code>zip</code></td>
+</tr>
+<tr>
+<td><code>columns("address", "id")</code></td>
+<td><code>address.street</code>, <code>address.city</code>, <code>address.zip</code>, <code>id</code></td>
+<td><code>address</code>, <code>id</code></td>
+<td><code>street</code>, <code>city</code>, <code>zip</code></td>
+</tr>
+<tr>
+<td><code>columns("address.zip", "id", "address.city")</code></td>
+<td><code>address.zip</code>, <code>id</code>, <code>address.city</code></td>
+<td><code>address</code>, <code>id</code></td>
+<td><code>zip</code>, <code>city</code></td>
+</tr>
+<tr>
+<td><code>columns("address.zip", "address")</code></td>
+<td><code>address.zip</code>, <code>address.street</code>, <code>address.city</code>, <code>address.zip</code></td>
+<td><code>address</code></td>
+<td><code>zip</code>, <code>street</code>, <code>city</code></td>
+</tr>
+<tr>
+<td><code>columns("id", "id")</code></td>
+<td><code>id</code>, <code>id</code></td>
+<td><code>id</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>A column listed after a group in <code>columns(...)</code> sits at a <code>ColumnReaders</code> index that counts the group's leaf columns, so it moves when the group gains or loses a field. By-name accessors do not depend on the order.</p>
+<p>A <code>RowReader</code>'s accessors reach the projected columns only. A filter column outside the projection is decoded where the filter needs its values and is not readable through the row:</p>
+<table>
+<thead>
+<tr>
+<th>Access</th>
+<th>Raises</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>By name, on the row or on a <code>PqStruct</code></td>
+<td><code>IllegalArgumentException</code></td>
+</tr>
+<tr>
+<td>By index at or past <code>getFieldCount()</code>, on the row or on a <code>PqStruct</code></td>
+<td><code>IndexOutOfBoundsException</code></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+
+     SPDX-License-Identifier: Apache-2.0
+
+     Copyright The original authors
+
+     Licensed under the Apache Software License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+
+--><div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons BY-SA 4.0</a>
+    </div>
+  
+  
+  
+    Built from
+    <a href="https://github.com/hardwood-hq/hardwood/tree/98439a59aab5d3add97d7b9b82372bde47aeb51c" target="_blank" rel="noopener">
+      98439a59
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/hardwood-hq/hardwood" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
