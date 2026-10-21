@@ -2072,7 +2072,7 @@
 <a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">().</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span><span class="p">.</span><span class="na">longs</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">ids</span><span class="p">));</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
 </code></pre></div>
-<p>The source is configured as for reading; <a href="../s3/">Reading from S3</a> covers credentials and S3-compatible endpoints. The bucket must already exist.</p>
+<p>One <code>S3Source</code> serves reads and writes alike; <a href="../s3/">Reading from S3</a> covers credentials and S3-compatible endpoints. A source built with <code>anonymous()</code> cannot write. The bucket must already exist.</p>
 <h2 id="change-the-part-size">Change the part size<a class="headerlink" href="#change-the-part-size" title="Permanent link">&para;</a></h2>
 <p>The output uploads the file in parts of 8 MiB. A larger part size raises the size limit of one file (10,000 parts) and takes more memory per open output, which holds up to five parts. Each part upload must complete within the source's <code>requestTimeout</code> (30 s by default), with four sharing the upload bandwidth, so raise the timeout with the part size on a slow link:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">S3Source</span><span class="w"> </span><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">S3Source</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
@@ -2133,8 +2133,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/e3f5a6f813394df395d3b37a31bad4a6367330f8" target="_blank" rel="noopener">
-      e3f5a6f8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/06f5cda16b9969a54323d1f470730bd66e474e75" target="_blank" rel="noopener">
+      06f5cda1
     </a>
   
 </div>

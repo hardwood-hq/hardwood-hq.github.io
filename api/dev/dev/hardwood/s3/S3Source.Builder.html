@@ -268,7 +268,9 @@ upload has at most 10,000 parts, which caps an object at 10,000 times the part s
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></span>&nbsp;<span class="element-name">anonymous</span>()</div>
 <div class="block">Sends requests unsigned, for buckets that allow public read access.
-Mutually exclusive with <a href="#credentials(dev.hardwood.s3.S3CredentialsProvider)"><code>credentials(S3CredentialsProvider)</code></a>.</div>
+Mutually exclusive with <a href="#credentials(dev.hardwood.s3.S3CredentialsProvider)"><code>credentials(S3CredentialsProvider)</code></a>. A source built this
+way cannot create output files: <a href="S3Source.html#outputFile(java.lang.String,java.lang.String)"><code>S3Source.outputFile(String, String)</code></a> throws
+<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>.</div>
 </div>
 </section>
 </li>

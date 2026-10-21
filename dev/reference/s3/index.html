@@ -2168,6 +2168,7 @@
 <h1 id="s3-reference">S3 Reference<a class="headerlink" href="#s3-reference" title="Permanent link">&para;</a></h1>
 <p>Options and behavior of the <code>hardwood-s3</code> module; <a href="../../how-to/s3/">Reading from S3</a> and <a href="../../how-to/write-to-s3/">Write to S3</a> show how to use it.</p>
 <h2 id="s3source-builder-options"><code>S3Source</code> builder options<a class="headerlink" href="#s3source-builder-options" title="Permanent link">&para;</a></h2>
+<p><code>S3Source</code> is the connection to one S3-compatible service. The same instance creates <code>S3InputFile</code>s for reading and <code>S3OutputFile</code>s for writing; <code>S3Source.builder()</code> takes these options:</p>
 <table>
 <thead>
 <tr>
@@ -2239,8 +2240,8 @@
 </tr>
 </tbody>
 </table>
-<p>When the retry budget is exhausted, the read fails with an <code>IOException</code>. For an HTTP error
-status the message has the form <code>Failed to open s3://&lt;bucket&gt;/&lt;key&gt;: HTTP &lt;status&gt; &lt;body&gt;</code> when
+<p>When the retry budget is exhausted, the read or write fails with an <code>IOException</code>. For a read
+with an HTTP error status, the message has the form <code>Failed to open s3://&lt;bucket&gt;/&lt;key&gt;: HTTP &lt;status&gt; &lt;body&gt;</code> when
 opening the file and <code>Failed to read range [&lt;start&gt;, &lt;end&gt;) from s3://&lt;bucket&gt;/&lt;key&gt;: HTTP &lt;status&gt; &lt;body&gt;</code>
 for a range read; for network errors the original <code>IOException</code> message is preserved. When an
 anonymous source receives HTTP 401 or 403, the message ends with <code>(the request was sent unsigned, without credentials)</code>.</p>
@@ -2425,8 +2426,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/e3f5a6f813394df395d3b37a31bad4a6367330f8" target="_blank" rel="noopener">
-      e3f5a6f8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/06f5cda16b9969a54323d1f470730bd66e474e75" target="_blank" rel="noopener">
+      06f5cda1
     </a>
   
 </div>

@@ -91,10 +91,12 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">S3Source</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
-<div class="block"><p>A configured connection to an S3-compatible object store.</p>
+<div class="block"><p>A configured connection to an S3-compatible object store, the source of the files read
+from it and written to it.</p>
 <p>Holds the region, endpoint, credentials (or anonymous access), and HTTP client needed
-to create <a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> and <a href="S3OutputFile.html" title="class in dev.hardwood.s3"><code>S3OutputFile</code></a> instances. Reuse a single <code>S3Source</code> across
-multiple files for connection pooling and credential reuse.</p>
+to create <a href="S3InputFile.html" title="class in dev.hardwood.s3"><code>S3InputFile</code></a> instances for reading and <a href="S3OutputFile.html" title="class in dev.hardwood.s3"><code>S3OutputFile</code></a> instances for writing.
+Reuse a single <code>S3Source</code> across multiple files, in either direction, for connection
+pooling and credential reuse.</p>
 <p><strong>URL styles:</strong></p>
 <ul>
 <li><strong>Virtual-hosted</strong> (default): <code>https://{bucket}.s3.{region}.amazonaws.com/{key}</code></li>
