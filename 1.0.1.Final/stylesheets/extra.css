@@ -1,0 +1,66 @@
+/**
+ *  SPDX-License-Identifier: CC-BY-SA-4.0
+ *
+ *  Copyright The original authors
+ *
+ *  Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License;
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at https://creativecommons.org/licenses/by-sa/4.0/
+ */
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #1e3a5f;
+  --md-primary-fg-color--light: #2c5282;
+  --md-primary-fg-color--dark: #142b46;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #1e3a5f;
+  --md-primary-fg-color--light: #2c5282;
+  --md-primary-fg-color--dark: #142b46;
+}
+
+/*
+ * Hide the redundant site-name text in the header (the logo already includes the
+ * wordmark), but only the text span: the mike version selector is injected by JS
+ * as a sibling inside this same .md-header__topic, so hiding the whole topic would
+ * hide the version picker too.
+ */
+.md-header__topic:not([data-md-component="header-topic"]) > .md-ellipsis {
+  display: none;
+}
+
+.md-header__button.md-logo img {
+  width: auto;
+  height: 1.6rem;
+}
+
+@media screen and (max-width: 76.1875em) {
+  .md-header__button.md-logo {
+    display: inline-flex;
+  }
+}
+
+/*
+ * Links: keep them clearly distinguishable from body text. The brand primary
+ * is a dark navy that, used as the link color, reads almost like body text, so
+ * give links their own brighter colour per scheme and underline them (don't
+ * rely on colour alone). Heading permalinks and image links are excluded.
+ */
+[data-md-color-scheme="default"] {
+  --md-typeset-a-color: #2c5282;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-typeset-a-color: #7eb6e8;
+}
+
+.md-typeset a:not(.headerlink):not(:has(img)) {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+}
+
+.md-typeset a:not(.headerlink):not(:has(img)):hover {
+  text-decoration-thickness: 2px;
+}
