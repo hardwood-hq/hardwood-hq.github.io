@@ -640,6 +640,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#verifying-a-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying a Download
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#shell-completion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2202,6 +2213,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#verifying-a-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying a Download
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#shell-completion" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2381,13 +2403,26 @@ Bindings are available for all popular logger implementations, for instance for 
 </code></pre></div>
 <p>If you attempt to read a file using a compression codec whose library is not on the classpath, Hardwood will throw an exception with a message indicating which dependency to add.</p>
 <h2 id="command-line-tool">Command-Line Tool<a class="headerlink" href="#command-line-tool" title="Permanent link">&para;</a></h2>
-<p>The <code>hardwood</code> command-line tool ships as a GraalVM native binary for Linux, macOS, and Windows, available from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">release page</a>. The <a href="../reference/cli/">CLI reference</a> documents its commands.</p>
+<p>The <code>hardwood</code> command-line tool ships as a GraalVM native binary for Linux (x86_64 and aarch64), macOS (Apple silicon) and Windows (x86_64), available from the <a href="https://github.com/hardwood-hq/hardwood/releases/tag/1.0-early-access">release page</a>. On an Intel Mac, run the <a href="#docker">Docker image</a>, whose amd64 variant Docker Desktop runs there. The <a href="../reference/cli/">CLI reference</a> documents its commands.</p>
 <div class="admonition note">
 <p class="admonition-title">macOS</p>
 <p>The binary is not notarized. On first run, macOS Gatekeeper will block it. Remove the quarantine flag after extracting:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>xattr<span class="w"> </span>-r<span class="w"> </span>-d<span class="w"> </span>com.apple.quarantine<span class="w"> </span>hardwood-cli-*/
 </code></pre></div>
 </div>
+<h3 id="verifying-a-download">Verifying a Download<a class="headerlink" href="#verifying-a-download" title="Permanent link">&para;</a></h3>
+<p>Each release lists the SHA-256 hash of every archive in <code>checksums_sha256.txt</code>. Download it next to the archive and check the archive against it:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>sha256sum<span class="w"> </span>--ignore-missing<span class="w"> </span>-c<span class="w"> </span>checksums_sha256.txt<span class="w">            </span><span class="c1"># Linux</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>shasum<span class="w"> </span>-a<span class="w"> </span><span class="m">256</span><span class="w"> </span>--ignore-missing<span class="w"> </span>-c<span class="w"> </span>checksums_sha256.txt<span class="w">        </span><span class="c1"># macOS</span>
+</code></pre></div>
+<p>On Windows, <code>Get-FileHash &lt;archive&gt;</code> in PowerShell prints the hash to compare with the archive's line in the file.</p>
+<p>The archives and the Docker image also carry a build provenance attestation, which names the workflow run that built them. The <a href="https://cli.github.com/">GitHub CLI</a> checks it, and <code>--signer-workflow</code> restricts the check to the release workflow:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>gh<span class="w"> </span>attestation<span class="w"> </span>verify<span class="w"> </span>&lt;archive&gt;<span class="w"> </span>-R<span class="w"> </span>hardwood-hq/hardwood<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>--signer-workflow<span class="w"> </span>hardwood-hq/hardwood/.github/workflows/release-cli.yml
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>gh<span class="w"> </span>attestation<span class="w"> </span>verify<span class="w"> </span>oci://ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span>-R<span class="w"> </span>hardwood-hq/hardwood<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span>--signer-workflow<span class="w"> </span>hardwood-hq/hardwood/.github/workflows/release-cli.yml
+</code></pre></div>
+<p>Early-access builds are signed by <code>.github/workflows/cli-early-access.yml</code> instead.</p>
 <h3 id="shell-completion">Shell Completion<a class="headerlink" href="#shell-completion" title="Permanent link">&para;</a></h3>
 <p>The distribution includes completion scripts for Bash, Zsh, and Fish under <code>bin/</code>:</p>
 <table>
@@ -2413,26 +2448,26 @@ Bindings are available for all popular logger implementations, for instance for 
 </tbody>
 </table>
 <p>Source the one for your shell to enable tab completion for commands, options, and arguments, and add that line to your shell's startup file (e.g. <code>~/.bashrc</code>, <code>~/.zshrc</code>) to make it permanent:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">source</span><span class="w"> </span>hardwood_completion
 </code></pre></div>
 <h3 id="docker">Docker<a class="headerlink" href="#docker" title="Permanent link">&para;</a></h3>
 <p>A minimal Fedora-based image is published to the GitHub Container Registry for Linux amd64 and arm64. Pass the command after the image name, and mount a local directory to reach files on the host:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span>schema<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span>schema<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
 </code></pre></div>
 <p>The <code>dive</code> TUI needs an interactive terminal, so pass <code>-it</code>. With <code>-it</code> and no command, the image starts an interactive shell with tab completion loaded:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span>dive<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>-v<span class="w"> </span><span class="s2">"</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span><span class="s2">"</span>:/data<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span>ghcr.io/hardwood-hq/hardwood:1.0-early-access<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span>dive<span class="w"> </span>-f<span class="w"> </span>/data/data.parquet
 </code></pre></div>
 <h3 id="use-with-ai-coding-agents">Use with AI Coding Agents<a class="headerlink" href="#use-with-ai-coding-agents" title="Permanent link">&para;</a></h3>
 <p>The repository ships an <a href="https://agentskills.io">Agent Skill</a> at <code>skills/hardwood-cli/</code> that teaches an AI coding agent when and how to reach for the CLI while debugging Parquet read/write code (checking schema and physical/logical types, diagnosing why predicate pushdown or page skipping isn't happening, reading dictionary entries, and so on).</p>
 <p>For <a href="https://claude.com/claude-code">Claude Code</a>, it is packaged as the <code>hardwood</code> plugin, distributed from the <a href="https://github.com/hardwood-hq/hardwood-skills"><code>hardwood-skills</code></a> marketplace. Install it once by running, inside Claude Code:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>/plugin marketplace add hardwood-hq/hardwood-skills
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>/plugin install hardwood@hardwood-skills
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>/plugin marketplace add hardwood-hq/hardwood-skills
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>/plugin install hardwood@hardwood-skills
 </code></pre></div>
 <p>After installing, the skill loads automatically in future sessions whenever a task involves a Parquet file. It drives the <code>hardwood</code> binary, so <code>hardwood</code> must be on your <code>PATH</code>.</p>
 <p>For other agent harnesses, or a Claude Code setup without the plugin, copy <code>skills/hardwood-cli/SKILL.md</code> into that tool's skills directory (for Claude Code that is <code>~/.claude/skills/hardwood-cli/</code>).</p>
@@ -2487,8 +2522,8 @@ Bindings are available for all popular logger implementations, for instance for 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/709549864bf2ff4b911d2afc99c26afab610b07d" target="_blank" rel="noopener">
-      70954986
+    <a href="https://github.com/hardwood-hq/hardwood/tree/3fdd39fba71116d179f3a6558317eaa6c2154184" target="_blank" rel="noopener">
+      3fdd39fb
     </a>
   
 </div>
