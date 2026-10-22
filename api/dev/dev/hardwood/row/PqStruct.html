@@ -78,10 +78,11 @@ extends <a href="StructAccessor.html" title="interface in dev.hardwood.row">Stru
 <p>Provides dedicated accessor methods for each type, similar to JDBC ResultSet.
 This interface is used for nested struct access, not for top-level row iteration.
 For top-level row access, use <a href="../reader/RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> directly.</p>
-<p>A <code>PqStruct</code> is a flyweight over the underlying read batch — its accessors
-resolve to column data on each call. The flyweight is valid for as long as
-the batch it was obtained from is current; it is not safe to hold across
-<code>rowReader.next()</code> calls.</p>
+<p>A <code>PqStruct</code> is a flyweight over the batch of rows it was read from: its accessors
+read the column data on each call. It can be held after the reader moves on and
+keeps reading its own row; while it is reachable, the values of every projected
+column in that batch stay in memory. To keep a few fields of many rows, copy the
+fields out instead.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">while (rowReader.hasNext()) {
     rowReader.next();
     int id = rowReader.getInt(&quot;id&quot;);

@@ -800,6 +800,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#keeping-values-past-the-current-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keeping values past the current row
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2075,6 +2086,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#keeping-values-past-the-current-row" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keeping values past the current row
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2264,6 +2286,28 @@ and surface the value of the last matching entry.</p>
 <p>The columns each physical accessor reads are listed under <a href="../../reference/accessors/#physical-accessors">Physical accessors</a>.</p>
 <h4 id="decoded-generic-access">Decoded generic access<a class="headerlink" href="#decoded-generic-access" title="Permanent link">&para;</a></h4>
 <p>When the column type is not known ahead of time, <code>getValue</code> returns the value decoded to its logical-type representation and <code>getRawValue</code> the boxed physical value; see <a href="../../reference/accessors/#generic-accessors">Generic accessors</a>. In hot loops, prefer the typed accessors.</p>
+<h3 id="keeping-values-past-the-current-row">Keeping values past the current row<a class="headerlink" href="#keeping-values-past-the-current-row" title="Permanent link">&para;</a></h3>
+<p>Every value an accessor returns can be kept after <code>next()</code>. A kept <code>PqStruct</code>, <code>PqList</code> or <code>PqMap</code> still reads the row it was obtained from:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">List</span><span class="o">&lt;</span><span class="n">PqStruct</span><span class="o">&gt;</span><span class="w"> </span><span class="n">addresses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="n">addresses</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">getStruct</span><span class="p">(</span><span class="s">"address"</span><span class="p">));</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">}</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">String</span><span class="w"> </span><span class="n">firstCity</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">addresses</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">).</span><span class="na">getString</span><span class="p">(</span><span class="s">"city"</span><span class="p">);</span>
+</code></pre></div>
+<p>A kept struct, list or map holds the whole batch of rows it was read from in memory: the values of every projected column in that batch, not just its own. Keeping one row out of each batch keeps every batch. To keep a few fields of selected rows, copy them into your own objects:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kd">record</span> <span class="nc">Address</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">city</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">zip</span><span class="p">)</span><span class="w"> </span><span class="p">{}</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">List</span><span class="o">&lt;</span><span class="n">Address</span><span class="o">&gt;</span><span class="w"> </span><span class="n">addresses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">rowReader</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="n">rowReader</span><span class="p">.</span><span class="na">next</span><span class="p">();</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="n">PqStruct</span><span class="w"> </span><span class="n">address</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rowReader</span><span class="p">.</span><span class="na">getStruct</span><span class="p">(</span><span class="s">"address"</span><span class="p">);</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="s">"Hamburg"</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">"city"</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="n">addresses</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">Address</span><span class="p">(</span><span class="n">address</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">"city"</span><span class="p">),</span><span class="w"> </span><span class="n">address</span><span class="p">.</span><span class="na">getString</span><span class="p">(</span><span class="s">"zip"</span><span class="p">)));</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="p">}</span>
+</code></pre></div>
+<p>What each kind of value keeps in memory is listed under <a href="../../reference/accessors/#value-lifetime">Value lifetime</a>.</p>
 
 
 
@@ -2313,8 +2357,8 @@ and surface the value of the last matching entry.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/09fec1144f4d7f044e1850199490f563a8712495" target="_blank" rel="noopener">
-      09fec114
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f87040f5d9edb92acfdf51b7306fe01f6bceaafe" target="_blank" rel="noopener">
+      f87040f5
     </a>
   
 </div>

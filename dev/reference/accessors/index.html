@@ -1645,6 +1645,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#value-lifetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value lifetime
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#file-groups" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2163,6 +2174,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#value-lifetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value lifetime
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#file-groups" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2491,6 +2513,50 @@ etc., which avoid the boxed <code>Object</code> return of <code>getValue()</code
 expose <code>PrimitiveIterator.OfInt</code> / <code>OfLong</code> / <code>OfDouble</code>, <code>int get(int)</code>, and <code>int[] toArray()</code>
 without boxing. For nested <code>list&lt;list&lt;int&gt;&gt;</code> (or <code>&lt;long&gt;</code> / <code>&lt;double&gt;</code>), iterate the outer list via
 <code>lists()</code> and call <code>ints()</code> / <code>longs()</code> / <code>doubles()</code> on each inner <code>PqList</code>.</p>
+<h2 id="value-lifetime">Value lifetime<a class="headerlink" href="#value-lifetime" title="Permanent link">&para;</a></h2>
+<p>A value an accessor returns does not change when the reader moves to another row, and can be held
+for as long as the caller needs it. The reader reads rows in batches; some values refer to the
+batch their row was read from, and while such a value is reachable, that batch stays in memory.</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Accessors</th>
+<th>Kept in memory while reachable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>byte[]</code></td>
+<td><code>getBinary</code>, <code>binaries()</code>, <code>getBinaryKey()</code>, <code>getBinaryValue()</code>, and every generic and raw accessor (<code>getValue</code>, <code>getRawValue</code>, <code>get</code>, <code>getRaw</code>, <code>values()</code>, <code>rawValues()</code>, <code>getKey()</code>, <code>getRawKey()</code>) that returns a value as bytes</td>
+<td>the array alone: each call returns a new array, which the caller owns and may modify</td>
+</tr>
+<tr>
+<td><code>String</code>, <code>BigDecimal</code>, <code>UUID</code>, <code>Instant</code> and the other decoded values</td>
+<td>the typed and generic accessors</td>
+<td>the value alone</td>
+</tr>
+<tr>
+<td><code>PqStruct</code>, <code>PqList</code>, <code>PqMap</code>, <code>PqMap.Entry</code>, <code>PqIntList</code>, <code>PqLongList</code>, <code>PqDoubleList</code>, the <code>List</code> views of the typed <code>PqList</code> accessors</td>
+<td><code>getStruct</code>, <code>getList</code>, <code>getMap</code>, <code>getEntries()</code>, <code>structs()</code>, <code>lists()</code>, <code>maps()</code>, <code>ints()</code>, <code>strings()</code> and the other typed views</td>
+<td>the values of every projected column in the row's batch</td>
+</tr>
+<tr>
+<td><code>PqFile</code></td>
+<td><code>getFile</code>, <code>files()</code>, <code>getFileValue()</code></td>
+<td>the inline bytes of every value in the row's batch</td>
+</tr>
+<tr>
+<td><code>PqVariant</code></td>
+<td><code>getVariant</code>, <code>variants()</code>, <code>getVariantValue()</code></td>
+<td>its own copy of the stored bytes; <code>metadata()</code> and <code>value()</code> return a new copy on each call</td>
+</tr>
+</tbody>
+</table>
+<p>A struct, list or map reads its values from the batch on each access, so holding one costs no copy;
+holding many from different batches keeps each of those batches in memory.</p>
+<p>A held value can be handed to another thread and read there while the reader moves on. A value is
+not safe for use by several threads at once.</p>
 <h2 id="file-groups">FILE groups<a class="headerlink" href="#file-groups" title="Permanent link">&para;</a></h2>
 <p>A group annotated <code>FILE</code> holds a reference to a range of bytes. Its children are matched by name;
 a group may define any of them, in any order, or none, and each is <code>OPTIONAL</code>:</p>
@@ -2544,8 +2610,8 @@ a group may define any of them, in any order, or none, and each is <code>OPTIONA
 </table>
 <p>A field is set when its child is present and non-null; a string child holding the empty string is
 not set. <code>offset()</code> returns <code>0</code> when no offset is set; <code>size()</code> throws <code>IllegalStateException</code> when
-no size is set. A <code>PqFile</code> the reader returns can be held after the reader moves on; while it is
-reachable, the inline bytes of every value in the batch it was read from stay in memory.</p>
+no size is set. A <code>PqFile</code> the reader returns can be held after the reader moves on; what it keeps
+in memory is listed under <a href="#value-lifetime">Value lifetime</a>.</p>
 <p>A value is valid when:</p>
 <ul>
 <li><code>inline</code> or <code>uri</code> is set;</li>
@@ -2827,8 +2893,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/09fec1144f4d7f044e1850199490f563a8712495" target="_blank" rel="noopener">
-      09fec114
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f87040f5d9edb92acfdf51b7306fe01f6bceaafe" target="_blank" rel="noopener">
+      f87040f5
     </a>
   
 </div>

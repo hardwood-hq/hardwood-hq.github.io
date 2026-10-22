@@ -104,6 +104,9 @@ if (v.type() == VariantType.OBJECT) {
 </code></pre>
 <p>Every nested Variant sub-value (array element, object field value) is itself
 a <code>PqVariant</code>, so navigation composes naturally.</p>
+<p>A <code>PqVariant</code> the row reader returns is built over its own copy of the stored
+bytes: it can be held after the reader moves on and keeps no other values in
+memory.</p>
 </div>
 <dl class="notes">
 <dt>See Also:</dt>
@@ -211,7 +214,7 @@ a <code>PqVariant</code>, so navigation composes naturally.</p>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>byte[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#metadata()" class="member-name-link">metadata</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">The canonical Variant metadata bytes.</div>
+<div class="block">The canonical Variant metadata bytes, as a new array on each call.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="VariantType.html" title="enum class in dev.hardwood.row">VariantType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#type()" class="member-name-link">type</a>()</code></div>
@@ -221,7 +224,7 @@ a <code>PqVariant</code>, so navigation composes naturally.</p>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>byte[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#value()" class="member-name-link">value</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">The canonical Variant value bytes.</div>
+<div class="block">The canonical Variant value bytes, as a new array on each call.</div>
 </div>
 </div>
 </div>
@@ -242,7 +245,7 @@ a <code>PqVariant</code>, so navigation composes naturally.</p>
 <h3>metadata</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">byte[]</span>&nbsp;<span class="element-name">metadata</span>()</div>
-<div class="block">The canonical Variant metadata bytes.</div>
+<div class="block">The canonical Variant metadata bytes, as a new array on each call.</div>
 </div>
 </section>
 </li>
@@ -251,7 +254,7 @@ a <code>PqVariant</code>, so navigation composes naturally.</p>
 <h3>value</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">byte[]</span>&nbsp;<span class="element-name">value</span>()</div>
-<div class="block">The canonical Variant value bytes.</div>
+<div class="block">The canonical Variant value bytes, as a new array on each call.</div>
 </div>
 </section>
 </li>

@@ -83,7 +83,15 @@ loadScripts(document, 'script');</script>
 extends <a href="../row/StructAccessor.html" title="interface in dev.hardwood.row">StructAccessor</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
 <div class="block"><p>Provides row-oriented iteration over a Parquet file.</p>
 <p>A <code>RowReader</code> is a stateful, mutable view providing access to the current row
-in the iterator. The values returned by its accessors change between calls of <a href="#next()"><code>next()</code></a>.</p>
+in the iterator: its accessors read the row <a href="#next()"><code>next()</code></a> moved to. A value an accessor
+has returned does not change when the reader moves on, and can be held. A binary
+value (<code>getBinary</code>, or <code>getRawValue</code> of a binary column) is a new <code>byte[]</code> per call,
+which the caller owns. A <a href="../row/PqStruct.html" title="interface in dev.hardwood.row"><code>PqStruct</code></a>, <a href="../row/PqList.html" title="interface in dev.hardwood.row"><code>PqList</code></a> or
+<a href="../row/PqMap.html" title="interface in dev.hardwood.row"><code>PqMap</code></a> reads the batch of rows it was obtained from, and keeps that
+batch in memory while it is reachable; to keep a few values of many rows, copy them
+out instead. A value can be handed to another thread and read
+there while this reader moves on; neither this reader nor a value is safe for use by
+several threads at once.</p>
 <p>Usage example:</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">try (RowReader rowReader = fileReader.rowReader()) {
     while (rowReader.hasNext()) {

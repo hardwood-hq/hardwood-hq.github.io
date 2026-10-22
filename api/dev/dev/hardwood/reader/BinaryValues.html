@@ -100,9 +100,11 @@ for (int i = 0; i &lt; values.size(); i++) {
     }
 }
 </code></pre>
-<p><code>buffer(i)</code> is an array value <code>i</code> can be read from, valid as long as the batch is. Do not
-write to it. Values may or may not share an array, and nothing is promised about which array
-a value is read from or about bytes outside its range.</p>
+<p><code>buffer(i)</code> is an array value <code>i</code> can be read from. Do not write to it: the array of a
+dictionary-encoded value holds the dictionary's entries, which every batch drawing on that
+dictionary reads, so a write changes values of earlier and later batches as well. Values may
+or may not share an array, within a batch or across batches, and nothing is promised about
+which array a value is read from or about bytes outside its range.</p>
 <p><strong>This API is <a href="../Experimental.html" title="annotation interface in dev.hardwood"><code>Experimental</code></a>:</strong> it may change in future releases without prior
 deprecation.</p>
 </div>

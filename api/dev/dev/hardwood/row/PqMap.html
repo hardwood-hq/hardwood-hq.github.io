@@ -98,10 +98,11 @@ for (PqMap.Entry entry : attributes.getEntries()) {
     int value = entry.getIntValue();
 }
 </code></pre>
-<p>A <code>PqMap</code> and its <a href="PqMap.Entry.html" title="interface in dev.hardwood.row"><code>PqMap.Entry</code></a> objects are flyweights over the underlying read
-batch — accessors resolve to column data on each call. The flyweight is
-valid for as long as the batch it was obtained from is current; it is not
-safe to hold across <code>rowReader.next()</code> calls.</p>
+<p>A <code>PqMap</code> and its <a href="PqMap.Entry.html" title="interface in dev.hardwood.row"><code>PqMap.Entry</code></a> objects are flyweights over the batch of rows they
+were read from: accessors read the column data on each call. They can be held
+after the reader moves on and keep reading their own row; while one is
+reachable, the values of every projected column in that batch stay in memory.
+To keep a few maps of many rows, copy their entries out instead.</p>
 </div>
 </div>
 </section>

@@ -2456,7 +2456,7 @@
 <p><code>ColumnReaders.nextBatch()</code> advances every underlying reader once and returns <code>false</code> when the readers are exhausted. The aligned record count is exposed via <code>ColumnReaders.getRecordCount()</code>. As a defensive guard, mismatched per-column record counts throw <code>IllegalStateException</code>.</p>
 <p>The readers from <code>getColumnReader(...)</code> show the group's current batch. <code>ColumnReaders.nextBatch()</code> is the only way to advance them: <code>ColumnReader.nextBatch()</code> on one of them throws <code>IllegalStateException</code>. Close the group with <code>ColumnReaders.close()</code>; closing one of its readers has no effect.</p>
 <h3 id="retaining-and-handing-off-batch-arrays">Retaining and Handing Off Batch Arrays<a class="headerlink" href="#retaining-and-handing-off-batch-arrays" title="Permanent link">&para;</a></h3>
-<p>The arrays and <code>Validity</code> objects returned by the accessors belong to the current batch and are freshly allocated on each <code>nextBatch()</code>, except <code>Validity.NO_NULLS</code>, which is a shared immutable instance, and the <code>BinaryDictionary</code> from <code>getBinaryDictionary()</code> (see <a href="#dictionary-encoded-columns">Dictionary-Encoded Columns</a>), whose entries never change. A later <code>nextBatch()</code> never reuses or overwrites an array returned for an earlier batch, so you can keep a returned array and process it after advancing, including by handing it to another thread:</p>
+<p>Each <code>nextBatch()</code> allocates new arrays and <code>Validity</code> objects for the batch, and never reuses or overwrites those returned for an earlier batch. You can keep a returned array after advancing and process it later, including on another thread:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">columns</span><span class="p">.</span><span class="na">nextBatch</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="p">.</span><span class="na">getRecordCount</span><span class="p">();</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="kt">long</span><span class="o">[]</span><span class="w">   </span><span class="n">v0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">columns</span><span class="p">.</span><span class="na">getColumnReader</span><span class="p">(</span><span class="s">"passenger_count"</span><span class="p">).</span><span class="na">getLongs</span><span class="p">();</span>
@@ -2466,6 +2466,12 @@
 <a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">}</span>
 </code></pre></div>
 <p>The reader stays a single-threaded cursor: only the loop thread calls <code>nextBatch()</code>. The <em>returned arrays</em> are detached and safe to read on other threads, as is the <code>BinaryValues</code> from <code>getBinaryValues()</code>.</p>
+<p>Three returned objects are shared across batches instead of allocated per batch:</p>
+<ul>
+<li><code>Validity.NO_NULLS</code> is one immutable instance.</li>
+<li>The <code>BinaryDictionary</code> from <code>getBinaryDictionary()</code> is the column chunk's dictionary, whose entries never change (see <a href="#dictionary-encoded-columns">Dictionary-Encoded Columns</a>).</li>
+<li>For a dictionary-encoded value, <code>getBinaryValues().buffer(i)</code> returns the array holding the dictionary's entries, which every batch using that dictionary shares. Do not write to it.</li>
+</ul>
 <h3 id="dictionary-encoded-columns">Dictionary-Encoded Columns<a class="headerlink" href="#dictionary-encoded-columns" title="Permanent link">&para;</a></h3>
 <p>For a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column, <code>getDictionaryIds()</code> returns each value's entry in the column chunk's dictionary, and <code>getBinaryDictionary()</code> returns that dictionary, a <code>BinaryDictionary</code> with <code>size()</code>, <code>getBinary(e)</code> and <code>getString(e)</code>. Work done per entry then runs once per dictionary instead of once per value. This example counts the rows of each station, tallying per entry and adding the tallies up by name whenever the dictionary changes:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.HashMap</span><span class="p">;</span>
@@ -2803,8 +2809,8 @@ and maps, <code>getLayerOffsets(k)</code>; the leaf has <code>getLeafValidity()<
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/09fec1144f4d7f044e1850199490f563a8712495" target="_blank" rel="noopener">
-      09fec114
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f87040f5d9edb92acfdf51b7306fe01f6bceaafe" target="_blank" rel="noopener">
+      f87040f5
     </a>
   
 </div>

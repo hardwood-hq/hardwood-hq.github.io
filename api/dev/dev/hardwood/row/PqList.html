@@ -104,10 +104,12 @@ loadScripts(document, 'script');</script>
 Primitive int/long/double element lists surface as the dedicated
 <a href="PqIntList.html" title="interface in dev.hardwood.row"><code>PqIntList</code></a> / <a href="PqLongList.html" title="interface in dev.hardwood.row"><code>PqLongList</code></a> / <a href="PqDoubleList.html" title="interface in dev.hardwood.row"><code>PqDoubleList</code></a> types (with <code>PrimitiveIterator.OfInt</code>
 and friends — no boxing). All other typed accessors return <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a>.</p>
-<p>A <code>PqList</code> is a flyweight over the underlying read batch — its <code>get(int)</code> and
-the lazy <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> views returned by the typed accessors resolve to column data
-on each call. The flyweight is valid for as long as the batch it was obtained
-from is current; it is not safe to hold across <code>rowReader.next()</code> calls.</p>
+<p>A <code>PqList</code> is a flyweight over the batch of rows it was read from: its <code>get(int)</code> and
+the lazy <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> views returned by the typed accessors read the column data on each
+call. The list and its views can be held after the reader moves on and keep reading
+their own row; while one is reachable, the values of every projected column in that
+batch stay in memory. To keep a few lists of many rows, copy their elements out
+instead.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">// String list
 PqList tags = rowReader.getList(&quot;tags&quot;);
 for (String tag : tags.strings()) {
@@ -488,7 +490,8 @@ surfaces as the <a href="PqStruct.html" title="interface in dev.hardwood.row"><c
 <h3>binaries</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;byte[]&gt;</span>&nbsp;<span class="element-name">binaries</span>()</div>
-<div class="block">View the elements as a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of binary (<code>byte[]</code>) values.</div>
+<div class="block">View the elements as a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link"><code>List</code></a> of binary (<code>byte[]</code>) values. Each <code>get</code> returns a
+new array.</div>
 </div>
 </section>
 </li>
