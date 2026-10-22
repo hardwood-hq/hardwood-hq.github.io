@@ -138,10 +138,11 @@ filter's values, and to encode and compress the column chunks of a writer's row 
 <div class="block">Sets the number of platform threads the context uses to decompress and decode pages, to
 parse the footers and page indexes a read reads as it goes and scan dictionaries for a
 filter's values, and to encode and compress the column chunks of a writer's row groups.
-Defaults to <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runtime.html#availableProcessors()" title="class or interface in java.lang" class="external-link"><code>Runtime.availableProcessors()</code></a>.</div>
+Defaults to <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runtime.html#availableProcessors()" title="class or interface in java.lang" class="external-link"><code>Runtime.availableProcessors()</code></a>. With zero threads, the context has no pool:
+that work runs on the threads calling the readers and writers.</div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>threads</code> is less than 1</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>threads</code> is negative</dd>
 </dl>
 </div>
 </section>

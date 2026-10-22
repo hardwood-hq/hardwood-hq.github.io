@@ -1556,6 +1556,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#context-threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context Threads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#limits" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2009,6 +2020,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#context-threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Context Threads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#limits" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2094,6 +2116,26 @@
 </tr>
 </tbody>
 </table>
+<h2 id="context-threads">Context Threads<a class="headerlink" href="#context-threads" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th>Threads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>HardwoodContext.create()</code></td>
+<td>A pool of one thread per available processor</td>
+</tr>
+<tr>
+<td><code>HardwoodContext.create(n)</code>, <code>HardwoodContext.builder().threads(n)</code></td>
+<td>A pool of <code>n</code> threads; <code>n = 0</code> creates a context without a pool, whose reads run on the threads calling the readers. A negative <code>n</code> fails with an <code>IllegalArgumentException</code></td>
+</tr>
+</tbody>
+</table>
+<p>On a context of zero threads, <code>executor()</code> throws an <code>UnsupportedOperationException</code>, and the reads of files not in memory fetch bytes ahead on virtual threads. See <a href="../../concepts/concurrency-model/#a-context-of-zero-threads">A context of zero threads</a>.</p>
 <h2 id="limits">Limits<a class="headerlink" href="#limits" title="Permanent link">&para;</a></h2>
 <p>A column chunk read without an OffsetIndex must be at most 2 GB of <em>compressed</em> data; a chunk with an OffsetIndex is read in page groups and has no such limit. Files larger than 2 GB are read both locally and from S3, except by the in-memory (<code>ByteBuffer</code>) backend and by an S3 file opened with <a href="../s3/#range-backing"><code>RangeBacking.SPARSE_TEMPFILE</code></a>, which the <code>dive</code> TUI uses for every file; both are limited to 2 GB per file. For datasets that don't fit a single supported file, split the data into multiple files at write time and read them as one; see <a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
 
@@ -2145,8 +2187,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d6d751029c7d3a5bd4d5705676246e0580695c5f" target="_blank" rel="noopener">
-      d6d75102
+    <a href="https://github.com/hardwood-hq/hardwood/tree/472a07246767d78a2141c0cc1c71923187480c0f" target="_blank" rel="noopener">
+      472a0724
     </a>
   
 </div>

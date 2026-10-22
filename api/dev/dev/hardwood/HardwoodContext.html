@@ -88,6 +88,9 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 <p>Holds the thread pool for parallel page decoding and column chunk encoding, the libdeflate
 decompressor pool for native GZIP decompression, the decompressor factory,
 and the <a href="MetadataSource.html" title="interface in dev.hardwood"><code>MetadataSource</code></a> installed through <a href="#builder()"><code>builder()</code></a>, if any.</p>
+<p>A context of zero threads (<a href="#create(int)"><code>create(int)</code></a> with <code>0</code>) has no pool: a read on it decodes on the
+thread calling the reader, as that thread asks for each batch, and a writer encodes on the
+thread calling it. A read of files not in memory still fetches bytes ahead on virtual threads.</p>
 <p>The context lifecycle is tied to either:</p>
 <ul>
 <li><a href="Hardwood.html" title="class in dev.hardwood"><code>Hardwood</code></a> instance (for multi-file usage)</li>
@@ -189,6 +192,10 @@ them. A read waits for work only this executor's threads run, so a reader built 
 context cannot be built in a task running on it: building one there fails with an
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>.</p>
 </div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/UnsupportedOperationException.html" title="class or interface in java.lang" class="external-link">UnsupportedOperationException</a></code> - if the context has zero threads, and so no pool</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -220,7 +227,12 @@ run to completion; the call waits up to five seconds for them.</div>
 <h3>create</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="HardwoodContext.html" title="interface in dev.hardwood">HardwoodContext</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(int&nbsp;threads)</span></div>
-<div class="block">Create a new context with a thread pool of the specified size.</div>
+<div class="block">Create a new context with a thread pool of the specified size. With zero threads, the
+context has no pool, and its reads and writes run on the threads calling them.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>threads</code> is negative</dd>
+</dl>
 </div>
 </section>
 </li>

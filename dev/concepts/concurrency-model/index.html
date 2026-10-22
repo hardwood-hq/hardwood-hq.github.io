@@ -1343,6 +1343,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-context-of-zero-threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A context of zero threads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#guidelines-for-your-code" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2108,6 +2119,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-context-of-zero-threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A context of zero threads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#guidelines-for-your-code" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2201,6 +2223,10 @@ shared pool matters, since all the files draw on the same workers. See
 <h2 id="writing">Writing<a class="headerlink" href="#writing" title="Permanent link">&para;</a></h2>
 <p>A writer copies a batch's values into the open row group in parallel: the pool threads of a <code>HardwoodContext</code> and the calling thread each take the next column not yet claimed, and <code>writeBatch</code> returns once every column holds its values. When the row group is flushed, its column chunks are encoded and compressed in parallel the same way, a chunk at a time, and written in schema order. The file is the same as one written on a single thread. A writer opened without a context creates its own for the duration of the write; <code>ParquetFileWriter.create(out, schema, config, context)</code> uses yours, so writers and readers can draw on one pool.</p>
 <p>A schema of many columns spreads both the copying and the flush across all the threads. A schema of a few columns is bounded by its most expensive column while values are copied, since a column is copied by one thread. At flush, a chunk is encoded by one thread, but under a compressing codec such as <code>ZSTD</code> a pool thread with no chunk left compresses pages of the chunks still being encoded, so a schema of a few columns, or of one, spreads its flush across the threads too, and those threads stay with the flush until its last chunk is encoded; uncompressed, the flush of a few columns is bounded by its most expensive column chunk. Between two batches, the pool threads that copied values wait for the next batch for at most a millisecond before returning to the pool, and they return at once when a row group is flushed or the writer is closed. While batches keep arriving, each such thread goes to the back of the pool's queue every millisecond, so other work queued on a shared context runs in between.</p>
+<h2 id="a-context-of-zero-threads">A context of zero threads<a class="headerlink" href="#a-context-of-zero-threads" title="Permanent link">&para;</a></h2>
+<p><code>HardwoodContext.create(0)</code> creates a context without a pool. A read on it runs on the thread that calls the reader: when <code>hasNext()</code> or <code>nextBatch()</code> finds no batch ready, that call walks the page headers, decompresses and decodes pages until the batch is complete, and returns it. Nothing decodes while your loop works on a batch, so a read uses one core, the one your loop runs on.</p>
+<p>This suits a process that runs one pipeline per core: N readers, each driven by its own thread, use N cores, with no worker threads competing with them for the cores, caches and memory bandwidth. It also suits an environment that cannot start threads. One context of zero threads serves readers on several threads at once, each read running on the thread that drives it.</p>
+<p>A read of local files, or of files in memory, starts no thread. A read of other files, such as files on S3, fetches bytes ahead of the read on virtual threads, which wait for the requests and do no other work. These virtual threads run on the carrier threads of the JVM's virtual-thread scheduler, which the whole process shares and the context does not bound: the CPU a request takes inside the <code>InputFile</code>, such as decrypting TLS or copying the response, runs on those carriers. While a page's bytes are in flight, the read's thread waits for them in <code>hasNext()</code> or <code>nextBatch()</code>, which a <code>BatchWait</code> event records. The reads that plan a row group (the next file's footer, its page index, Bloom filters and dictionaries) run on the read's thread, and no <code>BatchWait</code> event records them. Drive such a read from a platform thread: a virtual thread holds its carrier for the length of each decode. A writer on such a context copies, encodes and compresses on the thread that calls it.</p>
 <h2 id="guidelines-for-your-code">Guidelines for your code<a class="headerlink" href="#guidelines-for-your-code" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Drive one reader from one thread.</strong> A <code>RowReader</code> / <code>ColumnReader</code> / <code>ColumnReaders</code> instance
@@ -2229,9 +2255,10 @@ shared pool matters, since all the files draw on the same workers. See
   threads than on the default. Measure the read at a few values of <code>n</code> to find its best. Every page a read
   decodes, dictionary pages included, is decoded on these <code>n</code> threads. The same threads walk each
   column's pages, parse the footer of every file after the first and the page indexes of each row
-  group, and scan a row group's dictionaries for a filter's values. Bytes fetched ahead of the read
-  are fetched on the JVM's virtual threads; a fetch the read waits for runs on one of the <code>n</code>
-  threads. The first file's footer is parsed on the thread that opens the reader.</li>
+  group, and scan a row group's dictionaries for a filter's values. The bytes of a file not in
+  memory are fetched on the JVM's virtual threads. The first file's footer is parsed on the thread
+  that opens the reader. With <code>n = 0</code>, all of that work runs on your loop's thread instead
+  (<a href="#a-context-of-zero-threads">A context of zero threads</a>).</li>
 </ul>
 <h2 id="further-reading">Further reading<a class="headerlink" href="#further-reading" title="Permanent link">&para;</a></h2>
 <ul>
@@ -2293,8 +2320,8 @@ shared pool matters, since all the files draw on the same workers. See
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/d6d751029c7d3a5bd4d5705676246e0580695c5f" target="_blank" rel="noopener">
-      d6d75102
+    <a href="https://github.com/hardwood-hq/hardwood/tree/472a07246767d78a2141c0cc1c71923187480c0f" target="_blank" rel="noopener">
+      472a0724
     </a>
   
 </div>
