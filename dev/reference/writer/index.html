@@ -2734,7 +2734,7 @@
 <tr>
 <td><code>pageTargetBytes(int)</code></td>
 <td><code>1 MiB</code></td>
-<td>Encoded bytes before a data page is cut, counting the values as the chunk's chosen encoding writes them, so a dictionary column is measured in indices. A ceiling: the page is cut before the record that would cross it, and only a single record larger than the whole target can breach it, a page holding whole records. Must be at least 4 bytes; a target above 128 MiB cuts at 128 MiB.</td>
+<td>Encoded bytes before a data page is cut, counting the values as the chunk's chosen encoding writes them, so a dictionary column is measured in indices. A ceiling: the page is cut before the record that would cross it, and only a single record larger than the whole target can breach it, a page holding whole records. Must be at least 4 bytes; a target above 1,073,741,819 bytes cuts at 1,073,741,819 bytes.</td>
 </tr>
 <tr>
 <td><code>pageTargetRows(int)</code></td>
@@ -2788,7 +2788,7 @@
 </tr>
 </tbody>
 </table>
-<p>A page is cut at whichever of the two page targets is reached first, and in any case at 67,108,864 values and nulls, the most a reader takes in one page; a single record holding more is a page of its own. A row group is cut at whichever of the two row-group targets is reached first.</p>
+<p>A page is cut at whichever of the two page targets is reached first, and in any case at 2,147,483,638 values and nulls, the most a reader takes in one page; a single record holding more is a page of its own. A row group is cut at whichever of the two row-group targets is reached first.</p>
 <p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>pageTargetRows()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>codec()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>, and for the Bloom filter setters, <code>bloomFilters()</code>, a map from column path to probability. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
 <h2 id="encodings">Encodings<a class="headerlink" href="#encodings" title="Permanent link">&para;</a></h2>
 <p><code>ColumnEncoding</code> sets how a column's values are encoded, file-wide or per leaf column. <code>AUTO</code> leaves the choice to the writer; every other member names an encoding outright, and a column that names one builds no dictionary.</p>
@@ -3406,8 +3406,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/07c4593b305a9abd66668236aaf22cf23802bf7a" target="_blank" rel="noopener">
-      07c4593b
+    <a href="https://github.com/hardwood-hq/hardwood/tree/87d7fea3b223c1029015f8780ed8be00cb3a9177" target="_blank" rel="noopener">
+      87d7fea3
     </a>
   
 </div>
