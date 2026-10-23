@@ -1996,7 +1996,7 @@
 <a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p">}</span>
 </code></pre></div>
-<p>Cross-file prefetching is automatic: when pages from file N are running low, pages from file N+1 are already being prefetched.</p>
+<p>Cross-file prefetching is automatic: when pages from file N are running low, pages from file N+1 are already being prefetched. For files not in memory, such as files on S3, several files after N are opened ahead as well (<a href="../../concepts/concurrency-model/#cross-file-prefetching">Cross-file prefetching</a>).</p>
 <p>The schema of the first file is the reference schema. Each later file a data reader reaches is
 validated against it for that reader's projection and filter; inspecting a file's metadata does not
 validate it. Columns are matched by field path, in any order. Every projected or filtered column
@@ -2067,8 +2067,8 @@ column of the first file is projected and therefore required.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2973c1ef02c8bbd0a12797a7a482631e15d53931" target="_blank" rel="noopener">
-      2973c1ef
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4fbba14e78c2067c7fe2814eff02406457e414b1" target="_blank" rel="noopener">
+      4fbba14e
     </a>
   
 </div>

@@ -2216,7 +2216,10 @@ mean decode (or I/O) isn't keeping up with consumption.</p>
 <h2 id="cross-file-prefetching">Cross-file prefetching<a class="headerlink" href="#cross-file-prefetching" title="Permanent link">&para;</a></h2>
 <p>When a reader spans multiple files (via <code>Hardwood.openAll(...)</code>), prefetching crosses file
 boundaries: as the pages of file <em>N</em> run low, pages of file <em>N+1</em> are already being fetched and
-decoded. This is the main reason to open
+decoded. A read of files not in memory, such as files on S3, also opens several files beyond
+<em>N+1</em>: their footers and the first data of each are fetched while the read works on earlier files,
+within a share of the heap the context holds for reading ahead. A read with a row limit opens only
+file <em>N+1</em> ahead. This is the main reason to open
 a multi-file reader rather than looping over single-file readers yourself, and the reason the
 shared pool matters, since all the files draw on the same workers. See
 <a href="../../how-to/multi-file/">Read Multiple Files as One Dataset</a>.</p>
@@ -2320,8 +2323,8 @@ shared pool matters, since all the files draw on the same workers. See
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2973c1ef02c8bbd0a12797a7a482631e15d53931" target="_blank" rel="noopener">
-      2973c1ef
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4fbba14e78c2067c7fe2814eff02406457e414b1" target="_blank" rel="noopener">
+      4fbba14e
     </a>
   
 </div>

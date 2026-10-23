@@ -2265,6 +2265,10 @@
 <li>CLI releases publish <code>checksums_sha256.txt</code> and build provenance attestations for the archives and the Docker image, verifiable with <code>gh attestation verify</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1607">#1607</a>)</li>
 <li>The CLI Docker image is based on Fedora 44 (<a href="https://github.com/hardwood-hq/hardwood/issues/1607">#1607</a>)</li>
 </ul>
+<p><strong>Improvements:</strong></p>
+<ul>
+<li>A multi-file read of files not in memory, such as files on S3, opens several files ahead, fetching their footers and first data while it reads earlier files (<a href="https://github.com/hardwood-hq/hardwood/issues/1665">#1665</a>)</li>
+</ul>
 <h2 id="110beta3-2026-10-21">1.1.0.Beta3 (2026-10-21)<a class="headerlink" href="#110beta3-2026-10-21" title="Permanent link">&para;</a></h2>
 <p><strong>Bug fixes:</strong></p>
 <ul>
@@ -2548,8 +2552,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/2973c1ef02c8bbd0a12797a7a482631e15d53931" target="_blank" rel="noopener">
-      2973c1ef
+    <a href="https://github.com/hardwood-hq/hardwood/tree/4fbba14e78c2067c7fe2814eff02406457e414b1" target="_blank" rel="noopener">
+      4fbba14e
     </a>
   
 </div>
