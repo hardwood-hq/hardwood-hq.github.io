@@ -210,7 +210,8 @@ all, or whose schema cannot be reconciled with the first file's</dd>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()
     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Releases the resources held by this reader. Idempotent: calling it more
-than once has no further effect.</div>
+than once has no further effect, and a call on another thread while a close runs, such
+as the <a href="ParquetFileReader.html" title="class in dev.hardwood.reader"><code>ParquetFileReader</code></a>'s, returns once that close has completed.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>
