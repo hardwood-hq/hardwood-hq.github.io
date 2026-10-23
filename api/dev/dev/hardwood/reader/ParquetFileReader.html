@@ -608,7 +608,9 @@ access to a column projection. Works for single- and multi-file.</div>
 closes every child reader still open, which stops its columns and waits for the
 prefetches its read started, then this reader's metadata, an owned context and
 owned input files. A failure to close a child does not stop the rest from being
-closed; the first failure is thrown, later ones suppressed beneath it.</div>
+closed; the first failure is thrown, later ones suppressed beneath it. A later or
+concurrent close waits until the first has completed and returns without closing
+anything again.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>
