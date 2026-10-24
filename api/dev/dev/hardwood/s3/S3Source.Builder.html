@@ -288,7 +288,10 @@ way cannot create output files: <a href="S3Source.html#outputFile(java.lang.Stri
 <h3>requestTimeout</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></span>&nbsp;<span class="element-name">requestTimeout</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Duration.html" title="class or interface in java.time" class="external-link">Duration</a>&nbsp;requestTimeout)</span></div>
-<div class="block">Sets the per-request timeout for individual HTTP requests (default 30 seconds).</div>
+<div class="block">Sets the per-request timeout for individual HTTP requests (default 30 seconds). It bounds
+the time until a response's headers arrive, and then each gap between bytes of its body:
+a body that stops sending bytes fails after one to two timeouts, and its request is
+retried like a network error.</div>
 </div>
 </section>
 </li>

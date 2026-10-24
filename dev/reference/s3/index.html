@@ -2211,7 +2211,7 @@
 <tr>
 <td><code>requestTimeout(Duration)</code></td>
 <td>30s</td>
-<td>Maximum time for an individual HTTP request to complete, including the upload of one part.</td>
+<td>Maximum time for an individual HTTP request to receive its response headers, including the upload of one part, and then for each gap between bytes of the response body. A body that stops sending bytes fails after one to two timeouts.</td>
 </tr>
 <tr>
 <td><code>maxRetries(int)</code></td>
@@ -2243,7 +2243,15 @@
 <p>When the retry budget is exhausted, the read or write fails with an <code>IOException</code>. For a read
 with an HTTP error status, the message has the form <code>Failed to open s3://&lt;bucket&gt;/&lt;key&gt;: HTTP &lt;status&gt; &lt;body&gt;</code> when
 opening the file and <code>Failed to read range [&lt;start&gt;, &lt;end&gt;) from s3://&lt;bucket&gt;/&lt;key&gt;: HTTP &lt;status&gt; &lt;body&gt;</code>
-for a range read; for network errors the original <code>IOException</code> message is preserved. When an
+for a range read. A range read whose connection fails, before or during its body, is retried for
+the bytes not yet received, and the bytes received stay; for an object without a strong <code>ETag</code>
+the retry reads the whole range again. When the retries run out, the message has
+the form <code>Failed to read range [&lt;start&gt;, &lt;end&gt;) from s3://&lt;bucket&gt;/&lt;key&gt;: received &lt;n&gt; of &lt;length&gt; bytes in &lt;attempts&gt; attempts</code>,
+and the cause carries the last failure. For other network errors the original <code>IOException</code>
+message is preserved. A response body that stops sending bytes fails like a lost connection; for a
+read the message has the form <code>GET s3://&lt;bucket&gt;/&lt;key&gt; range &lt;range&gt; timed out: no body bytes for &lt;timeout&gt; ms</code>,
+where <code>&lt;range&gt;</code> is the request's <code>Range</code> header value, such as <code>bytes=0-99</code>, and for a write it
+names the request, such as <code>PUT s3://&lt;bucket&gt;/&lt;key&gt; timed out: no body bytes for &lt;timeout&gt; ms</code>. When an
 anonymous source receives HTTP 401 or 403, the message ends with <code>(the request was sent unsigned, without credentials)</code>.</p>
 <p>A range read must be answered with HTTP 206. An endpoint that ignores the <code>Range</code> header and
 answers HTTP 200 with the whole object makes the read fail with an <code>IOException</code> whose message
@@ -2254,7 +2262,9 @@ smaller. That single round-trip discovers the object size, so there is never a
 separate HEAD request. A read falling entirely inside that trailing window is answered
 without a further request, so reading an object of up to 256 KiB costs that one GET. The
 reader releases the window once it has read past the file. An HTTP 200 answer to this GET
-is accepted: the whole object then forms the window.</p>
+is accepted when the whole object fits in 256 KiB; the object then forms the window. A longer
+answer fails the open with an <code>IOException</code> whose message has the form
+<code>Failed to open s3://&lt;bucket&gt;/&lt;key&gt;: HTTP &lt;status&gt; with a body longer than 262144 bytes requested; the endpoint ignored the Range header</code>.</p>
 <p>For most files the window also carries the Parquet footer and the page index, which is why
 opening a file usually costs one GET. It is a cost heuristic rather than a guarantee: footer
 size grows with row groups × columns and with the size of the per-column statistics,
@@ -2263,7 +2273,13 @@ footer past 256 KiB. Reading it then costs one extra GET. When the context's <co
 supplies the footer, the open checks only the 8-byte trailer, which lies in the window, so that
 extra GET is not made.</p>
 <p>The <code>ETag</code> header of this response is the object's <code>InputFile.identity()</code>, quotes included. It is
-empty when the endpoint sends no <code>ETag</code>.</p>
+empty when the endpoint sends no <code>ETag</code>. Every later range request carries a strong <code>ETag</code> as
+<code>If-Match</code>, so a read never mixes bytes of two versions of the object. When the object has been
+replaced since the open, the endpoint answers HTTP 412, and the read fails with a
+<code>ParquetReadException</code> whose message has the form
+<code>Failed to read range [&lt;start&gt;, &lt;end&gt;) from s3://&lt;bucket&gt;/&lt;key&gt;: the file changed since it was opened (HTTP 412 for If-Match &lt;etag&gt;)</code>.
+Opening the file again reads the new version. Without an <code>ETag</code>, or with a weak one (<code>W/"&lt;tag&gt;"</code>),
+range requests are sent without <code>If-Match</code>, and a replaced object is not detected.</p>
 <p>This applies to every <code>S3InputFile</code>, independent of the range backing below.</p>
 <h2 id="io-behavior">I/O behavior<a class="headerlink" href="#io-behavior" title="Permanent link">&para;</a></h2>
 <p>Hardwood coalesces the column chunk reads within each row group into as few HTTP requests as
@@ -2426,8 +2442,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ffb955d614b6eda26c3d41d9f3147b83d11b8113" target="_blank" rel="noopener">
-      ffb955d6
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fa1cbdb40cf21fc112d5912e19d02d8d2caa65be" target="_blank" rel="noopener">
+      fa1cbdb4
     </a>
   
 </div>

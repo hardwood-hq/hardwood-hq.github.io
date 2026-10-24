@@ -2120,7 +2120,7 @@
 </tr>
 <tr>
 <td><code>ParquetReadException</code></td>
-<td>They arrived and are not valid Parquet: a bad magic number, a corrupt footer, a malformed page index, a dictionary page the metadata places outside its column chunk, a page whose checksum fails, a page that will not decompress, values that do not decode, a shredded Variant <code>typed_value</code> column of a type the Variant shredding specification does not list (raised when the reader is built; see <a href="../../how-to/variant/">Variant</a>), a <code>FILE</code> group whose children the format does not define (raised when the file is opened), a <code>FILE</code> value that is not a valid reference (raised by the call that reads it as a <code>PqFile</code>; see <a href="../accessors/#file-groups">FILE groups</a>). When the context's <code>MetadataSource</code> supplied the file's footer, the message ends with <code>(footer supplied by the MetadataSource; the file may have changed since the footer was read)</code>: the file may have been rewritten in a way the checks behind <code>StaleMetadataException</code> do not detect, and evicting that footer and opening a new reader reads the file afresh. Unchecked</td>
+<td>They arrived and are not valid Parquet: a bad magic number, a corrupt footer, a malformed page index, a dictionary page the metadata places outside its column chunk, a page whose checksum fails, a page that will not decompress, values that do not decode, a shredded Variant <code>typed_value</code> column of a type the Variant shredding specification does not list (raised when the reader is built; see <a href="../../how-to/variant/">Variant</a>), a <code>FILE</code> group whose children the format does not define (raised when the file is opened), a <code>FILE</code> value that is not a valid reference (raised by the call that reads it as a <code>PqFile</code>; see <a href="../accessors/#file-groups">FILE groups</a>), an S3 object replaced since the file was opened (see <a href="../s3/#footer-pre-fetch">Footer pre-fetch</a>; opening the file again reads the new version). When the context's <code>MetadataSource</code> supplied the file's footer, the message ends with <code>(footer supplied by the MetadataSource; the file may have changed since the footer was read)</code>: the file may have been rewritten in a way the checks behind <code>StaleMetadataException</code> do not detect, and evicting that footer and opening a new reader reads the file afresh. Unchecked</td>
 </tr>
 <tr>
 <td><code>SchemaIncompatibleException</code></td>
@@ -2239,8 +2239,8 @@ the schema path of the offending group or column, not the file.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ffb955d614b6eda26c3d41d9f3147b83d11b8113" target="_blank" rel="noopener">
-      ffb955d6
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fa1cbdb40cf21fc112d5912e19d02d8d2caa65be" target="_blank" rel="noopener">
+      fa1cbdb4
     </a>
   
 </div>

@@ -2271,6 +2271,12 @@
 <li>An S3 object of up to 256 KiB is read in the one request that opens it, and the footer and page index of a larger file come with that request (<a href="https://github.com/hardwood-hq/hardwood/issues/1399">#1399</a>)</li>
 <li>A multi-file read holds the footers of the files it is reading rather than of every file it has read (<a href="https://github.com/hardwood-hq/hardwood/issues/1662">#1662</a>)</li>
 </ul>
+<p><strong>Bug fixes:</strong></p>
+<ul>
+<li>An S3 response body that sends no bytes for <code>requestTimeout</code> fails its request, which is retried, instead of blocking the read without bound (<a href="https://github.com/hardwood-hq/hardwood/issues/1393">#1393</a>)</li>
+<li>An S3 read fails with <code>ParquetReadException</code> when the object was replaced since the file was opened, and opening an S3 file fails when the endpoint ignores the <code>Range</code> header of an object larger than the open-time tail (<a href="https://github.com/hardwood-hq/hardwood/issues/1686">#1686</a>)</li>
+<li>An S3 range read whose connection fails midway re-requests only the bytes not yet received, within the retry budget (<a href="https://github.com/hardwood-hq/hardwood/issues/1666">#1666</a>)</li>
+</ul>
 <h2 id="110beta3-2026-10-21">1.1.0.Beta3 (2026-10-21)<a class="headerlink" href="#110beta3-2026-10-21" title="Permanent link">&para;</a></h2>
 <p><strong>Bug fixes:</strong></p>
 <ul>
@@ -2554,8 +2560,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ffb955d614b6eda26c3d41d9f3147b83d11b8113" target="_blank" rel="noopener">
-      ffb955d6
+    <a href="https://github.com/hardwood-hq/hardwood/tree/fa1cbdb40cf21fc112d5912e19d02d8d2caa65be" target="_blank" rel="noopener">
+      fa1cbdb4
     </a>
   
 </div>
