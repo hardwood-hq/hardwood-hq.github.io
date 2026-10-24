@@ -2249,18 +2249,18 @@ anonymous source receives HTTP 401 or 403, the message ends with <code>(the requ
 answers HTTP 200 with the whole object makes the read fail with an <code>IOException</code> whose message
 has the form <code>Failed to read range [&lt;start&gt;, &lt;end&gt;) from s3://&lt;bucket&gt;/&lt;key&gt;: HTTP 200, expected 206; the endpoint ignored the Range header</code>.</p>
 <h2 id="footer-pre-fetch">Footer pre-fetch<a class="headerlink" href="#footer-pre-fetch" title="Permanent link">&para;</a></h2>
-<p><code>open()</code> issues one GET for the last 64 KB of the object, or the whole object if it is
+<p><code>open()</code> issues one GET for the last 256 KiB of the object, or the whole object if it is
 smaller. That single round-trip discovers the object size, so there is never a
-separate HEAD request. Those bytes are kept for as long as the file is open, and any
-read falling entirely inside that trailing window is answered without a further
-request. An HTTP 200 answer to this GET is accepted: the whole object then forms the
-window, and no read goes to the network again.</p>
-<p>For most files the window also carries the Parquet footer, which is why opening a
-file usually costs one GET. It is a cost heuristic rather than a guarantee: footer
+separate HEAD request. A read falling entirely inside that trailing window is answered
+without a further request, so reading an object of up to 256 KiB costs that one GET. The
+reader releases the window once it has read past the file. An HTTP 200 answer to this GET
+is accepted: the whole object then forms the window.</p>
+<p>For most files the window also carries the Parquet footer and the page index, which is why
+opening a file usually costs one GET. It is a cost heuristic rather than a guarantee: footer
 size grows with row groups × columns and with the size of the per-column statistics,
 so a wide schema, a heavily split file, or long string min/max values can push the
-footer past 64 KB. Reading it then costs one extra GET. When the context's <code>MetadataSource</code>
-supplies the footer, the open reads only the 8-byte trailer, which lies in the window, so that
+footer past 256 KiB. Reading it then costs one extra GET. When the context's <code>MetadataSource</code>
+supplies the footer, the open checks only the 8-byte trailer, which lies in the window, so that
 extra GET is not made.</p>
 <p>The <code>ETag</code> header of this response is the object's <code>InputFile.identity()</code>, quotes included. It is
 empty when the endpoint sends no <code>ETag</code>.</p>
@@ -2426,8 +2426,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/f611ba92f6a38cee7eb7bd56e0e8df3a5f9a5c25" target="_blank" rel="noopener">
-      f611ba92
+    <a href="https://github.com/hardwood-hq/hardwood/tree/7c1f98904b8563e32ddb5ea22f1b016b11376e0f" target="_blank" rel="noopener">
+      7c1f9890
     </a>
   
 </div>

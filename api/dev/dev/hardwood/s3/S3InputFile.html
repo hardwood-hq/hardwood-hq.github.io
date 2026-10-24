@@ -98,9 +98,9 @@ bytes are transferred.</p>
 discovers the file length from the <code>Content-Range</code> response header
 and pre-fetches the Parquet footer (which sits at the end of the file) in
 the same round-trip — eliminating a separate HEAD request per file.
-Those tail bytes are retained for as long as the file is open, and a
-read falling entirely inside that window is answered from them
-without a request.</p>
+A read falling entirely inside those tail bytes is answered from them
+without a request, until a read of the whole tail hands them to the
+reader, which then holds them.</p>
 <p>When the owning <a href="S3Source.html" title="class in dev.hardwood.s3"><code>S3Source</code></a> is configured with
 <a href="RangeBacking.html#SPARSE_TEMPFILE"><code>RangeBacking.SPARSE_TEMPFILE</code></a>, an internal mmap-backed range cache
 serves repeat reads of the same byte ranges without re-issuing HTTP

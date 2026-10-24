@@ -2268,6 +2268,8 @@
 <p><strong>Improvements:</strong></p>
 <ul>
 <li>A multi-file read of files not in memory, such as files on S3, opens several files ahead, fetching their footers and first data while it reads earlier files (<a href="https://github.com/hardwood-hq/hardwood/issues/1665">#1665</a>)</li>
+<li>An S3 object of up to 256 KiB is read in the one request that opens it, and the footer and page index of a larger file come with that request (<a href="https://github.com/hardwood-hq/hardwood/issues/1399">#1399</a>)</li>
+<li>A multi-file read holds the footers of the files it is reading rather than of every file it has read (<a href="https://github.com/hardwood-hq/hardwood/issues/1662">#1662</a>)</li>
 </ul>
 <h2 id="110beta3-2026-10-21">1.1.0.Beta3 (2026-10-21)<a class="headerlink" href="#110beta3-2026-10-21" title="Permanent link">&para;</a></h2>
 <p><strong>Bug fixes:</strong></p>
@@ -2552,8 +2554,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/f611ba92f6a38cee7eb7bd56e0e8df3a5f9a5c25" target="_blank" rel="noopener">
-      f611ba92
+    <a href="https://github.com/hardwood-hq/hardwood/tree/7c1f98904b8563e32ddb5ea22f1b016b11376e0f" target="_blank" rel="noopener">
+      7c1f9890
     </a>
   
 </div>

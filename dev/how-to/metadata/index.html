@@ -2210,8 +2210,8 @@
 <p><code>ParsedFooter.metaData()</code> returns what <code>getFileMetaData()</code> returns on a reader that read the footer itself. A <code>ParsedFooter</code> holds no file resources, and one instance serves any number of readers on any threads.</p>
 <h2 id="metadata-for-multiple-files">Metadata for multiple files<a class="headerlink" href="#metadata-for-multiple-files" title="Permanent link">&para;</a></h2>
 <p>For a multi-file reader, use <code>getFileCount()</code> and <code>getFileMetaData(int)</code> to inspect each
-physical input file in order. Each footer is read once, when first needed, and reused by
-metadata, row and column access for the lifetime of the parent reader.</p>
+physical input file in order. The first file's footer is read when the reader is opened; for a
+later file, <code>getFileMetaData(int)</code> may read the file's footer.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Hardwood</span><span class="w"> </span><span class="n">hardwood</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Hardwood</span><span class="p">.</span><span class="na">create</span><span class="p">();</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">     </span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hardwood</span><span class="p">.</span><span class="na">openAll</span><span class="p">(</span><span class="n">files</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="kt">long</span><span class="w"> </span><span class="n">totalRows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
@@ -2224,8 +2224,7 @@ metadata, row and column access for the lifetime of the parent reader.</p>
 </code></pre></div>
 <p><code>getFileMetaData(int)</code> reports the physical file's footer without validating it against the first
 file; cross-file schema validation happens when a row or column reader is planned. Leave every input
-file unchanged until the parent reader is closed. A failed footer load is cached too: close and
-reopen the parent reader to retry it or to inspect a changed file.</p>
+file unchanged until the parent reader is closed.</p>
 <h2 id="size-statistics-and-level-histograms">Size statistics and level histograms<a class="headerlink" href="#size-statistics-and-level-histograms" title="Permanent link">&para;</a></h2>
 <p><code>ColumnMetaData.sizeStatistics()</code> reports how much data a column chunk holds, without reading any of it:</p>
 <ul>
@@ -2291,8 +2290,8 @@ reopen the parent reader to retry it or to inspect a changed file.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/f611ba92f6a38cee7eb7bd56e0e8df3a5f9a5c25" target="_blank" rel="noopener">
-      f611ba92
+    <a href="https://github.com/hardwood-hq/hardwood/tree/7c1f98904b8563e32ddb5ea22f1b016b11376e0f" target="_blank" rel="noopener">
+      7c1f9890
     </a>
   
 </div>
