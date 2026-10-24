@@ -2576,7 +2576,8 @@ to its annotation.</p>
 <h2 id="when-statistics-are-ignored">When statistics are ignored<a class="headerlink" href="#when-statistics-are-ignored" title="Permanent link">&para;</a></h2>
 <p>Pruning compares a unit's <code>min</code> / <code>max</code> bounds. A pair a reader cannot compare against is
 ignored rather than trusted, so the row group or page is kept and its rows are read and filtered
-one by one. Results are the same either way; only the I/O saved is lost. Bounds are ignored when:</p>
+one by one. Results are the same either way and only the I/O saved is lost, except on an ordered
+column index (below). Bounds are ignored when:</p>
 <table>
 <thead>
 <tr>
@@ -2619,6 +2620,11 @@ one by one. Results are the same either way; only the I/O saved is lost. Bounds 
 </tr>
 </tbody>
 </table>
+<p>On a column index that declares its page bounds <code>ASCENDING</code> or <code>DESCENDING</code> and has no null-only
+page, <code>eq</code>, <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> on a column other than <code>FLOAT</code>, <code>DOUBLE</code>, <code>FLOAT16</code> and
+<code>BOOLEAN</code> binary-search the bounds and skip the pages outside the matching span unread. A skipped
+page whose own bounds would be ignored, such as a minimum above its maximum, loses its matching
+rows. If a page the search reads has bounds that would be ignored, every page is decided on its own.</p>
 <p>The bounds themselves are still reported as the file carries them, by <code>Statistics</code> on the metadata
 API and by <code>hardwood inspect</code> and <code>hardwood dive</code>.</p>
 <p>Usable floating-point bounds cover a unit's non-<code>NaN</code> values only. A predicate that a <code>NaN</code>
@@ -2821,8 +2827,8 @@ and <code>notEq</code> are left to statistics alone. Some equality probes skip o
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/16d2b5c53eac3e0391064a5131960007eed45f20" target="_blank" rel="noopener">
-      16d2b5c5
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c6e2916658e87e3db0b552f061cc29cb4051ac95" target="_blank" rel="noopener">
+      c6e29166
     </a>
   
 </div>
