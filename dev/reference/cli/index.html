@@ -1968,6 +1968,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#log-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#compression-libraries" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2385,6 +2396,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#log-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log file
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#compression-libraries" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2748,7 +2770,7 @@ the terminal instead. <code>convert</code> carries the whole value.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>hardwood<span class="w"> </span>dive<span class="w"> </span>-f<span class="w"> </span>data.parquet
 </code></pre></div>
 <p><code>dive</code> requires an interactive terminal. When stdin or stdout is not a TTY (e.g., a <code>docker run</code> without <code>-it</code>, or output piped to a file), it exits with an error instead of launching the UI.</p>
-<p><code>dive</code> writes no warnings to the terminal while it runs. <code>--log-file &lt;path&gt;</code> writes them to <code>&lt;path&gt;</code> instead, together with a trace of the session's reads, replacing the file's contents; <code>dive</code> exits with an error when it cannot create the file.</p>
+<p><code>dive</code> writes no warnings to the terminal while it runs. <a href="#log-file"><code>--log-file &lt;path&gt;</code></a> writes them to <code>&lt;path&gt;</code> instead, together with a trace of the session's reads.</p>
 <p><link rel="stylesheet" href="../../stylesheets/asciinema-player.css"></p>
 <div id="dive-player"></div>
 <div id="dive-caption" class="dive-caption"></div>
@@ -2966,6 +2988,10 @@ filter applied but exits edit mode).</p>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span>info<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
 <p>The file replaces the built-in root certificates entirely; the certificates in <code>blocked.certs</code> stay rejected. It can be a PKCS12 or JKS keystore, such as a JDK's <code>lib/security/cacerts</code> or, on Fedora and RHEL, <code>/etc/pki/ca-trust/extracted/java/cacerts</code>. A path that does not exist makes every HTTPS connection fail with an error. With the <a href="../../getting-started/#docker">Docker image</a>, mount the file into the container and pass its path inside the container.</p>
+<h2 id="log-file">Log file<a class="headerlink" href="#log-file" title="Permanent link">&para;</a></h2>
+<p>Every command that reads a file accepts <code>--log-file &lt;path&gt;</code>, which writes the command's log records to <code>&lt;path&gt;</code>, replacing the file's contents: Hardwood's from <code>FINE</code>, including one line per byte range fetched from S3, and other libraries' warnings, each with a timestamp and the name of its logger. Warnings still go to standard error as they do without the option, and the extra records go to the file only. The command exits with an error when it cannot create the file.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>hardwood<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet<span class="w"> </span>--log-file<span class="w"> </span>hardwood.log
+</code></pre></div>
 <h2 id="compression-libraries">Compression libraries<a class="headerlink" href="#compression-libraries" title="Permanent link">&para;</a></h2>
 <p>The native binary contains the native libraries for the Snappy, ZSTD, LZ4 and Brotli codecs. On startup it writes them to the first usable one of these directories and loads them from there:</p>
 <table>
@@ -3038,8 +3064,8 @@ filter applied but exits edit mode).</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/ea4a22676ada1de32d626fcc0b2de804f470f165" target="_blank" rel="noopener">
-      ea4a2267
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f611ba92f6a38cee7eb7bd56e0e8df3a5f9a5c25" target="_blank" rel="noopener">
+      f611ba92
     </a>
   
 </div>
