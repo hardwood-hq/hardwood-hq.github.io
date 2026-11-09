@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a>, <a href="s3/S3OutputFile.html" title="class in dev.hardwood.s3">S3OutputFile</a></code></dd>
+<dd><code><a href="AbstractOutputFile.html" title="class in dev.hardwood">AbstractOutputFile</a>, <a href="InMemoryOutputFile.html" title="class in dev.hardwood">InMemoryOutputFile</a>, <a href="s3/S3OutputFile.html" title="class in dev.hardwood.s3">S3OutputFile</a></code></dd>
 </dl>
 <hr>
 <object type="image/svg+xml" data="OutputFile.svg"  style="max-width:60%;float:right;"></object>
@@ -94,11 +94,57 @@ extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/ja
 random access, the Parquet container is produced front to back and never
 seeked backward: the footer carries every offset a reader needs and is
 emitted last. An <code>OutputFile</code> is therefore a purely sequential sink.</p>
-<p>An <code>OutputFile</code> starts in an uncreated state. <a href="#create()"><code>create()</code></a> must be called
-before <a href="#write(java.nio.ByteBuffer)"><code>write(ByteBuffer)</code></a> or <a href="#position()"><code>position()</code></a>; the writer framework
-(<a href="writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>) calls it automatically.</p>
-<p>A file is valid only after <a href="#close()"><code>close()</code></a> returns successfully. A writer
-abandoned before <code>close()</code> produces no footer and therefore no readable file.</p>
+<p>An <code>OutputFile</code> is used for one file. It starts uncreated; <a href="#create()"><code>create()</code></a> opens it,
+and the writer framework (<a href="writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a>) calls it
+automatically. <a href="#write(java.nio.ByteBuffer)"><code>write(ByteBuffer)</code></a> and <a href="#position()"><code>position()</code></a> are allowed only while the file is open.
+The file ends either published by <a href="#close()"><code>close()</code></a> or thrown away by <a href="#discard()"><code>discard()</code></a>, and
+an ended file cannot be created again:</p>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th>Uncreated</th>
+<th>Open</th>
+<th>Published</th>
+<th>Discarded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>create()</code></td>
+<td>opens the file</td>
+<td>throws</td>
+<td>throws</td>
+<td>throws</td>
+</tr>
+<tr>
+<td><code>write</code>, <code>position</code></td>
+<td>throws</td>
+<td>allowed</td>
+<td>throws</td>
+<td>throws</td>
+</tr>
+<tr>
+<td><code>close()</code></td>
+<td>discards</td>
+<td>publishes, or discards and throws</td>
+<td>nothing</td>
+<td>nothing</td>
+</tr>
+<tr>
+<td><code>discard()</code></td>
+<td>discards</td>
+<td>discards</td>
+<td>nothing</td>
+<td>nothing</td>
+</tr>
+</tbody>
+</table>
+<p>The rejections are <code>IllegalStateException</code>s. A file is valid only after
+<a href="#close()"><code>close()</code></a> returns successfully. A writer abandoned before <code>close()</code> produces no
+footer and therefore no readable file.</p>
+<p>To implement an <code>OutputFile</code>, extend <a href="AbstractOutputFile.html" title="class in dev.hardwood"><code>AbstractOutputFile</code></a>, which enforces this
+lifecycle and leaves only the work at the destination to the subclass.</p>
 </div>
 </div>
 </section>
@@ -177,6 +223,7 @@ Must be called before <a href="#write(java.nio.ByteBuffer)"><code>write(ByteBuff
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the resource cannot be acquired</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the file is open, published or discarded</dd>
 </dl>
 </div>
 </section>
@@ -195,7 +242,7 @@ Must be called before <a href="#write(java.nio.ByteBuffer)"><code>write(ByteBuff
 <dd><code>data</code> - the bytes to append</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if the write fails</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if <a href="#create()"><code>create()</code></a> has not been called</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the file is not open</dd>
 </dl>
 </div>
 </section>
@@ -211,7 +258,7 @@ the next <a href="#write(java.nio.ByteBuffer)"><code>write(ByteBuffer)</code></a
 <dt>Returns:</dt>
 <dd>the running byte offset</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if <a href="#create()"><code>create()</code></a> has not been called</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the file is not open</dd>
 </dl>
 </div>
 </section>
@@ -226,6 +273,8 @@ the next <a href="#write(java.nio.ByteBuffer)"><code>write(ByteBuffer)</code></a
 <p>When publishing fails, <code>close()</code> releases the resources and discards what was
 written before it throws, leaving the destination as if nothing was written. A
 failure to discard is attached to the thrown exception as suppressed.</p>
+<p>On a file that was never created, <code>close()</code> publishes nothing and ends the file
+as discarded. On a file that is already published or discarded, it does nothing.</p>
 </div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -249,7 +298,9 @@ file at the destination. This is the failure counterpart to <a href="#close()"><
 <a href="#close()"><code>close()</code></a> finalizes (commits) the file, <code>discard()</code> throws it away. The
 writer calls <code>discard()</code> when it cannot finish a valid file, so a partially
 written file is never presented as valid. After <code>discard()</code> the destination
-is left as if nothing was written; calling <code>close()</code> afterwards is a no-op.</div>
+is left as if nothing was written; calling <code>close()</code> afterwards is a no-op.
+On a file that is already published or discarded, <code>discard()</code> does nothing, so a
+published file stays published.</div>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if resources cannot be released</dd>

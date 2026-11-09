@@ -2524,6 +2524,7 @@
 </tr>
 </tbody>
 </table>
+<p>An <code>OutputFile</code> writes one file. <code>ParquetFileWriter.create</code> throws <code>IllegalStateException</code> for an <code>OutputFile</code> another writer has already used.</p>
 <p>An in-memory file can be written and read back without a filesystem: <code>buffer()</code> returns the whole file as a <code>ByteBuffer</code> positioned at its first byte, which is what <code>InputFile.of(ByteBuffer)</code> expects.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">InMemoryOutputFile</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OutputFile</span><span class="p">.</span><span class="na">inMemory</span><span class="p">();</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
@@ -2537,7 +2538,39 @@
 </code></pre></div>
 <p>The buffer grows with the file, so no size has to be given up front; the length of a Parquet file is only known once it has been written. The whole file is held on the heap, which costs the size of the finished file in addition to the memory the writer uses for the open row group. Each call to <code>buffer()</code> returns a buffer with its own position and limit, so reading the file back leaves it intact. The buffer's contents must not be modified; whether a change shows in the buffers other calls return is unspecified.</p>
 <p>The file is complete only after the writer is closed, and <code>buffer()</code> throws <code>IllegalStateException</code> before that, or if the destination was discarded.</p>
-<p>To write anywhere else, implement <code>OutputFile</code>.</p>
+<p>To write anywhere else, extend <code>AbstractOutputFile</code> (<code>@Experimental</code>). Its public methods are final: each rejects a call the file's state does not allow with <code>IllegalStateException</code>, then calls the protected method that does the work. <code>position()</code> counts the bytes <code>doWrite</code> accepted. A subclass implements <code>doWrite</code> and overrides the other methods it needs; they do nothing by default.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Called by, while the file is open</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>doCreate()</code></td>
+<td><code>create()</code></td>
+<td>Acquires the destination's resources. When it throws, the file is discarded without a call to <code>doDiscard()</code>, so it must leave nothing held</td>
+</tr>
+<tr>
+<td><code>doWrite(ByteBuffer)</code></td>
+<td><code>write</code></td>
+<td>Appends all of the buffer's remaining bytes; <code>write</code> throws <code>IllegalStateException</code> if any are left. Required</td>
+</tr>
+<tr>
+<td><code>doClose()</code></td>
+<td><code>close()</code></td>
+<td>Publishes the file. When it throws, <code>doDiscard()</code> runs, its failure is attached as suppressed, and the file is discarded</td>
+</tr>
+<tr>
+<td><code>doDiscard()</code></td>
+<td><code>discard()</code>, or <code>close()</code> when <code>doClose()</code> throws</td>
+<td>Releases the resources and throws away what was written. It is not called again after it throws, so it releases what it can first</td>
+</tr>
+</tbody>
+</table>
+<p><code>close()</code> and <code>discard()</code> on a published or discarded file, and <code>close()</code> on an uncreated one, call nothing. A subclass that hands out the finished file checks for it with <code>requireClosed()</code>.</p>
 <h2 id="schema">Schema<a class="headerlink" href="#schema" title="Permanent link">&para;</a></h2>
 <p>A file's schema is declared with <code>FileSchema.builder(String)</code> and built once; the same <code>FileSchema</code> is passed to <code>ParquetFileWriter.create</code>. Every method appends one field in declaration order, which is also the order the leaf-column indices follow.</p>
 <table>
@@ -3333,7 +3366,7 @@
 </tr>
 <tr>
 <td><code>IllegalStateException</code></td>
-<td>Writing, ending a row group, or setting key-value metadata or <code>created_by</code>, after <code>close()</code>; writing after the writer has failed; using both write APIs on one file; ending a row group or closing the writer from inside a batch or record filler; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned; taking <code>InMemoryOutputFile.buffer()</code> before the writer has closed, or from a destination that was discarded; flushing a row group after the <code>HardwoodContext</code> passed to <code>create</code> has been closed</td>
+<td>Writing, ending a row group, or setting key-value metadata or <code>created_by</code>, after <code>close()</code>; writing after the writer has failed; using both write APIs on one file; ending a row group or closing the writer from inside a batch or record filler; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned; creating a writer on an <code>OutputFile</code> another writer has already used; taking <code>InMemoryOutputFile.buffer()</code> before the writer has closed, or from a destination that was discarded; flushing a row group after the <code>HardwoodContext</code> passed to <code>create</code> has been closed</td>
 </tr>
 <tr>
 <td><code>IOException</code></td>
@@ -3406,8 +3439,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/34f00e804abc52bfadaaee8a41fef0b88e6636b9" target="_blank" rel="noopener">
-      34f00e80
+    <a href="https://github.com/hardwood-hq/hardwood/tree/2bf4dfca486f92e6d4e55e54b49306e7bc585be1" target="_blank" rel="noopener">
+      2bf4dfca
     </a>
   
 </div>
