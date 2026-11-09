@@ -172,7 +172,8 @@ repeats, or null if all columns are projected.</div>
 <li><code>&quot;address.city&quot;</code> - selects only a specific nested field</li>
 </ul>
 <p>A nested field is reached by its full path only; <code>&quot;city&quot;</code> does not select <code>address.city</code>.
-Names may repeat or overlap, such as <code>&quot;address&quot;</code> and <code>&quot;address.city&quot;</code>. For the order in
+Sibling fields may share a name; a name then selects every field that has it, in schema
+order, and they are read by index. Names may repeat or overlap, such as <code>&quot;address&quot;</code> and <code>&quot;address.city&quot;</code>. For the order in
 which readers expose the projected columns by index, see the column projection reference.</p>
 </div>
 <dl class="notes">

@@ -1999,7 +1999,9 @@
 <p>Cross-file prefetching is automatic: when pages from file N are running low, pages from file N+1 are already being prefetched. For files not in memory, such as files on S3, several files after N are opened ahead as well (<a href="../../concepts/concurrency-model/#cross-file-prefetching">Cross-file prefetching</a>).</p>
 <p>The schema of the first file is the reference schema. Each later file a data reader reaches is
 validated against it for that reader's projection and filter; inspecting a file's metadata does not
-validate it. Columns are matched by field path, in any order. Every projected or filtered column
+validate it. Columns are matched by field path, in any order. Where sibling fields share a name,
+several columns share a path: the n-th of them in the first file matches the n-th in a later file,
+and a later file holding another number of them fails the read. Every projected or filtered column
 must exist with a matching physical type, logical type, repetition type, and fixed byte length, and
 its enclosing groups must match in nullability and repeatedness, otherwise a
 <code>SchemaIncompatibleException</code> is thrown. The check runs as the read reaches a file, so a mismatch
@@ -2067,8 +2069,8 @@ column of the first file is projected and therefore required.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c2c0347d0776d81a38a909e1880a08bc20186599" target="_blank" rel="noopener">
-      c2c0347d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/747f9e858faca7707a146b5cede66f31a3f138f7" target="_blank" rel="noopener">
+      747f9e85
     </a>
   
 </div>

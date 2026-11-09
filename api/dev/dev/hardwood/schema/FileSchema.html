@@ -287,12 +287,16 @@ is the path of more than one column</dd>
 <h3>getColumn</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></span>&nbsp;<span class="element-name">getColumn</span><wbr><span class="parameters">(<a href="../metadata/FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a>&nbsp;fieldPath)</span></div>
-<div class="block">Returns the column with the given field path.</div>
+<div class="block"><p>Returns the column with the given field path.</p>
+<p>Sibling fields may share a name, so two columns may share a path; use
+<a href="#getColumn(int)"><code>getColumn(int)</code></a> for such a column.</p>
+</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>fieldPath</code> - path from schema root to leaf column</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column with the given path exists</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no column with the given path exists, or more than one
+column has it</dd>
 </dl>
 </div>
 </section>
@@ -320,7 +324,13 @@ is the path of more than one column</dd>
 <h3>getField</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></span>&nbsp;<span class="element-name">getField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
-<div class="block">Finds a top-level field by name in the schema tree.</div>
+<div class="block"><p>Finds a top-level field by name in the schema tree.</p>
+<p>Sibling fields may share a name; use <a href="#getRootNode()"><code>getRootNode()</code></a> and its children for such a field.</p>
+</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if no top-level field has the name, or more than one has it</dd>
+</dl>
 </div>
 </section>
 </li>

@@ -2257,7 +2257,7 @@ see <a href="../../how-to/query-controls/">Predicate Pushdown, Projection, Limit
 </tr>
 <tr>
 <td>Column form</td>
-<td>By name or dot-separated path (<code>address.city</code>). Comparison predicates take leaf columns only; <code>isNull</code> / <code>isNotNull</code> also take the name of a group — a struct, a <code>LIST</code> or a <code>MAP</code>. Any name below a repeated path is rejected</td>
+<td>By name or dot-separated path (<code>address.city</code>). Comparison predicates take leaf columns only; <code>isNull</code> / <code>isNotNull</code> also take the name of a group — a struct, a <code>LIST</code> or a <code>MAP</code>. Any name below a repeated path is rejected, and so is a name that is the path of more than one field. A filter that tests columns under two sibling fields of one name throws <code>IllegalArgumentException</code> when the reader is built</td>
 </tr>
 </tbody>
 </table>
@@ -2709,6 +2709,7 @@ and <code>notEq</code> are left to statistics alone. Some equality probes skip o
 </table>
 <p>A name is a top-level field or the full path to a nested field. A nested field is not selected by its own name alone: over <code>id, address STRUCT&lt;city&gt;</code>, <code>columns("city")</code> fails with <code>Column not found: city</code>. Names may repeat or overlap.</p>
 <p>A field name may contain dots: <code>columns("sepal.length")</code> selects a top-level column named <code>sepal.length</code>, and <code>columns("acme.info.x.y")</code> selects the field <code>x.y</code> of a struct named <code>acme.info</code>. Predicates and <code>FileSchema.getColumn(String)</code> resolve names the same way. A name that is the path of two fields, such as a top-level <code>a.b</code> beside a struct <code>a</code> with a field <code>b</code>, fails with an error; <code>buildColumnReader(int)</code> and the positions of <code>ColumnReaders</code> reach each of those columns by index.</p>
+<p>Sibling fields may share a name. A projection selects every field of such a name, in schema order: over two top-level columns named <code>id</code>, <code>columns("id")</code> projects both, read with <code>getLong(0)</code> and <code>getLong(1)</code>. Accessing them by name fails with an error, and so do a predicate on that name and <code>buildColumnReader("id")</code>, which resolve to one column.</p>
 <h3 id="index-order">Index order<a class="headerlink" href="#index-order" title="Permanent link">&para;</a></h3>
 <p>By-index accessors follow the order <code>columns(...)</code> names the columns in. The columns one name selects, such as a group's children or every column under <code>all()</code>, follow schema order among themselves. The two reader types count positions differently:</p>
 <ul>
@@ -2827,8 +2828,8 @@ and <code>notEq</code> are left to statistics alone. Some equality probes skip o
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c2c0347d0776d81a38a909e1880a08bc20186599" target="_blank" rel="noopener">
-      c2c0347d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/747f9e858faca7707a146b5cede66f31a3f138f7" target="_blank" rel="noopener">
+      747f9e85
     </a>
   
 </div>

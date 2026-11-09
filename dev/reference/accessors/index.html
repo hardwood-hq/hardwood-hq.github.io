@@ -1678,6 +1678,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fields-that-share-a-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fields that share a name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#null-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2207,6 +2218,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#fields-that-share-a-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fields that share a name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#null-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2675,6 +2697,18 @@ accessor for their annotation.</p>
 whatever its column holds and the refusal comes on the first present value. <code>PqList.strings()</code>
 and <code>ColumnReader.getStrings()</code> ask about the column once for a whole run of values, and refuse
 one that does not hold text whatever its values are.</p>
+<h2 id="fields-that-share-a-name">Fields that share a name<a class="headerlink" href="#fields-that-share-a-name" title="Permanent link">&para;</a></h2>
+<p>Parquet allows sibling fields to share a name. Such a name is ambiguous, and every lookup by it
+throws <code>IllegalArgumentException</code>:</p>
+<ul>
+<li>the by-name accessors of <code>RowReader</code> and <code>PqStruct</code>, for a name that more than one of the row's or
+  the struct's fields has;</li>
+<li><code>FileSchema.getField(name)</code>, for a name that more than one top-level field has;</li>
+<li><code>FileSchema.getColumn(FieldPath)</code> and <code>FileSchema.getColumn(String)</code>, for a path that more than
+  one column has.</li>
+</ul>
+<p>The by-index accessors and <code>FileSchema.getColumn(int)</code> reach each of the fields. A projection by
+such a name selects all of them (<a href="../query-controls/#column-projection-forms">Column projection forms</a>).</p>
 <h2 id="null-handling">Null handling<a class="headerlink" href="#null-handling" title="Permanent link">&para;</a></h2>
 <p>Primitive accessors (<code>getInt</code>, <code>getLong</code>, <code>getFloat</code>, <code>getDouble</code>, <code>getBoolean</code>) throw
 <code>NullPointerException</code> if the field is null — always check <code>isNull()</code> first. Object accessors
@@ -2893,8 +2927,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/c2c0347d0776d81a38a909e1880a08bc20186599" target="_blank" rel="noopener">
-      c2c0347d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/747f9e858faca7707a146b5cede66f31a3f138f7" target="_blank" rel="noopener">
+      747f9e85
     </a>
   
 </div>
