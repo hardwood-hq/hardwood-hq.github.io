@@ -2955,10 +2955,28 @@ filter applied but exits edit mode).</p>
 <a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>hardwood<span class="w"> </span>print<span class="w"> </span>-n<span class="w"> </span><span class="m">10</span><span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
 <p>The CLI resolves credentials through the AWS SDK's default credential chain (<code>AWS_ACCESS_KEY_ID</code> / <code>AWS_SECRET_ACCESS_KEY</code> / <code>AWS_SESSION_TOKEN</code> environment variables, profile files, container and instance metadata), which decides the order in which those sources are tried. SSO and web-identity profiles are not supported. See <a href="../../how-to/s3/#credentials">Read from S3</a> for the credential options available to the library.</p>
-<p>When no credential source is configured, the CLI sends unsigned requests, which read buckets that allow public access. A source counts as configured when any of these is set: <code>AWS_ACCESS_KEY_ID</code>, <code>AWS_SECRET_ACCESS_KEY</code>, <code>AWS_SESSION_TOKEN</code>, <code>AWS_WEB_IDENTITY_TOKEN_FILE</code>, <code>AWS_CONTAINER_CREDENTIALS_RELATIVE_URI</code>, <code>AWS_CONTAINER_CREDENTIALS_FULL_URI</code>, <code>AWS_PROFILE</code>, or credentials in the <code>default</code> profile of <code>~/.aws/credentials</code> or <code>~/.aws/config</code>. Credentials from instance metadata are used when present; outside EC2, <code>AWS_EC2_METADATA_DISABLED=true</code> skips the instance metadata lookup. A configured source that yields no credentials makes the command fail with an error.</p>
+<p>When no credential source is configured, the CLI sends unsigned requests, which read buckets that allow public access. A source counts as configured when any of these is set: <code>AWS_ACCESS_KEY_ID</code>, <code>AWS_SECRET_ACCESS_KEY</code>, <code>AWS_SESSION_TOKEN</code>, <code>AWS_WEB_IDENTITY_TOKEN_FILE</code>, <code>AWS_CONTAINER_CREDENTIALS_RELATIVE_URI</code>, <code>AWS_CONTAINER_CREDENTIALS_FULL_URI</code>, <code>AWS_PROFILE</code> or the <code>aws.profile</code> system property, or credentials in the <code>default</code> profile of the config or credentials file (located as described below for the region). Credentials from instance metadata are used when present; outside EC2, <code>AWS_EC2_METADATA_DISABLED=true</code> skips the instance metadata lookup. A configured source that yields no credentials makes the command fail with an error.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nv">AWS_REGION</span><span class="o">=</span>us-west-2<span class="w"> </span>hardwood<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>s3://public-bucket/data.parquet
 </code></pre></div>
-<p>The CLI additionally reads these environment variables:</p>
+<p>The region is the first of these that is set: the <code>aws.region</code> system property, <code>AWS_REGION</code>, <code>AWS_DEFAULT_REGION</code>, and the <code>region</code> of the selected profile. Instance metadata is not queried for it. The profile is the one named by <code>aws.profile</code>, else <code>AWS_PROFILE</code>, else <code>default</code>. Profiles are read from <code>~/.aws/config</code> and <code>~/.aws/credentials</code>, or from the files that <code>aws.configFile</code> / <code>AWS_CONFIG_FILE</code> and <code>aws.sharedCredentialsFile</code> / <code>AWS_SHARED_CREDENTIALS_FILE</code> name; each system property takes precedence over its environment variable. Where both files set a property of the profile, the credentials file's value is used.</p>
+<p>The endpoint is the first of these that is set:</p>
+<ol>
+<li>the <code>aws.endpointUrlS3</code> system property</li>
+<li>the <code>aws.endpointUrl</code> system property</li>
+<li><code>AWS_ENDPOINT_URL_S3</code></li>
+<li><code>AWS_ENDPOINT_URL</code></li>
+<li><code>endpoint_url</code> under <code>s3</code> in the <code>[services &lt;name&gt;]</code> section that the selected profile names with <code>services = &lt;name&gt;</code></li>
+<li><code>endpoint_url</code> under <code>s3</code> in the selected profile</li>
+<li><code>endpoint_url</code> in the selected profile</li>
+</ol>
+<p>None of these is used when <code>ignore_configured_endpoint_urls</code> is <code>true</code>. That setting is the first of the <code>aws.ignoreConfiguredEndpointUrls</code> system property, <code>AWS_IGNORE_CONFIGURED_ENDPOINT_URLS</code> and <code>ignore_configured_endpoint_urls</code> in the selected profile, and must be <code>true</code> or <code>false</code>.</p>
+<p>The endpoint must be an <code>http</code> or <code>https</code> URL with a valid host name. With an endpoint and no region, requests are signed for the region <code>auto</code>; with neither, the command fails.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">[profile r2]</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="na">region</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">auto</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="na">endpoint_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">https://&lt;account-id&gt;.r2.cloudflarestorage.com</span>
+</code></pre></div>
+<p>For region, endpoint and <code>ignore_configured_endpoint_urls</code>, a blank value counts as unset. A profile file that cannot be parsed makes the command fail with the parse error when the region or the endpoint is looked up in it.</p>
+<p>The CLI additionally reads this environment variable:</p>
 <table>
 <thead>
 <tr>
@@ -2968,14 +2986,6 @@ filter applied but exits edit mode).</p>
 </thead>
 <tbody>
 <tr>
-<td><code>AWS_REGION</code></td>
-<td>AWS region (also read from <code>~/.aws/config</code> if not set)</td>
-</tr>
-<tr>
-<td><code>AWS_ENDPOINT_URL</code></td>
-<td>Custom endpoint for S3-compatible services (MinIO, LocalStack, R2, etc.)</td>
-</tr>
-<tr>
 <td><code>AWS_PATH_STYLE</code></td>
 <td>Set to <code>true</code> to use path-style access (required by some S3-compatible services)</td>
 </tr>
@@ -2984,13 +2994,13 @@ filter applied but exits edit mode).</p>
 <h3 id="tls-certificates">TLS certificates<a class="headerlink" href="#tls-certificates" title="Permanent link">&para;</a></h3>
 <p>The native binary verifies HTTPS connections against the root certificates of the JDK it was built with. It does not read the operating system's certificate store. It rejects any certificate chain that contains a certificate listed in <a href="https://github.com/hardwood-hq/hardwood/blob/main/cli/src/main/trust/blocked.certs"><code>blocked.certs</code></a>, whichever trust store is in use.</p>
 <p>To verify against a different set of root certificates, for example one that contains a company CA, pass a trust store file and its password before the command name:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>hardwood<span class="w"> </span>-Djavax.net.ssl.trustStore<span class="o">=</span>/path/to/cacerts<span class="w"> </span>-Djavax.net.ssl.trustStorePassword<span class="o">=</span>changeit<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span>info<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>hardwood<span class="w"> </span>-Djavax.net.ssl.trustStore<span class="o">=</span>/path/to/cacerts<span class="w"> </span>-Djavax.net.ssl.trustStorePassword<span class="o">=</span>changeit<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span>info<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet
 </code></pre></div>
 <p>The file replaces the built-in root certificates entirely; the certificates in <code>blocked.certs</code> stay rejected. It can be a PKCS12 or JKS keystore, such as a JDK's <code>lib/security/cacerts</code> or, on Fedora and RHEL, <code>/etc/pki/ca-trust/extracted/java/cacerts</code>. A path that does not exist makes every HTTPS connection fail with an error. With the <a href="../../getting-started/#docker">Docker image</a>, mount the file into the container and pass its path inside the container.</p>
 <h2 id="log-file">Log file<a class="headerlink" href="#log-file" title="Permanent link">&para;</a></h2>
 <p>Every command that reads a file accepts <code>--log-file &lt;path&gt;</code>, which writes the command's log records to <code>&lt;path&gt;</code>, replacing the file's contents: Hardwood's from <code>FINE</code>, including one line per byte range fetched from S3, and other libraries' warnings, each with a timestamp and the name of its logger. Warnings still go to standard error as they do without the option, and the extra records go to the file only. The command exits with an error when it cannot create the file.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>hardwood<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet<span class="w"> </span>--log-file<span class="w"> </span>hardwood.log
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>hardwood<span class="w"> </span>info<span class="w"> </span>-f<span class="w"> </span>s3://my-bucket/data.parquet<span class="w"> </span>--log-file<span class="w"> </span>hardwood.log
 </code></pre></div>
 <h2 id="compression-libraries">Compression libraries<a class="headerlink" href="#compression-libraries" title="Permanent link">&para;</a></h2>
 <p>The native binary contains the native libraries for the Snappy, ZSTD, LZ4 and Brotli codecs. On startup it writes them to the first usable one of these directories and loads them from there:</p>
@@ -3064,8 +3074,8 @@ filter applied but exits edit mode).</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/747f9e858faca7707a146b5cede66f31a3f138f7" target="_blank" rel="noopener">
-      747f9e85
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ae97c2745423bdbc21f105cf17642b6ecb5e3ae4" target="_blank" rel="noopener">
+      ae97c274
     </a>
   
 </div>
