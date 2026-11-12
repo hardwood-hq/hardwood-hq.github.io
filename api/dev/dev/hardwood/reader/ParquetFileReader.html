@@ -105,8 +105,8 @@ loadScripts(document, 'script');</script>
 implements <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></span></div>
 <div class="block"><p>Reader for one or more Parquet files.</p>
 <p>A reader opened over a list of files exposes the schema of the first file
-and reads rows / column batches across all files in order, with
-cross-file prefetching handled by the underlying iterator.</p>
+and reads rows / column batches across all files in order, prefetching
+across files.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">// Single file
 try (ParquetFileReader reader = ParquetFileReader.open(InputFile.of(path))) {
     RowReader rows = reader.rowReader();
@@ -379,7 +379,7 @@ the caller retains ownership of the context.</div>
                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block"><p>Open multiple Parquet files with a dedicated context. The schema
 is read from the first file and is assumed to be common across all
-files. Files are opened on demand by the iterator; the first file is
+files. Files are opened on demand as the read reaches them; the first file is
 opened eagerly so any I/O or metadata error surfaces immediately.</p>
 <p>A later file is opened when a read arrives at it, so its I/O errors and any
 disagreement with the reference schema are raised from the reading loop rather

@@ -89,8 +89,7 @@ loadScripts(document, 'script');</script>
 <div class="block"><p>Builds a <a href="ColumnReaders.html" title="class in dev.hardwood.reader"><code>ColumnReaders</code></a> collection for batch-oriented access to a
 projection of columns.</p>
 <p>Obtained from <a href="ParquetFileReader.html#buildColumnReaders(dev.hardwood.schema.ColumnProjection)"><code>ParquetFileReader.buildColumnReaders(ColumnProjection)</code></a>.
-Works for both single- and multi-file readers; the underlying iterator
-handles cross-file prefetch transparently.</p>
+Works for both single- and multi-file readers, prefetching across files.</p>
 <pre style="white-space:pre-wrap;"><code class="language-java">try (ColumnReaders cols = file.buildColumnReaders(ColumnProjection.columns(&quot;a&quot;, &quot;b&quot;))
         .filter(FilterPredicate.eq(&quot;a&quot;, 7))
         .build()) {
