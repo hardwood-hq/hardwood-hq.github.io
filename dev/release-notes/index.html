@@ -2281,6 +2281,7 @@
 <li>An S3 read fails with <code>ParquetReadException</code> when the object was replaced since the file was opened, and opening an S3 file fails when the endpoint ignores the <code>Range</code> header of an object larger than the open-time tail (<a href="https://github.com/hardwood-hq/hardwood/issues/1686">#1686</a>)</li>
 <li>An S3 range read whose connection fails midway re-requests only the bytes not yet received, within the retry budget (<a href="https://github.com/hardwood-hq/hardwood/issues/1666">#1666</a>)</li>
 <li>Creating a writer on an <code>OutputFile</code> another writer has used fails, instead of a local <code>OutputFile</code> publishing over the first writer's file (<a href="https://github.com/hardwood-hq/hardwood/issues/1747">#1747</a>)</li>
+<li>On heaps below 4 GB, a read allocates no humongous G1 object for a batch of an <code>INT64</code>, <code>DOUBLE</code> or list column, for the dictionary of a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column, or for a page decompressed with Brotli or with LZ4 in the Hadoop format (<a href="https://github.com/hardwood-hq/hardwood/issues/1497">#1497</a>)</li>
 </ul>
 <h2 id="110beta3-2026-10-21">1.1.0.Beta3 (2026-10-21)<a class="headerlink" href="#110beta3-2026-10-21" title="Permanent link">&para;</a></h2>
 <p><strong>Bug fixes:</strong></p>
@@ -2565,8 +2566,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/86fd73e10ac953c403ec0e5b46ec73e62b95ee9d" target="_blank" rel="noopener">
-      86fd73e1
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a77d710bf5e73331b74cf79db9ddf2168d9acd50" target="_blank" rel="noopener">
+      a77d710b
     </a>
   
 </div>

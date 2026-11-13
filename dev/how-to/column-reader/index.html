@@ -2470,7 +2470,7 @@
 <ul>
 <li><code>Validity.NO_NULLS</code> is one immutable instance.</li>
 <li>The <code>BinaryDictionary</code> from <code>getBinaryDictionary()</code> is the column chunk's dictionary, whose entries never change (see <a href="#dictionary-encoded-columns">Dictionary-Encoded Columns</a>).</li>
-<li>For a dictionary-encoded value, <code>getBinaryValues().buffer(i)</code> returns the array holding the dictionary's entries, which every batch using that dictionary shares. Do not write to it.</li>
+<li>For a dictionary-encoded value, <code>getBinaryValues().buffer(i)</code> returns one of the arrays holding the dictionary's entries, the one holding the value's entry, which every batch using that dictionary shares. Do not write to it.</li>
 </ul>
 <h3 id="dictionary-encoded-columns">Dictionary-Encoded Columns<a class="headerlink" href="#dictionary-encoded-columns" title="Permanent link">&para;</a></h3>
 <p>For a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column, <code>getDictionaryIds()</code> returns each value's entry in the column chunk's dictionary, and <code>getBinaryDictionary()</code> returns that dictionary, a <code>BinaryDictionary</code> with <code>size()</code>, <code>getBinary(e)</code> and <code>getString(e)</code>. Work done per entry then runs once per dictionary instead of once per value. This example counts the rows of each station, tallying per entry and adding the tallies up by name whenever the dictionary changes:</p>
@@ -2809,8 +2809,8 @@ and maps, <code>getLayerOffsets(k)</code>; the leaf has <code>getLeafValidity()<
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/86fd73e10ac953c403ec0e5b46ec73e62b95ee9d" target="_blank" rel="noopener">
-      86fd73e1
+    <a href="https://github.com/hardwood-hq/hardwood/tree/a77d710bf5e73331b74cf79db9ddf2168d9acd50" target="_blank" rel="noopener">
+      a77d710b
     </a>
   
 </div>
