@@ -2282,8 +2282,8 @@ Opening the file again reads the new version. Without an <code>ETag</code>, or w
 range requests are sent without <code>If-Match</code>, and a replaced object is not detected.</p>
 <p>This applies to every <code>S3InputFile</code>, independent of the range backing below.</p>
 <h2 id="io-behavior">I/O behavior<a class="headerlink" href="#io-behavior" title="Permanent link">&para;</a></h2>
-<p>Hardwood coalesces the column chunk reads within each row group into as few HTTP requests as
-possible. The page index of the columns a read uses is fetched for several row groups at a time,
+<p>Hardwood coalesces the column chunk reads within each row group into HTTP requests of at most
+16 MiB, several of which run at once, so a column chunk larger than that is fetched as several requests. The page index of the columns a read uses is fetched for several row groups at a time,
 one request for the offset indexes and, on a filtered read, one for the column indexes and one
 for the bloom filters it checks; a filtered read adds one request per dictionary page it may check, sent with the bloom filters' request.
 Column projection, page-level predicate pushdown,
@@ -2442,8 +2442,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/5c54002d09692f0407e5fe2fde8b297e5f931bcf" target="_blank" rel="noopener">
-      5c54002d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/bd2cc989581d2c99297a08b0413d0117920c1aeb" target="_blank" rel="noopener">
+      bd2cc989
     </a>
   
 </div>
