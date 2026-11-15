@@ -2778,8 +2778,9 @@ Protobuf message or a hash. Every command decides from the bytes themselves:
 well-formed UTF-8 with no control characters prints as text unless it starts
 with <code>0x</code>; anything else prints as <code>0x</code>-prefixed lowercase hex, so a <code>0x…</code>
 value always means bytes. The same rule applies to values,
-dictionary entries and min/max statistics alike, and to a byte-backed logical
-type whose payload length rules out its own decoder.</p>
+dictionary entries and min/max statistics alike, to <code>BSON</code>, <code>GEOMETRY</code> and
+<code>GEOGRAPHY</code> columns, and to a byte-backed logical type whose payload length
+rules out its own decoder.</p>
 <p>Each table column holds 50 cells, and a value wider than that is cut with a
 trailing <code>…</code>. <code>print</code>, <code>inspect dictionary</code> and <code>inspect pages</code> take <code>-w N</code> for
 a different cap and <code>--no-truncate</code> for none at all; <code>dive</code> sizes its cells from
@@ -3105,8 +3106,8 @@ filter applied but exits edit mode).</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3be5de990661237ebf6fd48174af0a75342f60de" target="_blank" rel="noopener">
-      3be5de99
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5c54002d09692f0407e5fe2fde8b297e5f931bcf" target="_blank" rel="noopener">
+      5c54002d
     </a>
   
 </div>
