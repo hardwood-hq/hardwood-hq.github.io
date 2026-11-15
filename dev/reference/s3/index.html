@@ -2285,7 +2285,7 @@ range requests are sent without <code>If-Match</code>, and a replaced object is 
 <p>Hardwood coalesces the column chunk reads within each row group into as few HTTP requests as
 possible. The page index of the columns a read uses is fetched for several row groups at a time,
 one request for the offset indexes and, on a filtered read, one for the column indexes and one
-for the bloom filters it checks; a filtered read may add one request per dictionary it checks.
+for the bloom filters it checks; a filtered read adds one request per dictionary page it may check, sent with the bloom filters' request.
 Column projection, page-level predicate pushdown,
 and <code>head(n)</code> on an unfiltered read narrow the byte ranges before coalescing.</p>
 <p>Without a row limit, the reader fetches all projected (and filtered) column data for an entire
@@ -2442,8 +2442,8 @@ properties:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4ab382b4594aedc0c3d583facbe49e7801262b2a" target="_blank" rel="noopener">
-      4ab382b4
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5f1236d135eb0785807838484add27fa47dca8c3" target="_blank" rel="noopener">
+      5f1236d1
     </a>
   
 </div>

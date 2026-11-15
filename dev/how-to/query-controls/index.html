@@ -2229,7 +2229,7 @@
 <h2 id="predicate-pushdown-filter">Predicate Pushdown (Filter)<a class="headerlink" href="#predicate-pushdown-filter" title="Permanent link">&para;</a></h2>
 <p>Filter predicates apply at three levels, in this order:</p>
 <ol>
-<li><strong>Row group</strong> — entire row groups whose statistics prove no rows can match are skipped. For <code>eq</code> and <code>in</code> predicates, a column's <a href="https://parquet.apache.org/docs/file-format/bloomfilter/">Bloom filter</a> and, when the chunk's <code>encoding_stats</code> show every data page is dictionary-encoded, the column chunk's dictionary page also skip a row group that never stored the target. Dictionary pages are read only for a row group that statistics and the Bloom filter did not already drop.</li>
+<li><strong>Row group</strong> — entire row groups whose statistics prove no rows can match are skipped. For <code>eq</code> and <code>in</code> predicates, a column's <a href="https://parquet.apache.org/docs/file-format/bloomfilter/">Bloom filter</a> and, when the chunk's <code>encoding_stats</code> show every data page is dictionary-encoded, the column chunk's dictionary page also skip a row group that never stored the target. Bloom filters and dictionary pages are read only for a row group that statistics did not already drop. A column's dictionary page is read only for a predicate its Bloom filter does not check, as on a column without a Bloom filter, and is decoded only where the Bloom filters did not drop the row group.</li>
 <li><strong>Page</strong> — within surviving row groups, the Column Index (per-page min/max statistics) is used to skip individual pages, avoiding unnecessary decompression and decoding. On remote backends like S3, only the matching pages are fetched.</li>
 <li><strong>Record</strong> — <code>buildRowReader().filter(filter).build()</code> evaluates the predicate against each decoded row and returns only rows that match.</li>
 </ol>
@@ -2479,8 +2479,8 @@ encoding automatically:</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4ab382b4594aedc0c3d583facbe49e7801262b2a" target="_blank" rel="noopener">
-      4ab382b4
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5f1236d135eb0785807838484add27fa47dca8c3" target="_blank" rel="noopener">
+      5f1236d1
     </a>
   
 </div>
