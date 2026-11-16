@@ -69,6 +69,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#DEFAULT_COMPRESSION" tabindex="0">DEFAULT_COMPRESSION</a></li>
 <li><a href="#DEFAULT_PRECISION_LOSS_POLICY" tabindex="0">DEFAULT_PRECISION_LOSS_POLICY</a></li>
 <li><a href="#DEFAULT_ENCODING" tabindex="0">DEFAULT_ENCODING</a></li>
+<li><a href="#DEFAULT_DATA_PAGE_VERSION" tabindex="0">DEFAULT_DATA_PAGE_VERSION</a></li>
 <li><a href="#DEFAULT_BLOOM_FILTER_FPP" tabindex="0">DEFAULT_BLOOM_FILTER_FPP</a></li>
 </ol>
 </li>
@@ -85,6 +86,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#bloomFilters()" tabindex="0">bloomFilters()</a></li>
 <li><a href="#statisticsTruncationLength()" tabindex="0">statisticsTruncationLength()</a></li>
 <li><a href="#compression()" tabindex="0">compression()</a></li>
+<li><a href="#dataPageVersion()" tabindex="0">dataPageVersion()</a></li>
 <li><a href="#precisionLossPolicy()" tabindex="0">precisionLossPolicy()</a></li>
 <li><a href="#sortingColumns()" tabindex="0">sortingColumns()</a></li>
 </ol>
@@ -182,41 +184,46 @@ writer fails the write at the first row out of that order.</p>
 <div class="block">Default page compression: <code>ZSTD</code> at its default level when the zstd-jni library is on the
 classpath, otherwise <code>UNCOMPRESSED</code>.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_ENCODING" class="member-name-link">DEFAULT_ENCODING</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="DataPageVersion.html" title="enum class in dev.hardwood.writer">DataPageVersion</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_DATA_PAGE_VERSION" class="member-name-link">DEFAULT_DATA_PAGE_VERSION</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Default data page version: <a href="DataPageVersion.html#V1"><code>DataPageVersion.V1</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_ENCODING" class="member-name-link">DEFAULT_ENCODING</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default encoding policy: <a href="ColumnEncoding.html#AUTO"><code>ColumnEncoding.AUTO</code></a>, leaving each column chunk's encoding to
 the size comparison the writer makes once the row group is buffered.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_PAGE_TARGET_BYTES" class="member-name-link">DEFAULT_PAGE_TARGET_BYTES</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default page target: 1 MiB of encoded values per data page.</div>
 </div>
-<div class="col-first even-row-color"><code>static final int</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_PAGE_TARGET_ROWS" class="member-name-link">DEFAULT_PAGE_TARGET_ROWS</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_PAGE_TARGET_ROWS" class="member-name-link">DEFAULT_PAGE_TARGET_ROWS</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default page row target: 20,000 records per data page.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final <a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_PRECISION_LOSS_POLICY" class="member-name-link">DEFAULT_PRECISION_LOSS_POLICY</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default precision-loss policy: reject a value the column cannot hold exactly, rather
 than silently dropping the digits that do not fit.</div>
 </div>
-<div class="col-first even-row-color"><code>static final long</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final long</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES" class="member-name-link">DEFAULT_ROW_GROUP_BUFFER_TARGET_BYTES</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default row-group buffer target: 128 MiB of buffered values per row group.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final long</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_ROWS" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_ROWS</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static final long</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_ROW_GROUP_TARGET_ROWS" class="member-name-link">DEFAULT_ROW_GROUP_TARGET_ROWS</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Default row-group row target: 1,048,576 records.</div>
 </div>
-<div class="col-first even-row-color"><code>static final int</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static final int</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_STATISTICS_TRUNCATION_LENGTH" class="member-name-link">DEFAULT_STATISTICS_TRUNCATION_LENGTH</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Default statistics truncation length: <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> bounds longer than
 64 bytes are truncated and flagged inexact.</div>
 </div>
@@ -255,50 +262,55 @@ false-positive probability.</div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">How each page body is compressed.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#defaultEncoding()" class="member-name-link">defaultEncoding</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DataPageVersion.html" title="enum class in dev.hardwood.writer">DataPageVersion</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dataPageVersion()" class="member-name-link">dataPageVersion</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">The header and layout every data page is written with.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#defaultEncoding()" class="member-name-link">defaultEncoding</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The encoding policy for columns with no override of their own.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#defaults()" class="member-name-link">defaults</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#defaults()" class="member-name-link">defaults</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">The default configuration.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes()" class="member-name-link">pageTargetBytes</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetBytes()" class="member-name-link">pageTargetBytes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Encoded-byte threshold at which a data page is cut.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetRows()" class="member-name-link">pageTargetRows</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pageTargetRows()" class="member-name-link">pageTargetRows</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Record count at which a data page is cut.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy()" class="member-name-link">precisionLossPolicy</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PrecisionLossPolicy.html" title="enum class in dev.hardwood.writer">PrecisionLossPolicy</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#precisionLossPolicy()" class="member-name-link">precisionLossPolicy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">What <a href="RowWriter.html" title="class in dev.hardwood.writer"><code>RowWriter</code></a> does with a value carrying more precision than its column can hold.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupBufferTargetBytes()" class="member-name-link">rowGroupBufferTargetBytes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupBufferTargetBytes()" class="member-name-link">rowGroupBufferTargetBytes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Byte threshold at which a row group is cut, counted as the bytes the writer holds for it.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetRows()" class="member-name-link">rowGroupTargetRows</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetRows()" class="member-name-link">rowGroupTargetRows</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Record count at which a row group is cut.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sortingColumns()" class="member-name-link">sortingColumns</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sortingColumns()" class="member-name-link">sortingColumns</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The columns every row group is declared sorted by, in order; empty when no order is
 declared.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength()" class="member-name-link">statisticsTruncationLength</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">The maximum length of a <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound before it is
 truncated (and flagged inexact).</div>
 </div>
@@ -445,6 +457,15 @@ the size comparison the writer makes once the row group is buffered.</div>
 </section>
 </li>
 <li>
+<section class="detail" id="DEFAULT_DATA_PAGE_VERSION">
+<h3>DEFAULT_DATA_PAGE_VERSION</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="DataPageVersion.html" title="enum class in dev.hardwood.writer">DataPageVersion</a></span>&nbsp;<span class="element-name">DEFAULT_DATA_PAGE_VERSION</span></div>
+<div class="block">Default data page version: <a href="DataPageVersion.html#V1"><code>DataPageVersion.V1</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="DEFAULT_BLOOM_FILTER_FPP">
 <h3>DEFAULT_BLOOM_FILTER_FPP</h3>
 <div class="horizontal-scroll">
@@ -568,6 +589,15 @@ truncated (and flagged inexact).</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Compression.html" title="interface in dev.hardwood.writer">Compression</a></span>&nbsp;<span class="element-name">compression</span>()</div>
 <div class="block">How each page body is compressed.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="dataPageVersion()">
+<h3>dataPageVersion</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DataPageVersion.html" title="enum class in dev.hardwood.writer">DataPageVersion</a></span>&nbsp;<span class="element-name">dataPageVersion</span>()</div>
+<div class="block">The header and layout every data page is written with.</div>
 </div>
 </section>
 </li>

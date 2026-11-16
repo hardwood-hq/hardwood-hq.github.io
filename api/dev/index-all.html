@@ -1095,6 +1095,19 @@ the page.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-dataPageOffset"><code>dataPageOffset</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#dataPageVersion()" class="member-name-link">dataPageVersion()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">The header and layout every data page is written with.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#dataPageVersion(dev.hardwood.writer.DataPageVersion)" class="member-name-link">dataPageVersion(DataPageVersion)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets the header and layout every data page is written with; must be non-null.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/DataPageVersion.html" class="type-name-link" title="enum class in dev.hardwood.writer">DataPageVersion</a> - Enum Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">The header and layout every data page of a file is written with, set through
+<a href="dev/hardwood/writer/WriterConfig.Builder.html#dataPageVersion(dev.hardwood.writer.DataPageVersion)"><code>WriterConfig.Builder.dataPageVersion(DataPageVersion)</code></a>.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.html#date()" class="member-name-link">date()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
 <dd>
 <div class="block">The <code>DATE</code> annotation, for a calendar date in days since the Unix epoch.</div>
@@ -1177,6 +1190,10 @@ classpath, otherwise <code>UNCOMPRESSED</code>.</div>
 <div class="block">Default <code>created_by</code> identifier written into the file footer, in the
 <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> convention Parquet readers parse — for
 example <code>hardwood version 1.1.0 (build a093aab)</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_DATA_PAGE_VERSION" class="member-name-link">DEFAULT_DATA_PAGE_VERSION</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">Default data page version: <a href="dev/hardwood/writer/DataPageVersion.html#V1"><code>DataPageVersion.V1</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_ENCODING" class="member-name-link">DEFAULT_ENCODING</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
@@ -6294,6 +6311,16 @@ ordering added to the Parquet format after this release.</div>
 </dl>
 <h2 class="title" id="I:V">V</h2>
 <dl class="index">
+<dt><a href="dev/hardwood/writer/DataPageVersion.html#V1" class="member-name-link">V1</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/DataPageVersion.html" title="enum class in dev.hardwood.writer">DataPageVersion</a></dt>
+<dd>
+<div class="block"><code>DATA_PAGE</code>: the repetition and definition levels and the values are compressed together
+as one body, each level stream prefixed by its length.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/DataPageVersion.html#V2" class="member-name-link">V2</a> - Enum constant in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/DataPageVersion.html" title="enum class in dev.hardwood.writer">DataPageVersion</a></dt>
+<dd>
+<div class="block"><code>DATA_PAGE_V2</code>: the levels are stored uncompressed ahead of the values, and the values are
+compressed where that makes them smaller.</div>
+</dd>
 <dt><a href="dev/hardwood/Validity.html" class="type-name-link" title="interface in dev.hardwood">Validity</a> - Interface in <a href="dev/hardwood/package-summary.html">dev.hardwood</a></dt>
 <dd>
 <div class="block">Per-item nullability over a run of items, shared by the reader and the writer: the
@@ -6425,6 +6452,10 @@ writer accepts it as a column's null mask.</div>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/ColumnEncoding.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/DataPageVersion.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/DataPageVersion.html" title="enum class in dev.hardwood.writer">DataPageVersion</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
@@ -6573,6 +6604,11 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/ColumnEncoding.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/DataPageVersion.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.writer.<a href="dev/hardwood/writer/DataPageVersion.html" title="enum class in dev.hardwood.writer">DataPageVersion</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>

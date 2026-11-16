@@ -2812,6 +2812,11 @@
 <td>Codec each page body is compressed with, and its level. See <a href="#compression-codecs">Compression Codecs</a>.</td>
 </tr>
 <tr>
+<td><code>dataPageVersion(DataPageVersion)</code></td>
+<td><code>V1</code></td>
+<td>Header and layout of every data page. <code>V1</code> writes <code>DATA_PAGE</code>s, each body compressed whole. <code>V2</code> writes <code>DATA_PAGE_V2</code>s, which store the repetition and definition levels uncompressed ahead of the values, compress the values only where that makes them smaller, and state each page's row and null counts in its header. Dictionary pages are the same under either.</td>
+</tr>
+<tr>
 <td><code>encoding(ColumnEncoding)</code></td>
 <td><code>AUTO</code></td>
 <td>Encoding policy for every column without an override of its own.</td>
@@ -2849,7 +2854,7 @@
 </tbody>
 </table>
 <p>A page is cut at whichever of the two page targets is reached first, and in any case at 2,147,483,638 values and nulls, the most a reader takes in one page; a single record holding more is a page of its own. A row group is cut at whichever of the two row-group targets is reached first.</p>
-<p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>pageTargetRows()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>compression()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, <code>sortingColumns()</code>, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>, and for the Bloom filter setters, <code>bloomFilters()</code>, a map from column path to probability. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
+<p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>pageTargetRows()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>compression()</code>, <code>dataPageVersion()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, <code>sortingColumns()</code>, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>, and for the Bloom filter setters, <code>bloomFilters()</code>, a map from column path to probability. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
 <h2 id="sorted-rows">Sorted Rows<a class="headerlink" href="#sorted-rows" title="Permanent link">&para;</a></h2>
 <p><code>sortingColumns</code> declares the order the rows of every row group are in: by the first column, rows equal there by the second, and so on. Each row group's metadata records the declaration as <code>sorting_columns</code>. A second call replaces the first.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.SortingColumn.NullOrder.NULLS_LAST</span><span class="p">;</span>
@@ -3598,8 +3603,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/850dafa71c5bc0f99ef0434db5d81d4f3a862772" target="_blank" rel="noopener">
-      850dafa7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/12e00e638b38e5a4c8e537ff7bcb217720ef09ad" target="_blank" rel="noopener">
+      12e00e63
     </a>
   
 </div>

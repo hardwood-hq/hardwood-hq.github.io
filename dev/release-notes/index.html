@@ -2277,6 +2277,7 @@
 <li>Row readers resolve most field names passed as string literals, or taken from the file's schema, by comparing references rather than characters (<a href="https://github.com/hardwood-hq/hardwood/issues/681">#681</a>)</li>
 <li><code>Compression</code> sets the writer's compression level for <code>ZSTD</code>, <code>GZIP</code>, <code>BROTLI</code> and <code>LZ4_RAW</code>, as in <code>Compression.zstd().level(9)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
 <li><code>WriterConfig.Builder.sortingColumns</code> declares the order rows are sorted in; each row group records it as <code>sorting_columns</code>, and a row out of that order fails the write (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
+<li><code>WriterConfig.Builder.dataPageVersion(DataPageVersion.V2)</code> writes every data page as <code>DATA_PAGE_V2</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1820">#1820</a>)</li>
 <li><code>StructBuilder.setValue</code> writes a field from a value in the form <code>getValue</code> returns, so rows can be copied without switching on field types (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
 <li>A filtered <code>ColumnReader</code> or <code>ColumnReaders</code> returns no batch without rows: <code>nextBatch()</code> passes over the batches the filter keeps no row of (<a href="https://github.com/hardwood-hq/hardwood/issues/1815">#1815</a>)</li>
 </ul>
@@ -2572,8 +2573,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/850dafa71c5bc0f99ef0434db5d81d4f3a862772" target="_blank" rel="noopener">
-      850dafa7
+    <a href="https://github.com/hardwood-hq/hardwood/tree/12e00e638b38e5a4c8e537ff7bcb217720ef09ad" target="_blank" rel="noopener">
+      12e00e63
     </a>
   
 </div>
