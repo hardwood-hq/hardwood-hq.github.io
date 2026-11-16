@@ -95,9 +95,9 @@ the path must be non-null and the probability strictly between 0 and 1.</div>
 <div class="block">A builder pre-populated with the defaults.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#codec(dev.hardwood.metadata.CompressionCodec)" class="member-name-link">codec</a><wbr>(<a href="../../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a>&nbsp;codec)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#compression(dev.hardwood.writer.Compression)" class="member-name-link">compression</a><wbr>(<a href="../Compression.html" title="interface in dev.hardwood.writer">Compression</a>&nbsp;compression)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Sets the codec each page body is compressed with; must be non-null.</div>
+<div class="block">Sets how each page body is compressed; must be non-null.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#encoding(dev.hardwood.writer.ColumnEncoding)" class="member-name-link">encoding</a><wbr>(<a href="../ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a>&nbsp;encoding)</code></div>
@@ -138,6 +138,18 @@ can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java
 <div class="col-second even-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#rowGroupTargetRows(long)" class="member-name-link">rowGroupTargetRows</a><wbr>(long&nbsp;rowGroupTargetRows)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Sets the record count at which a row group is cut; must be positive.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#sortingColumns(dev.hardwood.metadata.SortingColumn...)" class="member-name-link">sortingColumns</a><wbr>(<a href="../../metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a>...&nbsp;sortingColumns)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Declares the order every row group's rows are sorted in; a second call replaces the
+first, and no columns declares none.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#sortingColumns(java.util.List)" class="member-name-link">sortingColumns</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a>&gt;&nbsp;sortingColumns)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Declares the order every row group's rows are sorted in: by the first column, rows
+equal there by the second, and so on.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">WriterConfig.Builder.</span><code><a href="../WriterConfig.Builder.html#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>

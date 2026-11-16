@@ -69,8 +69,10 @@ loadScripts(document, 'script');</script>
 <li><a href="#bloomFilter(java.lang.String)" tabindex="0">bloomFilter(String)</a></li>
 <li><a href="#bloomFilter(java.lang.String,double)" tabindex="0">bloomFilter(String, double)</a></li>
 <li><a href="#statisticsTruncationLength(int)" tabindex="0">statisticsTruncationLength(int)</a></li>
-<li><a href="#codec(dev.hardwood.metadata.CompressionCodec)" tabindex="0">codec(CompressionCodec)</a></li>
+<li><a href="#compression(dev.hardwood.writer.Compression)" tabindex="0">compression(Compression)</a></li>
 <li><a href="#precisionLossPolicy(dev.hardwood.writer.PrecisionLossPolicy)" tabindex="0">precisionLossPolicy(PrecisionLossPolicy)</a></li>
+<li><a href="#sortingColumns(dev.hardwood.metadata.SortingColumn...)" tabindex="0">sortingColumns(SortingColumn...)</a></li>
+<li><a href="#sortingColumns(java.util.List)" tabindex="0">sortingColumns(List)</a></li>
 <li><a href="#build()" tabindex="0">build()</a></li>
 </ol>
 </li>
@@ -129,9 +131,9 @@ the path must be non-null and the probability strictly between 0 and 1.</div>
 <div class="block">Builds the immutable configuration.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#codec(dev.hardwood.metadata.CompressionCodec)" class="member-name-link">codec</a><wbr>(<a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a>&nbsp;codec)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#compression(dev.hardwood.writer.Compression)" class="member-name-link">compression</a><wbr>(<a href="Compression.html" title="interface in dev.hardwood.writer">Compression</a>&nbsp;compression)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the codec each page body is compressed with; must be non-null.</div>
+<div class="block">Sets how each page body is compressed; must be non-null.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#encoding(dev.hardwood.writer.ColumnEncoding)" class="member-name-link">encoding</a><wbr>(<a href="ColumnEncoding.html" title="enum class in dev.hardwood.writer">ColumnEncoding</a>&nbsp;encoding)</code></div>
@@ -172,6 +174,18 @@ can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rowGroupTargetRows(long)" class="member-name-link">rowGroupTargetRows</a><wbr>(long&nbsp;rowGroupTargetRows)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the record count at which a row group is cut; must be positive.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sortingColumns(dev.hardwood.metadata.SortingColumn...)" class="member-name-link">sortingColumns</a><wbr>(<a href="../metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a>...&nbsp;sortingColumns)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Declares the order every row group's rows are sorted in; a second call replaces the
+first, and no columns declares none.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sortingColumns(java.util.List)" class="member-name-link">sortingColumns</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a>&gt;&nbsp;sortingColumns)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Declares the order every row group's rows are sorted in: by the first column, rows
+equal there by the second, and so on.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#statisticsTruncationLength(int)" class="member-name-link">statisticsTruncationLength</a><wbr>(int&nbsp;statisticsTruncationLength)</code></div>
@@ -331,19 +345,13 @@ positive. A bound longer than this is truncated and flagged inexact.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="codec(dev.hardwood.metadata.CompressionCodec)">
-<h3>codec</h3>
+<section class="detail" id="compression(dev.hardwood.writer.Compression)">
+<h3>compression</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">codec</span><wbr><span class="parameters">(<a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a>&nbsp;codec)</span></div>
-<div class="block"><p>Sets the codec each page body is compressed with; must be non-null.</p>
-<p><code>UNCOMPRESSED</code>, <code>GZIP</code>, <code>SNAPPY</code>, <code>ZSTD</code>, <code>LZ4_RAW</code> and <code>BROTLI</code> are written.
-Everything but the first two needs its library on the classpath, which is checked
-when the writer is created rather than here.</p>
-<p>The other two members of <a href="../metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata"><code>CompressionCodec</code></a> are not produced, and neither is
-waiting on a later release. <code>LZ4</code> names the Hadoop framing the format deprecated in
-favour of <code>LZ4_RAW</code>; files already written with it are still read, so the refusal is
-on this side only. <code>LZO</code> has no maintained JVM implementation and is refused in both
-directions. Asking for either fails when the writer is created.</p>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">compression</span><wbr><span class="parameters">(<a href="Compression.html" title="interface in dev.hardwood.writer">Compression</a>&nbsp;compression)</span></div>
+<div class="block"><p>Sets how each page body is compressed; must be non-null. See <a href="Compression.html" title="interface in dev.hardwood.writer"><code>Compression</code></a> for the
+codecs and their levels.</p>
+<p>A codec's library is required when the writer is created rather than here.</p>
 </div>
 </div>
 </section>
@@ -357,6 +365,39 @@ directions. Asking for either fails when the writer is created.</p>
 can hold — an <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/time/Instant.html" title="class or interface in java.time" class="external-link"><code>Instant</code></a> with microseconds written to a
 <code>TIMESTAMP(MILLIS)</code> column, say; must be non-null. Defaults to
 <a href="PrecisionLossPolicy.html#REJECT"><code>PrecisionLossPolicy.REJECT</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="sortingColumns(dev.hardwood.metadata.SortingColumn...)">
+<h3>sortingColumns</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">sortingColumns</span><wbr><span class="parameters">(<a href="../metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a>...&nbsp;sortingColumns)</span></div>
+<div class="block">Declares the order every row group's rows are sorted in; a second call replaces the
+first, and no columns declares none. See
+<a href="#sortingColumns(java.util.List)"><code>sortingColumns(List)</code></a>.</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="sortingColumns(java.util.List)">
+<h3>sortingColumns</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></span>&nbsp;<span class="element-name">sortingColumns</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a>&gt;&nbsp;sortingColumns)</span></div>
+<div class="block"><p>Declares the order every row group's rows are sorted in: by the first column, rows
+equal there by the second, and so on. A second call replaces the first, and an empty
+list declares none. The list must be non-null, hold no <code>null</code> and name each column
+once.</p>
+<p>Each row group's metadata records the order. The writer checks it as rows arrive,
+within each row group: the first row that sorts before the row ahead of it fails
+the write with an <code>IllegalArgumentException</code>. <a href="../metadata/SortingColumn.html" title="class in dev.hardwood.metadata"><code>SortingColumn</code></a> defines how each
+column's values compare.</p>
+<p>A column is named by its dotted leaf path, as for
+<a href="#encoding(java.lang.String,dev.hardwood.writer.ColumnEncoding)"><code>encoding(String, ColumnEncoding)</code></a>. A path matching no leaf column, a column that is
+repeated or sits inside a list or map, and a column whose type has no defined order
+(<code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>UNKNOWN</code>) are rejected when the
+writer is created.</p>
+</div>
 </div>
 </section>
 </li>

@@ -2413,7 +2413,7 @@
 </tbody>
 </table>
 <p>Column readers can also be created by index via <code>columnReader(int columnIndex)</code>. To attach a filter or customize the batch size, use the builder form: <code>reader.buildColumnReader("id").filter(predicate).batchSize(1024).build()</code>.</p>
-<p>A filtered column reader returns <strong>only</strong> the matching rows: each batch's <code>getRecordCount()</code> and typed arrays exclude non-matching rows. The predicate may reference the column being read, another column, or a column outside the projection; for <code>columnReaders(projection)</code> every column is filtered to the same row set and stays row-aligned. Predicate columns that are not part of the projection are decoded internally to evaluate the filter but are not exposed.</p>
+<p>A filtered column reader returns <strong>only</strong> the matching rows: each batch's <code>getRecordCount()</code> and typed arrays exclude non-matching rows, and <code>nextBatch()</code> passes over batches without a matching row, so every batch holds at least one. The predicate may reference the column being read, another column, or a column outside the projection; for <code>columnReaders(projection)</code> every column is filtered to the same row set and stays row-aligned. Predicate columns that are not part of the projection are decoded internally to evaluate the filter but are not exposed.</p>
 <h3 id="reading-multiple-columns">Reading Multiple Columns<a class="headerlink" href="#reading-multiple-columns" title="Permanent link">&para;</a></h3>
 <p>For reading multiple columns together, use <code>columnReaders(projection)</code> which returns a <code>ColumnReaders</code> collection. <code>getColumnReader(String)</code> takes a column's field path and <code>getColumnReader(int)</code> its position in the projection (see <a href="../../reference/query-controls/#index-order">Index order</a>). Drive every reader in lockstep with <code>ColumnReaders.nextBatch()</code>. Open the columns together rather than building one <code>ColumnReader</code> per column: separately built readers batch at different row boundaries, so pairing their values by position reads different rows from each (see <a href="../../concepts/reader-models/#several-columns-means-one-columnreaders-not-several-columnreaders">RowReader vs. ColumnReader</a>).</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.Hardwood</span><span class="p">;</span>
@@ -2453,7 +2453,7 @@
 </code></pre></div>
 <p>When the read includes a <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code> or <code>INT96</code> column, filter columns included, every batch ends at a row-group boundary, so the last batch of a row group can hold fewer records than the batch size.</p>
 <p>The batch size caps the number of <strong>records</strong> per batch, never the number of leaf values. A batch boundary always falls between records: a record, including all the leaf values a repeated column holds for it, is never split across two batches. A consequence for repeated columns is that <code>getValueCount()</code> can exceed the configured batch size, since one record may carry many leaf values; size any per-value buffers off <code>getValueCount()</code>, not the batch size.</p>
-<p><code>ColumnReaders.nextBatch()</code> advances every underlying reader once and returns <code>false</code> when the readers are exhausted. The aligned record count is exposed via <code>ColumnReaders.getRecordCount()</code>. As a defensive guard, mismatched per-column record counts throw <code>IllegalStateException</code>.</p>
+<p><code>ColumnReaders.nextBatch()</code> advances every underlying reader to the next batch and returns <code>false</code> when the readers are exhausted. The aligned record count is exposed via <code>ColumnReaders.getRecordCount()</code>. As a defensive guard, mismatched per-column record counts throw <code>IllegalStateException</code>.</p>
 <p>The readers from <code>getColumnReader(...)</code> show the group's current batch. <code>ColumnReaders.nextBatch()</code> is the only way to advance them: <code>ColumnReader.nextBatch()</code> on one of them throws <code>IllegalStateException</code>. Close the group with <code>ColumnReaders.close()</code>; closing one of its readers has no effect.</p>
 <h3 id="retaining-and-handing-off-batch-arrays">Retaining and Handing Off Batch Arrays<a class="headerlink" href="#retaining-and-handing-off-batch-arrays" title="Permanent link">&para;</a></h3>
 <p>Each <code>nextBatch()</code> allocates new arrays and <code>Validity</code> objects for the batch, and never reuses or overwrites those returned for an earlier batch. You can keep a returned array after advancing and process it later, including on another thread:</p>
@@ -2809,8 +2809,8 @@ and maps, <code>getLayerOffsets(k)</code>; the leaf has <code>getLeafValidity()<
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/db2372d81a1b4e909ab5231a814123a1223724d4" target="_blank" rel="noopener">
-      db2372d8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/850dafa71c5bc0f99ef0434db5d81d4f3a862772" target="_blank" rel="noopener">
+      850dafa7
     </a>
   
 </div>

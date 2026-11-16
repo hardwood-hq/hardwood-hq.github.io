@@ -237,11 +237,12 @@ their positions, with the same reader at each.</p>
 way to advance the group: <a href="ColumnReader.html#nextBatch()"><code>ColumnReader.nextBatch()</code></a> on one of its readers throws
 <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a>.</p>
 <p>All readers share one pipeline, so they always publish batches at the same row
-boundaries. This method advances that pipeline once and returns:</p>
+boundaries. This method advances that pipeline to its next batch and returns:</p>
 <ul>
 <li><code>true</code> when a new batch is available — callers can then read values via the
 per-column accessors. The aligned record count is exposed through
-<a href="#getRecordCount()"><code>getRecordCount()</code></a>.</li>
+<a href="#getRecordCount()"><code>getRecordCount()</code></a>, and is at least one: under a filter, the batches the filter
+keeps no record of are passed over.</li>
 <li><code>false</code> when the readers are exhausted — partial advancement is impossible
 because all readers consume from the shared pipeline, so once one is done they
 all are.</li>

@@ -241,6 +241,10 @@ smallest and bit-packed.</div>
 <dd>
 <div class="block">Extract a boolean.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html#ascending(java.lang.String,dev.hardwood.metadata.SortingColumn.NullOrder)" class="member-name-link">ascending(String, SortingColumn.NullOrder)</a> - Static method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
+<dd>
+<div class="block">A column sorted from least to greatest.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html#ASCENDING" class="member-name-link">ASCENDING</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/row/PqVariant.html#asDate()" class="member-name-link">asDate()</a> - Method in interface dev.hardwood.row.<a href="dev/hardwood/row/PqVariant.html" title="interface in dev.hardwood.row">PqVariant</a></dt>
@@ -441,6 +445,10 @@ false-positive probability.</div>
 <dt><a href="dev/hardwood/metadata/BoundingBox.html#%3Cinit%3E(double,double,double,double,java.lang.Double,java.lang.Double,java.lang.Double,java.lang.Double)" class="member-name-link">BoundingBox(double, double, double, double, Double, Double, Double, Double)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/BoundingBox.html" title="class in dev.hardwood.metadata">BoundingBox</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>BoundingBox</code> record class.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/Compression.html#brotli()" class="member-name-link">brotli()</a> - Static method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.html" title="interface in dev.hardwood.writer">Compression</a></dt>
+<dd>
+<div class="block">Brotli at its default quality; see <a href="dev/hardwood/writer/Compression.Leveled.html#level(int)"><code>Compression.Leveled.level(int)</code></a> for another.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/CompressionCodec.html#BROTLI" class="member-name-link">BROTLI</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></dt>
 <dd>
@@ -656,14 +664,14 @@ file at the destination.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnMetaData.html#param-codec"><code>codec</code></a> record component.</div>
 </dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.html#codec()" class="member-name-link">codec()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dt><a href="dev/hardwood/writer/Compression.html#codec()" class="member-name-link">codec()</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.html" title="interface in dev.hardwood.writer">Compression</a></dt>
 <dd>
-<div class="block">The codec each page body is compressed with.</div>
+<div class="block">The codec page bodies are compressed with.</div>
 </dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#codec(dev.hardwood.metadata.CompressionCodec)" class="member-name-link">codec(CompressionCodec)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
-<dd>
-<div class="block">Sets the codec each page body is compressed with; must be non-null.</div>
-</dd>
+<dt><a href="dev/hardwood/writer/Compression.Fixed.html#codec()" class="member-name-link">codec()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.Fixed.html" title="class in dev.hardwood.writer">Compression.Fixed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/writer/Compression.Leveled.html#codec()" class="member-name-link">codec()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.Leveled.html" title="class in dev.hardwood.writer">Compression.Leveled</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/BatchWaitEvent.html#column" class="member-name-link">column</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/BatchWaitEvent.html" title="class in dev.hardwood.jfr">BatchWaitEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/PageDecodedEvent.html#column" class="member-name-link">column</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PageDecodedEvent.html" title="class in dev.hardwood.jfr">PageDecodedEvent</a></dt>
@@ -869,6 +877,10 @@ stores once, which <a href="dev/hardwood/reader/ColumnReader.html#getDictionaryI
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/FileMetaData.html#param-columnOrders"><code>columnOrders</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html#columnPath()" class="member-name-link">columnPath()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SortingColumn.html#param-columnPath"><code>columnPath</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/ColumnProjection.html" class="type-name-link" title="class in dev.hardwood.schema">ColumnProjection</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
 <dd>
 <div class="block">Specifies which columns to read from a Parquet file.</div>
@@ -928,6 +940,27 @@ hold columns rather than records.</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/PageDecodedEvent.html#compressedSize" class="member-name-link">compressedSize</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PageDecodedEvent.html" title="class in dev.hardwood.jfr">PageDecodedEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#compression()" class="member-name-link">compression()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">How each page body is compressed.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#compression(dev.hardwood.writer.Compression)" class="member-name-link">compression(Compression)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Sets how each page body is compressed; must be non-null.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/Compression.html" class="type-name-link" title="interface in dev.hardwood.writer">Compression</a> - Interface in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">How <a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer"><code>ParquetFileWriter</code></a> compresses each page body: a codec, and for the codecs that have
+them, the level it compresses at.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/Compression.Fixed.html" class="type-name-link" title="class in dev.hardwood.writer">Compression.Fixed</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">A codec without levels.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/Compression.Leveled.html" class="type-name-link" title="class in dev.hardwood.writer">Compression.Leveled</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
+<dd>
+<div class="block">A codec with levels, at its default level or the one <a href="dev/hardwood/writer/Compression.Leveled.html#level(int)"><code>Compression.Leveled.level(int)</code></a> set.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/CompressionCodec.html" class="type-name-link" title="enum class in dev.hardwood.metadata">CompressionCodec</a> - Enum Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
 <div class="block">Compression codecs supported by Parquet.</div>
@@ -1134,10 +1167,10 @@ the page.</div>
 <dd>
 <div class="block">Default false-positive probability of a column's Bloom filter: 1%.</div>
 </dd>
-<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_CODEC" class="member-name-link">DEFAULT_CODEC</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#DEFAULT_COMPRESSION" class="member-name-link">DEFAULT_COMPRESSION</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
 <dd>
-<div class="block">Default page compression codec: <code>ZSTD</code> when the zstd-jni library is on the classpath,
-otherwise <code>UNCOMPRESSED</code>.</div>
+<div class="block">Default page compression: <code>ZSTD</code> at its default level when the zstd-jni library is on the
+classpath, otherwise <code>UNCOMPRESSED</code>.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/ParquetFileWriter.html#DEFAULT_CREATED_BY" class="member-name-link">DEFAULT_CREATED_BY</a> - Static variable in class dev.hardwood.writer.<a href="dev/hardwood/writer/ParquetFileWriter.html" title="class in dev.hardwood.writer">ParquetFileWriter</a></dt>
 <dd>
@@ -1236,6 +1269,14 @@ each block.</div>
 <dd>
 <div class="block">The lengths delta-encoded ahead of the values, which is cheaper than <code>PLAIN</code>'s
 per-value 4-byte length prefix wherever the lengths are similar.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html#descending()" class="member-name-link">descending()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SortingColumn.html#param-descending"><code>descending</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html#descending(java.lang.String,dev.hardwood.metadata.SortingColumn.NullOrder)" class="member-name-link">descending(String, SortingColumn.NullOrder)</a> - Static method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
+<dd>
+<div class="block">A column sorted from greatest to least.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html#DESCENDING" class="member-name-link">DESCENDING</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.BoundaryOrder.html" title="enum class in dev.hardwood.metadata">ColumnIndex.BoundaryOrder</a></dt>
 <dd>&nbsp;</dd>
@@ -1626,6 +1667,10 @@ with <code>isAdjustedToUTC = false</code>).</div>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
+<dd>
+<div class="block">Indicates whether some other object is "equal to" this one.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/Statistics.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
@@ -1790,6 +1835,8 @@ with <code>isAdjustedToUTC = false</code>).</div>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/Compression.Leveled.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.Leveled.html" title="class in dev.hardwood.writer">Compression.Leveled</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/writer/RowWriteResult.Rejected.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in record class dev.hardwood.writer.<a href="dev/hardwood/writer/RowWriteResult.Rejected.html" title="class in dev.hardwood.writer">RowWriteResult.Rejected</a></dt>
 <dd>
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
@@ -2893,6 +2940,10 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Creates a greater-than-or-equal predicate for a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link"><code>UUID</code></a> column.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/Compression.html#gzip()" class="member-name-link">gzip()</a> - Static method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.html" title="interface in dev.hardwood.writer">Compression</a></dt>
+<dd>
+<div class="block">GZIP at deflate's default level; see <a href="dev/hardwood/writer/Compression.Leveled.html#level(int)"><code>Compression.Leveled.level(int)</code></a> for another.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/CompressionCodec.html#GZIP" class="member-name-link">GZIP</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></dt>
 <dd>
 <div class="block">Gzip compression (slower, higher ratio).</div>
@@ -3037,6 +3088,10 @@ only (phantom slots from null/empty parents are excluded).</div>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/SizeStatistics.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SizeStatistics.html" title="class in dev.hardwood.metadata">SizeStatistics</a></dt>
+<dd>
+<div class="block">Returns a hash code value for this object.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
@@ -3204,6 +3259,8 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/Compression.Leveled.html#hashCode()" class="member-name-link">hashCode()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.Leveled.html" title="class in dev.hardwood.writer">Compression.Leveled</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/writer/RowWriteResult.Rejected.html#hashCode()" class="member-name-link">hashCode()</a> - Method in record class dev.hardwood.writer.<a href="dev/hardwood/writer/RowWriteResult.Rejected.html" title="class in dev.hardwood.writer">RowWriteResult.Rejected</a></dt>
 <dd>
 <div class="block">Returns a hash code value for this object.</div>
@@ -3726,6 +3783,18 @@ for a key it names and leaving the rest in place.</div>
 <dd>
 <div class="block">The length of value <code>i</code> in bytes.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/Compression.Fixed.html#level()" class="member-name-link">level()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.Fixed.html" title="class in dev.hardwood.writer">Compression.Fixed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/writer/Compression.html#level()" class="member-name-link">level()</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.html" title="interface in dev.hardwood.writer">Compression</a></dt>
+<dd>
+<div class="block">The level the codec compresses at, or empty for its default.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/Compression.Leveled.html#level()" class="member-name-link">level()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.Leveled.html" title="class in dev.hardwood.writer">Compression.Leveled</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/writer/Compression.Leveled.html#level(int)" class="member-name-link">level(int)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.Leveled.html" title="class in dev.hardwood.writer">Compression.Leveled</a></dt>
+<dd>
+<div class="block">This codec at <code>level</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.html#list()" class="member-name-link">list()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
 <dd>
 <div class="block">The <code>LIST</code> annotation, for a group holding a repeated element.</div>
@@ -4022,6 +4091,10 @@ Variant spec.</div>
 <dt><a href="dev/hardwood/metadata/CompressionCodec.html#LZ4_RAW" class="member-name-link">LZ4_RAW</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></dt>
 <dd>
 <div class="block">LZ4 raw block compression (no Hadoop framing).</div>
+</dd>
+<dt><a href="dev/hardwood/writer/Compression.html#lz4Raw()" class="member-name-link">lz4Raw()</a> - Static method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.html" title="interface in dev.hardwood.writer">Compression</a></dt>
+<dd>
+<div class="block">LZ4_RAW through LZ4's fast compressor; see <a href="dev/hardwood/writer/Compression.Leveled.html#level(int)"><code>Compression.Leveled.level(int)</code></a> for the high compressor.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/CompressionCodec.html#LZO" class="member-name-link">LZO</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></dt>
 <dd>
@@ -4365,9 +4438,25 @@ current batch.&quot;</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnIndex.html#param-nullCounts"><code>nullCounts</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html#nullOrder()" class="member-name-link">nullOrder()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SortingColumn.html#param-nullOrder"><code>nullOrder</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.html#nullPages()" class="member-name-link">nullPages()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnIndex.html" title="class in dev.hardwood.metadata">ColumnIndex</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/ColumnIndex.html#param-nullPages"><code>nullPages</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.NullOrder.html#NULLS_FIRST" class="member-name-link">NULLS_FIRST</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.NullOrder.html" title="enum class in dev.hardwood.metadata">SortingColumn.NullOrder</a></dt>
+<dd>
+<div class="block">Nulls sort before every value.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.NullOrder.html#NULLS_LAST" class="member-name-link">NULLS_LAST</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.NullOrder.html" title="enum class in dev.hardwood.metadata">SortingColumn.NullOrder</a></dt>
+<dd>
+<div class="block">Nulls sort after every value.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html#nullsFirst()" class="member-name-link">nullsFirst()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
+<dd>
+<div class="block">Whether the column's nulls sort before its values.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.html#nullType()" class="member-name-link">nullType()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
 <dd>
@@ -4403,6 +4492,11 @@ current batch.&quot;</div>
 <dt><a href="dev/hardwood/Validity.html#of(long%5B%5D)" class="member-name-link">of(long[])</a> - Static method in interface dev.hardwood.<a href="dev/hardwood/Validity.html" title="interface in dev.hardwood">Validity</a></dt>
 <dd>
 <div class="block">Wraps a packed <code>long[]</code> bitmap (set-bit = present storage).</div>
+</dd>
+<dt><a href="dev/hardwood/writer/Compression.html#of(dev.hardwood.metadata.CompressionCodec)" class="member-name-link">of(CompressionCodec)</a> - Static method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.html" title="interface in dev.hardwood.writer">Compression</a></dt>
+<dd>
+<div class="block">The codec at its default level, for a codec chosen at runtime, such as the codec of a
+file being copied.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/FieldPath.html#of(java.lang.String...)" class="member-name-link">of(String...)</a> - Static method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a></dt>
 <dd>
@@ -5382,6 +5476,16 @@ annotation declares, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(
 <dd>
 <div class="block">Sets a <code>FIXED_LEN_BYTE_ARRAY(16)</code> field annotated <code>UUID</code>.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setValue(int,java.lang.Object)" class="member-name-link">setValue(int, Object)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a field by index from a value whose type is known only at runtime.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/StructBuilder.html#setValue(java.lang.String,java.lang.Object)" class="member-name-link">setValue(String, Object)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
+<dd>
+<div class="block">Sets a field from a value whose type is known only at runtime, in the form
+<a href="dev/hardwood/row/FieldAccessor.html#getValue(java.lang.String)"><code>FieldAccessor.getValue(String)</code></a> returns for the field's declared type,
+so a value read from one file can be written to another as it is:</div>
+</dd>
 <dt><a href="dev/hardwood/jfr/FileMappingEvent.html#size" class="member-name-link">size</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/FileMappingEvent.html" title="class in dev.hardwood.jfr">FileMappingEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/BinaryDictionary.html#size()" class="member-name-link">size()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/BinaryDictionary.html" title="class in dev.hardwood.reader">BinaryDictionary</a></dt>
@@ -5439,9 +5543,41 @@ and its repetition- and definition-level histograms.</div>
 <dd>
 <div class="block">Skip leading rows before reading — SQL <code>OFFSET</code>.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/Compression.html#snappy()" class="member-name-link">snappy()</a> - Static method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.html" title="interface in dev.hardwood.writer">Compression</a></dt>
+<dd>
+<div class="block">Snappy, which has no levels.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/CompressionCodec.html#SNAPPY" class="member-name-link">SNAPPY</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></dt>
 <dd>
 <div class="block">Snappy compression (fast, moderate ratio).</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html" class="type-name-link" title="class in dev.hardwood.metadata">SortingColumn</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
+<dd>
+<div class="block">One column of the order a row group's rows are sorted in: the column, its direction, and
+where its nulls go.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html#%3Cinit%3E(java.lang.String,boolean,dev.hardwood.metadata.SortingColumn.NullOrder)" class="member-name-link">SortingColumn(String, boolean, SortingColumn.NullOrder)</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
+<dd>
+<div class="block">Creates an instance of a <code>SortingColumn</code> record class.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.NullOrder.html" class="type-name-link" title="enum class in dev.hardwood.metadata">SortingColumn.NullOrder</a> - Enum Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
+<dd>
+<div class="block">Where a sorting column's nulls go relative to its values.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.html#sortingColumns()" class="member-name-link">sortingColumns()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.html" title="class in dev.hardwood.writer">WriterConfig</a></dt>
+<dd>
+<div class="block">The columns every row group is declared sorted by, in order; empty when no order is
+declared.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#sortingColumns(dev.hardwood.metadata.SortingColumn...)" class="member-name-link">sortingColumns(SortingColumn...)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Declares the order every row group's rows are sorted in; a second call replaces the
+first, and no columns declares none.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/WriterConfig.Builder.html#sortingColumns(java.util.List)" class="member-name-link">sortingColumns(List)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/WriterConfig.Builder.html" title="class in dev.hardwood.writer">WriterConfig.Builder</a></dt>
+<dd>
+<div class="block">Declares the order every row group's rows are sorted in: by the first column, rows
+equal there by the second, and so on.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ParsedFooter.html#sourceIdentity()" class="member-name-link">sourceIdentity()</a> - Method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/ParsedFooter.html" title="interface in dev.hardwood.metadata">ParsedFooter</a></dt>
 <dd>
@@ -5811,6 +5947,10 @@ followed by each node in pre-order, groups carrying their child count.</div>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
+<dd>
+<div class="block">The column as SQL spells a sort key, such as <code>pickup_ts ASC NULLS FIRST</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/Statistics.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
@@ -5977,6 +6117,10 @@ followed by each node in pre-order, groups carrying their child count.</div>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
 </dd>
+<dt><a href="dev/hardwood/writer/Compression.Fixed.html#toString()" class="member-name-link">toString()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.Fixed.html" title="class in dev.hardwood.writer">Compression.Fixed</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/writer/Compression.Leveled.html#toString()" class="member-name-link">toString()</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.Leveled.html" title="class in dev.hardwood.writer">Compression.Leveled</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/writer/RowWriteResult.Rejected.html#toString()" class="member-name-link">toString()</a> - Method in record class dev.hardwood.writer.<a href="dev/hardwood/writer/RowWriteResult.Rejected.html" title="class in dev.hardwood.writer">RowWriteResult.Rejected</a></dt>
 <dd>
 <div class="block">Returns a string representation of this record class.</div>
@@ -6064,6 +6208,10 @@ footer was read with.</div>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#UINT_8" class="member-name-link">UINT_8</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
 <div class="block">Unsigned 8-bit integer, stored as INT32.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/Compression.html#uncompressed()" class="member-name-link">uncompressed()</a> - Static method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.html" title="interface in dev.hardwood.writer">Compression</a></dt>
+<dd>
+<div class="block">Page bodies stored as they are.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/CompressionCodec.html#UNCOMPRESSED" class="member-name-link">UNCOMPRESSED</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></dt>
 <dd>
@@ -6252,6 +6400,10 @@ writer accepts it as a column's null mask.</div>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.NullOrder.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.NullOrder.html" title="enum class in dev.hardwood.metadata">SortingColumn.NullOrder</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this class with the specified name.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.Operator.html#valueOf(java.lang.String)" class="member-name-link">valueOf(String)</a> - Static method in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.Operator.html" title="enum class in dev.hardwood.reader">FilterPredicate.Operator</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this class with the specified name.</div>
@@ -6330,6 +6482,11 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/RepetitionType.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum class, in
+the order they are declared.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/SortingColumn.NullOrder.html#values()" class="member-name-link">values()</a> - Static method in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.NullOrder.html" title="enum class in dev.hardwood.metadata">SortingColumn.NullOrder</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
@@ -6552,6 +6709,10 @@ data crosses the row-group target.</div>
 <dt><a href="dev/hardwood/metadata/BoundingBox.html#zmin()" class="member-name-link">zmin()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/BoundingBox.html" title="class in dev.hardwood.metadata">BoundingBox</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/BoundingBox.html#param-zmin"><code>zmin</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/writer/Compression.html#zstd()" class="member-name-link">zstd()</a> - Static method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/Compression.html" title="interface in dev.hardwood.writer">Compression</a></dt>
+<dd>
+<div class="block">ZSTD at zstd's default level; see <a href="dev/hardwood/writer/Compression.Leveled.html#level(int)"><code>Compression.Leveled.level(int)</code></a> for another.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/CompressionCodec.html#ZSTD" class="member-name-link">ZSTD</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/CompressionCodec.html" title="enum class in dev.hardwood.metadata">CompressionCodec</a></dt>
 <dd>

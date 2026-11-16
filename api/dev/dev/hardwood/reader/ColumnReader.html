@@ -278,7 +278,8 @@ only (phantom slots from null/empty parents are excluded).</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">nextBatch</span>()
                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block"><p>Advance to the next batch.</p>
+<div class="block"><p>Advance to the next batch. A batch holds at least one record: under a filter, the
+batches the filter keeps no record of are passed over.</p>
 <p><strong>One reader advances only itself.</strong> Readers built separately — each from its own
 <a href="ParquetFileReader.html#buildColumnReader(java.lang.String)"><code>ParquetFileReader.buildColumnReader(String)</code></a> — are independent cursors, and the
 batch a reader hands out is sized for the columns <em>it</em> reads. A batch of a

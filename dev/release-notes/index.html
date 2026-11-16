@@ -2255,6 +2255,7 @@
 <ul>
 <li>The native CLI is no longer published for macOS on Intel; on those machines the CLI runs from the Docker image (<a href="https://github.com/hardwood-hq/hardwood/issues/1606">#1606</a>)</li>
 <li><code>InMemoryOutputFile.create()</code>, <code>close()</code> and <code>discard()</code> declare <code>IOException</code>, and <code>position()</code> throws <code>IllegalStateException</code> after <code>close()</code>; <code>buffer().remaining()</code> gives the file's length (<a href="https://github.com/hardwood-hq/hardwood/issues/1747">#1747</a>)</li>
+<li><code>WriterConfig.Builder.codec(CompressionCodec)</code> is replaced by <code>compression(Compression)</code>, the getter <code>codec()</code> by <code>compression()</code>, and <code>WriterConfig.DEFAULT_CODEC</code> by <code>DEFAULT_COMPRESSION</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
 </ul>
 <p><strong>Deprecations:</strong></p>
 <ul>
@@ -2274,6 +2275,10 @@
 <li><code>AbstractOutputFile</code> is a base for implementing <code>OutputFile</code> that enforces its lifecycle; the bundled outputs extend it (<a href="https://github.com/hardwood-hq/hardwood/issues/1747">#1747</a>)</li>
 <li>A row reader projecting structs that hold no list, map or variant reads them without decoding nested records, as it reads top-level columns (<a href="https://github.com/hardwood-hq/hardwood/issues/475">#475</a>)</li>
 <li>Row readers resolve most field names passed as string literals, or taken from the file's schema, by comparing references rather than characters (<a href="https://github.com/hardwood-hq/hardwood/issues/681">#681</a>)</li>
+<li><code>Compression</code> sets the writer's compression level for <code>ZSTD</code>, <code>GZIP</code>, <code>BROTLI</code> and <code>LZ4_RAW</code>, as in <code>Compression.zstd().level(9)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
+<li><code>WriterConfig.Builder.sortingColumns</code> declares the order rows are sorted in; each row group records it as <code>sorting_columns</code>, and a row out of that order fails the write (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
+<li><code>StructBuilder.setValue</code> writes a field from a value in the form <code>getValue</code> returns, so rows can be copied without switching on field types (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
+<li>A filtered <code>ColumnReader</code> or <code>ColumnReaders</code> returns no batch without rows: <code>nextBatch()</code> passes over the batches the filter keeps no row of (<a href="https://github.com/hardwood-hq/hardwood/issues/1815">#1815</a>)</li>
 </ul>
 <p><strong>Bug fixes:</strong></p>
 <ul>
@@ -2567,8 +2572,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/db2372d81a1b4e909ab5231a814123a1223724d4" target="_blank" rel="noopener">
-      db2372d8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/850dafa71c5bc0f99ef0434db5d81d4f3a862772" target="_blank" rel="noopener">
+      850dafa7
     </a>
   
 </div>

@@ -1623,6 +1623,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sorted-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sorted Rows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#encodings" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2270,6 +2281,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#sorted-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sorted Rows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#encodings" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2750,7 +2772,7 @@
 <h2 id="writer-options">Writer Options<a class="headerlink" href="#writer-options" title="Permanent link">&para;</a></h2>
 <p>Write-time behaviour is configured with an immutable <code>WriterConfig</code>, passed to <code>ParquetFileWriter.create(out, schema, config)</code>. <code>WriterConfig.defaults()</code> returns the defaults, which the two-argument <code>create(out, schema)</code> uses.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">        </span><span class="p">.</span><span class="na">codec</span><span class="p">(</span><span class="n">CompressionCodec</span><span class="p">.</span><span class="na">ZSTD</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">        </span><span class="p">.</span><span class="na">compression</span><span class="p">(</span><span class="n">Compression</span><span class="p">.</span><span class="na">zstd</span><span class="p">())</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="p">.</span><span class="na">rowGroupBufferTargetBytes</span><span class="p">(</span><span class="mi">64L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="p">.</span><span class="na">encoding</span><span class="p">(</span><span class="s">"temperature"</span><span class="p">,</span><span class="w"> </span><span class="n">ColumnEncoding</span><span class="p">.</span><span class="na">BYTE_STREAM_SPLIT</span><span class="p">)</span>
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
@@ -2785,9 +2807,9 @@
 <td>Bytes the writer holds for the open row group before cutting it: level streams, dictionary indices, value stores and dictionaries. A row group passes it by at most one record. A row group is also cut before a repeated column's chunk would reach <code>Integer.MAX_VALUE - 8</code> values and nulls, or before any column chunk would pass <code>Integer.MAX_VALUE - 8</code> bytes of <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> values, so a target above 2 GiB can yield smaller row groups. See <a href="../../concepts/write-model/#memory-bounds">The Write Model</a>. Must be positive.</td>
 </tr>
 <tr>
-<td><code>codec(CompressionCodec)</code></td>
-<td><code>ZSTD</code>, or <code>UNCOMPRESSED</code> when the ZSTD library is absent</td>
-<td>Codec each page body is compressed with.</td>
+<td><code>compression(Compression)</code></td>
+<td><code>Compression.zstd()</code>, or <code>Compression.uncompressed()</code> when the ZSTD library is absent</td>
+<td>Codec each page body is compressed with, and its level. See <a href="#compression-codecs">Compression Codecs</a>.</td>
 </tr>
 <tr>
 <td><code>encoding(ColumnEncoding)</code></td>
@@ -2819,10 +2841,83 @@
 <td><code>REJECT</code></td>
 <td>What the row-oriented layer does with a value carrying more precision than its column can hold.</td>
 </tr>
+<tr>
+<td><code>sortingColumns(SortingColumn...)</code>, <code>sortingColumns(List&lt;SortingColumn&gt;)</code></td>
+<td>none</td>
+<td>The order every row group's rows are sorted in, recorded in each row group's metadata and checked as rows are written. See <a href="#sorted-rows">Sorted Rows</a>.</td>
+</tr>
 </tbody>
 </table>
 <p>A page is cut at whichever of the two page targets is reached first, and in any case at 2,147,483,638 values and nulls, the most a reader takes in one page; a single record holding more is a page of its own. A row group is cut at whichever of the two row-group targets is reached first.</p>
-<p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>pageTargetRows()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>codec()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>, and for the Bloom filter setters, <code>bloomFilters()</code>, a map from column path to probability. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
+<p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>pageTargetRows()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>compression()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, <code>sortingColumns()</code>, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>, and for the Bloom filter setters, <code>bloomFilters()</code>, a map from column path to probability. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
+<h2 id="sorted-rows">Sorted Rows<a class="headerlink" href="#sorted-rows" title="Permanent link">&para;</a></h2>
+<p><code>sortingColumns</code> declares the order the rows of every row group are in: by the first column, rows equal there by the second, and so on. Each row group's metadata records the declaration as <code>sorting_columns</code>. A second call replaces the first.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.SortingColumn.NullOrder.NULLS_LAST</span><span class="p">;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">        </span><span class="p">.</span><span class="na">sortingColumns</span><span class="p">(</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">                </span><span class="n">SortingColumn</span><span class="p">.</span><span class="na">ascending</span><span class="p">(</span><span class="s">"vendor"</span><span class="p">,</span><span class="w"> </span><span class="n">NULLS_LAST</span><span class="p">),</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">                </span><span class="n">SortingColumn</span><span class="p">.</span><span class="na">descending</span><span class="p">(</span><span class="s">"pickup_ts"</span><span class="p">,</span><span class="w"> </span><span class="n">NULLS_LAST</span><span class="p">))</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Factory</th>
+<th>Order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SortingColumn.ascending(String columnPath, NullOrder nullOrder)</code></td>
+<td>Least to greatest</td>
+</tr>
+<tr>
+<td><code>SortingColumn.descending(String columnPath, NullOrder nullOrder)</code></td>
+<td>Greatest to least</td>
+</tr>
+</tbody>
+</table>
+<p><code>NullOrder</code> is <code>NULLS_FIRST</code> or <code>NULLS_LAST</code>. A column is named by its dotted leaf path, as for <code>encoding(String, ColumnEncoding)</code>.</p>
+<p>Values compare in their column's order, the order its statistics use:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INT32</code>, <code>INT64</code></td>
+<td>Signed; unsigned under an unsigned <code>INT</code> annotation</td>
+</tr>
+<tr>
+<td><code>FLOAT</code>, <code>DOUBLE</code>, <code>FLOAT16</code></td>
+<td>Numeric; <code>NaN</code> after every number, <code>-0.0</code> equal to <code>0.0</code></td>
+</tr>
+<tr>
+<td><code>BOOLEAN</code></td>
+<td><code>false</code> before <code>true</code></td>
+</tr>
+<tr>
+<td><code>DECIMAL</code> on <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td>By the number it holds</td>
+</tr>
+<tr>
+<td>Other <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td>Unsigned, byte by byte; a prefix before the values it starts</td>
+</tr>
+</tbody>
+</table>
+<p>The writer checks the order within each row group as rows are written. The first row that sorts before the row ahead of it fails the write with an <code>IllegalArgumentException</code> naming the row, its row group and the column, and the writer accepts no more rows. Under <code>RowWriter</code>, rows are checked when their staged batch is written, which can be a later <code>writeRow</code>, <code>endRowGroup()</code> or <code>close()</code>. A new row group starts the order again.</p>
+<p>When the writer is created, it rejects a sorting column that:</p>
+<ul>
+<li>names no leaf column of the schema;</li>
+<li>is repeated, or sits inside a list or map;</li>
+<li>has a type with no defined order: <code>INTERVAL</code>, <code>UNKNOWN</code>, <code>GEOMETRY</code> or <code>GEOGRAPHY</code>.</li>
+</ul>
+<p>The builder rejects a <code>null</code> entry and a column declared twice.</p>
 <h2 id="encodings">Encodings<a class="headerlink" href="#encodings" title="Permanent link">&para;</a></h2>
 <p><code>ColumnEncoding</code> sets how a column's values are encoded, file-wide or per leaf column. <code>AUTO</code> leaves the choice to the writer; every other member names an encoding outright, and a column that names one builds no dictionary.</p>
 <table>
@@ -2902,58 +2997,68 @@
 <p><code>AUTO</code> never chooses <code>ALP</code>. The format specification marks <code>ALP</code> as Preview, and a column written with it can be read only by readers that implement it. The page cut charges each <code>ALP</code> value its width plus 2 bytes, the most a value can take, so an <code>ALP</code> page holds fewer values than a <code>PLAIN</code> page and stays within <code>pageTargetBytes</code>.</p>
 <p>No policy demands a dictionary; it is an outcome <code>AUTO</code> may arrive at. A <code>BOOLEAN</code> column is never dictionary-encoded, so <code>AUTO</code> resolves it to <code>PLAIN</code> whatever its values are.</p>
 <h2 id="compression-codecs">Compression Codecs<a class="headerlink" href="#compression-codecs" title="Permanent link">&para;</a></h2>
+<p>A <code>Compression</code> names the codec and, for the codecs that have them, a level. Each written codec has a factory:</p>
 <table>
 <thead>
 <tr>
+<th>Factory</th>
 <th>Codec</th>
-<th>Produced</th>
 <th>Library needed</th>
+<th>Levels</th>
+<th>Default level</th>
 </tr>
 </thead>
 <tbody>
 <tr>
+<td><code>Compression.uncompressed()</code></td>
 <td><code>UNCOMPRESSED</code></td>
-<td>yes</td>
+<td>—</td>
+<td>—</td>
 <td>—</td>
 </tr>
 <tr>
+<td><code>Compression.gzip()</code></td>
 <td><code>GZIP</code></td>
-<td>yes</td>
 <td>— (JDK)</td>
+<td>0 (stored, not compressed) to 9</td>
+<td>6</td>
 </tr>
 <tr>
+<td><code>Compression.snappy()</code></td>
 <td><code>SNAPPY</code></td>
-<td>yes</td>
 <td><code>org.xerial.snappy:snappy-java</code></td>
+<td>—</td>
+<td>—</td>
 </tr>
 <tr>
+<td><code>Compression.zstd()</code></td>
 <td><code>ZSTD</code></td>
-<td>yes</td>
 <td><code>com.github.luben:zstd-jni</code></td>
+<td>-131072 to 22; 0 selects the default</td>
+<td>3</td>
 </tr>
 <tr>
+<td><code>Compression.lz4Raw()</code></td>
 <td><code>LZ4_RAW</code></td>
-<td>yes</td>
 <td><code>at.yawk.lz4:lz4-java</code></td>
+<td>1 to 17, through LZ4's high compressor (LZ4 HC)</td>
+<td>LZ4's fast compressor</td>
 </tr>
 <tr>
+<td><code>Compression.brotli()</code></td>
 <td><code>BROTLI</code></td>
-<td>yes</td>
 <td><code>com.aayushatharva.brotli4j:brotli4j</code></td>
-</tr>
-<tr>
-<td><code>LZ4</code></td>
-<td>no</td>
-<td>—</td>
-</tr>
-<tr>
-<td><code>LZO</code></td>
-<td>no</td>
-<td>—</td>
+<td>0 to 11</td>
+<td>11</td>
 </tr>
 </tbody>
 </table>
-<p>A missing library, and either of the two refused codecs, fails when the writer is created rather than mid-file. <code>LZ4</code> and <code>LZO</code> are refused on write. <code>LZ4</code> files are read; <code>LZO</code> files are not.</p>
+<p><code>level(int)</code> on the factories of codecs with levels returns the codec at that level; a level outside the codec's range is rejected with <code>IllegalArgumentException</code>. A higher level writes a smaller file and takes longer to write; reading the file takes about as long at any level. The level is not recorded in the file.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">        </span><span class="p">.</span><span class="na">compression</span><span class="p">(</span><span class="n">Compression</span><span class="p">.</span><span class="na">zstd</span><span class="p">().</span><span class="na">level</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p><code>Compression.of(CompressionCodec)</code> returns a codec chosen at runtime at its default level. It refuses <code>LZ4</code> and <code>LZO</code> with <code>UnsupportedOperationException</code>: <code>LZ4</code> files are read but not written, and <code>LZO</code> files are neither read nor written. A missing library fails when the writer is created rather than mid-file.</p>
 <h2 id="physical-types-and-columnar-setters">Physical Types and Columnar Setters<a class="headerlink" href="#physical-types-and-columnar-setters" title="Permanent link">&para;</a></h2>
 <p>Every physical type Parquet defines is written except <code>INT96</code>, which is deprecated and rejected when the writer is created. Each <code>ColumnBatch</code> setter comes in four shapes: by index or name, all-present or nullable (a <code>Validity</code> or a <code>boolean[]</code> mask).</p>
 <table>
@@ -3117,11 +3222,65 @@
 <td><code>setFile</code></td>
 <td><code>PqFile</code></td>
 </tr>
+<tr>
+<td>any</td>
+<td>any</td>
+<td><code>setValue</code></td>
+<td>the form <code>getValue</code> returns, below</td>
+</tr>
 </tbody>
 </table>
 <p><code>ListBuilder</code> has the same set as <code>addInt</code>, <code>addString</code>, <code>addStruct</code>, <code>addFile</code>, <code>addNull</code>, … and <code>MapBuilder</code> has <code>addEntry</code>, whose entry struct declares the two fields <code>key</code> and <code>value</code>.</p>
 <p>A <code>FILE</code> group is set only through <code>setFile</code> / <code>addFile</code>; <code>setStruct</code> / <code>addStruct</code> on one throws. A group read from an existing file may declare fewer children, and a value setting a field the group has no child for is rejected. The columnar API writes a <code>FILE</code> group's children as ordinary columns, addressed as <code>photo.uri</code>, <code>photo.offset</code> and so on, and rejects a batch holding a present value that is not valid under the rules in <a href="../accessors/#file-groups">FILE groups</a>.</p>
 <p>Timestamp columns split by <code>isAdjustedToUTC</code>, mirroring the reader's split between <code>getTimestamp</code> and <code>getLocalTimestamp</code>: using the wrong setter throws. Both APIs also accept every setter by field index; see <a href="../../how-to/write-row-by-row/#addressing-fields-by-index">Addressing fields by index</a>.</p>
+<p><code>setValue(String, Object)</code> and <code>setValue(int, Object)</code> take the value in the form <code>getValue</code> returns for the field's type and write it through that type's setter, with its checks. A <code>null</code> sets the field null; a value of any other Java type fails with <code>IllegalArgumentException</code>, and nothing is converted.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th><code>setValue</code> takes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BOOLEAN</code>, <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code></td>
+<td><code>Boolean</code>, <code>Integer</code>, <code>Long</code>, <code>Float</code>, <code>Double</code></td>
+</tr>
+<tr>
+<td><code>INT32</code> annotated <code>INT(8, true)</code> / <code>INT(16, true)</code></td>
+<td><code>Byte</code> / <code>Short</code></td>
+</tr>
+<tr>
+<td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code></td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>DATE</code>, <code>TIME</code>, <code>DECIMAL</code>, <code>UUID</code>, <code>INTERVAL</code></td>
+<td><code>LocalDate</code>, <code>LocalTime</code>, <code>BigDecimal</code>, <code>UUID</code>, <code>PqInterval</code></td>
+</tr>
+<tr>
+<td><code>TIMESTAMP(isAdjustedToUTC = true / false)</code></td>
+<td><code>Instant</code> / <code>LocalDateTime</code></td>
+</tr>
+<tr>
+<td><code>FLOAT16</code></td>
+<td><code>Float</code>; a value without an exact half-precision representation is rejected</td>
+</tr>
+<tr>
+<td>other <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td><code>byte[]</code></td>
+</tr>
+<tr>
+<td><code>FILE</code> group</td>
+<td><code>PqFile</code></td>
+</tr>
+<tr>
+<td>struct group, <code>LIST</code>, <code>MAP</code></td>
+<td><code>PqStruct</code>, <code>PqList</code>, <code>PqMap</code></td>
+</tr>
+</tbody>
+</table>
+<p>A <code>PqStruct</code> is copied by name: each field the target struct declares takes the source's field of that name, a field the source lacks stays unset, and a source field the target does not declare is not written. A <code>PqList</code>'s elements and a <code>PqMap</code>'s entries are copied in order the same way. A <code>PqVariant</code> is rejected.</p>
 <p>A timestamp column's physical type sets the range of values it holds; its unit sets the precision on either:</p>
 <table>
 <thead>
@@ -3252,11 +3411,11 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"ARROW:schema"</span><span class="p">,</span><span class="w"> </span><span class="n">encodedArrowSchema</span><span class="p">);</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">().</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">));</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"row.count"</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="na">length</span><span class="p">));</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"ARROW:schema"</span><span class="p">,</span><span class="w"> </span><span class="n">encodedArrowSchema</span><span class="p">);</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">().</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">));</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"row.count"</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="na">length</span><span class="p">));</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="key-value-metadata">Key-value metadata<a class="headerlink" href="#key-value-metadata" title="Permanent link">&para;</a></h3>
 <p><code>key_value_metadata</code> is application-defined: Parquet does not interpret it, and the writer validates nothing beyond requiring a key. It is where <code>ARROW:schema</code>, the pandas descriptor, <code>org.apache.spark.sql.parquet.row.metadata</code> and the table-format stamps live.</p>
@@ -3264,7 +3423,7 @@
 <p>Reading the field back is covered in <a href="../../how-to/metadata/">Read File Metadata</a>.</p>
 <h3 id="created_by"><code>created_by</code><a class="headerlink" href="#created_by" title="Permanent link">&para;</a></h3>
 <p>The default identifier follows the convention Parquet readers parse, naming the library, its version and the build it came from:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>hardwood version &lt;version&gt; (build &lt;commit&gt;)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>hardwood version &lt;version&gt; (build &lt;commit&gt;)
 </code></pre></div>
 <p><code>ParquetFileWriter.DEFAULT_CREATED_BY</code> holds it. <code>createdBy(String)</code> replaces it; readers that key compatibility workarounds off this field expect the <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> shape, and a bare application name is rejected by some of them.</p>
 <h2 id="ending-a-row-group">Ending a Row Group<a class="headerlink" href="#ending-a-row-group" title="Permanent link">&para;</a></h2>
@@ -3354,11 +3513,11 @@
 <tbody>
 <tr>
 <td><code>UnsupportedOperationException</code></td>
-<td>A schema column of an unsupported physical type (<code>INT96</code>); a refused codec (<code>LZ4</code>, <code>LZO</code>), one whose library is missing, or one whose native library will not load; a <a href="#schema-shapes">schema shape</a> the writer cannot produce</td>
+<td>A schema column of an unsupported physical type (<code>INT96</code>); <code>Compression.of</code> given a refused codec (<code>LZ4</code>, <code>LZO</code>); a codec whose library is missing, or one whose native library will not load; a <a href="#schema-shapes">schema shape</a> the writer cannot produce</td>
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
-<td>A schema with no columns; a <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>FILE</code> value that is not valid, or that sets a field its group has no child for; a <code>REQUIRED</code> field left unset by a record; a record whose values for one column pass what a column chunk can hold; a Bloom filter configured for a <code>BOOLEAN</code> column, or with a false-positive probability outside (0, 1)</td>
+<td>A schema with no columns; a <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>FILE</code> value that is not valid, or that sets a field its group has no child for; a <code>REQUIRED</code> field left unset by a record; a record whose values for one column pass what a column chunk can hold; a Bloom filter configured for a <code>BOOLEAN</code> column, or with a false-positive probability outside (0, 1); a compression level outside the codec's range; a row out of the declared sort order; a sorting column naming no leaf column, a repeated one or one whose type has no defined order, or declared twice</td>
 </tr>
 <tr>
 <td><code>IndexOutOfBoundsException</code></td>
@@ -3439,8 +3598,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/db2372d81a1b4e909ab5231a814123a1223724d4" target="_blank" rel="noopener">
-      db2372d8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/850dafa71c5bc0f99ef0434db5d81d4f3a862772" target="_blank" rel="noopener">
+      850dafa7
     </a>
   
 </div>

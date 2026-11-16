@@ -306,6 +306,20 @@ annotation declares, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(
 <div class="col-last odd-row-color">
 <div class="block">Sets a <code>FIXED_LEN_BYTE_ARRAY(16)</code> field annotated <code>UUID</code>.</div>
 </div>
+<div class="col-first even-row-color"><code><a href="../StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StructBuilder.</span><code><a href="../StructBuilder.html#setValue(int,java.lang.Object)" class="member-name-link">setValue</a><wbr>(int&nbsp;fieldIndex,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Sets a field by index from a value whose type is known only at runtime.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StructBuilder.</span><code><a href="../StructBuilder.html#setValue(java.lang.String,java.lang.Object)" class="member-name-link">setValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sets a field from a value whose type is known only at runtime, in the form
+<a href="../../row/FieldAccessor.html#getValue(java.lang.String)"><code>FieldAccessor.getValue(String)</code></a> returns for the field's declared type,
+so a value read from one file can be written to another as it is:</div>
+</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../package-summary.html">dev.hardwood.writer</a> with type arguments of type <a href="../StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span></div>
 <div class="summary-table three-column-summary">
