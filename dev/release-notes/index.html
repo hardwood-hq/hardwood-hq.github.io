@@ -2297,6 +2297,7 @@
 <li>A <code>DATA_PAGE</code> whose repetition or definition levels are in the deprecated <code>BIT_PACKED</code> encoding is read correctly, instead of failing or returning wrong nulls and nesting (<a href="https://github.com/hardwood-hq/hardwood/issues/569">#569</a>)</li>
 <li>A read of a malformed file fails with <code>ParquetReadException</code> naming what is wrong, instead of an <code>ArrayIndexOutOfBoundsException</code>, <code>NullPointerException</code> or <code>IllegalStateException</code>, a stalled read or a wrong answer (<a href="https://github.com/hardwood-hq/hardwood/issues/1715">#1715</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1685">#1685</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1630">#1630</a>)</li>
 <li>A repetition or definition level above its column's maximum fails the read with <code>ParquetReadException</code>, instead of reading as a null or a value in no list (<a href="https://github.com/hardwood-hq/hardwood/issues/1685">#1685</a>)</li>
+<li>A read of a Variant column whose annotation declares a specification version other than 1 fails with <code>UnsupportedOperationException</code>, instead of decoding the column as version 1 (<a href="https://github.com/hardwood-hq/hardwood/issues/777">#777</a>)</li>
 </ul>
 <h2 id="110beta3-2026-10-21">1.1.0.Beta3 (2026-10-21)<a class="headerlink" href="#110beta3-2026-10-21" title="Permanent link">&para;</a></h2>
 <p><strong>Bug fixes:</strong></p>
@@ -2581,8 +2582,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/1745601e657b40b0a8c0444c9d4f6a22dcde66e3" target="_blank" rel="noopener">
-      1745601e
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b3fc8fbb795052fb8a9b852cade3a2db06637b5d" target="_blank" rel="noopener">
+      b3fc8fbb
     </a>
   
 </div>
