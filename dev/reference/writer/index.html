@@ -3483,7 +3483,7 @@
 </tr>
 </tbody>
 </table>
-<p>The writer fails when <code>ColumnWriter.writeBatch</code>, <code>RowWriter.writeRow</code> or <code>endRowGroup</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#rejected-input">Rejected Input</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. <code>RowWriter.tryWriteRow</code> fails the writer only on the exceptions listed under <a href="#rowwriteresult"><code>RowWriteResult</code></a>. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
+<p>The writer fails when <code>ColumnWriter.writeBatch</code>, <code>RowWriter.writeRow</code> or <code>endRowGroup</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#rejected-input">Rejected Input</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. <code>RowWriter.tryWriteRow</code> fails the writer only on the exceptions described under <a href="#rowwriteresult"><code>RowWriteResult</code></a>. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
 <p>A failure while <code>close()</code> finishes or publishes the file discards the output as well, and <code>close()</code> throws it. When the output cannot be discarded, <code>abort()</code> and <code>close()</code> on a failed writer throw the <code>IOException</code>; a failure while finishing or publishing carries it as a suppressed exception.</p>
 <h2 id="rowwriteresult"><code>RowWriteResult</code><a class="headerlink" href="#rowwriteresult" title="Permanent link">&para;</a></h2>
 <p><code>RowWriter.tryWriteRow</code> returns one of two members:</p>
@@ -3505,8 +3505,8 @@
 </tr>
 </tbody>
 </table>
-<p>A rejection that depends on the value handed over becomes <code>Rejected</code>: a value outside the range its annotation declares, a value whose magnitude or precision the column cannot hold under the configured <code>PrecisionLossPolicy</code>, a <code>FIXED_LEN_BYTE_ARRAY</code> value of the wrong length, a <code>PqFile</code> that is not a valid reference, sets a field its <code>FILE</code> group has no child for, or holds a malformed <code>checksum</code>, or a <code>REQUIRED</code> field left unset or set null.</p>
-<p>Every other failure throws and fails the writer, as it does under <code>writeRow</code>: an unknown field name or index, a field set twice, a setter that does not fit the field (including any value setter on a column annotated <code>UNKNOWN</code>), an exception thrown by the filler, and a failure while a completed batch is written.</p>
+<p>A rejection that depends on the value handed over becomes <code>Rejected</code>, such as a value outside the range its annotation declares, a value the column cannot hold under the configured <code>PrecisionLossPolicy</code>, or a <code>REQUIRED</code> field left unset or set null.</p>
+<p>Every other failure throws and fails the writer, as it does under <code>writeRow</code>: a defect in the calling code, such as an unknown field name or a setter that does not fit the field, an exception thrown by the filler, or a failure while a completed batch is written.</p>
 <h2 id="rejected-input">Rejected Input<a class="headerlink" href="#rejected-input" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -3518,11 +3518,11 @@
 <tbody>
 <tr>
 <td><code>UnsupportedOperationException</code></td>
-<td>A schema column of an unsupported physical type (<code>INT96</code>); <code>Compression.of</code> given a refused codec (<code>LZ4</code>, <code>LZO</code>); a codec whose library is missing, or one whose native library will not load; a <a href="#schema-shapes">schema shape</a> the writer cannot produce</td>
+<td>Something the writer does not produce, such as an <code>INT96</code> column, the <code>LZ4</code> or <code>LZO</code> codec, or a <a href="#schema-shapes">schema shape</a> outside what it writes. For a codec whose library is missing, the message names the dependency to add</td>
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
-<td>A schema with no columns; a <code>null</code> metadata key, metadata map or <code>created_by</code>; an unknown column name or path; a setter that does not fit the column's type; a <code>null</code> value array, or a <code>null</code> value at a present row of a binary column; a column set twice in one batch or record; a batch that leaves a column unset, or whose arrays disagree in length; a null mask on a <code>REQUIRED</code> column; a <code>boolean[]</code> mask whose length does not match the values; list offsets that do not start at <code>0</code>, are not non-decreasing, or disagree with the element count; a value outside the range its annotation declares; a <code>FILE</code> value that is not valid, or that sets a field its group has no child for; a <code>REQUIRED</code> field left unset by a record; a record whose values for one column pass what a column chunk can hold; a Bloom filter configured for a <code>BOOLEAN</code> column, or with a false-positive probability outside (0, 1); a compression level outside the codec's range; a row out of the declared sort order; a sorting column naming no leaf column, a repeated one or one whose type has no defined order, or declared twice</td>
+<td>The input does not fit the schema, or a configuration value lies outside what it accepts, such as a setter that does not fit the column's type, a column left unset or set twice, a value outside the range its annotation declares, a <code>REQUIRED</code> field a record leaves unset, a row out of the declared sort order, or a compression level outside the codec's range</td>
 </tr>
 <tr>
 <td><code>IndexOutOfBoundsException</code></td>
@@ -3530,7 +3530,7 @@
 </tr>
 <tr>
 <td><code>IllegalStateException</code></td>
-<td>Writing, ending a row group, or setting key-value metadata or <code>created_by</code>, after <code>close()</code>; writing after the writer has failed; using both write APIs on one file; ending a row group or closing the writer from inside a batch or record filler; using a <code>ColumnBatch</code> after it has been submitted, or a nested builder after its filler has returned; creating a writer on an <code>OutputFile</code> another writer has already used; taking <code>InMemoryOutputFile.buffer()</code> before the writer has closed, or from a destination that was discarded; flushing a row group after the <code>HardwoodContext</code> passed to <code>create</code> has been closed</td>
+<td>A call the writer's state does not allow at that point, such as a write after <code>close()</code> or after the writer has failed, using both write APIs on one file, or using a <code>ColumnBatch</code> after it has been submitted</td>
 </tr>
 <tr>
 <td><code>IOException</code></td>
@@ -3544,14 +3544,7 @@
 </table>
 <h3 id="schema-shapes">Schema Shapes<a class="headerlink" href="#schema-shapes" title="Permanent link">&para;</a></h3>
 <p>Repetition is writable wherever a <code>LIST</code> or <code>MAP</code> annotation accounts for it. An annotated group is <code>REQUIRED</code> or <code>OPTIONAL</code> and holds exactly one <code>REPEATED</code> entry, which for a <code>MAP</code> is a group of <code>key</code> and <code>value</code>. That admits the canonical three-level <code>LIST</code> and two-level <code>MAP</code> layouts <code>FileSchema.builder</code> declares, and the legacy two-level lists a schema read from an existing file may carry: <code>LIST { repeated element }</code>, whose entry is the element, and <code>LIST { repeated group element { … } }</code>, whose entry is an element struct.</p>
-<p>Every other arrangement of repetition is rejected when the writer is created, since nothing in the schema says where its entries begin and end:</p>
-<ul>
-<li>a <code>REPEATED</code> field, leaf or group, whose parent carries neither annotation;</li>
-<li>a <code>LIST</code> or <code>MAP</code> group that is itself <code>REPEATED</code>;</li>
-<li>a <code>LIST</code> or <code>MAP</code> group holding anything other than its single <code>REPEATED</code> entry;</li>
-<li>a <code>MAP</code> whose entry is a leaf rather than a group.</li>
-</ul>
-<p>A <code>FILE</code> group with no children is rejected with <code>UnsupportedOperationException</code> when the writer is created.</p>
+<p>Any other repetition is rejected with <code>UnsupportedOperationException</code> when the writer is created, as is a <code>FILE</code> group with no children.</p>
 <p>The row API reaches a list's values through an element node below the entry, which the legacy two-level lists do not have, so <code>rowWriter()</code> refuses those two shapes and <code>columnWriter()</code> writes them. <code>rowWriter()</code> also requires sibling field names to be unique, which the <code>ColumnBatch</code> indices and dotted paths do not.</p>
 <p>A column's maximum definition level and maximum repetition level must each be at most 255. A schema nested deeper is rejected with <code>UnsupportedOperationException</code> when the writer is created.</p>
 
@@ -3603,8 +3596,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b8b9d87d1a2bdb0605c994fa9045161b83f5e10c" target="_blank" rel="noopener">
-      b8b9d87d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c3fa8749f07dd8e29ad49331a9c8865a15ee922e" target="_blank" rel="noopener">
+      c3fa8749
     </a>
   
 </div>

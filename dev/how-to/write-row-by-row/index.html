@@ -2267,8 +2267,8 @@
 <a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="p">}</span>
 </code></pre></div>
-<p>With the schema above, a person whose <code>name</code> is <code>null</code> is skipped with the message <code>Field name is REQUIRED; it must be set to a non-null value in every record</code>, and <code>close()</code> publishes every other person.</p>
-<p>Which failures <code>tryWriteRow</code> returns as <code>Rejected</code>, and which still fail the writer, is listed under <a href="../../reference/writer/#rowwriteresult"><code>RowWriteResult</code></a>.</p>
+<p>With the schema above, a person whose <code>name</code> is <code>null</code> is skipped, with a message naming the field, and <code>close()</code> publishes every other person.</p>
+<p>Which failures <code>tryWriteRow</code> returns as <code>Rejected</code>, and which still fail the writer, is described under <a href="../../reference/writer/#rowwriteresult"><code>RowWriteResult</code></a>.</p>
 <h2 id="structs-lists-and-maps">Structs, Lists, and Maps<a class="headerlink" href="#structs-lists-and-maps" title="Permanent link">&para;</a></h2>
 <p>Nesting is entered with a filler per level. Fields are addressed by their user-visible names throughout — the synthetic <code>list.element</code> and <code>key_value</code> path segments Parquet's nested layout introduces never appear.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"person"</span><span class="p">)</span>
@@ -2427,8 +2427,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b8b9d87d1a2bdb0605c994fa9045161b83f5e10c" target="_blank" rel="noopener">
-      b8b9d87d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c3fa8749f07dd8e29ad49331a9c8865a15ee922e" target="_blank" rel="noopener">
+      c3fa8749
     </a>
   
 </div>

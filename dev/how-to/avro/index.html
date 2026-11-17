@@ -2157,7 +2157,7 @@
 <p>A key-only Parquet MAP, whose repeated <code>key_value</code> group has no value column, also maps to an Avro <code>map</code> with bare <code>null</code> values. Each decoded key is present in the Java map with a <code>null</code> value.</p>
 <p>A <code>repeated</code> field outside a <code>LIST</code> or <code>MAP</code> group is a required list of required elements, and maps to a non-nullable Avro <code>array</code> of the field's own type: <code>repeated int32 foo</code> becomes <code>array&lt;int&gt;</code>, a repeated group becomes an <code>array</code> of its record, and a repeated group whose only child is a repeated <code>MAP_KEY_VALUE</code> group becomes an <code>array</code> of Avro <code>map</code>s. Its values are <code>java.util.List</code> instances. Such a group converts as the row reader reads it, ignoring any <code>LIST</code>, <code>MAP</code> or <code>MAP_KEY_VALUE</code> annotation of its own (see <a href="../../reference/accessors/#legacy-list-encodings">Legacy list encodings</a>). Building an <code>AvroRowReader</code> whose projection includes a column of such a group annotated <code>VARIANT</code> fails with an error; a projection without its columns reads the rest of the file.</p>
 <p>A group carrying an annotation other than <code>LIST</code>, <code>MAP</code> or <code>VARIANT</code>, such as a <code>LIST</code> element group annotated <code>MAP_KEY_VALUE</code>, maps to an Avro record of its fields.</p>
-<p>Building an <code>AvroRowReader</code> fails with an error when a projected <code>LIST</code> group has no element field, a projected <code>MAP</code> group has no key field, or a projected <code>FIXED_LEN_BYTE_ARRAY</code> column declares no positive type length.</p>
+<p>Building an <code>AvroRowReader</code> fails with an error when a projected group or column is missing something its type needs, such as a <code>LIST</code> group with no element field. A projection that leaves that group or column out reads normally.</p>
 <h2 id="lifecycle">Lifecycle<a class="headerlink" href="#lifecycle" title="Permanent link">&para;</a></h2>
 <p><code>AvroRowReader</code> does <strong>not</strong> take ownership of the <code>ParquetFileReader</code> it wraps. Closing the <code>AvroRowReader</code> releases the inner readers, but the underlying <code>ParquetFileReader</code> must be closed separately by the caller.</p>
 <h2 id="schema-overrides">Schema overrides<a class="headerlink" href="#schema-overrides" title="Permanent link">&para;</a></h2>
@@ -2211,8 +2211,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b8b9d87d1a2bdb0605c994fa9045161b83f5e10c" target="_blank" rel="noopener">
-      b8b9d87d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c3fa8749f07dd8e29ad49331a9c8865a15ee922e" target="_blank" rel="noopener">
+      c3fa8749
     </a>
   
 </div>

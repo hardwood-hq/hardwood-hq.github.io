@@ -2300,6 +2300,7 @@
 <li>A read of a Variant column whose annotation declares a specification version other than 1 fails with <code>UnsupportedOperationException</code>, instead of decoding the column as version 1 (<a href="https://github.com/hardwood-hq/hardwood/issues/777">#777</a>)</li>
 <li><code>getValue</code> on an <code>INT(8)</code> or <code>INT(16)</code> column fails with <code>ParquetReadException</code> on a stored value outside the annotation's range instead of returning its low bits (<a href="https://github.com/hardwood-hq/hardwood/issues/1803">#1803</a>)</li>
 <li><code>hardwood print</code> and <code>dive</code> show a value outside its <code>INT(8)</code> or <code>INT(16)</code> range, or a <code>TIME</code> outside a day, as a marker, and <code>hardwood convert</code> fails on it (<a href="https://github.com/hardwood-hq/hardwood/issues/1803">#1803</a>)</li>
+<li>In a GraalVM native image, a read failure keeps the exception type it has on the JVM instead of losing it; an exception of the application's own type, such as one a <code>MetadataSource</code> throws, reaches the caller as the cause of a <code>RuntimeException</code> naming the file, on the JVM and in a native image (<a href="https://github.com/hardwood-hq/hardwood/issues/1803">#1803</a>)</li>
 </ul>
 <h2 id="110beta3-2026-10-21">1.1.0.Beta3 (2026-10-21)<a class="headerlink" href="#110beta3-2026-10-21" title="Permanent link">&para;</a></h2>
 <p><strong>Bug fixes:</strong></p>
@@ -2584,8 +2585,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b8b9d87d1a2bdb0605c994fa9045161b83f5e10c" target="_blank" rel="noopener">
-      b8b9d87d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c3fa8749f07dd8e29ad49331a9c8865a15ee922e" target="_blank" rel="noopener">
+      c3fa8749
     </a>
   
 </div>

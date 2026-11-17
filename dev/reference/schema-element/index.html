@@ -2258,38 +2258,7 @@
 </code></pre></div>
 <p><code>typeLength</code> can be <code>null</code> in raw footer metadata. A writer must provide a positive length for a <code>FIXED_LEN_BYTE_ARRAY</code> column. A data reader also needs this length to decode its values. <code>ParquetFileWriter.create</code> refuses a schema from <code>fromSchemaElements</code> that has a <code>FIXED_LEN_BYTE_ARRAY</code> column without a positive length, a <code>REQUIRED</code> column annotated <code>UNKNOWN</code>, or another annotation the writer cannot write, as <code>FileSchema.Builder</code> refuses them.</p>
 <h2 id="errors">Errors<a class="headerlink" href="#errors" title="Permanent link">&para;</a></h2>
-<p>The factories throw <code>IllegalArgumentException</code> for these inputs:</p>
-<table>
-<thead>
-<tr>
-<th>Condition</th>
-<th>Factory</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>repetition</code> is <code>null</code></td>
-<td><code>group</code>, <code>primitive</code>, <code>fixedLengthPrimitive</code></td>
-</tr>
-<tr>
-<td><code>type</code> is <code>null</code></td>
-<td><code>primitive</code></td>
-</tr>
-<tr>
-<td><code>type</code> is <code>FIXED_LEN_BYTE_ARRAY</code></td>
-<td><code>primitive</code></td>
-</tr>
-<tr>
-<td><code>numChildren</code> is negative</td>
-<td><code>group</code>, <code>root</code></td>
-</tr>
-<tr>
-<td><code>typeLength</code> is zero or less</td>
-<td><code>fixedLengthPrimitive</code></td>
-</tr>
-</tbody>
-</table>
-<p>A factory checks one element; <code>fromSchemaElements</code> checks the complete list.</p>
+<p>A factory throws <code>IllegalArgumentException</code> when its arguments cannot describe a valid element, such as a <code>null</code> repetition, or a <code>FIXED_LEN_BYTE_ARRAY</code> type passed to <code>primitive</code> instead of <code>fixedLengthPrimitive</code>. A factory checks one element; <code>fromSchemaElements</code> checks the complete list.</p>
 <h2 id="canonical-constructor">Canonical constructor<a class="headerlink" href="#canonical-constructor" title="Permanent link">&para;</a></h2>
 <p>The record constructor takes the components in Hardwood record-component order:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">new</span><span class="w"> </span><span class="n">SchemaElement</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="p">,</span><span class="w"> </span><span class="n">typeLength</span><span class="p">,</span><span class="w"> </span><span class="n">repetitionType</span><span class="p">,</span><span class="w"> </span>
@@ -2373,8 +2342,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b8b9d87d1a2bdb0605c994fa9045161b83f5e10c" target="_blank" rel="noopener">
-      b8b9d87d
+    <a href="https://github.com/hardwood-hq/hardwood/tree/c3fa8749f07dd8e29ad49331a9c8865a15ee922e" target="_blank" rel="noopener">
+      c3fa8749
     </a>
   
 </div>
