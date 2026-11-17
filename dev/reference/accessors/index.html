@@ -2496,10 +2496,10 @@ holds, whatever it is annotated with. <code>getInt</code> reads a <code>DATE</co
 <code>FLOAT16</code>, a <code>TIMESTAMP</code> over <code>FIXED_LEN_BYTE_ARRAY(12)</code>, a <code>BSON</code> and a <code>GEOMETRY</code> or <code>GEOGRAPHY</code>
 payload. Use them to skip the logical-type
 decode — see <a href="../../how-to/row-reader/#reading-the-physical-value">Reading the physical value</a>.</p>
-<p><code>getValue</code> on a signed <code>INT(8)</code> or <code>INT(16)</code> column returns a <code>Byte</code> or a <code>Short</code>. A file can
-store a value outside the range its annotation states: <code>getValue</code> keeps the low 8 or 16 bits of
-such a value, so a stored <code>1000</code> reads as the <code>Byte</code> <code>-24</code>, while <code>getInt</code> returns it as stored.
-On an unsigned <code>INT(8)</code> or <code>INT(16)</code> column <code>getValue</code> returns the stored <code>Integer</code>. Filter
+<p><code>getValue</code> on a signed <code>INT(8)</code> or <code>INT(16)</code> column returns a <code>Byte</code> or a <code>Short</code>, and on an
+unsigned one the stored <code>Integer</code>. A file can store a value outside the range its annotation
+states (a stored <code>1000</code> on an <code>INT(8)</code> column): <code>getValue</code> fails on such a value with a
+<code>ParquetReadException</code> naming the value and the range, while <code>getInt</code> returns it as stored. Filter
 predicates compare the value <code>getInt</code> returns.</p>
 <h2 id="generic-accessors">Generic accessors<a class="headerlink" href="#generic-accessors" title="Permanent link">&para;</a></h2>
 <p>When the column type is not known ahead of time, the generic accessors return values decoded to
@@ -2927,8 +2927,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b3fc8fbb795052fb8a9b852cade3a2db06637b5d" target="_blank" rel="noopener">
-      b3fc8fbb
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5cd430499141b53cd26e46b72fa2e421190a88b3" target="_blank" rel="noopener">
+      5cd43049
     </a>
   
 </div>

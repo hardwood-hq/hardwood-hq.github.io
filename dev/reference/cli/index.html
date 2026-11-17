@@ -2716,8 +2716,16 @@ value or a key-value metadata key renders as <code>·</code>, and a value or key
 entirely of control characters as <code>0x</code>-prefixed hex of its UTF-8 bytes.</p>
 <p>A min/max statistic or dictionary entry that does not decode as its type
 renders in its stored form: bytes whose length does not match the type as
-<code>0x</code>-prefixed hex, a <code>TIME</code> outside a day as its stored integer. A malformed
-<code>UUID</code>, <code>INTERVAL</code> or <code>INT96</code> value in a row makes <code>print</code> and <code>convert</code> fail.</p>
+<code>0x</code>-prefixed hex, a <code>TIME</code> outside a day or an <code>INT(8)</code> / <code>INT(16)</code> outside its
+bit width as its stored integer. A malformed <code>UUID</code>, <code>INTERVAL</code> or <code>INT96</code> value
+in a row makes <code>print</code> and <code>convert</code> fail.</p>
+<p>A row value its annotation does not admit, a <code>TIME</code> outside a day or an <code>INT(8)</code> /
+<code>INT(16)</code> outside its bit width, renders in <code>print</code> and <code>dive</code> as a marker naming the
+stored value and the reason, such as <code>&lt;300: outside INT_8 range&gt;</code> or
+<code>&lt;86400000: outside a day&gt;</code>; an unsigned <code>INT</code> shows its unsigned value. A shredded
+<code>VARIANT</code> whose <code>INT(8)</code> / <code>INT(16)</code> value lies outside its bit width renders as
+<code>&lt;variant: 300 outside INT_8 range&gt;</code>. The rest of the row renders as usual. <code>convert</code> fails on such a value, naming the file and the
+column.</p>
 <h2 id="schema-output-formats">Schema output formats<a class="headerlink" href="#schema-output-formats" title="Permanent link">&para;</a></h2>
 <p><code>hardwood schema</code> prints the Parquet schema in its native form by default.
 <code>-F AVRO</code> and <code>-F PROTO</code> render it as an Avro schema or a Protobuf message
@@ -3139,8 +3147,8 @@ filter applied but exits edit mode).</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/b3fc8fbb795052fb8a9b852cade3a2db06637b5d" target="_blank" rel="noopener">
-      b3fc8fbb
+    <a href="https://github.com/hardwood-hq/hardwood/tree/5cd430499141b53cd26e46b72fa2e421190a88b3" target="_blank" rel="noopener">
+      5cd43049
     </a>
   
 </div>
