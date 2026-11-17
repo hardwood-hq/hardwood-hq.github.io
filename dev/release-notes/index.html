@@ -2288,6 +2288,7 @@
 <ul>
 <li>A shredded Variant row that sets both <code>value</code> and <code>typed_value</code> for a value that is not an object fails the read with <code>ParquetReadException</code>, instead of reading <code>typed_value</code> and dropping <code>value</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/315">#315</a>)</li>
 <li>An array element of a shredded Variant whose shredded object is null reads its <code>value</code>, such as a Variant <code>NULL</code>, instead of failing the read (<a href="https://github.com/hardwood-hq/hardwood/issues/315">#315</a>)</li>
+<li>An array element of a shredded Variant whose shredded object is present with no fields set reads as an empty object instead of Variant <code>NULL</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/315">#315</a>)</li>
 <li>An S3 response body that sends no bytes for <code>requestTimeout</code> fails its request, which is retried, instead of blocking the read without bound (<a href="https://github.com/hardwood-hq/hardwood/issues/1393">#1393</a>)</li>
 <li>An S3 read fails with <code>ParquetReadException</code> when the object was replaced since the file was opened, and opening an S3 file fails when the endpoint ignores the <code>Range</code> header of an object larger than the open-time tail (<a href="https://github.com/hardwood-hq/hardwood/issues/1686">#1686</a>)</li>
 <li>An S3 range read whose connection fails midway re-requests only the bytes not yet received, within the retry budget (<a href="https://github.com/hardwood-hq/hardwood/issues/1666">#1666</a>)</li>
@@ -2580,8 +2581,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/9386ced86a79bb5eaf33b66c84e40b291231ccff" target="_blank" rel="noopener">
-      9386ced8
+    <a href="https://github.com/hardwood-hq/hardwood/tree/1745601e657b40b0a8c0444c9d4f6a22dcde66e3" target="_blank" rel="noopener">
+      1745601e
     </a>
   
 </div>
