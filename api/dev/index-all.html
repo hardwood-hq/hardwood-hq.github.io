@@ -679,7 +679,9 @@ file at the destination.</div>
 <dt><a href="dev/hardwood/jfr/PageFilterEvent.html#column" class="member-name-link">column</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PageFilterEvent.html" title="class in dev.hardwood.jfr">PageFilterEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/PrefetchMissEvent.html#column" class="member-name-link">column</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PrefetchMissEvent.html" title="class in dev.hardwood.jfr">PrefetchMissEvent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupScannedEvent.html#column" class="member-name-link">column</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupScannedEvent.html" title="class in dev.hardwood.jfr">RowGroupScannedEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/reader/FilterPredicate.BinaryColumnPredicate.html#column()" class="member-name-link">column()</a> - Method in record class dev.hardwood.reader.<a href="dev/hardwood/reader/FilterPredicate.BinaryColumnPredicate.html" title="class in dev.hardwood.reader">FilterPredicate.BinaryColumnPredicate</a></dt>
@@ -1916,7 +1918,9 @@ Variants, or absent.</div>
 <dt><a href="dev/hardwood/jfr/PageFilterEvent.html#file" class="member-name-link">file</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PageFilterEvent.html" title="class in dev.hardwood.jfr">PageFilterEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/PrefetchMissEvent.html#file" class="member-name-link">file</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PrefetchMissEvent.html" title="class in dev.hardwood.jfr">PrefetchMissEvent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RecordFilterEvent.html#file" class="member-name-link">file</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RecordFilterEvent.html" title="class in dev.hardwood.jfr">RecordFilterEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/jfr/RowGroupBloomFilterEvent.html#file" class="member-name-link">file</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/RowGroupBloomFilterEvent.html" title="class in dev.hardwood.jfr">RowGroupBloomFilterEvent</a></dt>
@@ -4349,7 +4353,9 @@ against the context reads.</div>
 <div class="block">Number of HTTP requests issued against the object since <a href="dev/hardwood/s3/S3InputFile.html#open()"><code>S3InputFile.open()</code></a>.</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/PrefetchMissEvent.html#newDepth" class="member-name-link">newDepth</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PrefetchMissEvent.html" title="class in dev.hardwood.jfr">PrefetchMissEvent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</dd>
 <dt><a href="dev/hardwood/avro/AvroRowReader.html#next()" class="member-name-link">next()</a> - Method in class dev.hardwood.avro.<a href="dev/hardwood/avro/AvroRowReader.html" title="class in dev.hardwood.avro">AvroRowReader</a></dt>
 <dd>
 <div class="block">Advance to the next row and return it as a GenericRecord.</div>
@@ -4939,10 +4945,15 @@ a <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/mat
 </dd>
 <dt><a href="dev/hardwood/jfr/PrefetchMissEvent.html" class="type-name-link" title="class in dev.hardwood.jfr">PrefetchMissEvent</a> - Class in <a href="dev/hardwood/jfr/package-summary.html">dev.hardwood.jfr</a></dt>
 <dd>
-<div class="block">JFR event emitted when the prefetch queue cannot supply a decoded page in time.</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
+<div class="deprecation-comment">Hardwood never emits this event; it will be removed in the next major release.
+Use <a href="dev/hardwood/jfr/BatchWaitEvent.html" title="class in dev.hardwood.jfr"><code>BatchWaitEvent</code></a> to observe the consumer's stalls.</div>
+</div>
 </dd>
 <dt><a href="dev/hardwood/jfr/PrefetchMissEvent.html#%3Cinit%3E()" class="member-name-link">PrefetchMissEvent()</a> - Constructor for class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PrefetchMissEvent.html" title="class in dev.hardwood.jfr">PrefetchMissEvent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">primitive(PhysicalType, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
 <dd>
 <div class="block">Declare a primitive element.</div>
@@ -4989,7 +5000,9 @@ length of a <code>FIXED_LEN_BYTE_ARRAY</code> element.</div>
 <h2 class="title" id="I:Q">Q</h2>
 <dl class="index">
 <dt><a href="dev/hardwood/jfr/PrefetchMissEvent.html#queueEmpty" class="member-name-link">queueEmpty</a> - Variable in class dev.hardwood.jfr.<a href="dev/hardwood/jfr/PrefetchMissEvent.html" title="class in dev.hardwood.jfr">PrefetchMissEvent</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
 <dl class="index">
