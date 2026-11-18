@@ -2100,7 +2100,7 @@
 
 -->
 <h1 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h1>
-<p>Retrying a failed read may succeed after an <code>IOException</code>, and will not after any other exception.</p>
+<p>Retrying a failed read may succeed after an <code>IOException</code>, or with a larger maximum heap after a <code>ParquetReadException</code> that names the memory the read needs, and will not after any other exception.</p>
 <h2 id="the-read-failed">The read failed<a class="headerlink" href="#the-read-failed" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
@@ -2120,7 +2120,7 @@
 </tr>
 <tr>
 <td><code>ParquetReadException</code></td>
-<td>They arrived and are not valid Parquet: part of the file is corrupt or breaks the format, such as a footer that does not parse, a page that fails its checksum, or a value outside what its type allows. Raised when the read reaches the invalid part (on open, when building a reader, or when reading the value), so what the read returned before that point was read normally. An S3 object replaced since the file was opened fails the same way (see <a href="../s3/#footer-pre-fetch">Footer pre-fetch</a>; opening the file again reads the new version). When the context's <code>MetadataSource</code> supplied the file's footer, the file may have been rewritten since that footer was read, in a way the checks behind <code>StaleMetadataException</code> do not detect; the message then says so, and evicting that footer and opening a new reader reads the file afresh. Unchecked</td>
+<td>They arrived and are not valid Parquet: part of the file is corrupt or breaks the format, such as a footer that does not parse, a page that fails its checksum, or a value outside what its type allows. Raised when the read reaches the invalid part (on open, when building a reader, or when reading the value), so what the read returned before that point was read normally. An S3 object replaced since the file was opened fails the same way (see <a href="../s3/#footer-pre-fetch">Footer pre-fetch</a>; opening the file again reads the new version). When the context's <code>MetadataSource</code> supplied the file's footer, the file may have been rewritten since that footer was read, in a way the checks behind <code>StaleMetadataException</code> do not detect; the message then says so, and evicting that footer and opening a new reader reads the file afresh. A read that would need more memory than the maximum heap usually fails the same way before allocating it, and can run out of memory instead; the message names the bytes needed and the limit. Unchecked</td>
 </tr>
 <tr>
 <td><code>SchemaIncompatibleException</code></td>
@@ -2129,6 +2129,10 @@
 <tr>
 <td><code>UnsupportedOperationException</code></td>
 <td>The file is correct and Hardwood cannot read it, such as Parquet Modular Encryption, an encoding not implemented or a compression codec whose library is absent. The message names what is not supported, and for an absent codec library the dependency to add. When only one column uses the unsupported feature, a read that leaves that column out of its projection reads the other columns</td>
+</tr>
+<tr>
+<td><code>OutOfMemoryError</code></td>
+<td>The heap ran out during a read. Hardwood checks each read's memory on its own, not together with other reads or what the application holds. Raised by the call that reads from the reader; Hardwood makes no promise about the reader or its context afterwards. For reading files from untrusted sources, see the <a href="https://github.com/hardwood-hq/hardwood/blob/main/SECURITY.md#threat-model">threat model</a></td>
 </tr>
 </tbody>
 </table>
@@ -2239,8 +2243,8 @@ the schema path of the offending group or column, not the file.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/4a7822d96369a9f6b6e0276f2c9791bfc1e63e1a" target="_blank" rel="noopener">
-      4a7822d9
+    <a href="https://github.com/hardwood-hq/hardwood/tree/f526c8fa9e6182692b6c638c83457fdeb6f79266" target="_blank" rel="noopener">
+      f526c8fa
     </a>
   
 </div>
