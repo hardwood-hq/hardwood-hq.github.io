@@ -2315,6 +2315,7 @@
 <p><strong>Bug fixes:</strong></p>
 <ul>
 <li>A read whose decode runs out of heap raises the <code>OutOfMemoryError</code> to its caller instead of hanging (<a href="https://github.com/hardwood-hq/hardwood/issues/1841">#1841</a>)</li>
+<li>A page storing more bytes than the read's memory limit fails the read with <code>ParquetReadException</code> before it is decoded, and before it is fetched where the file's page index locates it, instead of running out of heap or, on S3, direct memory (<a href="https://github.com/hardwood-hq/hardwood/issues/1842">#1842</a>)</li>
 <li>A shredded Variant row that sets both <code>value</code> and <code>typed_value</code> for a value that is not an object fails the read with <code>ParquetReadException</code>, instead of reading <code>typed_value</code> and dropping <code>value</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/315">#315</a>)</li>
 <li>An array element of a shredded Variant whose shredded object is null reads its <code>value</code>, such as a Variant <code>NULL</code>, instead of failing the read (<a href="https://github.com/hardwood-hq/hardwood/issues/315">#315</a>)</li>
 <li>An array element of a shredded Variant whose shredded object is present with no fields set reads as an empty object instead of Variant <code>NULL</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/315">#315</a>)</li>
@@ -2614,8 +2615,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/090f18cbd822e59d5f86de7c8c5c896f732b8198" target="_blank" rel="noopener">
-      090f18cb
+    <a href="https://github.com/hardwood-hq/hardwood/tree/d8f3e5da9c454dd7f0f56d06187204edb90b2011" target="_blank" rel="noopener">
+      d8f3e5da
     </a>
   
 </div>
