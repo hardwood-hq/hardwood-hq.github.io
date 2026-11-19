@@ -2238,17 +2238,7 @@
 <td>No</td>
 </tr>
 <tr>
-<td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code>, <code>BSON</code>, <code>UUID</code>, <code>DATE</code>, <code>TIME</code>, <code>TIMESTAMP</code>, <code>DECIMAL</code>, <code>INTERVAL</code>, <code>FLOAT16</code>, <code>UNKNOWN</code>, signed and unsigned <code>INT</code></td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td><code>GEOMETRY</code>, <code>GEOGRAPHY</code></td>
-<td>Yes</td>
-<td>Yes</td>
-</tr>
-<tr>
-<td><code>FILE</code></td>
+<td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code>, <code>BSON</code>, <code>UUID</code>, <code>DATE</code>, <code>TIME</code>, <code>TIMESTAMP</code>, <code>DECIMAL</code>, <code>INTERVAL</code>, <code>FLOAT16</code>, <code>UNKNOWN</code>, signed and unsigned <code>INT</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code></td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
@@ -2263,7 +2253,7 @@
 <td>No (<a href="https://github.com/hardwood-hq/hardwood/issues/1837">#1837</a>)</td>
 </tr>
 <tr>
-<td><code>LIST</code>, <code>MAP</code> and structs, nested</td>
+<td><code>LIST</code>, <code>MAP</code>, <code>FILE</code> and structs, nested</td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
@@ -2316,7 +2306,17 @@
 <td>No</td>
 </tr>
 <tr>
-<td><code>DELTA_BINARY_PACKED</code>, <code>DELTA_LENGTH_BYTE_ARRAY</code>, <code>DELTA_BYTE_ARRAY</code></td>
+<td><code>DELTA_BINARY_PACKED</code></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>DELTA_LENGTH_BYTE_ARRAY</code></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>DELTA_BYTE_ARRAY</code></td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
@@ -2344,7 +2344,32 @@
 </thead>
 <tbody>
 <tr>
-<td><code>UNCOMPRESSED</code>, <code>GZIP</code>, <code>SNAPPY</code>, <code>ZSTD</code>, <code>LZ4_RAW</code>, <code>BROTLI</code></td>
+<td><code>UNCOMPRESSED</code></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>GZIP</code></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>SNAPPY</code></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>ZSTD</code></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>LZ4_RAW</code></td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><code>BROTLI</code></td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
@@ -2372,7 +2397,12 @@
 </thead>
 <tbody>
 <tr>
-<td>Data pages V1 and V2</td>
+<td>Data pages V1</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Data pages V2</td>
 <td>Yes</td>
 <td>Yes</td>
 </tr>
@@ -2576,8 +2606,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3836cad68c8136fec9a2d06ca59e23c79ce8c25f" target="_blank" rel="noopener">
-      3836cad6
+    <a href="https://github.com/hardwood-hq/hardwood/tree/090f18cbd822e59d5f86de7c8c5c896f732b8198" target="_blank" rel="noopener">
+      090f18cb
     </a>
   
 </div>
