@@ -1649,6 +1649,34 @@
   
   
     <li class="md-nav__item">
+      <a href="reference/format-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Format Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="reference/accessors/" class="md-nav__link">
         
   
@@ -2206,12 +2234,29 @@ The write path ships both APIs described under <a href="how-to/#choosing-a-write
 <p>Writing targets local files through <code>OutputFile.of(Path)</code>, the heap through <code>OutputFile.inMemory()</code>, and S3 through <code>S3Source.outputFile(...)</code> (<a href="reference/s3/#writing">S3 writing</a>).
 Reads have no file-size ceiling, but a column chunk read without an OffsetIndex is capped at 2 GB, and some backends carry their own limits; see <a href="reference/reader/#limits">Limits</a>.</p>
 <h2 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">&para;</a></h2>
-<p>Forward-looking items, none committed to a specific release.</p>
+<p>1.1, in its release candidate phase:</p>
 <ul>
-<li><strong>Finalize <code>ColumnReader</code> API</strong> — stabilize the API for columnar access and move it out of "Experimental" state. (<a href="https://github.com/hardwood-hq/hardwood/issues/522">#522</a>)</li>
-<li><strong>Parquet Modular Encryption</strong> — read files encrypted under the Parquet <a href="https://github.com/apache/parquet-format/blob/master/Encryption.md">Modular Encryption spec</a>: encrypted footer, per-column keys, AES-GCM and AES-GCM-CTR. (<a href="https://github.com/hardwood-hq/hardwood/issues/128">#128</a>)</li>
-<li><strong>Apache Arrow interop</strong> — <code>ColumnReader</code> output as Arrow <code>FieldVector</code> / <code>VectorSchemaRoot</code> for zero-copy handoff to DuckDB, DataFusion, Pandas-via-JNI, and other Arrow-native consumers. (<a href="https://github.com/hardwood-hq/hardwood/issues/153">#153</a>)</li>
+<li><strong>Write support</strong>: <code>RowWriter</code> and <code>ColumnWriter</code> over nested structs, lists and maps, with the types, encodings and codecs listed in <a href="reference/format-support/">Format Support</a>, statistics, page indexes and Bloom filters, written to local files, memory or S3, with column chunks encoded in parallel. (<a href="https://github.com/hardwood-hq/hardwood/issues/9">#9</a>)</li>
+<li><strong>Substantially improved read performance</strong>: a rebuilt read engine that decodes every column on the context's pool, structs read without nested record assembly, and dictionary-encoded batches on <code>ColumnReader</code>.</li>
+<li><strong>Remote reads with fewer requests</strong>: a file's footer and page index fetched with the request that opens it, later files of a multi-file read opened ahead, and parsed footers reused across readers through a <code>MetadataSource</code>.</li>
+<li><strong>More predicate pushdown</strong>: row groups skipped by Bloom filters and dictionary pages, predicates on dictionary-encoded columns evaluated once per dictionary entry, and null tests on struct, <code>LIST</code> and <code>MAP</code> groups.</li>
+<li><strong>A reworked exception model</strong>: a corrupt file raises <code>ParquetReadException</code>, and a read failure names the file and, where it has them, the row group and column it occurred in.</li>
+<li><strong>Hardened reads of untrusted files</strong>: a size, count or length a file's bytes cannot back fails the read before anything is allocated from it. (<a href="https://github.com/hardwood-hq/hardwood/issues/610">#610</a>)</li>
+<li><strong>New format features</strong>: the <code>ALP</code> encoding, read and written, <code>TIMESTAMP</code> over <code>FIXED_LEN_BYTE_ARRAY(12)</code>, and the <code>FILE</code> logical type.</li>
 </ul>
+<p>Planned for 1.2:</p>
+<ul>
+<li><strong>Parquet Modular Encryption</strong>: read files encrypted under the <a href="https://github.com/apache/parquet-format/blob/master/Encryption.md">Modular Encryption spec</a>. (<a href="https://github.com/hardwood-hq/hardwood/issues/128">#128</a>)</li>
+<li><strong>Bounded read memory</strong>: a heap quota per <code>HardwoodContext</code>, shared by the reads using it. (<a href="https://github.com/hardwood-hq/hardwood/issues/1859">#1859</a>)</li>
+<li><strong>Copying and rewriting files</strong>: copy a file through the column and row APIs without a hand-written bridge, and rewrite or merge files by copying unchanged row groups. (<a href="https://github.com/hardwood-hq/hardwood/issues/1291">#1291</a>)</li>
+<li><strong>Complete Variant support</strong>: writing Variant columns, and predicate pushdown and projection on shredded Variant paths. (<a href="https://github.com/hardwood-hq/hardwood/issues/1488">#1488</a>)</li>
+<li><strong>Stable <code>ColumnReader</code> API</strong>: move columnar access out of <code>@Experimental</code>. (<a href="https://github.com/hardwood-hq/hardwood/issues/522">#522</a>)</li>
+</ul>
+<p>Planned for a later release:</p>
+<ul>
+<li><strong>Apache Arrow interop</strong>: <code>ColumnReader</code> output as Arrow <code>FieldVector</code> / <code>VectorSchemaRoot</code>. (<a href="https://github.com/hardwood-hq/hardwood/issues/153">#153</a>)</li>
+</ul>
+<p>See the <a href="https://github.com/hardwood-hq/hardwood/milestones">GitHub milestones</a> for the issues of past and upcoming releases, and <a href="reference/format-support/">Format Support</a> for the parts of the Parquet format Hardwood reads and writes.</p>
 <h2 id="getting-help">Getting help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
 <p>Ask questions on <a href="https://github.com/hardwood-hq/hardwood/discussions">GitHub Discussions</a> and file bugs on the <a href="https://github.com/hardwood-hq/hardwood/issues">issue tracker</a>; see <a href="contributing/">Contributing</a>.</p>
 <h2 id="articles-talks-podcasts">Articles, talks &amp; podcasts<a class="headerlink" href="#articles-talks-podcasts" title="Permanent link">&para;</a></h2>
@@ -2272,8 +2317,8 @@ Reads have no file-size ceiling, but a column chunk read without an OffsetIndex 
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/3b82d0899c55c10ce9b12ce78e92a76318804f70" target="_blank" rel="noopener">
-      3b82d089
+    <a href="https://github.com/hardwood-hq/hardwood/tree/3836cad68c8136fec9a2d06ca59e23c79ce8c25f" target="_blank" rel="noopener">
+      3836cad6
     </a>
   
 </div>
