@@ -1596,6 +1596,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#field-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field ids
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#logical-type-factories" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2282,6 +2293,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#field-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field ids
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#logical-type-factories" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2623,6 +2645,7 @@
 <p><code>close()</code> and <code>discard()</code> on a published or discarded file, and <code>close()</code> on an uncreated one, call nothing. A subclass that hands out the finished file checks for it with <code>requireClosed()</code>.</p>
 <h2 id="schema">Schema<a class="headerlink" href="#schema" title="Permanent link">&para;</a></h2>
 <p>A file's schema is declared with <code>FileSchema.builder(String)</code> and built once; the same <code>FileSchema</code> is passed to <code>ParquetFileWriter.create</code>. Every method appends one field in declaration order, which is also the order the leaf-column indices follow.</p>
+<p><code>FileSchema.builder(String, Consumer&lt;FileSchema.StructBuilder&gt;)</code> declares the root's fields on a <code>StructBuilder</code>, the type a nested <code>struct</code> is declared on, so one method can declare the fields of the root and of every struct. The returned builder takes further fields before <code>build()</code>.</p>
 <table>
 <thead>
 <tr>
@@ -2632,20 +2655,12 @@
 </thead>
 <tbody>
 <tr>
-<td><code>addColumn(name, type, repetition)</code></td>
+<td><code>primitive(name, type, repetition)</code></td>
 <td>a primitive column</td>
 </tr>
 <tr>
-<td><code>addColumn(name, type, repetition, logicalType)</code></td>
-<td>a primitive column carrying an annotation; a <code>FIXED_LEN_BYTE_ARRAY</code> column takes the length the annotation implies</td>
-</tr>
-<tr>
-<td><code>addColumn(name, type, repetition, typeLength)</code></td>
-<td>a <code>FIXED_LEN_BYTE_ARRAY</code> column of the given byte length</td>
-</tr>
-<tr>
-<td><code>addColumn(name, type, repetition, typeLength, logicalType)</code></td>
-<td>both of the above</td>
+<td><code>primitive(name, type, repetition, column)</code></td>
+<td>a primitive column whose optional attributes <code>column</code> sets on a <code>FileSchema.PrimitiveBuilder</code></td>
 </tr>
 <tr>
 <td><code>struct(name, repetition, filler)</code></td>
@@ -2656,12 +2671,20 @@
 <td>a <code>FILE</code> group with all six children, each <code>OPTIONAL</code>, in the order <code>uri</code>, <code>offset</code>, <code>size</code>, <code>content_type</code>, <code>checksum</code>, <code>inline</code> (see <a href="../accessors/#file-groups">FILE groups</a>)</td>
 </tr>
 <tr>
-<td><code>list(name, repetition, element)</code></td>
-<td>a <code>LIST</code> group whose element <code>element</code> declares</td>
+<td><code>file(name, repetition, group)</code></td>
+<td>the same <code>FILE</code> group, whose own attributes <code>group</code> sets on a <code>FileSchema.GroupBuilder</code></td>
 </tr>
 <tr>
-<td><code>map(name, repetition, keyType[, keyTypeLength][, keyLogicalType], value)</code></td>
-<td>a <code>MAP</code> group with a <code>REQUIRED</code> key of <code>keyType</code> and a value <code>value</code> declares</td>
+<td><code>list(name, repetition[, group], element)</code></td>
+<td>a <code>LIST</code> group whose own attributes <code>group</code> sets, and whose element <code>element</code> declares</td>
+</tr>
+<tr>
+<td><code>map(name, repetition, keyType[, key], value)</code></td>
+<td>a <code>MAP</code> group with a <code>REQUIRED</code> key of <code>keyType</code>, whose optional attributes <code>key</code> sets, and a value <code>value</code> declares</td>
+</tr>
+<tr>
+<td><code>map(name, repetition, group, keyType, key, value)</code></td>
+<td>the same <code>MAP</code> group, whose own attributes <code>group</code> sets</td>
 </tr>
 <tr>
 <td><code>build()</code></td>
@@ -2669,8 +2692,32 @@
 </tr>
 </tbody>
 </table>
+<p>A <code>FileSchema.PrimitiveBuilder</code> sets the optional attributes of one primitive leaf. Each attribute can be set one time; a second call throws <code>IllegalArgumentException</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Sets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logicalType(logicalType)</code></td>
+<td>the annotation, which must be legal for the physical type; a leaf whose lambda does not call it is unannotated</td>
+</tr>
+<tr>
+<td><code>typeLength(typeLength)</code></td>
+<td>the byte length of a <code>FIXED_LEN_BYTE_ARRAY</code> leaf</td>
+</tr>
+<tr>
+<td><code>fieldId(fieldId)</code></td>
+<td>the field id (<code>field_id</code> in the footer)</td>
+</tr>
+</tbody>
+</table>
+<p>A <code>FileSchema.GroupBuilder</code> sets the optional attributes of a <code>LIST</code>, <code>MAP</code> or <code>FILE</code> group itself, with the same one-time rule. Its only method is <code>fieldId(fieldId)</code>.</p>
 <p>The writer requires at least one column: <code>build()</code> rejects a schema with no fields, and <code>ParquetFileWriter.create</code> rejects one built another way, such as the childless root a file that declares no columns is read as, both with <code>UnsupportedOperationException</code>.</p>
-<p><code>repetition</code> is <code>REQUIRED</code> or <code>OPTIONAL</code>; <code>REPEATED</code> is rejected, repetition being what <code>list</code> and <code>map</code> express. <code>typeLength</code> is rejected for every type but <code>FIXED_LEN_BYTE_ARRAY</code>, and a <code>FIXED_LEN_BYTE_ARRAY</code> column has a positive one. Declared without one, it takes the length its annotation implies:</p>
+<p>Each method throws <code>IllegalArgumentException</code> for a <code>null</code> argument, and for a field name that is empty or already declared among the same group's fields. <code>repetition</code> is <code>REQUIRED</code> or <code>OPTIONAL</code>; <code>REPEATED</code> is rejected, repetition being what <code>list</code> and <code>map</code> express. A message names a nested field by its dotted path, a list element as <code>&lt;list&gt;.list.element</code> and a map key or value as <code>&lt;map&gt;.key_value.key</code> or <code>&lt;map&gt;.key_value.value</code>. <code>typeLength</code> is rejected for every type but <code>FIXED_LEN_BYTE_ARRAY</code>, and a <code>FIXED_LEN_BYTE_ARRAY</code> column has a positive one. Declared without one, it takes the length its annotation implies:</p>
 <table>
 <thead>
 <tr>
@@ -2697,17 +2744,58 @@
 </tr>
 </tbody>
 </table>
-<p>Any other annotation, or none, implies no length, and the column is declared through a <code>typeLength</code> overload. A <code>typeLength</code> given explicitly is kept as given; a <code>DECIMAL</code> may take more bytes than its precision needs, while a <code>UUID</code>, <code>INTERVAL</code> or <code>FLOAT16</code> of any other length is rejected.</p>
+<p>Any other annotation, or none, implies no length, and the column needs <code>typeLength</code>. A <code>typeLength</code> given explicitly is kept as given; a <code>DECIMAL</code> may take more bytes than its precision needs, while a <code>UUID</code>, <code>INTERVAL</code> or <code>FLOAT16</code> of any other length is rejected.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"event"</span><span class="p">)</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">uuid</span><span class="p">())</span><span class="w">                                                 </span><span class="c1">// 16 bytes</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span><span class="w">                                         </span><span class="c1">// 8 bytes</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="p">.</span><span class="na">addColumn</span><span class="p">(</span><span class="s">"legacy_amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">                </span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">))</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">        </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">                </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">logicalType</span><span class="p">(</span><span class="n">LogicalType</span><span class="p">.</span><span class="na">uuid</span><span class="p">()))</span><span class="w">                         </span><span class="c1">// 16 bytes</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">                </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">logicalType</span><span class="p">(</span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span><span class="w">                 </span><span class="c1">// 8 bytes</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"legacy_amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">                </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">typeLength</span><span class="p">(</span><span class="mi">16</span><span class="p">).</span><span class="na">logicalType</span><span class="p">(</span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span>
 <a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
-<p>Inside a <code>struct</code> filler the same methods appear on <code>FileSchema.StructBuilder</code>; a list element and a map value are declared on <code>FileSchema.ElementBuilder</code>, whose <code>primitive(type, repetition[, typeLength][, logicalType])</code>, <code>struct</code>, <code>file</code>, <code>list</code> and <code>map</code> carry no name, the surrounding layout supplying it.</p>
+<p>Inside a <code>struct</code> filler the same methods appear on <code>FileSchema.StructBuilder</code>; a list element and a map value are declared on <code>FileSchema.ElementBuilder</code>, whose <code>primitive(type, repetition[, column])</code>, <code>struct</code>, <code>file</code>, <code>list</code> and <code>map</code> carry no name, the surrounding layout supplying it.</p>
+<h3 id="field-ids">Field ids<a class="headerlink" href="#field-ids" title="Permanent link">&para;</a></h3>
+<p>A field id identifies a field independently of its name. Table formats such as Iceberg, Delta Lake (column mapping mode <code>id</code>) and DuckLake map columns by it. Each declaration scope sets the field id of the field it declares:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Set with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a primitive column, list element, map key or map value</td>
+<td><code>PrimitiveBuilder.fieldId(int)</code></td>
+</tr>
+<tr>
+<td>a <code>struct</code> group, also as a list element or map value</td>
+<td><code>StructBuilder.fieldId(int)</code> in its filler</td>
+</tr>
+<tr>
+<td>a <code>LIST</code>, <code>MAP</code> or <code>FILE</code> group</td>
+<td><code>GroupBuilder.fieldId(int)</code> in its <code>group</code> lambda</td>
+</tr>
+</tbody>
+</table>
+<p>The synthetic <code>list</code> and <code>key_value</code> groups, the root and the children of a <code>FILE</code> group carry no field id; <code>fieldId</code> on the <code>StructBuilder</code> that declares the root's fields throws <code>IllegalArgumentException</code>. The builder does not check that field ids are unique.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"event"</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">        </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">INT64</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="p">.</span><span class="na">struct</span><span class="p">(</span><span class="s">"location"</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="n">location</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">location</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">                </span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">                </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"lat"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">DOUBLE</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">                </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"lon"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">DOUBLE</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">4</span><span class="p">)))</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="p">.</span><span class="na">list</span><span class="p">(</span><span class="s">"tags"</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">group</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">                </span><span class="n">element</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">                        </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">logicalType</span><span class="p">(</span><span class="n">LogicalType</span><span class="p">.</span><span class="na">string</span><span class="p">()).</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">6</span><span class="p">)))</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">        </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="s">"props"</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">group</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">BYTE_ARRAY</span><span class="p">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">                </span><span class="n">key</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">key</span><span class="p">.</span><span class="na">logicalType</span><span class="p">(</span><span class="n">LogicalType</span><span class="p">.</span><span class="na">string</span><span class="p">()).</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">                </span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">value</span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">INT64</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">9</span><span class="p">)))</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="p">.</span><span class="na">file</span><span class="p">(</span><span class="s">"photo"</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">group</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p>A schema read from a file keeps the field ids of its elements: <code>SchemaNode.fieldId()</code> and <code>ColumnSchema.fieldId()</code> return them, or <code>null</code> for an element without one. A file written with that schema carries the same field ids.</p>
 <h3 id="logical-type-factories">Logical Type Factories<a class="headerlink" href="#logical-type-factories" title="Permanent link">&para;</a></h3>
 <p>An annotation is built with the <code>LogicalType</code> static factory of the same name. The parameterless factories return a shared instance.</p>
 <table>
@@ -2751,8 +2839,8 @@
 <td><code>FLOAT16</code> — IEEE 754 half-precision, 2-byte fixed-length byte array</td>
 </tr>
 <tr>
-<td><code>LogicalType.nullType()</code></td>
-<td><code>NULL</code> — every value in the column is null</td>
+<td><code>LogicalType.unknown()</code></td>
+<td><code>UNKNOWN</code> — every value in the column is null</td>
 </tr>
 <tr>
 <td><code>LogicalType.list()</code></td>
@@ -2799,11 +2887,11 @@
 <p>Which Java value each annotation accepts is listed under <a href="#logical-types-and-row-setters">Logical Types and Row Setters</a>; a pairing of annotation and physical type the format does not define is rejected when the schema is built.</p>
 <h2 id="writer-options">Writer Options<a class="headerlink" href="#writer-options" title="Permanent link">&para;</a></h2>
 <p>Write-time behaviour is configured with an immutable <code>WriterConfig</code>, passed to <code>ParquetFileWriter.create(out, schema, config)</code>. <code>WriterConfig.defaults()</code> returns the defaults, which the two-argument <code>create(out, schema)</code> uses.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">        </span><span class="p">.</span><span class="na">compression</span><span class="p">(</span><span class="n">Compression</span><span class="p">.</span><span class="na">zstd</span><span class="p">())</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="p">.</span><span class="na">rowGroupBufferTargetBytes</span><span class="p">(</span><span class="mi">64L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="p">.</span><span class="na">encoding</span><span class="p">(</span><span class="s">"temperature"</span><span class="p">,</span><span class="w"> </span><span class="n">ColumnEncoding</span><span class="p">.</span><span class="na">BYTE_STREAM_SPLIT</span><span class="p">)</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">        </span><span class="p">.</span><span class="na">compression</span><span class="p">(</span><span class="n">Compression</span><span class="p">.</span><span class="na">zstd</span><span class="p">())</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">        </span><span class="p">.</span><span class="na">rowGroupBufferTargetBytes</span><span class="p">(</span><span class="mi">64L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">        </span><span class="p">.</span><span class="na">encoding</span><span class="p">(</span><span class="s">"temperature"</span><span class="p">,</span><span class="w"> </span><span class="n">ColumnEncoding</span><span class="p">.</span><span class="na">BYTE_STREAM_SPLIT</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <table>
 <thead>
@@ -2885,13 +2973,13 @@
 <p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>pageTargetRows()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>compression()</code>, <code>dataPageVersion()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, <code>sortingColumns()</code>, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>, and for the Bloom filter setters, <code>bloomFilters()</code>, a map from column path to probability. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
 <h2 id="sorted-rows">Sorted Rows<a class="headerlink" href="#sorted-rows" title="Permanent link">&para;</a></h2>
 <p><code>sortingColumns</code> declares the order the rows of every row group are in: by the first column, rows equal there by the second, and so on. Each row group's metadata records the declaration as <code>sorting_columns</code>. A second call replaces the first.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.SortingColumn.NullOrder.NULLS_LAST</span><span class="p">;</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">        </span><span class="p">.</span><span class="na">sortingColumns</span><span class="p">(</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">                </span><span class="n">SortingColumn</span><span class="p">.</span><span class="na">ascending</span><span class="p">(</span><span class="s">"vendor"</span><span class="p">,</span><span class="w"> </span><span class="n">NULLS_LAST</span><span class="p">),</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">                </span><span class="n">SortingColumn</span><span class="p">.</span><span class="na">descending</span><span class="p">(</span><span class="s">"pickup_ts"</span><span class="p">,</span><span class="w"> </span><span class="n">NULLS_LAST</span><span class="p">))</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.SortingColumn.NullOrder.NULLS_LAST</span><span class="p">;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="p">.</span><span class="na">sortingColumns</span><span class="p">(</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">                </span><span class="n">SortingColumn</span><span class="p">.</span><span class="na">ascending</span><span class="p">(</span><span class="s">"vendor"</span><span class="p">,</span><span class="w"> </span><span class="n">NULLS_LAST</span><span class="p">),</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">                </span><span class="n">SortingColumn</span><span class="p">.</span><span class="na">descending</span><span class="p">(</span><span class="s">"pickup_ts"</span><span class="p">,</span><span class="w"> </span><span class="n">NULLS_LAST</span><span class="p">))</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <table>
 <thead>
@@ -3087,9 +3175,9 @@
 </tbody>
 </table>
 <p><code>level(int)</code> on the factories of codecs with levels returns the codec at that level; a level outside the codec's range is rejected with <code>IllegalArgumentException</code>. A higher level writes a smaller file and takes longer to write; reading the file takes about as long at any level. The level is not recorded in the file.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">        </span><span class="p">.</span><span class="na">compression</span><span class="p">(</span><span class="n">Compression</span><span class="p">.</span><span class="na">zstd</span><span class="p">().</span><span class="na">level</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">        </span><span class="p">.</span><span class="na">compression</span><span class="p">(</span><span class="n">Compression</span><span class="p">.</span><span class="na">zstd</span><span class="p">().</span><span class="na">level</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <p><code>Compression.of(CompressionCodec)</code> returns a codec chosen at runtime at its default level. It refuses <code>LZ4</code> and <code>LZO</code> with <code>UnsupportedOperationException</code>: <code>LZ4</code> files are read but not written, and <code>LZO</code> files are neither read nor written. A missing library fails when the writer is created rather than mid-file.</p>
 <h2 id="physical-types-and-columnar-setters">Physical Types and Columnar Setters<a class="headerlink" href="#physical-types-and-columnar-setters" title="Permanent link">&para;</a></h2>
@@ -3184,7 +3272,7 @@
 <td><code>double</code></td>
 </tr>
 <tr>
-<td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code>, or none</td>
+<td><code>STRING</code>, <code>ENUM</code> or <code>JSON</code></td>
 <td><code>BYTE_ARRAY</code></td>
 <td><code>setString</code></td>
 <td><code>String</code> (written as UTF-8)</td>
@@ -3444,11 +3532,11 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"ARROW:schema"</span><span class="p">,</span><span class="w"> </span><span class="n">encodedArrowSchema</span><span class="p">);</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">().</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">));</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"row.count"</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="na">length</span><span class="p">));</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"ARROW:schema"</span><span class="p">,</span><span class="w"> </span><span class="n">encodedArrowSchema</span><span class="p">);</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">().</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">));</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"row.count"</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="na">length</span><span class="p">));</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="key-value-metadata">Key-value metadata<a class="headerlink" href="#key-value-metadata" title="Permanent link">&para;</a></h3>
 <p><code>key_value_metadata</code> is application-defined: Parquet does not interpret it, and the writer validates nothing beyond requiring a key. It is where <code>ARROW:schema</code>, the pandas descriptor, <code>org.apache.spark.sql.parquet.row.metadata</code> and the table-format stamps live.</p>
@@ -3456,7 +3544,7 @@
 <p>Reading the field back is covered in <a href="../../how-to/metadata/">Read File Metadata</a>.</p>
 <h3 id="created_by"><code>created_by</code><a class="headerlink" href="#created_by" title="Permanent link">&para;</a></h3>
 <p>The default identifier follows the convention Parquet readers parse, naming the library, its version and the build it came from:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>hardwood version &lt;version&gt; (build &lt;commit&gt;)
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>hardwood version &lt;version&gt; (build &lt;commit&gt;)
 </code></pre></div>
 <p><code>ParquetFileWriter.DEFAULT_CREATED_BY</code> holds it. <code>createdBy(String)</code> replaces it; readers that key compatibility workarounds off this field expect the <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> shape, and a bare application name is rejected by some of them.</p>
 <h2 id="ending-a-row-group">Ending a Row Group<a class="headerlink" href="#ending-a-row-group" title="Permanent link">&para;</a></h2>
@@ -3624,8 +3712,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bd379b5321c18b1b80e2cb58d5e2af557a82a0c2" target="_blank" rel="noopener">
-      bd379b53
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6a3e97428a947d51dd3eb3522215517107055945" target="_blank" rel="noopener">
+      6a3e9742
     </a>
   
 </div>

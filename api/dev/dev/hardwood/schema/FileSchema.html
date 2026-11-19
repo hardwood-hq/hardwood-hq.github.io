@@ -70,6 +70,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#getField(java.lang.String)" tabindex="0">getField(String)</a></li>
 <li><a href="#isFlatSchema()" tabindex="0">isFlatSchema()</a></li>
 <li><a href="#builder(java.lang.String)" tabindex="0">builder(String)</a></li>
+<li><a href="#builder(java.lang.String,java.util.function.Consumer)" tabindex="0">builder(String, Consumer)</a></li>
 <li><a href="#toSchemaElements()" tabindex="0">toSchemaElements()</a></li>
 <li><a href="#fromSchemaElements(java.util.List)" tabindex="0">fromSchemaElements(List)</a></li>
 <li><a href="#toString()" tabindex="0">toString()</a></li>
@@ -127,6 +128,18 @@ Supports both flat schemas and nested structures (structs, lists, maps).</div>
 <code>struct</code>, a nested <code>LIST</code>, or a nested <code>MAP</code>.</div>
 </div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="FileSchema.GroupBuilder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.GroupBuilder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Sets the optional attributes of a <code>LIST</code>, <code>MAP</code> or <code>FILE</code> group itself, as opposed to
+its element, value or children.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="FileSchema.PrimitiveBuilder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.PrimitiveBuilder</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sets the optional attributes of a primitive leaf: a column, a list element, a map key or
+a map value.</div>
+</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="FileSchema.StructBuilder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Declares the fields of a <code>struct</code> group.</div>
@@ -151,66 +164,75 @@ Supports both flat schemas and nested structures (structs, lists, maps).</div>
 <div class="block">Creates a builder for constructing a schema, flat or nested, programmatically, for use
 with the writer.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromSchemaElements(java.util.List)" class="member-name-link">fromSchemaElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a>&gt;&nbsp;elements)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#builder(java.lang.String,java.util.function.Consumer)" class="member-name-link">builder</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a>&gt;&nbsp;fields)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Reconstruct schema from Thrift SchemaElement list.</div>
+<div class="block">Creates a builder whose root fields <code>fields</code> declares on a <a href="FileSchema.StructBuilder.html" title="class in dev.hardwood.schema"><code>FileSchema.StructBuilder</code></a>, the type a
+nested <code>struct</code> is declared on, so code that converts another schema model declares the
+root and every struct with the same method.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumn(int)" class="member-name-link">getColumn</a><wbr>(int&nbsp;index)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the column at the given zero-based index.</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fromSchemaElements(java.util.List)" class="member-name-link">fromSchemaElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a>&gt;&nbsp;elements)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Reconstructs a schema from the depth-first <a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata"><code>SchemaElement</code></a> list a footer carries: the root,
+then each group followed by as many descendants as its <code>numChildren</code> counts.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumn(dev.hardwood.metadata.FieldPath)" class="member-name-link">getColumn</a><wbr>(<a href="../metadata/FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a>&nbsp;fieldPath)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumn(int)" class="member-name-link">getColumn</a><wbr>(int&nbsp;index)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the column with the given field path.</div>
+<div class="block">Returns the column at the given zero-based index.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumn(java.lang.String)" class="member-name-link">getColumn</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumn(dev.hardwood.metadata.FieldPath)" class="member-name-link">getColumn</a><wbr>(<a href="../metadata/FieldPath.html" title="class in dev.hardwood.metadata">FieldPath</a>&nbsp;fieldPath)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the column with the given field path.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumn(java.lang.String)" class="member-name-link">getColumn</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the column with the given name or dot-separated path.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnCount()" class="member-name-link">getColumnCount</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumnCount()" class="member-name-link">getColumnCount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the total number of leaf columns in this schema.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumns()" class="member-name-link">getColumns</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColumns()" class="member-name-link">getColumns</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns an unmodifiable list of all leaf columns in schema order.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getField(java.lang.String)" class="member-name-link">getField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getField(java.lang.String)" class="member-name-link">getField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Finds a top-level field by name in the schema tree.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the schema name (typically &quot;schema&quot; or &quot;message&quot;).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.GroupNode.html" title="class in dev.hardwood.schema">SchemaNode.GroupNode</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRootNode()" class="member-name-link">getRootNode</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.GroupNode.html" title="class in dev.hardwood.schema">SchemaNode.GroupNode</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRootNode()" class="member-name-link">getRootNode</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the hierarchical schema tree representation.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFlatSchema()" class="member-name-link">isFlatSchema</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFlatSchema()" class="member-name-link">isFlatSchema</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true if this schema supports direct columnar access.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toSchemaElements()" class="member-name-link">toSchemaElements</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toSchemaElements()" class="member-name-link">toSchemaElements</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Flattens this schema back into the depth-first <a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata"><code>SchemaElement</code></a> list written
 to the file footer, the inverse of <a href="#fromSchemaElements(java.util.List)"><code>fromSchemaElements(List)</code></a>: the root element
 followed by each node in pre-order, groups carrying their child count.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -357,6 +379,33 @@ with the writer.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>name</code> - the schema (message) name, conventionally <code>&quot;schema&quot;</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>name</code> is <code>null</code></dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="builder(java.lang.String,java.util.function.Consumer)">
+<h3>builder</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></span>&nbsp;<span class="element-name">builder</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a>&gt;&nbsp;fields)</span></div>
+<div class="block"><p>Creates a builder whose root fields <code>fields</code> declares on a <a href="FileSchema.StructBuilder.html" title="class in dev.hardwood.schema"><code>FileSchema.StructBuilder</code></a>, the type a
+nested <code>struct</code> is declared on, so code that converts another schema model declares the
+root and every struct with the same method. More fields can be added to the returned
+builder before <a href="FileSchema.Builder.html#build()"><code>FileSchema.Builder.build()</code></a>.</p>
+<pre style="white-space:pre-wrap;"><code class="language-java">FileSchema schema = FileSchema.builder(&quot;schema&quot;, root -&gt; addFields(root, source.fields()))
+        .build();
+</code></pre>
+</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - the schema (message) name, conventionally <code>&quot;schema&quot;</code></dd>
+<dd><code>fields</code> - declares the root's fields</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if <code>name</code> or <code>fields</code> is <code>null</code>, or <code>fields</code> declares an
+invalid field</dd>
 </dl>
 </div>
 </section>
@@ -377,7 +426,16 @@ followed by each node in pre-order, groups carrying their child count.</div>
 <h3>fromSchemaElements</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></span>&nbsp;<span class="element-name">fromSchemaElements</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a>&gt;&nbsp;elements)</span></div>
-<div class="block">Reconstruct schema from Thrift SchemaElement list.</div>
+<div class="block">Reconstructs a schema from the depth-first <a href="../metadata/SchemaElement.html" title="class in dev.hardwood.metadata"><code>SchemaElement</code></a> list a footer carries: the root,
+then each group followed by as many descendants as its <code>numChildren</code> counts.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the list is empty, its root is not a group, its child
+counts do not describe exactly the elements it holds, a primitive declares
+children, or an element carries an annotation its field cannot carry, such as
+<code>STRING</code> on an <code>INT32</code> or <code>UUID</code> on a <code>FIXED_LEN_BYTE_ARRAY</code> of other than 16
+bytes</dd>
+</dl>
 </div>
 </section>
 </li>

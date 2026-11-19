@@ -62,7 +62,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
-<li><a href="#%3Cinit%3E(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.ConvertedType,dev.hardwood.metadata.LogicalType,java.util.List,int,int)" tabindex="0">GroupNode(String, RepetitionType, ConvertedType, LogicalType, List, int, int)</a></li>
+<li><a href="#%3Cinit%3E(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.ConvertedType,dev.hardwood.metadata.LogicalType,java.util.List,int,int,java.lang.Integer)" tabindex="0">GroupNode(String, RepetitionType, ConvertedType, LogicalType, List, int, int, Integer)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
@@ -85,6 +85,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#children()" tabindex="0">children()</a></li>
 <li><a href="#maxDefinitionLevel()" tabindex="0">maxDefinitionLevel()</a></li>
 <li><a href="#maxRepetitionLevel()" tabindex="0">maxRepetitionLevel()</a></li>
+<li><a href="#fieldId()" tabindex="0">fieldId()</a></li>
 </ol>
 </li>
 </ol>
@@ -109,6 +110,7 @@ loadScripts(document, 'script');</script>
 <dd><code><span id="param-children">children</span></code> - child nodes of this group</dd>
 <dd><code><span id="param-maxDefinitionLevel">maxDefinitionLevel</span></code> - maximum definition level</dd>
 <dd><code><span id="param-maxRepetitionLevel">maxRepetitionLevel</span></code> - maximum repetition level</dd>
+<dd><code><span id="param-fieldId">fieldId</span></code> - field id of the schema element, or <code>null</code> if absent</dd>
 </dl>
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
@@ -121,7 +123,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <object type="image/svg+xml" data="SchemaNode.GroupNode.svg"  style="max-width:60%;float:right;"></object>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public static record </span><span class="element-name type-name-label">SchemaNode.GroupNode</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name, <a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType, <a href="../metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a>&nbsp;convertedType, <a href="../metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a>&gt;&nbsp;children, int&nbsp;maxDefinitionLevel, int&nbsp;maxRepetitionLevel)
+<div class="type-signature"><span class="modifiers">public static record </span><span class="element-name type-name-label">SchemaNode.GroupNode</span>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name, <a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType, <a href="../metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a>&nbsp;convertedType, <a href="../metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a>&gt;&nbsp;children, int&nbsp;maxDefinitionLevel, int&nbsp;maxRepetitionLevel, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;fieldId)
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a>
 implements <a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></span></div>
 <div class="block">Group node representing a struct, list, map, or variant.</div>
@@ -146,13 +148,14 @@ implements <a href="SchemaNode.html" title="interface in dev.hardwood.schema">Sc
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.ConvertedType,dev.hardwood.metadata.LogicalType,java.util.List,int,int)" class="member-name-link">GroupNode</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.ConvertedType,dev.hardwood.metadata.LogicalType,java.util.List,int,int,java.lang.Integer)" class="member-name-link">GroupNode</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a>&nbsp;repetitionType,
  <a href="../metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a>&nbsp;convertedType,
  <a href="../metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a>&gt;&nbsp;children,
  int&nbsp;maxDefinitionLevel,
- int&nbsp;maxRepetitionLevel)</code></div>
+ int&nbsp;maxRepetitionLevel,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;fieldId)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance of a <code>GroupNode</code> record class.</div>
 </div>
@@ -185,84 +188,89 @@ implements <a href="SchemaNode.html" title="interface in dev.hardwood.schema">Sc
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Indicates whether some other object is "equal to" this one.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getListElement()" class="member-name-link">getListElement</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fieldId()" class="member-name-link">fieldId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the value of the <a href="#param-fieldId"><code>fieldId</code></a> record component.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getListElement()" class="member-name-link">getListElement</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">For LIST groups, returns the list's element node — the logical element,
 independent of whether the list uses 2-level or 3-level encoding.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapKey()" class="member-name-link">getMapKey</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapKey()" class="member-name-link">getMapKey</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">For MAP groups, returns the key node from the standard encoding
 (<code>map.key_value.key</code>).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapValue()" class="member-name-link">getMapValue</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMapValue()" class="member-name-link">getMapValue</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">For MAP groups, returns the value node from the standard encoding
 (<code>map.key_value.value</code>), or <code>null</code> if the <code>key_value</code> group has no value
 field.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a hash code value for this object.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFile()" class="member-name-link">isFile</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFile()" class="member-name-link">isFile</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true if this group carries the <a href="../metadata/LogicalType.FileType.html" title="class in dev.hardwood.metadata"><code>LogicalType.FileType</code></a> annotation.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isList()" class="member-name-link">isList</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isList()" class="member-name-link">isList</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true if this is a LIST group.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isMap()" class="member-name-link">isMap</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isMap()" class="member-name-link">isMap</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true if this is a MAP group.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isStruct()" class="member-name-link">isStruct</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isStruct()" class="member-name-link">isStruct</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true if this group is read and written field by field as a struct: it carries no
 annotation, or the <a href="../metadata/LogicalType.FileType.html" title="class in dev.hardwood.metadata"><code>LogicalType.FileType</code></a> annotation, whose children are ordinary fields.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isVariant()" class="member-name-link">isVariant</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isVariant()" class="member-name-link">isVariant</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns true if this group carries the <a href="../metadata/LogicalType.VariantType.html" title="class in dev.hardwood.metadata"><code>LogicalType.VariantType</code></a> annotation.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logicalType()" class="member-name-link">logicalType</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logicalType()" class="member-name-link">logicalType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-logicalType"><code>logicalType</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxDefinitionLevel()" class="member-name-link">maxDefinitionLevel</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxDefinitionLevel()" class="member-name-link">maxDefinitionLevel</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-maxDefinitionLevel"><code>maxDefinitionLevel</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxRepetitionLevel()" class="member-name-link">maxRepetitionLevel</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxRepetitionLevel()" class="member-name-link">maxRepetitionLevel</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-maxRepetitionLevel"><code>maxRepetitionLevel</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#name()" class="member-name-link">name</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#name()" class="member-name-link">name</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-name"><code>name</code></a> record component.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#repetitionType()" class="member-name-link">repetitionType</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../metadata/RepetitionType.html" title="enum class in dev.hardwood.metadata">RepetitionType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#repetitionType()" class="member-name-link">repetitionType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the value of the <a href="#param-repetitionType"><code>repetitionType</code></a> record component.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns a string representation of this record class.</div>
 </div>
 </div>
@@ -283,7 +291,7 @@ annotation, or the <a href="../metadata/LogicalType.FileType.html" title="class 
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.ConvertedType,dev.hardwood.metadata.LogicalType,java.util.List,int,int)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.ConvertedType,dev.hardwood.metadata.LogicalType,java.util.List,int,int,java.lang.Integer)">
 <h3>GroupNode</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GroupNode</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -292,7 +300,8 @@ annotation, or the <a href="../metadata/LogicalType.FileType.html" title="class 
  <a href="../metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a>&nbsp;logicalType,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a>&gt;&nbsp;children,
  int&nbsp;maxDefinitionLevel,
- int&nbsp;maxRepetitionLevel)</span></div>
+ int&nbsp;maxRepetitionLevel,
+ <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&nbsp;fieldId)</span></div>
 <div class="block">Creates an instance of a <code>GroupNode</code> record class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -303,6 +312,7 @@ annotation, or the <a href="../metadata/LogicalType.FileType.html" title="class 
 <dd><code>children</code> - the value for the <a href="#param-children"><code>children</code></a> record component</dd>
 <dd><code>maxDefinitionLevel</code> - the value for the <a href="#param-maxDefinitionLevel"><code>maxDefinitionLevel</code></a> record component</dd>
 <dd><code>maxRepetitionLevel</code> - the value for the <a href="#param-maxRepetitionLevel"><code>maxRepetitionLevel</code></a> record component</dd>
+<dd><code>fieldId</code> - the value for the <a href="#param-fieldId"><code>fieldId</code></a> record component</dd>
 </dl>
 </div>
 </section>
@@ -571,6 +581,21 @@ represents a set of keys or a map with all-null values. See
 <dd><code><a href="SchemaNode.html#maxRepetitionLevel()">maxRepetitionLevel</a></code>&nbsp;in interface&nbsp;<code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></dd>
 <dt>Returns:</dt>
 <dd>the value of the <a href="#param-maxRepetitionLevel"><code>maxRepetitionLevel</code></a> record component</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="fieldId()">
+<h3>fieldId</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a></span>&nbsp;<span class="element-name">fieldId</span>()</div>
+<div class="block">Returns the value of the <a href="#param-fieldId"><code>fieldId</code></a> record component.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="SchemaNode.html#fieldId()">fieldId</a></code>&nbsp;in interface&nbsp;<code><a href="SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></code></dd>
+<dt>Returns:</dt>
+<dd>the value of the <a href="#param-fieldId"><code>fieldId</code></a> record component</dd>
 </dl>
 </div>
 </section>

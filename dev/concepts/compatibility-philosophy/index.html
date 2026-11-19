@@ -2194,7 +2194,7 @@ principle described below.</p>
   years (parquet-mr, Arrow, Spark, Hive, PyArrow) using legacy encodings, deprecated types,
   and annotations that newer specs dropped. Hardwood reads these transparently: most legacy
   list-encoding variants, INT96 timestamps, the legacy <code>converted_type</code> annotations that
-  predate the modern logical-type union, <code>NULL</code>-typed columns, FLOAT16. The tolerance also
+  predate the modern logical-type union, <code>UNKNOWN</code>-typed columns, FLOAT16. The tolerance also
   extends <em>forward</em>: a logical-type annotation newer than Hardwood recognizes is ignored rather
   than rejected, and the column's physical type is exposed, so a file written by a tool that
   has adopted a future logical type still reads.</li>
@@ -2279,8 +2279,8 @@ filters routed through it evaluate under Hardwood's semantics. See
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bd379b5321c18b1b80e2cb58d5e2af557a82a0c2" target="_blank" rel="noopener">
-      bd379b53
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6a3e97428a947d51dd3eb3522215517107055945" target="_blank" rel="noopener">
+      6a3e9742
     </a>
   
 </div>

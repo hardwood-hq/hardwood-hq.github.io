@@ -2742,7 +2742,7 @@ such a name selects all of them (<a href="../query-controls/#column-projection-f
 <code>NullPointerException</code> if the field is null — always check <code>isNull()</code> first. Object accessors
 (<code>getString</code>, <code>getDate</code>, <code>getTimestamp</code>, <code>getLocalTimestamp</code>, <code>getDecimal</code>, <code>getUuid</code>,
 <code>getInterval</code>, <code>getStruct</code>, <code>getList</code>, <code>getMap</code>) return <code>null</code> for null fields.</p>
-<p>A column annotated with the <code>NULL</code> logical type (e.g. PyArrow's <code>pa.null()</code>) holds a null value at
+<p>A column annotated with the <code>UNKNOWN</code> logical type (e.g. PyArrow's <code>pa.null()</code>) holds a null value at
 every row: <code>column.logicalType()</code> returns <code>LogicalType.NullType</code>, <code>isNull(name)</code> is always <code>true</code>,
 and the object accessors return <code>null</code>.</p>
 <h2 id="type-mismatches">Type mismatches<a class="headerlink" href="#type-mismatches" title="Permanent link">&para;</a></h2>
@@ -2955,8 +2955,8 @@ forms. Hardwood reads both as lists, so <code>getList</code> returns a <code>PqL
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bd379b5321c18b1b80e2cb58d5e2af557a82a0c2" target="_blank" rel="noopener">
-      bd379b53
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6a3e97428a947d51dd3eb3522215517107055945" target="_blank" rel="noopener">
+      6a3e9742
     </a>
   
 </div>

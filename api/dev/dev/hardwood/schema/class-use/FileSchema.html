@@ -105,7 +105,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static <a href="../FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">FileSchema.</span><code><a href="../FileSchema.html#fromSchemaElements(java.util.List)" class="member-name-link">fromSchemaElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a>&gt;&nbsp;elements)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Reconstruct schema from Thrift SchemaElement list.</div>
+<div class="block">Reconstructs a schema from the depth-first <a href="../../metadata/SchemaElement.html" title="class in dev.hardwood.metadata"><code>SchemaElement</code></a> list a footer carries: the root,
+then each group followed by as many descendants as its <code>numChildren</code> counts.</div>
 </div>
 </div>
 </section>

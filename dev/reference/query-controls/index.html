@@ -2320,7 +2320,7 @@ magnitude. Set membership follows the same mapping: <code>in</code> takes each l
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">eq</span><span class="p">(</span><span class="s">"ts"</span><span class="p">,</span><span class="w"> </span><span class="n">Instant</span><span class="p">.</span><span class="na">parse</span><span class="p">(</span><span class="s">"2026-01-01T00:00:00.000000500Z"</span><span class="p">))</span><span class="w">   </span><span class="c1">// ✗ throws: finer than the column's MICROS</span>
 </code></pre></div>
 <p>The ordered operators <code>lt</code>, <code>ltEq</code>, <code>gt</code> and <code>gtEq</code> throw <code>IllegalArgumentException</code> at reader
-creation on an <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code> or <code>NULL</code> column, and with a <code>byte[]</code> literal
+creation on an <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code> or <code>UNKNOWN</code> column, and with a <code>byte[]</code> literal
 where <a href="#binary-columns">Binary columns</a> says so. <code>BOOLEAN</code> has no set form, since <code>eq</code>, <code>notEq</code> and
 <code>isNotNull</code> express every set of two values.</p>
 <table>
@@ -2460,7 +2460,7 @@ where <a href="#binary-columns">Binary columns</a> says so. <code>BOOLEAN</code>
 <td>the 12 bytes</td>
 </tr>
 <tr>
-<td><code>NULL</code></td>
+<td><code>UNKNOWN</code></td>
 <td>any</td>
 <td>the literal for the physical type</td>
 <td>the stored value; a column that keeps to its annotation holds only nulls, so no comparison matches</td>
@@ -2628,7 +2628,7 @@ column index (below). Bounds are ignored when:</p>
 </tr>
 <tr>
 <td>The column's annotation defines no order</td>
-<td>An <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>LIST</code> or <code>MAP</code> column, for which the Parquet spec defines no sort order, or a <code>NULL</code> column</td>
+<td>An <code>INTERVAL</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>VARIANT</code>, <code>LIST</code> or <code>MAP</code> column, for which the Parquet spec defines no sort order, or an <code>UNKNOWN</code> column</td>
 </tr>
 <tr>
 <td>The column is <code>INT96</code> under <code>TYPE_ORDER</code></td>
@@ -2856,8 +2856,8 @@ and <code>notEq</code> are left to statistics alone. Some equality probes skip o
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bd379b5321c18b1b80e2cb58d5e2af557a82a0c2" target="_blank" rel="noopener">
-      bd379b53
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6a3e97428a947d51dd3eb3522215517107055945" target="_blank" rel="noopener">
+      6a3e9742
     </a>
   
 </div>

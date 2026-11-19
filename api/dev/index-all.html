@@ -77,42 +77,6 @@ closes the writer.</div>
 <dd>
 <div class="block">Appends a <code>BOOLEAN</code> entry.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
-<dd>
-<div class="block">Append a primitive column.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
-<dd>
-<div class="block">Append a primitive field.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType, int)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
-<dd>
-<div class="block">Append a primitive column, giving the fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code>
-column.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType, int)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
-<dd>
-<div class="block">Append a primitive field, giving the fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code>
-column.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int,dev.hardwood.metadata.LogicalType)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType, int, LogicalType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
-<dd>
-<div class="block">Append a primitive column carrying a logical type annotation, giving the fixed byte
-length of a <code>FIXED_LEN_BYTE_ARRAY</code> column.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int,dev.hardwood.metadata.LogicalType)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType, int, LogicalType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
-<dd>
-<div class="block">Append a primitive field carrying a logical type annotation, giving the fixed byte
-length of a <code>FIXED_LEN_BYTE_ARRAY</code> column.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType, LogicalType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
-<dd>
-<div class="block">Append a primitive column carrying a logical type annotation.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#addColumn(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)" class="member-name-link">addColumn(String, PhysicalType, RepetitionType, LogicalType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
-<dd>
-<div class="block">Append a primitive field carrying a logical type annotation.</div>
-</dd>
 <dt><a href="dev/hardwood/writer/ListBuilder.html#addDate(java.time.LocalDate)" class="member-name-link">addDate(LocalDate)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/ListBuilder.html" title="interface in dev.hardwood.writer">ListBuilder</a></dt>
 <dd>
 <div class="block">Appends a <code>DATE</code> entry.</div>
@@ -536,6 +500,12 @@ access to a column projection.</div>
 <div class="block">Creates a builder for constructing a schema, flat or nested, programmatically, for use
 with the writer.</div>
 </dd>
+<dt><a href="dev/hardwood/schema/FileSchema.html#builder(java.lang.String,java.util.function.Consumer)" class="member-name-link">builder(String, Consumer)</a> - Static method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></dt>
+<dd>
+<div class="block">Creates a builder whose root fields <code>fields</code> declares on a <a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema"><code>FileSchema.StructBuilder</code></a>, the type a
+nested <code>struct</code> is declared on, so code that converts another schema model declares the
+root and every struct with the same method.</div>
+</dd>
 <dt><a href="dev/hardwood/reader/ParquetFileReader.html#buildRowReader()" class="member-name-link">buildRowReader()</a> - Method in class dev.hardwood.reader.<a href="dev/hardwood/reader/ParquetFileReader.html" title="class in dev.hardwood.reader">ParquetFileReader</a></dt>
 <dd>
 <div class="block">Begin configuring a <a href="dev/hardwood/reader/RowReader.html" title="interface in dev.hardwood.reader"><code>RowReader</code></a> with optional projection, filter,
@@ -804,6 +774,10 @@ file at the destination.</div>
 <dd>
 <div class="block">Returns the value of the <code>column</code> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#column()" class="member-name-link">column()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.PrimitiveNode.html#param-column"><code>column</code></a> record component.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/ColumnBatch.html" class="type-name-link" title="class in dev.hardwood.writer">ColumnBatch</a> - Class in <a href="dev/hardwood/writer/package-summary.html">dev.hardwood.writer</a></dt>
 <dd>
 <div class="block">One aligned slice of a file's columns.</div>
@@ -840,7 +814,7 @@ stores once, which <a href="dev/hardwood/reader/ColumnReader.html#getDictionaryI
 </dd>
 <dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#columnIndex()" class="member-name-link">columnIndex()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
 <dd>
-<div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.PrimitiveNode.html#param-columnIndex"><code>columnIndex</code></a> record component.</div>
+<div class="block">Returns the zero-based index among all leaf columns.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnIndex.html" class="type-name-link" title="class in dev.hardwood.metadata">ColumnIndex</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
@@ -923,7 +897,7 @@ pipeline for batch-oriented projection reads.</div>
 <dd>
 <div class="block">Represents a primitive column in a Parquet schema.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/ColumnSchema.html#%3Cinit%3E(dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,java.lang.Integer,int,int,int,dev.hardwood.metadata.LogicalType)" class="member-name-link">ColumnSchema(FieldPath, PhysicalType, RepetitionType, Integer, int, int, int, LogicalType)</a> - Constructor for record class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></dt>
+<dt><a href="dev/hardwood/schema/ColumnSchema.html#%3Cinit%3E(dev.hardwood.metadata.FieldPath,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,java.lang.Integer,int,int,int,dev.hardwood.metadata.LogicalType,java.lang.Integer)" class="member-name-link">ColumnSchema(FieldPath, PhysicalType, RepetitionType, Integer, int, int, int, LogicalType, Integer)</a> - Constructor for record class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>ColumnSchema</code> record class.</div>
 </dd>
@@ -1895,6 +1869,33 @@ Variants, or absent.</div>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/SchemaElement.html#param-fieldId"><code>fieldId</code></a> record component.</div>
 </dd>
+<dt><a href="dev/hardwood/schema/ColumnSchema.html#fieldId()" class="member-name-link">fieldId()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/schema/ColumnSchema.html#param-fieldId"><code>fieldId</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/SchemaNode.html#fieldId()" class="member-name-link">fieldId()</a> - Method in interface dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></dt>
+<dd>
+<div class="block">Returns the field id of the schema element (<code>field_id</code> in <code>parquet.thrift</code>), or <code>null</code>
+if the element has no field id.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/SchemaNode.GroupNode.html#fieldId()" class="member-name-link">fieldId()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.GroupNode.html" title="class in dev.hardwood.schema">SchemaNode.GroupNode</a></dt>
+<dd>
+<div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.GroupNode.html#param-fieldId"><code>fieldId</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#fieldId()" class="member-name-link">fieldId()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.GroupBuilder.html#fieldId(int)" class="member-name-link">fieldId(int)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.GroupBuilder.html" title="class in dev.hardwood.schema">FileSchema.GroupBuilder</a></dt>
+<dd>
+<div class="block">Set the field id (<code>field_id</code> in <code>parquet.thrift</code>).</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.PrimitiveBuilder.html#fieldId(int)" class="member-name-link">fieldId(int)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.PrimitiveBuilder.html" title="class in dev.hardwood.schema">FileSchema.PrimitiveBuilder</a></dt>
+<dd>
+<div class="block">Set the field id (<code>field_id</code> in <code>parquet.thrift</code>).</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#fieldId(int)" class="member-name-link">fieldId(int)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
+<dd>
+<div class="block">Set the field id of this <code>struct</code> group.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/ColumnSchema.html#fieldPath()" class="member-name-link">fieldPath()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/schema/ColumnSchema.html#param-fieldPath"><code>fieldPath</code></a> record component.</div>
@@ -1942,6 +1943,11 @@ inline in the value or in an external file.</div>
 <dd>
 <div class="block">Declare a <code>FILE</code> element, as <a href="dev/hardwood/schema/FileSchema.Builder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType)"><code>FileSchema.Builder.file(String, RepetitionType)</code></a> describes.</div>
 </dd>
+<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#file(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">file(RepetitionType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
+<dd>
+<div class="block">Declare a <code>FILE</code> element whose own attributes are set by <code>group</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)"><code>FileSchema.Builder.file(String, RepetitionType, Consumer)</code></a> describes.</div>
+</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.Builder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType)" class="member-name-link">file(String, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
 <dd>
 <div class="block">Append a <code>FILE</code> group, a reference to a range of bytes stored inline or in an external
@@ -1950,6 +1956,16 @@ file.</div>
 <dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType)" class="member-name-link">file(String, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
 <dd>
 <div class="block">Append a nested <code>FILE</code> field, as <a href="dev/hardwood/schema/FileSchema.Builder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType)"><code>FileSchema.Builder.file(String, RepetitionType)</code></a> describes.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">file(String, RepetitionType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
+<dd>
+<div class="block">Append a <code>FILE</code> group whose own attributes are set by <code>group</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType)"><code>FileSchema.Builder.file(String, RepetitionType)</code></a> describes.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">file(String, RepetitionType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
+<dd>
+<div class="block">Append a nested <code>FILE</code> field whose own attributes are set by <code>group</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#file(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)"><code>FileSchema.Builder.file(String, RepetitionType, Consumer)</code></a> describes.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/StaleMetadataException.html#fileIdentity()" class="member-name-link">fileIdentity()</a> - Method in exception class dev.hardwood.reader.<a href="dev/hardwood/reader/StaleMetadataException.html" title="class in dev.hardwood.reader">StaleMetadataException</a></dt>
 <dd>
@@ -2000,6 +2016,16 @@ group annotated <code>FILE</code>.</div>
 <dd>
 <div class="block">Declares the element of a <code>LIST</code>, or the value of a <code>MAP</code>: a primitive, a nested
 <code>struct</code>, a nested <code>LIST</code>, or a nested <code>MAP</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.GroupBuilder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.GroupBuilder</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
+<dd>
+<div class="block">Sets the optional attributes of a <code>LIST</code>, <code>MAP</code> or <code>FILE</code> group itself, as opposed to
+its element, value or children.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.PrimitiveBuilder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.PrimitiveBuilder</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
+<dd>
+<div class="block">Sets the optional attributes of a primitive leaf: a column, a list element, a map key or
+a map value.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html" class="type-name-link" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a> - Class in <a href="dev/hardwood/schema/package-summary.html">dev.hardwood.schema</a></dt>
 <dd>
@@ -2283,7 +2309,8 @@ magic number.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/FileSchema.html#fromSchemaElements(java.util.List)" class="member-name-link">fromSchemaElements(List)</a> - Static method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.html" title="class in dev.hardwood.schema">FileSchema</a></dt>
 <dd>
-<div class="block">Reconstruct schema from Thrift SchemaElement list.</div>
+<div class="block">Reconstructs a schema from the depth-first <a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata"><code>SchemaElement</code></a> list a footer carries: the root,
+then each group followed by as many descendants as its <code>numChildren</code> counts.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:G">G</h2>
@@ -2865,7 +2892,7 @@ only (phantom slots from null/empty parents are excluded).</div>
 <dd>
 <div class="block">Creates a group element.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/SchemaNode.GroupNode.html#%3Cinit%3E(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.ConvertedType,dev.hardwood.metadata.LogicalType,java.util.List,int,int)" class="member-name-link">GroupNode(String, RepetitionType, ConvertedType, LogicalType, List, int, int)</a> - Constructor for record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.GroupNode.html" title="class in dev.hardwood.schema">SchemaNode.GroupNode</a></dt>
+<dt><a href="dev/hardwood/schema/SchemaNode.GroupNode.html#%3Cinit%3E(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.ConvertedType,dev.hardwood.metadata.LogicalType,java.util.List,int,int,java.lang.Integer)" class="member-name-link">GroupNode(String, RepetitionType, ConvertedType, LogicalType, List, int, int, Integer)</a> - Constructor for record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.GroupNode.html" title="class in dev.hardwood.schema">SchemaNode.GroupNode</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>GroupNode</code> record class.</div>
 </dd>
@@ -3824,6 +3851,10 @@ for a key it names and leaving the rest in place.</div>
 <dd>
 <div class="block">Declare a nested <code>LIST</code> element.</div>
 </dd>
+<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#list(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer,java.util.function.Consumer)" class="member-name-link">list(RepetitionType, Consumer, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
+<dd>
+<div class="block">Declare a nested <code>LIST</code> element whose own attributes are set by <code>group</code>.</div>
+</dd>
 <dt><a href="dev/hardwood/writer/ColumnBatch.html#list(java.lang.String,int%5B%5D)" class="member-name-link">list(String, int[])</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
 <dd>
 <div class="block">Sets the entry offsets of a <code>LIST</code>, addressed by the list group's dot-separated path.</div>
@@ -3840,6 +3871,16 @@ are themselves absent), distinct from an empty list carrying a zero-delta offset
 <dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#list(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">list(String, RepetitionType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
 <dd>
 <div class="block">Append a nested <code>LIST</code> field.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#list(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer,java.util.function.Consumer)" class="member-name-link">list(String, RepetitionType, Consumer, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
+<dd>
+<div class="block">Append a <code>LIST</code> group whose own attributes are set by <code>group</code> and whose element is
+declared by <code>element</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#list(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer,java.util.function.Consumer)" class="member-name-link">list(String, RepetitionType, Consumer, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
+<dd>
+<div class="block">Append a nested <code>LIST</code> field whose own attributes are set by <code>group</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#list(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer,java.util.function.Consumer)"><code>FileSchema.Builder.list(String, RepetitionType, Consumer, Consumer)</code></a> describes.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#LIST" class="member-name-link">LIST</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
@@ -3884,7 +3925,11 @@ timestamp) values.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#logicalType()" class="member-name-link">logicalType()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
 <dd>
-<div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.PrimitiveNode.html#param-logicalType"><code>logicalType</code></a> record component.</div>
+<div class="block">Returns the logical type annotation, or <code>null</code> if absent.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.PrimitiveBuilder.html#logicalType(dev.hardwood.metadata.LogicalType)" class="member-name-link">logicalType(LogicalType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.PrimitiveBuilder.html" title="class in dev.hardwood.schema">FileSchema.PrimitiveBuilder</a></dt>
+<dd>
+<div class="block">Set the logical type annotation.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.html" class="type-name-link" title="interface in dev.hardwood.metadata">LogicalType</a> - Interface in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
@@ -3949,7 +3994,7 @@ timestamp) values.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.NullType.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.NullType</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
-<div class="block">Column whose every value is null.</div>
+<div class="block">The <code>UNKNOWN</code> annotation: a column whose every value is null.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.StringType.html" class="type-name-link" title="class in dev.hardwood.metadata">LogicalType.StringType</a> - Record Class in <a href="dev/hardwood/metadata/package-summary.html">dev.hardwood.metadata</a></dt>
 <dd>
@@ -4128,18 +4173,20 @@ Variant spec.</div>
 <dd>
 <div class="block">The <code>MAP</code> annotation, for a group holding key-value pairs.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#map(dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,int,dev.hardwood.metadata.LogicalType,java.util.function.Consumer)" class="member-name-link">map(RepetitionType, PhysicalType, int, LogicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
-<dd>
-<div class="block">Declare a nested <code>MAP</code> element whose key carries a logical type annotation, giving the
-fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code> key.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#map(dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.LogicalType,java.util.function.Consumer)" class="member-name-link">map(RepetitionType, PhysicalType, LogicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
-<dd>
-<div class="block">Declare a nested <code>MAP</code> element whose key carries a logical type annotation.</div>
-</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#map(dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" class="member-name-link">map(RepetitionType, PhysicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
 <dd>
 <div class="block">Declare a nested <code>MAP</code> element.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#map(dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)" class="member-name-link">map(RepetitionType, PhysicalType, Consumer, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
+<dd>
+<div class="block">Declare a nested <code>MAP</code> element whose key has optional attributes, set by <code>key</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)"><code>FileSchema.Builder.map(String, RepetitionType, PhysicalType, Consumer, Consumer)</code></a> describes.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#map(dev.hardwood.metadata.RepetitionType,java.util.function.Consumer,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)" class="member-name-link">map(RepetitionType, Consumer, PhysicalType, Consumer, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
+<dd>
+<div class="block">Declare a nested <code>MAP</code> element whose own attributes are set by <code>group</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)"><code>FileSchema.Builder.map(String, RepetitionType, Consumer, PhysicalType, Consumer, Consumer)</code></a>
+describes.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/ColumnBatch.html#map(java.lang.String,int%5B%5D)" class="member-name-link">map(String, int[])</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
 <dd>
@@ -4150,25 +4197,6 @@ fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code> key.</div>
 <div class="block">Sets the entry offsets of a <code>MAP</code> together with its per-instance nulls (which maps
 are themselves absent), distinct from an empty map carrying a zero-delta offset.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,int,dev.hardwood.metadata.LogicalType,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, PhysicalType, int, LogicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
-<dd>
-<div class="block">Append a <code>MAP</code> group whose key carries a logical type annotation, giving the fixed
-byte length of a <code>FIXED_LEN_BYTE_ARRAY</code> key.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,int,dev.hardwood.metadata.LogicalType,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, PhysicalType, int, LogicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
-<dd>
-<div class="block">Append a nested <code>MAP</code> field whose key carries a logical type annotation, giving the
-fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code> key.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.LogicalType,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, PhysicalType, LogicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
-<dd>
-<div class="block">Append a <code>MAP</code> group whose key carries a logical type annotation — a <code>STRING</code> key
-being the common case.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.LogicalType,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, PhysicalType, LogicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
-<dd>
-<div class="block">Append a nested <code>MAP</code> field whose key carries a logical type annotation.</div>
-</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, PhysicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
 <dd>
 <div class="block">Append a <code>MAP</code> group whose value is declared by <code>value</code>.</div>
@@ -4176,6 +4204,27 @@ being the common case.</div>
 <dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, PhysicalType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
 <dd>
 <div class="block">Append a nested <code>MAP</code> field.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, PhysicalType, Consumer, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
+<dd>
+<div class="block">Append a <code>MAP</code> group whose key has optional attributes, set by <code>key</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, PhysicalType, Consumer, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
+<dd>
+<div class="block">Append a nested <code>MAP</code> field whose key has optional attributes, set by <code>key</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)"><code>FileSchema.Builder.map(String, RepetitionType, PhysicalType, Consumer, Consumer)</code></a> describes.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, Consumer, PhysicalType, Consumer, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
+<dd>
+<div class="block">Append a <code>MAP</code> group whose own attributes are set by <code>group</code> and whose key has
+optional attributes, set by <code>key</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)"><code>FileSchema.Builder.map(String, RepetitionType, PhysicalType, Consumer, Consumer)</code></a> describes.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)" class="member-name-link">map(String, RepetitionType, Consumer, PhysicalType, Consumer, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
+<dd>
+<div class="block">Append a nested <code>MAP</code> field whose own attributes are set by <code>group</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#map(java.lang.String,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer,dev.hardwood.metadata.PhysicalType,java.util.function.Consumer,java.util.function.Consumer)"><code>FileSchema.Builder.map(String, RepetitionType, Consumer, PhysicalType, Consumer, Consumer)</code></a>
+describes.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ConvertedType.html#MAP" class="member-name-link">MAP</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ConvertedType.html" title="enum class in dev.hardwood.metadata">ConvertedType</a></dt>
 <dd>
@@ -4214,9 +4263,7 @@ being the common case.</div>
 <div class="block">Returns the maximum definition level, computed from the schema hierarchy.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#maxDefinitionLevel()" class="member-name-link">maxDefinitionLevel()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
-<dd>
-<div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.PrimitiveNode.html#param-maxDefinitionLevel"><code>maxDefinitionLevel</code></a> record component.</div>
-</dd>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/schema/ColumnSchema.html#maxRepetitionLevel()" class="member-name-link">maxRepetitionLevel()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/schema/ColumnSchema.html#param-maxRepetitionLevel"><code>maxRepetitionLevel</code></a> record component.</div>
@@ -4230,9 +4277,7 @@ being the common case.</div>
 <div class="block">Returns the maximum repetition level, computed from the schema hierarchy.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#maxRepetitionLevel()" class="member-name-link">maxRepetitionLevel()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
-<dd>
-<div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.PrimitiveNode.html#param-maxRepetitionLevel"><code>maxRepetitionLevel</code></a> record component.</div>
-</dd>
+<dd>&nbsp;</dd>
 <dt><a href="dev/hardwood/s3/S3Source.Builder.html#maxRetries(int)" class="member-name-link">maxRetries(int)</a> - Method in class dev.hardwood.s3.<a href="dev/hardwood/s3/S3Source.Builder.html" title="class in dev.hardwood.s3">S3Source.Builder</a></dt>
 <dd>
 <div class="block">Sets the maximum number of retries per request on transient failures
@@ -4330,7 +4375,7 @@ against the context reads.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#name()" class="member-name-link">name()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
 <dd>
-<div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.PrimitiveNode.html#param-name"><code>name</code></a> record component.</div>
+<div class="block">Returns the field name.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/Statistics.html#nanCount()" class="member-name-link">nanCount()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/Statistics.html" title="class in dev.hardwood.metadata">Statistics</a></dt>
 <dd>
@@ -4480,10 +4525,6 @@ current batch.&quot;</div>
 <dt><a href="dev/hardwood/metadata/SortingColumn.html#nullsFirst()" class="member-name-link">nullsFirst()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SortingColumn.html" title="class in dev.hardwood.metadata">SortingColumn</a></dt>
 <dd>
 <div class="block">Whether the column's nulls sort before its values.</div>
-</dd>
-<dt><a href="dev/hardwood/metadata/LogicalType.html#nullType()" class="member-name-link">nullType()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
-<dd>
-<div class="block">The <code>NULL</code> annotation, for a column whose every value is null.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/LogicalType.NullType.html#%3Cinit%3E()" class="member-name-link">NullType()</a> - Constructor for record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.NullType.html" title="class in dev.hardwood.metadata">LogicalType.NullType</a></dt>
 <dd>
@@ -4956,31 +4997,39 @@ Use <a href="dev/hardwood/jfr/BatchWaitEvent.html" title="class in dev.hardwood.
 &nbsp;</dd>
 <dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">primitive(PhysicalType, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
 <dd>
-<div class="block">Declare a primitive element.</div>
+<div class="block">Declare a primitive element without optional attributes.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int)" class="member-name-link">primitive(PhysicalType, RepetitionType, int)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
+<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">primitive(PhysicalType, RepetitionType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
 <dd>
-<div class="block">Declare a primitive element, giving the fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code>
-element.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,int,dev.hardwood.metadata.LogicalType)" class="member-name-link">primitive(PhysicalType, RepetitionType, int, LogicalType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
-<dd>
-<div class="block">Declare a primitive element carrying a logical type annotation, giving the fixed byte
-length of a <code>FIXED_LEN_BYTE_ARRAY</code> element.</div>
-</dd>
-<dt><a href="dev/hardwood/schema/FileSchema.ElementBuilder.html#primitive(dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)" class="member-name-link">primitive(PhysicalType, RepetitionType, LogicalType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.ElementBuilder.html" title="class in dev.hardwood.schema">FileSchema.ElementBuilder</a></dt>
-<dd>
-<div class="block">Declare a primitive element carrying a logical type annotation.</div>
+<div class="block">Declare a primitive element whose optional attributes are set by <code>column</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)"><code>FileSchema.Builder.primitive(String, PhysicalType, RepetitionType, Consumer)</code></a> describes.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/SchemaElement.html#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">primitive(String, PhysicalType, RepetitionType)</a> - Static method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></dt>
 <dd>
 <div class="block">Creates a primitive element</div>
 </dd>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">primitive(String, PhysicalType, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
+<dd>
+<div class="block">Append a primitive column without optional attributes.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType)" class="member-name-link">primitive(String, PhysicalType, RepetitionType)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
+<dd>
+<div class="block">Append a primitive field without optional attributes.</div>
+</dd>
 <dt><a href="dev/hardwood/metadata/SchemaElement.html#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType)" class="member-name-link">primitive(String, PhysicalType, RepetitionType, LogicalType)</a> - Static method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/SchemaElement.html" title="class in dev.hardwood.metadata">SchemaElement</a></dt>
 <dd>
 <div class="block">Creates a primitive element.</div>
 </dd>
-<dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#%3Cinit%3E(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,dev.hardwood.metadata.LogicalType,int,int,int)" class="member-name-link">PrimitiveNode(String, PhysicalType, RepetitionType, LogicalType, int, int, int)</a> - Constructor for record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
+<dt><a href="dev/hardwood/schema/FileSchema.Builder.html#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">primitive(String, PhysicalType, RepetitionType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.Builder.html" title="class in dev.hardwood.schema">FileSchema.Builder</a></dt>
+<dd>
+<div class="block">Append a primitive column whose optional attributes are set by <code>column</code>.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.StructBuilder.html#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)" class="member-name-link">primitive(String, PhysicalType, RepetitionType, Consumer)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.StructBuilder.html" title="class in dev.hardwood.schema">FileSchema.StructBuilder</a></dt>
+<dd>
+<div class="block">Append a primitive field whose optional attributes are set by <code>column</code>, as
+<a href="dev/hardwood/schema/FileSchema.Builder.html#primitive(java.lang.String,dev.hardwood.metadata.PhysicalType,dev.hardwood.metadata.RepetitionType,java.util.function.Consumer)"><code>FileSchema.Builder.primitive(String, PhysicalType, RepetitionType, Consumer)</code></a> describes.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#%3Cinit%3E(dev.hardwood.schema.ColumnSchema)" class="member-name-link">PrimitiveNode(ColumnSchema)</a> - Constructor for record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
 <dd>
 <div class="block">Creates an instance of a <code>PrimitiveNode</code> record class.</div>
 </dd>
@@ -5095,7 +5144,7 @@ records no repetition-level histogram for this chunk.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#repetitionType()" class="member-name-link">repetitionType()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
 <dd>
-<div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.PrimitiveNode.html#param-repetitionType"><code>repetitionType</code></a> record component.</div>
+<div class="block">Returns whether the field is required, optional, or repeated.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/SchemaNode.html#repetitionType()" class="member-name-link">repetitionType()</a> - Method in interface dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.html" title="interface in dev.hardwood.schema">SchemaNode</a></dt>
 <dd>
@@ -5470,8 +5519,8 @@ referenced rather than copied and must not be mutated until the record is writte
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setString(java.lang.String,java.lang.String)" class="member-name-link">setString(String, String)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
-<div class="block">Sets a <code>BYTE_ARRAY</code> field annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code>, or unannotated, from
-the value's UTF-8 bytes.</div>
+<div class="block">Sets a <code>BYTE_ARRAY</code> field annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code> from the value's UTF-8
+bytes.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/StructBuilder.html#setStruct(int,java.util.function.Consumer)" class="member-name-link">setStruct(int, Consumer)</a> - Method in interface dev.hardwood.writer.<a href="dev/hardwood/writer/StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></dt>
 <dd>
@@ -6206,7 +6255,7 @@ footer was read with.</div>
 </dd>
 <dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#type()" class="member-name-link">type()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
 <dd>
-<div class="block">Returns the value of the <a href="./dev/hardwood/schema/SchemaNode.PrimitiveNode.html#param-type"><code>type</code></a> record component.</div>
+<div class="block">Returns the physical (storage) type.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnOrder.html#TYPE_DEFINED_ORDER" class="member-name-link">TYPE_DEFINED_ORDER</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnOrder.html" title="enum class in dev.hardwood.metadata">ColumnOrder</a></dt>
 <dd>
@@ -6219,6 +6268,15 @@ footer was read with.</div>
 <dt><a href="dev/hardwood/schema/ColumnSchema.html#typeLength()" class="member-name-link">typeLength()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/ColumnSchema.html" title="class in dev.hardwood.schema">ColumnSchema</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/schema/ColumnSchema.html#param-typeLength"><code>typeLength</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html#typeLength()" class="member-name-link">typeLength()</a> - Method in record class dev.hardwood.schema.<a href="dev/hardwood/schema/SchemaNode.PrimitiveNode.html" title="class in dev.hardwood.schema">SchemaNode.PrimitiveNode</a></dt>
+<dd>
+<div class="block">Returns the fixed byte length of a <a href="dev/hardwood/metadata/PhysicalType.html#FIXED_LEN_BYTE_ARRAY"><code>PhysicalType.FIXED_LEN_BYTE_ARRAY</code></a> field, or <code>null</code>
+for any other type.</div>
+</dd>
+<dt><a href="dev/hardwood/schema/FileSchema.PrimitiveBuilder.html#typeLength(int)" class="member-name-link">typeLength(int)</a> - Method in class dev.hardwood.schema.<a href="dev/hardwood/schema/FileSchema.PrimitiveBuilder.html" title="class in dev.hardwood.schema">FileSchema.PrimitiveBuilder</a></dt>
+<dd>
+<div class="block">Set the fixed byte length of a <code>FIXED_LEN_BYTE_ARRAY</code> leaf.</div>
 </dd>
 </dl>
 <h2 class="title" id="I:U">U</h2>
@@ -6264,6 +6322,10 @@ footer was read with.</div>
 <dt><a href="dev/hardwood/metadata/LogicalType.TimeType.html#unit()" class="member-name-link">unit()</a> - Method in record class dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.TimeType.html" title="class in dev.hardwood.metadata">LogicalType.TimeType</a></dt>
 <dd>
 <div class="block">Returns the value of the <a href="./dev/hardwood/metadata/LogicalType.TimeType.html#param-unit"><code>unit</code></a> record component.</div>
+</dd>
+<dt><a href="dev/hardwood/metadata/LogicalType.html#unknown()" class="member-name-link">unknown()</a> - Static method in interface dev.hardwood.metadata.<a href="dev/hardwood/metadata/LogicalType.html" title="interface in dev.hardwood.metadata">LogicalType</a></dt>
+<dd>
+<div class="block">The <code>UNKNOWN</code> annotation, for a column whose every value is null.</div>
 </dd>
 <dt><a href="dev/hardwood/metadata/ColumnOrder.html#UNKNOWN" class="member-name-link">UNKNOWN</a> - Enum constant in enum class dev.hardwood.metadata.<a href="dev/hardwood/metadata/ColumnOrder.html" title="enum class in dev.hardwood.metadata">ColumnOrder</a></dt>
 <dd>

@@ -355,8 +355,8 @@ referenced rather than copied and must not be mutated until the record is writte
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setString(java.lang.String,java.lang.String)" class="member-name-link">setString</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Sets a <code>BYTE_ARRAY</code> field annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code>, or unannotated, from
-the value's UTF-8 bytes.</div>
+<div class="block">Sets a <code>BYTE_ARRAY</code> field annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code> from the value's UTF-8
+bytes.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStruct(int,java.util.function.Consumer)" class="member-name-link">setStruct</a><wbr>(int&nbsp;fieldIndex,
@@ -545,8 +545,9 @@ for the field's annotation</dd>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="StructBuilder.html" title="interface in dev.hardwood.writer">StructBuilder</a></span>&nbsp;<span class="element-name">setString</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</span></div>
-<div class="block">Sets a <code>BYTE_ARRAY</code> field annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code>, or unannotated, from
-the value's UTF-8 bytes. A <code>null</code> value sets the field null.</div>
+<div class="block">Sets a <code>BYTE_ARRAY</code> field annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code> from the value's UTF-8
+bytes. A <code>null</code> value sets the field null. An unannotated <code>BYTE_ARRAY</code> field takes
+[#setBinary(String, byte[])].</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>

@@ -2577,6 +2577,7 @@
 <li><code>children()</code> — for plain struct groups, iterate to get each field.</li>
 </ul>
 <p>All three navigation methods return <code>null</code> when the group isn't of the expected kind or its encoding is malformed. Callers decide whether <code>null</code> is fatal at their layer.</p>
+<p>The walk ends at a <code>SchemaNode.PrimitiveNode</code>. Its <code>column()</code> returns the leaf's <code>ColumnSchema</code>, the entry <code>FileSchema.getColumns()</code> lists for it; pass <code>column().columnIndex()</code> to <code>columnReader(int)</code>, or <code>column().fieldPath().toString()</code> to <code>columnReader(String)</code>.</p>
 <h4 id="reading-nested-data-the-layer-model">Reading nested data: the layer model<a class="headerlink" href="#reading-nested-data-the-layer-model" title="Permanent link">&para;</a></h4>
 <p><code>ColumnReader</code> exposes a nested column's schema chain as a sequence of <strong>layers</strong>, numbered
 <code>0..getLayerCount() - 1</code> outermost-to-innermost, each with <code>getLayerValidity(k)</code> and, for lists
@@ -2837,8 +2838,8 @@ and maps, <code>getLayerOffsets(k)</code>; the leaf has <code>getLeafValidity()<
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bd379b5321c18b1b80e2cb58d5e2af557a82a0c2" target="_blank" rel="noopener">
-      bd379b53
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6a3e97428a947d51dd3eb3522215517107055945" target="_blank" rel="noopener">
+      6a3e9742
     </a>
   
 </div>

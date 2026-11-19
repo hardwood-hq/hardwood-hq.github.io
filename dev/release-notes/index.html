@@ -2284,6 +2284,10 @@
 <li>The native CLI is no longer published for macOS on Intel; on those machines the CLI runs from the Docker image (<a href="https://github.com/hardwood-hq/hardwood/issues/1606">#1606</a>)</li>
 <li><code>InMemoryOutputFile.create()</code>, <code>close()</code> and <code>discard()</code> declare <code>IOException</code>, and <code>position()</code> throws <code>IllegalStateException</code> after <code>close()</code>; <code>buffer().remaining()</code> gives the file's length (<a href="https://github.com/hardwood-hq/hardwood/issues/1747">#1747</a>)</li>
 <li><code>WriterConfig.Builder.codec(CompressionCodec)</code> is replaced by <code>compression(Compression)</code>, the getter <code>codec()</code> by <code>compression()</code>, and <code>WriterConfig.DEFAULT_CODEC</code> by <code>DEFAULT_COMPRESSION</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
+<li><code>FileSchema.Builder</code> sets the logical type and type length of a primitive leaf in a <code>FileSchema.PrimitiveBuilder</code> lambda, for example <code>primitive("name", BYTE_ARRAY, REQUIRED, col -&gt; col.logicalType(LogicalType.string()))</code>. The overloads that took a <code>typeLength</code> or a <code>LogicalType</code> are removed (<a href="https://github.com/hardwood-hq/hardwood/issues/957">#957</a>)</li>
+<li><code>FileSchema.Builder.addColumn(...)</code> and <code>FileSchema.StructBuilder.addColumn(...)</code> are renamed to <code>primitive(...)</code>, the name <code>FileSchema.ElementBuilder</code> uses (<a href="https://github.com/hardwood-hq/hardwood/issues/1883">#1883</a>)</li>
+<li><code>ColumnSchema</code> and <code>SchemaNode.GroupNode</code> have a last record component <code>fieldId</code>. Their constructors and record patterns take the new component, and two schemas that differ only in field ids are no longer equal (<a href="https://github.com/hardwood-hq/hardwood/issues/957">#957</a>)</li>
+<li><code>SchemaNode.PrimitiveNode</code> has the single record component <code>column</code>, the leaf's <code>ColumnSchema</code>; its other accessors read from that column and remain (<a href="https://github.com/hardwood-hq/hardwood/issues/1892">#1892</a>)</li>
 </ul>
 <p><strong>Deprecations:</strong></p>
 <ul>
@@ -2311,6 +2315,7 @@
 <li><code>WriterConfig.Builder.dataPageVersion(DataPageVersion.V2)</code> writes every data page as <code>DATA_PAGE_V2</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1820">#1820</a>)</li>
 <li><code>StructBuilder.setValue</code> writes a field from a value in the form <code>getValue</code> returns, so rows can be copied without switching on field types (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
 <li>A filtered <code>ColumnReader</code> or <code>ColumnReaders</code> returns no batch without rows: <code>nextBatch()</code> passes over the batches the filter keeps no row of (<a href="https://github.com/hardwood-hq/hardwood/issues/1815">#1815</a>)</li>
+<li>The field id of each schema element (<code>field_id</code>, used by Iceberg, Delta Lake and DuckLake) is available as <code>ColumnSchema.fieldId()</code> and <code>SchemaNode.fieldId()</code>. A file written with a schema read from another file keeps the field ids, and <code>FileSchema.Builder</code> can set them (<a href="https://github.com/hardwood-hq/hardwood/issues/957">#957</a>)</li>
 </ul>
 <p><strong>Bug fixes:</strong></p>
 <ul>
@@ -2615,8 +2620,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bd379b5321c18b1b80e2cb58d5e2af557a82a0c2" target="_blank" rel="noopener">
-      bd379b53
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6a3e97428a947d51dd3eb3522215517107055945" target="_blank" rel="noopener">
+      6a3e9742
     </a>
   
 </div>

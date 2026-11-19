@@ -2543,7 +2543,7 @@
 </tr>
 <tr>
 <td><code>hardwood schema</code></td>
-<td>Print the file schema, including logical-type annotations such as <code>VARIANT(1)</code> on Variant groups</td>
+<td>Print the file schema, including logical-type annotations such as <code>VARIANT(1)</code> on Variant groups and field ids as <code>= &lt;id&gt;</code></td>
 </tr>
 <tr>
 <td><code>hardwood print</code></td>
@@ -2995,7 +2995,7 @@ and <strong>Dictionary</strong>. <strong>Schema</strong>, <strong>Footer &amp; i
 <ul>
 <li><strong>Overview</strong> — file summary and key/value metadata, with Spark JSON schemas pretty-printed and
   Arrow IPC schemas decoded to a hex dump</li>
-<li><strong>Schema</strong> — expandable tree of groups and leaves, navigated with <code>→</code> / <code>←</code></li>
+<li><strong>Schema</strong> — expandable tree of groups and leaves, navigated with <code>→</code> / <code>←</code>; a file whose schema carries field ids shows them in a <code>Field id</code> column</li>
 <li><strong>Row groups</strong> — <code>:</code> jumps to a row group by number, <code>d</code> opens the Data preview at the selected group's first row</li>
 <li><strong>Row group detail</strong> — <code>d</code> opens the Data preview at this row group's first row</li>
 <li><strong>Column chunks</strong> — the chunks of one row group in column order, with type, codec, compressed size and
@@ -3175,8 +3175,8 @@ filter applied but exits edit mode).</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bd379b5321c18b1b80e2cb58d5e2af557a82a0c2" target="_blank" rel="noopener">
-      bd379b53
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6a3e97428a947d51dd3eb3522215517107055945" target="_blank" rel="noopener">
+      6a3e9742
     </a>
   
 </div>

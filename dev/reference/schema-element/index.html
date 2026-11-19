@@ -2195,7 +2195,7 @@
 -->
 <h1 id="schemaelement">SchemaElement<a class="headerlink" href="#schemaelement" title="Permanent link">&para;</a></h1>
 <p><code>dev.hardwood.metadata.SchemaElement</code> represents one element in the flat schema list in a Parquet footer. The list uses depth-first order.</p>
-<p><code>FileSchema.fromSchemaElements(List&lt;SchemaElement&gt;)</code> builds a schema tree from this list. <code>FileSchema.toSchemaElements()</code> creates the list again.</p>
+<p><code>FileSchema.fromSchemaElements(List&lt;SchemaElement&gt;)</code> builds a schema tree from this list. <code>FileSchema.toSchemaElements()</code> creates the list again. <code>fromSchemaElements</code> throws <code>IllegalArgumentException</code> when the groups' child counts do not describe exactly the elements in the list, when a primitive element declares children, or when an element carries an annotation its field cannot carry, such as <code>STRING</code> on an <code>INT32</code> or <code>UUID</code> on a <code>FIXED_LEN_BYTE_ARRAY</code> of other than 16 bytes.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Use <a href="../../how-to/write-row-by-row/#writing-a-file"><code>FileSchema.builder(String)</code></a> to build a schema for writing. The builder checks the complete schema and calculates child counts. Use <code>SchemaElement</code> when you work with footer metadata.</p>
@@ -2370,8 +2370,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bd379b5321c18b1b80e2cb58d5e2af557a82a0c2" target="_blank" rel="noopener">
-      bd379b53
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6a3e97428a947d51dd3eb3522215517107055945" target="_blank" rel="noopener">
+      6a3e9742
     </a>
   
 </div>

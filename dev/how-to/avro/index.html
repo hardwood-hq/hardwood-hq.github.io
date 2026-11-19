@@ -2181,7 +2181,7 @@
 <li>A group whose two children carry the same Parquet name. Avro records cannot hold two fields of one name.</li>
 <li>A file whose root is named <code>interval</code> or <code>float16</code> and that carries a column of that logical type. Those two logical types convert to Avro <code>fixed</code> types with exactly those names and no namespace, which is also the root's full name. Excluding the column from the projection does not lift the rejection; read such a file through Hardwood's <code>RowReader</code>.</li>
 </ul>
-<p>A Parquet column annotated with the <code>NULL</code> logical type (e.g. PyArrow's <code>pa.null()</code> columns) maps to a bare Avro <code>null</code> field. The same collapse applies inside lists and maps: a <code>list&lt;null&gt;</code> element or <code>map&lt;string, null&gt;</code> value position becomes a bare <code>null</code> in the corresponding Avro <code>array</code> / <code>map</code> schema.</p>
+<p>A Parquet column annotated with the <code>UNKNOWN</code> logical type (e.g. PyArrow's <code>pa.null()</code> columns) maps to a bare Avro <code>null</code> field. The same collapse applies inside lists and maps: a <code>list&lt;null&gt;</code> element or <code>map&lt;string, null&gt;</code> value position becomes a bare <code>null</code> in the corresponding Avro <code>array</code> / <code>map</code> schema.</p>
 <p>A key-only Parquet MAP, whose repeated <code>key_value</code> group has no value column, also maps to an Avro <code>map</code> with bare <code>null</code> values. Each decoded key is present in the Java map with a <code>null</code> value.</p>
 <p>A <code>repeated</code> field outside a <code>LIST</code> or <code>MAP</code> group is a required list of required elements, and maps to a non-nullable Avro <code>array</code> of the field's own type: <code>repeated int32 foo</code> becomes <code>array&lt;int&gt;</code>, a repeated group becomes an <code>array</code> of its record, and a repeated group whose only child is a repeated <code>MAP_KEY_VALUE</code> group becomes an <code>array</code> of Avro <code>map</code>s. Its values are <code>java.util.List</code> instances. Such a group converts as the row reader reads it, ignoring any <code>LIST</code>, <code>MAP</code> or <code>MAP_KEY_VALUE</code> annotation of its own (see <a href="../../reference/accessors/#legacy-list-encodings">Legacy list encodings</a>). Building an <code>AvroRowReader</code> whose projection includes a column of such a group annotated <code>VARIANT</code> fails with an error; a projection without its columns reads the rest of the file.</p>
 <p>A group carrying an annotation other than <code>LIST</code>, <code>MAP</code> or <code>VARIANT</code>, such as a <code>LIST</code> element group annotated <code>MAP_KEY_VALUE</code>, maps to an Avro record of its fields.</p>
@@ -2239,8 +2239,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/bd379b5321c18b1b80e2cb58d5e2af557a82a0c2" target="_blank" rel="noopener">
-      bd379b53
+    <a href="https://github.com/hardwood-hq/hardwood/tree/6a3e97428a947d51dd3eb3522215517107055945" target="_blank" rel="noopener">
+      6a3e9742
     </a>
   
 </div>
