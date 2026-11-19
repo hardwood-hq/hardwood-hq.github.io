@@ -21,7 +21,7 @@
       
       
       <link rel="icon" href="assets/hardwood.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -29,10 +29,10 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1405,6 +1405,34 @@
   
   
     <li class="md-nav__item">
+      <a href="reference/format-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Format Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="reference/accessors/" class="md-nav__link">
         
   
@@ -1852,14 +1880,29 @@ Available as a Java library and a <a href="reference/cli/">command-line tool</a>
 <p>The Hardwood library supports reading arbitrarily large Parquet files, provided individual column chunks are not larger than 2 GB (see <a href="concepts/parquet-layout/">Parquet file layout</a>).
 The interactive <code>dive</code> TUI currently caps S3 files at 2 GB.</p>
 <h2 id="roadmap">Roadmap<a class="headerlink" href="#roadmap" title="Permanent link">&para;</a></h2>
-<p>Forward-looking items tracked for post-1.0. None are committed to a specific release.</p>
+<p>1.1, in its release candidate phase:</p>
 <ul>
-<li><strong>Finalize <code>ColumnReader</code> API</strong> — stabilize the API for columnar access and move it out of "Experimental" state. (<a href="https://github.com/hardwood-hq/hardwood/issues/522">#522</a>)</li>
-<li><strong>Writer support</strong> — write Parquet files in addition to reading; today Hardwood is reader-only. (<a href="https://github.com/hardwood-hq/hardwood/issues/9">#9</a>)</li>
-<li><strong>Bloom filter predicate pushdown</strong> — use per-chunk bloom filters for equality-predicate skipping on high-cardinality columns, where min/max statistics can't help. (<a href="https://github.com/hardwood-hq/hardwood/issues/105">#105</a>)</li>
-<li><strong>Parquet Modular Encryption</strong> — read files encrypted under the Parquet <a href="https://github.com/apache/parquet-format/blob/master/Encryption.md">Modular Encryption spec</a>: encrypted footer, per-column keys, AES-GCM and AES-GCM-CTR. (<a href="https://github.com/hardwood-hq/hardwood/issues/128">#128</a>)</li>
-<li><strong>Apache Arrow interop</strong> — <code>ColumnReader</code> output as Arrow <code>FieldVector</code> / <code>VectorSchemaRoot</code> for zero-copy handoff to DuckDB, DataFusion, Pandas-via-JNI, and other Arrow-native consumers. (<a href="https://github.com/hardwood-hq/hardwood/issues/153">#153</a>)</li>
+<li><strong>Write support</strong>: <code>RowWriter</code> and <code>ColumnWriter</code> over nested structs, lists and maps, statistics, page indexes and Bloom filters, written to local files, memory or S3, with column chunks encoded in parallel. (<a href="https://github.com/hardwood-hq/hardwood/issues/9">#9</a>)</li>
+<li><strong>Substantially improved read performance</strong>: a rebuilt read engine that decodes every column on the context's pool, structs read without nested record assembly, and dictionary-encoded batches on <code>ColumnReader</code>.</li>
+<li><strong>Remote reads with fewer requests</strong>: a file's footer and page index fetched with the request that opens it, later files of a multi-file read opened ahead, and parsed footers reused across readers through a <code>MetadataSource</code>.</li>
+<li><strong>More predicate pushdown</strong>: row groups skipped by Bloom filters and dictionary pages, predicates on dictionary-encoded columns evaluated once per dictionary entry, and null tests on struct, <code>LIST</code> and <code>MAP</code> groups.</li>
+<li><strong>A reworked exception model</strong>: a corrupt file raises <code>ParquetReadException</code>, and a read failure names the file and, where it has them, the row group and column it occurred in.</li>
+<li><strong>Hardened reads of untrusted files</strong>: a size, count or length a file's bytes cannot back fails the read before anything is allocated from it. (<a href="https://github.com/hardwood-hq/hardwood/issues/610">#610</a>)</li>
+<li><strong>New format features</strong>: the <code>ALP</code> encoding, read and written, <code>TIMESTAMP</code> over <code>FIXED_LEN_BYTE_ARRAY(12)</code>, and the <code>FILE</code> logical type.</li>
 </ul>
+<p>Planned for 1.2:</p>
+<ul>
+<li><strong>Parquet Modular Encryption</strong>: read files encrypted under the <a href="https://github.com/apache/parquet-format/blob/master/Encryption.md">Modular Encryption spec</a>. (<a href="https://github.com/hardwood-hq/hardwood/issues/128">#128</a>)</li>
+<li><strong>Bounded read memory</strong>: a heap quota per <code>HardwoodContext</code>, shared by the reads using it. (<a href="https://github.com/hardwood-hq/hardwood/issues/1859">#1859</a>)</li>
+<li><strong>Copying and rewriting files</strong>: copy a file through the column and row APIs without a hand-written bridge, and rewrite or merge files by copying unchanged row groups. (<a href="https://github.com/hardwood-hq/hardwood/issues/1291">#1291</a>)</li>
+<li><strong>Complete Variant support</strong>: writing Variant columns, and predicate pushdown and projection on shredded Variant paths. (<a href="https://github.com/hardwood-hq/hardwood/issues/1488">#1488</a>)</li>
+<li><strong>Stable <code>ColumnReader</code> API</strong>: move columnar access out of <code>@Experimental</code>. (<a href="https://github.com/hardwood-hq/hardwood/issues/522">#522</a>)</li>
+</ul>
+<p>Planned for a later release:</p>
+<ul>
+<li><strong>Apache Arrow interop</strong>: <code>ColumnReader</code> output as Arrow <code>FieldVector</code> / <code>VectorSchemaRoot</code>. (<a href="https://github.com/hardwood-hq/hardwood/issues/153">#153</a>)</li>
+</ul>
+<p>See the <a href="https://github.com/hardwood-hq/hardwood/milestones">GitHub milestones</a> for the issues of past and upcoming releases, and <a href="reference/format-support/">Format Support</a> for the parts of the Parquet format Hardwood 1.0 reads.</p>
 <h2 id="getting-help">Getting help<a class="headerlink" href="#getting-help" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>Questions, ideas, design discussion</strong> — <a href="https://github.com/hardwood-hq/hardwood/discussions">GitHub Discussions</a>. The best first stop for "how do I…", "is X possible…", or "what's the right way to…".</li>
@@ -1920,8 +1963,8 @@ The interactive <code>dive</code> TUI currently caps S3 files at 2 GB.</p>
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/38895924c8bd58a5778c1bae429d652f7b11d2b4" target="_blank" rel="noopener">
-      38895924
+    <a href="https://github.com/hardwood-hq/hardwood/tree/cfe4b15053dd675d573db7e80a3da02abce2db87" target="_blank" rel="noopener">
+      cfe4b150
     </a>
   
 </div>
@@ -1955,10 +1998,10 @@ The interactive <code>dive</code> TUI currently caps S3 files at 2 GB.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy", "content.action.edit"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy", "content.action.edit"], "search": "assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>
