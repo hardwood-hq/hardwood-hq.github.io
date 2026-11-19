@@ -2669,7 +2669,7 @@
 </tr>
 </tbody>
 </table>
-<p>The writer requires at least one column: <code>build()</code> rejects a schema with no fields, and <code>ParquetFileWriter.create</code> rejects one built another way, such as the childless root a file that declares no columns is read as.</p>
+<p>The writer requires at least one column: <code>build()</code> rejects a schema with no fields, and <code>ParquetFileWriter.create</code> rejects one built another way, such as the childless root a file that declares no columns is read as, both with <code>UnsupportedOperationException</code>.</p>
 <p><code>repetition</code> is <code>REQUIRED</code> or <code>OPTIONAL</code>; <code>REPEATED</code> is rejected, repetition being what <code>list</code> and <code>map</code> express. <code>typeLength</code> is rejected for every type but <code>FIXED_LEN_BYTE_ARRAY</code>, and a <code>FIXED_LEN_BYTE_ARRAY</code> column has a positive one. Declared without one, it takes the length its annotation implies:</p>
 <table>
 <thead>
@@ -3546,11 +3546,11 @@
 <tbody>
 <tr>
 <td><code>UnsupportedOperationException</code></td>
-<td>Something the writer does not produce, such as an <code>INT96</code> column, the <code>LZ4</code> or <code>LZO</code> codec, or a <a href="#schema-shapes">schema shape</a> outside what it writes. For a codec whose library is missing, the message names the dependency to add</td>
+<td>Something the format allows and the writer does not produce, such as a schema with no columns, an <code>INT96</code> column, the <code>LZ4</code> or <code>LZO</code> codec, or a <a href="#schema-shapes">schema shape</a> outside what it writes. For a codec whose library is missing, the message names the dependency to add</td>
 </tr>
 <tr>
 <td><code>IllegalArgumentException</code></td>
-<td>The input does not fit the schema, or a configuration value lies outside what it accepts, such as a setter that does not fit the column's type, a column left unset or set twice, a value outside the range its annotation declares, a <code>REQUIRED</code> field a record leaves unset, a row out of the declared sort order, or a compression level outside the codec's range</td>
+<td>The input does not fit the schema, the schema is one the format does not allow, or a configuration value lies outside what it accepts, such as a <code>MAP</code> key that is not <code>REQUIRED</code>, a setter that does not fit the column's type, a column left unset or set twice, a value outside the range its annotation declares, a <code>REQUIRED</code> field a record leaves unset, a row out of the declared sort order, or a compression level outside the codec's range</td>
 </tr>
 <tr>
 <td><code>IndexOutOfBoundsException</code></td>
@@ -3572,7 +3572,7 @@
 </table>
 <h3 id="schema-shapes">Schema Shapes<a class="headerlink" href="#schema-shapes" title="Permanent link">&para;</a></h3>
 <p>Repetition is writable wherever a <code>LIST</code> or <code>MAP</code> annotation accounts for it. An annotated group is <code>REQUIRED</code> or <code>OPTIONAL</code> and holds exactly one <code>REPEATED</code> entry, which for a <code>MAP</code> is a group of <code>key</code> and <code>value</code>. That admits the canonical three-level <code>LIST</code> and two-level <code>MAP</code> layouts <code>FileSchema.builder</code> declares, and the legacy two-level lists a schema read from an existing file may carry: <code>LIST { repeated element }</code>, whose entry is the element, and <code>LIST { repeated group element { … } }</code>, whose entry is an element struct.</p>
-<p>Any other repetition is rejected with <code>UnsupportedOperationException</code> when the writer is created, as is a <code>FILE</code> group with no children.</p>
+<p>A <code>repeated</code> field outside a <code>LIST</code> or <code>MAP</code> group is rejected with <code>UnsupportedOperationException</code> when the writer is created. An annotated group that is itself <code>REPEATED</code>, holds other than one field, or holds an entry that is not <code>REPEATED</code> (or for a <code>MAP</code>, is not a group), a <code>MAP</code> whose entry group has no fields or whose key is not <code>REQUIRED</code>, and a <code>FILE</code> group with no children are rejected with <code>IllegalArgumentException</code>. A key-only map needs a <code>REQUIRED</code> key too, and an <code>OPTIONAL</code> key is rejected even if every key value would be present. These rules apply to schemas read from existing files as well as built ones.</p>
 <p>The row API reaches a list's values through an element node below the entry, which the legacy two-level lists do not have, so <code>rowWriter()</code> refuses those two shapes and <code>columnWriter()</code> writes them. <code>rowWriter()</code> also requires sibling field names to be unique, which the <code>ColumnBatch</code> indices and dotted paths do not.</p>
 <p>A column's maximum definition level and maximum repetition level must each be at most 255. A schema nested deeper is rejected with <code>UnsupportedOperationException</code> when the writer is created.</p>
 
@@ -3624,8 +3624,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/8f9603a15c94555d9e69138e278b4cd7d13bbd2e" target="_blank" rel="noopener">
-      8f9603a1
+    <a href="https://github.com/hardwood-hq/hardwood/tree/bd379b5321c18b1b80e2cb58d5e2af557a82a0c2" target="_blank" rel="noopener">
+      bd379b53
     </a>
   
 </div>
