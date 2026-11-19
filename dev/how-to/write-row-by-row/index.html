@@ -2397,18 +2397,23 @@
 <a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="p">}</span>
 </code></pre></div>
 <p>A nested struct, list or map is copied with its contents. A struct's fields are matched by name, so the target struct can declare its fields in another order, or fewer of them; a field the source lacks is written as null. A value not in the field's form, such as a <code>String</code> for a <code>DOUBLE</code> field, fails with an error. See <a href="../../reference/writer/#logical-types-and-row-setters">Logical Types and Row Setters</a> for the form each type takes.</p>
+<p>A file holding an <code>INT96</code> or <code>VARIANT</code> column, or a schema shape the row writer does not produce, cannot be copied this way: the copy fails when the writer or its row writer is created, or on the first such value. See <a href="../../reference/writer/#schema-shapes">Schema Shapes</a> and <a href="../../reference/writer/#physical-types-and-columnar-setters">Physical Types and Columnar Setters</a>.</p>
+<p>To copy the source file's key-value metadata, pass it to the writer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="n">reader</span><span class="p">.</span><span class="na">getFileMetaData</span><span class="p">().</span><span class="na">keyValueMetadata</span><span class="p">());</span>
+</code></pre></div>
+<p>Some entries describe the schema they were written with, such as <code>ARROW:schema</code>, the pandas descriptor and <code>org.apache.spark.sql.parquet.row.metadata</code>. Carry those over only when the target schema is the source's; on a changed schema, a reader that trusts them reads the file under the wrong types or fails.</p>
 <h2 id="configuring-the-writer">Configuring the Writer<a class="headerlink" href="#configuring-the-writer" title="Permanent link">&para;</a></h2>
 <p>Pass a <code>WriterConfig</code> to <code>create</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.PrecisionLossPolicy</span><span class="p">;</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.WriterConfig</span><span class="p">;</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">        </span><span class="p">.</span><span class="na">precisionLossPolicy</span><span class="p">(</span><span class="n">PrecisionLossPolicy</span><span class="p">.</span><span class="na">TRUNCATE</span><span class="p">)</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="c1">// ...</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.PrecisionLossPolicy</span><span class="p">;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">dev.hardwood.writer.WriterConfig</span><span class="p">;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">        </span><span class="p">.</span><span class="na">precisionLossPolicy</span><span class="p">(</span><span class="n">PrecisionLossPolicy</span><span class="p">.</span><span class="na">TRUNCATE</span><span class="p">)</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">,</span><span class="w"> </span><span class="n">config</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="c1">// ...</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="p">}</span>
 </code></pre></div>
 <p>Every option, its default and what it rejects is under <a href="../../reference/writer/#writer-options">Writer Options</a>. <code>ParquetFileWriter.endRowGroup()</code> closes the open row group after the records written so far; see <a href="../write-column-by-column/#ending-a-row-group">Ending a Row Group</a>. The footer's key-value metadata and <code>created_by</code> identifier are set on the <code>ParquetFileWriter</code> until <code>close()</code>; see <a href="../../reference/writer/#file-metadata">File Metadata</a>.</p>
 
@@ -2460,8 +2465,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/6a3e97428a947d51dd3eb3522215517107055945" target="_blank" rel="noopener">
-      6a3e9742
+    <a href="https://github.com/hardwood-hq/hardwood/tree/b176fd5901ac49bd8bc72468a7c13d035932fd3e" target="_blank" rel="noopener">
+      b176fd59
     </a>
   
 </div>
