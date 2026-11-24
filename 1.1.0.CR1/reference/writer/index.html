@@ -1,0 +1,3728 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A lightweight Java Parquet reader and writer — zero transitive dependencies, GraalVM-friendly, S3 without Hadoop">
+      
+      
+      
+        <link rel="canonical" href="https://hardwood.dev/1.1.0.CR1/reference/writer/">
+      
+      
+        <link rel="prev" href="../reader/">
+      
+      
+        <link rel="next" href="../format-support/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/hardwood.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Writer - Hardwood</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#writer-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Hardwood" class="md-header__button md-logo" aria-label="Hardwood" data-md-component="logo">
+      <!--
+
+     SPDX-License-Identifier: Apache-2.0
+
+     Copyright The original authors
+
+     Licensed under the Apache Software License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+
+--><img src="../../assets/hardwood-with-text.svg" alt="Hardwood">
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Hardwood
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Writer
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hardwood-hq/hardwood" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hardwood-hq/hardwood
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../getting-started/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorial/first-read/" class="md-tabs__link">
+          
+  
+  
+  Tutorial
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../how-to/" class="md-tabs__link">
+          
+  
+  
+  How-to Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../concepts/parquet-layout/" class="md-tabs__link">
+          
+  
+  
+  Concepts
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../configuration/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../contributing/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../release-notes/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Release Notes
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="/experiments/dive-web/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  dive on the Web
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Hardwood" class="md-nav__button md-logo" aria-label="Hardwood" data-md-component="logo">
+      <!--
+
+     SPDX-License-Identifier: Apache-2.0
+
+     Copyright The original authors
+
+     Licensed under the Apache Software License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+
+--><img src="../../assets/hardwood-with-text.svg" alt="Hardwood">
+    </a>
+    Hardwood
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hardwood-hq/hardwood" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hardwood-hq/hardwood
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tutorial
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tutorial
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorial/first-read/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Your First Parquet File
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How-to Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    How-to Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/row-reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Row by Row
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/column-reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Column by Column
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/query-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Filter, Project, Limit, and Split
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/multi-file/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Multiple Files as One Dataset
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/avro/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read into Avro GenericRecords
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read from S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/write-to-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write to S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/compat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read with the parquet-java API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/variant/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Variant Columns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/geospatial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read Geospatial Columns
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/file-references/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Read and Write File References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/write-row-by-row/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write Row by Row
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/write-column-by-column/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Write Column by Column
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/write-failures/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handle Write Failures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../how-to/metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inspect File Metadata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/parquet-layout/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How a Parquet File Is Laid Out
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/write-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Write Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/concurrency-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Concurrency Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/reader-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RowReader vs. ColumnReader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/nested-columns/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Layer Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/row-selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Row Selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/timestamps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Timestamp Semantics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../concepts/compatibility-philosophy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compatibility Philosophy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writer
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#destination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#field-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field ids
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logical-type-factories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logical Type Factories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writer-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writer Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sorted-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sorted Rows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encodings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encodings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compression-codecs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression Codecs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#physical-types-and-columnar-setters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Types and Columnar Setters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logical-types-and-row-setters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logical Types and Row Setters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#value-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value Ranges
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statistics-written" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics Written
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Statistics Written">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bloom-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloom filters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Metadata
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-value-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key-value metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#created_by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        created_by
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ending-a-row-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ending a Row Group
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writer-threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writer Threads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finishing-and-abandoning-a-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finishing and Abandoning a File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rowwriteresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RowWriteResult
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rejected-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rejected Input
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rejected Input">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema Shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../format-support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Format Support
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../accessors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Typed Accessors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../query-controls/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Query Controls
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parquet-java-compat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    parquet-java Compat Filters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../error-handling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Error Handling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../packages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Package Structure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/api/1.1.0.CR1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API (JavaDoc)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/api-changes/1.1.0.CR1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Changes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../release-notes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Notes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="/experiments/dive-web/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    dive on the Web
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#destination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Destination
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Schema">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#field-ids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field ids
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logical-type-factories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logical Type Factories
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writer-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writer Options
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sorted-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sorted Rows
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encodings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Encodings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compression-codecs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression Codecs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#physical-types-and-columnar-setters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Physical Types and Columnar Setters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#logical-types-and-row-setters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Logical Types and Row Setters
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#value-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value Ranges
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statistics-written" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics Written
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Statistics Written">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bloom-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bloom filters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#file-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Metadata
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Metadata">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#key-value-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key-value metadata
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#created_by" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        created_by
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ending-a-row-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ending a Row Group
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#writer-threads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Writer Threads
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#finishing-and-abandoning-a-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Finishing and Abandoning a File
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rowwriteresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RowWriteResult
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rejected-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rejected Input
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Rejected Input">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#schema-shapes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Schema Shapes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/hardwood-hq/hardwood/edit/main/docs/content/reference/writer.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<!--
+
+     SPDX-License-Identifier: CC-BY-SA-4.0
+
+     Copyright The original authors
+
+     Licensed under the Creative Commons Attribution-ShareAlike 4.0 International License;
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at https://creativecommons.org/licenses/by-sa/4.0/
+
+-->
+<h1 id="writer-reference">Writer Reference<a class="headerlink" href="#writer-reference" title="Permanent link">&para;</a></h1>
+<h2 id="destination">Destination<a class="headerlink" href="#destination" title="Permanent link">&para;</a></h2>
+<p>The <code>OutputFile</code> a writer is created with decides where the file is written.</p>
+<table>
+<thead>
+<tr>
+<th>Factory</th>
+<th>Destination</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>OutputFile.of(Path)</code></td>
+<td>A local file. The bytes are streamed to a temporary sibling of the target path and renamed onto it when the writer closes, so a write that fails or is abandoned leaves nothing at the path</td>
+</tr>
+<tr>
+<td><code>OutputFile.inMemory()</code></td>
+<td>The heap, up to <code>Integer.MAX_VALUE - 8</code> bytes. Returns an <code>InMemoryOutputFile</code>, whose <code>buffer()</code> returns the finished file</td>
+</tr>
+<tr>
+<td><code>S3Source.outputFile(...)</code></td>
+<td>An S3 object, uploaded as the file is written and published when the writer closes (<code>hardwood-s3</code>; see <a href="../s3/#writing">S3 Reference</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>An <code>OutputFile</code> writes one file. <code>ParquetFileWriter.create</code> throws <code>IllegalStateException</code> for an <code>OutputFile</code> another writer has already used.</p>
+<p>An in-memory file can be written and read back without a filesystem: <code>buffer()</code> returns the whole file as a <code>ByteBuffer</code> positioned at its first byte, which is what <code>InputFile.of(ByteBuffer)</code> expects.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">InMemoryOutputFile</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">OutputFile</span><span class="p">.</span><span class="na">inMemory</span><span class="p">();</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">RowWriter</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">writer</span><span class="p">.</span><span class="na">rowWriter</span><span class="p">();</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">rows</span><span class="p">.</span><span class="na">writeRow</span><span class="p">(</span><span class="n">row</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">row</span><span class="p">.</span><span class="na">setLong</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="mi">1L</span><span class="p">));</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileReader</span><span class="w"> </span><span class="n">reader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileReader</span><span class="p">.</span><span class="na">open</span><span class="p">(</span><span class="n">InputFile</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="n">out</span><span class="p">.</span><span class="na">buffer</span><span class="p">())))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="c1">// ...</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="p">}</span>
+</code></pre></div>
+<p>The buffer grows with the file, so no size has to be given up front; the length of a Parquet file is only known once it has been written. The whole file is held on the heap, which costs the size of the finished file in addition to the memory the writer uses for the open row group. Each call to <code>buffer()</code> returns a buffer with its own position and limit, so reading the file back leaves it intact. The buffer's contents must not be modified; whether a change shows in the buffers other calls return is unspecified.</p>
+<p>The file is complete only after the writer is closed, and <code>buffer()</code> throws <code>IllegalStateException</code> before that, or if the destination was discarded.</p>
+<p>To write anywhere else, extend <code>AbstractOutputFile</code> (<code>@Experimental</code>). Its public methods are final: each rejects a call the file's state does not allow with <code>IllegalStateException</code>, then calls the protected method that does the work. <code>position()</code> counts the bytes <code>doWrite</code> accepted. A subclass implements <code>doWrite</code> and overrides the other methods it needs; they do nothing by default.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Called by, while the file is open</th>
+<th>Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>doCreate()</code></td>
+<td><code>create()</code></td>
+<td>Acquires the destination's resources. When it throws, the file is discarded without a call to <code>doDiscard()</code>, so it must leave nothing held</td>
+</tr>
+<tr>
+<td><code>doWrite(ByteBuffer)</code></td>
+<td><code>write</code></td>
+<td>Appends all of the buffer's remaining bytes; <code>write</code> throws <code>IllegalStateException</code> if any are left. Required</td>
+</tr>
+<tr>
+<td><code>doClose()</code></td>
+<td><code>close()</code></td>
+<td>Publishes the file. When it throws, <code>doDiscard()</code> runs, its failure is attached as suppressed, and the file is discarded</td>
+</tr>
+<tr>
+<td><code>doDiscard()</code></td>
+<td><code>discard()</code>, or <code>close()</code> when <code>doClose()</code> throws</td>
+<td>Releases the resources and throws away what was written. It is not called again after it throws, so it releases what it can first</td>
+</tr>
+</tbody>
+</table>
+<p><code>close()</code> and <code>discard()</code> on a published or discarded file, and <code>close()</code> on an uncreated one, call nothing. A subclass that hands out the finished file checks for it with <code>requireClosed()</code>.</p>
+<h2 id="schema">Schema<a class="headerlink" href="#schema" title="Permanent link">&para;</a></h2>
+<p>A file's schema is declared with <code>FileSchema.builder(String)</code> and built once; the same <code>FileSchema</code> is passed to <code>ParquetFileWriter.create</code>. Every method appends one field in declaration order, which is also the order the leaf-column indices follow.</p>
+<p><code>FileSchema.builder(String, Consumer&lt;FileSchema.StructBuilder&gt;)</code> declares the root's fields on a <code>StructBuilder</code>, the type a nested <code>struct</code> is declared on, so one method can declare the fields of the root and of every struct. The returned builder takes further fields before <code>build()</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Declares</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>primitive(name, type, repetition)</code></td>
+<td>a primitive column</td>
+</tr>
+<tr>
+<td><code>primitive(name, type, repetition, column)</code></td>
+<td>a primitive column whose optional attributes <code>column</code> sets on a <code>FileSchema.PrimitiveBuilder</code></td>
+</tr>
+<tr>
+<td><code>struct(name, repetition, filler)</code></td>
+<td>a <code>struct</code> group whose fields <code>filler</code> declares</td>
+</tr>
+<tr>
+<td><code>file(name, repetition)</code></td>
+<td>a <code>FILE</code> group with all six children, each <code>OPTIONAL</code>, in the order <code>uri</code>, <code>offset</code>, <code>size</code>, <code>content_type</code>, <code>checksum</code>, <code>inline</code> (see <a href="../accessors/#file-groups">FILE groups</a>)</td>
+</tr>
+<tr>
+<td><code>file(name, repetition, group)</code></td>
+<td>the same <code>FILE</code> group, whose own attributes <code>group</code> sets on a <code>FileSchema.GroupBuilder</code></td>
+</tr>
+<tr>
+<td><code>list(name, repetition[, group], element)</code></td>
+<td>a <code>LIST</code> group whose own attributes <code>group</code> sets, and whose element <code>element</code> declares</td>
+</tr>
+<tr>
+<td><code>map(name, repetition, keyType[, key], value)</code></td>
+<td>a <code>MAP</code> group with a <code>REQUIRED</code> key of <code>keyType</code>, whose optional attributes <code>key</code> sets, and a value <code>value</code> declares</td>
+</tr>
+<tr>
+<td><code>map(name, repetition, group, keyType, key, value)</code></td>
+<td>the same <code>MAP</code> group, whose own attributes <code>group</code> sets</td>
+</tr>
+<tr>
+<td><code>build()</code></td>
+<td>the <code>FileSchema</code></td>
+</tr>
+</tbody>
+</table>
+<p>A <code>FileSchema.PrimitiveBuilder</code> sets the optional attributes of one primitive leaf. Each attribute can be set one time; a second call throws <code>IllegalArgumentException</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Sets</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logicalType(logicalType)</code></td>
+<td>the annotation, which must be legal for the physical type; a leaf whose lambda does not call it is unannotated</td>
+</tr>
+<tr>
+<td><code>typeLength(typeLength)</code></td>
+<td>the byte length of a <code>FIXED_LEN_BYTE_ARRAY</code> leaf</td>
+</tr>
+<tr>
+<td><code>fieldId(fieldId)</code></td>
+<td>the field id (<code>field_id</code> in the footer)</td>
+</tr>
+</tbody>
+</table>
+<p>A <code>FileSchema.GroupBuilder</code> sets the optional attributes of a <code>LIST</code>, <code>MAP</code> or <code>FILE</code> group itself, with the same one-time rule. Its only method is <code>fieldId(fieldId)</code>.</p>
+<p>The writer requires at least one column: <code>build()</code> rejects a schema with no fields, and <code>ParquetFileWriter.create</code> rejects one built another way, such as the childless root a file that declares no columns is read as, both with <code>UnsupportedOperationException</code>.</p>
+<p>Each method throws <code>IllegalArgumentException</code> for a <code>null</code> argument, and for a field name that is empty or already declared among the same group's fields. <code>repetition</code> is <code>REQUIRED</code> or <code>OPTIONAL</code>; <code>REPEATED</code> is rejected, repetition being what <code>list</code> and <code>map</code> express. A message names a nested field by its dotted path, a list element as <code>&lt;list&gt;.list.element</code> and a map key or value as <code>&lt;map&gt;.key_value.key</code> or <code>&lt;map&gt;.key_value.value</code>. <code>typeLength</code> is rejected for every type but <code>FIXED_LEN_BYTE_ARRAY</code>, and a <code>FIXED_LEN_BYTE_ARRAY</code> column has a positive one. Declared without one, it takes the length its annotation implies:</p>
+<table>
+<thead>
+<tr>
+<th>Annotation</th>
+<th>Implied <code>typeLength</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UUID</code></td>
+<td>16</td>
+</tr>
+<tr>
+<td><code>INTERVAL</code></td>
+<td>12</td>
+</tr>
+<tr>
+<td><code>FLOAT16</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>DECIMAL(precision, scale)</code></td>
+<td>the fewest bytes whose two's complement holds <code>precision</code> digits: 1 for precision 1–2, 4 for 9, 8 for 18, 16 for 38</td>
+</tr>
+</tbody>
+</table>
+<p>Any other annotation, or none, implies no length, and the column needs <code>typeLength</code>. A <code>typeLength</code> given explicitly is kept as given; a <code>DECIMAL</code> may take more bytes than its precision needs, while a <code>UUID</code>, <code>INTERVAL</code> or <code>FLOAT16</code> of any other length is rejected.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"event"</span><span class="p">)</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">        </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">                </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">logicalType</span><span class="p">(</span><span class="n">LogicalType</span><span class="p">.</span><span class="na">uuid</span><span class="p">()))</span><span class="w">                         </span><span class="c1">// 16 bytes</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">        </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">                </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">logicalType</span><span class="p">(</span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span><span class="w">                 </span><span class="c1">// 8 bytes</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"legacy_amount"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">FIXED_LEN_BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">                </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">typeLength</span><span class="p">(</span><span class="mi">16</span><span class="p">).</span><span class="na">logicalType</span><span class="p">(</span><span class="n">LogicalType</span><span class="p">.</span><span class="na">decimal</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)))</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p>Inside a <code>struct</code> filler the same methods appear on <code>FileSchema.StructBuilder</code>; a list element and a map value are declared on <code>FileSchema.ElementBuilder</code>, whose <code>primitive(type, repetition[, column])</code>, <code>struct</code>, <code>file</code>, <code>list</code> and <code>map</code> carry no name, the surrounding layout supplying it.</p>
+<h3 id="field-ids">Field ids<a class="headerlink" href="#field-ids" title="Permanent link">&para;</a></h3>
+<p>A field id identifies a field independently of its name. Table formats such as Iceberg, Delta Lake (column mapping mode <code>id</code>) and DuckLake map columns by it. Each declaration scope sets the field id of the field it declares:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Set with</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a primitive column, list element, map key or map value</td>
+<td><code>PrimitiveBuilder.fieldId(int)</code></td>
+</tr>
+<tr>
+<td>a <code>struct</code> group, also as a list element or map value</td>
+<td><code>StructBuilder.fieldId(int)</code> in its filler</td>
+</tr>
+<tr>
+<td>a <code>LIST</code>, <code>MAP</code> or <code>FILE</code> group</td>
+<td><code>GroupBuilder.fieldId(int)</code> in its <code>group</code> lambda</td>
+</tr>
+</tbody>
+</table>
+<p>The synthetic <code>list</code> and <code>key_value</code> groups, the root and the children of a <code>FILE</code> group carry no field id; <code>fieldId</code> on the <code>StructBuilder</code> that declares the root's fields throws <code>IllegalArgumentException</code>. The builder does not check that field ids are unique.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">FileSchema</span><span class="w"> </span><span class="n">schema</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FileSchema</span><span class="p">.</span><span class="na">builder</span><span class="p">(</span><span class="s">"event"</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">        </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"id"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">INT64</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">        </span><span class="p">.</span><span class="na">struct</span><span class="p">(</span><span class="s">"location"</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="n">location</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">location</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">                </span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">                </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"lat"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">DOUBLE</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">                </span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="s">"lon"</span><span class="p">,</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">DOUBLE</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">4</span><span class="p">)))</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="p">.</span><span class="na">list</span><span class="p">(</span><span class="s">"tags"</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">group</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">                </span><span class="n">element</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">element</span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">BYTE_ARRAY</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">REQUIRED</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">                        </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">logicalType</span><span class="p">(</span><span class="n">LogicalType</span><span class="p">.</span><span class="na">string</span><span class="p">()).</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">6</span><span class="p">)))</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">        </span><span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="s">"props"</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">group</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">BYTE_ARRAY</span><span class="p">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">                </span><span class="n">key</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">key</span><span class="p">.</span><span class="na">logicalType</span><span class="p">(</span><span class="n">LogicalType</span><span class="p">.</span><span class="na">string</span><span class="p">()).</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">                </span><span class="n">value</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">value</span><span class="p">.</span><span class="na">primitive</span><span class="p">(</span><span class="n">PhysicalType</span><span class="p">.</span><span class="na">INT64</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="n">col</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">col</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">9</span><span class="p">)))</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="p">.</span><span class="na">file</span><span class="p">(</span><span class="s">"photo"</span><span class="p">,</span><span class="w"> </span><span class="n">RepetitionType</span><span class="p">.</span><span class="na">OPTIONAL</span><span class="p">,</span><span class="w"> </span><span class="n">group</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">group</span><span class="p">.</span><span class="na">fieldId</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p>A schema read from a file keeps the field ids of its elements: <code>SchemaNode.fieldId()</code> and <code>ColumnSchema.fieldId()</code> return them, or <code>null</code> for an element without one. A file written with that schema carries the same field ids.</p>
+<h3 id="logical-type-factories">Logical Type Factories<a class="headerlink" href="#logical-type-factories" title="Permanent link">&para;</a></h3>
+<p>An annotation is built with the <code>LogicalType</code> static factory of the same name. The parameterless factories return a shared instance.</p>
+<table>
+<thead>
+<tr>
+<th>Factory</th>
+<th>Annotation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>LogicalType.string()</code></td>
+<td><code>STRING</code> — UTF-8 encoded string</td>
+</tr>
+<tr>
+<td><code>LogicalType.enumType()</code></td>
+<td><code>ENUM</code> — enum stored as a UTF-8 string</td>
+</tr>
+<tr>
+<td><code>LogicalType.uuid()</code></td>
+<td><code>UUID</code> — 16-byte fixed-length byte array</td>
+</tr>
+<tr>
+<td><code>LogicalType.date()</code></td>
+<td><code>DATE</code> — days since the Unix epoch</td>
+</tr>
+<tr>
+<td><code>LogicalType.json()</code></td>
+<td><code>JSON</code> — JSON document stored as a UTF-8 string</td>
+</tr>
+<tr>
+<td><code>LogicalType.bson()</code></td>
+<td><code>BSON</code> — BSON document stored as a byte array</td>
+</tr>
+<tr>
+<td><code>LogicalType.interval()</code></td>
+<td><code>INTERVAL</code> — 12-byte fixed-length byte array (months, days, millis)</td>
+</tr>
+<tr>
+<td><code>LogicalType.float16()</code></td>
+<td><code>FLOAT16</code> — IEEE 754 half-precision, 2-byte fixed-length byte array</td>
+</tr>
+<tr>
+<td><code>LogicalType.unknown()</code></td>
+<td><code>UNKNOWN</code> — every value in the column is null</td>
+</tr>
+<tr>
+<td><code>LogicalType.list()</code></td>
+<td><code>LIST</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.map()</code></td>
+<td><code>MAP</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.intType(bitWidth, isSigned)</code></td>
+<td><code>INT_8</code> … <code>UINT_64</code> — <code>bitWidth</code> is 8, 16, 32 or 64</td>
+</tr>
+<tr>
+<td><code>LogicalType.decimal(precision, scale)</code></td>
+<td><code>DECIMAL(precision, scale)</code> — <code>precision</code> is positive and <code>scale</code> lies in <code>[0, precision]</code>; other values throw <code>IllegalArgumentException</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.time(isAdjustedToUTC, unit)</code></td>
+<td><code>TIME</code> — <code>unit</code> is <code>TimeUnit.MILLIS</code>, <code>MICROS</code> or <code>NANOS</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.timestamp(isAdjustedToUTC, unit)</code></td>
+<td><code>TIMESTAMP</code> — same units, over an <code>INT64</code> or a <code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.variant(specVersion)</code></td>
+<td><code>VARIANT</code> — <code>specVersion</code> is <code>1</code>; the writer rejects a column carrying it</td>
+</tr>
+<tr>
+<td><code>LogicalType.geometry(crs)</code></td>
+<td><code>GEOMETRY</code> — <code>crs</code> defaults to <code>OGC:CRS84</code> when <code>null</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.geography(crs, edgeInterpolation)</code></td>
+<td><code>GEOGRAPHY</code> — <code>edgeInterpolation</code> is an <code>EdgeInterpolationAlgorithm</code></td>
+</tr>
+<tr>
+<td><code>LogicalType.file()</code></td>
+<td><code>FILE</code> — annotates a group; declared with <code>file(name, repetition)</code>, and rejected on a column</td>
+</tr>
+</tbody>
+</table>
+<p>Which Java value each annotation accepts is listed under <a href="#logical-types-and-row-setters">Logical Types and Row Setters</a>; a pairing of annotation and physical type the format does not define is rejected when the schema is built.</p>
+<h2 id="writer-options">Writer Options<a class="headerlink" href="#writer-options" title="Permanent link">&para;</a></h2>
+<p>Write-time behaviour is configured with an immutable <code>WriterConfig</code>, passed to <code>ParquetFileWriter.create(out, schema, config)</code>. <code>WriterConfig.defaults()</code> returns the defaults, which the two-argument <code>create(out, schema)</code> uses.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">        </span><span class="p">.</span><span class="na">compression</span><span class="p">(</span><span class="n">Compression</span><span class="p">.</span><span class="na">zstd</span><span class="p">())</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">        </span><span class="p">.</span><span class="na">rowGroupBufferTargetBytes</span><span class="p">(</span><span class="mi">64L</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">        </span><span class="p">.</span><span class="na">encoding</span><span class="p">(</span><span class="s">"temperature"</span><span class="p">,</span><span class="w"> </span><span class="n">ColumnEncoding</span><span class="p">.</span><span class="na">BYTE_STREAM_SPLIT</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pageTargetBytes(int)</code></td>
+<td><code>1 MiB</code></td>
+<td>Encoded bytes before a data page is cut, counting the values as the chunk's chosen encoding writes them, so a dictionary column is measured in indices. A ceiling: the page is cut before the record that would cross it, and only a single record larger than the whole target can breach it, a page holding whole records. Must be at least 4 bytes; a target above 1,073,741,819 bytes cuts at 1,073,741,819 bytes.</td>
+</tr>
+<tr>
+<td><code>pageTargetRows(int)</code></td>
+<td><code>20,000</code></td>
+<td>Records before a data page is cut. A page holds whole records, so on a repeated column it counts records, not values. Sets how finely the page index lets a reader skip within a column chunk; it binds on columns whose values encode small, such as dictionary-encoded ones. Must be positive.</td>
+</tr>
+<tr>
+<td><code>rowGroupTargetRows(long)</code></td>
+<td><code>1,048,576</code></td>
+<td>Records per row group: row groups hold exactly this many records apart from the last. Must be positive; a target above the structural ceiling of <code>Integer.MAX_VALUE - 9</code> records is that ceiling, so <code>Long.MAX_VALUE</code> means "cut on bytes alone".</td>
+</tr>
+<tr>
+<td><code>rowGroupBufferTargetBytes(long)</code></td>
+<td><code>128 MiB</code></td>
+<td>Bytes the writer holds for the open row group before cutting it: level streams, dictionary indices, value stores and dictionaries. A row group passes it by at most one record. A row group is also cut before a repeated column's chunk would reach <code>Integer.MAX_VALUE - 8</code> values and nulls, or before any column chunk would pass <code>Integer.MAX_VALUE - 8</code> bytes of <code>BYTE_ARRAY</code> / <code>FIXED_LEN_BYTE_ARRAY</code> values, so a target above 2 GiB can yield smaller row groups. See <a href="../../concepts/write-model/#memory-bounds">The Write Model</a>. Must be positive.</td>
+</tr>
+<tr>
+<td><code>compression(Compression)</code></td>
+<td><code>Compression.zstd()</code>, or <code>Compression.uncompressed()</code> when the ZSTD library is absent</td>
+<td>Codec each page body is compressed with, and its level. See <a href="#compression-codecs">Compression Codecs</a>.</td>
+</tr>
+<tr>
+<td><code>dataPageVersion(DataPageVersion)</code></td>
+<td><code>V1</code></td>
+<td>Header and layout of every data page. <code>V1</code> writes <code>DATA_PAGE</code>s, each body compressed whole. <code>V2</code> writes <code>DATA_PAGE_V2</code>s, which store the repetition and definition levels uncompressed ahead of the values, compress the values only where that makes them smaller, and state each page's row and null counts in its header. Dictionary pages are the same under either.</td>
+</tr>
+<tr>
+<td><code>encoding(ColumnEncoding)</code></td>
+<td><code>AUTO</code></td>
+<td>Encoding policy for every column without an override of its own.</td>
+</tr>
+<tr>
+<td><code>encoding(String, ColumnEncoding)</code></td>
+<td>—</td>
+<td>Encoding policy for one leaf column, overriding the file-wide default.</td>
+</tr>
+<tr>
+<td><code>bloomFilter(String)</code></td>
+<td>—</td>
+<td>Writes a Bloom filter for one leaf column at a false-positive probability of <code>0.01</code>. A path naming no leaf column, or a <code>BOOLEAN</code> column, fails when the writer is created. See <a href="#bloom-filters">Bloom filters</a>.</td>
+</tr>
+<tr>
+<td><code>bloomFilter(String, double)</code></td>
+<td>—</td>
+<td>Writes a Bloom filter for one leaf column at the given false-positive probability. Must be strictly between 0 and 1.</td>
+</tr>
+<tr>
+<td><code>statisticsTruncationLength(int)</code></td>
+<td><code>64</code></td>
+<td>Longest <code>BYTE_ARRAY</code> <code>min</code> / <code>max</code> statistics bound. A longer bound is truncated and flagged inexact. Must be positive.</td>
+</tr>
+<tr>
+<td><code>precisionLossPolicy(PrecisionLossPolicy)</code></td>
+<td><code>REJECT</code></td>
+<td>What the row-oriented layer does with a value carrying more precision than its column can hold.</td>
+</tr>
+<tr>
+<td><code>sortingColumns(SortingColumn...)</code>, <code>sortingColumns(List&lt;SortingColumn&gt;)</code></td>
+<td>none</td>
+<td>The order every row group's rows are sorted in, recorded in each row group's metadata and checked as rows are written. See <a href="#sorted-rows">Sorted Rows</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>A page is cut at whichever of the two page targets is reached first, and in any case at 2,147,483,638 values and nulls, the most a reader takes in one page; a single record holding more is a page of its own. A row group is cut at whichever of the two row-group targets is reached first.</p>
+<p>Each option has a getter that reads the configured value back: <code>pageTargetBytes()</code>, <code>pageTargetRows()</code>, <code>rowGroupTargetRows()</code>, <code>rowGroupBufferTargetBytes()</code>, <code>compression()</code>, <code>dataPageVersion()</code>, <code>statisticsTruncationLength()</code>, <code>precisionLossPolicy()</code>, <code>sortingColumns()</code>, for the two encoding setters, <code>defaultEncoding()</code> and <code>columnEncodings()</code>, and for the Bloom filter setters, <code>bloomFilters()</code>, a map from column path to probability. Every setter rejects <code>null</code>, and the numeric bounds above are checked when the option is set.</p>
+<h2 id="sorted-rows">Sorted Rows<a class="headerlink" href="#sorted-rows" title="Permanent link">&para;</a></h2>
+<p><code>sortingColumns</code> declares the order the rows of every row group are in: by the first column, rows equal there by the second, and so on. Each row group's metadata records the declaration as <code>sorting_columns</code>. A second call replaces the first.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">dev.hardwood.metadata.SortingColumn.NullOrder.NULLS_LAST</span><span class="p">;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="p">.</span><span class="na">sortingColumns</span><span class="p">(</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">                </span><span class="n">SortingColumn</span><span class="p">.</span><span class="na">ascending</span><span class="p">(</span><span class="s">"vendor"</span><span class="p">,</span><span class="w"> </span><span class="n">NULLS_LAST</span><span class="p">),</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">                </span><span class="n">SortingColumn</span><span class="p">.</span><span class="na">descending</span><span class="p">(</span><span class="s">"pickup_ts"</span><span class="p">,</span><span class="w"> </span><span class="n">NULLS_LAST</span><span class="p">))</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Factory</th>
+<th>Order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SortingColumn.ascending(String columnPath, NullOrder nullOrder)</code></td>
+<td>Least to greatest</td>
+</tr>
+<tr>
+<td><code>SortingColumn.descending(String columnPath, NullOrder nullOrder)</code></td>
+<td>Greatest to least</td>
+</tr>
+</tbody>
+</table>
+<p><code>NullOrder</code> is <code>NULLS_FIRST</code> or <code>NULLS_LAST</code>. A column is named by its dotted leaf path, as for <code>encoding(String, ColumnEncoding)</code>.</p>
+<p>Values compare in their column's order, the order its statistics use:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Order</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INT32</code>, <code>INT64</code></td>
+<td>Signed; unsigned under an unsigned <code>INT</code> annotation</td>
+</tr>
+<tr>
+<td><code>FLOAT</code>, <code>DOUBLE</code>, <code>FLOAT16</code></td>
+<td>Numeric; <code>NaN</code> after every number, <code>-0.0</code> equal to <code>0.0</code></td>
+</tr>
+<tr>
+<td><code>BOOLEAN</code></td>
+<td><code>false</code> before <code>true</code></td>
+</tr>
+<tr>
+<td><code>DECIMAL</code> on <code>BYTE_ARRAY</code> or <code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td>By the number it holds</td>
+</tr>
+<tr>
+<td>Other <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td>Unsigned, byte by byte; a prefix before the values it starts</td>
+</tr>
+</tbody>
+</table>
+<p>The writer checks the order within each row group as rows are written. The first row that sorts before the row ahead of it fails the write with an <code>IllegalArgumentException</code> naming the row, its row group and the column, and the writer accepts no more rows. Under <code>RowWriter</code>, rows are checked when their staged batch is written, which can be a later <code>writeRow</code>, <code>endRowGroup()</code> or <code>close()</code>. A new row group starts the order again.</p>
+<p>When the writer is created, it rejects a sorting column that:</p>
+<ul>
+<li>names no leaf column of the schema;</li>
+<li>is repeated, or sits inside a list or map;</li>
+<li>has a type with no defined order: <code>INTERVAL</code>, <code>UNKNOWN</code>, <code>GEOMETRY</code> or <code>GEOGRAPHY</code>.</li>
+</ul>
+<p>The builder rejects a <code>null</code> entry and a column declared twice.</p>
+<h2 id="encodings">Encodings<a class="headerlink" href="#encodings" title="Permanent link">&para;</a></h2>
+<p><code>ColumnEncoding</code> sets how a column's values are encoded, file-wide or per leaf column. <code>AUTO</code> leaves the choice to the writer; every other member names an encoding outright, and a column that names one builds no dictionary.</p>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>What it writes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AUTO</code></td>
+<td>Per column chunk, whichever of a dictionary or <code>PLAIN</code> is smaller, measured once the row group is buffered.</td>
+</tr>
+<tr>
+<td><code>PLAIN</code></td>
+<td>Values as they are: fixed-width types little-endian, <code>BYTE_ARRAY</code> behind a 4-byte length prefix.</td>
+</tr>
+<tr>
+<td><code>DELTA_BINARY_PACKED</code></td>
+<td>Differences between neighbouring values, bit-packed per block. Suits sorted or slow-moving integers.</td>
+</tr>
+<tr>
+<td><code>DELTA_LENGTH_BYTE_ARRAY</code></td>
+<td>Lengths delta-encoded ahead of the values, cheaper than <code>PLAIN</code>'s per-value length prefix where the lengths are similar.</td>
+</tr>
+<tr>
+<td><code>DELTA_BYTE_ARRAY</code></td>
+<td>Each value carrying only what it does not share with the value before it. Suits sorted values with common prefixes.</td>
+</tr>
+<tr>
+<td><code>BYTE_STREAM_SPLIT</code></td>
+<td>A value's bytes scattered across one stream per byte position. Changes no page's size on its own; it changes how well the codec afterwards compresses floating-point data.</td>
+</tr>
+<tr>
+<td><code>ALP</code></td>
+<td>Floating-point values scaled to integers by a power of ten and bit-packed per block of 1024 values. Suits values with few decimal digits, such as prices and measurements; a value with more significant digits than its block keeps is stored as it is, at its width plus 2 bytes.</td>
+</tr>
+</tbody>
+</table>
+<p>An encoding is legal only for some physical types:</p>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Physical types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AUTO</code>, <code>PLAIN</code></td>
+<td>every writable type</td>
+</tr>
+<tr>
+<td><code>DELTA_BINARY_PACKED</code></td>
+<td><code>INT32</code>, <code>INT64</code></td>
+</tr>
+<tr>
+<td><code>DELTA_LENGTH_BYTE_ARRAY</code></td>
+<td><code>BYTE_ARRAY</code></td>
+</tr>
+<tr>
+<td><code>DELTA_BYTE_ARRAY</code></td>
+<td><code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
+</tr>
+<tr>
+<td><code>BYTE_STREAM_SPLIT</code></td>
+<td><code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
+</tr>
+<tr>
+<td><code>ALP</code></td>
+<td><code>FLOAT</code>, <code>DOUBLE</code></td>
+</tr>
+</tbody>
+</table>
+<p>A policy naming a column whose type cannot carry it fails when the writer is created, including a file-wide <code>BYTE_STREAM_SPLIT</code> over a schema holding a <code>BYTE_ARRAY</code> column. A per-column override names the column by its <strong>dotted leaf path</strong> as the schema spells it, synthetic segments included: <code>readings.list.element</code>, not <code>readings</code>. A path matching no leaf column is rejected the same way.</p>
+<p><code>AUTO</code> never chooses <code>ALP</code>. The format specification marks <code>ALP</code> as Preview, and a column written with it can be read only by readers that implement it. The page cut charges each <code>ALP</code> value its width plus 2 bytes, the most a value can take, so an <code>ALP</code> page holds fewer values than a <code>PLAIN</code> page and stays within <code>pageTargetBytes</code>.</p>
+<p>No policy demands a dictionary; it is an outcome <code>AUTO</code> may arrive at. A <code>BOOLEAN</code> column is never dictionary-encoded, so <code>AUTO</code> resolves it to <code>PLAIN</code> whatever its values are.</p>
+<h2 id="compression-codecs">Compression Codecs<a class="headerlink" href="#compression-codecs" title="Permanent link">&para;</a></h2>
+<p>A <code>Compression</code> names the codec and, for the codecs that have them, a level. Each written codec has a factory:</p>
+<table>
+<thead>
+<tr>
+<th>Factory</th>
+<th>Codec</th>
+<th>Library needed</th>
+<th>Levels</th>
+<th>Default level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Compression.uncompressed()</code></td>
+<td><code>UNCOMPRESSED</code></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>Compression.gzip()</code></td>
+<td><code>GZIP</code></td>
+<td>— (JDK)</td>
+<td>0 (stored, not compressed) to 9</td>
+<td>6</td>
+</tr>
+<tr>
+<td><code>Compression.snappy()</code></td>
+<td><code>SNAPPY</code></td>
+<td><code>org.xerial.snappy:snappy-java</code></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>Compression.zstd()</code></td>
+<td><code>ZSTD</code></td>
+<td><code>com.github.luben:zstd-jni</code></td>
+<td>-131072 to 22; 0 selects the default</td>
+<td>3</td>
+</tr>
+<tr>
+<td><code>Compression.lz4Raw()</code></td>
+<td><code>LZ4_RAW</code></td>
+<td><code>at.yawk.lz4:lz4-java</code></td>
+<td>1 to 17, through LZ4's high compressor (LZ4 HC)</td>
+<td>LZ4's fast compressor</td>
+</tr>
+<tr>
+<td><code>Compression.brotli()</code></td>
+<td><code>BROTLI</code></td>
+<td><code>com.aayushatharva.brotli4j:brotli4j</code></td>
+<td>0 to 11</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p><code>level(int)</code> on the factories of codecs with levels returns the codec at that level; a level outside the codec's range is rejected with <code>IllegalArgumentException</code>. A higher level writes a smaller file and takes longer to write; reading the file takes about as long at any level. The level is not recorded in the file.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">WriterConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">WriterConfig</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">        </span><span class="p">.</span><span class="na">compression</span><span class="p">(</span><span class="n">Compression</span><span class="p">.</span><span class="na">zstd</span><span class="p">().</span><span class="na">level</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
+</code></pre></div>
+<p><code>Compression.of(CompressionCodec)</code> returns a codec chosen at runtime at its default level. It refuses <code>LZ4</code> and <code>LZO</code> with <code>UnsupportedOperationException</code>: <code>LZ4</code> files are read but not written, and <code>LZO</code> files are neither read nor written. A missing library fails when the writer is created rather than mid-file.</p>
+<h2 id="physical-types-and-columnar-setters">Physical Types and Columnar Setters<a class="headerlink" href="#physical-types-and-columnar-setters" title="Permanent link">&para;</a></h2>
+<p>Every physical type Parquet defines is written except <code>INT96</code>, which is deprecated and rejected when the writer is created. Each <code>ColumnBatch</code> setter comes in four shapes: by index or name, all-present or nullable (a <code>Validity</code> or a <code>boolean[]</code> mask).</p>
+<table>
+<thead>
+<tr>
+<th>Physical type</th>
+<th><code>ColumnBatch</code> setter</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BOOLEAN</code></td>
+<td><code>booleans</code></td>
+<td><code>boolean[]</code></td>
+</tr>
+<tr>
+<td><code>INT32</code></td>
+<td><code>ints</code></td>
+<td><code>int[]</code></td>
+</tr>
+<tr>
+<td><code>INT64</code></td>
+<td><code>longs</code></td>
+<td><code>long[]</code></td>
+</tr>
+<tr>
+<td><code>FLOAT</code></td>
+<td><code>floats</code></td>
+<td><code>float[]</code></td>
+</tr>
+<tr>
+<td><code>DOUBLE</code></td>
+<td><code>doubles</code></td>
+<td><code>double[]</code></td>
+</tr>
+<tr>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>bytes</code></td>
+<td><code>byte[][]</code></td>
+</tr>
+<tr>
+<td><code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td><code>fixed</code></td>
+<td><code>byte[][]</code>, each exactly the declared length</td>
+</tr>
+</tbody>
+</table>
+<p>The columnar API takes physical values and converts nothing: a <code>STRING</code> column is written through <code>bytes(...)</code> as UTF-8, a <code>DATE</code> column through <code>ints(...)</code> as days since the Unix epoch. Nesting is described through <code>struct(path, Validity)</code>, <code>list(path, offsets[, Validity])</code> and <code>map(path, offsets[, Validity])</code>.</p>
+<h2 id="logical-types-and-row-setters">Logical Types and Row Setters<a class="headerlink" href="#logical-types-and-row-setters" title="Permanent link">&para;</a></h2>
+<p>The row-oriented layer takes physical values through the setter named for the type, and converts logical-type values to the column's physical representation, taking the same Java types the reader returns. The physical setters apply whatever the column's annotation is: an <code>INT32</code> column annotated <code>DATE</code> accepts <code>setDate</code> and <code>setInt</code> alike, the one taking a <code>LocalDate</code> and the other the epoch day it converts to.</p>
+<table>
+<thead>
+<tr>
+<th>Logical type</th>
+<th>Physical type</th>
+<th><code>StructBuilder</code> setter</th>
+<th>Java type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none</td>
+<td><code>BOOLEAN</code></td>
+<td><code>setBoolean</code></td>
+<td><code>boolean</code></td>
+</tr>
+<tr>
+<td>any</td>
+<td><code>INT32</code></td>
+<td><code>setInt</code></td>
+<td><code>int</code></td>
+</tr>
+<tr>
+<td>any</td>
+<td><code>INT64</code></td>
+<td><code>setLong</code></td>
+<td><code>long</code></td>
+</tr>
+<tr>
+<td>none</td>
+<td><code>FLOAT</code></td>
+<td><code>setFloat</code></td>
+<td><code>float</code></td>
+</tr>
+<tr>
+<td>none</td>
+<td><code>DOUBLE</code></td>
+<td><code>setDouble</code></td>
+<td><code>double</code></td>
+</tr>
+<tr>
+<td><code>STRING</code>, <code>ENUM</code> or <code>JSON</code></td>
+<td><code>BYTE_ARRAY</code></td>
+<td><code>setString</code></td>
+<td><code>String</code> (written as UTF-8)</td>
+</tr>
+<tr>
+<td>any</td>
+<td><code>BYTE_ARRAY</code><br><code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td><code>setBinary</code></td>
+<td><code>byte[]</code></td>
+</tr>
+<tr>
+<td><code>DATE</code></td>
+<td><code>INT32</code></td>
+<td><code>setDate</code></td>
+<td><code>LocalDate</code></td>
+</tr>
+<tr>
+<td><code>TIME</code></td>
+<td><code>INT32</code><br><code>INT64</code></td>
+<td><code>setTime</code></td>
+<td><code>LocalTime</code></td>
+</tr>
+<tr>
+<td><code>TIMESTAMP(isAdjustedToUTC = true)</code></td>
+<td><code>INT64</code><br><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>setTimestamp</code></td>
+<td><code>Instant</code></td>
+</tr>
+<tr>
+<td><code>TIMESTAMP(isAdjustedToUTC = false)</code></td>
+<td><code>INT64</code><br><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>setLocalTimestamp</code></td>
+<td><code>LocalDateTime</code></td>
+</tr>
+<tr>
+<td><code>DECIMAL</code></td>
+<td><code>INT32</code><br><code>INT64</code><br><code>BYTE_ARRAY</code><br><code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td><code>setDecimal</code></td>
+<td><code>BigDecimal</code></td>
+</tr>
+<tr>
+<td><code>UUID</code></td>
+<td><code>FIXED_LEN_BYTE_ARRAY(16)</code></td>
+<td><code>setUuid</code></td>
+<td><code>UUID</code></td>
+</tr>
+<tr>
+<td><code>INTERVAL</code></td>
+<td><code>FIXED_LEN_BYTE_ARRAY(12)</code></td>
+<td><code>setInterval</code></td>
+<td><code>PqInterval</code></td>
+</tr>
+<tr>
+<td>any</td>
+<td>any primitive</td>
+<td><code>setNull</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>none / <code>LIST</code> / <code>MAP</code></td>
+<td>group</td>
+<td><code>setStruct</code> / <code>setList</code> / <code>setMap</code></td>
+<td>a filler over <code>StructBuilder</code> / <code>ListBuilder</code> / <code>MapBuilder</code></td>
+</tr>
+<tr>
+<td><code>FILE</code></td>
+<td>group</td>
+<td><code>setFile</code></td>
+<td><code>PqFile</code></td>
+</tr>
+<tr>
+<td>any</td>
+<td>any</td>
+<td><code>setValue</code></td>
+<td>the form <code>getValue</code> returns, below</td>
+</tr>
+</tbody>
+</table>
+<p><code>ListBuilder</code> has the same set as <code>addInt</code>, <code>addString</code>, <code>addStruct</code>, <code>addFile</code>, <code>addNull</code>, … and <code>MapBuilder</code> has <code>addEntry</code>, whose entry struct declares the two fields <code>key</code> and <code>value</code>.</p>
+<p>A <code>FILE</code> group is set only through <code>setFile</code> / <code>addFile</code>; <code>setStruct</code> / <code>addStruct</code> on one throws. A group read from an existing file may declare fewer children, and a value setting a field the group has no child for is rejected. The columnar API writes a <code>FILE</code> group's children as ordinary columns, addressed as <code>photo.uri</code>, <code>photo.offset</code> and so on, and rejects a batch holding a present value that is not valid under the rules in <a href="../accessors/#file-groups">FILE groups</a>.</p>
+<p>Timestamp columns split by <code>isAdjustedToUTC</code>, mirroring the reader's split between <code>getTimestamp</code> and <code>getLocalTimestamp</code>: using the wrong setter throws. Both APIs also accept every setter by field index; see <a href="../../how-to/write-row-by-row/#addressing-fields-by-index">Addressing fields by index</a>.</p>
+<p><code>setValue(String, Object)</code> and <code>setValue(int, Object)</code> take the value in the form <code>getValue</code> returns for the field's type and write it through that type's setter, with its checks. A <code>null</code> sets the field null; a value of any other Java type fails with <code>IllegalArgumentException</code>, and nothing is converted.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th><code>setValue</code> takes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BOOLEAN</code>, <code>INT32</code>, <code>INT64</code>, <code>FLOAT</code>, <code>DOUBLE</code></td>
+<td><code>Boolean</code>, <code>Integer</code>, <code>Long</code>, <code>Float</code>, <code>Double</code></td>
+</tr>
+<tr>
+<td><code>INT32</code> annotated <code>INT(8, true)</code> / <code>INT(16, true)</code></td>
+<td><code>Byte</code> / <code>Short</code></td>
+</tr>
+<tr>
+<td><code>STRING</code>, <code>ENUM</code>, <code>JSON</code></td>
+<td><code>String</code></td>
+</tr>
+<tr>
+<td><code>DATE</code>, <code>TIME</code>, <code>DECIMAL</code>, <code>UUID</code>, <code>INTERVAL</code></td>
+<td><code>LocalDate</code>, <code>LocalTime</code>, <code>BigDecimal</code>, <code>UUID</code>, <code>PqInterval</code></td>
+</tr>
+<tr>
+<td><code>TIMESTAMP(isAdjustedToUTC = true / false)</code></td>
+<td><code>Instant</code> / <code>LocalDateTime</code></td>
+</tr>
+<tr>
+<td><code>FLOAT16</code></td>
+<td><code>Float</code>; a value without an exact half-precision representation is rejected</td>
+</tr>
+<tr>
+<td>other <code>BYTE_ARRAY</code>, <code>FIXED_LEN_BYTE_ARRAY</code></td>
+<td><code>byte[]</code></td>
+</tr>
+<tr>
+<td><code>FILE</code> group</td>
+<td><code>PqFile</code></td>
+</tr>
+<tr>
+<td>struct group, <code>LIST</code>, <code>MAP</code></td>
+<td><code>PqStruct</code>, <code>PqList</code>, <code>PqMap</code></td>
+</tr>
+</tbody>
+</table>
+<p>A <code>PqStruct</code> is copied by name: each field the target struct declares takes the source's field of that name, a field the source lacks stays unset, and a source field the target does not declare is not written. A <code>PqList</code>'s elements and a <code>PqMap</code>'s entries are copied in order the same way. A <code>PqVariant</code> is rejected.</p>
+<p>A timestamp column's physical type sets the range of values it holds; its unit sets the precision on either:</p>
+<table>
+<thead>
+<tr>
+<th>Unit</th>
+<th><code>INT64</code> holds</th>
+<th><code>FIXED_LEN_BYTE_ARRAY(12)</code> holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MILLIS</code></td>
+<td>about 292 million years either side of 1970</td>
+<td>every <code>Instant</code> and <code>LocalDateTime</code></td>
+</tr>
+<tr>
+<td><code>MICROS</code></td>
+<td>about 292,000 years either side of 1970</td>
+<td>every <code>Instant</code> and <code>LocalDateTime</code></td>
+</tr>
+<tr>
+<td><code>NANOS</code></td>
+<td>1677-09-21T00:12:43.145224192 to 2262-04-11T23:47:16.854775807</td>
+<td>every <code>Instant</code> and <code>LocalDateTime</code></td>
+</tr>
+</tbody>
+</table>
+<p>A value outside the range of an <code>INT64</code> column is rejected under either <code>PrecisionLossPolicy</code>.</p>
+<h2 id="value-ranges">Value Ranges<a class="headerlink" href="#value-ranges" title="Permanent link">&para;</a></h2>
+<p>Some annotations narrow what their physical type may hold. Where one does, both write APIs reject a stored value outside that range, naming the offending row or field:</p>
+<table>
+<thead>
+<tr>
+<th>Annotation</th>
+<th>Accepted values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INT(n)</code> signed, <code>n</code> &lt; physical width</td>
+<td><code>[-2^(n-1), 2^(n-1))</code></td>
+</tr>
+<tr>
+<td><code>INT(n)</code> unsigned, <code>n</code> &lt; physical width</td>
+<td><code>[0, 2^n)</code></td>
+</tr>
+<tr>
+<td><code>TIME(unit, _)</code></td>
+<td><code>[0, one day in unit)</code> — the annotation defines the value as elapsed time after midnight</td>
+</tr>
+<tr>
+<td><code>DECIMAL(p, s)</code></td>
+<td>an unscaled value of at most <code>p</code> digits</td>
+</tr>
+<tr>
+<td><code>UNKNOWN</code></td>
+<td>no value at all; every row must be null, so a column given values is set through a setter taking a null mask</td>
+</tr>
+</tbody>
+</table>
+<p>Every other annotation, <code>DATE</code>, <code>TIMESTAMP</code>, <code>INT(32)</code> and <code>INT(64)</code> included, admits every value of its physical type, and its column is not scanned per value. A large unsigned value is spelled as a negative, which is also how the reader returns it.</p>
+<p>Two checks are not annotations and always apply: a <code>FIXED_LEN_BYTE_ARRAY</code> value must be exactly the length the column declares, and a present value of a binary column must not be <code>null</code>. The value at a row a <code>Validity</code> marks null is never encoded, so it is never checked.</p>
+<p>An annotation over binary <em>content</em> is not a range, and the writer does not inspect it. A value passed to <code>bytes(...)</code> or <code>fixed(...)</code> is written as given, whether the column is annotated <code>STRING</code>, <code>ENUM</code>, <code>JSON</code>, <code>BSON</code>, <code>VARIANT</code>, <code>GEOMETRY</code> or <code>GEOGRAPHY</code>. Encoding a <code>STRING</code> column's values as UTF-8, and producing well-formed payloads under the others, is the caller's to do. Bytes that are not valid UTF-8 are written and read back as replacement characters rather than rejected. <code>StructBuilder.setString</code> takes a <code>String</code> and encodes it, so the row-oriented layer cannot produce that.</p>
+<p><code>PrecisionLossPolicy</code> governs <strong>precision</strong> only, and only on the row-oriented layer:</p>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REJECT</code> (default)</td>
+<td>Reject a value carrying digits the column's unit or scale cannot hold, naming the field. A value that is exact at the column's unit or scale is written normally.</td>
+</tr>
+<tr>
+<td><code>TRUNCATE</code></td>
+<td>Drop the digits that do not fit: a <code>TIME</code> / <code>TIMESTAMP</code> value is floored to the column's unit, a <code>DECIMAL</code> rescaled with <code>RoundingMode.DOWN</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>A value the column cannot represent at all, such as a <code>LocalDate</code> beyond the <code>INT32</code> day range or an unscaled decimal wider than the declared precision, is rejected under either policy.</p>
+<h2 id="statistics-written">Statistics Written<a class="headerlink" href="#statistics-written" title="Permanent link">&para;</a></h2>
+<p>Every column chunk carries <code>null_count</code>. <code>min</code> / <code>max</code> are computed under the column's <code>ColumnOrder</code> during encoding and written to the preferred <code>min_value</code> / <code>max_value</code> fields; the deprecated <code>min</code> / <code>max</code> fields are not written.</p>
+<ul>
+<li><strong>Bounds are omitted where their order is undefined.</strong> A column annotated <code>INTERVAL</code>, <code>UNKNOWN</code>, <code>VARIANT</code>, <code>GEOMETRY</code>, <code>GEOGRAPHY</code>, <code>LIST</code> or <code>MAP</code> writes its null count alone. An all-null chunk has no bounds to write either.</li>
+<li><strong>Truncation.</strong> <code>BYTE_ARRAY</code> bounds longer than <code>statisticsTruncationLength</code> are truncated and flagged inexact (<code>is_min_value_exact</code> / <code>is_max_value_exact</code> = <code>false</code>). A column annotated <code>STRING</code>, <code>ENUM</code> or <code>JSON</code> is truncated at a character boundary, so its bounds are valid UTF-8. Fixed-width types write those flags as <code>true</code>.</li>
+<li><strong><code>nan_count</code></strong> is written for every <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code> chunk, including when it is zero. No other type writes the field.</li>
+<li><strong><code>distinct_count</code></strong> is written where the chunk still knows its cardinality exactly: any chunk under <code>AUTO</code> that interned its values to the end, whichever encoding the flush-time comparison then chose, and any <code>BOOLEAN</code> chunk, which knows its cardinality without a dictionary. It is absent for any other chunk written under a named encoding, and for one that stopped interning part-way (see <a href="../../concepts/write-model/#how-the-writer-picks-an-encoding">How the Writer Picks an Encoding</a>).</li>
+</ul>
+<p>Every column chunk also carries <code>encoding_stats</code>: its page count per page type and encoding. A dictionary-encoded chunk lists one <code>PLAIN</code> dictionary page and all of its data pages as <code>RLE_DICTIONARY</code>, so a reader can prune its row group on the dictionary for an <code>eq</code> or <code>in</code> predicate (see <a href="../../how-to/query-controls/">Query Controls</a>). Any other chunk lists its data pages under the one value encoding it was written in.</p>
+<p>A column chunk carries <code>SizeStatistics</code> where it has something to count: its repetition level histogram where the column is repeated, its definition level histogram where the column's maximum definition level is 2 or more, and for a <code>BYTE_ARRAY</code> column the bytes of its values without their length prefixes.</p>
+<p>Every file carries a page index, written between the last row group and the footer:</p>
+<ul>
+<li><strong><code>OffsetIndex</code></strong>, for every column chunk: the location of each data page and the first record it holds, and for a <code>BYTE_ARRAY</code> column the bytes of the page's values without their length prefixes. Every page starts at a record boundary.</li>
+<li><strong><code>ColumnIndex</code></strong>, for every column chunk whose bounds can be stated: each page's <code>min</code> / <code>max</code> under the same rules as the chunk statistics, its null count, whether it holds only nulls, its <code>NaN</code> count for <code>FLOAT</code>, <code>DOUBLE</code> and <code>FLOAT16</code>, its level histograms where the chunk's <code>SizeStatistics</code> carries them, and whether the pages' bounds ascend or descend. A column without an order writes none, nor does a floating-point column chunk with a page whose values are all <code>NaN</code>. Where no truncated <code>max</code> exists, a page's <code>max</code> is written whole.</li>
+</ul>
+<p>The <code>GeospatialStatistics</code> of a <code>GEOMETRY</code> or <code>GEOGRAPHY</code> column are not written. <a href="../../how-to/geospatial/">Bounding-box pushdown</a> prunes row groups from that last field, so it prunes nothing in a file Hardwood produced.</p>
+<h3 id="bloom-filters">Bloom filters<a class="headerlink" href="#bloom-filters" title="Permanent link">&para;</a></h3>
+<p>To let <code>eq</code> and <code>in</code> predicates on a high-cardinality column skip row groups, add a Bloom filter for the column with <code>bloomFilter(...)</code> (see <a href="#writer-options">Writer Options</a>). The column then carries a split-block Bloom filter in every row group. <a href="../../concepts/parquet-layout/#bloom-filters-skipping-on-equality">Bloom filters: skipping on equality</a> describes which columns benefit and what a filter costs.</p>
+<ul>
+<li><strong>Contents.</strong> Every non-null value of the column chunk, hashed with XXH64 over its bytes as stored: <code>INT32</code> and <code>FLOAT</code> as 4 little-endian bytes, <code>INT64</code> and <code>DOUBLE</code> as 8, <code>BYTE_ARRAY</code> without its length prefix, <code>FIXED_LEN_BYTE_ARRAY</code> as is. <code>FLOAT</code> and <code>DOUBLE</code> values are hashed over their raw bits, so <code>-0.0</code> and <code>0.0</code> are distinct values, as are <code>NaN</code>s with different bits.</li>
+<li><strong>Size.</strong> About 1.2 bytes per distinct value of the chunk at the default probability of <code>0.01</code>, rounded up to a power of two between 32 bytes and 128 MiB. Every chunk gets a filter whatever its encoding, an all-null chunk included.</li>
+<li><strong>Placement.</strong> All filters of the file are written together after the last row group, before the page index, with <code>bloom_filter_offset</code> and <code>bloom_filter_length</code> set on each column chunk.</li>
+</ul>
+<h2 id="file-metadata">File Metadata<a class="headerlink" href="#file-metadata" title="Permanent link">&para;</a></h2>
+<p>Two footer fields are set on the <code>ParquetFileWriter</code> itself, at any point until <code>close()</code> writes the footer: the file's key-value metadata and its <code>created_by</code> identifier.</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>keyValueMetadata(String key, String value)</code></td>
+<td>Adds one key-value entry, replacing any value already held for that key.</td>
+</tr>
+<tr>
+<td><code>keyValueMetadata(Map&lt;String, String&gt; metadata)</code></td>
+<td>Adds every entry of the map, leaving entries it does not name in place.</td>
+</tr>
+<tr>
+<td><code>createdBy(String createdBy)</code></td>
+<td>Replaces the <code>created_by</code> identifier.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">ParquetFileWriter</span><span class="w"> </span><span class="n">writer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParquetFileWriter</span><span class="p">.</span><span class="na">create</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">schema</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"ARROW:schema"</span><span class="p">,</span><span class="w"> </span><span class="n">encodedArrowSchema</span><span class="p">);</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">columnWriter</span><span class="p">().</span><span class="na">writeBatch</span><span class="p">(</span><span class="n">batch</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="n">batch</span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="p">));</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">writer</span><span class="p">.</span><span class="na">keyValueMetadata</span><span class="p">(</span><span class="s">"row.count"</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">values</span><span class="p">.</span><span class="na">length</span><span class="p">));</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="key-value-metadata">Key-value metadata<a class="headerlink" href="#key-value-metadata" title="Permanent link">&para;</a></h3>
+<p><code>key_value_metadata</code> is application-defined: Parquet does not interpret it, and the writer validates nothing beyond requiring a key. It is where <code>ARROW:schema</code>, the pandas descriptor, <code>org.apache.spark.sql.parquet.row.metadata</code> and the table-format stamps live.</p>
+<p>Entries reach the file in the order they were added. A <code>null</code> value writes a key carrying no value, which the format allows and which is what a reader reports as a <code>null</code>, so the map <code>FileMetaData.keyValueMetadata()</code> returns can be passed straight to <code>keyValueMetadata(Map)</code> to reproduce another file's metadata exactly. A file given no entries carries no <code>key_value_metadata</code> field at all.</p>
+<p>Reading the field back is covered in <a href="../../how-to/metadata/">Read File Metadata</a>.</p>
+<h3 id="created_by"><code>created_by</code><a class="headerlink" href="#created_by" title="Permanent link">&para;</a></h3>
+<p>The default identifier follows the convention Parquet readers parse, naming the library, its version and the build it came from:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>hardwood version &lt;version&gt; (build &lt;commit&gt;)
+</code></pre></div>
+<p><code>ParquetFileWriter.DEFAULT_CREATED_BY</code> holds it. <code>createdBy(String)</code> replaces it; readers that key compatibility workarounds off this field expect the <code>&lt;app&gt; version &lt;version&gt; (build &lt;hash&gt;)</code> shape, and a bare application name is rejected by some of them.</p>
+<h2 id="ending-a-row-group">Ending a Row Group<a class="headerlink" href="#ending-a-row-group" title="Permanent link">&para;</a></h2>
+<p><code>ParquetFileWriter.endRowGroup()</code> writes the open row group, so the next record starts a new one. Records staged by <code>rowWriter()</code> are written into the row group being closed. When no record was written since the last row group closed, it writes nothing.</p>
+<p>The row-group targets close row groups as well; a row group ends at a target or at a call, whichever comes first. A row group closed by a call is written exactly as one a target closes after the same records.</p>
+<p><code>endRowGroup()</code> and <code>close()</code> throw <code>IllegalStateException</code> when called from inside a <code>writeBatch</code> or <code>writeRow</code> filler. Any exception from <code>endRowGroup()</code> fails the writer.</p>
+<h2 id="writer-threads">Writer Threads<a class="headerlink" href="#writer-threads" title="Permanent link">&para;</a></h2>
+<p>Each batch's values are copied into the row group's column chunks in parallel, and at each row-group flush the column chunks are encoded and compressed in parallel, on the threads of a <code>HardwoodContext</code> and on the thread that called the write. Under a codec other than <code>UNCOMPRESSED</code> and with more than one available processor, the pages of one chunk are also compressed in parallel. The chunks are written in schema order. The file is byte-identical to one written on a single thread.</p>
+<table>
+<thead>
+<tr>
+<th>Factory</th>
+<th>Threads</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>create(out, schema)</code>, <code>create(out, schema, config)</code></td>
+<td>The writer creates a context with one thread per available processor when it first needs one: on its first write of more than one column with more than one available processor, otherwise on its first flush of more than one column, or of one column under a codec other than <code>UNCOMPRESSED</code> with more than one available processor. It closes the context on <code>close()</code> or <code>abort()</code></td>
+</tr>
+<tr>
+<td><code>create(out, schema, config, context)</code></td>
+<td>The threads of <code>context</code>, and on a context of zero threads (<code>HardwoodContext.create(0)</code>) the calling thread alone. The caller closes <code>context</code> after the writer; one context can serve several writers and readers</td>
+</tr>
+</tbody>
+</table>
+<p>A schema of one column is copied on the calling thread alone, and encoded on it alone under <code>UNCOMPRESSED</code> or with one available processor. With one available processor, values are copied on the calling thread alone. A <code>ParquetFileWriter</code> is still driven from one thread at a time.</p>
+<h2 id="finishing-and-abandoning-a-file">Finishing and Abandoning a File<a class="headerlink" href="#finishing-and-abandoning-a-file" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Call</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>close()</code></td>
+<td>Writes the buffered row group and the footer, and publishes the file at the destination</td>
+</tr>
+<tr>
+<td><code>close()</code> after the writer has failed</td>
+<td>Discards the output, leaving nothing at the destination</td>
+</tr>
+<tr>
+<td><code>abort()</code></td>
+<td>Discards the output and closes the writer</td>
+</tr>
+<tr>
+<td><code>close()</code> or <code>abort()</code> on a closed or aborted writer</td>
+<td>Nothing</td>
+</tr>
+</tbody>
+</table>
+<p>The writer fails when <code>ColumnWriter.writeBatch</code>, <code>RowWriter.writeRow</code> or <code>endRowGroup</code> throws, whatever the exception: a batch or record rejected by the checks under <a href="#rejected-input">Rejected Input</a>, an exception thrown by the filler, a destination <code>IOException</code> or a codec failure. <code>RowWriter.tryWriteRow</code> fails the writer only on the exceptions described under <a href="#rowwriteresult"><code>RowWriteResult</code></a>. A failed writer rejects further writes; <code>keyValueMetadata</code> and <code>createdBy</code> stay callable until <code>close()</code>.</p>
+<p>A failure while <code>close()</code> finishes or publishes the file discards the output as well, and <code>close()</code> throws it. When the output cannot be discarded, <code>abort()</code> and <code>close()</code> on a failed writer throw the <code>IOException</code>; a failure while finishing or publishing carries it as a suppressed exception.</p>
+<h2 id="rowwriteresult"><code>RowWriteResult</code><a class="headerlink" href="#rowwriteresult" title="Permanent link">&para;</a></h2>
+<p><code>RowWriter.tryWriteRow</code> returns one of two members:</p>
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Staged</code></td>
+<td>The record is in the batch. A later flush can still fail the writer.</td>
+</tr>
+<tr>
+<td><code>Rejected(fieldPath, message)</code></td>
+<td>The record was not staged, and the staged batch is unchanged. <code>fieldPath</code> is the schema path the message names; <code>message</code> is the full text <code>writeRow</code> throws for the same rejection.</td>
+</tr>
+</tbody>
+</table>
+<p>A rejection that depends on the value handed over becomes <code>Rejected</code>, such as a value outside the range its annotation declares, a value the column cannot hold under the configured <code>PrecisionLossPolicy</code>, or a <code>REQUIRED</code> field left unset or set null.</p>
+<p>Every other failure throws and fails the writer, as it does under <code>writeRow</code>: a defect in the calling code, such as an unknown field name or a setter that does not fit the field, an exception thrown by the filler, or a failure while a completed batch is written.</p>
+<h2 id="rejected-input">Rejected Input<a class="headerlink" href="#rejected-input" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>When</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>UnsupportedOperationException</code></td>
+<td>Something the format allows and the writer does not produce, such as a schema with no columns, an <code>INT96</code> column, the <code>LZ4</code> or <code>LZO</code> codec, or a <a href="#schema-shapes">schema shape</a> outside what it writes. For a codec whose library is missing, the message names the dependency to add</td>
+</tr>
+<tr>
+<td><code>IllegalArgumentException</code></td>
+<td>The input does not fit the schema, the schema is one the format does not allow, or a configuration value lies outside what it accepts, such as a <code>MAP</code> key that is not <code>REQUIRED</code>, a setter that does not fit the column's type, a column left unset or set twice, a value outside the range its annotation declares, a <code>REQUIRED</code> field a record leaves unset, a row out of the declared sort order, or a compression level outside the codec's range</td>
+</tr>
+<tr>
+<td><code>IndexOutOfBoundsException</code></td>
+<td>A leaf-column index outside <code>[0, leaf column count)</code> on a <code>ColumnBatch</code> setter, or a field index outside <code>[0, getFieldCount())</code> on a <code>StructBuilder</code> setter</td>
+</tr>
+<tr>
+<td><code>IllegalStateException</code></td>
+<td>A call the writer's state does not allow at that point, such as a write after <code>close()</code> or after the writer has failed, using both write APIs on one file, or using a <code>ColumnBatch</code> after it has been submitted</td>
+</tr>
+<tr>
+<td><code>IOException</code></td>
+<td>The destination cannot be created, written, or finalized; an in-memory file would pass <code>Integer.MAX_VALUE - 8</code> bytes</td>
+</tr>
+<tr>
+<td><code>ParquetWriteException</code></td>
+<td>The file could not be produced for a reason that is neither the caller's input nor the destination: a compression codec that rejects a page body. Unchecked</td>
+</tr>
+</tbody>
+</table>
+<h3 id="schema-shapes">Schema Shapes<a class="headerlink" href="#schema-shapes" title="Permanent link">&para;</a></h3>
+<p>Repetition is writable wherever a <code>LIST</code> or <code>MAP</code> annotation accounts for it. An annotated group is <code>REQUIRED</code> or <code>OPTIONAL</code> and holds exactly one <code>REPEATED</code> entry, which for a <code>MAP</code> is a group of <code>key</code> and <code>value</code>. That admits the canonical three-level <code>LIST</code> and two-level <code>MAP</code> layouts <code>FileSchema.builder</code> declares, and the legacy two-level lists a schema read from an existing file may carry: <code>LIST { repeated element }</code>, whose entry is the element, and <code>LIST { repeated group element { … } }</code>, whose entry is an element struct.</p>
+<p>A <code>repeated</code> field outside a <code>LIST</code> or <code>MAP</code> group is rejected with <code>UnsupportedOperationException</code> when the writer is created. An annotated group that is itself <code>REPEATED</code>, holds other than one field, or holds an entry that is not <code>REPEATED</code> (or for a <code>MAP</code>, is not a group), a <code>MAP</code> whose entry group has no fields or whose key is not <code>REQUIRED</code>, and a <code>FILE</code> group with no children are rejected with <code>IllegalArgumentException</code>. A key-only map needs a <code>REQUIRED</code> key too, and an <code>OPTIONAL</code> key is rejected even if every key value would be present. These rules apply to schemas read from existing files as well as built ones.</p>
+<p>The row API reaches a list's values through an element node below the entry, which the legacy two-level lists do not have, so <code>rowWriter()</code> refuses those two shapes and <code>columnWriter()</code> writes them. <code>rowWriter()</code> also requires sibling field names to be unique, which the <code>ColumnBatch</code> indices and dotted paths do not.</p>
+<p>A column's maximum definition level and maximum repetition level must each be at most 255. A schema nested deeper is rejected with <code>UnsupportedOperationException</code> when the writer is created.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <!--
+
+     SPDX-License-Identifier: Apache-2.0
+
+     Copyright The original authors
+
+     Licensed under the Apache Software License version 2.0, available at http://www.apache.org/licenses/LICENSE-2.0
+
+--><div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">Creative Commons BY-SA 4.0</a>
+    </div>
+  
+  
+  
+    Built from
+    <a href="https://github.com/hardwood-hq/hardwood/tree/ff0421c311387d51cf286c431f4e84b2d4968ba6" target="_blank" rel="noopener">
+      ff0421c3
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/hardwood-hq/hardwood" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
