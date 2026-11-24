@@ -1709,34 +1709,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../schema-element/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    SchemaElement
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../cli/" class="md-nav__link">
         
   
@@ -1996,6 +1968,9 @@
 -->
 <h1 id="package-structure">Package Structure<a class="headerlink" href="#package-structure" title="Permanent link">&para;</a></h1>
 <p>Application code should import only from the packages marked <strong>Public API</strong>.</p>
+<p>API annotated <code>@Experimental</code>, such as <code>ColumnReader</code> and <code>RowWriter</code>, may change in any release.</p>
+<p>Always build values through the provided factory methods and builders; the canonical constructors of public records are not part of the public API. Reading a record through its accessors and matching on its type (<code>case LogicalType.DecimalType decimal</code>) are compatible like the rest of the public API. A minor release may add or restructure a record's components, keeping its accessors: code deconstructing a record (<code>case LogicalType.DecimalType(int precision, int scale)</code>) may then need adjusting, and what the record's <code>equals</code> compares changes with its components.</p>
+<p>A sealed interface may gain subtypes, and an enum constants, in a minor release. An exhaustive <code>switch</code> over one of them without a <code>default</code> branch then fails to compile until it handles the new case.</p>
 <table>
 <thead>
 <tr>
@@ -2111,8 +2086,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/452417d2b5c435ac634be317f46637379df944e6" target="_blank" rel="noopener">
-      452417d2
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8bbb6ede4cf25a7ac7042d2d175bbee24f4fe092" target="_blank" rel="noopener">
+      8bbb6ede
     </a>
   
 </div>

@@ -1704,34 +1704,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/schema-element/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    SchemaElement
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../reference/cli/" class="md-nav__link">
         
   
@@ -2292,6 +2264,7 @@
 <li><code>sortingColumns</code> declares and enforces the row order, recorded as <code>sorting_columns</code></li>
 <li><code>DATA_PAGE_V2</code> pages on request, and <code>SizeStatistics</code> with level histograms, so Hardwood and other readers can prune <code>isNull</code> and <code>isNotNull</code> on groups in files Hardwood wrote</li>
 <li><code>StructBuilder.setValue</code> takes a value in the form <code>getValue</code> returns, so rows copy without switching on field types</li>
+<li><code>PqInterval.of(months, days, milliseconds)</code> creates an <code>INTERVAL</code> value for <code>setInterval</code> and filter literals</li>
 </ul>
 </li>
 <li>New format features<ul>
@@ -2330,17 +2303,25 @@
 </ul>
 <p><strong>Breaking Changes:</strong></p>
 <ul>
-<li><code>ColumnReader.getBinaryValues()</code> returns a <code>BinaryValues</code> giving each value as a window (<code>buffer(i)</code>, <code>start(i)</code>, <code>end(i)</code>), and <code>getBinaryStarts()</code> and <code>getBinaryEnds()</code> are removed (<a href="https://github.com/hardwood-hq/hardwood/issues/1578">#1578</a>)</li>
-<li><code>WriterConfig.Builder.codec(CompressionCodec)</code> is replaced by <code>compression(Compression)</code>, <code>codec()</code> by <code>compression()</code>, and <code>DEFAULT_CODEC</code> by <code>DEFAULT_COMPRESSION</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
-<li><code>FileSchema.Builder</code> and <code>StructBuilder</code> declare leaves with <code>primitive(...)</code> instead of <code>addColumn(...)</code>, and set a leaf's logical type and type length in a <code>PrimitiveBuilder</code> lambda, as in <code>primitive("name", BYTE_ARRAY, REQUIRED, col -&gt; col.logicalType(LogicalType.string()))</code>; the overloads taking a <code>typeLength</code> or <code>LogicalType</code> are removed (<a href="https://github.com/hardwood-hq/hardwood/issues/957">#957</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1883">#1883</a>)</li>
-<li><code>ColumnSchema</code> and <code>SchemaNode.GroupNode</code> take a last record component <code>fieldId</code>, so schemas differing only in field ids are no longer equal; <code>SchemaNode.PrimitiveNode</code> has the single component <code>column</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/957">#957</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1892">#1892</a>)</li>
-<li><code>LogicalType.nullType()</code> is renamed to <code>unknown()</code>, and the annotation prints as <code>UNKNOWN</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1890">#1890</a>)</li>
-<li><code>LogicalType</code> permits the new <code>FileType</code>, and <code>Encoding</code> and <code>ColumnEncoding</code> have the new constant <code>ALP</code>; an exhaustive <code>switch</code> over them needs a case for each (<a href="https://github.com/hardwood-hq/hardwood/issues/1413">#1413</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/581">#581</a>)</li>
+<li>The experimental method <code>ColumnReader.getBinaryValues()</code> returns a <code>BinaryValues</code> giving each value as a window (<code>buffer(i)</code>, <code>start(i)</code>, <code>end(i)</code>) instead of a <code>byte[]</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1578">#1578</a>)</li>
+<li><code>ColumnSchema</code> and <code>SchemaNode.GroupNode</code> take a last record component <code>fieldId</code>, so schemas differing only in field ids are no longer equal; <code>SchemaNode.PrimitiveNode</code> has the single component <code>column</code>, and its other accessors remain (<a href="https://github.com/hardwood-hq/hardwood/issues/957">#957</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1892">#1892</a>)</li>
+<li><code>LogicalType</code> permits the new <code>FileType</code>, and <code>Encoding</code> has the new constant <code>ALP</code>; an exhaustive <code>switch</code> over them needs a case for each (<a href="https://github.com/hardwood-hq/hardwood/issues/1413">#1413</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/581">#581</a>)</li>
 <li>A lookup by a name that several sibling fields share, such as <code>getColumn(String)</code>, <code>FileSchema.getField</code> or a row accessor, throws <code>IllegalArgumentException</code> instead of returning the first or last match; a projection by such a name selects all of them (<a href="https://github.com/hardwood-hq/hardwood/issues/1744">#1744</a>)</li>
-<li>The writer refuses <code>setString</code> on a <code>BYTE_ARRAY</code> column without a <code>STRING</code> annotation (use <code>setBinary</code>), and <code>FileSchema.Builder</code> and <code>FileSchema.fromSchemaElements</code> refuse null arguments, sibling fields of one name and annotations a field cannot carry where they are declared (<a href="https://github.com/hardwood-hq/hardwood/issues/1890">#1890</a>)</li>
-<li>A <code>LIST</code>, <code>MAP</code> or <code>FILE</code> shape the format forbids, including a <code>MAP</code> with an optional or missing key, fails with <code>IllegalArgumentException</code> instead of <code>UnsupportedOperationException</code>, and a schema without columns with <code>UnsupportedOperationException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1899">#1899</a>)</li>
-<li><code>InMemoryOutputFile.create()</code>, <code>close()</code> and <code>discard()</code> declare <code>IOException</code>, and <code>position()</code> throws <code>IllegalStateException</code> after <code>close()</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1747">#1747</a>)</li>
+<li><code>FileSchema.fromSchemaElements</code> refuses an element list whose child counts do not describe its elements, a primitive element that declares children, and annotations a field cannot carry (<a href="https://github.com/hardwood-hq/hardwood/issues/1890">#1890</a>)</li>
 <li>The native CLI is no longer published for macOS on Intel; use the Docker image there (<a href="https://github.com/hardwood-hq/hardwood/issues/1606">#1606</a>)</li>
+</ul>
+<p><strong>Changes to 1.1 preview API:</strong></p>
+<p>Code written against 1.1.0.Beta1 to Beta3 needs the following changes in addition to the Breaking Changes above; the <a href="/api-changes/1.1.0.CR1/">API changes</a> list every signature.</p>
+<ul>
+<li><code>WriterConfig.Builder.codec(CompressionCodec)</code> is replaced by <code>compression(Compression)</code>, <code>codec()</code> by <code>compression()</code>, and <code>DEFAULT_CODEC</code> by <code>DEFAULT_COMPRESSION</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1530">#1530</a>)</li>
+<li><code>FileSchema.Builder</code> and <code>StructBuilder</code> declare leaves with <code>primitive(...)</code> instead of <code>addColumn(...)</code>, and <code>Builder</code>, <code>StructBuilder</code> and <code>ElementBuilder</code> set a leaf's or map key's logical type and type length in a <code>PrimitiveBuilder</code> lambda, as in <code>primitive("name", BYTE_ARRAY, REQUIRED, col -&gt; col.logicalType(LogicalType.string()))</code>; the <code>primitive(...)</code> and <code>map(...)</code> overloads taking a <code>typeLength</code> or <code>LogicalType</code> are removed (<a href="https://github.com/hardwood-hq/hardwood/issues/957">#957</a>, <a href="https://github.com/hardwood-hq/hardwood/issues/1883">#1883</a>)</li>
+<li>The <code>SchemaElement</code> factories <code>root</code>, <code>group</code>, <code>primitive</code> and <code>fixedLengthPrimitive</code> are removed; build a schema with <code>FileSchema.builder(...)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1951">#1951</a>)</li>
+<li><code>LogicalType.nullType()</code> is renamed to <code>unknown()</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1890">#1890</a>)</li>
+<li>The writer refuses <code>setString</code> on a <code>BYTE_ARRAY</code> column without a <code>STRING</code> annotation (use <code>setBinary</code>), and <code>FileSchema.Builder</code> refuses null arguments, sibling fields of one name and annotations a field cannot carry where they are declared (<a href="https://github.com/hardwood-hq/hardwood/issues/1890">#1890</a>)</li>
+<li>A <code>LIST</code>, <code>MAP</code> or <code>FILE</code> shape the format forbids, including a <code>MAP</code> with an optional or missing key, fails with <code>IllegalArgumentException</code> instead of <code>UnsupportedOperationException</code>, and a schema without columns with <code>UnsupportedOperationException</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1899">#1899</a>)</li>
+<li><code>ColumnEncoding</code> has the new constant <code>ALP</code>; an exhaustive <code>switch</code> over it needs a case for it (<a href="https://github.com/hardwood-hq/hardwood/issues/581">#581</a>)</li>
+<li><code>InMemoryOutputFile.create()</code>, <code>close()</code> and <code>discard()</code> declare <code>IOException</code>, and <code>position()</code> throws <code>IllegalStateException</code> after <code>close()</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1747">#1747</a>)</li>
+<li><code>ColumnReader.getBinaryStarts()</code> and <code>getBinaryEnds()</code> are removed; <code>getBinaryValues()</code> gives each value's <code>buffer(i)</code>, <code>start(i)</code> and <code>end(i)</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1578">#1578</a>)</li>
 </ul>
 <p><strong>Deprecations:</strong></p>
 <ul>
@@ -2354,7 +2335,7 @@
 <li>The native CLI is built with GraalVM CE 25 and embeds JDK 25.0.4.1, the Docker image is based on Fedora 44, and CLI releases publish <code>checksums_sha256.txt</code> and build provenance attestations, verifiable with <code>gh attestation verify</code> (<a href="https://github.com/hardwood-hq/hardwood/issues/1607">#1607</a>)</li>
 </ul>
 <p>See the <a href="https://github.com/hardwood-hq/hardwood/milestone/10?closed=1">1.1.0.CR1 milestone</a> on GitHub for the full list of resolved issues.</p>
-<p>Thank you to all contributors to this release: <a href="https://github.com/Gerrrr">Alex Sorokoumov</a>, <a href="https://github.com/arouel">André Rouél</a>, <a href="https://github.com/arnabnandy7">Arnab Nandy</a>, <a href="https://github.com/nitrogen404">Chandan Dhamande</a>, <a href="https://github.com/iifawzi">Fawzi Essam</a>, <a href="https://github.com/gunnarmorling">Gunnar Morling</a>, <a href="https://github.com/jerolba">Jeronimo López</a>, <a href="https://github.com/mghildiy">Manish</a>, <a href="https://github.com/mvanhorn">Matt Van Horn</a>, <a href="https://github.com/25mattm">Matthew Mullett</a>, <a href="https://github.com/OmarAbdelmawgoud5">Omar Abdelmawgoud</a>, <a href="https://github.com/ommkd">ommkd</a>, <a href="https://github.com/perfloop-agent">Perfloop Agent</a>, <a href="https://github.com/rionmonster">Rion Williams</a>.</p>
+<p>Thank you to all contributors to this release: <a href="https://github.com/ifesdjeen">Alex Petrov</a>, <a href="https://github.com/Gerrrr">Alex Sorokoumov</a>, <a href="https://github.com/arouel">André Rouél</a>, <a href="https://github.com/arnabnandy7">Arnab Nandy</a>, <a href="https://github.com/nitrogen404">Chandan Dhamande</a>, <a href="https://github.com/iifawzi">Fawzi Essam</a>, <a href="https://github.com/gunnarmorling">Gunnar Morling</a>, <a href="https://github.com/jerolba">Jeronimo López</a>, <a href="https://github.com/mghildiy">Manish</a>, <a href="https://github.com/mvanhorn">Matt Van Horn</a>, <a href="https://github.com/25mattm">Matthew Mullett</a>, <a href="https://github.com/OmarAbdelmawgoud5">Omar Abdelmawgoud</a>, <a href="https://github.com/ommkd">ommkd</a>, <a href="https://github.com/perfloop-agent">Perfloop Agent</a>, <a href="https://github.com/rionmonster">Rion Williams</a>.</p>
 <h2 id="110beta3-2026-10-21">1.1.0.Beta3 (2026-10-21)<a class="headerlink" href="#110beta3-2026-10-21" title="Permanent link">&para;</a></h2>
 <p><strong>Bug fixes:</strong></p>
 <ul>
@@ -2638,8 +2619,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/452417d2b5c435ac634be317f46637379df944e6" target="_blank" rel="noopener">
-      452417d2
+    <a href="https://github.com/hardwood-hq/hardwood/tree/8bbb6ede4cf25a7ac7042d2d175bbee24f4fe092" target="_blank" rel="noopener">
+      8bbb6ede
     </a>
   
 </div>
