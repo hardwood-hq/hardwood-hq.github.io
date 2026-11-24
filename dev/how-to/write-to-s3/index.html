@@ -2083,7 +2083,7 @@
 <a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">        </span><span class="p">.</span><span class="na">build</span><span class="p">();</span>
 </code></pre></div>
 <h2 id="clean-up-after-a-failed-write">Clean up after a failed write<a class="headerlink" href="#clean-up-after-a-failed-write" title="Permanent link">&para;</a></h2>
-<p>A writer that fails, or that <code>abort()</code> discards, aborts its upload, so nothing appears at the key. Add a lifecycle rule for incomplete multipart uploads to the bucket, so that the parts of an upload that could not be aborted (for instance because the process ended) are removed. <a href="../../reference/s3/#writing">S3 Reference</a> lists the requests, limits and failure behavior.</p>
+<p>A writer that fails, or that <code>abort()</code> discards, aborts its upload, so nothing appears at the key. Add a <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpu-abort-incomplete-mpu-lifecycle-config.html">lifecycle rule for incomplete multipart uploads</a> to the bucket, so that the parts of an upload that could not be aborted (for instance because the process ended) are removed. <a href="../../reference/s3/#writing">S3 Reference</a> lists the requests, limits and failure behavior.</p>
 
 
 
@@ -2133,8 +2133,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/43a64f1262383f67f2a9e7a42a8d76d9bf35d468" target="_blank" rel="noopener">
-      43a64f12
+    <a href="https://github.com/hardwood-hq/hardwood/tree/e9290e35fd146f6c1804fe5004d576c08797148f" target="_blank" rel="noopener">
+      e9290e35
     </a>
   
 </div>
