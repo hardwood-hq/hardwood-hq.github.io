@@ -2249,6 +2249,7 @@
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">        </span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="s">"address.street"</span><span class="p">,</span><span class="w"> </span><span class="n">streets</span><span class="p">)</span>
 <a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="p">.</span><span class="na">ints</span><span class="p">(</span><span class="s">"address.zip"</span><span class="p">,</span><span class="w"> </span><span class="n">zips</span><span class="p">,</span><span class="w"> </span><span class="n">zipNulls</span><span class="p">));</span>
 </code></pre></div>
+<p>A <code>VARIANT</code> group in a schema read from an existing file is written the same way: <code>struct(...)</code> sets which variants are null, and its <code>metadata</code> and <code>value</code> children are binary leaves.</p>
 <p><strong>Lists</strong> carry an offsets array of length <code>rowCount + 1</code>, where <code>offsets[i + 1] - offsets[i]</code> is the number of entries of list <code>i</code> and a zero delta is an empty list. The element leaf holds the concatenated entries:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// optional group phones (LIST) { repeated group list { optional int32 element } }</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1">// row 0: [1, 2]   row 1: []   row 2: null   row 3: [3, null, 5]</span>
@@ -2336,8 +2337,8 @@
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/279d3309a1fb9a452d47b34881daa3d50196ee1a" target="_blank" rel="noopener">
-      279d3309
+    <a href="https://github.com/hardwood-hq/hardwood/tree/133ff1fa3c2d5069230d2c0251b14479f4d8f52f" target="_blank" rel="noopener">
+      133ff1fa
     </a>
   
 </div>

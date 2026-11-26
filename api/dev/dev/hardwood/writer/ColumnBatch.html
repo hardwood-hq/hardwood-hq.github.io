@@ -490,8 +490,9 @@ are themselves absent), distinct from an empty map carrying a zero-delta offset.
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#struct(java.lang.String,dev.hardwood.Validity)" class="member-name-link">struct</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;structPath,
  <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the per-instance nulls of an <code>OPTIONAL</code> <code>struct</code> group, addressed by its
-dot-separated path.</div>
+<div class="block">Sets the per-instance nulls of an <code>OPTIONAL</code> group other than a <code>LIST</code> or <code>MAP</code>, addressed
+by its dot-separated path: a plain struct, a <code>FILE</code> group, or a group whose fields the
+writer writes as a struct's, such as a <code>VARIANT</code> group of a schema read from a file.</div>
 </div>
 </div>
 </div>
@@ -517,8 +518,10 @@ dot-separated path.</div>
 <div class="member-signature"><span class="annotations"><a href="../Experimental.html" title="annotation interface in dev.hardwood">@Experimental</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></span>&nbsp;<span class="element-name">struct</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;structPath,
  <a href="../Validity.html" title="interface in dev.hardwood">Validity</a>&nbsp;nulls)</span></div>
-<div class="block">Sets the per-instance nulls of an <code>OPTIONAL</code> <code>struct</code> group, addressed by its
-dot-separated path. Omitting the call leaves every instance of the group present.
+<div class="block">Sets the per-instance nulls of an <code>OPTIONAL</code> group other than a <code>LIST</code> or <code>MAP</code>, addressed
+by its dot-separated path: a plain struct, a <code>FILE</code> group, or a group whose fields the
+writer writes as a struct's, such as a <code>VARIANT</code> group of a schema read from a file.
+Omitting the call leaves every instance of the group present.
 The values of leaf columns beneath a null struct instance are ignored.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -527,8 +530,8 @@ The values of leaf columns beneath a null struct instance are ignored.</div>
 <dt>Returns:</dt>
 <dd>this batch, for chaining</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the path does not name an <code>OPTIONAL</code> <code>struct</code>
-group, or the group is already set in this batch</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the path does not name an <code>OPTIONAL</code> group other
+than a <code>LIST</code> or <code>MAP</code>, or the group is already set in this batch</dd>
 </dl>
 </div>
 </section>

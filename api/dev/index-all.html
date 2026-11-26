@@ -5742,8 +5742,9 @@ positive.</div>
 </dd>
 <dt><a href="dev/hardwood/writer/ColumnBatch.html#struct(java.lang.String,dev.hardwood.Validity)" class="member-name-link">struct(String, Validity)</a> - Method in class dev.hardwood.writer.<a href="dev/hardwood/writer/ColumnBatch.html" title="class in dev.hardwood.writer">ColumnBatch</a></dt>
 <dd>
-<div class="block">Sets the per-instance nulls of an <code>OPTIONAL</code> <code>struct</code> group, addressed by its
-dot-separated path.</div>
+<div class="block">Sets the per-instance nulls of an <code>OPTIONAL</code> group other than a <code>LIST</code> or <code>MAP</code>, addressed
+by its dot-separated path: a plain struct, a <code>FILE</code> group, or a group whose fields the
+writer writes as a struct's, such as a <code>VARIANT</code> group of a schema read from a file.</div>
 </dd>
 <dt><a href="dev/hardwood/reader/LayerKind.html#STRUCT" class="member-name-link">STRUCT</a> - Enum constant in enum class dev.hardwood.reader.<a href="dev/hardwood/reader/LayerKind.html" title="enum class in dev.hardwood.reader">LayerKind</a></dt>
 <dd>
