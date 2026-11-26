@@ -2448,9 +2448,10 @@ where <a href="#binary-columns">Binary columns</a> says so. <code>BOOLEAN</code>
 <p>A predicate on a <code>VARIANT</code> column reaches the group's presence, not the values inside it. The
 <code>metadata</code> and <code>value</code> leaves below the group, and a shredded variant's <code>typed_value</code> leaves, hold
 the encoded variant, which <a href="../accessors/"><code>getVariant</code></a> reads off the group; they take <code>isNull</code> and
-<code>isNotNull</code> only, and any other predicate on one throws <code>IllegalArgumentException</code> at reader
-creation. Filtering on a shredded variant's sub-paths is in progress, tracked by
-<a href="https://github.com/hardwood-hq/hardwood/issues/309">#309</a>.</p>
+<code>isNotNull</code> only, which test the leaf itself, and any other predicate on one throws
+<code>IllegalArgumentException</code> at reader creation. So does a null predicate on a group below the
+variant, such as a shredded <code>typed_value</code> group. Filtering on a shredded variant's sub-paths is in
+progress, tracked by <a href="https://github.com/hardwood-hq/hardwood/issues/309">#309</a>.</p>
 <p>A <code>FLOAT</code> column compares by the <code>Float.compare</code> total order and a <code>DOUBLE</code> column by
 <code>Double.compare</code>, so all <code>NaN</code> values equal each other and sort above every other value, and
 <code>-0.0</code> sorts below <code>+0.0</code>. This holds
@@ -2708,6 +2709,7 @@ and <code>notEq</code> are left to statistics alone. Some equality probes skip o
 </tbody>
 </table>
 <p>A name is a top-level field or the full path to a nested field. A nested field is not selected by its own name alone: over <code>id, address STRUCT&lt;city&gt;</code>, <code>columns("city")</code> fails with an error naming the column. Names may repeat or overlap.</p>
+<p>A row reader reads a <code>VARIANT</code> column whole: selecting any field below it, such as <code>columns("var.value")</code>, also reads <code>var.metadata</code> and any shredded <code>typed_value</code> fields, and <code>getVariant("var")</code> returns the complete value. Selecting a field below a <code>MAP</code>'s values also reads the map's keys. A column reader reads only the leaves it names.</p>
 <p>A field name may contain dots: <code>columns("sepal.length")</code> selects a top-level column named <code>sepal.length</code>, and <code>columns("acme.info.x.y")</code> selects the field <code>x.y</code> of a struct named <code>acme.info</code>. Predicates and <code>FileSchema.getColumn(String)</code> resolve names the same way. A name that is the path of two fields, such as a top-level <code>a.b</code> beside a struct <code>a</code> with a field <code>b</code>, fails with an error; <code>buildColumnReader(int)</code> and the positions of <code>ColumnReaders</code> reach each of those columns by index.</p>
 <p>Sibling fields may share a name. A projection selects every field of such a name, in schema order: over two top-level columns named <code>id</code>, <code>columns("id")</code> projects both, read with <code>getLong(0)</code> and <code>getLong(1)</code>. Accessing them by name fails with an error, and so do a predicate on that name and <code>buildColumnReader("id")</code>, which resolve to one column.</p>
 <h3 id="index-order">Index order<a class="headerlink" href="#index-order" title="Permanent link">&para;</a></h3>
@@ -2828,8 +2830,8 @@ and <code>notEq</code> are left to statistics alone. Some equality probes skip o
   
   
     Built from
-    <a href="https://github.com/hardwood-hq/hardwood/tree/6abe88abaf7fbafb5929c5f2e1d3eccd21253829" target="_blank" rel="noopener">
-      6abe88ab
+    <a href="https://github.com/hardwood-hq/hardwood/tree/3d12c2469308f6a02a4863de69a2ed1e018a7a51" target="_blank" rel="noopener">
+      3d12c246
     </a>
   
 </div>
